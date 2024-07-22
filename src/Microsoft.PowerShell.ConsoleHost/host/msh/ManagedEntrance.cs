@@ -49,8 +49,6 @@ namespace Microsoft.PowerShell
         /// </param>
         public static int Start([MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.LPWStr, SizeParamIndex = 1)] string[] args, int argc)
         {
-            ArgumentNullException.ThrowIfNull(args);
-
 #if DEBUG
             if (args.Length > 0 && !string.IsNullOrEmpty(args[0]) && args[0]!.Equals("-isswait", StringComparison.OrdinalIgnoreCase))
             {
@@ -73,28 +71,28 @@ namespace Microsoft.PowerShell
             // The currentUICulture returned NativeCultureResolver supports this non
             // traditional fallback on Vista. So it is important to set currentUICulture
             // in the beginning before we do anything.
-            Thread.CurrentThread.CurrentUICulture = NativeCultureResolver.UICulture;
-            Thread.CurrentThread.CurrentCulture = NativeCultureResolver.Culture;
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
+            Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
 
             ConsoleHost.ParseCommandLine(args);
 
             // NOTE: On Unix, logging depends on a command line parsing
             // and must be just after ConsoleHost.ParseCommandLine(args)
             // to allow overriding logging options.
-            PSEtwLog.LogConsoleStartup();
+            // PSEtwLog.LogConsoleStartup();
 
             int exitCode = 0;
             try
             {
-                var banner = string.Format(
-                    CultureInfo.InvariantCulture,
-                    ManagedEntranceStrings.ShellBannerNonWindowsPowerShell,
-                    PSVersionInfo.GitCommitId);
+                // var banner = string.Format(
+                //     CultureInfo.InvariantCulture,
+                //     ManagedEntranceStrings.ShellBannerNonWindowsPowerShell,
+                //     PSVersionInfo.GitCommitId);
 
                 ConsoleHost.DefaultInitialSessionState = InitialSessionState.CreateDefault2();
 
                 exitCode = ConsoleHost.Start(
-                    bannerText: banner,
+                    bannerText: null,
                     helpText: ManagedEntranceStrings.UsageHelp,
                     issProvidedExternally: false);
             }

@@ -135,11 +135,11 @@ namespace System.Management.Automation
             try
             {
 #if UNIX
-                LogProvider sysLogProvider = new PSSysLogProvider();
-                providers.Add(sysLogProvider);
+                //LogProvider sysLogProvider = new PSSysLogProvider();
+                //providers.Add(sysLogProvider);
 #else
-                LogProvider etwLogProvider = new PSEtwLogProvider();
-                providers.Add(etwLogProvider);
+                //LogProvider etwLogProvider = new PSEtwLogProvider();
+                //providers.Add(etwLogProvider);
 #endif
 
                 return providers;
@@ -158,7 +158,7 @@ namespace System.Management.Automation
                 // to dummy log.
             }
 
-            providers.Add(new DummyLogProvider());
+            //providers.Add(new DummyLogProvider());
             return providers;
         }
 

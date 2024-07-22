@@ -57,7 +57,7 @@ namespace Microsoft.PowerShell
         static UpdatesNotification()
         {
             s_notificationType = GetNotificationType();
-            CanNotifyUpdates = s_notificationType != NotificationType.Off;
+            CanNotifyUpdates = false;
 
             if (CanNotifyUpdates)
             {

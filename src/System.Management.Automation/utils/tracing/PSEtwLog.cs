@@ -13,7 +13,7 @@ namespace System.Management.Automation.Tracing
     internal static class PSEtwLog
     {
 #if UNIX
-        private static readonly PSSysLogProvider provider;
+        private static readonly DummySysLogProvider provider;
 #else
         private static readonly PSEtwLogProvider provider;
 #endif
@@ -24,7 +24,8 @@ namespace System.Management.Automation.Tracing
         static PSEtwLog()
         {
 #if UNIX
-            provider = new PSSysLogProvider();
+            
+            provider = new DummySysLogProvider();
 #else
             provider = new PSEtwLogProvider();
 #endif

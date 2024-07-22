@@ -301,7 +301,8 @@ namespace System.Management.Automation
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsEnabled(string featureName)
         {
-            return EnabledExperimentalFeatureNames.Contains(featureName);
+            return false;
+            // return EnabledExperimentalFeatureNames.Contains(featureName);
         }
 
         #endregion

@@ -873,7 +873,8 @@ namespace System.Management.Automation
                 string.Create(CultureInfo.CurrentCulture, $"{RegistryStrings.MonadEngine_ApplicationBase} is empty or null"));
 
             // Get the PSVersion from Utils..this is hardcoded
-            psVersion = PSVersionInfo.PSVersion;
+            // psVersion = PSVersionInfo.PSVersion;
+            psVersion = new Version(7, 0);
             Dbg.Assert(
                 psVersion != null,
                 string.Create(CultureInfo.CurrentCulture, $"{RegistryStrings.MonadEngine_MonadVersion} is null"));
