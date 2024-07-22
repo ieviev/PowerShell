@@ -101,3 +101,4 @@ StartupProfileData-NonInteractive
 
 # Ignore logfiles
 logfile/*
+.idea/
