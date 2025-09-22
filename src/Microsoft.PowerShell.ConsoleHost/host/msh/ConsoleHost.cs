@@ -123,11 +123,23 @@ namespace Microsoft.PowerShell
                 throw new ConsoleHostStartupException(ConsoleHostStrings.ShellCannotBeStartedWithConfigConflict);
             }
 
-            // put PSHOME in front of PATH so that calling `powershell` within `powershell` always starts the same running version
+            // Put PSHOME in front of PATH so that calling `pwsh` within `pwsh` always starts the same running version.
             string path = Environment.GetEnvironmentVariable("PATH");
-            string pshome = Utils.DefaultPowerShellAppBase + Path.PathSeparator;
+            string pshome = Utils.DefaultPowerShellAppBase;
+            string dotnetToolsPathSegment = $"{Path.DirectorySeparatorChar}.store{Path.DirectorySeparatorChar}powershell{Path.DirectorySeparatorChar}";
 
-            // to not impact startup perf, we don't remove duplicates, but we avoid adding a duplicate to the front
+            int index = pshome.IndexOf(dotnetToolsPathSegment, StringComparison.Ordinal);
+            if (index > 0)
+            {
+                // We're running PowerShell global tool. In this case the real entry executable should be the 'pwsh'
+                // or 'pwsh.exe' within the tool folder which should be the path right before the '\.store', not what
+                // PSHome is pointing to.
+                pshome = pshome[0..index];
+            }
+
+            pshome += Path.PathSeparator;
+
+            // To not impact startup perf, we don't remove duplicates, but we avoid adding a duplicate to the front
             // we also don't handle the edge case where PATH only contains $PSHOME
             if (string.IsNullOrEmpty(path))
             {
@@ -186,7 +198,26 @@ namespace Microsoft.PowerShell
                 }
 
                 // Servermode parameter validation check.
-                if ((s_cpp.ServerMode && s_cpp.NamedPipeServerMode) || (s_cpp.ServerMode && s_cpp.SocketServerMode) || (s_cpp.NamedPipeServerMode && s_cpp.SocketServerMode))
+                int serverModeCount = 0;
+                if (s_cpp.ServerMode)
+                {
+                    serverModeCount++;
+                }
+                if (s_cpp.NamedPipeServerMode)
+                {
+                    serverModeCount++;
+                }
+                if (s_cpp.SocketServerMode)
+                {
+                    serverModeCount++;
+                }
+#if !UNIX
+                if (s_cpp.V2SocketServerMode)
+                {
+                    serverModeCount++;
+                }
+#endif
+                if (serverModeCount > 1)
                 {
                     s_tracer.TraceError("Conflicting server mode parameters, parameters must be used exclusively.");
                     s_theConsoleHost?.ui.WriteErrorLine(ConsoleHostStrings.ConflictingServerModeParameters);
@@ -230,6 +261,34 @@ namespace Microsoft.PowerShell
                         configurationName: s_cpp.ConfigurationName);
                     exitCode = 0;
                 }
+#if !UNIX
+                else if (s_cpp.V2SocketServerMode)
+                {
+                    if (s_cpp.Token == null)
+                    {
+                        s_tracer.TraceError("Token is required for V2SocketServerMode.");
+                        s_theConsoleHost?.ui.WriteErrorLine(string.Format(CultureInfo.CurrentCulture, ConsoleHostStrings.MissingMandatoryParameter, "-Token", "-V2SocketServerMode"));
+                        return ExitCodeBadCommandLineParameter;
+                    }
+
+                    if (s_cpp.UTCTimestamp == null)
+                    {
+                        s_tracer.TraceError("UTCTimestamp is required for V2SocketServerMode.");
+                        s_theConsoleHost?.ui.WriteErrorLine(string.Format(CultureInfo.CurrentCulture, ConsoleHostStrings.MissingMandatoryParameter, "-UTCTimestamp", "-v2socketservermode"));
+                        return ExitCodeBadCommandLineParameter;
+                    }
+
+                    ApplicationInsightsTelemetry.SendPSCoreStartupTelemetry("V2SocketServerMode", s_cpp.ParametersUsedAsDouble);
+                    ProfileOptimization.StartProfile("StartupProfileData-V2SocketServerMode");
+                    HyperVSocketMediator.Run(
+                        initialCommand: s_cpp.InitialCommand,
+                        configurationName: s_cpp.ConfigurationName,
+                        token: s_cpp.Token,
+                        tokenCreationTime: s_cpp.UTCTimestamp.Value);
+
+                    exitCode = 0;
+                }
+#endif
                 else if (s_cpp.SocketServerMode)
                 {
                     ApplicationInsightsTelemetry.SendPSCoreStartupTelemetry("SocketServerMode", s_cpp.ParametersUsedAsDouble);
@@ -610,15 +669,18 @@ namespace Microsoft.PowerShell
         /// <summary>
         /// See base class.
         /// </summary>
-        public void PushRunspace(Runspace newRunspace)
+        public void PushRunspace(Runspace runspace)
         {
             if (_runspaceRef == null)
             {
                 return;
             }
 
-            RemoteRunspace remoteRunspace = newRunspace as RemoteRunspace;
-            Dbg.Assert(remoteRunspace != null, "Expected remoteRunspace != null");
+            if (runspace is not RemoteRunspace remoteRunspace)
+            {
+                throw new ArgumentException(ConsoleHostStrings.PushRunspaceNotRemote, nameof(runspace));
+            }
+
             remoteRunspace.StateChanged += HandleRemoteRunspaceStateChanged;
 
             // Unsubscribe the local session debugger.
@@ -1864,6 +1926,7 @@ namespace Microsoft.PowerShell
                             {
                                 s_theConsoleHost.UI.WriteLine(ManagedEntranceStrings.ShellBannerCLAuditMode);
                             }
+
                             break;
 
                         case PSLanguageMode.NoLanguage:
@@ -2730,6 +2793,7 @@ namespace Microsoft.PowerShell
 #endif
                         }
                     }
+
                     // NTRAID#Windows Out Of Band Releases-915506-2005/09/09
                     // Removed HandleUnexpectedExceptions infrastructure
                     finally

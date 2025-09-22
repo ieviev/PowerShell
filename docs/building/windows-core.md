@@ -10,8 +10,8 @@ R2, though they should work anywhere the dependencies work.
 
 ### Git Setup
 
-Using Git requires it to be setup correctly; refer to the
-[README](../../README.md) and
+Using Git requires it to be set up correctly; refer to the
+[Readme](../../README.md) and
 [Contributing Guidelines](../../.github/CONTRIBUTING.md).
 
 This guide assumes that you have recursively cloned the PowerShell repository and `cd`ed into it.
@@ -35,7 +35,7 @@ The `Start-PSBootstrap` function will automatically install it and add it to you
 
 ```powershell
 Import-Module ./build.psm1
-Start-PSBootstrap
+Start-PSBootstrap -Scenario Dotnet
 ```
 
 Or you can call `Install-Dotnet` directly:
@@ -54,9 +54,11 @@ If you have any problems installing `dotnet`, please see their [documentation][c
 
 We maintain a [PowerShell module](../../build.psm1) with the function `Start-PSBuild` to build PowerShell.
 
+We do not recommend using Visual Studio Dev Environment Terminal to build the source code.
+
 ```powershell
 Import-Module ./build.psm1
-Start-PSBuild -Clean -PSModuleRestore
+Start-PSBuild -Clean -PSModuleRestore -UseNuGetOrg
 ```
 
 Congratulations! If everything went right, PowerShell is now built and executable as `./src/powershell-win-core/bin/Debug/net6.0/win7-x64/publish/pwsh.exe`.
@@ -77,7 +79,7 @@ You can run our cross-platform Pester tests with `Start-PSPester`.
 
 ```powershell
 Import-Module ./build.psm1
-Start-PSPester
+Start-PSPester -UseNuGetOrg
 ```
 
 ## Building in Visual Studio

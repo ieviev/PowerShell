@@ -83,6 +83,13 @@ namespace Microsoft.PowerShell.Telemetry
         /// Remote session creation.
         /// </summary>
         RemoteSessionOpen,
+
+        /// <summary>
+        /// Send telemetry for a stable feature when used.
+        /// By making a distinction between this and experimental feature use, it will make
+        /// queries much easier.
+        /// </summary>
+        FeatureUse,
     }
 
     /// <summary>
@@ -110,6 +117,9 @@ namespace Microsoft.PowerShell.Telemetry
     /// </summary>
     public static class ApplicationInsightsTelemetry
     {
+        // The string for SubsystermRegistration
+        internal const string s_subsystemRegistration = "Subsystem.Registration";
+
         // If this env var is true, yes, or 1, telemetry will NOT be sent.
         private const string _telemetryOptoutEnvVar = "POWERSHELL_TELEMETRY_OPTOUT";
 
@@ -143,6 +153,8 @@ namespace Microsoft.PowerShell.Telemetry
         /// We send telemetry only a known set of modules and tags.
         /// If it's not in the list (initialized in the static constructor), then we report anonymous
         /// or don't report anything (in the case of tags).
+
+        private static readonly HashSet<string> s_knownSubsystemNames;
 
         /// <summary>Gets a value indicating whether telemetry can be sent.</summary>
         public static bool CanSendTelemetry { get; private set; } = false;
@@ -251,8 +263,38 @@ namespace Microsoft.PowerShell.Telemetry
         /// </summary>
         /// <param name="metricId">The type of telemetry that we'll be sending.</param>
         /// <param name="data">The specific details about the telemetry.</param>
-        internal static void SendTelemetryMetric(TelemetryType metricId, string data)
+        /// <param name="value">The count of instances for the telemetry payload.</param>
+        internal static void SendTelemetryMetric(TelemetryType metricId, string data, double value = 1.0)
         {
+        }
+
+        /// <summary>
+        /// Send additional information about an feature as it is used.
+        /// </summary>
+        /// <param name="featureName">The name of the feature.</param>
+        /// <param name="detail">The details about the feature use.</param>
+        /// <param name="value">The value to report when sending the payload.</param>
+        internal static void SendUseTelemetry(string featureName, string detail, double value = 1.0)
+        {
+            if (!CanSendTelemetry)
+            {
+                return;
+            }
+
+            // keep payload small
+            if (featureName is null || detail is null || featureName.Length > 33 || detail.Length > 33)
+            {
+                return;
+            }
+
+            if (string.Compare(featureName, s_subsystemRegistration, true) == 0)
+            {
+                ApplicationInsightsTelemetry.SendTelemetryMetric(TelemetryType.FeatureUse, string.Join(":", featureName, GetSubsystemName(detail)), value);
+            }
+            else
+            {
+                ApplicationInsightsTelemetry.SendTelemetryMetric(TelemetryType.FeatureUse, string.Join(":", featureName, detail), value);
+            }
         }
 
         /// <summary>

@@ -11,7 +11,7 @@ namespace System.Management.Automation
     internal static class PlatformInvokes
     {
         [StructLayout(LayoutKind.Sequential)]
-        internal class FILETIME
+        internal sealed class FILETIME
         {
             internal uint dwLowDateTime;
             internal uint dwHighDateTime;
@@ -92,7 +92,7 @@ namespace System.Management.Automation
         }
 
         [StructLayout(LayoutKind.Sequential)]
-        internal class SecurityAttributes
+        internal sealed class SecurityAttributes
         {
             internal int nLength;
             internal SafeLocalMemHandle lpSecurityDescriptor;
@@ -235,7 +235,6 @@ namespace System.Management.Automation
         /// </returns>
         [DllImport(PinvokeDllNames.CloseHandleDllName, SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        // [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage")]
         internal static extern bool CloseHandle(IntPtr handle);
 
         [DllImport(PinvokeDllNames.DosDateTimeToFileTimeDllName, SetLastError = false)]
@@ -412,7 +411,6 @@ namespace System.Management.Automation
         /// <param name="lpLuid"></param>
         /// <returns></returns>
         [DllImport(PinvokeDllNames.LookupPrivilegeValueDllName, CharSet = CharSet.Unicode, SetLastError = true, BestFitMapping = false)]
-        [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage")]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool LookupPrivilegeValue(string lpSystemName, string lpName, ref LUID lpLuid);
 
@@ -424,7 +422,6 @@ namespace System.Management.Automation
         /// <param name="pfResult"></param>
         /// <returns></returns>
         [DllImport(PinvokeDllNames.PrivilegeCheckDllName, CharSet = CharSet.Unicode, SetLastError = true, BestFitMapping = false)]
-        [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage")]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool PrivilegeCheck(IntPtr tokenHandler, ref PRIVILEGE_SET requiredPrivileges, out bool pfResult);
 
@@ -441,7 +438,6 @@ namespace System.Management.Automation
         /// <param name="returnLength"></param>
         /// <returns></returns>
         [DllImport(PinvokeDllNames.AdjustTokenPrivilegesDllName, CharSet = CharSet.Unicode, SetLastError = true, BestFitMapping = false)]
-        [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage")]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool AdjustTokenPrivileges(IntPtr tokenHandler, bool disableAllPrivilege,
                                                           ref TOKEN_PRIVILEGE newPrivilegeState, int bufferLength,
@@ -482,7 +478,6 @@ namespace System.Management.Automation
         /// </summary>
         /// <returns></returns>
         [DllImport(PinvokeDllNames.GetCurrentProcessDllName)]
-        [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage")]
         internal static extern IntPtr GetCurrentProcess();
 
         /// <summary>
@@ -494,7 +489,6 @@ namespace System.Management.Automation
         /// <param name="tokenHandle">Process token.</param>
         /// <returns>The current process token.</returns>
         [DllImport(PinvokeDllNames.OpenProcessTokenDllName, CharSet = CharSet.Unicode, SetLastError = true, BestFitMapping = false)]
-        [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage")]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool OpenProcessToken(IntPtr processHandle, uint desiredAccess, out IntPtr tokenHandle);
 
@@ -536,7 +530,7 @@ namespace System.Management.Automation
         internal static readonly UInt32 OPEN_EXISTING = 3;
 
         [StructLayout(LayoutKind.Sequential)]
-        internal class PROCESS_INFORMATION
+        internal sealed class PROCESS_INFORMATION
         {
             public IntPtr hProcess;
             public IntPtr hThread;
@@ -581,7 +575,7 @@ namespace System.Management.Automation
         }
 
         [StructLayout(LayoutKind.Sequential)]
-        internal class STARTUPINFO
+        internal sealed class STARTUPINFO
         {
             public int cb;
             public IntPtr lpReserved;
@@ -645,7 +639,7 @@ namespace System.Management.Automation
         }
 
         [StructLayout(LayoutKind.Sequential)]
-        internal class SECURITY_ATTRIBUTES
+        internal sealed class SECURITY_ATTRIBUTES
         {
             public int nLength;
             public SafeLocalMemHandle lpSecurityDescriptor;

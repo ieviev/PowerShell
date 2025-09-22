@@ -24,7 +24,7 @@ using Dbg = System.Management.Automation.Diagnostics;
 
 namespace Microsoft.PowerShell.Cim
 {
-    internal class CimSensitiveValueConverter : IDisposable
+    internal sealed class CimSensitiveValueConverter : IDisposable
     {
         private sealed class SensitiveString : IDisposable
         {
@@ -425,7 +425,9 @@ namespace Microsoft.PowerShell.Cim
                 var cimIntrinsicValue = (byte[])LanguagePrimitives.ConvertTo(cimObject, typeof(byte[]), CultureInfo.InvariantCulture);
                 return exceptionSafeReturn(delegate
                                                {
+                                                   #pragma warning disable SYSLIB0057
                                                    return new X509Certificate2(cimIntrinsicValue);
+                                                   #pragma warning restore SYSLIB0057
                                                });
             }
 

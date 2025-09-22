@@ -24,10 +24,6 @@ using Microsoft.Management.Infrastructure.Options;
 using Microsoft.Win32;
 using Dbg = System.Management.Automation;
 
-// FxCop suppressions for resource strings:
-[module: SuppressMessage("Microsoft.Naming", "CA1703:ResourceStringsShouldBeSpelledCorrectly", Scope = "resource", Target = "ComputerResources.resources", MessageId = "unjoined")]
-[module: SuppressMessage("Microsoft.Naming", "CA1701:ResourceStringCompoundWordsShouldBeCasedCorrectly", Scope = "resource", Target = "ComputerResources.resources", MessageId = "UpTime")]
-
 namespace Microsoft.PowerShell.Commands
 {
     #region Restart-Computer
@@ -2052,25 +2048,6 @@ $result
             }
 
             return !allDigits;
-        }
-
-        /// <summary>
-        /// System Restore APIs are not supported on the ARM platform. Skip the system restore operation is necessary.
-        /// </summary>
-        /// <param name="cmdlet"></param>
-        /// <returns></returns>
-        internal static bool SkipSystemRestoreOperationForARMPlatform(PSCmdlet cmdlet)
-        {
-            bool retValue = false;
-            if (PsUtils.IsRunningOnProcessorArchitectureARM())
-            {
-                var ex = new InvalidOperationException(ComputerResources.SystemRestoreNotSupported);
-                var er = new ErrorRecord(ex, "SystemRestoreNotSupported", ErrorCategory.InvalidOperation, null);
-                cmdlet.WriteError(er);
-                retValue = true;
-            }
-
-            return retValue;
         }
 
         /// <summary>

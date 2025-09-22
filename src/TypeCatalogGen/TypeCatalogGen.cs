@@ -235,9 +235,6 @@ DUPLICATE key '{fullName}' from '{strongAssemblyName}' (IsObsolete? {isTypeObsol
                 case AssemblyHashAlgorithm.Sha1:
                     hashImpl = SHA1.Create();
                     break;
-                case AssemblyHashAlgorithm.MD5:
-                    hashImpl = MD5.Create();
-                    break;
                 case AssemblyHashAlgorithm.Sha256:
                     hashImpl = SHA256.Create();
                     break;
@@ -473,4 +470,3 @@ namespace System.Management.Automation
         }
     }
 }
-

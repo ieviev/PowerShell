@@ -16,7 +16,7 @@ $AllDistributions = @()
 $AllDistributions += $DebianDistributions
 $AllDistributions += $RedhatDistributions
 $AllDistributions += 'macOs'
-$script:netCoreRuntime = 'net9.0'
+$script:netCoreRuntime = 'net10.0'
 $script:iconFileName = "Powershell_black_64.png"
 $script:iconPath = Join-Path -path $PSScriptRoot -ChildPath "../../assets/$iconFileName" -Resolve
 
@@ -50,7 +50,7 @@ function Start-PSPackage {
         [string]$Name = "powershell",
 
         # Ubuntu, CentOS, Fedora, macOS, and Windows packages are supported
-        [ValidateSet("msix", "deb", "osxpkg", "rpm", "rpm-fxdependent", "rpm-fxdependent-arm64", "msi", "zip", "zip-pdb", "nupkg", "tar", "tar-arm", "tar-arm64", "tar-alpine", "fxdependent", "fxdependent-win-desktop", "min-size", "tar-alpine-fxdependent")]
+        [ValidateSet("msix", "deb", "osxpkg", "rpm", "rpm-fxdependent", "rpm-fxdependent-arm64", "msi", "zip", "zip-pdb", "tar", "tar-arm", "tar-arm64", "tar-alpine", "fxdependent", "fxdependent-win-desktop", "min-size", "tar-alpine-fxdependent")]
         [string[]]$Type,
 
         # Generate windows downlevel package
@@ -321,18 +321,18 @@ function Start-PSPackage {
         if (-not $Type) {
             $Type = if ($Environment.IsLinux) {
                 if ($Environment.LinuxInfo.ID -match "ubuntu") {
-                    "deb", "nupkg", "tar"
+                    "deb", "tar"
                 } elseif ($Environment.IsRedHatFamily) {
-                    "rpm", "nupkg"
+                    "rpm"
                 } elseif ($Environment.IsSUSEFamily) {
-                    "rpm", "nupkg"
+                    "rpm"
                 } else {
                     throw "Building packages for $($Environment.LinuxInfo.PRETTY_NAME) is unsupported!"
                 }
             } elseif ($Environment.IsMacOS) {
-                "osxpkg", "nupkg", "tar"
+                "osxpkg", "tar"
             } elseif ($Environment.IsWindows) {
-                "msi", "nupkg", "msix"
+                "msi", "msix"
             }
             Write-Warning "-Type was not specified, continuing with $Type!"
         }
@@ -519,20 +519,6 @@ function Start-PSPackage {
 
                 if ($PSCmdlet.ShouldProcess("Create MSIX Package")) {
                     New-MSIXPackage @Arguments
-                }
-            }
-            'nupkg' {
-                $Arguments = @{
-                    PackageNameSuffix = $NameSuffix
-                    PackageSourcePath = $Source
-                    PackageVersion = $Version
-                    PackageRuntime = $Runtime
-                    PackageConfiguration = $Configuration
-                    Force = $Force
-                }
-
-                if ($PSCmdlet.ShouldProcess("Create NuPkg Package")) {
-                    New-NugetContentPackage @Arguments
                 }
             }
             "tar" {
@@ -901,7 +887,8 @@ function Update-PSSignedBuildFolder
         [string]$BuildPath,
         [Parameter(Mandatory)]
         [string]$SignedFilesPath,
-        [string[]] $RemoveFilter = ('*.pdb', '*.zip', '*.r2rmap')
+        [string[]] $RemoveFilter = ('*.pdb', '*.zip', '*.r2rmap'),
+        [bool]$OfficialBuild = $true
     )
 
     $BuildPathNormalized = (Get-Item $BuildPath).FullName
@@ -957,8 +944,21 @@ function Update-PSSignedBuildFolder
         if ($IsWindows)
         {
             $signature = Get-AuthenticodeSignature -FilePath $signedFilePath
-            if ($signature.Status -ne 'Valid') {
+
+            if ($signature.Status -ne 'Valid' -and $OfficialBuild) {
+                Write-Host "Certificate Issuer: $($signature.SignerCertificate.Issuer)"
+                Write-Host "Certificate Subject: $($signature.SignerCertificate.Subject)"
                 Write-Error "Invalid signature for $signedFilePath"
+            } elseif ($OfficialBuild -eq $false) {
+                if ($signature.Status -eq 'NotSigned') {
+                    Write-Warning "File is not signed: $signedFilePath"
+                } elseif ($signature.SignerCertificate.Issuer -notmatch '^CN=(Microsoft|TestAzureEngBuildCodeSign|Windows Internal Build Tools).*') {
+                    Write-Warning "File signed with test certificate: $signedFilePath"
+                    Write-Host "Certificate Issuer: $($signature.SignerCertificate.Issuer)"
+                    Write-Host "Certificate Subject: $($signature.SignerCertificate.Subject)"
+                } else {
+                    Write-Verbose -Verbose "File properly signed: $signedFilePath"
+                }
             }
         }
         else
@@ -1612,7 +1612,7 @@ function Get-PackageDependencies
                 "libgssapi-krb5-2",
                 "libstdc++6",
                 "zlib1g",
-                "libicu72|libicu71|libicu70|libicu69|libicu68|libicu67|libicu66|libicu65|libicu63|libicu60|libicu57|libicu55|libicu52",
+                "libicu76|libicu74|libicu72|libicu71|libicu70|libicu69|libicu68|libicu67|libicu66|libicu65|libicu63|libicu60|libicu57|libicu55|libicu52",
                 "libssl3|libssl1.1|libssl1.0.2|libssl1.0.0"
             )
 
@@ -1635,7 +1635,7 @@ function Get-PackageDependencies
             )
             if($Script:Options.Runtime -like 'fx*') {
                 $Dependencies += @(
-                    "dotnet-runtime-9.0"
+                    "dotnet-runtime-10.0"
                 )
             }
         } elseif ($Distribution -eq 'macOS') {
@@ -1650,8 +1650,8 @@ function Get-PackageDependencies
 
 function Test-Dependencies
 {
-    foreach ($Dependency in "fpm", "ronn") {
-        if (!(precheck $Dependency "Package dependency '$Dependency' not found. Run Start-PSBootstrap -Package")) {
+    foreach ($Dependency in "fpm") {
+        if (!(precheck $Dependency "Package dependency '$Dependency' not found. Run Start-PSBootstrap -Scenario Package")) {
             # These tools are not added to the path automatically on OpenSUSE 13.2
             # try adding them to the path and re-tesing first
             [string] $gemsPath = $null
@@ -1661,7 +1661,7 @@ function Test-Dependencies
                 $depenencyPath  = Get-ChildItem -Path (Join-Path -Path $gemsPath -ChildPath "gems" -AdditionalChildPath $Dependency) -Recurse | Sort-Object -Property LastWriteTime -Descending | Select-Object -First 1 -ExpandProperty DirectoryName
                 $originalPath = $env:PATH
                 $env:PATH = $ENV:PATH +":" + $depenencyPath
-                if ((precheck $Dependency "Package dependency '$Dependency' not found. Run Start-PSBootstrap -Package")) {
+                if ((precheck $Dependency "Package dependency '$Dependency' not found. Run Start-PSBootstrap -Scenario Package")) {
                     continue
                 }
                 else {
@@ -1728,34 +1728,28 @@ function New-ManGzip
     )
 
     Write-Log "Creating man gz..."
-    # run ronn to convert man page to roff
-    $RonnFile = "$RepoRoot/assets/pwsh.1.ronn"
 
-    if ($IsPreview.IsPresent -or $IsLTS.IsPresent)
-    {
+    # run roff to convert man page to roff
+    $RoffFile = "$RepoRoot/assets/manpage/pwsh.1"
+
+    if ($IsPreview.IsPresent -or $IsLTS.IsPresent) {
         $prodName = if ($IsLTS) { 'pwsh-lts' } else { 'pwsh-preview' }
-        $newRonnFile = $RonnFile -replace 'pwsh', $prodName
-        Copy-Item -Path $RonnFile -Destination $newRonnFile -Force
-        $RonnFile = $newRonnFile
-    }
-
-    $RoffFile = $RonnFile -replace "\.ronn$"
-
-    # Run ronn on assets file
-    Write-Log "Creating man gz - running ronn..."
-    Start-NativeExecution { ronn --roff $RonnFile }
-
-    if ($IsPreview.IsPresent)
-    {
-        Remove-Item $RonnFile
+        $newRoffFile = $RoffFile -replace 'pwsh', $prodName
+        Copy-Item -Path $RoffFile -Destination $newRoffFile -Force -Verbose
+        $RoffFile = $newRoffFile
     }
 
     # gzip in assets directory
     $GzipFile = "$RoffFile.gz"
     Write-Log "Creating man gz - running gzip..."
-    Start-NativeExecution { gzip -f $RoffFile } -VerboseOutputOnError
+    Start-NativeExecution { gzip -kf $RoffFile } -VerboseOutputOnError
 
-    $ManFile = Join-Path "/usr/local/share/man/man1" (Split-Path -Leaf $GzipFile)
+    if($Environment.IsMacOS) {
+        $ManFile = Join-Path "/usr/local/share/man/man1" (Split-Path -Leaf $GzipFile)
+    }
+    else {
+        $ManFile = Join-Path "/usr/share/man/man1" (Split-Path -Leaf $GzipFile)
+    }
 
     return [PSCustomObject ] @{
         GZipFile = $GzipFile
@@ -3053,95 +3047,6 @@ function Publish-NugetToMyGet
     }
 }
 
-<#
-.SYNOPSIS
-The function creates a nuget package for daily feed.
-
-.DESCRIPTION
-The nuget package created is a content package and has all the binaries laid out in a flat structure.
-This package is used by install-powershell.ps1
-#>
-function New-NugetContentPackage
-{
-    [CmdletBinding(SupportsShouldProcess=$true)]
-    param (
-
-        # Name of the Product
-        [ValidateNotNullOrEmpty()]
-        [string] $PackageName = 'powershell',
-
-        # Suffix of the Name
-        [string] $PackageNameSuffix,
-
-        # Version of the Product
-        [Parameter(Mandatory = $true)]
-        [ValidateNotNullOrEmpty()]
-        [string] $PackageVersion,
-
-        # Runtime of the Product
-        [Parameter(Mandatory = $true)]
-        [ValidateNotNullOrEmpty()]
-        [string] $PackageRuntime,
-
-        # Configuration of the Product
-        [Parameter(Mandatory = $true)]
-        [ValidateNotNullOrEmpty()]
-        [string] $PackageConfiguration,
-
-        # Source Path to the Product Files - required to package the contents into an Zip
-        [Parameter(Mandatory = $true)]
-        [ValidateNotNullOrEmpty()]
-        [string] $PackageSourcePath,
-
-        [Switch]
-        $Force
-    )
-
-    Write-Log "PackageVersion: $PackageVersion"
-    $nugetSemanticVersion = Get-NugetSemanticVersion -Version $PackageVersion
-    Write-Log "nugetSemanticVersion: $nugetSemanticVersion"
-
-    $nugetFolder = New-SubFolder -Path $PSScriptRoot -ChildPath 'nugetOutput' -Clean
-
-    $nuspecPackageName = $PackageName
-    if ($PackageNameSuffix)
-    {
-        $nuspecPackageName += '-' + $PackageNameSuffix
-    }
-
-    # Setup staging directory so we don't change the original source directory
-    $stagingRoot = New-SubFolder -Path $PSScriptRoot -ChildPath 'nugetStaging' -Clean
-    $contentFolder = Join-Path -Path $stagingRoot -ChildPath 'content'
-    if ($PSCmdlet.ShouldProcess("Create staging folder")) {
-        New-StagingFolder -StagingPath $contentFolder -PackageSourcePath $PackageSourcePath
-    }
-
-    $projectFolder = Join-Path $PSScriptRoot 'projects/nuget'
-
-    $arguments = @('pack')
-    $arguments += @('--output',$nugetFolder)
-    $arguments += @('--configuration',$PackageConfiguration)
-    $arguments += "/p:StagingPath=$stagingRoot"
-    $arguments += "/p:RID=$PackageRuntime"
-    $arguments += "/p:SemVer=$nugetSemanticVersion"
-    $arguments += "/p:PackageName=$nuspecPackageName"
-    $arguments += $projectFolder
-
-    Write-Log "Running dotnet $arguments"
-    Write-Log "Use -verbose to see output..."
-    Start-NativeExecution -sb {dotnet $arguments} | ForEach-Object {Write-Verbose $_}
-
-    $nupkgFile = "${nugetFolder}\${nuspecPackageName}-${packageRuntime}.${nugetSemanticVersion}.nupkg"
-    if (Test-Path $nupkgFile)
-    {
-        Get-Item $nupkgFile
-    }
-    else
-    {
-        throw "Failed to create $nupkgFile"
-    }
-}
-
 function New-SubFolder
 {
     [CmdletBinding(SupportsShouldProcess=$true)]
@@ -3463,7 +3368,7 @@ function New-MSIPackage
 
     $buildArguments = New-MsiArgsArray -Argument $arguments
 
-    Test-Bom -Path $staging -BomName windows
+    Test-Bom -Path $staging -BomName windows -Architecture $ProductTargetArchitecture -Verbose
     Start-NativeExecution -VerboseOutputOnError { & $wixPaths.wixHeatExePath dir $staging -dr  VersionFolder -cg ApplicationFiles -ag -sfrag -srd -scom -sreg -out $wixFragmentPath -var var.ProductSourcePath $buildArguments -v}
 
     Send-AzdoFile -Path $wixFragmentPath
@@ -3816,8 +3721,17 @@ function New-MSIXPackage
 
     $ProductVersion = Get-WindowsVersion -PackageName $packageName
 
+    # Any app that is submitted to the Store must have a PhoneIdentity in its appxmanifest.
+    # If you submit a package without this information to the Store, the Store will silently modify your package to include it.
+    # To find the PhoneProductId value, you need to run a package through the Store certification process,
+    # and use the PhoneProductId value from the Store certified package to update the manifest in your source code.
+    # This is the PhoneProductId for the "Microsoft.PowerShell" package.
+    $PhoneProductId = "5b3ae196-2df7-446e-8060-94b4ad878387"
+
     $isPreview = Test-IsPreview -Version $ProductSemanticVersion
     if ($isPreview) {
+        # This is the PhoneProductId for the "Microsoft.PowerShellPreview" package.
+        $PhoneProductId = "67859fd2-b02a-45be-8fb5-62c569a3e8bf"
         Write-Verbose "Using Preview assets" -Verbose
     }
 
@@ -3827,7 +3741,14 @@ function New-MSIXPackage
     $releasePublisher = 'CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US'
 
     $appxManifest = Get-Content "$RepoRoot\assets\AppxManifest.xml" -Raw
-    $appxManifest = $appxManifest.Replace('$VERSION$', $ProductVersion).Replace('$ARCH$', $Architecture).Replace('$PRODUCTNAME$', $productName).Replace('$DISPLAYNAME$', $displayName).Replace('$PUBLISHER$', $releasePublisher)
+    $appxManifest = $appxManifest.
+        Replace('$VERSION$', $ProductVersion).
+        Replace('$ARCH$', $Architecture).
+        Replace('$PRODUCTNAME$', $productName).
+        Replace('$DISPLAYNAME$', $displayName).
+        Replace('$PUBLISHER$', $releasePublisher).
+        Replace('$PHONEPRODUCTID$', $PhoneProductId)
+
     $xml = [xml]$appxManifest
     if ($isPreview) {
         Write-Verbose -Verbose "Adding pwsh-preview.exe alias"
@@ -5091,6 +5012,9 @@ class BomRecord {
     [string]
     $FileType = "NonProduct"
 
+    [string[]]
+    $Architecture
+
     # Add methods to normalize Pattern to use `/` as the directory separator,
     # but give a Pattern that is usable on the current platform
     [string]
@@ -5120,6 +5044,13 @@ class BomRecord {
         # If the directory separator character is a slash, then set the pattern as-is
         $this.Pattern = $Pattern
     }
+
+    [void]
+    EnsureArchitecture([string[]]$DefaultArchitecture = @("x64","x86","arm64")) {
+        if (-not $this.PSObject.Properties.Match("Architecture")) {
+            $this.Architecture = $DefaultArchitecture
+        }
+    }
 }
 
 # Verify a folder based on a BOM json.
@@ -5133,7 +5064,9 @@ function Test-Bom {
         [string]
         $Path,
         [switch]
-        $Fix
+        $Fix,
+        [string]
+        $Architecture
     )
 
     Write-Log "verifying no unauthorized files have been added or removed..."

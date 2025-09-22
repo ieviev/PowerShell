@@ -76,7 +76,7 @@ namespace System.Management.Automation.Provider
         /// An instance of the PSTraceSource class used for trace output
         /// using "CmdletProviderClasses" as the category.
         /// </summary>
-        [TraceSourceAttribute(
+        [TraceSource(
              "CmdletProviderClasses",
              "The namespace provider base classes tracer")]
         internal static readonly PSTraceSource providerBaseTracer = PSTraceSource.GetTracer(
@@ -1984,4 +1984,3 @@ namespace System.Management.Automation.Provider
 }
 
 #pragma warning restore 56506
-
