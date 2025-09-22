@@ -11,12 +11,6 @@ using System.Runtime.InteropServices;
 using System.Security.AccessControl;
 using System.Threading;
 
-using Microsoft.ApplicationInsights;
-using Microsoft.ApplicationInsights.Metrics;
-using Microsoft.ApplicationInsights.Channel;
-using Microsoft.ApplicationInsights.Extensibility;
-using Microsoft.ApplicationInsights.Extensibility.Implementation;
-
 namespace Microsoft.PowerShell.Telemetry
 {
     /// <summary>
@@ -90,26 +84,6 @@ namespace Microsoft.PowerShell.Telemetry
         /// queries much easier.
         /// </summary>
         FeatureUse,
-    }
-
-    /// <summary>
-    /// Set up the telemetry initializer to mask the platform specific names.
-    /// </summary>
-    internal class NameObscurerTelemetryInitializer : ITelemetryInitializer
-    {
-        // Report the platform name information as "na".
-        private const string _notavailable = "na";
-
-        /// <summary>
-        /// Initialize properties we are obscuring to "na".
-        /// </summary>
-        /// <param name="telemetry">The instance of our telemetry.</param>
-        public void Initialize(ITelemetry telemetry)
-        {
-            telemetry.Context.Cloud.RoleName = _notavailable;
-            telemetry.Context.GetInternalContext().NodeName = _notavailable;
-            telemetry.Context.Cloud.RoleInstance = _notavailable;
-        }
     }
 
     /// <summary>
