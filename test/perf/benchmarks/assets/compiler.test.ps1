@@ -1460,7 +1460,6 @@ function Start-CrossGen {
         "System.Diagnostics.Process.dll"
         "System.Threading.Tasks.Parallel.dll"
         "System.Security.AccessControl.dll"
-        "System.Text.Encoding.CodePages.dll"
         "System.Private.Uri.dll"
         "System.Threading.dll"
         "System.Security.Principal.Windows.dll"

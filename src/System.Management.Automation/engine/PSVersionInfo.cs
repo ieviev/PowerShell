@@ -38,6 +38,8 @@ namespace System.Management.Automation
         internal const string PSOSName = "OS";
         internal const string SerializationVersionName = "SerializationVersion";
         internal const string WSManStackVersionName = "WSManStackVersion";
+        internal const string GitCommitId = "none";
+        internal const string ProductVersion = "10.0";
 
         private static readonly PSVersionHashTable s_psVersionTable;
 
@@ -72,7 +74,7 @@ namespace System.Management.Automation
         private static readonly Version s_psV51Version = new(5, 1);
         private static readonly Version s_psV6Version = new(6, 0);
         private static readonly Version s_psV7Version = new(7, 0);
-        private static readonly Version s_psVersion;
+        private static readonly Version s_psVersion = new(10, 0);
         private static readonly SemanticVersion s_psSemVersion;
 
         /// <summary>
@@ -83,22 +85,22 @@ namespace System.Management.Automation
         // Static Constructor.
         static PSVersionInfo()
         {
-            s_psVersionTable = new PSVersionHashTable(StringComparer.OrdinalIgnoreCase);
+            // s_psVersionTable = new PSVersionHashTable(StringComparer.OrdinalIgnoreCase);
 
-            s_psSemVersion = Version_Label == string.Empty
-                ? new SemanticVersion(Version_Major, Version_Minor, Version_Patch)
-                : new SemanticVersion(Version_Major, Version_Minor, Version_Patch, Version_Label, buildLabel: null);
-            s_psVersion = (Version)s_psSemVersion;
+            // s_psSemVersion = Version_Label == string.Empty
+            //     ? new SemanticVersion(Version_Major, Version_Minor, Version_Patch)
+            //     : new SemanticVersion(Version_Major, Version_Minor, Version_Patch, Version_Label, buildLabel: null);
+            // s_psVersion = (Version)s_psSemVersion;
 
-            s_psVersionTable[PSVersionName] = s_psSemVersion;
-            s_psVersionTable[PSEditionName] = PSEditionValue;
-            s_psVersionTable[PSGitCommitIdName] = GitCommitId;
-            s_psVersionTable[PSCompatibleVersionsName] = new Version[] { s_psV1Version, s_psV2Version, s_psV3Version, s_psV4Version, s_psV5Version, s_psV51Version, s_psV6Version, s_psV7Version };
-            s_psVersionTable[SerializationVersionName] = new Version(InternalSerializer.DefaultVersion);
-            s_psVersionTable[PSRemotingProtocolVersionName] = RemotingConstants.ProtocolVersion;
-            s_psVersionTable[WSManStackVersionName] = GetWSManStackVersion();
-            s_psVersionTable[PSPlatformName] = Environment.OSVersion.Platform.ToString();
-            s_psVersionTable[PSOSName] = Runtime.InteropServices.RuntimeInformation.OSDescription;
+            // s_psVersionTable[PSVersionName] = s_psSemVersion;
+            // s_psVersionTable[PSEditionName] = PSEditionValue;
+            // s_psVersionTable[PSGitCommitIdName] = GitCommitId;
+            // s_psVersionTable[PSCompatibleVersionsName] = new Version[] { s_psV1Version, s_psV2Version, s_psV3Version, s_psV4Version, s_psV5Version, s_psV51Version, s_psV6Version, s_psV7Version };
+            // s_psVersionTable[SerializationVersionName] = new Version(InternalSerializer.DefaultVersion);
+            // s_psVersionTable[PSRemotingProtocolVersionName] = RemotingConstants.ProtocolVersion;
+            // s_psVersionTable[WSManStackVersionName] = GetWSManStackVersion();
+            // s_psVersionTable[PSPlatformName] = Environment.OSVersion.Platform.ToString();
+            // s_psVersionTable[PSOSName] = Runtime.InteropServices.RuntimeInformation.OSDescription;
         }
 
         internal static PSVersionHashTable GetPSVersionTable()

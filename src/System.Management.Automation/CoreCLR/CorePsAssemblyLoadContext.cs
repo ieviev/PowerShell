@@ -90,7 +90,7 @@ namespace System.Management.Automation
             }
 
             // NEXT: Initialize the CoreCLR type catalog dictionary [OrdinalIgnoreCase]
-            _coreClrTypeCatalog = InitializeTypeCatalog();
+            _coreClrTypeCatalog = new Dictionary<string, string>();
             _availableDotNetAssemblyNames = new Lazy<HashSet<string>>(
                     () => new HashSet<string>(_coreClrTypeCatalog.Values, StringComparer.Ordinal));
 

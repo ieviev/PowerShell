@@ -154,8 +154,6 @@ namespace Microsoft.PowerShell.Telemetry
         /// If it's not in the list (initialized in the static constructor), then we report anonymous
         /// or don't report anything (in the case of tags).
 
-        private static readonly HashSet<string> s_knownSubsystemNames;
-
         /// <summary>Gets a value indicating whether telemetry can be sent.</summary>
         public static bool CanSendTelemetry { get; private set; } = false;
 
@@ -276,25 +274,6 @@ namespace Microsoft.PowerShell.Telemetry
         /// <param name="value">The value to report when sending the payload.</param>
         internal static void SendUseTelemetry(string featureName, string detail, double value = 1.0)
         {
-            if (!CanSendTelemetry)
-            {
-                return;
-            }
-
-            // keep payload small
-            if (featureName is null || detail is null || featureName.Length > 33 || detail.Length > 33)
-            {
-                return;
-            }
-
-            if (string.Compare(featureName, s_subsystemRegistration, true) == 0)
-            {
-                ApplicationInsightsTelemetry.SendTelemetryMetric(TelemetryType.FeatureUse, string.Join(":", featureName, GetSubsystemName(detail)), value);
-            }
-            else
-            {
-                ApplicationInsightsTelemetry.SendTelemetryMetric(TelemetryType.FeatureUse, string.Join(":", featureName, detail), value);
-            }
         }
 
         /// <summary>

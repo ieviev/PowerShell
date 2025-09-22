@@ -1132,10 +1132,6 @@
     "FileType": "NonProduct"
   },
   {
-    "Pattern": "ref/System.Text.Encoding.CodePages.dll",
-    "FileType": "NonProduct"
-  },
-  {
     "Pattern": "ref/System.Text.Encoding.dll",
     "FileType": "NonProduct"
   },

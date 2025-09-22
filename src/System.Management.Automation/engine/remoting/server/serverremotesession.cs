@@ -992,7 +992,7 @@ namespace System.Management.Automation.Remoting
                         new PSRemotingDataStructureException(RemotingErrorIdStrings.ServerConnectFailedOnNegotiation,
                             RemoteDataNameStrings.PS_STARTUP_PROTOCOL_VERSION_NAME,
                             clientProtocolVersion,
-                            PSVersionInfo.GitCommitId,
+                            string.Empty,
                             RemotingConstants.ProtocolVersion);
                     throw reasonOfFailure;
                 }
@@ -1018,7 +1018,7 @@ namespace System.Management.Automation.Remoting
                         new PSRemotingDataStructureException(RemotingErrorIdStrings.ServerNegotiationFailed,
                             RemoteDataNameStrings.PS_STARTUP_PROTOCOL_VERSION_NAME,
                             clientProtocolVersion,
-                            PSVersionInfo.GitCommitId,
+                            string.Empty,
                             RemotingConstants.ProtocolVersion);
                     throw reasonOfFailure;
                 }
@@ -1034,7 +1034,7 @@ namespace System.Management.Automation.Remoting
                     new PSRemotingDataStructureException(RemotingErrorIdStrings.ServerNegotiationFailed,
                         RemoteDataNameStrings.PSVersion,
                         clientPSVersion,
-                        PSVersionInfo.GitCommitId,
+                        string.Empty,
                         RemotingConstants.ProtocolVersion);
                 throw reasonOfFailure;
             }
@@ -1049,7 +1049,7 @@ namespace System.Management.Automation.Remoting
                     new PSRemotingDataStructureException(RemotingErrorIdStrings.ServerNegotiationFailed,
                         RemoteDataNameStrings.SerializationVersion,
                         clientSerVersion,
-                        PSVersionInfo.GitCommitId,
+                        string.Empty,
                         RemotingConstants.ProtocolVersion);
                 throw reasonOfFailure;
             }

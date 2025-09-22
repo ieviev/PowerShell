@@ -1331,9 +1331,6 @@ namespace System.Management.Automation.Language
         private static readonly CallSite<Func<CallSite, object, ConfirmImpact>> s_attrArgToConfirmImpactConverter =
             CallSite<Func<CallSite, object, ConfirmImpact>>.Create(PSConvertBinder.Get(typeof(ConfirmImpact)));
 
-        private static readonly CallSite<Func<CallSite, object, RemotingCapability>> s_attrArgToRemotingCapabilityConverter =
-            CallSite<Func<CallSite, object, RemotingCapability>>.Create(PSConvertBinder.Get(typeof(RemotingCapability)));
-
         private static readonly CallSite<Func<CallSite, object, ExperimentAction>> s_attrArgToExperimentActionConverter =
             CallSite<Func<CallSite, object, ExperimentAction>>.Create(PSConvertBinder.Get(typeof(ExperimentAction)));
 
@@ -1419,10 +1416,6 @@ namespace System.Management.Automation.Language
                 else if (argumentName.Equals("SupportsPaging", StringComparison.OrdinalIgnoreCase))
                 {
                     result.SupportsPaging = s_attrArgToBoolConverter.Target(s_attrArgToBoolConverter, argValue);
-                }
-                else if (argumentName.Equals("RemotingCapability", StringComparison.OrdinalIgnoreCase))
-                {
-                    result.RemotingCapability = s_attrArgToRemotingCapabilityConverter.Target(s_attrArgToRemotingCapabilityConverter, argValue);
                 }
                 else
                 {
