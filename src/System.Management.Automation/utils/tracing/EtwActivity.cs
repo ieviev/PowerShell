@@ -396,7 +396,7 @@ namespace System.Management.Automation.Tracing
         {
             get
             {
-                return PSEtwLogProvider.ProviderGuid;
+                return 
             }
         }
 

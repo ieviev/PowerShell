@@ -1348,12 +1348,12 @@ namespace System.Management.Automation
             }
             catch (DllNotFoundException)
             {
-                PSEtwLog.LogAmsiUtilStateEvent("DllNotFoundException", $"{s_amsiContext}-{s_amsiSession}");
+                
                 s_amsiInitFailed = true;
                 return;
             }
 
-            PSEtwLog.LogAmsiUtilStateEvent($"init-{s_amsiInitFailed}", $"{s_amsiContext}-{s_amsiSession}");
+            
 #endif
         }
 
@@ -1421,7 +1421,7 @@ namespace System.Management.Automation
             // If we had a previous initialization failure, just return the neutral result.
             if (s_amsiInitFailed)
             {
-                PSEtwLog.LogAmsiUtilStateEvent("ScanContent-InitFail", $"{s_amsiContext}-{s_amsiSession}");
+                
                 return AmsiNativeMethods.AMSI_RESULT.AMSI_RESULT_NOT_DETECTED;
             }
 
@@ -1429,7 +1429,7 @@ namespace System.Management.Automation
             {
                 if (s_amsiInitFailed)
                 {
-                    PSEtwLog.LogAmsiUtilStateEvent("ScanContent-InitFail", $"{s_amsiContext}-{s_amsiSession}");
+                    
                     return AmsiNativeMethods.AMSI_RESULT.AMSI_RESULT_NOT_DETECTED;
                 }
 
@@ -1469,7 +1469,7 @@ namespace System.Management.Automation
                     if (!Utils.Succeeded(hr))
                     {
                         // If we got a failure, just return the neutral result ("AMSI_RESULT_NOT_DETECTED")
-                        PSEtwLog.LogAmsiUtilStateEvent($"AmsiScanBuffer-{hr}", $"{s_amsiContext}-{s_amsiSession}");
+                        
                         return AmsiNativeMethods.AMSI_RESULT.AMSI_RESULT_NOT_DETECTED;
                     }
 
@@ -1477,7 +1477,7 @@ namespace System.Management.Automation
                 }
                 catch (DllNotFoundException)
                 {
-                    PSEtwLog.LogAmsiUtilStateEvent("DllNotFoundException", $"{s_amsiContext}-{s_amsiSession}");
+                    
                     return AmsiNativeMethods.AMSI_RESULT.AMSI_RESULT_NOT_DETECTED;
                 }
             }

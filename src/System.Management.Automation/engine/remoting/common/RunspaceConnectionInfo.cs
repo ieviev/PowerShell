@@ -1242,9 +1242,7 @@ namespace System.Management.Automation.Runspaces
                 }
             }
 
-            PSEtwLog.LogAnalyticVerbose(PSEventId.ComputerName, PSOpcode.Method,
-                PSTask.CreateRunspace, PSKeyword.Runspace | PSKeyword.UseAlwaysAnalytic,
-                _computerName);
+            
 
             if (port.HasValue)
             {
@@ -1672,10 +1670,7 @@ namespace System.Management.Automation.Runspaces
         /// <returns>Instance of OutOfProcessClientSessionTransportManager</returns>
         public override BaseClientSessionTransportManager CreateClientSessionTransportManager(Guid instanceId, string sessionName, PSRemotingCryptoHelper cryptoHelper)
         {
-            return new OutOfProcessClientSessionTransportManager(
-                instanceId,
-                this,
-                cryptoHelper);
+            return null;
         }
 
         #endregion
@@ -1910,10 +1905,7 @@ namespace System.Management.Automation.Runspaces
         /// <returns>Instance of NamedPipeClientSessionTransportManager</returns>
         public override BaseClientSessionTransportManager CreateClientSessionTransportManager(Guid instanceId, string sessionName, PSRemotingCryptoHelper cryptoHelper)
         {
-            return new NamedPipeClientSessionTransportManager(
-                this,
-                instanceId,
-                cryptoHelper);
+            return null;
         }
 
         #endregion
@@ -2178,10 +2170,7 @@ namespace System.Management.Automation.Runspaces
         /// <param name="cryptoHelper">PSRemotingCryptoHelper.</param>
         public override BaseClientSessionTransportManager CreateClientSessionTransportManager(Guid instanceId, string sessionName, PSRemotingCryptoHelper cryptoHelper)
         {
-            return new SSHClientSessionTransportManager(
-                this,
-                instanceId,
-                cryptoHelper);
+            return null;
         }
 
         #endregion
@@ -2999,12 +2988,7 @@ namespace System.Management.Automation.Runspaces
         /// <returns>Instance of VMHyperVSocketClientSessionTransportManager.</returns>
         public override BaseClientSessionTransportManager CreateClientSessionTransportManager(Guid instanceId, string sessionName, PSRemotingCryptoHelper cryptoHelper)
         {
-            return new VMHyperVSocketClientSessionTransportManager(
-                this,
-                instanceId,
-                cryptoHelper,
-                VMGuid,
-                ConfigurationName);
+            return null;
         }
 
         #endregion
@@ -3143,21 +3127,7 @@ namespace System.Management.Automation.Runspaces
         /// <returns>Instance of ContainerHyperVSocketClientSessionTransportManager</returns>
         public override BaseClientSessionTransportManager CreateClientSessionTransportManager(Guid instanceId, string sessionName, PSRemotingCryptoHelper cryptoHelper)
         {
-            if (ContainerProc.RuntimeId != Guid.Empty)
-            {
-                return new ContainerHyperVSocketClientSessionTransportManager(
-                    this,
-                    instanceId,
-                    cryptoHelper,
-                    ContainerProc.RuntimeId);
-            }
-            else
-            {
-                return new ContainerNamedPipeClientSessionTransportManager(
-                    this,
-                    instanceId,
-                    cryptoHelper);
-            }
+            return null;
         }
 
         #endregion

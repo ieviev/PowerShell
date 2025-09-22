@@ -371,12 +371,6 @@ namespace System.Management.Automation.Remoting
 
         #region Events
 
-        /// <summary>
-        /// Event raised when the named pipe server listening thread
-        /// ends.
-        /// </summary>
-        internal event EventHandler<ListenerEndedEventArgs> ListenerEnded;
-
         #endregion
 
         #region Constructors
@@ -558,58 +552,7 @@ namespace System.Management.Automation.Remoting
         /// <param name="pipeName">The name of the pipe to create.</param>
         public static void CreateCustomNamedPipeServer(string pipeName)
         {
-            lock (s_syncObject)
-            {
-                if (_customNamedPipeServer != null && !_customNamedPipeServer.IsDisposed)
-                {
-                    if (pipeName == _customNamedPipeServer.PipeName)
-                    {
-                        // we shouldn't recreate the server object if we're using the same pipeName
-                        return;
-                    }
-
-                    // Dispose of the current pipe server so we can create a new one with the new pipeName
-                    _customNamedPipeServer.Dispose();
-                }
-
-                if (!Platform.IsWindows)
-                {
-                    int maxNameLength = (Platform.IsLinux ? _maxPipePathLengthLinux : _maxPipePathLengthMacOS) - Path.GetTempPath().Length;
-                    if (pipeName.Length > maxNameLength)
-                    {
-                        throw new InvalidOperationException(
-                            string.Format(
-                                RemotingErrorIdStrings.CustomPipeNameTooLong,
-                                maxNameLength,
-                                pipeName,
-                                pipeName.Length));
-                    }
-                }
-
-                try
-                {
-                    try
-                    {
-                        _customNamedPipeServer = new RemoteSessionNamedPipeServer(pipeName);
-                    }
-                    catch (IOException)
-                    {
-                        // Expected when named pipe server for this process already exists.
-                        // This can happen if process has multiple AppDomains hosting PowerShell (SMA.dll).
-                        return;
-                    }
-
-                    // Listener ended callback, used to create listening new pipe server.
-                    _customNamedPipeServer.ListenerEnded += OnCustomNamedPipeServerEnded;
-
-                    // Start the pipe server listening thread, and provide client connection callback.
-                    _customNamedPipeServer.StartListening(ClientConnectionCallback);
-                }
-                catch (Exception)
-                {
-                    _customNamedPipeServer = null;
-                }
-            }
+          
         }
 
         #endregion
@@ -626,62 +569,12 @@ namespace System.Management.Automation.Remoting
         internal void StartListening(
             Action<RemoteSessionNamedPipeServer> clientConnectCallback)
         {
-            if (clientConnectCallback == null)
-            {
-                throw new PSArgumentNullException(nameof(clientConnectCallback));
-            }
-
-            lock (_syncObject)
-            {
-                if (IsListenerRunning)
-                {
-                    throw new InvalidOperationException(RemotingErrorIdStrings.NamedPipeAlreadyListening);
-                }
-
-                IsListenerRunning = true;
-
-                // Create listener thread.
-                Thread listenerThread = new Thread(ProcessListeningThread);
-                listenerThread.Name = _threadName;
-                listenerThread.IsBackground = true;
-                listenerThread.Start(clientConnectCallback);
-            }
+            
         }
 
         internal static CommonSecurityDescriptor GetServerPipeSecurity()
         {
-#if UNIX
             return null;
-#else
-            // Built-in Admin SID
-            SecurityIdentifier adminSID = new SecurityIdentifier(WellKnownSidType.BuiltinAdministratorsSid, null);
-            DiscretionaryAcl dacl = new DiscretionaryAcl(false, false, 1);
-            dacl.AddAccess(
-                AccessControlType.Allow,
-                adminSID,
-                _pipeAccessMaskFullControl,
-                InheritanceFlags.None,
-                PropagationFlags.None);
-
-            CommonSecurityDescriptor securityDesc = new CommonSecurityDescriptor(
-                false, false,
-                ControlFlags.DiscretionaryAclPresent | ControlFlags.OwnerDefaulted | ControlFlags.GroupDefaulted,
-                null, null, null, dacl);
-
-            // Conditionally add User SID
-            bool isAdminElevated = new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator);
-            if (!isAdminElevated)
-            {
-                securityDesc.DiscretionaryAcl.AddAccess(
-                    AccessControlType.Allow,
-                    WindowsIdentity.GetCurrent().User,
-                    _pipeAccessMaskFullControl,
-                    InheritanceFlags.None,
-                    PropagationFlags.None);
-            }
-
-            return securityDesc;
-#endif
         }
 
         /// <summary>
@@ -699,135 +592,7 @@ namespace System.Management.Automation.Remoting
         [SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.Runtime.InteropServices.SafeHandle.DangerousGetHandle")]
         private void ProcessListeningThread(object state)
         {
-            string processId = Environment.ProcessId.ToString(CultureInfo.InvariantCulture);
-            string appDomainName = NamedPipeUtils.GetCurrentAppDomainName();
-
-            // Logging.
-            _tracer.WriteMessage("RemoteSessionNamedPipeServer", "StartListening", Guid.Empty,
-                "Listener thread started on Process {0} in AppDomainName {1}.", processId, appDomainName);
-            PSEtwLog.LogOperationalInformation(
-                PSEventId.NamedPipeIPC_ServerListenerStarted, PSOpcode.Open, PSTask.NamedPipe,
-                PSKeyword.UseAlwaysOperational,
-                processId, appDomainName);
-
-            Exception ex = null;
-            string userName = string.Empty;
-            bool restartListenerThread = true;
-
-            // Wait for connection.
-            try
-            {
-                // Begin listening for a client connect.
-                this.WaitForConnection();
-
-                try
-                {
-#if UNIX
-                    userName = System.Environment.UserName;
-#else
-                    userName = WindowsIdentity.GetCurrent().Name;
-#endif
-                }
-                catch (System.Security.SecurityException) { }
-
-                // Logging.
-                _tracer.WriteMessage("RemoteSessionNamedPipeServer", "StartListening", Guid.Empty,
-                    "Client connection started on Process {0} in AppDomainName {1} for User {2}.", processId, appDomainName, userName);
-                PSEtwLog.LogOperationalInformation(
-                    PSEventId.NamedPipeIPC_ServerConnect, PSOpcode.Connect, PSTask.NamedPipe,
-                    PSKeyword.UseAlwaysOperational,
-                    processId, appDomainName, userName);
-
-                // Create reader/writer streams.
-                TextReader = new StreamReader(Stream);
-                TextWriter = new StreamWriter(Stream);
-                TextWriter.AutoFlush = true;
-            }
-            catch (Exception e)
-            {
-                ex = e;
-            }
-
-            if (ex != null)
-            {
-                // Error during connection handling.  Don't try to restart listening thread.
-                string errorMessage = !string.IsNullOrEmpty(ex.Message) ? ex.Message : string.Empty;
-                _tracer.WriteMessage("RemoteSessionNamedPipeServer", "StartListening", Guid.Empty,
-                    "Unexpected error in listener thread on process {0} in AppDomainName {1}.  Error Message: {2}", processId, appDomainName, errorMessage);
-                PSEtwLog.LogOperationalError(PSEventId.NamedPipeIPC_ServerListenerError, PSOpcode.Exception, PSTask.NamedPipe,
-                    PSKeyword.UseAlwaysOperational,
-                    processId, appDomainName, errorMessage);
-
-                Dispose();
-                return;
-            }
-
-            // Start server session on new connection.
-            ex = null;
-            try
-            {
-                Action<RemoteSessionNamedPipeServer> clientConnectCallback = state as Action<RemoteSessionNamedPipeServer>;
-                Dbg.Assert(clientConnectCallback != null, "Client callback should never be null.");
-
-                // Handle a new client connect by making the callback.
-                // The callback must handle all exceptions except
-                // for a named pipe disposed or disconnected exception
-                // which propagates up to the thread listener loop.
-                clientConnectCallback(this);
-            }
-            catch (IOException)
-            {
-                // Expected connection terminated.
-            }
-            catch (ObjectDisposedException)
-            {
-                // Expected from PS transport close/dispose.
-            }
-            catch (Exception e)
-            {
-                ex = e;
-                restartListenerThread = false;
-            }
-
-            // Logging.
-            _tracer.WriteMessage("RemoteSessionNamedPipeServer", "StartListening", Guid.Empty,
-                "Client connection ended on process {0} in AppDomainName {1} for User {2}.", processId, appDomainName, userName);
-            PSEtwLog.LogOperationalInformation(
-                PSEventId.NamedPipeIPC_ServerDisconnect, PSOpcode.Close, PSTask.NamedPipe,
-                PSKeyword.UseAlwaysOperational,
-                processId, appDomainName, userName);
-
-            if (ex == null)
-            {
-                // Normal listener exit.
-                _tracer.WriteMessage("RemoteSessionNamedPipeServer", "StartListening", Guid.Empty,
-                    "Listener thread ended on process {0} in AppDomainName {1}.", processId, appDomainName);
-                PSEtwLog.LogOperationalInformation(PSEventId.NamedPipeIPC_ServerListenerEnded, PSOpcode.Close, PSTask.NamedPipe,
-                    PSKeyword.UseAlwaysOperational,
-                    processId, appDomainName);
-            }
-            else
-            {
-                // Unexpected error.
-                string errorMessage = !string.IsNullOrEmpty(ex.Message) ? ex.Message : string.Empty;
-                _tracer.WriteMessage("RemoteSessionNamedPipeServer", "StartListening", Guid.Empty,
-                    "Unexpected error in listener thread on process {0} in AppDomainName {1}.  Error Message: {2}", processId, appDomainName, errorMessage);
-                PSEtwLog.LogOperationalError(PSEventId.NamedPipeIPC_ServerListenerError, PSOpcode.Exception, PSTask.NamedPipe,
-                    PSKeyword.UseAlwaysOperational,
-                    processId, appDomainName, errorMessage);
-            }
-
-            lock (_syncObject)
-            {
-                IsListenerRunning = false;
-            }
-
-            // Ensure this named pipe server object is disposed.
-            Dispose();
-
-            ListenerEnded.SafeInvoke(
-                this,
-                new ListenerEndedEventArgs(ex, restartListenerThread));
+            
         }
 
         #endregion
@@ -843,24 +608,7 @@ namespace System.Management.Automation.Remoting
         /// <param name="configurationName">Name of the configuration to use.</param>
         internal static void RunServerMode(string configurationName)
         {
-            IPCNamedPipeServerEnabled = true;
-            CreateIPCNamedPipeServerSingleton();
-
-            if (IPCNamedPipeServer == null)
-            {
-                throw new RuntimeException(RemotingErrorIdStrings.NamedPipeServerCannotStart);
-            }
-
-            IPCNamedPipeServer.ConfigurationName = configurationName;
-
-            ManualResetEventSlim clientConnectionEnded = new ManualResetEventSlim(false);
-            IPCNamedPipeServer.ListenerEnded -= OnIPCNamedPipeServerEnded;
-            IPCNamedPipeServer.ListenerEnded += (sender, e) => clientConnectionEnded.Set();
-
-            // Wait for server to service a single client connection.
-            clientConnectionEnded.Wait();
-            clientConnectionEnded.Dispose();
-            IPCNamedPipeServerEnabled = false;
+            
         }
 
         /// <summary>
@@ -869,37 +617,7 @@ namespace System.Management.Automation.Remoting
         /// </summary>
         internal static void CreateIPCNamedPipeServerSingleton()
         {
-            lock (s_syncObject)
-            {
-                if (!IPCNamedPipeServerEnabled) { return; }
-
-                if (IPCNamedPipeServer == null || IPCNamedPipeServer.IsDisposed)
-                {
-                    try
-                    {
-                        try
-                        {
-                            IPCNamedPipeServer = CreateRemoteSessionNamedPipeServer();
-                        }
-                        catch (IOException)
-                        {
-                            // Expected when named pipe server for this process already exists.
-                            // This can happen if process has multiple AppDomains hosting PowerShell (SMA.dll).
-                            return;
-                        }
-
-                        // Listener ended callback, used to create listening new pipe server.
-                        IPCNamedPipeServer.ListenerEnded += OnIPCNamedPipeServerEnded;
-
-                        // Start the pipe server listening thread, and provide client connection callback.
-                        IPCNamedPipeServer.StartListening(ClientConnectionCallback);
-                    }
-                    catch (Exception)
-                    {
-                        IPCNamedPipeServer = null;
-                    }
-                }
-            }
+           
         }
 
         private static void CreateProcessExitHandler()

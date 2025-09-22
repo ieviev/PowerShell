@@ -385,14 +385,7 @@ namespace System.Management.Automation.Remoting
         internal void OnDataAvailableCallback(RemoteDataObject<PSObject> remoteObject)
         {
             // log the data to crimson logs
-            PSEtwLog.LogAnalyticInformational(PSEventId.TransportReceivedObject, PSOpcode.Open,
-                                                  PSTask.None,
-                                                  PSKeyword.Transport | PSKeyword.UseAlwaysAnalytic,
-                                                  remoteObject.RunspacePoolId.ToString(),
-                                                  remoteObject.PowerShellId.ToString(),
-                                                  (UInt32)(remoteObject.Destination),
-                                                  (UInt32)(remoteObject.DataType),
-                                                  (UInt32)(remoteObject.TargetInterface));
+            
 
             // This might throw exceptions which the caller handles.
             PowerShellGuidObserver.SafeInvoke(remoteObject.PowerShellId, EventArgs.Empty);
@@ -859,11 +852,7 @@ namespace System.Management.Automation.Remoting.Client
         internal void ServicePendingCallbacks(object objectToProcess)
         {
             tracer.WriteLine("ServicePendingCallbacks thread is starting");
-            PSEtwLog.ReplaceActivityIdForCurrentThread(RunspacePoolInstanceId,
-                PSEventId.OperationalTransferEventRunspacePool,
-                PSEventId.AnalyticTransferEventRunspacePool,
-                PSKeyword.Transport,
-                PSTask.None);
+            
 
             try
             {
@@ -1409,13 +1398,7 @@ namespace System.Management.Automation.Remoting.Server
         {
             Dbg.Assert(dataToSend != null, "ServerTransportManager cannot send null fragment");
             // log to crimson log.
-            PSEtwLog.LogAnalyticInformational(PSEventId.ServerSendData, PSOpcode.Send, PSTask.None,
-                PSKeyword.Transport | PSKeyword.UseAlwaysAnalytic,
-                _runspacePoolInstanceId.ToString(),
-                _powerShellInstanceId.ToString(),
-                dataToSend.Length.ToString(CultureInfo.InvariantCulture),
-                (UInt32)_dataType,
-                (UInt32)_targetInterface);
+            
 
             SendDataToClient(dataToSend, isEndFragment && _shouldFlushData, _reportAsPending, isEndFragment);
         }

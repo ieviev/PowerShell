@@ -23,24 +23,6 @@ namespace Microsoft.PowerShell
         /// <summary>
         /// Starts PowerShell.
         /// </summary>
-        /// <param name="consoleFilePath">
-        /// Deprecated: Console file used to create a runspace configuration to start PowerShell
-        /// </param>
-        /// <param name="args">
-        /// Command line arguments to the PowerShell
-        /// </param>
-        /// <param name="argc">
-        /// Length of the passed in argument array.
-        /// </param>
-        [Obsolete("Callers should now use UnmanagedPSEntry.Start(string[], int)", error: true)]
-        public static int Start(string consoleFilePath, [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.LPWStr, SizeParamIndex = 2)] string[] args, int argc)
-        {
-            return Start(args, argc);
-        }
-
-        /// <summary>
-        /// Starts PowerShell.
-        /// </summary>
         /// <param name="args">
         /// Command line arguments to PowerShell
         /// </param>
@@ -79,7 +61,7 @@ namespace Microsoft.PowerShell
             // NOTE: On Unix, logging depends on a command line parsing
             // and must be just after ConsoleHost.ParseCommandLine(args)
             // to allow overriding logging options.
-            // PSEtwLog.LogConsoleStartup();
+            // 
 
             int exitCode = 0;
             try

@@ -526,9 +526,7 @@ namespace System.Management.Automation.Remoting
             Assembly assembly = null;
             if (!string.IsNullOrEmpty(assemblyName))
             {
-                PSEtwLog.LogAnalyticVerbose(PSEventId.LoadingPSCustomShellAssembly,
-                    PSOpcode.Connect, PSTask.None, PSKeyword.Transport | PSKeyword.UseAlwaysAnalytic,
-                    assemblyName, shellId);
+                
 
                 assembly = LoadSsnStateProviderAssembly(applicationBase, assemblyName);
                 if (assembly == null)
@@ -543,9 +541,7 @@ namespace System.Management.Automation.Remoting
             {
                 try
                 {
-                    PSEtwLog.LogAnalyticVerbose(PSEventId.LoadingPSCustomShellType,
-                        PSOpcode.Connect, PSTask.None, PSKeyword.Transport | PSKeyword.UseAlwaysAnalytic,
-                        typeToLoad, shellId);
+                    
 
                     Type type = assembly.GetType(typeToLoad, true, true);
                     if (type == null)

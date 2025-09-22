@@ -231,9 +231,6 @@ namespace Microsoft.PowerShell.Commands
                         ThrowTerminatingError(errorRecord);
                     }
                 }
-
-                PSEtwLog.LogSettingsEvent(MshLog.GetLogContext(Context, MyInvocation),
-                    EtwLoggingStrings.ExecutionPolicyName, executionPolicy, null);
             }
         }
 

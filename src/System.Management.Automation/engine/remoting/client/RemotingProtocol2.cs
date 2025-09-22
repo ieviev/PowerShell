@@ -563,8 +563,7 @@ namespace System.Management.Automation.Internal
             else if (e.SessionStateInfo.State == RemoteSessionState.Connected)
             {
                 // write a transfer event here
-                PSEtwLog.ReplaceActivityIdForCurrentThread(_clientRunspacePoolId, PSEventId.OperationalTransferEventRunspacePool,
-                    PSEventId.AnalyticTransferEventRunspacePool, PSKeyword.Runspace, PSTask.CreateRunspace);
+                
             }
             else if (e.SessionStateInfo.State == RemoteSessionState.Disconnected)
             {

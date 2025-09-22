@@ -546,10 +546,7 @@ namespace System.Management.Automation
 
         private static void ReportExceptionForETW(XmlException exception)
         {
-            PSEtwLog.LogAnalyticError(
-                PSEventId.Serializer_XmlExceptionWhenDeserializing, PSOpcode.Exception, PSTask.Serialization,
-                PSKeyword.Serializer | PSKeyword.UseAlwaysAnalytic,
-                exception.LineNumber, exception.LinePosition, exception.ToString());
+            
         }
 
         private bool _done = false;
@@ -1048,8 +1045,7 @@ namespace System.Management.Automation
                 // assert commented out because of clashes with Wei's tests
                 // Dbg.Assert(false, "We should never reach MaxDepthBelowTopLevel with non-malicious input");
 
-                PSEtwLog.LogAnalyticError(PSEventId.Serializer_MaxDepthWhenSerializing, PSOpcode.Exception,
-                    PSTask.Serialization, PSKeyword.Serializer, source.GetType().AssemblyQualifiedName, property, _depthBelowTopLevel);
+                
 
                 string content = Serialization.DeserializationTooDeep;
                 HandlePrimitiveKnownType(content, streamName, property);
@@ -2087,11 +2083,7 @@ namespace System.Management.Automation
             catch (Exception exception)
             {
                 // Catch-all OK. This is a third-party call-out.
-                PSEtwLog.LogAnalyticWarning(
-                    PSEventId.Serializer_EnumerationFailed, PSOpcode.Exception, PSTask.Serialization,
-                    PSKeyword.Serializer | PSKeyword.UseAlwaysAnalytic,
-                    enumerable.GetType().AssemblyQualifiedName,
-                    exception.ToString());
+                
 
                 enumerator = null;
             }
@@ -2117,11 +2109,7 @@ namespace System.Management.Automation
                     catch (Exception exception)
                     {
                         // Catch-all OK. This is a third-party call-out.
-                        PSEtwLog.LogAnalyticWarning(
-                            PSEventId.Serializer_EnumerationFailed, PSOpcode.Exception, PSTask.Serialization,
-                            PSKeyword.Serializer | PSKeyword.UseAlwaysAnalytic,
-                            enumerable.GetType().AssemblyQualifiedName,
-                            exception.ToString());
+                        
 
                         break;
                     }
@@ -2160,11 +2148,7 @@ namespace System.Management.Automation
             catch (Exception exception) // ignore non-severe exceptions
             {
                 // Catch-all OK. This is a third-party call-out.
-                PSEtwLog.LogAnalyticWarning(
-                    PSEventId.Serializer_EnumerationFailed, PSOpcode.Exception, PSTask.Serialization,
-                    PSKeyword.Serializer | PSKeyword.UseAlwaysAnalytic,
-                    dictionary.GetType().AssemblyQualifiedName,
-                    exception.ToString());
+                
             }
 
             if (dictionaryEnum != null)
@@ -2188,11 +2172,7 @@ namespace System.Management.Automation
                     catch (Exception exception)
                     {
                         // Catch-all OK. This is a third-party call-out.
-                        PSEtwLog.LogAnalyticWarning(
-                            PSEventId.Serializer_EnumerationFailed, PSOpcode.Exception, PSTask.Serialization,
-                            PSKeyword.Serializer | PSKeyword.UseAlwaysAnalytic,
-                            dictionary.GetType().AssemblyQualifiedName,
-                            exception.ToString());
+                        
 
                         break;
                     }
@@ -2260,11 +2240,7 @@ namespace System.Management.Automation
             }
             catch (ExtendedTypeSystemException e)
             {
-                PSEtwLog.LogAnalyticWarning(
-                    PSEventId.Serializer_ToStringFailed, PSOpcode.Exception, PSTask.Serialization,
-                    PSKeyword.Serializer | PSKeyword.UseAlwaysAnalytic,
-                    source.GetType().AssemblyQualifiedName,
-                    e.InnerException != null ? e.InnerException.ToString() : e.ToString());
+                
             }
 
             string result = null;
@@ -2297,11 +2273,7 @@ namespace System.Management.Automation
             SerializationMethod method = source.GetSerializationMethod(_typeTable);
             if (method == SerializationMethod.String)
             {
-                PSEtwLog.LogAnalyticVerbose(
-                    PSEventId.Serializer_ModeOverride, PSOpcode.SerializationSettings, PSTask.Serialization,
-                    PSKeyword.Serializer | PSKeyword.UseAlwaysAnalytic,
-                    source.InternalTypeNames.Key,
-                    (UInt32)(SerializationMethod.String));
+                
 
                 return true;
             }
@@ -2359,10 +2331,7 @@ namespace System.Management.Automation
                 {
                     if (typesPs1xmlDepth != depth)
                     {
-                        PSEtwLog.LogAnalyticVerbose(
-                            PSEventId.Serializer_DepthOverride, PSOpcode.SerializationSettings, PSTask.Serialization,
-                            PSKeyword.Serializer | PSKeyword.UseAlwaysAnalytic,
-                            pso.InternalTypeNames.Key, depth, typesPs1xmlDepth, _depthBelowTopLevel);
+                        
 
                         return typesPs1xmlDepth;
                     }
@@ -3607,10 +3576,7 @@ namespace System.Management.Automation
                             object rehydratedResult = LanguagePrimitives.ConvertTo(
                                 result, targetType, true /* recurse */, CultureInfo.InvariantCulture, _typeTable);
 
-                            PSEtwLog.LogAnalyticVerbose(PSEventId.Serializer_RehydrationSuccess,
-                                                        PSOpcode.Rehydration, PSTask.Serialization, PSKeyword.Serializer,
-                                                        mshSource.InternalTypeNames.Key, targetType.FullName,
-                                                        rehydratedResult.GetType().FullName);
+                            
 
                             return rehydratedResult;
                         }
@@ -3626,14 +3592,7 @@ namespace System.Management.Automation
                         Dbg.Assert(rehydrationException != null,
                                    "The only way to get here is with rehydrationException != null");
 
-                        PSEtwLog.LogAnalyticError(PSEventId.Serializer_RehydrationFailure,
-                                                  PSOpcode.Rehydration, PSTask.Serialization, PSKeyword.Serializer,
-                                                  mshSource.InternalTypeNames.Key,
-                                                  targetType.FullName,
-                                                  rehydrationException.ToString(),
-                                                  rehydrationException.InnerException == null
-                                                      ? string.Empty
-                                                      : rehydrationException.InnerException.ToString());
+                        
                     }
                 }
 
@@ -5493,9 +5452,7 @@ namespace System.Management.Automation
                 catch (Exception exception)
                 {
                     // Catch-all OK. This is a third-party call-out.
-                    PSEtwLog.LogAnalyticWarning(PSEventId.Serializer_EnumerationFailed, PSOpcode.Exception,
-                        PSTask.Serialization, PSKeyword.Serializer, source.GetType().AssemblyQualifiedName,
-                        exception.ToString());
+                    
                 }
             }
 
@@ -5567,11 +5524,7 @@ namespace System.Management.Automation
             catch (Exception e)
             {
                 // Catch-all OK. This is a third-party call-out.
-                PSEtwLog.LogAnalyticWarning(
-                    PSEventId.Serializer_ToStringFailed, PSOpcode.Exception, PSTask.Serialization,
-                    PSKeyword.Serializer | PSKeyword.UseAlwaysAnalytic,
-                    source.GetType().AssemblyQualifiedName,
-                    e.ToString());
+                
             }
 
             return result;
@@ -5615,11 +5568,7 @@ namespace System.Management.Automation
 
             if (source.GetSerializationMethod(typeTable) == SerializationMethod.SpecificProperties)
             {
-                PSEtwLog.LogAnalyticVerbose(
-                    PSEventId.Serializer_ModeOverride, PSOpcode.SerializationSettings, PSTask.Serialization,
-                    PSKeyword.Serializer | PSKeyword.UseAlwaysAnalytic,
-                    source.InternalTypeNames.Key,
-                    (UInt32)(SerializationMethod.SpecificProperties));
+                
 
                 PSMemberInfoInternalCollection<PSPropertyInfo> specificProperties =
                     new PSMemberInfoInternalCollection<PSPropertyInfo>();
@@ -5634,11 +5583,7 @@ namespace System.Management.Automation
                     PSPropertyInfo property = allProperties[propertyName];
                     if (property == null)
                     {
-                        PSEtwLog.LogAnalyticWarning(
-                            PSEventId.Serializer_SpecificPropertyMissing, PSOpcode.Exception, PSTask.Serialization,
-                            PSKeyword.Serializer | PSKeyword.UseAlwaysAnalytic,
-                            source.InternalTypeNames.Key,
-                            propertyName);
+                        
                     }
                     else
                     {
@@ -5672,12 +5617,7 @@ namespace System.Management.Automation
             Dbg.Assert(script == null || script.GetterScript != null, "scriptProperty.IsGettable => (scriptProperty.GetterScript != null)");
             if ((script != null) && (!canUseDefaultRunspaceInThreadSafeManner))
             {
-                PSEtwLog.LogAnalyticWarning(
-                    PSEventId.Serializer_ScriptPropertyWithoutRunspace, PSOpcode.Exception, PSTask.Serialization,
-                    PSKeyword.Serializer | PSKeyword.UseAlwaysAnalytic,
-                    property.Name,
-                    property.instance == null ? string.Empty : PSObject.GetTypeNames(property.instance).Key,
-                    script.GetterScript.ToString());
+                
 
                 success = false;
                 return null;
@@ -5691,13 +5631,7 @@ namespace System.Management.Automation
             }
             catch (ExtendedTypeSystemException e)
             {
-                PSEtwLog.LogAnalyticWarning(
-                    PSEventId.Serializer_PropertyGetterFailed, PSOpcode.Exception, PSTask.Serialization,
-                    PSKeyword.Serializer | PSKeyword.UseAlwaysAnalytic,
-                    property.Name,
-                    property.instance == null ? string.Empty : PSObject.GetTypeNames(property.instance).Key,
-                    e.ToString(),
-                    e.InnerException == null ? string.Empty : e.InnerException.ToString());
+                
 
                 success = false;
                 return null;

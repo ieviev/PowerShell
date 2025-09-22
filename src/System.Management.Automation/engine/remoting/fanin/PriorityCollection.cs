@@ -558,15 +558,7 @@ namespace System.Management.Automation.Remoting
                     int dataCount = _pendingDataStream.Read(oneFragment, 0, totalLengthOfFragment);
                     Dbg.Assert(dataCount == totalLengthOfFragment, "Unable to read enough data from the stream. Read failed");
 
-                    PSEtwLog.LogAnalyticVerbose(
-                        PSEventId.ReceivedRemotingFragment, PSOpcode.Receive, PSTask.None,
-                        PSKeyword.Transport | PSKeyword.UseAlwaysAnalytic,
-                        (Int64)objectId,
-                        (Int64)fragmentId,
-                        sFlag ? 1 : 0,
-                        eFlag ? 1 : 0,
-                        (UInt32)blobLength,
-                        new PSETWBinaryBlob(oneFragment, FragmentedRemoteObject.HeaderLength, blobLength));
+                    
 
                     byte[] extraData = null;
                     if (totalLengthOfFragment < _pendingDataStream.Length)

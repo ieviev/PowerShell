@@ -255,7 +255,6 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        internal OutOfProcessTextWriter StdInWriter { get; set; }
 
         internal void Start()
         {

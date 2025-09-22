@@ -74,12 +74,7 @@ namespace System.Management.Automation.Runspaces.Internal
                 throw PSTraceSource.NewArgumentNullException("WSManConnectionInfo");
             }
 
-            PSEtwLog.LogOperationalVerbose(PSEventId.RunspacePoolConstructor,
-                    PSOpcode.Constructor, PSTask.CreateRunspace,
-                    PSKeyword.UseAlwaysOperational,
-                    instanceId.ToString(),
-                    minPoolSz.ToString(CultureInfo.InvariantCulture),
-                    maxPoolSz.ToString(CultureInfo.InvariantCulture));
+            
 
             _connectionInfo = connectionInfo.Clone();
 
@@ -143,12 +138,7 @@ namespace System.Management.Automation.Runspaces.Internal
             this.minPoolSz = -1;
             this.maxPoolSz = -1;
 
-            PSEtwLog.LogOperationalVerbose(PSEventId.RunspacePoolConstructor,
-                    PSOpcode.Constructor, PSTask.CreateRunspace,
-                    PSKeyword.UseAlwaysOperational,
-                    instanceId.ToString(),
-                    minPoolSz.ToString(CultureInfo.InvariantCulture),
-                    maxPoolSz.ToString(CultureInfo.InvariantCulture));
+            
 
             ConnectCommands = connectCommands;
             this.Name = name;
@@ -838,38 +828,7 @@ namespace System.Management.Automation.Runspaces.Internal
         protected override IAsyncResult CoreOpen(bool isAsync, AsyncCallback callback,
             object asyncState)
         {
-            PSEtwLog.SetActivityIdForCurrentThread(this.InstanceId);
-            PSEtwLog.LogOperationalVerbose(PSEventId.RunspacePoolOpen, PSOpcode.Open,
-                            PSTask.CreateRunspace, PSKeyword.UseAlwaysOperational);
-
-            // Telemetry here - remote session
-            ApplicationInsightsTelemetry.SendTelemetryMetric(TelemetryType.RemoteSessionOpen, isAsync.ToString());
-#if LEGACYTELEMETRY
-            TelemetryAPI.ReportRemoteSessionCreated(_connectionInfo);
-#endif
-
-            lock (syncObject)
-            {
-                AssertIfStateIsBeforeOpen();
-
-                stateInfo = new RunspacePoolStateInfo(RunspacePoolState.Opening, null);
-            }
-
-            // BUGBUG: the following comment needs to be validated
-            // only one thread will reach here, so no need
-            // to lock
-            RaiseStateChangeEvent(stateInfo);
-
-            RunspacePoolAsyncResult asyncResult = new RunspacePoolAsyncResult(
-                    instanceId, callback, asyncState, true);
-
-            _openAsyncResult = asyncResult;
-
-            // send a message using the data structure handler to open the RunspacePool
-            // on the remote server
-            DataStructureHandler.CreateRunspacePoolAndOpenAsync();
-
-            return asyncResult;
+            return null;
         }
 
         #endregion Protected Methods

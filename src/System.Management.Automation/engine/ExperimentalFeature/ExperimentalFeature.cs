@@ -225,7 +225,7 @@ namespace System.Management.Automation
         /// </summary>
         private static void LogError(PSEventId eventId, params object[] args)
         {
-            PSEtwLog.LogOperationalError(eventId, PSOpcode.Constructor, PSTask.ExperimentalFeature, PSKeyword.UseAlwaysOperational, args);
+            
         }
 
         /// <summary>

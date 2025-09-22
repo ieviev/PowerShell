@@ -807,7 +807,7 @@ namespace System.Management.Automation.Tracing
         /*
          * Making the provider static to reduce the number of buffers needed to 1.
          * */
-        private static readonly EventProvider _provider = new EventProvider(PSEtwLogProvider.ProviderGuid);
+        private static readonly EventProvider _provider = new EventProvider(
 
         private bool disposed;
         private PowerShellTraceKeywords _keywords;
@@ -1133,15 +1133,7 @@ namespace System.Management.Automation.Tracing
         /// <returns></returns>
         public void WriteMessage(string className, string methodName, Guid workflowId, string message, params string[] parameters)
         {
-            PSEtwLog.LogAnalyticVerbose(PSEventId.Engine_Trace,
-                                        PSOpcode.Method, PSTask.None,
-                                        PSKeyword.UseAlwaysAnalytic,
-                                        className, methodName, workflowId.ToString(),
-                                        parameters == null ? message : StringUtil.Format(message, parameters),
-                                        string.Empty, // Job
-                                        string.Empty, // Activity name
-                                        string.Empty, // Activity GUID
-                                        string.Empty);
+            
         }
 
         /// <summary>
@@ -1184,15 +1176,7 @@ namespace System.Management.Automation.Tracing
                 sb.AppendLine(StringUtil.Format(EtwLoggingStrings.JobName, EtwLoggingStrings.NullJobName));
             }
 
-            PSEtwLog.LogAnalyticVerbose(PSEventId.Engine_Trace,
-                                        PSOpcode.Method, PSTask.None,
-                                        PSKeyword.UseAlwaysAnalytic,
-                                        className, methodName, workflowId.ToString(),
-                                        parameters == null ? message : StringUtil.Format(message, parameters),
-                                        sb.ToString(), // Job
-                                        string.Empty, // Activity name
-                                        string.Empty, // Activity GUID
-                                        string.Empty);
+            
         }
 
         /// <summary>
@@ -1201,11 +1185,7 @@ namespace System.Management.Automation.Tracing
         /// <param name="args"></param>
         public void WriteScheduledJobStartEvent(params object[] args)
         {
-            PSEtwLog.LogOperationalInformation(PSEventId.ScheduledJob_Start,
-                                               PSOpcode.Method,
-                                               PSTask.ScheduledJob,
-                                               PSKeyword.UseAlwaysOperational,
-                                               args);
+            
         }
 
         /// <summary>
@@ -1214,11 +1194,7 @@ namespace System.Management.Automation.Tracing
         /// <param name="args"></param>
         public void WriteScheduledJobCompleteEvent(params object[] args)
         {
-            PSEtwLog.LogOperationalInformation(PSEventId.ScheduledJob_Complete,
-                                               PSOpcode.Method,
-                                               PSTask.ScheduledJob,
-                                               PSKeyword.UseAlwaysOperational,
-                                               args);
+            
         }
 
         /// <summary>
@@ -1227,11 +1203,7 @@ namespace System.Management.Automation.Tracing
         /// <param name="args"></param>
         public void WriteScheduledJobErrorEvent(params object[] args)
         {
-            PSEtwLog.LogOperationalError(PSEventId.ScheduledJob_Error,
-                                         PSOpcode.Exception,
-                                         PSTask.ScheduledJob,
-                                         PSKeyword.UseAlwaysOperational,
-                                         args);
+            
         }
 
         /// <summary>
@@ -1240,11 +1212,7 @@ namespace System.Management.Automation.Tracing
         /// <param name="args"></param>
         public void WriteISEExecuteScriptEvent(params object[] args)
         {
-            PSEtwLog.LogOperationalInformation(PSEventId.ISEExecuteScript,
-                                               PSOpcode.Method,
-                                               PSTask.ISEOperation,
-                                               PSKeyword.UseAlwaysOperational,
-                                               args);
+            
         }
 
         /// <summary>
@@ -1253,11 +1221,7 @@ namespace System.Management.Automation.Tracing
         /// <param name="args"></param>
         public void WriteISEExecuteSelectionEvent(params object[] args)
         {
-            PSEtwLog.LogOperationalInformation(PSEventId.ISEExecuteSelection,
-                                               PSOpcode.Method,
-                                               PSTask.ISEOperation,
-                                               PSKeyword.UseAlwaysOperational,
-                                               args);
+            
         }
 
         /// <summary>
@@ -1266,11 +1230,7 @@ namespace System.Management.Automation.Tracing
         /// <param name="args"></param>
         public void WriteISEStopCommandEvent(params object[] args)
         {
-            PSEtwLog.LogOperationalInformation(PSEventId.ISEStopCommand,
-                                               PSOpcode.Method,
-                                               PSTask.ISEOperation,
-                                               PSKeyword.UseAlwaysOperational,
-                                               args);
+            
         }
 
         /// <summary>
@@ -1279,11 +1239,7 @@ namespace System.Management.Automation.Tracing
         /// <param name="args"></param>
         public void WriteISEResumeDebuggerEvent(params object[] args)
         {
-            PSEtwLog.LogOperationalInformation(PSEventId.ISEResumeDebugger,
-                                               PSOpcode.Method,
-                                               PSTask.ISEOperation,
-                                               PSKeyword.UseAlwaysOperational,
-                                               args);
+            
         }
 
         /// <summary>
@@ -1292,11 +1248,7 @@ namespace System.Management.Automation.Tracing
         /// <param name="args"></param>
         public void WriteISEStopDebuggerEvent(params object[] args)
         {
-            PSEtwLog.LogOperationalInformation(PSEventId.ISEStopDebugger,
-                                               PSOpcode.Method,
-                                               PSTask.ISEOperation,
-                                               PSKeyword.UseAlwaysOperational,
-                                               args);
+            
         }
 
         /// <summary>
@@ -1305,11 +1257,7 @@ namespace System.Management.Automation.Tracing
         /// <param name="args"></param>
         public void WriteISEDebuggerStepIntoEvent(params object[] args)
         {
-            PSEtwLog.LogOperationalInformation(PSEventId.ISEDebuggerStepInto,
-                                               PSOpcode.Method,
-                                               PSTask.ISEOperation,
-                                               PSKeyword.UseAlwaysOperational,
-                                               args);
+            
         }
 
         /// <summary>
@@ -1318,11 +1266,7 @@ namespace System.Management.Automation.Tracing
         /// <param name="args"></param>
         public void WriteISEDebuggerStepOverEvent(params object[] args)
         {
-            PSEtwLog.LogOperationalInformation(PSEventId.ISEDebuggerStepOver,
-                                               PSOpcode.Method,
-                                               PSTask.ISEOperation,
-                                               PSKeyword.UseAlwaysOperational,
-                                               args);
+            
         }
 
         /// <summary>
@@ -1331,11 +1275,7 @@ namespace System.Management.Automation.Tracing
         /// <param name="args"></param>
         public void WriteISEDebuggerStepOutEvent(params object[] args)
         {
-            PSEtwLog.LogOperationalInformation(PSEventId.ISEDebuggerStepOut,
-                                               PSOpcode.Method,
-                                               PSTask.ISEOperation,
-                                               PSKeyword.UseAlwaysOperational,
-                                               args);
+            
         }
 
         /// <summary>
@@ -1344,11 +1284,7 @@ namespace System.Management.Automation.Tracing
         /// <param name="args"></param>
         public void WriteISEEnableAllBreakpointsEvent(params object[] args)
         {
-            PSEtwLog.LogOperationalInformation(PSEventId.ISEEnableAllBreakpoints,
-                                               PSOpcode.Method,
-                                               PSTask.ISEOperation,
-                                               PSKeyword.UseAlwaysOperational,
-                                               args);
+            
         }
 
         /// <summary>
@@ -1357,11 +1293,7 @@ namespace System.Management.Automation.Tracing
         /// <param name="args"></param>
         public void WriteISEDisableAllBreakpointsEvent(params object[] args)
         {
-            PSEtwLog.LogOperationalInformation(PSEventId.ISEDisableAllBreakpoints,
-                                               PSOpcode.Method,
-                                               PSTask.ISEOperation,
-                                               PSKeyword.UseAlwaysOperational,
-                                               args);
+            
         }
 
         /// <summary>
@@ -1370,11 +1302,7 @@ namespace System.Management.Automation.Tracing
         /// <param name="args"></param>
         public void WriteISERemoveAllBreakpointsEvent(params object[] args)
         {
-            PSEtwLog.LogOperationalInformation(PSEventId.ISERemoveAllBreakpoints,
-                                               PSOpcode.Method,
-                                               PSTask.ISEOperation,
-                                               PSKeyword.UseAlwaysOperational,
-                                               args);
+            
         }
 
         /// <summary>
@@ -1383,11 +1311,7 @@ namespace System.Management.Automation.Tracing
         /// <param name="args"></param>
         public void WriteISESetBreakpointEvent(params object[] args)
         {
-            PSEtwLog.LogOperationalInformation(PSEventId.ISESetBreakpoint,
-                                               PSOpcode.Method,
-                                               PSTask.ISEOperation,
-                                               PSKeyword.UseAlwaysOperational,
-                                               args);
+            
         }
 
         /// <summary>
@@ -1396,11 +1320,7 @@ namespace System.Management.Automation.Tracing
         /// <param name="args"></param>
         public void WriteISERemoveBreakpointEvent(params object[] args)
         {
-            PSEtwLog.LogOperationalInformation(PSEventId.ISERemoveBreakpoint,
-                                               PSOpcode.Method,
-                                               PSTask.ISEOperation,
-                                               PSKeyword.UseAlwaysOperational,
-                                               args);
+            
         }
 
         /// <summary>
@@ -1409,11 +1329,7 @@ namespace System.Management.Automation.Tracing
         /// <param name="args"></param>
         public void WriteISEEnableBreakpointEvent(params object[] args)
         {
-            PSEtwLog.LogOperationalInformation(PSEventId.ISEEnableBreakpoint,
-                                               PSOpcode.Method,
-                                               PSTask.ISEOperation,
-                                               PSKeyword.UseAlwaysOperational,
-                                               args);
+            
         }
 
         /// <summary>
@@ -1422,11 +1338,7 @@ namespace System.Management.Automation.Tracing
         /// <param name="args"></param>
         public void WriteISEDisableBreakpointEvent(params object[] args)
         {
-            PSEtwLog.LogOperationalInformation(PSEventId.ISEDisableBreakpoint,
-                                               PSOpcode.Method,
-                                               PSTask.ISEOperation,
-                                               PSKeyword.UseAlwaysOperational,
-                                               args);
+            
         }
 
         /// <summary>
@@ -1435,11 +1347,7 @@ namespace System.Management.Automation.Tracing
         /// <param name="args"></param>
         public void WriteISEHitBreakpointEvent(params object[] args)
         {
-            PSEtwLog.LogOperationalInformation(PSEventId.ISEHitBreakpoint,
-                                               PSOpcode.Method,
-                                               PSTask.ISEOperation,
-                                               PSKeyword.UseAlwaysOperational,
-                                               args);
+            
         }
 
         /// <summary>
@@ -1454,15 +1362,7 @@ namespace System.Management.Automation.Tracing
         /// <returns></returns>
         public void WriteMessage(string className, string methodName, Guid workflowId, string activityName, Guid activityId, string message, params string[] parameters)
         {
-            PSEtwLog.LogAnalyticVerbose(PSEventId.Engine_Trace,
-                                        PSOpcode.Method, PSTask.None,
-                                        PSKeyword.UseAlwaysAnalytic,
-                                        className, methodName, workflowId.ToString(),
-                                        parameters == null ? message : StringUtil.Format(message, parameters),
-                                        string.Empty, // Job
-                                        activityName,
-                                        activityId.ToString(),
-                                        string.Empty);
+            
         }
 
         /// <summary>

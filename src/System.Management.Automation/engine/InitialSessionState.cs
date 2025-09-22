@@ -5438,28 +5438,13 @@ end {
             {
                 { "Add-History",                       new SessionStateCmdletEntry("Add-History", typeof(AddHistoryCommand), helpFile) },
                 { "Clear-History",                     new SessionStateCmdletEntry("Clear-History", typeof(ClearHistoryCommand), helpFile) },
-                { "Debug-Job",                         new SessionStateCmdletEntry("Debug-Job", typeof(DebugJobCommand), helpFile) },
-#if !UNIX
-                { "Disable-PSRemoting",                new SessionStateCmdletEntry("Disable-PSRemoting", typeof(DisablePSRemotingCommand), helpFile) },
-                { "Enable-PSRemoting",                 new SessionStateCmdletEntry("Enable-PSRemoting", typeof(EnablePSRemotingCommand), helpFile) },
-                { "Disable-PSSessionConfiguration",    new SessionStateCmdletEntry("Disable-PSSessionConfiguration", typeof(DisablePSSessionConfigurationCommand), helpFile) },
-                { "Enable-PSSessionConfiguration",     new SessionStateCmdletEntry("Enable-PSSessionConfiguration", typeof(EnablePSSessionConfigurationCommand), helpFile) },
-                { "Get-PSSessionCapability",           new SessionStateCmdletEntry("Get-PSSessionCapability", typeof(GetPSSessionCapabilityCommand), helpFile) },
-                { "Get-PSSessionConfiguration",        new SessionStateCmdletEntry("Get-PSSessionConfiguration", typeof(GetPSSessionConfigurationCommand), helpFile) },
-                { "Receive-PSSession",                 new SessionStateCmdletEntry("Receive-PSSession", typeof(ReceivePSSessionCommand), helpFile) },
-                { "Register-PSSessionConfiguration",   new SessionStateCmdletEntry("Register-PSSessionConfiguration", typeof(RegisterPSSessionConfigurationCommand), helpFile) },
-                { "Unregister-PSSessionConfiguration", new SessionStateCmdletEntry("Unregister-PSSessionConfiguration", typeof(UnregisterPSSessionConfigurationCommand), helpFile) },
-                { "Set-PSSessionConfiguration",        new SessionStateCmdletEntry("Set-PSSessionConfiguration", typeof(SetPSSessionConfigurationCommand), helpFile) },
-                { "Test-PSSessionConfigurationFile",   new SessionStateCmdletEntry("Test-PSSessionConfigurationFile", typeof(TestPSSessionConfigurationFileCommand), helpFile) },
-                { "Connect-PSSession",                 new SessionStateCmdletEntry("Connect-PSSession", typeof(ConnectPSSessionCommand), helpFile) },
-                { "Disconnect-PSSession",              new SessionStateCmdletEntry("Disconnect-PSSession", typeof(DisconnectPSSessionCommand), helpFile) },
-#endif
-                { "Disable-ExperimentalFeature",       new SessionStateCmdletEntry("Disable-ExperimentalFeature", typeof(DisableExperimentalFeatureCommand), helpFile) },
-                { "Enable-ExperimentalFeature",        new SessionStateCmdletEntry("Enable-ExperimentalFeature", typeof(EnableExperimentalFeatureCommand), helpFile) },
-                { "Enter-PSHostProcess",               new SessionStateCmdletEntry("Enter-PSHostProcess", typeof(EnterPSHostProcessCommand), helpFile) },
-                { "Enter-PSSession",                   new SessionStateCmdletEntry("Enter-PSSession", typeof(EnterPSSessionCommand), helpFile) },
-                { "Exit-PSHostProcess",                new SessionStateCmdletEntry("Exit-PSHostProcess", typeof(ExitPSHostProcessCommand), helpFile) },
-                { "Exit-PSSession",                    new SessionStateCmdletEntry("Exit-PSSession", typeof(ExitPSSessionCommand), helpFile) },
+                // { "Debug-Job",                         new SessionStateCmdletEntry("Debug-Job", typeof(DebugJobCommand), helpFile) },
+                // { "Disable-ExperimentalFeature",       new SessionStateCmdletEntry("Disable-ExperimentalFeature", typeof(DisableExperimentalFeatureCommand), helpFile) },
+                // { "Enable-ExperimentalFeature",        new SessionStateCmdletEntry("Enable-ExperimentalFeature", typeof(EnableExperimentalFeatureCommand), helpFile) },
+                // { "Enter-PSHostProcess",               new SessionStateCmdletEntry("Enter-PSHostProcess", typeof(EnterPSHostProcessCommand), helpFile) },
+                // { "Enter-PSSession",                   new SessionStateCmdletEntry("Enter-PSSession", typeof(EnterPSSessionCommand), helpFile) },
+                // { "Exit-PSHostProcess",                new SessionStateCmdletEntry("Exit-PSHostProcess", typeof(ExitPSHostProcessCommand), helpFile) },
+                // { "Exit-PSSession",                    new SessionStateCmdletEntry("Exit-PSSession", typeof(ExitPSSessionCommand), helpFile) },
                 { "Export-ModuleMember",               new SessionStateCmdletEntry("Export-ModuleMember", typeof(ExportModuleMemberCommand), helpFile) },
                 { "ForEach-Object",                    new SessionStateCmdletEntry("ForEach-Object", typeof(ForEachObjectCommand), helpFile) },
                 { "Get-Command",                       new SessionStateCmdletEntry("Get-Command", typeof(GetCommandCommand), helpFile) },
@@ -5473,13 +5458,13 @@ end {
                 { "Import-Module",                     new SessionStateCmdletEntry("Import-Module", typeof(ImportModuleCommand), helpFile) },
                 { "Invoke-Command",                    new SessionStateCmdletEntry("Invoke-Command", typeof(InvokeCommandCommand), helpFile) },
                 { "Invoke-History",                    new SessionStateCmdletEntry("Invoke-History", typeof(InvokeHistoryCommand), helpFile) },
-                { "New-Module",                        new SessionStateCmdletEntry("New-Module", typeof(NewModuleCommand), helpFile) },
-                { "New-ModuleManifest",                new SessionStateCmdletEntry("New-ModuleManifest", typeof(NewModuleManifestCommand), helpFile) },
-                { "New-PSRoleCapabilityFile",          new SessionStateCmdletEntry("New-PSRoleCapabilityFile", typeof(NewPSRoleCapabilityFileCommand), helpFile) },
-                { "New-PSSession",                     new SessionStateCmdletEntry("New-PSSession", typeof(NewPSSessionCommand), helpFile) },
-                { "New-PSSessionConfigurationFile",    new SessionStateCmdletEntry("New-PSSessionConfigurationFile", typeof(NewPSSessionConfigurationFileCommand), helpFile) },
-                { "New-PSSessionOption",               new SessionStateCmdletEntry("New-PSSessionOption", typeof(NewPSSessionOptionCommand), helpFile) },
-                { "New-PSTransportOption",             new SessionStateCmdletEntry("New-PSTransportOption", typeof(NewPSTransportOptionCommand), helpFile) },
+                // { "New-Module",                        new SessionStateCmdletEntry("New-Module", typeof(NewModuleCommand), helpFile) },
+                // { "New-ModuleManifest",                new SessionStateCmdletEntry("New-ModuleManifest", typeof(NewModuleManifestCommand), helpFile) },
+                // { "New-PSRoleCapabilityFile",          new SessionStateCmdletEntry("New-PSRoleCapabilityFile", typeof(NewPSRoleCapabilityFileCommand), helpFile) },
+                // { "New-PSSession",                     new SessionStateCmdletEntry("New-PSSession", typeof(NewPSSessionCommand), helpFile) },
+                // { "New-PSSessionConfigurationFile",    new SessionStateCmdletEntry("New-PSSessionConfigurationFile", typeof(NewPSSessionConfigurationFileCommand), helpFile) },
+                // { "New-PSSessionOption",               new SessionStateCmdletEntry("New-PSSessionOption", typeof(NewPSSessionOptionCommand), helpFile) },
+                // { "New-PSTransportOption",             new SessionStateCmdletEntry("New-PSTransportOption", typeof(NewPSTransportOptionCommand), helpFile) },
                 { "Out-Default",                       new SessionStateCmdletEntry("Out-Default", typeof(OutDefaultCommand), helpFile) },
                 { "Out-Host",                          new SessionStateCmdletEntry("Out-Host", typeof(OutHostCommand), helpFile) },
                 { "Out-Null",                          new SessionStateCmdletEntry("Out-Null", typeof(OutNullCommand), helpFile) },
@@ -5497,27 +5482,15 @@ end {
                 { "Update-Help",                       new SessionStateCmdletEntry("Update-Help", typeof(UpdateHelpCommand), helpFile) },
                 { "Wait-Job",                          new SessionStateCmdletEntry("Wait-Job", typeof(WaitJobCommand), helpFile) },
                 { "Where-Object",                      new SessionStateCmdletEntry("Where-Object", typeof(WhereObjectCommand), helpFile) },
-#if !CORECLR
-                { "Add-PSSnapin",                      new SessionStateCmdletEntry("Add-PSSnapin", typeof(AddPSSnapinCommand), helpFile) },
-                { "Export-Console",                    new SessionStateCmdletEntry("Export-Console", typeof(ExportConsoleCommand), helpFile) },
-                { "Get-PSSnapin",                      new SessionStateCmdletEntry("Get-PSSnapin", typeof(GetPSSnapinCommand), helpFile) },
-                { "Remove-PSSnapin",                   new SessionStateCmdletEntry("Remove-PSSnapin", typeof(RemovePSSnapinCommand), helpFile) },
-                { "Resume-Job",                        new SessionStateCmdletEntry("Resume-Job", typeof(ResumeJobCommand), helpFile) },
-                { "Suspend-Job",                       new SessionStateCmdletEntry("Suspend-Job", typeof(SuspendJobCommand), helpFile) },
-#endif
                 // Not exported, but are added via reflection so added here as well, though maybe they shouldn't be
-                { "Out-LineOutput",                    new SessionStateCmdletEntry("Out-LineOutput", typeof(OutLineOutputCommand), helpFile) },
-                { "Format-Default",                    new SessionStateCmdletEntry("Format-Default", typeof(FormatDefaultCommand), helpFile) },
+                // { "Out-LineOutput",                    new SessionStateCmdletEntry("Out-LineOutput", typeof(OutLineOutputCommand), helpFile) },
+                // { "Format-Default",                    new SessionStateCmdletEntry("Format-Default", typeof(FormatDefaultCommand), helpFile) },
             };
 
             if (ExperimentalFeature.IsEnabled("PSSubsystemPluginModel"))
             {
                 cmdlets.Add("Get-PSSubsystem", new SessionStateCmdletEntry("Get-PSSubsystem", typeof(Subsystem.GetPSSubsystemCommand), helpFile));
             }
-
-#if UNIX
-            cmdlets.Add("Switch-Process", new SessionStateCmdletEntry("Switch-Process", typeof(SwitchProcessCommand), helpFile));
-#endif
 
             foreach (var val in cmdlets.Values)
             {
@@ -5526,9 +5499,6 @@ end {
 
             providers = new Dictionary<string, SessionStateProviderEntry>(StringComparer.OrdinalIgnoreCase)
             {
-#if !UNIX
-                { "Registry",    new SessionStateProviderEntry("Registry", typeof(RegistryProvider), helpFile) },
-#endif
                 { "Alias",       new SessionStateProviderEntry("Alias", typeof(AliasProvider), helpFile) },
                 { "Environment", new SessionStateProviderEntry("Environment", typeof(EnvironmentProvider), helpFile) },
                 { "FileSystem" , new SessionStateProviderEntry("FileSystem", typeof(FileSystemProvider), helpFile) },

@@ -387,8 +387,7 @@ namespace Microsoft.PowerShell.Commands
 
                 context.Severity = "Error";
 
-                PSEtwLog.LogOperationalError(PSEventId.Pipeline_Detail, PSOpcode.Exception, PSTask.ExecutePipeline,
-                    context, e.GetExceptionMessage(_commandType));
+                
             }
         }
 
@@ -843,7 +842,7 @@ namespace Microsoft.PowerShell.Commands
         internal void LogMessage(string message)
         {
             List<string> details = new List<string>() { message };
-            PSEtwLog.LogPipelineExecutionDetailEvent(MshLog.GetLogContext(Context, Context.CurrentCommandProcessor.Command.MyInvocation), details);
+            
         }
 
         #endregion

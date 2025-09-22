@@ -106,7 +106,7 @@ namespace System.Management.Automation.Security
                 }
             }
 
-            PSEtwLog.LogWDACAuditEvent(title, messageToWrite, fqid);
+            
 
             // We drop into the debugger only if requested and we are running in the interactive host session runspace (Id == 1).
             if (debuggerAvailable && dropIntoDebugger &&
@@ -220,7 +220,7 @@ namespace System.Management.Automation.Security
                     auditInfo: auditMsg,
                     result: out WLDP_EXECUTION_POLICY canExecuteResult);
 
-                PSEtwLog.LogWDACQueryEvent("WldpCanExecuteFile", filePath, hr, (int)canExecuteResult);
+                
 
                 if (hr >= 0)
                 {
@@ -251,7 +251,7 @@ namespace System.Management.Automation.Security
             {
                 // Fall back to legacy system policy checks.
                 s_wldpCanExecuteAvailable = false;
-                PSEtwLog.LogWDACQueryEvent("WldpCanExecuteFile_Failed", filePath, ex.HResult, 0);
+                
             }
 
             result = default;
@@ -364,7 +364,7 @@ namespace System.Management.Automation.Security
 
                 uint pdwLockdownState = 0;
                 int result = WldpNativeMethods.WldpGetLockdownPolicy(ref hostInformation, ref pdwLockdownState, 0);
-                PSEtwLog.LogWDACQueryEvent("WldpGetLockdownPolicy", path, result, (int)pdwLockdownState);
+                
                 if (result >= 0)
                 {
                     SystemEnforcementMode resultingLockdownPolicy = GetLockdownPolicyForResult(pdwLockdownState);
@@ -386,7 +386,7 @@ namespace System.Management.Automation.Security
             catch (DllNotFoundException ex)
             {
                 s_hadMissingWldpAssembly = true;
-                PSEtwLog.LogWDACQueryEvent("WldpGetLockdownPolicy_Failed", path, ex.HResult, 0);
+                
                 return s_cachedWldpSystemPolicy.GetValueOrDefault(SystemEnforcementMode.None);
             }
         }

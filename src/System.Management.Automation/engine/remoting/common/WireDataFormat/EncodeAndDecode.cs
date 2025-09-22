@@ -373,13 +373,7 @@ namespace System.Management.Automation
             {
                 Dbg.Assert(false, "Internal code shouldn't throw exceptions during serialization");
 
-                PSEtwLog.LogAnalyticWarning(
-                    PSEventId.Serializer_PropertyGetterFailed, PSOpcode.Exception, PSTask.Serialization,
-                    PSKeyword.Serializer | PSKeyword.UseAlwaysAnalytic,
-                    propertyName,
-                    valueGetter.Target == null ? string.Empty : valueGetter.Target.GetType().FullName,
-                    e.ToString(),
-                    e.InnerException == null ? string.Empty : e.InnerException.ToString());
+                
             }
 
             try

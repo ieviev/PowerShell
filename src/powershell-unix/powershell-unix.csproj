@@ -6,6 +6,7 @@
     <Description>PowerShell top-level project with .NET CLI host</Description>
     <AssemblyName>pwsh</AssemblyName>
     <OutputType>Exe</OutputType>
+    <NoWarn>$NoWarn;SA1507;CS1591</NoWarn>
     <TieredCompilation>true</TieredCompilation>
     <TieredCompilationQuickJit>true</TieredCompilationQuickJit>
     <TieredCompilationQuickJitForLoops>true</TieredCompilationQuickJitForLoops>

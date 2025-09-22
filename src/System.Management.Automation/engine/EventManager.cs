@@ -673,12 +673,6 @@ namespace System.Management.Automation
                 EventInfo eventInfo = null;
                 Type sourceType = source as Type ?? source.GetType();
 
-                // PowerShell does not support WinRT events.
-                if (WinRTHelper.IsWinRTType(sourceType))
-                {
-                    throw new InvalidOperationException(EventingResources.WinRTEventsNotSupported);
-                }
-
                 // Retrieve the event from the object
                 const BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static | BindingFlags.IgnoreCase;
                 eventInfo = sourceType.GetEvent(eventName, bindingFlags);

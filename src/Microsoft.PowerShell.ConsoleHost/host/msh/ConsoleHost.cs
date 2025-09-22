@@ -289,15 +289,6 @@ namespace Microsoft.PowerShell
                     exitCode = 0;
                 }
 #endif
-                else if (s_cpp.SocketServerMode)
-                {
-                    ApplicationInsightsTelemetry.SendPSCoreStartupTelemetry("SocketServerMode", s_cpp.ParametersUsedAsDouble);
-                    ProfileOptimization.StartProfile("StartupProfileData-SocketServerMode");
-                    HyperVSocketMediator.Run(
-                        initialCommand: s_cpp.InitialCommand,
-                        configurationName: s_cpp.ConfigurationName);
-                    exitCode = 0;
-                }
                 else
                 {
                     // Run PowerShell in normal console mode.
@@ -1826,8 +1817,7 @@ namespace Microsoft.PowerShell
             finally
             {
                 // Stop PerfTrack
-                PSEtwLog.LogOperationalInformation(PSEventId.Perftrack_ConsoleStartupStop, PSOpcode.WinStop,
-                                                   PSTask.PowershellConsoleStartup, PSKeyword.UseAlwaysOperational);
+                
             }
 
 #if LEGACYTELEMETRY

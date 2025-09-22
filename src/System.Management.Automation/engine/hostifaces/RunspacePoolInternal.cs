@@ -171,7 +171,7 @@ namespace System.Management.Automation.Runspaces.Internal
             minPoolSz = minRunspaces;
             stateInfo = new RunspacePoolStateInfo(RunspacePoolState.BeforeOpen, null);
             instanceId = Guid.NewGuid();
-            PSEtwLog.SetActivityIdForCurrentThread(instanceId);
+            
 
             _cleanupInterval = s_defaultCleanupPeriod;
             _cleanupTimer = new Timer(new TimerCallback(CleanupCallback), null, Timeout.Infinite, Timeout.Infinite);
@@ -1024,7 +1024,7 @@ namespace System.Management.Automation.Runspaces.Internal
         {
             try
             {
-                PSEtwLog.SetActivityIdForCurrentThread(this.InstanceId);
+                
                 // Create a Runspace and store it in the pool
                 // for future use. This will validate whether
                 // a runspace can be created + opened successfully

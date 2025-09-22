@@ -132,10 +132,8 @@ namespace System.Management.Automation
         /// </param>
         internal RemoteRunspace(TypeTable typeTable, RunspaceConnectionInfo connectionInfo, PSHost host, PSPrimitiveDictionary applicationArguments, string name = null, int id = -1)
         {
-            PSEtwLog.SetActivityIdForCurrentThread(this.InstanceId);
-            PSEtwLog.LogOperationalVerbose(PSEventId.RunspaceConstructor, PSOpcode.Constructor,
-                        PSTask.CreateRunspace, PSKeyword.UseAlwaysOperational,
-                        InstanceId.ToString());
+            
+            
 
             _connectionInfo = connectionInfo.Clone();
             OriginalConnectionInfo = connectionInfo.Clone();
@@ -186,10 +184,8 @@ namespace System.Management.Automation
 
             SetEventHandlers();
 
-            PSEtwLog.SetActivityIdForCurrentThread(this.InstanceId);
-            PSEtwLog.LogOperationalVerbose(PSEventId.RunspaceConstructor, PSOpcode.Constructor,
-                        PSTask.CreateRunspace, PSKeyword.UseAlwaysOperational,
-                        this.InstanceId.ToString());
+            
+            
         }
 
         /// <summary>
@@ -1414,9 +1410,7 @@ namespace System.Management.Automation
                             previousAvailability,
                             _runspaceAvailability));
 
-                    PSEtwLog.LogOperationalVerbose(PSEventId.RunspaceStateChange, PSOpcode.Open,
-                                PSTask.CreateRunspace, PSKeyword.UseAlwaysOperational,
-                                state.ToString());
+                    
                 }
             }
 
@@ -1726,10 +1720,7 @@ namespace System.Management.Automation
         /// </summary>
         internal void AbortOpen()
         {
-            System.Management.Automation.Remoting.Client.NamedPipeClientSessionTransportManager transportManager =
-                RunspacePool.RemoteRunspacePoolInternal.DataStructureHandler.TransportManager as System.Management.Automation.Remoting.Client.NamedPipeClientSessionTransportManager;
-
-            transportManager?.AbortConnect();
+            
         }
 
         #endregion Internal Methods

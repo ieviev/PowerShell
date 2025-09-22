@@ -1157,7 +1157,7 @@ namespace System.Management.Automation
             catch (Exception e)
             {
                 // TODO: Bug 251457. This is a workaround to unblock partners and find out the root cause.
-                Tracing.PSEtwLogProvider provider = new Tracing.PSEtwLogProvider();
+                Tracing.
 
                 provider.WriteEvent(PSEventId.Engine_Health,
                                     PSChannel.Analytic,

@@ -244,10 +244,7 @@ namespace System.Management.Automation.Remoting
                 if (!isContextReported)
                 {
                     isContextReported = true;
-                    PSEtwLog.LogAnalyticInformational(PSEventId.ReportContext,
-                        PSOpcode.Connect, PSTask.None,
-                        PSKeyword.ManagedPlugin | PSKeyword.UseAlwaysAnalytic,
-                        creationRequestDetails.ToString(), creationRequestDetails.ToString());
+                    
 
                     // TO BE FIXED - As soon as this API is called, WinRM service will send CommandResponse back and Signal is expected anytime
                     // If Signal comes and executes before registering the notification handle, cleanup will be messed

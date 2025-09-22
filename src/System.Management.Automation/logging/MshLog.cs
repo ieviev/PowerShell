@@ -138,7 +138,7 @@ namespace System.Management.Automation
                 //LogProvider sysLogProvider = new PSSysLogProvider();
                 //providers.Add(sysLogProvider);
 #else
-                //LogProvider etwLogProvider = new PSEtwLogProvider();
+                //LogProvider etwLogProvider = new 
                 //providers.Add(etwLogProvider);
 #endif
 

@@ -1525,16 +1525,7 @@ namespace System.Management.Automation
                                 SecuritySupportStrings.CouldNotEncryptContent,
                                 textToLog,
                                 error.ToString());
-                            PSEtwLog.LogOperationalError(
-                                id: PSEventId.ScriptBlock_Compile_Detail,
-                                opcode: PSOpcode.Create,
-                                task: PSTask.ExecuteCommand,
-                                keyword: PSKeyword.UseAlwaysOperational,
-                                0,
-                                0,
-                                errorMessage,
-                                scriptBlock.Id.ToString(),
-                                scriptBlock.File ?? string.Empty);
+                            
                         }
                         else
                         {
@@ -1552,29 +1543,11 @@ namespace System.Management.Automation
 
             if (scriptBlock._scriptBlockData.HasSuspiciousContent)
             {
-                PSEtwLog.LogOperationalWarning(
-                    id: PSEventId.ScriptBlock_Compile_Detail,
-                    opcode: PSOpcode.Create,
-                    task: PSTask.ExecuteCommand,
-                    keyword: PSKeyword.UseAlwaysOperational,
-                    segment + 1,
-                    segments,
-                    textToLog,
-                    scriptBlock.Id.ToString(),
-                    scriptBlock.File ?? string.Empty);
+                
             }
             else
             {
-                PSEtwLog.LogOperationalVerbose(
-                    id: PSEventId.ScriptBlock_Compile_Detail,
-                    opcode: PSOpcode.Create,
-                    task: PSTask.ExecuteCommand,
-                    keyword: PSKeyword.UseAlwaysOperational,
-                    segment + 1,
-                    segments,
-                    textToLog,
-                    scriptBlock.Id.ToString(),
-                    scriptBlock.File ?? string.Empty);
+                
             }
 
             return true;
@@ -1687,16 +1660,7 @@ namespace System.Management.Automation
                         string errorMessage = StringUtil.Format(
                             SecuritySupportStrings.CouldNotUseCertificate,
                             error.ToString());
-                        PSEtwLog.LogOperationalError(
-                            id: PSEventId.ScriptBlock_Compile_Detail,
-                            opcode: PSOpcode.Create,
-                            task: PSTask.ExecuteCommand,
-                            keyword: PSKeyword.UseAlwaysOperational,
-                            0,
-                            0,
-                            errorMessage,
-                            scriptBlock.Id.ToString(),
-                            scriptBlock.File ?? string.Empty);
+                        
 
                         return true;
                     }
@@ -1722,16 +1686,7 @@ namespace System.Management.Automation
                             string errorMessage = StringUtil.Format(
                                 SecuritySupportStrings.CertificateContainsPrivateKey,
                                 certificateForLog);
-                            PSEtwLog.LogOperationalError(
-                                id: PSEventId.ScriptBlock_Compile_Detail,
-                                opcode: PSOpcode.Create,
-                                task: PSTask.ExecuteCommand,
-                                keyword: PSKeyword.UseAlwaysOperational,
-                                0,
-                                0,
-                                errorMessage,
-                                scriptBlock.Id.ToString(),
-                                scriptBlock.File ?? string.Empty);
+                            
                         }
                     }
                 }
@@ -2112,13 +2067,7 @@ namespace System.Management.Automation
 
             if (GetScriptBlockLoggingSetting()?.EnableScriptBlockInvocationLogging == true)
             {
-                PSEtwLog.LogOperationalVerbose(
-                    id: PSEventId.ScriptBlock_Invoke_Start_Detail,
-                    opcode: PSOpcode.Create,
-                    task: PSTask.CommandStart,
-                    keyword: PSKeyword.UseAlwaysOperational,
-                    scriptBlock.Id.ToString(),
-                    runspaceId.ToString());
+                
             }
         }
 
@@ -2126,13 +2075,7 @@ namespace System.Management.Automation
         {
             if (GetScriptBlockLoggingSetting()?.EnableScriptBlockInvocationLogging == true)
             {
-                PSEtwLog.LogOperationalVerbose(
-                    id: PSEventId.ScriptBlock_Invoke_Complete_Detail,
-                    opcode: PSOpcode.Create,
-                    task: PSTask.CommandStop,
-                    keyword: PSKeyword.UseAlwaysOperational,
-                    scriptBlock.Id.ToString(),
-                    runspaceId.ToString());
+                
             }
         }
 
