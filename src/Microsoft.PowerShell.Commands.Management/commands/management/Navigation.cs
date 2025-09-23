@@ -579,14 +579,8 @@ namespace Microsoft.PowerShell.Commands
                 case LiteralPathParameterSet:
                     try
                     {
-                        // Change the current working directory
-                        if (string.IsNullOrEmpty(Path))
-                        {
-                            // If user just typed 'cd', go to FileSystem provider home directory
-                            Path = SessionState.Internal.GetSingleProvider(Commands.FileSystemProvider.ProviderName).Home;
-                        }
-
                         result = SessionState.Path.SetLocation(Path, CmdletProviderContext, ParameterSetName == LiteralPathParameterSet);
+                        System.Environment.CurrentDirectory = System.IO.Path.GetRelativePath(System.Environment.CurrentDirectory, Path);
                     }
                     catch (PSNotSupportedException notSupported)
                     {
