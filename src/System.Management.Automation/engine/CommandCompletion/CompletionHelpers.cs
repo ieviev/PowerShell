@@ -80,15 +80,15 @@ namespace System.Management.Automation
         /// </remarks>
         internal static string NormalizeToExpandableString(string value)
             => value
-                .Replace("\r", "`r")
-                .Replace("\n", "`n")
-                .Replace("\t", "`t")
-                .Replace("\0", "`0")
-                .Replace("\a", "`a")
-                .Replace("\b", "`b")
-                .Replace("\u001b", "`e")
-                .Replace("\f", "`f")
-                .Replace("\v", "`v");
+                .Replace("\r", "\\r")
+                .Replace("\n", "\\n")
+                .Replace("\t", "\\t")
+                .Replace("\0", "\\0")
+                .Replace("\a", "\\a")
+                .Replace("\b", "\\b")
+                .Replace("\u001b", "\\e")
+                .Replace("\f", "\\f")
+                .Replace("\v", "\\v");
 
         
         /// <param name="value">The input string to check for a match.</param>
@@ -243,7 +243,7 @@ namespace System.Management.Automation
         /// the Windows-style newline string ("`r`n"); otherwise, <c>false</c>.
         /// </returns>
         private static bool ContainsEscapedNewlineString(string text)
-            => text.Contains("`n", StringComparison.Ordinal);
+            => text.Contains("\\n", StringComparison.Ordinal);
 
         private static bool ContainsCharsToCheck(ReadOnlySpan<char> text)
             => text.ContainsAny(s_defaultCharsToCheck);
@@ -260,7 +260,6 @@ namespace System.Management.Automation
         /// </returns>
         internal static string QuoteCompletionText(string completionText, string quote)
         {
-            // Escaped newlines e.g. `r`n need be surrounded with double quotes
             if (ContainsEscapedNewlineString(completionText))
             {
                 return DoubleQuote + completionText + DoubleQuote;

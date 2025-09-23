@@ -37,14 +37,14 @@ namespace System.Management.Automation
     public sealed class WildcardPattern
     {
         // char that escapes special chars
-        private const char escapeChar = '`';
+        private const char escapeChar = '\\';
 
         // Threshold for stack allocation.
         // The size is less than MaxShortPath = 260.
         private const int StackAllocThreshold = 256;
 
         // chars that are considered special in a wildcard pattern
-        private const string SpecialChars = "*?[]`";
+        private const string SpecialChars = "*?[]\\";
 
         // we convert a wildcard pattern to a predicate
         private Predicate<string> _isMatch;
@@ -518,7 +518,7 @@ namespace System.Management.Automation
                         characterRangeContents = null;
                         characterRangeOperators = null;
                     }
-                    else if (c != '`' || previousCharacterIsAnEscape)
+                    else if (c != '\\' || previousCharacterIsAnEscape)
                     {
                         characterRangeContents.Append(c);
                         characterRangeOperators.Append((c == '-') && !previousCharacterIsAnEscape ? '-' : ' ');
@@ -543,13 +543,13 @@ namespace System.Management.Automation
                         characterRangeOperators = new StringBuilder();
                         previousCharacterStartedBracketExpression = true;
                     }
-                    else if (c != '`' || previousCharacterIsAnEscape)
+                    else if (c != '\\' || previousCharacterIsAnEscape)
                     {
                         parser.AppendLiteralCharacter(c);
                     }
                 }
 
-                previousCharacterIsAnEscape = (c == '`') && (!previousCharacterIsAnEscape);
+                previousCharacterIsAnEscape = (c == '\\') && (!previousCharacterIsAnEscape);
             }
 
             if (insideCharacterRange)
@@ -559,7 +559,7 @@ namespace System.Management.Automation
 
             if (previousCharacterIsAnEscape)
             {
-                if (!pattern.Pattern.Equals("`", StringComparison.Ordinal)) // Win7 backcompatibility requires treating '`' pattern as '' pattern
+                if (!pattern.Pattern.Equals("\\", StringComparison.Ordinal)) // Win7 backcompatibility requires treating '`' pattern as '' pattern
                 {
                     parser.AppendLiteralCharacter(pattern.Pattern[pattern.Pattern.Length - 1]);
                 }

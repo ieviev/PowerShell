@@ -140,12 +140,8 @@ namespace Microsoft.PowerShell.Commands.Utility
     
     public sealed class SeparatorArgumentCompleter : IArgumentCompleter
     {
-        private const string NewLineText =
-#if UNIX
-        "`n";
-#else
-        "`r`n";
-#endif
+        private const string NewLineText = "\\n";
+
 
         private static readonly CompletionHelpers.CompletionDisplayInfoMapper SeparatorDisplayInfoMapper = separator => separator switch
         {
@@ -207,13 +203,9 @@ namespace Microsoft.PowerShell.Commands.Utility
         {
             "[{0}]",
             "{0:N2}",
-#if UNIX
-            "`n    `${0}",
-            "`n    [string] `${0}",
-#else
-            "`r`n    `${0}",
-            "`r`n    [string] `${0}",
-#endif
+            "\\n    `${0}",
+            "\\n    [string] `${0}",
+
         };
 
         

@@ -97,7 +97,7 @@ namespace System.Management.Automation
         internal const string True = "true";
 
         
-        internal const char EscapeCharacter = '`';
+        internal const char EscapeCharacter = '\\';
 
         
         internal const string DefaultCmdletAdapter = "Microsoft.PowerShell.Cmdletization.Cim.CimCmdletAdapter, Microsoft.PowerShell.Commands.Management, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35";

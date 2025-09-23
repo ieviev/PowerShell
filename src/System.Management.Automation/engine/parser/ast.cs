@@ -6704,9 +6704,9 @@ namespace System.Management.Automation.Language
                 throw PSTraceSource.NewArgumentException(nameof(name));
             }
 
-            if (name.Contains('`'))
+            if (name.Contains('\\'))
             {
-                name = name.Replace("``", "`");
+                name = name.Replace("\\\\", "\\");
             }
 
             this._extent = extent;

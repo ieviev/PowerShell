@@ -2316,7 +2316,7 @@ namespace System.Management.Automation.Language
                         continue;
                     }
                 }
-                else if (c == '`')
+                else if (c == '\\')
                 {
                     // If end of input, go ahead and append the backtick and issue an error later
                     char c1 = PeekChar();
@@ -2518,8 +2518,6 @@ namespace System.Management.Automation.Language
             }
             else
             {
-                // Unget the character, it might be a '$' or '`' and if we're in a expandable here string, the caller must
-                // handle the character.
                 UngetChar();
             }
 
@@ -2652,7 +2650,7 @@ namespace System.Management.Automation.Language
                             continue;
                         }
                     }
-                    else if (c == '`')
+                    else if (c == '\\')
                     {
                         // If end of input, go ahead and append the backtick and issue an error later
                         char c1 = PeekChar();
@@ -2734,7 +2732,7 @@ namespace System.Management.Automation.Language
                     {
                         case '}':
                             goto end_braced_variable_scan;
-                        case '`':
+                        case '\\':
                             {
                                 char c1 = GetChar();
                                 if (c1 == '\0' && AtEof())
@@ -3256,7 +3254,7 @@ namespace System.Management.Automation.Language
             char c = GetChar();
             for (; !c.ForceStartNewToken(); c = GetChar())
             {
-                if (c == '`')
+                if (c == '\\')
                 {
                     // If end of input, we'll just append the backtick - there should be no error.
                     char c1 = PeekChar();
@@ -4301,10 +4299,10 @@ namespace System.Management.Automation.Language
                 {
                     case '.':
                     case '`':
+                    case '\\':
                     case '_':
                     case '+':
                     case '#':
-                    case '\\':
                         continue;
                     default:
                         if (char.IsLetterOrDigit(c))
@@ -4517,7 +4515,7 @@ namespace System.Management.Automation.Language
                     NormalizeCRLF(c);
                     goto case '\n';
 
-                case '`':
+                case '\\':
                     c1 = GetChar();
                     if (c1 == '\r')
                     {

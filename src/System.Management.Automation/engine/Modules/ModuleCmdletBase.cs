@@ -6858,7 +6858,6 @@ namespace Microsoft.PowerShell.Commands
                     case '|':
                     case '?':
                     case '@':
-                    case '`':
                     case '*':
                     case '%':
                     case '+':

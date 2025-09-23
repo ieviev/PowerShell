@@ -4878,27 +4878,27 @@ namespace System.Management.Automation
                         }
                         else
                         {
-                            backtickCount = sb[^1] == '`' ? 4 : 2;
+                            backtickCount = sb[^1] == '\\' ? 4 : 2;
                         }
 
-                        _ = sb.Append('`', backtickCount);
+                        _ = sb.Append('\\', backtickCount);
                         quotesAreNeeded = true;
                     }
                     break;
 
-                case '`':
+                case '\\':
                     // Literal backtick needs to be escaped to not be treated as an escape character
                     if (useSingleQuoteEscapeRules)
                     {
                         if (!literalPath)
                         {
-                            _ = sb.Append('`');
+                            _ = sb.Append('\\');
                         }
                     }
                     else
                     {
-                        int backtickCount = !literalPath && sb[^1] == '`' ? 3 : 1;
-                        _ = sb.Append('`', backtickCount);
+                        int backtickCount = !literalPath && sb[^1] == '\\' ? 3 : 1;
+                        _ = sb.Append('\\', backtickCount);
                     }
 
                     if (stringType is StringConstantType.BareWord or StringConstantType.DoubleQuoted)
@@ -4911,7 +4911,7 @@ namespace System.Management.Automation
                     // $ needs to be escaped so following chars are not parsed as a variable/subexpression
                     if (!useSingleQuoteEscapeRules)
                     {
-                        _ = sb.Append('`');
+                        _ = sb.Append('\\');
                     }
 
                     if (stringType is StringConstantType.BareWord or StringConstantType.DoubleQuoted)
@@ -4939,7 +4939,7 @@ namespace System.Management.Automation
                     else if (path[index].IsDoubleQuote())
                     {
                         // Double quoted or bareword with variables input string. Need to escape double quotes.
-                        _ = sb.Append('`');
+                        _ = sb.Append('\\');
                         quotesAreNeeded = true;
                     }
                     break;
@@ -7062,7 +7062,7 @@ namespace System.Management.Automation
 
             internal static string RemoveBackTick(string typeName)
             {
-                var backtick = typeName.LastIndexOf('`');
+                var backtick = typeName.LastIndexOf('\\');
                 return backtick == -1 ? typeName : typeName.Substring(0, backtick);
             }
         }
