@@ -8,16 +8,12 @@ using Dbg = System.Management.Automation;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Performs enum minimum disambiguation.
-    /// </summary>
+    
     internal static class EnumMinimumDisambiguation
     {
         #region Constructors
 
-        /// <summary>
-        /// Initialize the dictionary for special cases of minimum disambiguation.
-        /// </summary>
+        
         static EnumMinimumDisambiguation()
         {
             // Add special minimum disambiguation cases here for certain enum types.
@@ -30,9 +26,7 @@ namespace System.Management.Automation
 
         #endregion
 
-        /// <summary>
-        /// Perform disambiguation on enum names.
-        /// </summary>
+        
         /// <returns>Complete enum name after disambiguation.</returns>
         internal static string EnumDisambiguate(string text, Type enumType)
         {
@@ -98,9 +92,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Produces a string that contains all the enumerator names in an enum type.
-        /// </summary>
+        
         /// <param name="enumType"></param>
         /// <returns></returns>
         internal static string EnumAllValues(Type enumType)

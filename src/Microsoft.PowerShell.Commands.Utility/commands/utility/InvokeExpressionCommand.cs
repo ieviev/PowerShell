@@ -8,9 +8,7 @@ using System.Management.Automation.Security;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// Class implementing Invoke-Expression.
-    /// </summary>
+    
     [Cmdlet(VerbsLifecycle.Invoke, "Expression", HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097030")]
     public sealed
     class
@@ -18,18 +16,14 @@ namespace Microsoft.PowerShell.Commands
     {
         #region parameters
 
-        /// <summary>
-        /// Command to execute.
-        /// </summary>
+        
         [Parameter(Position = 0, Mandatory = true, ValueFromPipeline = true)]
         [ValidateTrustedData]
         public string Command { get; set; }
 
         #endregion parameters
 
-        /// <summary>
-        /// For each record, execute it, and push the results into the success stream.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             Diagnostics.Assert(Command != null, "Command is null");

@@ -16,12 +16,7 @@ using System.Threading.Tasks;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// Microsoft.PowerShell.Commands.WebResponse has a public property RawContentStream
-    /// which is of type MemoryStream. We shipped like that in PowerShell 3. Creating
-    /// this class as a wrapper to MemoryStream to lazily initialize. Otherwise, the
-    /// content will unnecessarily be read even if there are no consumers for it.
-    /// </summary>
+    
     internal sealed class WebResponseContentMemoryStream : MemoryStream
     {
         #region Data
@@ -36,9 +31,7 @@ namespace Microsoft.PowerShell.Commands
         #endregion Data
 
         #region Constructors
-        /// <summary>
-        /// Initializes a new instance of the <see cref="WebResponseContentMemoryStream"/> class.
-        /// </summary>
+        
         /// <param name="stream">Response stream.</param>
         /// <param name="initialCapacity">Presize the memory stream.</param>
         /// <param name="cmdlet">Owner cmdlet if any.</param>
@@ -55,20 +48,16 @@ namespace Microsoft.PowerShell.Commands
         }
         #endregion Constructors
 
-        /// <summary>
-        /// </summary>
+        
         public override bool CanRead => true;
 
-        /// <summary>
-        /// </summary>
+        
         public override bool CanSeek => true;
 
-        /// <summary>
-        /// </summary>
+        
         public override bool CanWrite => true;
 
-        /// <summary>
-        /// </summary>
+        
         public override long Length
         {
             get
@@ -78,8 +67,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="destination"></param>
         /// <param name="bufferSize"></param>
         /// <param name="cancellationToken"></param>
@@ -90,8 +78,7 @@ namespace Microsoft.PowerShell.Commands
             return base.CopyToAsync(destination, bufferSize, cancellationToken);
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="buffer"></param>
         /// <param name="offset"></param>
         /// <param name="count"></param>
@@ -102,8 +89,7 @@ namespace Microsoft.PowerShell.Commands
             return base.Read(buffer, offset, count);
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="buffer"></param>
         /// <param name="offset"></param>
         /// <param name="count"></param>
@@ -115,8 +101,7 @@ namespace Microsoft.PowerShell.Commands
             return base.ReadAsync(buffer, offset, count, cancellationToken);
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <returns></returns>
         public override int ReadByte()
         {
@@ -124,8 +109,7 @@ namespace Microsoft.PowerShell.Commands
             return base.ReadByte();
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="value"></param>
         public override void SetLength(long value)
         {
@@ -133,8 +117,7 @@ namespace Microsoft.PowerShell.Commands
             base.SetLength(value);
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <returns></returns>
         public override byte[] ToArray()
         {
@@ -142,8 +125,7 @@ namespace Microsoft.PowerShell.Commands
             return base.ToArray();
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="buffer"></param>
         /// <param name="offset"></param>
         /// <param name="count"></param>
@@ -153,8 +135,7 @@ namespace Microsoft.PowerShell.Commands
             base.Write(buffer, offset, count);
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="buffer"></param>
         /// <param name="offset"></param>
         /// <param name="count"></param>
@@ -166,8 +147,7 @@ namespace Microsoft.PowerShell.Commands
             return base.WriteAsync(buffer, offset, count, cancellationToken);
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="value"></param>
         public override void WriteByte(byte value)
         {
@@ -175,8 +155,7 @@ namespace Microsoft.PowerShell.Commands
             base.WriteByte(value);
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="stream"></param>
         public override void WriteTo(Stream stream)
         {
@@ -184,8 +163,7 @@ namespace Microsoft.PowerShell.Commands
             base.WriteTo(stream);
         }
 
-        /// <summary>
-        /// </summary>
+        
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
@@ -402,10 +380,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Saves content from stream into filePath.
-        /// Caller need to ensure <paramref name="stream"/> position is properly set.
-        /// </summary>
+        
         /// <param name="stream">Input stream.</param>
         /// <param name="filePath">Output file name.</param>
         /// <param name="cmdlet">Current cmdlet (Invoke-WebRequest or Invoke-RestMethod).</param>

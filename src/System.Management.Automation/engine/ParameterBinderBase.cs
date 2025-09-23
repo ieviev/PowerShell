@@ -16,43 +16,27 @@ using Dbg = System.Management.Automation.Diagnostics;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Flags.
-    /// </summary>
+    
     [Flags]
     internal enum ParameterBindingFlags
     {
-        /// <summary>
-        /// No flags specified.
-        /// </summary>
+        
         None = 0,
 
-        /// <summary>
-        /// Set when the argument should be converted to the parameter type.
-        /// </summary>
+        
         ShouldCoerceType = 0x01,
 
-        /// <summary>
-        /// Set when the argument should not be validated or recorded in BoundParameters.
-        /// </summary>
+        
         IsDefaultValue = 0x02,
 
-        /// <summary>
-        /// Set when script blocks can be bound as a script block parameter instead of a normal argument.
-        /// </summary>
+        
         DelayBindScriptBlock = 0x04,
 
-        /// <summary>
-        /// Set when an exception will be thrown if a matching parameter could not be found.
-        /// </summary>
+        
         ThrowOnParameterNotFound = 0x08,
     }
 
-    /// <summary>
-    /// An abstract class used by the CommandProcessor to bind parameters to a bindable object.
-    /// Derived classes are used to provide specific binding behavior for different object types,
-    /// like Cmdlet, PsuedoParameterCollection, and dynamic parameter objects.
-    /// </summary>
+    
     [DebuggerDisplay("Command = {command}")]
     internal abstract class ParameterBinderBase
     {
@@ -71,10 +55,7 @@ namespace System.Management.Automation
 
         #region ctor
 
-        /// <summary>
-        /// Constructs the parameter binder with the specified type metadata. The binder is only valid
-        /// for a single instance of a bindable object and only for the duration of a command.
-        /// </summary>
+        
         /// <param name="target">
         /// The target object that the parameter values will be bound to.
         /// </param>
@@ -107,10 +88,7 @@ namespace System.Management.Automation
             _isTranscribing = context.EngineHostInterface.UI.IsTranscribing;
         }
 
-        /// <summary>
-        /// Constructs the parameter binder with the specified type metadata. The binder is only valid
-        /// for a single instance of a bindable object and only for the duration of a command.
-        /// </summary>
+        
         /// <param name="invocationInfo">
         /// The invocation information for the code that is being bound.
         /// </param>
@@ -141,9 +119,7 @@ namespace System.Management.Automation
 
         #region internal members
 
-        /// <summary>
-        /// Gets or sets the bindable object that the binder will bind parameters to.
-        /// </summary>
+        
         /// <value></value>
         internal object Target
         {
@@ -162,14 +138,10 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// The bindable object that parameters will be bound to.
-        /// </summary>
+        
         private object _target;
 
-        /// <summary>
-        /// Holds the set of parameters that have been bound from the command line...
-        /// </summary>
+        
         internal CommandLineParameters CommandLineParameters
         {
             get { return _commandLineParameters ??= new CommandLineParameters(); }
@@ -180,22 +152,15 @@ namespace System.Management.Automation
 
         private CommandLineParameters _commandLineParameters;
 
-        /// <summary>
-        /// If this is true, then we want to record the list of bound parameters...
-        /// </summary>
+        
         internal bool RecordBoundParameters = true;
 
-        /// <summary>
-        /// Full Qualified ID for the obsolete parameter warning.
-        /// </summary>
+        
         internal const string FQIDParameterObsolete = "ParameterObsolete";
 
         #region Parameter default values
 
-        /// <summary>
-        /// Derived classes must override this method to get the default parameter
-        /// value so that it can be restored between pipeline input.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the parameter to get the default value of.
         /// </param>
@@ -208,10 +173,7 @@ namespace System.Management.Automation
 
         #region Parameter binding
 
-        /// <summary>
-        /// Derived classes define this method to bind the specified value
-        /// to the specified parameter.
-        /// </summary>
+        
         /// <param name="name">
         ///     The name of the parameter to bind the value to.
         /// </param>
@@ -288,11 +250,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Does all the type coercion, data generation, and validation necessary to bind the
-        /// parameter, then calls the protected BindParameter method to have
-        /// the derived class do the actual binding.
-        /// </summary>
+        
         /// <param name="parameter">
         /// The parameter to be bound.
         /// </param>
@@ -666,10 +624,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// This method ensures that if the parameter is mandatory, and AllowNull, AllowEmptyString,
-        /// and/or AllowEmptyCollection is not specified, then argument is not null or empty.
-        /// </summary>
+        
         /// <param name="parameter">
         /// The argument token.
         /// </param>
@@ -901,9 +856,7 @@ namespace System.Management.Automation
 
         #endregion Parameter binding
 
-        /// <summary>
-        /// The invocation information for the code that is being bound.
-        /// </summary>
+        
         private readonly InvocationInfo _invocationInfo;
 
         internal InvocationInfo InvocationInfo
@@ -914,9 +867,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// The context of the currently running engine.
-        /// </summary>
+        
         private readonly ExecutionContext _context;
 
         internal ExecutionContext Context
@@ -927,9 +878,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// An instance of InternalCommand that the binder is binding to.
-        /// </summary>
+        
         private readonly InternalCommand _command;
 
         internal InternalCommand Command
@@ -940,9 +889,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// The engine APIs that need to be passed the attributes when evaluated.
-        /// </summary>
+        
         private readonly EngineIntrinsics _engine;
 
         private readonly bool _isTranscribing;
@@ -951,9 +898,7 @@ namespace System.Management.Automation
 
         #region Private helpers
 
-        /// <summary>
-        /// Coerces the argument type to the parameter value type as needed.
-        /// </summary>
+        
         /// <param name="argument">
         /// The argument as was specified by the command line.
         /// </param>
@@ -1409,10 +1354,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Takes the current value specified and converts or adds it to
-        /// a collection of the appropriate type.
-        /// </summary>
+        
         /// <param name="argument">
         /// The argument the current value comes from. Used for error reporting.
         /// </param>
@@ -1936,13 +1878,7 @@ namespace System.Management.Automation
         #endregion private helpers
     }
 
-    /// <summary>
-    /// Represents an unbound parameter object in the engine. It's similar to
-    /// AutomationNull.Value however AutomationNull.Value as a parameter value
-    /// is used to say "use the default value for this object" whereas UnboundParameter
-    /// says "this parameter is unbound, use the default only if the target type
-    /// supports permits this."
-    /// </summary>
+    
     /// <remarks>It's a singleton class. Sealed to prevent subclassing</remarks>
     internal sealed class UnboundParameter
     {
@@ -1961,9 +1897,7 @@ namespace System.Management.Automation
 
         #region public_property
 
-        /// <summary>
-        /// Represents an object of the same class (singleton class).
-        /// </summary>
+        
         internal static object Value { get; } = new object();
 
         #endregion public_property

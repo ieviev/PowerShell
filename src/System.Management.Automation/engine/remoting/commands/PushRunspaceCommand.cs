@@ -19,9 +19,7 @@ using Dbg = System.Management.Automation.Diagnostics;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// Enter-PSSession cmdlet.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Enter, "PSSession", DefaultParameterSetName = "ComputerName",
         HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096695", RemotingCapability = RemotingCapability.OwnedByCommand)]
     public class EnterPSSessionCommand : PSRemotingBaseCmdlet
@@ -36,9 +34,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Members
 
-        /// <summary>
-        /// Disable ThrottleLimit parameter inherited from base class.
-        /// </summary>
+        
         public new int ThrottleLimit { get { return 0; } set { } }
 
         private ObjectStream _stream;
@@ -50,17 +46,13 @@ namespace Microsoft.PowerShell.Commands
 
         #region SSH Parameter Set
 
-        /// <summary>
-        /// Host name for an SSH remote connection.
-        /// </summary>
+        
         [Parameter(Position = 0, Mandatory = true, ValueFromPipeline = true,
             ParameterSetName = PSRemotingBaseCmdlet.SSHHostParameterSet)]
         [ValidateNotNullOrEmpty]
         public new string HostName { get; set; }
 
-        /// <summary>
-        /// Gets or sets the Hashtable containing options to be passed to OpenSSH.
-        /// </summary>
+        
         [Parameter(ParameterSetName = PSRemotingBaseCmdlet.SSHHostParameterSet)]
         [ValidateNotNullOrEmpty]
         public override Hashtable Options 
@@ -78,90 +70,65 @@ namespace Microsoft.PowerShell.Commands
 
         #endregion
 
-        /// <summary>
-        /// Computer name parameter.
-        /// </summary>
+        
         [Parameter(Position = 0, Mandatory = true, ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true, ParameterSetName = ComputerNameParameterSet)]
         [Alias("Cn")]
         [ValidateNotNullOrEmpty]
         public new string ComputerName { get; set; }
 
-        /// <summary>
-        /// Runspace parameter.
-        /// </summary>
+        
         [Parameter(Position = 0, ValueFromPipelineByPropertyName = true,
             ValueFromPipeline = true, ParameterSetName = SessionParameterSet)]
         [ValidateNotNullOrEmpty]
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Runspace")]
         public new PSSession Session { get; set; }
 
-        /// <summary>
-        /// ConnectionUri parameter.
-        /// </summary>
+        
         [Parameter(Position = 1, ValueFromPipelineByPropertyName = true,
             ParameterSetName = UriParameterSet)]
         [ValidateNotNullOrEmpty]
         [Alias("URI", "CU")]
         public new Uri ConnectionUri { get; set; }
 
-        /// <summary>
-        /// RemoteRunspaceId of the remote runspace info object.
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true,
         ParameterSetName = InstanceIdParameterSet)]
         [ValidateNotNull]
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Runspace")]
         public Guid InstanceId { get; set; }
 
-        /// <summary>
-        /// SessionId of the remote runspace info object.
-        /// </summary>
+        
         [Parameter(Position = 0,
             ValueFromPipelineByPropertyName = true,
              ParameterSetName = IdParameterSet)]
         [ValidateNotNull]
         public int Id { get; set; }
 
-        /// <summary>
-        /// Name of the remote runspace info object.
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true,
         ParameterSetName = NameParameterSet)]
         public string Name { get; set; }
 
-        /// <summary>
-        /// When set and in loopback scenario (localhost) this enables creation of WSMan
-        /// host process with the user interactive token, allowing PowerShell script network access,
-        /// i.e., allows going off box.  When this property is true and a PSSession is disconnected,
-        /// reconnection is allowed only if reconnecting from a PowerShell session on the same box.
-        /// </summary>
+        
         [Parameter(ParameterSetName = ComputerNameParameterSet)]
         [Parameter(ParameterSetName = UriParameterSet)]
         public SwitchParameter EnableNetworkAccess { get; set; }
 
-        /// <summary>
-        /// Virtual machine ID.
-        /// </summary>
+        
         [ValidateNotNullOrEmpty]
         [Parameter(Position = 0, Mandatory = true, ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true, ParameterSetName = VMIdParameterSet)]
         [Alias("VMGuid")]
         public new Guid VMId { get; set; }
 
-        /// <summary>
-        /// Virtual machine name.
-        /// </summary>
+        
         [ValidateNotNullOrEmpty]
         [Parameter(Position = 0, Mandatory = true, ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true, ParameterSetName = VMNameParameterSet)]
         public new string VMName { get; set; }
 
-        /// <summary>
-        /// Specifies the credentials of the user to impersonate in the
-        /// virtual machine. If this parameter is not specified then the
-        /// credentials of the current user process will be assumed.
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true,
                    ParameterSetName = PSRemotingBaseCmdlet.ComputerNameParameterSet)]
         [Parameter(ValueFromPipelineByPropertyName = true,
@@ -178,23 +145,13 @@ namespace Microsoft.PowerShell.Commands
             set { base.Credential = value; }
         }
 
-        /// <summary>
-        /// The Id of the target container.
-        /// </summary>
+        
         [ValidateNotNullOrEmpty]
         [Parameter(Position = 0, Mandatory = true, ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true, ParameterSetName = ContainerIdParameterSet)]
         public new string ContainerId { get; set; }
 
-        /// <summary>
-        /// For WSMan sessions:
-        /// If this parameter is not specified then the value specified in
-        /// the environment variable DEFAULTREMOTESHELLNAME will be used. If
-        /// this is not set as well, then Microsoft.PowerShell is used.
-        ///
-        /// For VM/Container sessions:
-        /// If this parameter is not specified then no configuration is used.
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true,
                    ParameterSetName = EnterPSSessionCommand.ComputerNameParameterSet)]
         [Parameter(ValueFromPipelineByPropertyName = true,
@@ -209,9 +166,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Suppress PSRemotingBaseCmdlet SSH hash parameter set
 
-        /// <summary>
-        /// Suppress SSHConnection parameter set.
-        /// </summary>
+        
         public override Hashtable[] SSHConnection
         {
             get { return null; }
@@ -223,9 +178,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Overrides
 
-        /// <summary>
-        /// Resolves shellname and appname.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             base.BeginProcessing();
@@ -246,9 +199,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Process record.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             // Push the remote runspace on the local host.
@@ -503,10 +454,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// This method will until the runspace is opened and warnings if any
-        /// are reported.
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             if (_stream != null)
@@ -529,8 +477,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// </summary>
+        
         protected override void StopProcessing()
         {
             var remoteRunspace = _tempRunspace;
@@ -564,9 +511,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Private Methods
 
-        /// <summary>
-        /// Create temporary remote runspace.
-        /// </summary>
+        
         private RemoteRunspace CreateTemporaryRemoteRunspace(PSHost host, WSManConnectionInfo connectionInfo)
         {
             // Create and open the runspace.
@@ -610,9 +555,7 @@ namespace Microsoft.PowerShell.Commands
             return remoteRunspace;
         }
 
-        /// <summary>
-        /// Write error create remote runspace failed.
-        /// </summary>
+        
         private void WriteErrorCreateRemoteRunspaceFailed(Exception exception, object argument)
         {
             // set the transport message in the error detail so that
@@ -646,9 +589,7 @@ namespace Microsoft.PowerShell.Commands
             WriteError(errorRecord);
         }
 
-        /// <summary>
-        /// Write invalid argument error.
-        /// </summary>
+        
         private void WriteInvalidArgumentError(PSRemotingErrorId errorId, string resourceString, object errorArgument)
         {
             string message = GetMessage(resourceString, errorArgument);
@@ -656,10 +597,7 @@ namespace Microsoft.PowerShell.Commands
                 ErrorCategory.InvalidArgument, errorArgument));
         }
 
-        /// <summary>
-        /// When the client remote session reports a URI redirection, this method will report the
-        /// message to the user as a Warning using Host method calls.
-        /// </summary>
+        
         /// <param name="sender"></param>
         /// <param name="eventArgs"></param>
         private void HandleURIDirectionReported(object sender, RemoteDataEventArgs<Uri> eventArgs)
@@ -669,9 +607,7 @@ namespace Microsoft.PowerShell.Commands
             _stream.Write(streamObject);
         }
 
-        /// <summary>
-        /// Create runspace when computer name parameter specified.
-        /// </summary>
+        
         private RemoteRunspace CreateRunspaceWhenComputerNameParameterSpecified()
         {
             RemoteRunspace remoteRunspace = null;
@@ -718,9 +654,7 @@ namespace Microsoft.PowerShell.Commands
             return remoteRunspace;
         }
 
-        /// <summary>
-        /// Create runspace when uri parameter specified.
-        /// </summary>
+        
         private RemoteRunspace CreateRunspaceWhenUriParameterSpecified()
         {
             RemoteRunspace remoteRunspace = null;
@@ -767,9 +701,7 @@ namespace Microsoft.PowerShell.Commands
             return remoteRunspace;
         }
 
-        /// <summary>
-        /// Get runspace matching condition.
-        /// </summary>
+        
         private RemoteRunspace GetRunspaceMatchingCondition(
             Predicate<PSSession> condition,
             PSRemotingErrorId tooFew,
@@ -800,9 +732,7 @@ namespace Microsoft.PowerShell.Commands
             return remoteRunspace;
         }
 
-        /// <summary>
-        /// Get runspace matching runspace id.
-        /// </summary>
+        
         private RemoteRunspace GetRunspaceMatchingRunspaceId(Guid remoteRunspaceId)
         {
             return GetRunspaceMatchingCondition(
@@ -814,9 +744,7 @@ namespace Microsoft.PowerShell.Commands
                 errorArgument: remoteRunspaceId);
         }
 
-        /// <summary>
-        /// Get runspace matching session id.
-        /// </summary>
+        
         private RemoteRunspace GetRunspaceMatchingSessionId(int sessionId)
         {
             return GetRunspaceMatchingCondition(
@@ -828,9 +756,7 @@ namespace Microsoft.PowerShell.Commands
                 errorArgument: sessionId);
         }
 
-        /// <summary>
-        /// Get runspace matching name.
-        /// </summary>
+        
         private RemoteRunspace GetRunspaceMatchingName(string name)
         {
             return GetRunspaceMatchingCondition(
@@ -874,10 +800,7 @@ namespace Microsoft.PowerShell.Commands
             return (ParameterSetName == ContainerIdParameterSet);
         }
 
-        /// <summary>
-        /// Whether the input is a session object or property that corresponds to
-        /// VM or container.
-        /// </summary>
+        
         private bool IsParameterSetForVMContainerSession()
         {
             RemoteRunspace remoteRunspace = null;
@@ -921,9 +844,7 @@ namespace Microsoft.PowerShell.Commands
             return false;
         }
 
-        /// <summary>
-        /// Create runspace for VM session.
-        /// </summary>
+        
         private RemoteRunspace GetRunspaceForVMSession()
         {
             RemoteRunspace remoteRunspace = null;
@@ -1094,9 +1015,7 @@ namespace Microsoft.PowerShell.Commands
             return remoteRunspace;
         }
 
-        /// <summary>
-        /// Create temporary remote runspace.
-        /// </summary>
+        
         private static RemoteRunspace CreateTemporaryRemoteRunspaceForPowerShellDirect(PSHost host, RunspaceConnectionInfo connectionInfo)
         {
             // Create and open the runspace.
@@ -1125,9 +1044,7 @@ namespace Microsoft.PowerShell.Commands
             return remoteRunspace;
         }
 
-        /// <summary>
-        /// Set prompt for VM/Container sessions.
-        /// </summary>
+        
         private void SetRunspacePrompt(RemoteRunspace remoteRunspace)
         {
             if (IsParameterSetForVM() ||
@@ -1192,9 +1109,7 @@ namespace Microsoft.PowerShell.Commands
             return;
         }
 
-        /// <summary>
-        /// Create runspace for container session.
-        /// </summary>
+        
         private RemoteRunspace GetRunspaceForContainerSession()
         {
             RemoteRunspace remoteRunspace = null;
@@ -1270,9 +1185,7 @@ namespace Microsoft.PowerShell.Commands
             return remoteRunspace;
         }
 
-        /// <summary>
-        /// Create remote runspace for SSH session.
-        /// </summary>
+        
         private RemoteRunspace GetRunspaceForSSHSession()
         {
             ParseSshHostName(HostName, out string host, out string userName, out int port);

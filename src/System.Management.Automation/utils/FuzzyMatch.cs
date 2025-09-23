@@ -15,17 +15,13 @@ namespace System.Management.Automation
             MinimumDistance = minimumDistance;
         }
 
-        /// <summary>
-        /// Determine if the two strings are considered similar.
-        /// </summary>
+        
         internal bool IsFuzzyMatch(string candidate, string pattern)
         {
             return IsFuzzyMatch(candidate, pattern, out _);
         }
 
-        /// <summary>
-        /// Determine if the two strings are considered similar, and return the similarity score.
-        /// </summary>
+        
         /// <param name="candidate">The candidate string to be compared.</param>
         /// <param name="pattern">The pattern string to be compared with.</param>
         /// <returns>True if the two strings have a distance <= MinimumDistance.</returns>
@@ -35,10 +31,7 @@ namespace System.Management.Automation
             return score <= MinimumDistance;
         }
 
-        /// <summary>
-        /// Compute the case-insensitive distance between two strings.
-        /// Based off https://www.csharpstar.com/csharp-string-distance-algorithm/.
-        /// </summary>
+        
         /// <param name="string1">The first string to compare.</param>
         /// <param name="string2">The second string to compare.</param>
         /// <returns>The distance value where the lower the value the shorter the distance between the two strings representing a closer match.</returns>

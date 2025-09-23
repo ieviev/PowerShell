@@ -19,54 +19,35 @@ using Dbg = System.Management.Automation;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Defines the options that control what data is embedded in the
-    /// signature blob.
-    /// </summary>
+    
     public enum SigningOption
     {
-        /// <summary>
-        /// Embeds only the signer's certificate.
-        /// </summary>
+        
         AddOnlyCertificate,
 
-        /// <summary>
-        /// Embeds the entire certificate chain.
-        /// </summary>
+        
         AddFullCertificateChain,
 
-        /// <summary>
-        /// Embeds the entire certificate chain, except for the root
-        /// certificate.
-        /// </summary>
+        
         AddFullCertificateChainExceptRoot,
 
-        /// <summary>
-        /// Default: Embeds the entire certificate chain, except for the
-        /// root certificate.
-        /// </summary>
+        
         Default = AddFullCertificateChainExceptRoot
     }
 
-    /// <summary>
-    /// Helper functions for signature functionality.
-    /// </summary>
+    
     internal static class SignatureHelper
     {
         private static Guid WINTRUST_ACTION_GENERIC_VERIFY_V2 = new Guid("00AAC56B-CD44-11d0-8CC2-00C04FC295EE");
 
-        /// <summary>
-        /// Tracer for SignatureHelper.
-        /// </summary>
+        
         [Dbg.TraceSource("SignatureHelper",
                           "tracer for SignatureHelper")]
         private static readonly Dbg.PSTraceSource s_tracer =
             Dbg.PSTraceSource.GetTracer("SignatureHelper",
                           "tracer for SignatureHelper");
 
-        /// <summary>
-        /// Sign a file.
-        /// </summary>
+        
         /// <param name="option">Option that controls what gets embedded in the signature blob.</param>
         /// <param name="fileName">Name of file to sign.</param>
         /// <param name="certificate">Signing cert.</param>
@@ -260,9 +241,7 @@ namespace System.Management.Automation
             return signature;
         }
 
-        /// <summary>
-        /// Get signature on the specified file.
-        /// </summary>
+        
         /// <param name="fileName">Name of file to check.</param>
         /// <param name="fileContent">Content of file to check.</param>
         /// <returns>Signature object.</returns>
@@ -295,11 +274,7 @@ namespace System.Management.Automation
             return signature;
         }
 
-        /// <summary>
-        /// Gets the file signature using the dotNet Microsoft.Security.Extensions package.
-        /// This supports both Windows catalog file signatures and embedded file signatures.
-        /// But it is not supported on all Windows platforms/skus, noteably Win7 and nanoserver.
-        /// </summary>
+        
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods")]
         private static Signature GetSignatureFromMSSecurityExtensions(string filename)
         {

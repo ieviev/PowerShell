@@ -11,18 +11,14 @@ using Dbg = System.Management.Automation;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Holds the state of a Monad Shell session.
-    /// </summary>
+    
     internal sealed partial class SessionStateInternal
     {
         #region ItemCmdletProvider accessors
 
         #region GetItem
 
-        /// <summary>
-        /// Gets the specified object.
-        /// </summary>
+        
         /// <param name="paths">
         /// The path(s) to the object(s). They can be either a relative (most common)
         /// or absolute path.
@@ -74,9 +70,7 @@ namespace System.Management.Automation
             return results;
         }
 
-        /// <summary>
-        /// Gets the specified object.
-        /// </summary>
+        
         /// <param name="paths">
         /// The path(s) to the object(s). They can be either a relative (most common)
         /// or absolute path.
@@ -142,9 +136,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the item at the specified path.
-        /// </summary>
+        
         /// <param name="providerInstance">
         /// The provider instance to use.
         /// </param>
@@ -211,9 +203,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the get-item cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -276,9 +266,7 @@ namespace System.Management.Automation
             return null;
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the get-item cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -356,9 +344,7 @@ namespace System.Management.Automation
 
         #region SetItem
 
-        /// <summary>
-        /// Gets the specified object.
-        /// </summary>
+        
         /// <param name="paths">
         /// The path(s) to the object. It can be either a relative (most common)
         /// or absolute path.
@@ -411,9 +397,7 @@ namespace System.Management.Automation
             return context.GetAccumulatedObjects();
         }
 
-        /// <summary>
-        /// Sets the specified object to the specified value.
-        /// </summary>
+        
         /// <param name="paths">
         /// The path(s) to the object. It can be either a relative (most common)
         /// or absolute path.
@@ -482,9 +466,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Sets item at the specified path.
-        /// </summary>
+        
         /// <param name="providerInstance">
         /// The provider instance to use.
         /// </param>
@@ -555,9 +537,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the set-item cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -623,9 +603,7 @@ namespace System.Management.Automation
             return null;
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the set-item cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -707,11 +685,7 @@ namespace System.Management.Automation
 
         #region ClearItem
 
-        /// <summary>
-        /// Clears the specified object. Depending on the provider that the path
-        /// maps to, this could mean the properties and/or content and/or value is
-        /// cleared.
-        /// </summary>
+        
         /// <param name="paths">
         /// The path(s) to the object. It can be either a relative (most common)
         /// or absolute path.
@@ -762,11 +736,7 @@ namespace System.Management.Automation
             return context.GetAccumulatedObjects();
         }
 
-        /// <summary>
-        /// Clears the specified item. Depending on the provider that the path
-        /// maps to, this could mean the properties and/or content and/or value is
-        /// cleared.
-        /// </summary>
+        
         /// <param name="paths">
         /// The path(s) to the object. It can be either a relative (most common)
         /// or absolute path.
@@ -831,9 +801,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Clears the item at the specified path.
-        /// </summary>
+        
         /// <param name="providerInstance">
         /// The provider instance to use.
         /// </param>
@@ -900,9 +868,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the clear-item cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -965,9 +931,7 @@ namespace System.Management.Automation
             return null;
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the clear-item cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -1045,10 +1009,7 @@ namespace System.Management.Automation
 
         #region InvokeDefaultAction
 
-        /// <summary>
-        /// Performs the default action on the specified item. The default action is
-        /// determined by the provider.
-        /// </summary>
+        
         /// <param name="paths">
         /// The path(s) to the object(s). They can be either a relative (most common)
         /// or absolute path(s).
@@ -1090,10 +1051,7 @@ namespace System.Management.Automation
             context.ThrowFirstErrorOrDoNothing();
         }
 
-        /// <summary>
-        /// Performs the default action on the specified item. The default action
-        /// is determined by the provider.
-        /// </summary>
+        
         /// <param name="paths">
         /// The path(s) to the object(s). They can be either a relative (most common)
         /// or absolute paths.
@@ -1158,9 +1116,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Invokes the default action on the item at the specified path.
-        /// </summary>
+        
         /// <param name="providerInstance">
         /// The provider instance to use.
         /// </param>
@@ -1227,9 +1183,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the invoke-item cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -1292,9 +1246,7 @@ namespace System.Management.Automation
             return null;
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the invoke-item cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>

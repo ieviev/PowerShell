@@ -5,9 +5,7 @@ using System.Management.Automation.Internal;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Derives InternalCommand for Native Commands.
-    /// </summary>
+    
     internal sealed class NativeCommand : InternalCommand
     {
         private NativeCommandProcessor _myCommandProcessor;
@@ -19,9 +17,7 @@ namespace System.Management.Automation
             set { _myCommandProcessor = value; }
         }
 
-        /// <summary>
-        /// Implement the stop functionality for native commands...
-        /// </summary>
+        
         internal override void DoStopProcessing()
         {
             try

@@ -6,14 +6,10 @@ using System.Management.Automation.SecurityAccountsManager.Native;
 
 namespace System.Management.Automation.SecurityAccountsManager
 {
-    /// <summary>
-    /// Contains utility functions for formatting localizable strings.
-    /// </summary>
+    
     internal class StringUtil
     {
-        /// <summary>
-        /// Private constructor to present auto-generation of a default constructor with greater accessibility.
-        /// </summary>
+        
         private StringUtil()
         {
         }

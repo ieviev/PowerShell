@@ -8,10 +8,7 @@ using System.Text;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// This class aggregates the objects necessary for the Monad
-    /// engine to run.
-    /// </summary>
+    
     internal class AutomationEngine
     {
         static AutomationEngine()
@@ -24,22 +21,13 @@ namespace System.Management.Automation
         // Holds the parser to use for this instance of the engine...
         internal Parser EngineParser;
 
-        /// <summary>
-        /// Returns the handle to the execution context
-        /// for this instance of the automation engine.
-        /// </summary>
+        
         internal ExecutionContext Context { get; }
 
-        /// <summary>
-        /// Gets the CommandDiscovery instance for the current engine.
-        /// </summary>
+        
         internal CommandDiscovery CommandDiscovery { get; }
 
-        /// <summary>
-        /// The principal constructor that most hosts will use when creating
-        /// an instance of the automation engine. It allows you to pass in an
-        /// instance of PSHost that provides the host-specific I/O routines, etc.
-        /// </summary>
+        
         internal AutomationEngine(PSHost hostInterface, InitialSessionState iss)
         {
 #if !UNIX
@@ -71,9 +59,7 @@ namespace System.Management.Automation
             iss.Bind(Context, updateOnly: false, module: null, noClobber: false, local: false, setLocation: true);
         }
 
-        /// <summary>
-        /// Method to take a string and expand any metachars in it.
-        /// </summary>
+        
         internal string Expand(string s)
         {
             var ast = Parser.ScanString(s);
@@ -82,9 +68,7 @@ namespace System.Management.Automation
             return Compiler.GetExpressionValue(ast, true, Context, Context.EngineSessionState) as string ?? string.Empty;
         }
 
-        /// <summary>
-        /// Compile a piece of text into a parse tree for later execution.
-        /// </summary>
+        
         /// <param name="script">The text to parse.</param>
         /// <param name="addToHistory">True if-and-only-if the scriptblock will be added to history.</param>
         /// <returns>The parse text as a parsetree node.</returns>

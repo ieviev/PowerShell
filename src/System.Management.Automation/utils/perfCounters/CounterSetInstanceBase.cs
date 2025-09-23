@@ -11,20 +11,13 @@ using System.Management.Automation.Tracing;
 
 namespace System.Management.Automation.PerformanceData
 {
-    /// <summary>
-    /// An abstract class that forms the base class for any Counter Set type.
-    /// A Counter Set Instance is required to register a given performance counter category
-    /// with PSPerfCountersMgr.
-    /// </summary>
+    
     public abstract class CounterSetInstanceBase : IDisposable
     {
         private readonly PowerShellTraceSource _tracer = PowerShellTraceSourceFactory.GetTraceSource();
         #region Protected Members
 
-        /// <summary>
-        /// An instance of counterSetRegistrarBase type encapsulates all the information
-        /// about a counter set and its associated counters.
-        /// </summary>
+        
         [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields")]
         protected CounterSetRegistrarBase _counterSetRegistrarBase;
 
@@ -33,21 +26,15 @@ namespace System.Management.Automation.PerformanceData
         // and that instance would then be shared by multiple threads for data access.
         // Those threads won't modify/manipulate the dictionary, but they would only access it.
 
-        /// <summary>
-        /// Dictionary mapping counter name to id.
-        /// </summary>
+        
         [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields")]
         protected ConcurrentDictionary<string, int> _counterNameToIdMapping;
-        /// <summary>
-        /// Dictionary mapping counter id to counter type.
-        /// </summary>
+        
         [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields")]
         protected ConcurrentDictionary<int, CounterType> _counterIdToTypeMapping;
 
         #region Constructors
-        /// <summary>
-        /// Constructor.
-        /// </summary>
+        
         protected CounterSetInstanceBase(CounterSetRegistrarBase counterSetRegistrarInst)
         {
             this._counterSetRegistrarBase = counterSetRegistrarInst;
@@ -68,12 +55,7 @@ namespace System.Management.Automation.PerformanceData
 
         #endregion
 
-        /// <summary>
-        /// Method that retrieves the target counter id.
-        /// NOTE: If isNumerator is true, then input counter id is returned.
-        /// But, if isNumerator is false, then a check is made on the input
-        /// counter's type to ensure that denominator is indeed value for such a counter.
-        /// </summary>
+        
         protected bool RetrieveTargetCounterIdIfValid(int counterId, bool isNumerator, out int targetCounterId)
         {
             targetCounterId = counterId;
@@ -118,72 +100,44 @@ namespace System.Management.Automation.PerformanceData
 
         #region Public Methods
 
-        /// <summary>
-        /// If isNumerator is true, then updates the numerator component
-        /// of target counter 'counterId' by a value given by 'stepAmount'.
-        /// Otherwise, updates the denominator component by 'stepAmount'.
-        /// </summary>
+        
         public abstract bool UpdateCounterByValue(
             int counterId,
             long stepAmount,
             bool isNumerator);
 
-        /// <summary>
-        /// If isNumerator is true, then updates the numerator component
-        /// of target counter 'counterName' by a value given by 'stepAmount'.
-        /// Otherwise, updates the denominator component by 'stepAmount'.
-        /// </summary>
+        
         public abstract bool UpdateCounterByValue(
             string counterName,
             long stepAmount,
             bool isNumerator);
 
-        /// <summary>
-        /// If isNumerator is true, then sets the numerator component of target
-        /// counter 'counterId' to 'counterValue'.
-        /// Otherwise, sets the denominator component to 'counterValue'.
-        /// </summary>
+        
         public abstract bool SetCounterValue(
             int counterId,
             long counterValue,
             bool isNumerator);
 
-        /// <summary>
-        /// If isNumerator is true, then sets the numerator component of target
-        /// Counter 'counterName' to 'counterValue'.
-        /// Otherwise, sets the denominator component to 'counterValue'.
-        /// </summary>
+        
         public abstract bool SetCounterValue(
             string counterName,
             long counterValue,
             bool isNumerator);
 
-        /// <summary>
-        /// This method retrieves the counter value associated with counter 'counterId'
-        /// based on isNumerator parameter.
-        /// </summary>
+        
         public abstract bool GetCounterValue(int counterId, bool isNumerator, out long counterValue);
 
-        /// <summary>
-        /// This method retrieves the counter value associated with counter 'counterName'
-        /// based on isNumerator parameter.
-        /// </summary>
+        
         public abstract bool GetCounterValue(string counterName, bool isNumerator, out long counterValue);
 
-        /// <summary>
-        /// An abstract method that will be implemented by the derived type
-        /// so as to dispose the appropriate counter set instance.
-        /// </summary>
+        
         public abstract void Dispose();
 
         
         #endregion
     }
 
-    /// <summary>
-    /// PSCounterSetInstance is a thin wrapper
-    /// on System.Diagnostics.PerformanceData.CounterSetInstance.
-    /// </summary>
+    
     public class PSCounterSetInstance : CounterSetInstanceBase
     {
         #region Private Members
@@ -242,9 +196,7 @@ namespace System.Management.Automation.PerformanceData
         #endregion
 
         #region Constructors
-        /// <summary>
-        /// Constructor for creating an instance of PSCounterSetInstance.
-        /// </summary>
+        
         public PSCounterSetInstance(CounterSetRegistrarBase counterSetRegBaseObj)
             : base(counterSetRegBaseObj)
         {
@@ -255,11 +207,7 @@ namespace System.Management.Automation.PerformanceData
 
         #region Destructor
 
-        /// <summary>
-        /// This destructor will run only if the Dispose method
-        /// does not get called.
-        /// It gives the base class opportunity to finalize.
-        /// </summary>
+        
         ~PSCounterSetInstance()
         {
             Dispose(false);
@@ -268,15 +216,7 @@ namespace System.Management.Automation.PerformanceData
         #endregion
 
         #region Protected Methods
-        /// <summary>
-        /// Dispose(bool disposing) executes in two distinct scenarios.
-        /// If disposing equals true, the method has been called directly
-        /// or indirectly by a user's code. Managed and unmanaged resources
-        /// can be disposed.
-        /// If disposing equals false, the method has been called by the
-        /// runtime from inside the finalizer and you should not reference
-        /// other objects. Only unmanaged resources can be disposed.
-        /// </summary>
+        
         protected virtual void Dispose(bool disposing)
         {
             // Check to see if Dispose has already been called.
@@ -298,9 +238,7 @@ namespace System.Management.Automation.PerformanceData
         #endregion
 
         #region IDisposable Overrides
-        /// <summary>
-        /// Dispose Method implementation for IDisposable interface.
-        /// </summary>
+        
         public override void Dispose()
         {
             this.Dispose(true);
@@ -318,11 +256,7 @@ namespace System.Management.Automation.PerformanceData
 
         #region Public Methods
 
-        /// <summary>
-        /// If isNumerator is true, then updates the numerator component
-        /// of target counter 'counterId' by a value given by 'stepAmount'.
-        /// Otherwise, updates the denominator component by 'stepAmount'.
-        /// </summary>
+        
         public override bool UpdateCounterByValue(int counterId, long stepAmount, bool isNumerator)
         {
             if (_Disposed)
@@ -359,11 +293,7 @@ namespace System.Management.Automation.PerformanceData
                 return false;
             }
         }
-        /// <summary>
-        /// If isNumerator is true, then updates the numerator component
-        /// of target counter 'counterName' by a value given by 'stepAmount'.
-        /// Otherwise, updates the denominator component by 'stepAmount'.
-        /// </summary>
+        
         public override bool UpdateCounterByValue(string counterName, long stepAmount, bool isNumerator)
         {
             if (_Disposed)
@@ -399,11 +329,7 @@ namespace System.Management.Automation.PerformanceData
             }
         }
 
-        /// <summary>
-        /// If isNumerator is true, then sets the numerator component
-        /// of target counter 'counterId' to 'counterValue'.
-        /// Otherwise, sets the denominator component to 'counterValue'.
-        /// </summary>
+        
         public override bool SetCounterValue(int counterId, long counterValue, bool isNumerator)
         {
             if (_Disposed)
@@ -442,11 +368,7 @@ namespace System.Management.Automation.PerformanceData
             }
         }
 
-        /// <summary>
-        /// If isNumerator is true, then updates the numerator component
-        /// of target counter 'counterName' by a value given by 'counterValue'.
-        /// Otherwise, sets the denominator component to 'counterValue'.
-        /// </summary>
+        
         public override bool SetCounterValue(string counterName, long counterValue, bool isNumerator)
         {
             if (_Disposed)
@@ -483,10 +405,7 @@ namespace System.Management.Automation.PerformanceData
             }
         }
 
-        /// <summary>
-        /// This method retrieves the counter value associated with counter 'counterId'
-        /// based on isNumerator parameter.
-        /// </summary>
+        
         public override bool GetCounterValue(int counterId, bool isNumerator, out long counterValue)
         {
             counterValue = -1;
@@ -526,10 +445,7 @@ namespace System.Management.Automation.PerformanceData
             }
         }
 
-        /// <summary>
-        /// This method retrieves the counter value associated with counter 'counterName'
-        /// based on isNumerator parameter.
-        /// </summary>
+        
         public override bool GetCounterValue(string counterName, bool isNumerator, out long counterValue)
         {
             counterValue = -1;

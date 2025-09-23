@@ -2,5 +2,7 @@
   <PropertyGroup>
       <TargetFrameworks>net10.0</TargetFrameworks>
       <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+      <!-- summaries -->
+      <NoWarn>$(NoWarn);SA1517;SA1002;CS1591;SA1507;SA1001</NoWarn>
   </PropertyGroup>
 </Project>

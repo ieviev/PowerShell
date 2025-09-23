@@ -5,10 +5,7 @@
 namespace System.Management.Automation.Provider
 {
     #region IDynamicPropertyCmdletProvider
-    /// <summary>
-    /// An interface that can be implemented on a Cmdlet provider to expose the dynamic
-    /// manipulation of properties.
-    /// </summary>
+    
     /// <remarks>
     /// An IDynamicPropertyCmdletProvider provider implements a set of methods that allows
     /// the use of a set of core commands against the data store that the provider
@@ -27,9 +24,7 @@ namespace System.Management.Automation.Provider
     /// </remarks>
     public interface IDynamicPropertyCmdletProvider : IPropertyCmdletProvider
     {
-        /// <summary>
-        /// Creates a new property on the specified item.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item on which the new property should be created.
         /// </param>
@@ -63,10 +58,7 @@ namespace System.Management.Automation.Provider
             string propertyTypeName,
             object? value);
 
-        /// <summary>
-        /// Gives the provider an opportunity to attach additional parameters to the
-        /// new-itemproperty cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// If the path was specified on the command line, this is the path
         /// to the item to get the dynamic parameters for.
@@ -93,9 +85,7 @@ namespace System.Management.Automation.Provider
             string propertyTypeName,
             object? value);
 
-        /// <summary>
-        /// Removes a property on the item specified by the path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item on which the property should be removed.
         /// </param>
@@ -121,10 +111,7 @@ namespace System.Management.Automation.Provider
             string path,
             string propertyName);
 
-        /// <summary>
-        /// Gives the provider an opportunity to attach additional parameters to the
-        /// remove-itemproperty cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// If the path was specified on the command line, this is the path
         /// to the item to get the dynamic parameters for.
@@ -143,9 +130,7 @@ namespace System.Management.Automation.Provider
             string path,
             string propertyName);
 
-        /// <summary>
-        /// Renames a property of the item at the specified path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item on which to rename the property.
         /// </param>
@@ -175,10 +160,7 @@ namespace System.Management.Automation.Provider
             string sourceProperty,
             string destinationProperty);
 
-        /// <summary>
-        /// Gives the provider an opportunity to attach additional parameters to the
-        /// rename-itemproperty cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// If the path was specified on the command line, this is the path
         /// to the item to get the dynamic parameters for.
@@ -201,10 +183,7 @@ namespace System.Management.Automation.Provider
             string sourceProperty,
             string destinationProperty);
 
-        /// <summary>
-        /// Copies a property of the item at the specified path to a new property on the
-        /// destination item.
-        /// </summary>
+        
         /// <param name="sourcePath">
         /// The path to the item on which to copy the property.
         /// </param>
@@ -238,10 +217,7 @@ namespace System.Management.Automation.Provider
             string destinationPath,
             string destinationProperty);
 
-        /// <summary>
-        /// Gives the provider an opportunity to attach additional parameters to the
-        /// copy-itemproperty cmdlet.
-        /// </summary>
+        
         /// <param name="sourcePath">
         /// If the path was specified on the command line, this is the path
         /// to the item to get the dynamic parameters for.
@@ -268,9 +244,7 @@ namespace System.Management.Automation.Provider
             string destinationPath,
             string destinationProperty);
 
-        /// <summary>
-        /// Moves a property on an item specified by the path.
-        /// </summary>
+        
         /// <param name="sourcePath">
         /// The path to the item on which to move the property.
         /// </param>
@@ -304,10 +278,7 @@ namespace System.Management.Automation.Provider
             string destinationPath,
             string destinationProperty);
 
-        /// <summary>
-        /// Gives the provider an opportunity to attach additional parameters to the
-        /// move-itemproperty cmdlet.
-        /// </summary>
+        
         /// <param name="sourcePath">
         /// If the path was specified on the command line, this is the path
         /// to the item to get the dynamic parameters for.

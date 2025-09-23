@@ -12,11 +12,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
 {
     #region Table View Definitions
 
-    /// <summary>
-    /// Alignment values
-    /// NOTE: we do not use an enum because this will have to be
-    /// serialized and ERS/serialization do not support enumerations.
-    /// </summary>
+    
     internal static class TextAlignment
     {
         internal const int Undefined = 0;
@@ -25,25 +21,16 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         internal const int Right = 3;
     }
 
-    /// <summary>
-    /// Definition of a table control.
-    /// </summary>
+    
     internal sealed class TableControlBody : ControlBody
     {
-        /// <summary>
-        /// Optional, if not present, use data off the default table row definition.
-        /// </summary>
+        
         internal TableHeaderDefinition header = new TableHeaderDefinition();
 
-        /// <summary>
-        /// Default row definition
-        /// It's mandatory.
-        /// </summary>
+        
         internal TableRowDefinition defaultDefinition;
 
-        /// <summary>
-        /// Optional list of row definition overrides. It can be empty if there are no overrides.
-        /// </summary>
+        
         internal List<TableRowDefinition> optionalDefinitionList = new List<TableRowDefinition>();
 
         internal override ControlBase Copy()
@@ -67,26 +54,17 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
     }
 
-    /// <summary>
-    /// Information about the table header
-    /// NOTE: if an instance of this class is present, the list must not be empty.
-    /// </summary>
+    
     internal sealed class TableHeaderDefinition
     {
-        /// <summary>
-        /// If true, direct the outputter to suppress table header printing.
-        /// </summary>
+        
         internal bool hideHeader;
 
-        /// <summary>
-        /// Mandatory list of column header definitions.
-        /// </summary>
+        
         internal List<TableColumnHeaderDefinition> columnHeaderDefinitionList =
                             new List<TableColumnHeaderDefinition>();
 
-        /// <summary>
-        /// Returns a Shallow Copy of the current object.
-        /// </summary>
+        
         /// <returns></returns>
         internal TableHeaderDefinition Copy()
         {
@@ -102,52 +80,29 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
 
     internal sealed class TableColumnHeaderDefinition
     {
-        /// <summary>
-        /// Optional label
-        /// If not present, use the name of the property from the matching
-        /// mandatory row description.
-        /// </summary>
+        
         internal TextToken label = null;
 
-        /// <summary>
-        /// General alignment for the column
-        /// If not present, either use the one from the row definition
-        /// or the data driven heuristics.
-        /// </summary>
+        
         internal int alignment = TextAlignment.Undefined;
 
-        /// <summary>
-        /// Width of the column.
-        /// </summary>
+        
         internal int width = 0; // undefined
     }
 
-    /// <summary>
-    /// Definition of the data to be displayed in a table row.
-    /// </summary>
+    
     internal sealed class TableRowDefinition
     {
-        /// <summary>
-        /// Applicability clause
-        /// Only valid if not the default definition.
-        /// </summary>
+        
         internal AppliesTo appliesTo;
 
-        /// <summary>
-        /// If true, the current table row should be allowed
-        /// to wrap to multiple lines, else truncated.
-        /// </summary>
+        
         internal bool multiLine;
 
-        /// <summary>
-        /// Mandatory list of column items.
-        /// It cannot be empty.
-        /// </summary>
+        
         internal List<TableRowItemDefinition> rowItemDefinitionList = new List<TableRowItemDefinition>();
 
-        /// <summary>
-        /// Returns a Shallow Copy of the current object.
-        /// </summary>
+        
         /// <returns></returns>
         internal TableRowDefinition Copy()
         {
@@ -165,23 +120,13 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
     }
 
-    /// <summary>
-    /// Cell definition inside a row.
-    /// </summary>
+    
     internal sealed class TableRowItemDefinition
     {
-        /// <summary>
-        /// Optional alignment to override the default one at the header level.
-        /// </summary>
+        
         internal int alignment = TextAlignment.Undefined;
 
-        /// <summary>
-        /// Format directive body telling how to format the cell
-        /// RULE: the body can only contain
-        ///     * TextToken
-        ///     * PropertyToken
-        ///     * NOTHING (provide an empty cell)
-        /// </summary>
+        
         internal List<FormatToken> formatTokenList = new List<FormatToken>();
     }
 
@@ -190,31 +135,29 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Defines a table control.
-    /// </summary>
+    
     public sealed class TableControl : PSControl
     {
-        /// <summary>Collection of column header definitions for this table control</summary>
+        
         public List<TableControlColumnHeader> Headers { get; set; }
 
-        /// <summary>Collection of row definitions for this table control</summary>
+        
         public List<TableControlRow> Rows { get; set; }
 
-        /// <summary>When true, column widths are calculated based on more than the first object.</summary>
+        
         public bool AutoSize { get; set; }
 
-        /// <summary>When true, table headers are not displayed</summary>
+        
         public bool HideTableHeaders { get; set; }
 
-        /// <summary>Create a default TableControl</summary>
+        
         public static TableControlBuilder Create(bool outOfBand = false, bool autoSize = false, bool hideTableHeaders = false)
         {
             var table = new TableControl { OutOfBand = outOfBand, AutoSize = autoSize, HideTableHeaders = hideTableHeaders };
             return new TableControlBuilder(table);
         }
 
-        /// <summary>Public default constructor for TableControl</summary>
+        
         public TableControl()
         {
             Headers = new List<TableControlColumnHeader>();
@@ -226,9 +169,7 @@ namespace System.Management.Automation
             writer.WriteTableControl(this);
         }
 
-        /// <summary>
-        /// Determines if this object is safe to be written.
-        /// </summary>
+        
         /// <returns>True if safe, false otherwise.</returns>
         internal override bool SafeForExport()
         {
@@ -284,9 +225,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Public constructor for TableControl that only takes 'tableControlRows'.
-        /// </summary>
+        
         /// <param name="tableControlRow"></param>
         public TableControl(TableControlRow tableControlRow) : this()
         {
@@ -296,9 +235,7 @@ namespace System.Management.Automation
             this.Rows.Add(tableControlRow);
         }
 
-        /// <summary>
-        /// Public constructor for TableControl that takes both 'tableControlRows' and 'tableControlColumnHeaders'.
-        /// </summary>
+        
         /// <param name="tableControlRow"></param>
         /// <param name="tableControlColumnHeaders"></param>
         public TableControl(TableControlRow tableControlRow, IEnumerable<TableControlColumnHeader> tableControlColumnHeaders) : this()
@@ -316,18 +253,16 @@ namespace System.Management.Automation
         }
     }
 
-    /// <summary>
-    /// Defines the header for a particular column in a table control.
-    /// </summary>
+    
     public sealed class TableControlColumnHeader
     {
-        /// <summary>Label for the column</summary>
+        
         public string Label { get; set; }
 
-        /// <summary>Alignment of the string within the column</summary>
+        
         public Alignment Alignment { get; set; }
 
-        /// <summary>Width of the column - in number of display cells</summary>
+        
         public int Width { get; set; }
 
         internal TableControlColumnHeader(TableColumnHeaderDefinition colheaderdefinition)
@@ -341,14 +276,12 @@ namespace System.Management.Automation
             Width = colheaderdefinition.width;
         }
 
-        /// <summary>Default constructor</summary>
+        
         public TableControlColumnHeader()
         {
         }
 
-        /// <summary>
-        /// Public constructor for TableControlColumnHeader.
-        /// </summary>
+        
         /// <param name="label">Could be null if no label to specify.</param>
         /// <param name="width">The Value should be non-negative.</param>
         /// <param name="alignment">The default value is Alignment.Undefined.</param>
@@ -363,31 +296,26 @@ namespace System.Management.Automation
         }
     }
 
-    /// <summary>
-    /// Defines a particular column within a row
-    /// in a table control.
-    /// </summary>
+    
     public sealed class TableControlColumn
     {
-        /// <summary>Alignment of the particular column</summary>
+        
         public Alignment Alignment { get; set; }
 
-        /// <summary>Display Entry</summary>
+        
         public DisplayEntry DisplayEntry { get; set; }
 
-        /// <summary>Format string to apply</summary>
+        
         public string FormatString { get; internal set; }
 
-        /// <summary>
-        /// Returns the value of the entry.
-        /// </summary>
+        
         /// <returns></returns>
         public override string ToString()
         {
             return DisplayEntry.Value;
         }
 
-        /// <summary>Default constructor</summary>
+        
         public TableControlColumn()
         {
         }
@@ -399,9 +327,7 @@ namespace System.Management.Automation
             FormatString = formatString;
         }
 
-        /// <summary>
-        /// Public constructor for TableControlColumn.
-        /// </summary>
+        
         /// <param name="alignment"></param>
         /// <param name="entry"></param>
         public TableControlColumn(Alignment alignment, DisplayEntry entry)
@@ -416,21 +342,19 @@ namespace System.Management.Automation
         }
     }
 
-    /// <summary>
-    /// Defines a single row in a table control.
-    /// </summary>
+    
     public sealed class TableControlRow
     {
-        /// <summary>Collection of column definitions for this row</summary>
+        
         public List<TableControlColumn> Columns { get; set; }
 
-        /// <summary>List of typenames which select this entry</summary>
+        
         public EntrySelectedBy SelectedBy { get; internal set; }
 
-        /// <summary>When true, instead of truncating to the column width, use multiple lines.</summary>
+        
         public bool Wrap { get; set; }
 
-        /// <summary>Public constructor for TableControlRow</summary>
+        
         public TableControlRow()
         {
             Columns = new List<TableControlColumn>();
@@ -462,7 +386,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>Public constructor for TableControlRow.</summary>
+        
         public TableControlRow(IEnumerable<TableControlColumn> columns) : this()
         {
             if (columns == null)
@@ -491,7 +415,7 @@ namespace System.Management.Automation
         }
     }
 
-    /// <summary>A helper class for defining table controls</summary>
+    
     public sealed class TableRowDefinitionBuilder
     {
         internal readonly TableControlBuilder _tcb;
@@ -517,32 +441,26 @@ namespace System.Management.Automation
             return this;
         }
 
-        /// <summary>
-        /// Add a column to the current row definition that calls a script block.
-        /// </summary>
+        
         public TableRowDefinitionBuilder AddScriptBlockColumn(string scriptBlock, Alignment alignment = Alignment.Undefined, string format = null)
         {
             return AddItem(scriptBlock, DisplayEntryValueType.ScriptBlock, alignment, format);
         }
 
-        /// <summary>
-        /// Add a column to the current row definition that references a property.
-        /// </summary>
+        
         public TableRowDefinitionBuilder AddPropertyColumn(string propertyName, Alignment alignment = Alignment.Undefined, string format = null)
         {
             return AddItem(propertyName, DisplayEntryValueType.Property, alignment, format);
         }
 
-        /// <summary>
-        /// Complete a row definition.
-        /// </summary>
+        
         public TableControlBuilder EndRowDefinition()
         {
             return _tcb;
         }
     }
 
-    /// <summary>A helper class for defining table controls</summary>
+    
     public sealed class TableControlBuilder
     {
         internal readonly TableControl _table;
@@ -552,7 +470,7 @@ namespace System.Management.Automation
             _table = table;
         }
 
-        /// <summary>Group instances by the property name with an optional label.</summary>
+        
         public TableControlBuilder GroupByProperty(string property, CustomControl customControl = null, string label = null)
         {
             _table.GroupBy = new PSControlGroupBy
@@ -564,7 +482,7 @@ namespace System.Management.Automation
             return this;
         }
 
-        /// <summary>Group instances by the script block expression with an optional label.</summary>
+        
         public TableControlBuilder GroupByScriptBlock(string scriptBlock, CustomControl customControl = null, string label = null)
         {
             _table.GroupBy = new PSControlGroupBy
@@ -576,14 +494,14 @@ namespace System.Management.Automation
             return this;
         }
 
-        /// <summary>Add a header</summary>
+        
         public TableControlBuilder AddHeader(Alignment alignment = Alignment.Undefined, int width = 0, string label = null)
         {
             _table.Headers.Add(new TableControlColumnHeader(label, width, alignment));
             return this;
         }
 
-        /// <summary>Add a header</summary>
+        
         public TableRowDefinitionBuilder StartRowDefinition(bool wrap = false, IEnumerable<string> entrySelectedByType = null, IEnumerable<DisplayEntry> entrySelectedByCondition = null)
         {
             var row = new TableControlRow { Wrap = wrap };
@@ -605,7 +523,7 @@ namespace System.Management.Automation
             return new TableRowDefinitionBuilder(this, row);
         }
 
-        /// <summary>Complete a table definition</summary>
+        
         public TableControl EndTable()
         {
             return _table;

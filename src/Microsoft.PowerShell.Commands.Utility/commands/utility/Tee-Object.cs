@@ -9,15 +9,11 @@ using Microsoft.PowerShell.Commands.Internal.Format;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// Class for Tee-object implementation.
-    /// </summary>
+    
     [Cmdlet("Tee", "Object", DefaultParameterSetName = "File", HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097034")]
     public sealed class TeeObjectCommand : PSCmdlet, IDisposable
     {
-        /// <summary>
-        /// Object to process.
-        /// </summary>
+        
         [Parameter(ValueFromPipeline = true)]
         public PSObject InputObject
         {
@@ -28,9 +24,7 @@ namespace Microsoft.PowerShell.Commands
 
         private PSObject _inputObject;
 
-        /// <summary>
-        /// FilePath parameter.
-        /// </summary>
+        
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = "File")]
         [Alias("Path")]
         public string FilePath
@@ -42,9 +36,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string _fileName;
 
-        /// <summary>
-        /// Literal FilePath parameter.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ParameterSetName = "LiteralFile")]
         [Alias("PSPath", "LP")]
         public string LiteralPath
@@ -60,9 +52,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Append switch.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "File")]
         public SwitchParameter Append
         {
@@ -73,9 +63,7 @@ namespace Microsoft.PowerShell.Commands
 
         private bool _append;
 
-        /// <summary>
-        /// Gets or sets the Encoding.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "File")]
         [Parameter(ParameterSetName = "LiteralFile")]
         [ArgumentToEncodingTransformation]
@@ -83,9 +71,7 @@ namespace Microsoft.PowerShell.Commands
         [ValidateNotNullOrEmpty]
         public Encoding Encoding { get; set; } = Encoding.Default;
 
-        /// <summary>
-        /// Variable parameter.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ParameterSetName = "Variable")]
         public string Variable
         {
@@ -96,8 +82,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string _variable;
 
-        /// <summary>
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             _commandWrapper = new CommandWrapper();
@@ -125,16 +110,14 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             _commandWrapper.Process(_inputObject);
             WriteObject(_inputObject);
         }
 
-        /// <summary>
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             _commandWrapper.ShutDown();
@@ -153,9 +136,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Dispose method in IDisposable.
-        /// </summary>
+        
         public void Dispose()
         {
             Dispose(true);

@@ -15,9 +15,7 @@ using Dbg = System.Management.Automation.Diagnostics;
 
 namespace Microsoft.PowerShell.Cmdletization.Cim
 {
-    /// <summary>
-    /// Job wrapping invocation of an extrinsic CIM method.
-    /// </summary>
+    
     internal abstract class MethodInvocationJobBase<T> : CimChildJobBase<T>
     {
         internal MethodInvocationJobBase(CimJobContext jobContext, bool passThru, string methodSubject, MethodInvocationInfo methodInvocationInfo)

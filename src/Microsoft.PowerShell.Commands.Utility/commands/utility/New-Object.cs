@@ -23,46 +23,38 @@ using Dbg = System.Management.Automation.Diagnostics;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>Create a new .net object</summary>
+    
     [Cmdlet(VerbsCommon.New, "Object", DefaultParameterSetName = netSetName, HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096620")]
     public sealed class NewObjectCommand : PSCmdlet
     {
         #region parameters
 
-        /// <summary> the number</summary>
+        
         [Parameter(ParameterSetName = netSetName, Mandatory = true, Position = 0)]
         [ValidateTrustedData]
         public string TypeName { get; set; }
 
 #if !UNIX
         private Guid _comObjectClsId = Guid.Empty;
-        /// <summary>
-        /// The ProgID of the Com object.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "Com", Mandatory = true, Position = 0)]
         [ValidateTrustedData]
         public string ComObject { get; set; }
 #endif
 
-        /// <summary>
-        /// The parameters for the constructor.
-        /// </summary>
+        
         /// <value></value>
         [Parameter(ParameterSetName = netSetName, Mandatory = false, Position = 1)]
         [ValidateTrustedData]
         [Alias("Args")]
         public object[] ArgumentList { get; set; }
 
-        /// <summary>
-        /// True if we should have an error when Com objects will use an interop assembly.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "Com")]
         public SwitchParameter Strict { get; set; }
 
         // Updated from Hashtable to IDictionary to support the work around ordered hashtables.
-        /// <summary>
-        /// Gets the properties to be set.
-        /// </summary>
+        
         [Parameter]
         [ValidateTrustedData]
         [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -129,7 +121,7 @@ namespace Microsoft.PowerShell.Commands
         #endregion private
 
         #region Overrides
-        /// <summary> Create the object </summary>
+        
         protected override void BeginProcessing()
         {
             Type type = null;
@@ -532,9 +524,7 @@ namespace Microsoft.PowerShell.Commands
         private const string netSetName = "Net";
     }
 
-    /// <summary>
-    /// Native methods for dealing with COM objects.
-    /// </summary>
+    
     internal static class NewObjectNativeMethods
     {
         /// Return Type: HRESULT->LONG->int

@@ -21,17 +21,10 @@ namespace Microsoft.WSMan.Management
 {
     #region Base class for cmdlets taking credential, authentication, certificatethumbprint
 
-    /// <summary>
-    /// Common base class for all WSMan cmdlets that
-    /// take Authentication, CertificateThumbprint and Credential parameters.
-    /// </summary>
+    
     public class AuthenticatingWSManCommand : PSCmdlet
     {
-        /// <summary>
-        /// The following is the definition of the input parameter "Credential".
-        /// Specifies a user account that has permission to perform this action. The
-        /// default is the current user.
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         [Credential]
@@ -52,21 +45,7 @@ namespace Microsoft.WSMan.Management
 
         private PSCredential credential;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "Authentication".
-        /// This parameter takes a set of authentication methods the user can select
-        /// from. The available method are an enum called Authentication in the
-        /// System.Management.Automation.Runspaces namespace. The available options
-        /// should be as follows:
-        /// - Default : Use the default authentication (ad defined by the underlying
-        /// protocol) for establishing a remote connection.
-        /// - Negotiate
-        /// - Kerberos
-        /// - Basic:  Use basic authentication for establishing a remote connection.
-        /// -CredSSP: Use CredSSP authentication for establishing a remote connection
-        /// which will enable the user to perform credential delegation. (i.e. second
-        /// hop)
-        /// </summary>
+        
         [Parameter]
         [ValidateNotNullOrEmpty]
         [Alias("auth", "am")]
@@ -86,10 +65,7 @@ namespace Microsoft.WSMan.Management
 
         private AuthenticationMechanism authentication = AuthenticationMechanism.Default;
 
-        /// <summary>
-        /// Specifies the certificate thumbprint to be used to impersonate the user on the
-        /// remote machine.
-        /// </summary>
+        
         [Parameter]
         [ValidateNotNullOrEmpty]
         public virtual string CertificateThumbprint
@@ -120,18 +96,13 @@ namespace Microsoft.WSMan.Management
     #endregion
 
     #region Connect-WsMan
-    /// <summary>
-    /// Connect wsman cmdlet.
-    /// </summary>
+    
     [Cmdlet(VerbsCommunications.Connect, "WSMan", DefaultParameterSetName = "ComputerName", HelpUri = "https://go.microsoft.com/fwlink/?LinkId=2096841")]
     public class ConnectWSManCommand : AuthenticatingWSManCommand
     {
         #region Parameters
 
-        /// <summary>
-        /// The following is the definition of the input parameter "ApplicationName".
-        /// ApplicationName identifies the remote endpoint.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "ComputerName")]
         [ValidateNotNullOrEmpty]
         public string ApplicationName
@@ -143,12 +114,7 @@ namespace Microsoft.WSMan.Management
 
         private string applicationname = null;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "ComputerName".
-        /// Executes the management operation on the specified computer(s). The default
-        /// is the local computer. Type the fully qualified domain name, NETBIOS name or
-        /// IP address to indicate the remote host(s)
-        /// </summary>
+        
         [Parameter(ParameterSetName = "ComputerName", Position = 0)]
         [Alias("cn")]
         public string ComputerName
@@ -170,12 +136,7 @@ namespace Microsoft.WSMan.Management
 
         private string computername = null;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "ConnectionURI".
-        /// Specifies the transport, server, port, and ApplicationName of the new
-        /// runspace. The format of this string is:
-        /// transport://server:port/ApplicationName.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "URI")]
         [ValidateNotNullOrEmpty]
         [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "URI")]
@@ -188,11 +149,7 @@ namespace Microsoft.WSMan.Management
 
         private Uri connectionuri;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "OptionSet".
-        /// OptionSet is a hash table and is used to pass a set of switches to the
-        /// service to modify or refine the nature of the request.
-        /// </summary>
+        
         [Parameter]
         [ValidateNotNullOrEmpty]
         [Alias("os")]
@@ -206,10 +163,7 @@ namespace Microsoft.WSMan.Management
 
         private Hashtable optionset;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "Port".
-        /// Specifies the port to be used when connecting to the ws management service.
-        /// </summary>
+        
         [Parameter]
         [ValidateNotNullOrEmpty]
         [Parameter(ParameterSetName = "ComputerName")]
@@ -223,11 +177,7 @@ namespace Microsoft.WSMan.Management
 
         private int port = 0;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "SessionOption".
-        /// Defines a set of extended options for the WSMan session.  This hashtable can
-        /// be created using New-WSManSessionOption.
-        /// </summary>
+        
         [Parameter]
         [ValidateNotNullOrEmpty]
         [Alias("so")]
@@ -241,12 +191,7 @@ namespace Microsoft.WSMan.Management
 
         private SessionOption sessionoption;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "UseSSL".
-        /// Uses the Secure Sockets Layer (SSL) protocol to establish a connection to
-        /// the remote computer. If SSL is not available on the port specified by the
-        /// Port parameter, the command fails.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "ComputerName")]
         [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "SSL")]
         public SwitchParameter UseSSL
@@ -260,9 +205,7 @@ namespace Microsoft.WSMan.Management
 
         #endregion
 
-        /// <summary>
-        /// BeginProcessing method.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             WSManHelper helper = new WSManHelper(this);
@@ -294,21 +237,11 @@ namespace Microsoft.WSMan.Management
     #endregion
 
     #region Disconnect-WSMAN
-    /// <summary>
-    /// The following is the definition of the input parameter "ComputerName".
-    /// Executes the management operation on the specified computer(s). The default
-    /// is the local computer. Type the fully qualified domain name, NETBIOS name or
-    /// IP address to indicate the remote host(s)
-    /// </summary>
+    
     [Cmdlet(VerbsCommunications.Disconnect, "WSMan", HelpUri = "https://go.microsoft.com/fwlink/?LinkId=2096839")]
     public class DisconnectWSManCommand : PSCmdlet, IDisposable
     {
-        /// <summary>
-        /// The following is the definition of the input parameter "ComputerName".
-        /// Executes the management operation on the specified computer(s). The default
-        /// is the local computer. Type the fully qualified domain name, NETBIOS name or
-        /// IP address to indicate the remote host(s)
-        /// </summary>
+        
         [Parameter(Position = 0)]
         public string ComputerName
         {
@@ -331,9 +264,7 @@ namespace Microsoft.WSMan.Management
 
         #region IDisposable Members
 
-        /// <summary>
-        /// Public dispose method.
-        /// </summary>
+        
         public
         void
         Dispose()
@@ -341,9 +272,7 @@ namespace Microsoft.WSMan.Management
             // CleanUp();
             GC.SuppressFinalize(this);
         }
-        /// <summary>
-        /// Public dispose method.
-        /// </summary>
+        
         public
         void
         Dispose(object session)
@@ -354,9 +283,7 @@ namespace Microsoft.WSMan.Management
 
         #endregion IDisposable Members
 
-        /// <summary>
-        /// BeginProcessing method.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             WSManHelper helper = new WSManHelper(this);

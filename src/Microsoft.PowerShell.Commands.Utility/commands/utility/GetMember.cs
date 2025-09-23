@@ -9,21 +9,15 @@ using System.Management.Automation.Internal;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// Class with member information that this cmdlet writes to the pipeline.
-    /// </summary>
+    
     public class MemberDefinition
     {
-        /// <summary>
-        /// Returns the member definition.
-        /// </summary>
+        
         public override string ToString()
         {
             return Definition;
         }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MemberDefinition"/> class.
-        /// </summary>
+        
         public MemberDefinition(string typeName, string name, PSMemberTypes memberType, string definition)
         {
             Name = name;
@@ -32,64 +26,44 @@ namespace Microsoft.PowerShell.Commands
             TypeName = typeName;
         }
 
-        /// <summary>
-        /// Type name.
-        /// </summary>
+        
         public string TypeName { get; }
 
-        /// <summary>
-        /// Member name.
-        /// </summary>
+        
         public string Name { get; }
 
-        /// <summary>
-        /// Member type.
-        /// </summary>
+        
         public PSMemberTypes MemberType { get; }
 
-        /// <summary>
-        /// Member definition.
-        /// </summary>
+        
         public string Definition { get; }
     }
 
-    /// <summary>
-    /// This class implements get-member command.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Get, "Member", HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096704", RemotingCapability = RemotingCapability.None)]
     [OutputType(typeof(MemberDefinition))]
     public class GetMemberCommand : PSCmdlet
     {
-        /// <summary>
-        /// The object to retrieve properties from.
-        /// </summary>
+        
         [Parameter(ValueFromPipeline = true)]
         public PSObject InputObject { get; set; }
 
-        /// <summary>
-        /// The member names to be retrieved.
-        /// </summary>
+        
         [Parameter(Position = 0)]
         [ValidateNotNullOrEmpty]
         public string[] Name { get; set; } = new string[] { "*" };
 
-        /// <summary>
-        /// The member types to be retrieved.
-        /// </summary>
+        
         [Parameter]
         [Alias("Type")]
         public PSMemberTypes MemberType { get; set; } = PSMemberTypes.All;
 
-        /// <summary>
-        /// View from which the members are retrieved.
-        /// </summary>
+        
         [Parameter]
         public PSMemberViewTypes View { get; set; } = PSMemberViewTypes.Adapted | PSMemberViewTypes.Extended;
 
         private bool _staticParameter = false;
-        /// <summary>
-        /// True if we should return static members.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter Static
         {
@@ -98,9 +72,7 @@ namespace Microsoft.PowerShell.Commands
             set { _staticParameter = value; }
         }
 
-        /// <summary>
-        /// Gets or sets the force property.
-        /// </summary>
+        
         /// <remarks>
         /// Gives the Member matcher guidance on how vigorous the Match should be.
         /// If set to true all members in a given view + membertype are displayed.
@@ -133,9 +105,7 @@ namespace Microsoft.PowerShell.Commands
 
         private readonly HybridDictionary _typesAlreadyDisplayed = new();
 
-        /// <summary>
-        /// This method implements the ProcessRecord method for get-member command.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             if (this.InputObject == null || this.InputObject == AutomationNull.Value)
@@ -263,9 +233,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// This method implements the End method for get-member command.
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             if (_typesAlreadyDisplayed.Count == 0)

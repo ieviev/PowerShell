@@ -24,9 +24,7 @@ using Dbg = System.Management.Automation.Diagnostics;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// Implements a cmdlet that gets the list of loaded modules...
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Get, "Module", DefaultParameterSetName = ParameterSet_Loaded,
         HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096696")]
     [OutputType(typeof(PSModuleInfo))]
@@ -39,9 +37,7 @@ namespace Microsoft.PowerShell.Commands
         private const string ParameterSet_AvailableInPsrpSession = "PsSession";
         private const string ParameterSet_AvailableInCimSession = "CimSession";
 
-        /// <summary>
-        /// This parameter specifies the current pipeline object.
-        /// </summary>
+        
         [Parameter(ParameterSetName = ParameterSet_Loaded, ValueFromPipeline = true, Position = 0)]
         [Parameter(ParameterSetName = ParameterSet_AvailableLocally, ValueFromPipeline = true, Position = 0)]
         [Parameter(ParameterSetName = ParameterSet_AvailableInPsrpSession, ValueFromPipeline = true, Position = 0)]
@@ -51,9 +47,7 @@ namespace Microsoft.PowerShell.Commands
             Justification = "Cmdlets use arrays for parameters.")]
         public string[] Name { get; set; }
 
-        /// <summary>
-        /// This parameter specifies the current pipeline object.
-        /// </summary>
+        
         [Parameter(ParameterSetName = ParameterSet_Loaded, ValueFromPipelineByPropertyName = true)]
         [Parameter(ParameterSetName = ParameterSet_AvailableLocally, ValueFromPipelineByPropertyName = true)]
         [Parameter(ParameterSetName = ParameterSet_AvailableInPsrpSession, ValueFromPipelineByPropertyName = true)]
@@ -62,33 +56,24 @@ namespace Microsoft.PowerShell.Commands
             Justification = "Cmdlets use arrays for parameters.")]
         public ModuleSpecification[] FullyQualifiedName { get; set; }
 
-        /// <summary>
-        /// If specified, all loaded modules should be returned, otherwise only the visible
-        /// modules should be returned.
-        /// </summary>
+        
         [Parameter(ParameterSetName = ParameterSet_Loaded)]
         [Parameter(ParameterSetName = ParameterSet_AvailableLocally)]
         public SwitchParameter All { get; set; }
 
-        /// <summary>
-        /// If specified, then Get-Module will return the set of available modules...
-        /// </summary>
+        
         [Parameter(ParameterSetName = ParameterSet_AvailableLocally, Mandatory = true)]
         [Parameter(ParameterSetName = ParameterSet_AvailableInPsrpSession)]
         [Parameter(ParameterSetName = ParameterSet_AvailableInCimSession)]
         public SwitchParameter ListAvailable { get; set; }
 
-        /// <summary>
-        /// If specified, then Get-Module will return the set of available modules which supports the specified PowerShell edition...
-        /// </summary>
+        
         [Parameter(ParameterSetName = ParameterSet_AvailableLocally)]
         [Parameter(ParameterSetName = ParameterSet_AvailableInPsrpSession)]
         [ArgumentCompleter(typeof(PSEditionArgumentCompleter))]
         public string PSEdition { get; set; }
 
-        /// <summary>
-        /// When set, CompatiblePSEditions checking is disabled for modules in the System32 (Windows PowerShell) module directory.
-        /// </summary>
+        
         [Parameter(ParameterSetName = ParameterSet_AvailableLocally)]
         [Parameter(ParameterSetName = ParameterSet_AvailableInPsrpSession)]
         [Parameter(ParameterSetName = ParameterSet_AvailableInCimSession)]
@@ -99,38 +84,28 @@ namespace Microsoft.PowerShell.Commands
             set { BaseSkipEditionCheck = value; }
         }
 
-        /// <summary>
-        /// If specified, then Get-Module refreshes the internal cmdlet analysis cache.
-        /// </summary>
+        
         [Parameter(ParameterSetName = ParameterSet_AvailableLocally)]
         [Parameter(ParameterSetName = ParameterSet_AvailableInPsrpSession)]
         [Parameter(ParameterSetName = ParameterSet_AvailableInCimSession)]
         public SwitchParameter Refresh { get; set; }
 
-        /// <summary>
-        /// If specified, then Get-Module will attempt to discover PowerShell modules on a remote computer using the specified session.
-        /// </summary>
+        
         [Parameter(ParameterSetName = ParameterSet_AvailableInPsrpSession, Mandatory = true)]
         [ValidateNotNull]
         public PSSession PSSession { get; set; }
 
-        /// <summary>
-        /// If specified, then Get-Module will attempt to discover PS-CIM modules on a remote computer using the specified session.
-        /// </summary>
+        
         [Parameter(ParameterSetName = ParameterSet_AvailableInCimSession, Mandatory = true)]
         [ValidateNotNull]
         public CimSession CimSession { get; set; }
 
-        /// <summary>
-        /// For interoperability with 3rd party CIM servers, user can specify custom resource URI.
-        /// </summary>
+        
         [Parameter(ParameterSetName = ParameterSet_AvailableInCimSession, Mandatory = false)]
         [ValidateNotNull]
         public Uri CimResourceUri { get; set; }
 
-        /// <summary>
-        /// For interoperability with 3rd party CIM servers, user can specify custom namespace.
-        /// </summary>
+        
         [Parameter(ParameterSetName = ParameterSet_AvailableInCimSession, Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public string CimNamespace { get; set; }
@@ -281,12 +256,7 @@ namespace Microsoft.PowerShell.Commands
             get { return _cancellationTokenSource.Token; }
         }
 
-        /// <summary>
-        /// When overridden in the derived class, interrupts currently
-        /// running code within the command. It should interrupt BeginProcessing,
-        /// ProcessRecord, and EndProcessing.
-        /// Default implementation in the base class just returns.
-        /// </summary>
+        
         protected override void StopProcessing()
         {
             _cancellationTokenSource.Cancel();
@@ -296,18 +266,14 @@ namespace Microsoft.PowerShell.Commands
 
         #region IDisposable Members
 
-        /// <summary>
-        /// Releases resources associated with this object.
-        /// </summary>
+        
         public void Dispose()
         {
             this.Dispose(true);
             GC.SuppressFinalize(this);
         }
 
-        /// <summary>
-        /// Releases resources associated with this object.
-        /// </summary>
+        
         private void Dispose(bool disposing)
         {
             if (_disposed)
@@ -342,9 +308,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Write out the specified modules...
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             // Name and FullyQualifiedName should not be specified at the same time.
@@ -500,10 +464,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Filter an enumeration of PowerShell modules based on the required PowerShell edition
-        /// and the module specification constraints set for each module (if any).
-        /// </summary>
+        
         /// <param name="modules">The modules to filter through.</param>
         /// <param name="moduleSpecificationTable">Module constraints, keyed by module name, to filter modules of that name by.</param>
         /// <returns>All modules from the original input that meet both any module edition and module specification constraints provided.</returns>
@@ -532,10 +493,7 @@ namespace Microsoft.PowerShell.Commands
             return modules;
         }
 
-        /// <summary>
-        /// Take an enumeration of modules and only return those that match a specification
-        /// in the given specification table, or have no corresponding entry in the specification table.
-        /// </summary>
+        
         /// <param name="modules">The modules to filter by specification match.</param>
         /// <param name="moduleSpecificationTable">The specification lookup table to filter the modules on.</param>
         /// <returns>The modules that match their corresponding table entry, or which have no table entry.</returns>
@@ -562,10 +520,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Take a dictionary of module specifications and return those that potentially match the module
-        /// passed in as a parameter (checks on names and paths).
-        /// </summary>
+        
         /// <param name="moduleSpecTable">The module specifications to filter candidates from.</param>
         /// <param name="module">The module to find candidates for from the module specification table.</param>
         /// <returns>The module specifications matching the module based on name, path and subpath.</returns>
@@ -585,14 +540,10 @@ namespace Microsoft.PowerShell.Commands
         }
     }
 
-    /// <summary>
-    /// Provides argument completion for PSEdition parameter.
-    /// </summary>
+    
     public class PSEditionArgumentCompleter : IArgumentCompleter
     {
-        /// <summary>
-        /// Returns completion results for PSEdition parameter.
-        /// </summary>
+        
         /// <param name="commandName">The command name.</param>
         /// <param name="parameterName">The parameter name.</param>
         /// <param name="wordToComplete">The word to complete.</param>

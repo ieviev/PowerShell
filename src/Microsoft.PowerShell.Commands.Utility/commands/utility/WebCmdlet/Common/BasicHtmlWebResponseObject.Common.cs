@@ -16,25 +16,18 @@ using System.Threading;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// Response object for html content without DOM parsing.
-    /// </summary>
+    
     public class BasicHtmlWebResponseObject : WebResponseObject
     {
         #region Constructors
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="BasicHtmlWebResponseObject"/> class.
-        /// </summary>
+        
         /// <param name="response">The response.</param>
         /// <param name="perReadTimeout">Time permitted between reads or Timeout.InfiniteTimeSpan for no timeout.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
         public BasicHtmlWebResponseObject(HttpResponseMessage response, TimeSpan perReadTimeout, CancellationToken cancellationToken) : this(response, null, perReadTimeout, cancellationToken) { }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="BasicHtmlWebResponseObject"/> class
-        /// with the specified <paramref name="contentStream"/>.
-        /// </summary>
+        
         /// <param name="response">The response.</param>
         /// <param name="contentStream">The content stream associated with the response.</param>
         /// <param name="perReadTimeout">Time permitted between reads or Timeout.InfiniteTimeSpan for no timeout.</param>
@@ -49,9 +42,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Properties
 
-        /// <summary>
-        /// Gets the text body content of this response.
-        /// </summary>
+        
         /// <value>
         /// Content of the response body, decoded using <see cref="Encoding"/>,
         /// if the <c>Content-Type</c> response header is a recognized text
@@ -59,9 +50,7 @@ namespace Microsoft.PowerShell.Commands
         /// </value>
         public new string Content { get; private set; }
 
-        /// <summary>
-        /// Gets the encoding of the text body content of this response.
-        /// </summary>
+        
         /// <value>
         /// Encoding of the response body from the <c>Content-Type</c> header,
         /// or <see langword="null"/> if the encoding could not be determined.
@@ -70,9 +59,7 @@ namespace Microsoft.PowerShell.Commands
 
         private WebCmdletElementCollection? _inputFields;
 
-        /// <summary>
-        /// Gets the HTML input field elements parsed from <see cref="Content"/>.
-        /// </summary>
+        
         public WebCmdletElementCollection InputFields
         {
             get
@@ -95,9 +82,7 @@ namespace Microsoft.PowerShell.Commands
 
         private WebCmdletElementCollection? _links;
 
-        /// <summary>
-        /// Gets the HTML a link elements parsed from <see cref="Content"/>.
-        /// </summary>
+        
         public WebCmdletElementCollection Links
         {
             get
@@ -120,9 +105,7 @@ namespace Microsoft.PowerShell.Commands
 
         private WebCmdletElementCollection? _images;
 
-        /// <summary>
-        /// Gets the HTML img elements parsed from <see cref="Content"/>.
-        /// </summary>
+        
         public WebCmdletElementCollection Images
         {
             get
@@ -147,9 +130,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Methods
 
-        /// <summary>
-        /// Reads the response content from the web response.
-        /// </summary>
+        
         /// <param name="cancellationToken">The cancellation token.</param>
         [MemberNotNull(nameof(Content))]
         protected void InitializeContent(CancellationToken cancellationToken)

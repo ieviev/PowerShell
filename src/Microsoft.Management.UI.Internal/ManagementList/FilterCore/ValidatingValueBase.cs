@@ -10,23 +10,16 @@ using System.Globalization;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <summary>
-    /// The ValidatingValueBase class provides basic services for base
-    /// classes to support validation via the IDataErrorInfo interface.
-    /// </summary>
+    
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public abstract class ValidatingValueBase : IDataErrorInfo, INotifyPropertyChanged, IDeepCloneable
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ValidatingValueBase"/> class.
-        /// </summary>
+        
         protected ValidatingValueBase()
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the  <see cref="ValidatingValueBase"/> class.
-        /// </summary>
+        
         /// <param name="source">The source to initialize from.</param>
         protected ValidatingValueBase(ValidatingValueBase source)
         {
@@ -48,9 +41,7 @@ namespace Microsoft.Management.UI.Internal
 
         private DataErrorInfoValidationResult cachedValidationResult;
 
-        /// <summary>
-        /// Gets the collection of validation rules used to validate the value.
-        /// </summary>
+        
         public ReadOnlyCollection<DataErrorInfoValidationRule> ValidationRules
         {
             get
@@ -68,9 +59,7 @@ namespace Microsoft.Management.UI.Internal
 
         #region IsValid
 
-        /// <summary>
-        /// Gets a value indicating whether the value is valid.
-        /// </summary>
+        
         public bool IsValid
         {
             get
@@ -84,9 +73,7 @@ namespace Microsoft.Management.UI.Internal
         #region IDataErrorInfo implementation
         #region Item
 
-        /// <summary>
-        /// Gets the error message for the property with the given name.
-        /// </summary>
+        
         /// <param name="columnName">
         /// The name of the property whose error message will be checked.
         /// </param>
@@ -112,9 +99,7 @@ namespace Microsoft.Management.UI.Internal
 
         #region Error
 
-        /// <summary>
-        /// Gets an error message indicating what is wrong with this object.
-        /// </summary>
+        
         public string Error
         {
             get
@@ -133,9 +118,7 @@ namespace Microsoft.Management.UI.Internal
 
         #region PropertyChanged
 
-        /// <summary>
-        /// Occurs when a property value changes.
-        /// </summary>
+        
         /// <remarks>
         /// The listeners attached to this event are not serialized.
         /// </remarks>
@@ -152,9 +135,7 @@ namespace Microsoft.Management.UI.Internal
 
         #region AddValidationRule
 
-        /// <summary>
-        /// Adds a validation rule to the ValidationRules collection.
-        /// </summary>
+        
         /// <param name="rule">The validation rule to add.</param>
         public void AddValidationRule(DataErrorInfoValidationRule rule)
         {
@@ -170,9 +151,7 @@ namespace Microsoft.Management.UI.Internal
 
         #region RemoveValidationRule
 
-        /// <summary>
-        /// Removes a validation rule from the ValidationRules collection.
-        /// </summary>
+        
         /// <param name="rule">The rule to remove.</param>
         public void RemoveValidationRule(DataErrorInfoValidationRule rule)
         {
@@ -188,9 +167,7 @@ namespace Microsoft.Management.UI.Internal
 
         #region ClearValidationRules
 
-        /// <summary>
-        /// Clears the ValidationRules collection.
-        /// </summary>
+        
         public void ClearValidationRules()
         {
             this.validationRules.Clear();
@@ -203,18 +180,14 @@ namespace Microsoft.Management.UI.Internal
 
         #region Validate
 
-        /// <summary>
-        /// Called to validate the entire object.
-        /// </summary>
+        
         /// <returns>
         /// Returns a DataErrorInfoValidationResult which indicates the validation state
         /// of the object.
         /// </returns>
         protected abstract DataErrorInfoValidationResult Validate();
 
-        /// <summary>
-        /// Called to validate the property with the given name.
-        /// </summary>
+        
         /// <param name="propertyName">
         /// The name of the property whose error message will be checked.
         /// </param>
@@ -251,10 +224,7 @@ namespace Microsoft.Management.UI.Internal
 
         #region InvalidateValidationResult
 
-        /// <summary>
-        /// Calling InvalidateValidationResult causes the
-        /// Validation to be reevaluated.
-        /// </summary>
+        
         protected void InvalidateValidationResult()
         {
             this.ClearValidationResult();
@@ -264,9 +234,7 @@ namespace Microsoft.Management.UI.Internal
 
         #region NotifyPropertyChanged
 
-        /// <summary>
-        /// Notifies listeners that a property has changed.
-        /// </summary>
+        
         /// <param name="propertyName">
         /// The propertyName which has changed.
         /// </param>

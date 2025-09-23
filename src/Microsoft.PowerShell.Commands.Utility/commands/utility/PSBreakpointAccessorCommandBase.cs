@@ -3,9 +3,7 @@
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// Base class for Get/Set-PSBreakpoint.
-    /// </summary>
+    
     public abstract class PSBreakpointAccessorCommandBase : PSBreakpointCommandBase
     {
         #region strings

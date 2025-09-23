@@ -7,9 +7,7 @@ namespace System.Management.Automation.Provider
 {
     #region ItemCmdletProvider
 
-    /// <summary>
-    /// The base class for Cmdlet providers that expose an item as a PowerShell path.
-    /// </summary>
+    
     /// <remarks>
     /// The ItemCmdletProvider class is a base class that a provider derives from to
     /// inherit a set of methods that allows the PowerShell engine
@@ -23,11 +21,7 @@ namespace System.Management.Automation.Provider
     {
         #region internal methods
 
-        /// <summary>
-        /// Internal wrapper for the GetItem protected method. It is called instead
-        /// of the protected method that is overridden by derived classes so that the
-        /// context of the command can be set.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to retrieve.
         /// </param>
@@ -46,10 +40,7 @@ namespace System.Management.Automation.Provider
             GetItem(path);
         }
 
-        /// <summary>
-        /// Gives the provider to attach additional parameters to
-        /// the get-item cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// If the path was specified on the command line, this is the path
         /// to the item to get the dynamic parameters for.
@@ -70,11 +61,7 @@ namespace System.Management.Automation.Provider
             return GetItemDynamicParameters(path);
         }
 
-        /// <summary>
-        /// Internal wrapper for the SetItem protected method. It is called instead
-        /// of the protected method that is overridden by derived classes so that the
-        /// context of the command can be set.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to set.
         /// </param>
@@ -101,10 +88,7 @@ namespace System.Management.Automation.Provider
             SetItem(path, value);
         }
 
-        /// <summary>
-        /// Gives the provider to attach additional parameters to
-        /// the set-item cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// If the path was specified on the command line, this is the path
         /// to the item to get the dynamic parameters for.
@@ -131,11 +115,7 @@ namespace System.Management.Automation.Provider
             return SetItemDynamicParameters(path, value);
         }
 
-        /// <summary>
-        /// Internal wrapper for the ClearItem protected method. It is called instead
-        /// of the protected method that is overridden by derived classes so that the
-        /// context of the command can be set.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to clear.
         /// </param>
@@ -155,10 +135,7 @@ namespace System.Management.Automation.Provider
             ClearItem(path);
         }
 
-        /// <summary>
-        /// Gives the provider to attach additional parameters to
-        /// the clear-item cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// If the path was specified on the command line, this is the path
         /// to the item to get the dynamic parameters for.
@@ -181,11 +158,7 @@ namespace System.Management.Automation.Provider
             return ClearItemDynamicParameters(path);
         }
 
-        /// <summary>
-        /// Internal wrapper for the InvokeDefaultAction protected method. It is called instead
-        /// of the protected method that is overridden by derived classes so that the
-        /// context of the command can be set.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to perform the default action on.
         /// </param>
@@ -205,10 +178,7 @@ namespace System.Management.Automation.Provider
             InvokeDefaultAction(path);
         }
 
-        /// <summary>
-        /// Gives the provider to attach additional parameters to
-        /// the invoke-item cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// If the path was specified on the command line, this is the path
         /// to the item to get the dynamic parameters for.
@@ -231,11 +201,7 @@ namespace System.Management.Automation.Provider
             return InvokeDefaultActionDynamicParameters(path);
         }
 
-        /// <summary>
-        /// Internal wrapper for the Exists protected method. It is called instead
-        /// of the protected method that is overridden by derived classes so that the
-        /// context of the command can be set.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to see if it exists.
         /// </param>
@@ -265,10 +231,7 @@ namespace System.Management.Automation.Provider
             return itemExists;
         }
 
-        /// <summary>
-        /// Gives the provider to attach additional parameters to
-        /// the test-path cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// If the path was specified on the command line, this is the path
         /// to the item to get the dynamic parameters for.
@@ -291,11 +254,7 @@ namespace System.Management.Automation.Provider
             return ItemExistsDynamicParameters(path);
         }
 
-        /// <summary>
-        /// Internal wrapper for the IsValidPath protected method. It is called instead
-        /// of the protected method that is overridden by derived classes so that the
-        /// context of the command can be set.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to check for validity.
         /// </param>
@@ -321,12 +280,7 @@ namespace System.Management.Automation.Provider
             return IsValidPath(path);
         }
 
-        /// <summary>
-        /// Internal wrapper for the ExpandPath protected method. It is called instead
-        /// of the protected method that is overridden by derived classes so that the
-        /// context of the command can be set. Only called for providers that declare
-        /// the ExpandWildcards capability.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to expand. Expansion must be consistent with the wildcarding
         /// rules of PowerShell's WildcardPattern class.
@@ -349,9 +303,7 @@ namespace System.Management.Automation.Provider
 
         #region Protected methods
 
-        /// <summary>
-        /// Gets the item at the specified path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to retrieve.
         /// </param>
@@ -382,10 +334,7 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <summary>
-        /// Gives the provider an opportunity to attach additional parameters to
-        /// the get-item cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// If the path was specified on the command line, this is the path
         /// to the item to get the dynamic parameters for.
@@ -405,9 +354,7 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <summary>
-        /// Sets the item specified by the path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to set.
         /// </param>
@@ -443,10 +390,7 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <summary>
-        /// Gives the provider an opportunity to attach additional parameters to
-        /// the set-item cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// If the path was specified on the command line, this is the path
         /// to the item to get the dynamic parameters for.
@@ -469,9 +413,7 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <summary>
-        /// Clears the item specified by the path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to clear.
         /// </param>
@@ -503,10 +445,7 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <summary>
-        /// Gives the provider an opportunity to attach additional parameters to
-        /// the clear-item cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// If the path was specified on the command line, this is the path
         /// to the item to get the dynamic parameters for.
@@ -526,9 +465,7 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <summary>
-        /// Invokes the default action on the specified item.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to perform the default action on.
         /// </param>
@@ -561,10 +498,7 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <summary>
-        /// Gives the provider an opportunity to attach additional parameters to
-        /// the invoke-item cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// If the path was specified on the command line, this is the path
         /// to the item to get the dynamic parameters for.
@@ -584,9 +518,7 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <summary>
-        /// Determines if an item exists at the specified path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to see if it exists.
         /// </param>
@@ -621,10 +553,7 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <summary>
-        /// Gives the provider an opportunity to attach additional parameters to
-        /// the test-path cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// If the path was specified on the command line, this is the path
         /// to the item to get the dynamic parameters for.
@@ -644,10 +573,7 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <summary>
-        /// Providers must override this method to verify the syntax and semantics
-        /// of their paths.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to check for validity.
         /// </param>
@@ -663,11 +589,7 @@ namespace System.Management.Automation.Provider
         /// </remarks>
         protected abstract bool IsValidPath(string path);
 
-        /// <summary>
-        /// Expand a provider path that contains wildcards to a list of provider
-        /// paths that the path represents.Only called for providers that declare
-        /// the ExpandWildcards capability.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to expand. Expansion must be consistent with the wildcarding
         /// rules of PowerShell's WildcardPattern class.

@@ -15,14 +15,10 @@ using System.Text;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// PSTuple is a helper class used to create Tuple from an input array.
-    /// </summary>
+    
     internal static class PSTuple
     {
-        /// <summary>
-        /// ArrayToTuple is a helper method used to create a tuple for the supplied input array.
-        /// </summary>
+        
         /// <typeparam name="T">The first generic type parameter.</typeparam>
         /// <param name="inputObjects">Input objects used to create a tuple.</param>
         /// <returns>Tuple object.</returns>
@@ -31,9 +27,7 @@ namespace Microsoft.PowerShell.Commands
             return ArrayToTuple(inputObjects, 0);
         }
 
-        /// <summary>
-        /// ArrayToTuple is a helper method used to create a tuple for the supplied input array.
-        /// </summary>
+        
         /// <typeparam name="T">The first generic type parameter.</typeparam>
         /// <param name="inputObjects">Input objects used to create a tuple.</param>
         /// <param name="startIndex">Start index of the array from which the objects have to considered for the tuple creation.</param>
@@ -103,9 +97,7 @@ namespace Microsoft.PowerShell.Commands
         }
     }
 
-    /// <summary>
-    /// Emitted by Group-Object when the NoElement option is true.
-    /// </summary>
+    
     public sealed class GroupInfoNoElement : GroupInfo
     {
         internal GroupInfoNoElement(OrderByPropertyEntry groupValue) : base(groupValue)
@@ -118,9 +110,7 @@ namespace Microsoft.PowerShell.Commands
         }
     }
 
-    /// <summary>
-    /// Emitted by Group-Object.
-    /// </summary>
+    
     [DebuggerDisplay("{Name} ({Count})")]
     public class GroupInfo
     {
@@ -169,9 +159,7 @@ namespace Microsoft.PowerShell.Commands
             return sb.Length >= 2 ? sb.Remove(sb.Length - 2, 2).ToString() : string.Empty;
         }
 
-        /// <summary>
-        /// Gets the values of the group.
-        /// </summary>
+        
         public ArrayList Values
         {
             get
@@ -186,39 +174,27 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets the number of objects in the group.
-        /// </summary>
+        
         public int Count { get; internal set; }
 
-        /// <summary>
-        /// Gets the list of objects in this group.
-        /// </summary>
+        
         public Collection<PSObject> Group { get; }
 
-        /// <summary>
-        /// Gets the name of the group.
-        /// </summary>
+        
         public string Name { get; }
 
-        /// <summary>
-        /// Gets the OrderByPropertyEntry used to build this group object.
-        /// </summary>
+        
         internal OrderByPropertyEntry GroupValue { get; }
     }
 
-    /// <summary>
-    /// Group-Object implementation.
-    /// </summary>
+    
     [Cmdlet(VerbsData.Group, "Object", HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096619", RemotingCapability = RemotingCapability.None)]
     [OutputType(typeof(Hashtable), typeof(GroupInfo))]
     public class GroupObjectCommand : ObjectBase
     {
         #region tracer
 
-        /// <summary>
-        /// An instance of the PSTraceSource class used for trace output.
-        /// </summary>
+        
         [TraceSource("GroupObjectCommand", "Class that has group base implementation")]
         private static readonly PSTraceSource s_tracer = PSTraceSource.GetTracer("GroupObjectCommand", "Class that has group base implementation");
 
@@ -226,25 +202,19 @@ namespace Microsoft.PowerShell.Commands
 
         #region Command Line Switches
 
-        /// <summary>
-        /// Gets or sets the NoElement parameter indicating of the groups should be flattened.
-        /// </summary>
+        
         /// <value></value>
         [Parameter]
         public SwitchParameter NoElement { get; set; }
 
-        /// <summary>
-        /// Gets or sets the AsHashTable parameter.
-        /// </summary>
+        
         /// <value></value>
         [Parameter(ParameterSetName = "HashTable")]
         [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "HashTable")]
         [Alias("AHT")]
         public SwitchParameter AsHashTable { get; set; }
 
-        /// <summary>
-        /// Gets or sets the AsString parameter.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "HashTable")]
         public SwitchParameter AsString { get; set; }
 
@@ -261,9 +231,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region utils
 
-        /// <summary>
-        /// Utility function called by Group-Object to create Groups.
-        /// </summary>
+        
         /// <param name="currentObjectEntry">Input object that needs to be grouped.</param>
         /// <param name="noElement">True if we are not accumulating objects.</param>
         /// <param name="groups">List containing Groups.</param>
@@ -315,9 +283,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Utility function called by Group-Object to create Groups.
-        /// </summary>
+        
         /// <param name="currentObjectEntry">Input object that needs to be grouped.</param>
         /// <param name="noElement">True if we are not accumulating objects.</param>
         /// <param name="groups">List containing Groups.</param>
@@ -381,9 +347,7 @@ namespace Microsoft.PowerShell.Commands
 
         #endregion utils
 
-        /// <summary>
-        /// Process every input object to group them.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             if (InputObject != null && InputObject != AutomationNull.Value)
@@ -479,9 +443,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Completes the processing of the gathered group objects.
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             if (!_hasDifferentValueTypes)

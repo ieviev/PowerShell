@@ -2664,8 +2664,7 @@ namespace System.Management.Automation.Language
             }
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="usingStatements">Using statement asts.</param>
         /// <param name="allUsingsAreNamespaces">This flag allow us some optimizations, if usings don't have assemblies and modules.</param>
         /// <param name="exprs"></param>
@@ -2697,10 +2696,7 @@ namespace System.Management.Automation.Language
             }
         }
 
-        /// <summary>
-        /// Bake types and creates a dynamic assembly.
-        /// This method should be called only for rootAsts (i.e. script file root ScriptBlockAst).
-        /// </summary>
+        
         /// <param name="rootForDefiningTypes"></param>
         /// <param name="typeAsts">Non-empty array of TypeDefinitionAst.</param>
         /// <returns>Assembly with defined types.</returns>
@@ -2843,9 +2839,7 @@ namespace System.Management.Automation.Language
             return assembly;
         }
 
-        /// <summary>
-        /// Take module info of module that can be already loaded or not and loads it.
-        /// </summary>
+        
         /// <param name="originalModuleInfo">Module to load.</param>
         /// <returns>Module info of the same module, but loaded.</returns>
         private static PSModuleInfo LoadModule(PSModuleInfo originalModuleInfo)
@@ -3268,10 +3262,7 @@ namespace System.Management.Automation.Language
             }
         }
 
-        /// <summary>
-        /// Determines whether a statement must have an explicit setting
-        /// for $? = $true after it by the compiler.
-        /// </summary>
+        
         /// <param name="statementAst">The statement to examine.</param>
         /// <returns>True is the compiler should add the success setting, false otherwise.</returns>
         private bool ShouldSetExecutionStatusToSuccess(StatementAst statementAst)
@@ -3288,10 +3279,7 @@ namespace System.Management.Automation.Language
             }
         }
 
-        /// <summary>
-        /// Determines whether a pipeline must have an explicit setting
-        /// for $? = $true after it by the compiler.
-        /// </summary>
+        
         /// <param name="pipelineAst">The pipeline to examine.</param>
         /// <returns>True is the compiler should add the success setting, false otherwise.</returns>
         private bool ShouldSetExecutionStatusToSuccess(PipelineAst pipelineAst)
@@ -3308,11 +3296,7 @@ namespace System.Management.Automation.Language
             return ShouldSetExecutionStatusToSuccess(expressionAst);
         }
 
-        /// <summary>
-        /// If the pipeline contains a single expression, the expression is returned, otherwise null is returned.
-        /// This method is different from <see cref="PipelineAst.GetPureExpression"/> in that it allows the single
-        /// expression to have redirections.
-        /// </summary>
+        
         private static ExpressionAst GetSingleExpressionFromPipeline(PipelineAst pipelineAst)
         {
             var pipelineElements = pipelineAst.PipelineElements;
@@ -3324,10 +3308,7 @@ namespace System.Management.Automation.Language
             return null;
         }
 
-        /// <summary>
-        /// Determines whether an assignment statement must have an explicit setting
-        /// for $? = $true after it by the compiler.
-        /// </summary>
+        
         /// <param name="assignmentStatementAst">The assignment statement to examine.</param>
         /// <returns>True is the compiler should add the success setting, false otherwise.</returns>
         private bool ShouldSetExecutionStatusToSuccess(AssignmentStatementAst assignmentStatementAst)
@@ -3353,10 +3334,7 @@ namespace System.Management.Automation.Language
             }
         }
 
-        /// <summary>
-        /// Determines whether an expression in a statement must have an explicit setting
-        /// for $? = $true after it by the compiler.
-        /// </summary>
+        
         /// <param name="expressionAst">The expression to examine.</param>
         /// <returns>True is the compiler should add the success setting, false otherwise.</returns>
         private bool ShouldSetExecutionStatusToSuccess(ExpressionAst expressionAst)
@@ -3706,11 +3684,7 @@ namespace System.Management.Automation.Language
             return fullyExpandedBlock;
         }
 
-        /// <summary>
-        /// Compile a pipeline as an element in a pipeline chain.
-        /// Needed since pure expressions won't set $? after them.
-        /// <seealso cref="CompileTrappableExpression"/> which does something similar.
-        /// </summary>
+        
         /// <param name="pipelineAst">The pipeline in the pipeline chain to compile to an expression.</param>
         /// <returns>The compiled expression to execute the pipeline.</returns>
         private Expression CompilePipelineChainElement(PipelineAst pipelineAst)

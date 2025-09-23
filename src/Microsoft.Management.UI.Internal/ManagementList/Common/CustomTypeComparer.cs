@@ -7,29 +7,19 @@ using System.Diagnostics;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <summary>
-    /// The CustomTypeComparer is responsible for holding custom comparers
-    /// for different types, which are in turn used to perform comparison
-    /// operations instead of the default IComparable comparison.
-    /// with a custom comparer.
-    /// </summary>
+    
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public static class CustomTypeComparer
     {
         private static Dictionary<Type, object> comparers = new Dictionary<Type, object>();
 
-        /// <summary>
-        /// The static constructor.
-        /// </summary>
+        
         static CustomTypeComparer()
         {
             comparers.Add(typeof(DateTime), new DateTimeApproximationComparer());
         }
 
-        /// <summary>
-        /// Compares two objects and returns a value indicating
-        /// whether one is less than, equal to, or greater than the other.
-        /// </summary>
+        
         /// <param name="value1">
         /// The first object to compare.
         /// </param>

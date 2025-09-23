@@ -17,9 +17,7 @@ using System.Security.Permissions;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Errors reported by PowerShell will be in one of these categories.
-    /// </summary>
+    
     /// <remarks>
     /// Do not specify ErrorCategory.NotSpecified when creating an
     /// <see cref="System.Management.Automation.ErrorRecord"/>.
@@ -27,171 +25,104 @@ namespace System.Management.Automation
     /// </remarks>
     public enum ErrorCategory
     {
-        /// <summary>
-        /// <para>
-        /// No error category is specified, or the error category is invalid.
-        /// </para>
-        /// <para>
-        /// Do not specify ErrorCategory.NotSpecified when creating an
-        /// <see cref="System.Management.Automation.ErrorRecord"/>.
-        /// Choose the best match from among the other values.
-        /// </para>
-        /// </summary>
+        
         NotSpecified = 0,
 
-        /// <summary>
-        /// </summary>
+        
         OpenError = 1,
 
-        /// <summary>
-        /// </summary>
+        
         CloseError = 2,
 
-        /// <summary>
-        /// </summary>
+        
         DeviceError = 3,
 
-        /// <summary>
-        /// </summary>
+        
         DeadlockDetected = 4,
 
-        /// <summary>
-        /// </summary>
+        
         InvalidArgument = 5,
 
-        /// <summary>
-        /// </summary>
+        
         InvalidData = 6,
 
-        /// <summary>
-        /// </summary>
+        
         InvalidOperation = 7,
 
-        /// <summary>
-        /// </summary>
+        
         InvalidResult = 8,
 
-        /// <summary>
-        /// </summary>
+        
         InvalidType = 9,
 
-        /// <summary>
-        /// </summary>
+        
         MetadataError = 10,
 
-        /// <summary>
-        /// </summary>
+        
         NotImplemented = 11,
 
-        /// <summary>
-        /// </summary>
+        
         NotInstalled = 12,
 
-        /// <summary>
-        /// Object can not be found (file, directory, computer, system resource, etc.)
-        /// </summary>
+        
         ObjectNotFound = 13,
 
-        /// <summary>
-        /// </summary>
+        
         OperationStopped = 14,
 
-        /// <summary>
-        /// </summary>
+        
         OperationTimeout = 15,
 
-        /// <summary>
-        /// </summary>
+        
         SyntaxError = 16,
 
-        /// <summary>
-        /// </summary>
+        
         ParserError = 17,
 
-        /// <summary>
-        /// Operation not permitted.
-        /// </summary>
+        
         PermissionDenied = 18,
 
-        /// <summary>
-        /// </summary>
+        
         ResourceBusy = 19,
 
-        /// <summary>
-        /// </summary>
+        
         ResourceExists = 20,
 
-        /// <summary>
-        /// </summary>
+        
         ResourceUnavailable = 21,
 
-        /// <summary>
-        /// </summary>
+        
         ReadError = 22,
 
-        /// <summary>
-        /// </summary>
+        
         WriteError = 23,
 
-        /// <summary>
-        /// <para>
-        /// A native command reported an error to its STDERR pipe.
-        /// </para>
-        /// <para>
-        /// The Engine uses this ErrorCategory when it executes a native
-        /// console applications and captures the errors reported by the
-        /// native application.  Avoid using ErrorCategory.FromStdErr
-        /// in other circumstances.
-        /// </para>
-        /// </summary>
+        
         FromStdErr = 24,
 
-        /// <summary>
-        /// Used for security exceptions.
-        /// </summary>
+        
         SecurityError = 25,
 
-        /// <summary>
-        /// The contract of a protocol is not being followed. Should not happen
-        /// with well-behaved components.
-        /// </summary>
+        
         ProtocolError = 26,
 
-        /// <summary>
-        /// The operation depends on a network connection that cannot be
-        /// established or maintained.
-        /// </summary>
+        
         ConnectionError = 27,
 
-        /// <summary>
-        /// Could not authenticate the user to the service. Could mean that the
-        /// credentials are invalid or the authentication system is not
-        /// functioning properly.
-        /// </summary>
+        
         AuthenticationError = 28,
 
-        /// <summary>
-        /// Internal limits prevent the operation from being executed.
-        /// </summary>
+        
         LimitsExceeded = 29,
 
-        /// <summary>
-        /// Controls on the use of traffic or resources prevent the operation
-        /// from being executed.
-        /// </summary>
+        
         QuotaExceeded = 30,
 
-        /// <summary>
-        /// The operation attempted to use functionality that is currently
-        /// disabled.
-        /// </summary>
+        
         NotEnabled = 31,
     }
 
-    /// <summary>
-    /// Contains auxiliary information about an
-    /// <see cref="System.Management.Automation.ErrorRecord"/>
-    /// </summary>
+    
     public class ErrorCategoryInfo
     {
         #region ctor
@@ -204,7 +135,7 @@ namespace System.Management.Automation
         #endregion ctor
 
         #region Properties
-        /// <summary></summary>
+        
         /// <see cref="System.Management.Automation.ErrorCategory"/>
         /// for this error
         public ErrorCategory Category
@@ -212,10 +143,7 @@ namespace System.Management.Automation
             get { return _errorRecord._category; }
         }
 
-        /// <summary>
-        /// Text description of the operation which
-        /// encountered the error.
-        /// </summary>
+        
         /// <value>text description of the operation</value>
         /// <remarks>
         /// By default, this is the cmdlet name.
@@ -248,9 +176,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Text description of the error.
-        /// </summary>
+        
         /// <value>text description of the error</value>
         /// <remarks>
         /// By default, this is the exception type.
@@ -284,9 +210,7 @@ namespace System.Management.Automation
 
         private bool _reasonIsExceptionType;
 
-        /// <summary>
-        /// Text description of the target object.
-        /// </summary>
+        
         /// <value>text description of the target object</value>
         /// <remarks>
         /// By default, this is TargetObject.ToString(), or the empty string
@@ -327,9 +251,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Text description of the type of the target object.
-        /// </summary>
+        
         /// <value>text description of the type of the target object</value>
         /// <remarks>
         /// By default, this is TargetObject.GetType().ToString(),
@@ -363,10 +285,7 @@ namespace System.Management.Automation
         #endregion Properties
 
         #region Methods
-        /// <summary>
-        /// Concise text description based on
-        /// <see cref="System.Management.Automation.ErrorCategoryInfo.Category"/>
-        /// </summary>
+        
         /// <returns>Concise text description.</returns>
         /// <remarks>
         /// GetMessage returns a concise string which categorizes the error,
@@ -390,10 +309,7 @@ namespace System.Management.Automation
             return GetMessage(CultureInfo.CurrentUICulture);
         }
 
-        /// <summary>
-        /// Concise text description based on
-        /// <see cref="System.Management.Automation.ErrorCategoryInfo.Category"/>
-        /// </summary>
+        
         /// <param name="uiCultureInfo">Culture in which to display message.</param>
         /// <returns>Concise text description.</returns>
         /// <remarks>
@@ -462,10 +378,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Same as
-        /// <see cref="System.Management.Automation.ErrorCategoryInfo.GetMessage()"/>
-        /// </summary>
+        
         /// <returns>Developer-readable identifier.</returns>
         public override string ToString()
         {
@@ -477,14 +390,7 @@ namespace System.Management.Automation
         // back-reference for facade class
         private readonly ErrorRecord _errorRecord;
 
-        /// <summary>
-        /// The Activity, Reason, TargetName and TargetType strings in
-        /// ErrorCategoryInfo can be of unlimited length.  In order to
-        /// control the maximum length of the GetMessage() string, we
-        /// ellipsize these strings.  The current heuristic is to take
-        /// strings longer than 40 characters and ellipsize them to
-        /// the first and last 19 characters plus "..." in the middle.
-        /// </summary>
+        
         /// <param name="uiCultureInfo">Culture to retrieve template if needed.</param>
         /// <param name="original">Original string.</param>
         /// <returns>Ellipsized version of string.</returns>
@@ -509,10 +415,7 @@ namespace System.Management.Automation
         #endregion Private
     }
 
-    /// <summary>
-    /// Additional details about an
-    /// <see cref="System.Management.Automation.ErrorRecord"/>
-    /// </summary>
+    
     /// <remarks>
     /// ErrorDetails represents additional details about an
     /// <see cref="System.Management.Automation.ErrorRecord"/>,
@@ -527,9 +430,7 @@ namespace System.Management.Automation
     public class ErrorDetails : ISerializable
     {
         #region Constructor
-        /// <summary>
-        /// Creates an instance of ErrorDetails specifying a Message.
-        /// </summary>
+        
         /// <remarks>
         /// It is preferred for Cmdlets to use
         /// <see cref="ErrorDetails(Cmdlet,string,string,object[])"/>,
@@ -546,10 +447,7 @@ namespace System.Management.Automation
         }
 
         #region UseResourceId
-        /// <summary>
-        /// Creates an instance of ErrorDetails specifying a Message.
-        /// This variant is used by cmdlets.
-        /// </summary>
+        
         /// <param name="cmdlet">Cmdlet containing the template string.</param>
         /// <param name="baseName">by default, the
         /// <see cref="System.Resources.ResourceManager"/>
@@ -591,10 +489,7 @@ namespace System.Management.Automation
         {
             _message = BuildMessage(cmdlet, baseName, resourceId, args);
         }
-        /// <summary>
-        /// Creates an instance of ErrorDetails specifying a Message.
-        /// This variant is used by CmdletProviders.
-        /// </summary>
+        
         /// <param name="resourceSupplier">
         /// Resource supplier, most often an instance of
         /// <see cref="Provider.CmdletProvider"/>.
@@ -644,11 +539,7 @@ namespace System.Management.Automation
         {
             _message = BuildMessage(resourceSupplier, baseName, resourceId, args);
         }
-        /// <summary>
-        /// Creates an instance of ErrorDetails specifying a Message.
-        /// This variant is used by other code without a reference to
-        /// a <see cref="Cmdlet"/> or <see cref="Provider.CmdletProvider"/> instance.
-        /// </summary>
+        
         /// <param name="assembly">
         /// assembly containing the template string
         /// </param>
@@ -696,11 +587,7 @@ namespace System.Management.Automation
         #endregion Constructor
 
         #region Serialization
-        /// <summary>
-        /// Initializes a new instance of the ErrorDetails class
-        /// using data serialized via
-        /// <see cref="ISerializable"/>
-        /// </summary>
+        
         /// <param name="info">Serialization information.</param>
         /// <param name="context">Streaming context.</param>
         /// <returns>Constructed object.</returns>
@@ -712,9 +599,7 @@ namespace System.Management.Automation
                 "ErrorDetails_RecommendedAction");
         }
 
-        /// <summary>
-        /// Serializer for <see cref="ISerializable"/>
-        /// </summary>
+        
         /// <param name="info">Serialization information.</param>
         /// <param name="context">Streaming context.</param>
         public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
@@ -729,11 +614,7 @@ namespace System.Management.Automation
         #endregion Serialization
 
         #region Public Properties
-        /// <summary>
-        /// Message which replaces
-        /// <see cref="System.Exception.Message"/> in
-        /// <see cref="System.Management.Automation.ErrorRecord.Exception"/>
-        /// </summary>
+        
         /// <remarks>
         /// When an instance of
         /// <see cref="System.Management.Automation.ErrorRecord"/>
@@ -755,11 +636,7 @@ namespace System.Management.Automation
 
         private readonly string _message = string.Empty;
 
-        /// <summary>
-        /// Text describing the recommended action in the event that this error
-        /// occurs.  This is empty unless the code which generates the error
-        /// specifies it explicitly.
-        /// </summary>
+        
         /// <remarks>
         /// This should be a grammatically correct localized text string.
         /// This may be left empty.
@@ -792,9 +669,7 @@ namespace System.Management.Automation
         #endregion Internal Properties
 
         #region ToString
-        /// <summary>
-        /// As <see cref="System.Object.ToString()"/>
-        /// </summary>
+        
         /// <returns>Developer-readable identifier.</returns>
         public override string ToString()
         {
@@ -958,9 +833,7 @@ namespace System.Management.Automation
 
     }
 
-    /// <summary>
-    /// Represents an error.
-    /// </summary>
+    
     /// <remarks>
     /// An ErrorRecord describes an error.  It extends the usual information
     /// in <see cref="System.Exception"/> with the additional information in
@@ -990,9 +863,7 @@ namespace System.Management.Automation
         {
         }
 
-        /// <summary>
-        /// Creates an instance of ErrorRecord.
-        /// </summary>
+        
         /// <param name="exception">
         /// This is an exception which describes the error.
         /// This argument may not be null, but it is not required
@@ -1047,11 +918,7 @@ namespace System.Management.Automation
         // InvocationInfo, Token, InternalCommand and its subclasses, and
         // CommandInfo and its subclasses is too expensive.
 
-        /// <summary>
-        /// Initializes a new instance of the ErrorRecord class
-        /// using data serialized via
-        /// <see cref="ISerializable"/>
-        /// </summary>
+        
         /// <param name="info">Serialization information.</param>
         /// <param name="context">Streaming context.</param>
         /// <returns>Constructed object.</returns>
@@ -1067,9 +934,7 @@ namespace System.Management.Automation
             ConstructFromPSObjectForRemoting(psObject);
         }
 
-        /// <summary>
-        /// Deserializer for <see cref="ISerializable"/>
-        /// </summary>
+        
         /// <param name="info">Serialization information.</param>
         /// <param name="context">Streaming context.</param>
         public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
@@ -1088,30 +953,19 @@ namespace System.Management.Automation
 
         #region Remoting
 
-        /// <summary>
-        /// IsSerialized is set to true if this error record is serialized.
-        /// </summary>
+        
         private bool _isSerialized = false;
 
-        /// <summary>
-        /// Is this instance serialized.
-        /// </summary>
+        
         internal bool IsSerialized { get => _isSerialized; }
 
-        /// <summary>
-        /// Value for FullyQualifiedErrorId in case of serialized error record.
-        /// </summary>
+        
         private string _serializedFullyQualifiedErrorId = null;
 
-        /// <summary>
-        /// Message overridee for CategoryInfo.GetMessage method.
-        /// </summary>
+        
         internal string _serializedErrorCategoryMessageOverride = null;
 
-        /// <summary>
-        /// This constructor is used by remoting code to create ErrorRecord.
-        /// Various information is obtained from serialized ErrorRecord.
-        /// </summary>
+        
         /// <param name="exception"></param>
         /// <param name="targetObject"></param>
         /// <param name="fullyQualifiedErrorId"></param>
@@ -1189,9 +1043,7 @@ namespace System.Management.Automation
             _scriptStackTrace = errorDetails_ScriptStackTrace;
         }
 
-        /// <summary>
-        /// Adds the information about this error record to PSObject as notes.
-        /// </summary>
+        
         /// <returns></returns>
         internal void ToPSObjectForRemoting(PSObject dest)
         {
@@ -1234,9 +1086,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the value for note from mshObject.
-        /// </summary>
+        
         /// <param name="mshObject">
         /// PSObject from which value is fetched.
         /// </param>
@@ -1258,11 +1108,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Create an ErrorRecord object from serialized ErrorRecord.
-        /// serializedErrorRecord PSObject is in the format returned
-        /// by ToPSObjectForRemoting method.
-        /// </summary>
+        
         /// <param name="serializedErrorRecord">
         /// PSObject to convert to ErrorRecord
         /// </param>
@@ -1375,11 +1221,7 @@ namespace System.Management.Automation
 
         #endregion Remoting
 
-        /// <summary>
-        /// Copy constructor, for use when a new wrapper exception wraps an
-        /// exception which already has an ErrorRecord
-        /// ErrorCategoryInfo and ErrorDetails are deep-copied, other fields are not.
-        /// </summary>
+        
         /// <param name="errorRecord">Wrapped ErrorRecord.</param>
         /// <param name="replaceParentContainsErrorRecordException">
         /// If the wrapped exception contains a ParentContainsErrorRecordException, the new
@@ -1424,10 +1266,7 @@ namespace System.Management.Automation
 
         #region Override
 
-        /// <summary>
-        /// Wrap the current ErrorRecord instance
-        /// A derived class needs to override this method if it contains additional info that needs to be kept when it gets wrapped.
-        /// </summary>
+        
         /// <param name="replaceParentContainsErrorRecordException">
         /// If the wrapped exception contains a ParentContainsErrorRecordException, the new
         /// ErrorRecord should have this exception as its Exception instead.
@@ -1442,9 +1281,7 @@ namespace System.Management.Automation
 
         #region Public Properties
 
-        /// <summary>
-        /// An Exception describing the error.
-        /// </summary>
+        
         /// <value>never null</value>
         public Exception Exception
         {
@@ -1457,9 +1294,7 @@ namespace System.Management.Automation
 
         private Exception _error ;
 
-        /// <summary>
-        /// The object against which the error occurred.
-        /// </summary>
+        
         /// <value>may be null</value>
         public object TargetObject { get => _target; }
 
@@ -1470,19 +1305,13 @@ namespace System.Management.Automation
             _target = target;
         }
 
-        /// <summary>
-        /// Information regarding the ErrorCategory
-        /// associated with this error, and with the categorized error message
-        /// for that ErrorCategory.
-        /// </summary>
+        
         /// <value>never null</value>
         public ErrorCategoryInfo CategoryInfo { get => _categoryInfo ??= new ErrorCategoryInfo(this); }
 
         private ErrorCategoryInfo _categoryInfo;
 
-        /// <summary>
-        /// String which uniquely identifies this error condition.
-        /// </summary>
+        
         /// <value>never null</value>
         /// <remarks>
         /// FullyQualifiedErrorid identifies this error condition
@@ -1509,9 +1338,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Additional information about the error.
-        /// </summary>
+        
         /// <value>may be null</value>
         /// <remarks>
         /// In particular, ErrorDetails.Message (if present and non-empty)
@@ -1520,10 +1347,7 @@ namespace System.Management.Automation
         /// </remarks>
         public ErrorDetails ErrorDetails { get; set; }
 
-        /// <summary>
-        /// Identifies the cmdlet, script, or other command which caused
-        /// the error.
-        /// </summary>
+        
         /// <value>may be null</value>
         public InvocationInfo InvocationInfo { get => _invocationInfo; }
 
@@ -1573,9 +1397,7 @@ namespace System.Management.Automation
         // 2005/07/14-913791 "write-error output is confusing and misleading"
         internal bool PreserveInvocationInfoOnce { get; set; }
 
-        /// <summary>
-        /// The script stack trace for the error.
-        /// </summary>
+        
         public string ScriptStackTrace { get => _scriptStackTrace; }
 
         private string _scriptStackTrace;
@@ -1608,16 +1430,12 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// The status of the pipeline when this record was created.
-        /// </summary>
+        
         public ReadOnlyCollection<int> PipelineIterationInfo { get => _pipelineIterationInfo; }
 
         private ReadOnlyCollection<int> _pipelineIterationInfo = Utils.EmptyReadOnlyCollection<int>();
 
-        /// <summary>
-        /// Whether to serialize the InvocationInfo during remote calls.
-        /// </summary>
+        
         internal bool SerializeExtendedInfo
         {
             get => _serializeExtendedInfo;
@@ -1673,9 +1491,7 @@ namespace System.Management.Automation
         #endregion Private
 
         #region ToString
-        /// <summary>
-        /// As <see cref="System.Object.ToString()"/>
-        /// </summary>
+        
         /// <returns>Developer-readable identifier.</returns>
         public override string ToString()
         {
@@ -1695,9 +1511,7 @@ namespace System.Management.Automation
 
     }
 
-    /// <summary>
-    /// Dummy generic class for type inference purposes on typed catch blocks.
-    /// </summary>
+    
     /// <typeparam name="TException">Anything that inherits Exception.</typeparam>
     internal class ErrorRecord<TException> : ErrorRecord where TException : Exception
     {
@@ -1708,11 +1522,7 @@ namespace System.Management.Automation
         }
     }
 
-    /// <summary>
-    /// Implemented by exception classes which contain additional
-    /// <see cref="System.Management.Automation.ErrorRecord"/>
-    /// information.
-    /// </summary>
+    
     /// <remarks>
     /// PowerShell defines certain exception classes which implement this interface.
     /// This includes wrapper exceptions such as
@@ -1755,11 +1565,7 @@ namespace System.Management.Automation
 #nullable enable
     public interface IContainsErrorRecord
     {
-        /// <summary>
-        /// This is the
-        /// <see cref="ErrorRecord"/>
-        /// which provides additional information about the error.
-        /// </summary>
+        
         /// <remarks>
         /// The <see cref="ErrorRecord"/> instance returned by
         /// <see cref="IContainsErrorRecord.ErrorRecord"/>
@@ -1783,10 +1589,7 @@ namespace System.Management.Automation
     }
 #nullable restore
 
-    /// <summary>
-    /// Objects implementing this interface can be used by
-    /// <see cref="System.Management.Automation.ErrorDetails(IResourceSupplier,string,string,object[])"/>
-    /// </summary>
+    
     /// <remarks>
     /// <see cref="Provider.CmdletProvider"/>
     /// implements this interface.  PSSnapins can implement
@@ -1806,10 +1609,7 @@ namespace System.Management.Automation
 #nullable enable
     public interface IResourceSupplier
     {
-        /// <summary>
-        /// Gets the error message template string corresponding to
-        /// <paramref name="baseName"/> and <paramref name="resourceId"/>.
-        /// </summary>
+        
         /// <remarks>
         /// If the desired behavior is simple string lookup
         /// in your assembly, you can use the

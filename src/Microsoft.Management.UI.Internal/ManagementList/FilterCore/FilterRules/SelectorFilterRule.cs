@@ -6,17 +6,13 @@ using System.Runtime.Serialization;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <summary>
-    /// The SelectorFilterRule represents a rule composed of other rules.
-    /// </summary>
+    
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public class SelectorFilterRule : FilterRule
     {
         #region Properties
 
-        /// <summary>
-        /// Gets a value indicating whether the rule can be evaluated.
-        /// </summary>
+        
         public override bool IsValid
         {
             get
@@ -25,9 +21,7 @@ namespace Microsoft.Management.UI.Internal
             }
         }
 
-        /// <summary>
-        /// Gets the collection of available rules.
-        /// </summary>
+        
         public ValidatingSelectorValue<FilterRule> AvailableRules
         {
             get;
@@ -38,18 +32,14 @@ namespace Microsoft.Management.UI.Internal
 
         #region Ctor
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SelectorFilterRule"/> class.
-        /// </summary>
+        
         public SelectorFilterRule()
         {
             this.AvailableRules = new ValidatingSelectorValue<FilterRule>();
             this.AvailableRules.SelectedValueChanged += this.AvailableRules_SelectedValueChanged;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SelectorFilterRule"/> class.
-        /// </summary>
+        
         /// <param name="source">The source to initialize from.</param>
         public SelectorFilterRule(SelectorFilterRule source)
             : base(source)
@@ -63,9 +53,7 @@ namespace Microsoft.Management.UI.Internal
 
         #region Public Methods
 
-        /// <summary>
-        /// Evaluates whether the item is inclusive.
-        /// </summary>
+        
         /// <param name="item">
         /// The item to evaluate.
         /// </param>
@@ -82,9 +70,7 @@ namespace Microsoft.Management.UI.Internal
             return this.AvailableRules.SelectedValue.Evaluate(item);
         }
 
-        /// <summary>
-        /// Called when the SelectedValue within AvailableRules changes.
-        /// </summary>
+        
         /// <param name="oldValue">
         /// The old FilterRule.
         /// </param>

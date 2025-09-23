@@ -175,12 +175,7 @@ namespace Microsoft.PowerShell.Commands
             return headerInfo;
         }
 
-        /// <summary>
-        /// Method to filter resolved expressions as per table view needs.
-        /// For v1.0, table view supports only 10 properties.
-        ///
-        /// This method filters and updates "activeAssociationList" instance property.
-        /// </summary>
+        
         /// <returns>None.</returns>
         /// <remarks>This method updates "activeAssociationList" instance property.</remarks>
         private static void FilterActiveAssociationList(List<MshResolvedExpressionParameterAssociation> activeAssociationList)

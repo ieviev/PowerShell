@@ -7,16 +7,11 @@ using System.Windows.Data;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <summary>
-    /// The FilterRuleToDisplayNameConverter is responsible for converting
-    /// a FilterRule value to its DisplayName.
-    /// </summary>
+    
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public class FilterRuleToDisplayNameConverter : IValueConverter
     {
-        /// <summary>
-        /// Converts a FilterRule value to its DisplayName.
-        /// </summary>
+        
         /// <param name="value">
         /// A FilterRule.
         /// </param>
@@ -48,9 +43,7 @@ namespace Microsoft.Management.UI.Internal
             return rule.DisplayName;
         }
 
-        /// <summary>
-        /// The method is not used.
-        /// </summary>
+        
         /// <param name="value">
         /// The parameter is not used.
         /// </param>

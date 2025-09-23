@@ -9,18 +9,14 @@ using Dbg = System.Management.Automation;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// Suspend shell, script, or runspace activity for the specified period of time.
-    /// </summary>
+    
     [Cmdlet(VerbsLifecycle.Start, "Sleep", DefaultParameterSetName = "Seconds", HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097041")]
     public sealed class StartSleepCommand : PSCmdlet, IDisposable
     {
         private bool _disposed = false;
 
         #region IDisposable
-        /// <summary>
-        /// Dispose method of IDisposable interface.
-        /// </summary>
+        
         public void Dispose()
         {
             if (!_disposed)
@@ -39,25 +35,19 @@ namespace Microsoft.PowerShell.Commands
 
         #region parameters
 
-        /// <summary>
-        /// Allows sleep time to be specified in seconds.
-        /// </summary>
+        
         [Parameter(Position = 0, Mandatory = true, ParameterSetName = "Seconds", ValueFromPipeline = true,
                    ValueFromPipelineByPropertyName = true)]
         [ValidateRange(0.0, (double)(int.MaxValue / 1000))]
         public double Seconds { get; set; }
 
-        /// <summary>
-        /// Allows sleep time to be specified in milliseconds.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ParameterSetName = "Milliseconds", ValueFromPipelineByPropertyName = true)]
         [ValidateRange(0, int.MaxValue)]
         [Alias("ms")]
         public int Milliseconds { get; set; }
 
-        /// <summary>
-        /// Allows sleep time to be specified as a TimeSpan.
-        /// </summary>
+        
         [Parameter(Position = 0, Mandatory = true, ParameterSetName = "FromTimeSpan", ValueFromPipeline = true,
                    ValueFromPipelineByPropertyName = true)]
         [ValidateRange(ValidateRangeKind.NonNegative)]
@@ -78,9 +68,7 @@ namespace Microsoft.PowerShell.Commands
         // this is set to true by stopProcessing
         private bool _stopping = false;
 
-        /// <summary>
-        /// This method causes calling thread to sleep for specified milliseconds.
-        /// </summary>
+        
         private void Sleep(int milliSecondsToSleep)
         {
             lock (_syncObject)
@@ -94,9 +82,7 @@ namespace Microsoft.PowerShell.Commands
             _waitHandle?.WaitOne(milliSecondsToSleep, true);
         }
 
-        /// <summary>
-        /// ProcessRecord method.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             int sleepTime = 0;
@@ -139,9 +125,7 @@ namespace Microsoft.PowerShell.Commands
             Sleep(sleepTime);
         }
 
-        /// <summary>
-        /// StopProcessing override.
-        /// </summary>
+        
         protected override void StopProcessing()
         {
             lock (_syncObject)

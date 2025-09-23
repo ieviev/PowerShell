@@ -7,10 +7,7 @@ using Dbg = System.Management.Automation.Diagnostics;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Defines a PowerShell command / script object which can be used with
-    /// <see cref="PowerShell"/> object.
-    /// </summary>
+    
     public sealed class PSCommand
     {
         #region Private Fields
@@ -23,17 +20,13 @@ namespace System.Management.Automation
 
         #region Constructor
 
-        /// <summary>
-        /// Creates an empty PSCommand; a command or script must be added to this PSCommand before it can be executed.
-        /// </summary>
+        
         public PSCommand()
         {
             Initialize(null, false, null);
         }
 
-        /// <summary>
-        /// Internal copy constructor.
-        /// </summary>
+        
         /// <param name="commandToClone"></param>
         internal PSCommand(PSCommand commandToClone)
         {
@@ -47,9 +40,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Creates a PSCommand from the specified command.
-        /// </summary>
+        
         /// <param name="command">Command object to use.</param>
         internal PSCommand(Command command)
         {
@@ -62,13 +53,7 @@ namespace System.Management.Automation
 
         #region Command / Parameter Construction
 
-        /// <summary>
-        /// Add a command to construct a command pipeline.
-        /// For example, to construct a command string "get-process | sort-object",
-        ///     <code>
-        ///         PSCommand command = new PSCommand("get-process").AddCommand("sort-object");
-        ///     </code>
-        /// </summary>
+        
         /// <param name="command">
         /// A string representing the command.
         /// </param>
@@ -100,13 +85,7 @@ namespace System.Management.Automation
             return this;
         }
 
-        /// <summary>
-        /// Add a cmdlet to construct a command pipeline.
-        /// For example, to construct a command string "get-process | sort-object",
-        ///     <code>
-        ///         PSCommand command = new PSCommand("get-process").AddCommand("sort-object");
-        ///     </code>
-        /// </summary>
+        
         /// <param name="cmdlet">
         /// A string representing cmdlet.
         /// </param>
@@ -141,14 +120,7 @@ namespace System.Management.Automation
             return this;
         }
 
-        /// <summary>
-        /// Add a piece of script to construct a command pipeline.
-        /// For example, to construct a command string "get-process | foreach { $_.Name }"
-        ///     <code>
-        ///         PSCommand command = new PSCommand("get-process")
-        ///             .AddScript("foreach { $_.Name }", true);
-        ///     </code>
-        /// </summary>
+        
         /// <param name="script">
         /// A string representing the script.
         /// </param>
@@ -180,14 +152,7 @@ namespace System.Management.Automation
             return this;
         }
 
-        /// <summary>
-        /// Add a piece of script to construct a command pipeline.
-        /// For example, to construct a command string "get-process | foreach { $_.Name }"
-        ///     <code>
-        ///         PSCommand command = new PSCommand("get-process")
-        ///             .AddScript("foreach { $_.Name }", true);
-        ///     </code>
-        /// </summary>
+        
         /// <param name="script">
         /// A string representing the script.
         /// </param>
@@ -222,10 +187,7 @@ namespace System.Management.Automation
             return this;
         }
 
-        /// <summary>
-        /// Add a <see cref="Command"/> element to the current command
-        /// pipeline.
-        /// </summary>
+        
         /// <param name="command">
         /// Command to add.
         /// </param>
@@ -257,15 +219,7 @@ namespace System.Management.Automation
             return this;
         }
 
-        /// <summary>
-        /// Add a parameter to the last added command.
-        /// For example, to construct a command string "get-process | select-object -property name"
-        ///     <code>
-        ///         PSCommand command = new PSCommand("get-process")
-        ///             .AddCommand("select-object")
-        ///             .AddParameter("property", "name");
-        ///     </code>
-        /// </summary>
+        
         /// <param name="parameterName">
         /// Name of the parameter.
         /// </param>
@@ -300,15 +254,7 @@ namespace System.Management.Automation
             return this;
         }
 
-        /// <summary>
-        /// Adds a switch parameter to the last added command.
-        /// For example, to construct a command string "get-process | sort-object -descending"
-        ///     <code>
-        ///         PSCommand command = new PSCommand("get-process")
-        ///             .AddCommand("sort-object")
-        ///             .AddParameter("descending");
-        ///     </code>
-        /// </summary>
+        
         /// <param name="parameterName">
         /// Name of the parameter.
         /// </param>
@@ -340,9 +286,7 @@ namespace System.Management.Automation
             return this;
         }
 
-        /// <summary>
-        /// Adds a <see cref="CommandParameter"/> instance to the last added command.
-        /// </summary>
+        
         internal PSCommand AddParameter(CommandParameter parameter)
         {
             if (_currentCommand == null)
@@ -357,18 +301,7 @@ namespace System.Management.Automation
             return this;
         }
 
-        /// <summary>
-        /// Adds an argument to the last added command.
-        /// For example, to construct a command string "get-process | select-object name"
-        ///     <code>
-        ///         PSCommand command = new PSCommand("get-process")
-        ///             .AddCommand("select-object")
-        ///             .AddArgument("name");
-        ///     </code>
-        /// This will add the value "name" to the positional parameter list of "select-object"
-        /// cmdlet. When the command is invoked, this value will get bound to positional parameter 0
-        /// of the "select-object" cmdlet which is "Property".
-        /// </summary>
+        
         /// <param name="value">
         /// Value for the parameter.
         /// </param>
@@ -397,20 +330,7 @@ namespace System.Management.Automation
             return this;
         }
 
-        /// <summary>
-        /// Adds an additional statement for execution
-        ///
-        /// For example,
-        ///     <code>
-        ///         Runspace rs = RunspaceFactory.CreateRunspace();
-        ///         PowerShell ps = PowerShell.Create();
-        ///
-        ///         ps.Runspace = rs;
-        ///         ps.AddCommand("Get-Process").AddArgument("idle");
-        ///         ps.AddStatement().AddCommand("Get-Service").AddArgument("audiosrv");
-        ///         ps.Invoke();
-        ///     </code>
-        /// </summary>
+        
         /// <returns>
         /// A PowerShell instance with the items in <paramref name="parameters"/> added
         /// to the parameter list of the last command.
@@ -430,10 +350,7 @@ namespace System.Management.Automation
 
         #region Properties and Methods
 
-        /// <summary>
-        /// Gets the collection of commands from this PSCommand
-        /// instance.
-        /// </summary>
+        
         public CommandCollection Commands
         {
             get
@@ -442,9 +359,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// The PowerShell instance this PSCommand is associated to, or null if it is an standalone command.
-        /// </summary>
+        
         internal PowerShell Owner
         {
             get
@@ -458,18 +373,14 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Clears the command(s).
-        /// </summary>
+        
         public void Clear()
         {
             _commands.Clear();
             _currentCommand = null;
         }
 
-        /// <summary>
-        /// Creates a shallow copy of the current PSCommand.
-        /// </summary>
+        
         /// <returns>
         /// A shallow copy of the current PSCommand
         /// </returns>
@@ -482,9 +393,7 @@ namespace System.Management.Automation
 
         #region Private Methods
 
-        /// <summary>
-        /// Initializes the instance. Called from the constructor.
-        /// </summary>
+        
         /// <param name="command">
         /// Command to initialize the instance with.
         /// </param>

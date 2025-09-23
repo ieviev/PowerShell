@@ -11,15 +11,11 @@ using System.Windows.Data;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <summary>
-    /// Takes a value and returns the largest value which is a integral amount of the second value.
-    /// </summary>
+    
     [SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public class IntegralConverter : IMultiValueConverter
     {
-        /// <summary>
-        /// Takes a value and returns the largest value which is a integral amount of the second value.
-        /// </summary>
+        
         /// <param name="values">
         /// The first value is the source.  The second is the factor.
         /// </param>
@@ -67,9 +63,7 @@ namespace Microsoft.Management.UI.Internal
             return result;
         }
 
-        /// <summary>
-        /// This method is not used.
-        /// </summary>
+        
         /// <param name="value">The parameter is not used.</param>
         /// <param name="targetTypes">The parameter is not used.</param>
         /// <param name="parameter">The parameter is not used.</param>

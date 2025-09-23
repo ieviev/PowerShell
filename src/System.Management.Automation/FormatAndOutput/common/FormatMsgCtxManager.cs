@@ -5,16 +5,7 @@ using System.Collections.Generic;
 
 namespace Microsoft.PowerShell.Commands.Internal.Format
 {
-    /// <summary>
-    /// INTERNAL IMPLEMENTATION CLASS
-    ///
-    /// It manages the finite state machine for the sequence of formatting messages.
-    /// It achieves this by maintaining a stack of OutputContext-derived objects.
-    /// A predefined set of events allows the host of this class to process the information
-    /// as it comes trough the finite state machine (push model)
-    ///
-    /// IMPORTANT: The code using this class will have to provide ALL the callbacks.
-    /// </summary>
+    
     internal class FormatMessagesContextManager
     {
         // callbacks declarations
@@ -38,32 +29,21 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         internal GroupEndCallback ge = null;
         internal PayloadCallback payload = null;
 
-        /// <summary>
-        /// The current output context, as determined by the
-        /// sequence of formatting messages in the object stream.
-        /// </summary>
+        
         internal abstract class OutputContext
         {
-            /// <summary>
-            /// </summary>
+            
             /// <param name="parentContextInStack">Parent context in the stack, it can be null.</param>
             internal OutputContext(OutputContext parentContextInStack)
             {
                 ParentContext = parentContextInStack;
             }
 
-            /// <summary>
-            /// The outer context: the context object pushed onto the
-            /// stack before the current one. For the first object pushed onto
-            /// the stack it will be null.
-            /// </summary>
+            
             internal OutputContext ParentContext { get; }
         }
 
-        /// <summary>
-        /// Process an object from an input stream. It manages the context stack and
-        /// calls back on the specified event delegates.
-        /// </summary>
+        
         /// <param name="o">Object to process.</param>
         internal void Process(object o)
         {
@@ -128,17 +108,13 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             }
         }
 
-        /// <summary>
-        /// Access the active context (top of the stack). It can be null.
-        /// </summary>
+        
         internal OutputContext ActiveOutputContext
         {
             get { return (_stack.Count > 0) ? _stack.Peek() : null; }
         }
 
-        /// <summary>
-        /// Internal stack to manage context.
-        /// </summary>
+        
         private readonly Stack<OutputContext> _stack = new Stack<OutputContext>();
     }
 }

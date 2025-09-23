@@ -11,10 +11,7 @@ using System.Management.Automation;
 
 namespace Microsoft.Management.Infrastructure.CimCmdlets
 {
-    /// <summary>
-    /// This cmdlet enables the user to invoke a static method on a CIM class using
-    /// the arguments passed as a list of name value pair dictionary.
-    /// </summary>
+    
     [Alias("icim")]
     [Cmdlet(
         "Invoke",
@@ -26,9 +23,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
     {
         #region constructor
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="InvokeCimMethodCommand"/> class.
-        /// </summary>
+        
         public InvokeCimMethodCommand()
             : base(parameters, parameterSets)
         {
@@ -39,10 +34,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         #region parameters
 
-        /// <summary>
-        /// The following is the definition of the input parameter "ClassName".
-        /// Specifies the Class Name, on which to invoke static method.
-        /// </summary>
+        
         [Parameter(Mandatory = true,
                    Position = 0,
                    ValueFromPipelineByPropertyName = true,
@@ -68,12 +60,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         private string className;
 
-        /// <summary>
-        /// <para>
-        /// The following is the definition of the input parameter "ResourceUri".
-        /// Define the Resource Uri for which the instances are retrieved.
-        /// </para>
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true,
                    ParameterSetName = CimBaseCommand.CimInstanceComputerSet)]
         [Parameter(ValueFromPipelineByPropertyName = true,
@@ -100,10 +87,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         private Uri resourceUri;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "CimClass".
-        /// Specifies the <see cref="CimClass"/> object, on which to invoke static method.
-        /// </summary>
+        
         [Parameter(Mandatory = true,
             Position = 0,
             ValueFromPipeline = true,
@@ -128,10 +112,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         private CimClass cimClass;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "Query".
-        /// Specifies the <see cref="CimClass"/> object, on which to invoke static method.
-        /// </summary>
+        
         [Parameter(Mandatory = true,
                    ValueFromPipelineByPropertyName = true,
                    ParameterSetName = CimBaseCommand.QueryComputerSet)]
@@ -154,13 +135,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         private string query;
 
-        /// <summary>
-        /// <para>
-        /// The following is the definition of the input parameter "QueryDialect".
-        /// Specifies the dialect used by the query Engine that interprets the Query
-        /// string.
-        /// </para>
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true,
                    ParameterSetName = CimBaseCommand.QueryComputerSet)]
         [Parameter(ValueFromPipelineByPropertyName = true,
@@ -181,11 +156,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         private string queryDialect;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "InputObject".
-        /// Takes a CimInstance object retrieved by a Get-CimInstance call.
-        /// Invoke the method against the given instance.
-        /// </summary>
+        
         [Parameter(Mandatory = true,
                    Position = 0,
                    ValueFromPipeline = true,
@@ -209,21 +180,10 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             }
         }
 
-        /// <summary>
-        /// Property for internal usage purpose.
-        /// </summary>
+        
         internal CimInstance CimInstance { get; private set; }
 
-        /// <summary>
-        /// <para>The following is the definition of the input parameter "ComputerName".
-        /// Provides the name of the computer from which to invoke the method. The
-        /// ComputerName is used to create a temporary CimSession with default parameter
-        /// values, which is then used to retrieve the instances.
-        /// </para>
-        /// <para>
-        /// If no ComputerName is specified the default value is "localhost"
-        /// </para>
-        /// </summary>
+        
         [Alias(AliasCN, AliasServerName)]
         [Parameter(
             ValueFromPipelineByPropertyName = true,
@@ -257,12 +217,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         private string[] computerName;
 
-        /// <summary>
-        /// <para>
-        /// The following is the definition of the input parameter "CimSession".
-        /// Identifies the CimSession which is to be used to retrieve the instances.
-        /// </para>
-        /// </summary>
+        
         [Parameter(
             Mandatory = true,
             ValueFromPipeline = true,
@@ -299,19 +254,12 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         private CimSession[] cimSession;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "Arguments".
-        /// Specifies the parameter arguments for the static method using a name value
-        /// pair.
-        /// </summary>
+        
         [Parameter(Position = 1, ValueFromPipelineByPropertyName = true)]
         [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public IDictionary Arguments { get; set; }
 
-        /// <summary>
-        /// The following is the definition of the input parameter "MethodName".
-        /// Name of the Static Method to use.
-        /// </summary>
+        
         [Parameter(Mandatory = true,
                    Position = 2,
                    ValueFromPipelineByPropertyName = true)]
@@ -332,10 +280,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         private string methodName;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "Namespace".
-        /// Specifies the NameSpace in which the class or instance lives under.
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true,
             ParameterSetName = CimBaseCommand.ClassNameComputerSet)]
         [Parameter(ValueFromPipelineByPropertyName = true,
@@ -366,11 +311,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         private string nameSpace;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "OperationTimeoutSec".
-        /// Enables the user to specify the operation timeout in Seconds. This value
-        /// overwrites the value specified by the CimSession Operation timeout.
-        /// </summary>
+        
         [Alias(AliasOT)]
         [Parameter]
         public uint OperationTimeoutSec { get; set; }
@@ -379,9 +320,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         #region cmdlet methods
 
-        /// <summary>
-        /// BeginProcessing method.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             CimInvokeCimMethod cimInvokeMethod = this.GetOperationAgent() ?? CreateOperationAgent();
@@ -390,9 +329,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             this.AtBeginProcess = false;
         }
 
-        /// <summary>
-        /// ProcessRecord method.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             base.CheckParameterSet();
@@ -402,9 +339,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             cimInvokeMethod.ProcessActions(this.CmdletOperation);
         }
 
-        /// <summary>
-        /// EndProcessing method.
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             CimInvokeCimMethod cimInvokeMethod = this.GetOperationAgent();
@@ -415,23 +350,13 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         #region helper methods
 
-        /// <summary>
-        /// <para>
-        /// Get <see cref="CimInvokeCimMethod"/> object, which is
-        /// used to delegate all Invoke-CimMethod operations.
-        /// </para>
-        /// </summary>
+        
         private CimInvokeCimMethod GetOperationAgent()
         {
             return this.AsyncOperation as CimInvokeCimMethod;
         }
 
-        /// <summary>
-        /// <para>
-        /// Create <see cref="CimInvokeCimMethod"/> object, which is
-        /// used to delegate all Invoke-CimMethod operations.
-        /// </para>
-        /// </summary>
+        
         /// <returns></returns>
         private CimInvokeCimMethod CreateOperationAgent()
         {
@@ -440,9 +365,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             return cimInvokeMethod;
         }
 
-        /// <summary>
-        /// Check argument value.
-        /// </summary>
+        
         private void CheckArgument()
         {
             switch (this.ParameterSetName)
@@ -474,9 +397,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         internal const string nameNamespace = "Namespace";
         #endregion
 
-        /// <summary>
-        /// Static parameter definition entries.
-        /// </summary>
+        
         private static readonly Dictionary<string, HashSet<ParameterDefinitionEntry>> parameters = new()
         {
             {
@@ -561,9 +482,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             },
         };
 
-        /// <summary>
-        /// Static parameter set entries.
-        /// </summary>
+        
         private static readonly Dictionary<string, ParameterSetEntry> parameterSets = new()
         {
             {   CimBaseCommand.ClassNameComputerSet, new ParameterSetEntry(2, true)     },

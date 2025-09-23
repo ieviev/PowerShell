@@ -12,16 +12,7 @@ using Dbg = System.Management.Automation.Diagnostics;
 
 namespace Microsoft.PowerShell
 {
-    /// <summary>
-    /// Executor wraps a Pipeline instance, and provides helper methods for executing commands in that pipeline. It is used to
-    /// provide bookkeeping and structure to the use of pipeline in such a way that they can be interrupted and cancelled by a
-    /// break event handler, and to track nesting of pipelines (which happens with interrupted input loops (aka subshells) and 
-    /// use of tab-completion in prompts). The bookkeeping is necessary because the break handler is static and global, and
-    /// there is no means for tying a break handler to an instance of an object.
-    ///
-    /// The class' instance methods manage a single pipeline.  The class' static methods track the outstanding instances to
-    /// ensure that only one instance is 'active' (and therefore cancellable) at a time.
-    /// </summary>
+    
     internal class Executor
     {
         [Flags]
@@ -33,9 +24,7 @@ namespace Microsoft.PowerShell
             ReadInputObjects = 0x04
         }
 
-        /// <summary>
-        /// Constructs a new instance.
-        /// </summary>
+        
         /// <param name="parent">
         /// A reference to the parent ConsoleHost that created this instance.
         /// </param>
@@ -99,9 +88,7 @@ namespace Microsoft.PowerShell
             }
         }
 
-        /// <summary>
-        /// This method handles failures in executing the pipeline asynchronously.
-        /// </summary>
+        
         /// <param name="ex"></param>
         private void AsyncPipelineFailureHandler(Exception ex)
         {
@@ -155,9 +142,7 @@ namespace Microsoft.PowerShell
             ExecuteCommandAsyncHelper(tempPipeline, out exceptionThrown, options);
         }
 
-        /// <summary>
-        /// Executes a pipeline in the console when we are running asnyc.
-        /// </summary>
+        
         /// <param name="tempPipeline">
         /// The pipeline to execute.
         /// </param>
@@ -290,15 +275,7 @@ namespace Microsoft.PowerShell
             return _parent.RunspaceRef.CreatePipeline(command, addToHistory, useNestedPipelines);
         }
 
-        /// <summary>
-        /// All calls to the Runspace to execute a command line must be done with this function, which properly synchronizes
-        /// access to the running pipeline between the main thread and the break handler thread. This synchronization is
-        /// necessary so that executions can be aborted with Ctrl-C (including evaluation of the prompt and collection of
-        /// command-completion candidates).
-        ///
-        /// On any given Executor instance, ExecuteCommand should be called at most once at a time by any one thread. It is NOT
-        /// reentrant.
-        /// </summary>
+        
         /// <param name="command">
         /// The command line to be executed. Must be non-null.
         /// </param>
@@ -439,10 +416,7 @@ namespace Microsoft.PowerShell
             return result;
         }
 
-        /// <summary>
-        /// Executes a command (by calling this.ExecuteCommand), and coerces the first result object to a string. Any Exception
-        /// thrown in the course of execution is returned through the exceptionThrown parameter.
-        /// </summary>
+        
         /// <param name="command">
         /// The command to execute. May be any valid monad command.
         /// </param>
@@ -491,10 +465,7 @@ namespace Microsoft.PowerShell
             return result;
         }
 
-        /// <summary>
-        /// Executes a command (by calling this.ExecuteCommand), and coerces the first result object to a bool. Any Exception
-        /// thrown in the course of execution is caught and ignored.
-        /// </summary>
+        
         /// <param name="command">
         /// The command to execute. May be any valid monad command.
         /// </param>
@@ -509,10 +480,7 @@ namespace Microsoft.PowerShell
             return result;
         }
 
-        /// <summary>
-        /// Executes a command (by calling this.ExecuteCommand), and coerces the first result object to a bool. Any Exception
-        /// thrown in the course of execution is returned through the exceptionThrown parameter.
-        /// </summary>
+        
         /// <param name="command">
         /// The command to execute. May be any valid monad command.
         /// </param>
@@ -555,10 +523,7 @@ namespace Microsoft.PowerShell
             return result;
         }
 
-        /// <summary>
-        /// Cancels execution of the current instance. Does nothing if the current instance is not running. Called in
-        /// response to a break handler, by the static Executor.Cancel method.
-        /// </summary>
+        
         private void Cancel()
         {
             // if there's a pipeline running, stop it.
@@ -599,9 +564,7 @@ namespace Microsoft.PowerShell
             remotePipeline?.ResumeIncomingData();
         }
 
-        /// <summary>
-        /// Resets the instance to its post-ctor state. Does not cancel execution.
-        /// </summary>
+        
         private void Reset()
         {
             lock (_instanceStateLock)
@@ -611,10 +574,7 @@ namespace Microsoft.PowerShell
             }
         }
 
-        /// <summary>
-        /// Makes the given instance the "current" instance, that is, the instance that will receive a Cancel call if the break
-        /// handler is triggered and calls the static Cancel method.
-        /// </summary>
+        
         /// <value>
         /// The instance to make current. Null is allowed.
         /// </value>
@@ -677,10 +637,7 @@ namespace Microsoft.PowerShell
             }
         }
 
-        /// <summary>
-        /// Cancels the execution of the current instance (the instance last passed to PushCurrentExecutor), if any. Does
-        /// nothing if no instance is Current.
-        /// </summary>
+        
         internal static void CancelCurrentExecutor()
         {
             Executor temp = null;

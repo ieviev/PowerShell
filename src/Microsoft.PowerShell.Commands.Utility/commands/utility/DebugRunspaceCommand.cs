@@ -13,11 +13,7 @@ using System.Threading;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// This cmdlet takes a Runspace object and checks to see if it is debuggable (i.e, if
-    /// it is running a script or is currently stopped in the debugger.
-    /// If it is debuggable then it breaks into the Runspace debugger in step mode.
-    /// </summary>
+    
     [SuppressMessage("Microsoft.PowerShell", "PS1012:CallShouldProcessOnlyIfDeclaringSupport")]
     [Cmdlet(VerbsDiagnostic.Debug, "Runspace", SupportsShouldProcess = true, DefaultParameterSetName = DebugRunspaceCommand.RunspaceParameterSet,
         HelpUri = "https://go.microsoft.com/fwlink/?LinkId=2096917")]
@@ -50,9 +46,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Parameters
 
-        /// <summary>
-        /// The Runspace to be debugged.
-        /// </summary>
+        
         [Parameter(Position = 0,
                    Mandatory = true,
                    ValueFromPipelineByPropertyName = true,
@@ -64,9 +58,7 @@ namespace Microsoft.PowerShell.Commands
             set;
         }
 
-        /// <summary>
-        /// The name of a Runspace to be debugged.
-        /// </summary>
+        
         [Parameter(Position = 0,
                    Mandatory = true,
                    ParameterSetName = DebugRunspaceCommand.NameParameterSet)]
@@ -76,9 +68,7 @@ namespace Microsoft.PowerShell.Commands
             set;
         }
 
-        /// <summary>
-        /// The Id of a Runspace to be debugged.
-        /// </summary>
+        
         [Parameter(Position = 0,
                    Mandatory = true,
                    ParameterSetName = DebugRunspaceCommand.IdParameterSet)]
@@ -88,9 +78,7 @@ namespace Microsoft.PowerShell.Commands
             set;
         }
 
-        /// <summary>
-        /// The InstanceId of a Runspace to be debugged.
-        /// </summary>
+        
         [Parameter(Position = 0,
                    Mandatory = true,
                    ParameterSetName = DebugRunspaceCommand.InstanceIdParameterSet)]
@@ -100,9 +88,7 @@ namespace Microsoft.PowerShell.Commands
             set;
         }
 
-        /// <summary>
-        /// Gets or sets a flag that tells PowerShell to automatically perform a BreakAll when the debugger is attached to the remote target.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter BreakAll { get; set; }
 
@@ -110,9 +96,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Overrides
 
-        /// <summary>
-        /// End processing.  Do work.
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             if (ParameterSetName == DebugRunspaceCommand.RunspaceParameterSet)
@@ -220,9 +204,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Stop processing.
-        /// </summary>
+        
         protected override void StopProcessing()
         {
             _debugging = false;

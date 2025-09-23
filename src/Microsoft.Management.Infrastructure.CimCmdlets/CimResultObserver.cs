@@ -12,11 +12,7 @@ using System.Management.Automation;
 namespace Microsoft.Management.Infrastructure.CimCmdlets
 {
     #region AsyncResultType
-    /// <summary>
-    /// <para>
-    /// Async result type
-    /// </para>
-    /// </summary>
+    
     public enum AsyncResultType
     {
         Result,
@@ -26,38 +22,26 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
     #endregion
 
     #region CimResultContext
-    /// <summary>
-    /// Cim Result Context.
-    /// </summary>
+    
     internal class CimResultContext
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CimResultContext"/> class.
-        /// </summary>
+        
         /// <param name="ErrorSource"></param>
         internal CimResultContext(object ErrorSource)
         {
             this.ErrorSource = ErrorSource;
         }
 
-        /// <summary>
-        /// ErrorSource property.
-        /// </summary>
+        
         internal object ErrorSource { get; }
     }
     #endregion
 
     #region AsyncResultEventArgsBase
-    /// <summary>
-    /// <para>
-    /// Base class of async result event argument
-    /// </para>
-    /// </summary>
+    
     internal abstract class AsyncResultEventArgsBase : EventArgs
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AsyncResultEventArgsBase"/> class.
-        /// </summary>
+        
         /// <param name="session"></param>
         /// <param name="observable"></param>
         /// <param name="resultType"></param>
@@ -71,9 +55,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             this.resultType = resultType;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AsyncResultEventArgsBase"/> class.
-        /// </summary>
+        
         /// <param name="session"></param>
         /// <param name="observable"></param>
         /// <param name="resultType"></param>
@@ -101,16 +83,10 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
     #endregion
 
     #region AsyncResult*Args
-    /// <summary>
-    /// <para>
-    /// operation successfully completed event argument
-    /// </para>
-    /// </summary>
+    
     internal class AsyncResultCompleteEventArgs : AsyncResultEventArgsBase
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AsyncResultCompleteEventArgs"/> class.
-        /// </summary>
+        
         /// <param name="session"><see cref="CimSession"/> object.</param>
         /// <param name="cancellationDisposable"></param>
         public AsyncResultCompleteEventArgs(
@@ -121,16 +97,10 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
     }
 
-    /// <summary>
-    /// <para>
-    /// async result argument with object
-    /// </para>
-    /// </summary>
+    
     internal class AsyncResultObjectEventArgs : AsyncResultEventArgsBase
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AsyncResultObjectEventArgs"/> class.
-        /// </summary>
+        
         /// <param name="session"></param>
         /// <param name="observable"></param>
         /// <param name="resultObject"></param>
@@ -146,16 +116,10 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         public readonly object resultObject;
     }
 
-    /// <summary>
-    /// <para>
-    /// operation completed with exception event argument
-    /// </para>
-    /// </summary>
+    
     internal class AsyncResultErrorEventArgs : AsyncResultEventArgsBase
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AsyncResultErrorEventArgs"/> class.
-        /// </summary>
+        
         /// <param name="session"></param>
         /// <param name="observable"></param>
         /// <param name="error"></param>
@@ -168,9 +132,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             this.error = error;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AsyncResultErrorEventArgs"/> class.
-        /// </summary>
+        
         /// <param name="session"></param>
         /// <param name="observable"></param>
         /// <param name="error"></param>
@@ -190,30 +152,14 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
     #endregion
 
     #region CimResultObserver
-    /// <summary>
-    /// <para>
-    /// Observer to consume results from asynchronous operations, such as,
-    /// EnumerateInstancesAsync operation of <see cref="CimSession"/> object.
-    /// </para>
-    /// <para>
-    /// (See https://channel9.msdn.com/posts/J.Van.Gogh/Reactive-Extensions-API-in-depth-Contract/)
-    /// for the IObserver/IObservable contact
-    /// - the only possible sequence is OnNext* (OnCompleted|OnError)?
-    /// - callbacks are serialized
-    /// - Subscribe never throws
-    /// </para>
-    /// </summary>
+    
     /// <typeparam name="T">object type</typeparam>
     internal class CimResultObserver<T> : IObserver<T>
     {
-        /// <summary>
-        /// Define an Event based on the NewActionHandler.
-        /// </summary>
+        
         public event EventHandler<AsyncResultEventArgsBase> OnNewResult;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CimResultObserver{T}"/> class.
-        /// </summary>
+        
         /// <param name="session"><see cref="CimSession"/> object that issued the operation.</param>
         /// <param name="observable">Operation that can be observed.</param>
         public CimResultObserver(CimSession session, IObservable<object> observable)
@@ -222,9 +168,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             this.observable = observable;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CimResultObserver{T}"/> class.
-        /// </summary>
+        
         /// <param name="session"><see cref="CimSession"/> object that issued the operation.</param>
         /// <param name="observable">Operation that can be observed.</param>
         public CimResultObserver(CimSession session,
@@ -236,11 +180,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             this.context = cimResultContext;
         }
 
-        /// <summary>
-        /// <para>
-        /// Operation completed successfully
-        /// </para>
-        /// </summary>
+        
         public virtual void OnCompleted()
         {
             // callbacks should never throw any exception to
@@ -260,11 +200,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             }
         }
 
-        /// <summary>
-        /// <para>
-        /// Operation completed with an error
-        /// </para>
-        /// </summary>
+        
         /// <param name="error">Error object.</param>
         public virtual void OnError(Exception error)
         {
@@ -281,9 +217,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             }
         }
 
-        /// <summary>
-        /// Deliver the result value.
-        /// </summary>
+        
         /// <param name="value"></param>
         protected void OnNextCore(object value)
         {
@@ -301,11 +235,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             }
         }
 
-        /// <summary>
-        /// <para>
-        /// Operation got a new result object
-        /// </para>
-        /// </summary>
+        
         /// <param name="value">Result object.</param>
         public virtual void OnNext(T value)
         {
@@ -321,31 +251,21 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         #region members
 
-        /// <summary>
-        /// Session object of the operation.
-        /// </summary>
+        
         protected CimSession CurrentSession { get; }
 
-        /// <summary>
-        /// Async operation that can be observed.
-        /// </summary>
+        
         private readonly IObservable<object> observable;
 
-        /// <summary>
-        /// <see cref="CimResultContext"/> object used during delivering result.
-        /// </summary>
+        
         private readonly CimResultContext context;
         #endregion
     }
 
-    /// <summary>
-    /// CimSubscriptionResultObserver class definition.
-    /// </summary>
+    
     internal class CimSubscriptionResultObserver : CimResultObserver<CimSubscriptionResult>
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CimSubscriptionResultObserver"/> class.
-        /// </summary>
+        
         /// <param name="session"></param>
         /// <param name="observable"></param>
         public CimSubscriptionResultObserver(CimSession session, IObservable<object> observable)
@@ -353,9 +273,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CimSubscriptionResultObserver"/> class.
-        /// </summary>
+        
         /// <param name="session"></param>
         /// <param name="observable"></param>
         public CimSubscriptionResultObserver(
@@ -366,9 +284,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         {
         }
 
-        /// <summary>
-        /// Override the OnNext method.
-        /// </summary>
+        
         /// <param name="value"></param>
         public override void OnNext(CimSubscriptionResult value)
         {
@@ -377,14 +293,10 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
     }
 
-    /// <summary>
-    /// CimMethodResultObserver class definition.
-    /// </summary>
+    
     internal class CimMethodResultObserver : CimResultObserver<CimMethodResultBase>
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CimMethodResultObserver"/> class.
-        /// </summary>
+        
         /// <param name="session"></param>
         /// <param name="observable"></param>
         public CimMethodResultObserver(CimSession session, IObservable<object> observable)
@@ -392,9 +304,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CimMethodResultObserver"/> class.
-        /// </summary>
+        
         /// <param name="session"></param>
         /// <param name="observable"></param>
         /// <param name="context"></param>
@@ -406,9 +316,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         {
         }
 
-        /// <summary>
-        /// Override the OnNext method.
-        /// </summary>
+        
         /// <param name="value"></param>
         public override void OnNext(CimMethodResultBase value)
         {
@@ -449,18 +357,14 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             }
         }
 
-        /// <summary>
-        /// Methodname.
-        /// </summary>
+        
         internal string MethodName
         {
             get;
             set;
         }
 
-        /// <summary>
-        /// Classname.
-        /// </summary>
+        
         internal string ClassName
         {
             get;
@@ -468,14 +372,10 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
     }
 
-    /// <summary>
-    /// IgnoreResultObserver class definition.
-    /// </summary>
+    
     internal class IgnoreResultObserver : CimResultObserver<CimInstance>
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="IgnoreResultObserver"/> class.
-        /// </summary>
+        
         /// <param name="session"></param>
         /// <param name="observable"></param>
         public IgnoreResultObserver(CimSession session, IObservable<object> observable)
@@ -483,9 +383,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         {
         }
 
-        /// <summary>
-        /// Override the OnNext method.
-        /// </summary>
+        
         /// <param name="value"></param>
         public override void OnNext(CimInstance value)
         {

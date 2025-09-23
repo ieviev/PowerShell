@@ -6,19 +6,11 @@ using System.Collections.Generic;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <summary>
-    /// The DateTimeApproximationComparer is responsible for comparing two
-    /// DateTime objects at a level of precision determined by
-    /// the first object. The comparison either compares at the
-    /// date level or the date and time (down to Seconds precision).
-    /// </summary>
+    
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public class DateTimeApproximationComparer : IComparer<DateTime>
     {
-        /// <summary>
-        /// Compares two objects and returns a value indicating
-        /// whether one is less than, equal to, or greater than the other.
-        /// </summary>
+        
         /// <param name="value1">
         /// The first object to compare.
         /// </param>

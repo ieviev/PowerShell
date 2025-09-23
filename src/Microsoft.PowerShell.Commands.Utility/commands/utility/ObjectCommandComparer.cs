@@ -14,11 +14,7 @@ namespace Microsoft.PowerShell.Commands
 {
     #region PSObject Comparer
 
-    /// <summary>
-    /// Keeps the property value of inputObject. Because the value of a non-existing property is null,
-    /// isExistingProperty is needed to distinguish whether a property exists and its value is null or
-    /// the property does not exist at all.
-    /// </summary>
+    
     internal sealed class ObjectCommandPropertyValue
     {
         private ObjectCommandPropertyValue() { }
@@ -29,9 +25,7 @@ namespace Microsoft.PowerShell.Commands
             IsExistingProperty = true;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ObjectCommandPropertyValue"/> class.
-        /// </summary>
+        
         /// <param name="propVal">Property Value.</param>
         /// <param name="isCaseSensitive">Indicates if the Property value comparison has to be case sensitive or not.</param>
         /// <param name="cultureInfo">Culture Info of the Property Value.</param>
@@ -46,17 +40,13 @@ namespace Microsoft.PowerShell.Commands
 
         internal bool IsExistingProperty { get; }
 
-        /// <summary>
-        /// Indicates if the Property Value comparison has to be Case sensitive or not.
-        /// </summary>
+        
         internal SwitchParameter CaseSensitive
         {
             get { return _caseSensitive; }
         }
 
-        /// <summary>
-        /// Gets the Culture Info of the Property Value.
-        /// </summary>
+        
         internal CultureInfo Culture
         {
             get
@@ -70,9 +60,7 @@ namespace Microsoft.PowerShell.Commands
         private readonly bool _caseSensitive;
         internal CultureInfo cultureInfo = null;
 
-        /// <summary>
-        /// Provides an Equals implementation.
-        /// </summary>
+        
         /// <param name="inputObject">Input Object.</param>
         /// <returns>True if both the objects are same or else returns false.</returns>
         public override bool Equals(object inputObject)
@@ -105,9 +93,7 @@ namespace Microsoft.PowerShell.Commands
             return false;
         }
 
-        /// <summary>
-        /// Provides a GetHashCode() implementation.
-        /// </summary>
+        
         /// <returns>Hashcode in the form of an integer.</returns>
         public override int GetHashCode()
         {
@@ -133,17 +119,10 @@ namespace Microsoft.PowerShell.Commands
         }
     }
 
-    /// <summary>
-    /// ObjectCommandComparer class.
-    /// </summary>
+    
     internal sealed class ObjectCommandComparer : IComparer
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ObjectCommandComparer"/> class.
-        /// Constructor that doesn't set any private field.
-        /// Necessary because compareTo can compare two objects by calling
-        /// ((ICompare)obj1).CompareTo(obj2) without using a key.
-        /// </summary>
+        
         internal ObjectCommandComparer(bool ascending, CultureInfo cultureInfo, bool caseSensitive)
         {
             _ascendingOrder = ascending;
@@ -179,9 +158,7 @@ namespace Microsoft.PowerShell.Commands
             return 0;
         }
 
-        /// <summary>
-        /// Main method that will compare first and second by their keys considering case and order.
-        /// </summary>
+        
         /// <param name="first">
         /// First object to extract value.
         /// </param>

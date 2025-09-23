@@ -21,17 +21,13 @@ using Dbg = System.Management.Automation.Diagnostics;
 namespace Microsoft.PowerShell.Commands
 {
     #region New-ModuleManifest
-    /// <summary>
-    /// Cmdlet to create a new module manifest file.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.New, "ModuleManifest", SupportsShouldProcess = true, ConfirmImpact = ConfirmImpact.Low,
         HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096487")]
     [OutputType(typeof(string))]
     public sealed class NewModuleManifestCommand : PSCmdlet
     {
-        /// <summary>
-        /// Gets or sets the output path for the generated file.
-        /// </summary>
+        
         [Parameter(Mandatory = true, Position = 0)]
         public string Path
         {
@@ -42,9 +38,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string _path;
 
-        /// <summary>
-        /// Gets or sets the list of files to load by default.
-        /// </summary>
+        
         [Parameter]
         [AllowEmptyCollection]
         public object[] NestedModules
@@ -56,9 +50,7 @@ namespace Microsoft.PowerShell.Commands
 
         private object[] _nestedModules;
 
-        /// <summary>
-        /// Gets or sets the GUID in the manifest file.
-        /// </summary>
+        
         [Parameter]
         public Guid Guid
         {
@@ -69,9 +61,7 @@ namespace Microsoft.PowerShell.Commands
 
         private Guid _guid = Guid.NewGuid();
 
-        /// <summary>
-        /// Gets or sets the author string in the manifest.
-        /// </summary>
+        
         [Parameter]
         [AllowEmptyString]
         public string Author
@@ -83,9 +73,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string _author;
 
-        /// <summary>
-        /// Gets or sets the company name in the manifest.
-        /// </summary>
+        
         [Parameter]
         [AllowEmptyString]
         public string CompanyName
@@ -97,9 +85,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string _companyName = string.Empty;
 
-        /// <summary>
-        /// Gets or sets the copyright string in the module manifest.
-        /// </summary>
+        
         [Parameter]
         [AllowEmptyString]
         public string Copyright
@@ -111,9 +97,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string _copyright;
 
-        /// <summary>
-        /// Gets or sets the root module.
-        /// </summary>
+        
         [Parameter]
         [AllowEmptyString]
         [Alias("ModuleToProcess")]
@@ -126,9 +110,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string _rootModule = null;
 
-        /// <summary>
-        /// Gets or sets the module version.
-        /// </summary>
+        
         [Parameter]
         [ValidateNotNull]
         public Version ModuleVersion
@@ -140,9 +122,7 @@ namespace Microsoft.PowerShell.Commands
 
         private Version _moduleVersion = new Version(0, 0, 1);
 
-        /// <summary>
-        /// Gets or sets the module description.
-        /// </summary>
+        
         [Parameter]
         [AllowEmptyString]
         public string Description
@@ -154,9 +134,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string _description;
 
-        /// <summary>
-        /// Gets or sets the ProcessorArchitecture required by this module.
-        /// </summary>
+        
         [Parameter]
         public ProcessorArchitecture ProcessorArchitecture
         {
@@ -167,9 +145,7 @@ namespace Microsoft.PowerShell.Commands
 
         private ProcessorArchitecture? _processorArchitecture = null;
 
-        /// <summary>
-        /// Gets or sets the PowerShell version required by this module.
-        /// </summary>
+        
         [Parameter]
         public Version PowerShellVersion
         {
@@ -180,9 +156,7 @@ namespace Microsoft.PowerShell.Commands
 
         private Version _powerShellVersion = null;
 
-        /// <summary>
-        /// Gets or sets the CLR version required by the module.
-        /// </summary>
+        
         [Parameter]
         public Version ClrVersion
         {
@@ -193,9 +167,7 @@ namespace Microsoft.PowerShell.Commands
 
         private Version _ClrVersion = null;
 
-        /// <summary>
-        /// Gets or sets the version of .NET Framework required by the module.
-        /// </summary>
+        
         [Parameter]
         public Version DotNetFrameworkVersion
         {
@@ -206,9 +178,7 @@ namespace Microsoft.PowerShell.Commands
 
         private Version _DotNetFrameworkVersion = null;
 
-        /// <summary>
-        /// Gets or sets the name of PowerShell host required by the module.
-        /// </summary>
+        
         [Parameter]
         public string PowerShellHostName
         {
@@ -219,9 +189,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string _PowerShellHostName = null;
 
-        /// <summary>
-        /// Gets or sets the version of PowerShell host required by the module.
-        /// </summary>
+        
         [Parameter]
         public Version PowerShellHostVersion
         {
@@ -232,9 +200,7 @@ namespace Microsoft.PowerShell.Commands
 
         private Version _PowerShellHostVersion = null;
 
-        /// <summary>
-        /// Gets or sets the list of Dependencies for the module.
-        /// </summary>
+        
         [Parameter]
         [ArgumentTypeConverter(typeof(ModuleSpecification[]))]
         public object[] RequiredModules
@@ -246,9 +212,7 @@ namespace Microsoft.PowerShell.Commands
 
         private object[] _requiredModules;
 
-        /// <summary>
-        /// Gets or sets the list of types files for the module.
-        /// </summary>
+        
         [Parameter]
         [AllowEmptyCollection]
         public string[] TypesToProcess
@@ -260,9 +224,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string[] _types;
 
-        /// <summary>
-        /// Gets or sets the list of formats files for the module.
-        /// </summary>
+        
         [Parameter]
         [AllowEmptyCollection]
         public string[] FormatsToProcess
@@ -274,9 +236,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string[] _formats;
 
-        /// <summary>
-        /// Gets or sets the list of ps1 scripts to run in the session state of the import-module invocation.
-        /// </summary>
+        
         [Parameter]
         [AllowEmptyCollection]
         public string[] ScriptsToProcess
@@ -288,9 +248,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string[] _scripts;
 
-        /// <summary>
-        /// Gets or sets the list of assemblies to load for this module.
-        /// </summary>
+        
         [Parameter]
         [AllowEmptyCollection]
         public string[] RequiredAssemblies
@@ -302,9 +260,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string[] _requiredAssemblies;
 
-        /// <summary>
-        /// Gets or sets the additional files used by this module.
-        /// </summary>
+        
         [Parameter]
         [AllowEmptyCollection]
         public string[] FileList
@@ -316,10 +272,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string[] _miscFiles;
 
-        /// <summary>
-        /// Gets or sets the list of other modules included with this module.
-        /// Like the RequiredModules key, this list can be a simple list of module names or a complex list of module hashtables.
-        /// </summary>
+        
         [Parameter]
         [AllowEmptyCollection]
         [ArgumentTypeConverter(typeof(ModuleSpecification[]))]
@@ -332,9 +285,7 @@ namespace Microsoft.PowerShell.Commands
 
         private object[] _moduleList;
 
-        /// <summary>
-        /// Gets or sets the functions to export from this manifest.
-        /// </summary>
+        
         [Parameter]
         [AllowEmptyCollection]
         public string[] FunctionsToExport
@@ -346,9 +297,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string[] _exportedFunctions;
 
-        /// <summary>
-        /// Gets or sets the aliases to export from this manifest.
-        /// </summary>
+        
         [Parameter]
         [AllowEmptyCollection]
         public string[] AliasesToExport
@@ -360,9 +309,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string[] _exportedAliases;
 
-        /// <summary>
-        /// Gets or sets the variables to export from this manifest.
-        /// </summary>
+        
         [Parameter]
         [AllowEmptyCollection]
         public string[] VariablesToExport
@@ -374,9 +321,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string[] _exportedVariables = new string[] { "*" };
 
-        /// <summary>
-        /// Gets or sets the cmdlets to export from this manifest.
-        /// </summary>
+        
         [Parameter]
         [AllowEmptyCollection]
         public string[] CmdletsToExport
@@ -388,9 +333,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string[] _exportedCmdlets;
 
-        /// <summary>
-        /// Gets or sets the dsc resources to export from this manifest.
-        /// </summary>
+        
         [Parameter]
         [AllowEmptyCollection]
         public string[] DscResourcesToExport
@@ -402,9 +345,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string[] _dscResourcesToExport;
 
-        /// <summary>
-        /// Gets or sets the compatible PSEditions of this module.
-        /// </summary>
+        
         [Parameter]
         [AllowEmptyCollection]
         [ValidateSet("Desktop", "Core")]
@@ -417,9 +358,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string[] _compatiblePSEditions;
 
-        /// <summary>
-        /// Gets or sets the module-specific private data here.
-        /// </summary>
+        
         [Parameter(Mandatory = false)]
         [AllowNull]
         public object PrivateData
@@ -431,64 +370,46 @@ namespace Microsoft.PowerShell.Commands
 
         private object _privateData;
 
-        /// <summary>
-        /// Gets or sets the Tags.
-        /// </summary>
+        
         [Parameter(Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public string[] Tags { get; set; }
 
-        /// <summary>
-        /// Gets or sets the ProjectUri.
-        /// </summary>
+        
         [Parameter(Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public Uri ProjectUri { get; set; }
 
-        /// <summary>
-        /// Gets or sets the LicenseUri.
-        /// </summary>
+        
         [Parameter(Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public Uri LicenseUri { get; set; }
 
-        /// <summary>
-        /// Gets or sets the IconUri.
-        /// </summary>
+        
         [Parameter(Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public Uri IconUri { get; set; }
 
-        /// <summary>
-        /// Gets or sets the ReleaseNotes.
-        /// </summary>
+        
         [Parameter(Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public string ReleaseNotes { get; set; }
 
-        /// <summary>
-        /// Gets or sets whether or not the module is a prerelease.
-        /// </summary>
+        
         [Parameter]
         [ValidateNotNullOrEmpty]
         public string Prerelease { get; set; }
 
-        /// <summary>
-        /// Gets or sets whether or not the module requires explicit user acceptance for install/update/save.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter RequireLicenseAcceptance { get; set; }
 
-        /// <summary>
-        /// Gets or sets the external module dependencies.
-        /// </summary>
+        
         [Parameter]
         [ValidateNotNullOrEmpty]
         public string[] ExternalModuleDependencies { get; set; }
 
-        /// <summary>
-        /// Gets or sets the HelpInfo URI.
-        /// </summary>
+        
         [Parameter]
         [AllowNull]
         public string HelpInfoUri
@@ -500,9 +421,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string _helpInfoUri;
 
-        /// <summary>
-        /// Gets or sets whether the module manifest string should go to the output stream.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter PassThru
         {
@@ -513,9 +432,7 @@ namespace Microsoft.PowerShell.Commands
 
         private bool _passThru;
 
-        /// <summary>
-        /// Gets or sets the Default Command Prefix.
-        /// </summary>
+        
         [Parameter]
         [AllowNull]
         public string DefaultCommandPrefix
@@ -529,9 +446,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string _indent = string.Empty;
 
-        /// <summary>
-        /// Return a single-quoted string. Any embedded single quotes will be doubled.
-        /// </summary>
+        
         /// <param name="name">The string to quote.</param>
         /// <returns>The quoted string.</returns>
         private static string QuoteName(string name)
@@ -541,9 +456,7 @@ namespace Microsoft.PowerShell.Commands
             return ("'" + name.Replace("'", "''") + "'");
         }
 
-        /// <summary>
-        /// Return a single-quoted string using the AbsoluteUri member to ensure it is escaped correctly.
-        /// </summary>
+        
         /// <param name="name">The Uri to quote.</param>
         /// <returns>The quoted AbsoluteUri.</returns>
         private static string QuoteName(Uri name)
@@ -553,9 +466,7 @@ namespace Microsoft.PowerShell.Commands
             return QuoteName(name.AbsoluteUri);
         }
 
-        /// <summary>
-        /// Return a single-quoted string from a Version object.
-        /// </summary>
+        
         /// <param name="name">The Version object to quote.</param>
         /// <returns>The quoted Version string.</returns>
         private static string QuoteName(Version name)
@@ -565,10 +476,7 @@ namespace Microsoft.PowerShell.Commands
             return QuoteName(name.ToString());
         }
 
-        /// <summary>
-        /// Takes a collection of strings and returns the collection
-        /// quoted.
-        /// </summary>
+        
         /// <param name="names">The list to quote.</param>
         /// <param name="streamWriter">Streamwriter to get end of line character from.</param>
         /// <returns>The quoted list.</returns>
@@ -613,13 +521,7 @@ namespace Microsoft.PowerShell.Commands
             return result.ToString();
         }
 
-        /// <summary>
-        /// This function is created to PreProcess -NestedModules in Win8.
-        /// In Win7, -NestedModules is of type string[]. In Win8, we changed
-        /// this to object[] to support module specification using hashtable.
-        /// To be backward compatible, this function calls ToString() on any
-        /// object that is not of type hashtable or string.
-        /// </summary>
+        
         /// <param name="moduleSpecs"></param>
         /// <returns></returns>
         private static IEnumerable PreProcessModuleSpec(IEnumerable moduleSpecs)
@@ -640,10 +542,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Takes a collection of "module specifications" (string or hashtable)
-        /// and returns the collection as a string that can be inserted into a module manifest.
-        /// </summary>
+        
         /// <param name="moduleSpecs">The list to quote.</param>
         /// <param name="streamWriter">Streamwriter to get end of line character from.</param>
         /// <returns>The quoted list.</returns>
@@ -725,10 +624,7 @@ namespace Microsoft.PowerShell.Commands
             return result.ToString();
         }
 
-        /// <summary>
-        /// Takes a collection of file names and returns the collection
-        /// quoted.
-        /// </summary>
+        
         /// <param name="names">The list to quote.</param>
         /// <param name="streamWriter">Streamwriter to get end of line character from.</param>
         /// <returns>The quoted list.</returns>
@@ -753,12 +649,7 @@ namespace Microsoft.PowerShell.Commands
             return QuoteNames(resolvedPaths, streamWriter);
         }
 
-        ///// <summary>
-        ///// Takes a collection of file names and returns the collection
-        ///// quoted.  It does not expand wildcard to actual files (as QuoteFiles does).
-        ///// It throws an error when the entered filename is different than the allowedExtension.
-        ///// If any file name falls outside the directory tree basPath a warning is issued.
-        ///// </summary>
+        //
         ///// <param name="basePath">This is the path which will be used to determine whether a warning is to be displayed.</param>
         ///// <param name="names">The list to quote</param>
         ///// <param name="allowedExtension">This is the allowed file extension, any other extension will give an error.</param>
@@ -829,9 +720,7 @@ namespace Microsoft.PowerShell.Commands
         //    return QuoteNames(names, streamWriter);
         // }
 
-        /// <summary>
-        /// Glob a set of files then resolve them to relative paths.
-        /// </summary>
+        
         /// <param name="filePath"></param>
         /// <returns></returns>
         private List<string> TryResolveFilePath(string filePath)
@@ -874,11 +763,7 @@ namespace Microsoft.PowerShell.Commands
             return result;
         }
 
-        /// <summary>
-        /// This routine builds a fragment of the module manifest file
-        /// for a particular key. It returns a formatted string that includes
-        /// a comment describing the key as well as the key and its value.
-        /// </summary>
+        
         /// <param name="key">The manifest key to use.</param>
         /// <param name="resourceString">ResourceString that holds the message.</param>
         /// <param name="value">The formatted manifest fragment.</param>
@@ -905,9 +790,7 @@ namespace Microsoft.PowerShell.Commands
             return string.Format(CultureInfo.InvariantCulture, "#{0}{1}", insert, streamWriter.NewLine);
         }
 
-        /// <summary>
-        /// Generate the module manifest...
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             // Win8: 264471 - Error message for New-ModuleManifest -ProcessorArchitecture is obsolete.

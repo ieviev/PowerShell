@@ -7,16 +7,10 @@ using System.Diagnostics;
 
 namespace Microsoft.PowerShell.Commands.Internal.Format
 {
-    /// <summary>
-    /// Queue to provide sliding window capabilities for auto size functionality
-    /// It provides caching capabilities (either the first N objects in a group
-    /// or all the objects in a group)
-    /// </summary>
+    
     internal sealed class OutputGroupQueue
     {
-        /// <summary>
-        /// Create a grouping cache.
-        /// </summary>
+        
         /// <param name="callBack">Notification callback to be called when the desired number of objects is reached.</param>
         /// <param name="objectCount">Max number of objects to be cached.</param>
         internal OutputGroupQueue(FormattedObjectsCache.ProcessCachedGroupNotification callBack, int objectCount)
@@ -25,9 +19,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             _objectCount = objectCount;
         }
 
-        /// <summary>
-        /// Create a time-bounded grouping cache.
-        /// </summary>
+        
         /// <param name="callBack">Notification callback to be called when the desired number of objects is reached.</param>
         /// <param name="groupingDuration">Max amount of time to cache of objects.</param>
         internal OutputGroupQueue(FormattedObjectsCache.ProcessCachedGroupNotification callBack, TimeSpan groupingDuration)
@@ -36,9 +28,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             _groupingDuration = groupingDuration;
         }
 
-        /// <summary>
-        /// Add an object to the cache.
-        /// </summary>
+        
         /// <param name="o">Object to add.</param>
         /// <returns>Objects the cache needs to return. It can be null.</returns>
         internal List<PacketInfoData> Add(PacketInfoData o)
@@ -145,9 +135,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             _notificationCallBack(_formatStartData, validObjects);
         }
 
-        /// <summary>
-        /// Remove a single object from the queue.
-        /// </summary>
+        
         /// <returns>Object retrieved, null if queue is empty.</returns>
         internal PacketInfoData Dequeue()
         {
@@ -157,63 +145,38 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             return _queue.Dequeue();
         }
 
-        /// <summary>
-        /// Queue to store the currently cached objects.
-        /// </summary>
+        
         private readonly Queue<PacketInfoData> _queue = new Queue<PacketInfoData>();
 
-        /// <summary>
-        /// Number of objects to compute the best fit.
-        /// Zero: all the objects
-        /// a positive number N: use the first N.
-        /// </summary>
+        
         private readonly int _objectCount = 0;
 
-        /// <summary>
-        /// Maximum amount of time for record processing to compute the best fit.
-        /// MaxValue: all the objects.
-        /// A positive timespan: use all objects that have been processed within the timeframe.
-        /// </summary>
+        
         private readonly TimeSpan _groupingDuration = TimeSpan.MinValue;
         private Stopwatch _groupingTimer = null;
 
-        /// <summary>
-        /// Notification callback to be called when we have accumulated enough
-        /// data to compute a hint.
-        /// </summary>
+        
         private readonly FormattedObjectsCache.ProcessCachedGroupNotification _notificationCallBack = null;
 
-        /// <summary>
-        /// Reference kept to be used during notification.
-        /// </summary>
+        
         private FormatStartData _formatStartData = null;
 
-        /// <summary>
-        /// State flag to signal we are queuing.
-        /// </summary>
+        
         private bool _processingGroup = false;
 
-        /// <summary>
-        /// Current object count.
-        /// </summary>
+        
         private int _currentObjectCount = 0;
     }
 
-    /// <summary>
-    /// Facade class managing the front end and the autosize cache.
-    /// </summary>
+    
     internal sealed class FormattedObjectsCache
     {
-        /// <summary>
-        /// Delegate to allow notifications when the autosize queue is about to be drained.
-        /// </summary>
+        
         /// <param name="formatStartData">Current Fs control message.</param>
         /// <param name="objects">Enumeration of PacketInfoData objects.</param>
         internal delegate void ProcessCachedGroupNotification(FormatStartData formatStartData, List<PacketInfoData> objects);
 
-        /// <summary>
-        /// Decide right away if we need a front end cache (e.g. printing)
-        /// </summary>
+        
         /// <param name="cacheFrontEnd">If true, create a front end cache object.</param>
         internal FormattedObjectsCache(bool cacheFrontEnd)
         {
@@ -221,9 +184,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
                 _frontEndQueue = new Queue<PacketInfoData>();
         }
 
-        /// <summary>
-        /// If needed, add a back end autosize (grouping) cache.
-        /// </summary>
+        
         /// <param name="callBack">Notification callback to be called when the desired number of objects is reached.</param>
         /// <param name="objectCount">Max number of objects to be cached.</param>
         internal void EnableGroupCaching(ProcessCachedGroupNotification callBack, int objectCount)
@@ -232,9 +193,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
                 _groupQueue = new OutputGroupQueue(callBack, objectCount);
         }
 
-        /// <summary>
-        /// If needed, add a back end autosize (grouping) cache.
-        /// </summary>
+        
         /// <param name="callBack">Notification callback to be called when the desired number of objects is reached.</param>
         /// <param name="groupingDuration">Max amount of time to cache of objects.</param>
         internal void EnableGroupCaching(ProcessCachedGroupNotification callBack, TimeSpan groupingDuration)
@@ -243,10 +202,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
                 _groupQueue = new OutputGroupQueue(callBack, groupingDuration);
         }
 
-        /// <summary>
-        /// Add an object to the cache. the behavior depends on the object added, the
-        /// objects already in the cache and the cache settings.
-        /// </summary>
+        
         /// <param name="o">Object to add.</param>
         /// <returns>List of objects the cache is flushing.</returns>
         internal List<PacketInfoData> Add(PacketInfoData o)
@@ -270,9 +226,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             return _groupQueue.Add(o);
         }
 
-        /// <summary>
-        /// Remove all the objects from the cache.
-        /// </summary>
+        
         /// <returns>All the objects that were in the cache.</returns>
         internal List<PacketInfoData> Drain()
         {
@@ -320,14 +274,10 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             return retVal;
         }
 
-        /// <summary>
-        /// Front end queue (if present, cache ALL, if not, bypass)
-        /// </summary>
+        
         private readonly Queue<PacketInfoData> _frontEndQueue;
 
-        /// <summary>
-        /// Back end grouping queue.
-        /// </summary>
+        
         private OutputGroupQueue _groupQueue = null;
     }
 }

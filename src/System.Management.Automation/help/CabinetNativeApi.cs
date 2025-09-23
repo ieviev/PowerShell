@@ -10,9 +10,7 @@ namespace System.Management.Automation.Internal
 {
     internal class CabinetExtractor : ICabinetExtractor
     {
-        /// <summary>
-        /// GC handle which prevents garbage collector from collecting this delegate.
-        /// </summary>
+        
         private CabinetNativeApi.FdiAllocDelegate _allocDelegate;
         private GCHandle _fdiAllocHandle;
         private CabinetNativeApi.FdiFreeDelegate _freeDelegate;
@@ -53,14 +51,10 @@ namespace System.Management.Automation.Internal
 
         #region IDisposable Methods
 
-        /// <summary>
-        /// Flag: Has Dispose already been called?
-        /// </summary>
+        
         private bool _disposed = false;
 
-        /// <summary>
-        /// Protected implementation of Dispose pattern.
-        /// </summary>
+        
         /// <param name="disposing"></param>
         protected override void Dispose(bool disposing)
         {
@@ -80,9 +74,7 @@ namespace System.Management.Automation.Internal
             base.Dispose(disposing);
         }
 
-        /// <summary>
-        /// Finalizes an instance of the <see cref="CabinetExtractor"/> class.
-        /// </summary>
+        
         ~CabinetExtractor()
         {
             Dispose(false);
@@ -108,9 +100,7 @@ namespace System.Management.Automation.Internal
             return result;
         }
 
-        /// <summary>
-        /// Creates delegates for the FDI* operation functions.
-        /// </summary>
+        
         private void populateDelegates()
         {
             // if a delegate is re-located by a garbage collection, it will not affect
@@ -143,9 +133,7 @@ namespace System.Management.Automation.Internal
             _fdiNotifyHandle = GCHandle.Alloc(_notifyDelegate);
         }
 
-        /// <summary>
-        /// Frees all the delegate handles.
-        /// </summary>
+        
         private void CleanUpDelegates()
         {
             // Free GCHandles so that the memory they point to may be unpinned (garbage collected)
@@ -426,9 +414,7 @@ namespace System.Management.Automation.Internal
 
         #region Helper methods for non-trivial conversions
 
-        /// <summary>
-        /// Converts an unmanaged define into a known managed value.
-        /// </summary>
+        
         /// <param name="origin">Defined in stdio.h.</param>
         /// <returns>The appropriate System.IO.SeekOrigin value.</returns>
         internal static SeekOrigin ConvertOriginToSeekOrigin(int origin)
@@ -446,9 +432,7 @@ namespace System.Management.Automation.Internal
             }
         }
 
-        /// <summary>
-        /// Converts an unmanaged define into a known managed type.
-        /// </summary>
+        
         /// <param name="oflag">Operation mode defined in fcntl.h.</param>
         /// <returns>The appropriate System.IO.FileMode type.</returns>
         internal static FileMode ConvertOpflagToFileMode(int oflag)
@@ -485,9 +469,7 @@ namespace System.Management.Automation.Internal
             }
         }
 
-        /// <summary>
-        /// Converts an unmanaged define into a known managed type.
-        /// </summary>
+        
         /// <param name="pmode">Permission mode defined in stat.h.</param>
         /// <returns>The appropriate System.IO.FileAccess type.</returns>
         internal static FileAccess ConvertPermissionModeToFileAccess(int pmode)
@@ -512,9 +494,7 @@ namespace System.Management.Automation.Internal
             }
         }
 
-        /// <summary>
-        /// Converts an unmanaged define into a known managed type.
-        /// </summary>
+        
         /// <param name="pmode">Permission mode defined in stat.h.</param>
         /// <returns>The appropriate System.IO.FileShare type.</returns>
         internal static FileShare ConvertPermissionModeToFileShare(int pmode)
@@ -623,9 +603,7 @@ namespace System.Management.Automation.Internal
 
         #region PInvoke Definitions
 
-        /// <summary>
-        /// Creates an FDI context.
-        /// </summary>
+        
         /// <param name="pfnalloc">_In_ PFNALLOC - Memory allocation delegate.</param>
         /// <param name="pfnfree">_In_ PFNFREE - Memory free delegate.</param>
         /// <param name="pfnopen">_In_ PFNOPEN - File open delegate.</param>
@@ -648,9 +626,7 @@ namespace System.Management.Automation.Internal
             CabinetNativeApi.FdiCreateCpuType cpuType,
             FdiERF erf);
 
-        /// <summary>
-        /// Extracts files from cabinets.
-        /// </summary>
+        
         /// <param name="hfdi">_In_ HFDI - A valid FDI context handle returned by FDICreate.</param>
         /// <param name="pszCabinet">_In_ LPSTR - The name of the cabinet file.</param>
         /// <param name="pszCabPath">_In_ LPSTR - The path to the cabinet file excluding the file name.</param>
@@ -669,9 +645,7 @@ namespace System.Management.Automation.Internal
             IntPtr pfnfdid,
             IntPtr pvUser);
 
-        /// <summary>
-        /// Deletes an open FDI context.
-        /// </summary>
+        
         /// <param name="hfdi">_In_ HFDI - The FDI context handle to destroy.</param>
         /// <returns></returns>
         [DllImport("cabinet.dll", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]

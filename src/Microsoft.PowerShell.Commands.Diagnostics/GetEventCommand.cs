@@ -20,18 +20,14 @@ using System.Xml;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// Class that implements the Get-WinEvent cmdlet.
-    /// </summary>
+    
     [OutputType(typeof(EventRecord), ParameterSetName = new string[] { "GetLogSet", "GetProviderSet", "FileSet", "HashQuerySet", "XmlQuerySet" })]
     [OutputType(typeof(ProviderMetadata), ParameterSetName = new string[] { "ListProviderSet" })]
     [OutputType(typeof(EventLogConfiguration), ParameterSetName = new string[] { "ListLogSet" })]
     [Cmdlet(VerbsCommon.Get, "WinEvent", DefaultParameterSetName = "GetLogSet", HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096581")]
     public sealed class GetWinEventCommand : PSCmdlet
     {
-        /// <summary>
-        /// ListLog parameter.
-        /// </summary>
+        
         [Parameter(
                 Position = 0,
                 Mandatory = true,
@@ -47,9 +43,7 @@ namespace Microsoft.PowerShell.Commands
                             Justification = "A string[] is required here because that is the type Powershell supports")]
         public string[] ListLog { get; set; } = { "*" };
 
-        /// <summary>
-        /// GetLog parameter.
-        /// </summary>
+        
         [Parameter(
                 Position = 0,
                 ParameterSetName = "GetLogSet",
@@ -63,9 +57,7 @@ namespace Microsoft.PowerShell.Commands
                             Justification = "A string[] is required here because that is the type Powershell supports")]
         public string[] LogName { get; set; } = { "*" };
 
-        /// <summary>
-        /// ListProvider parameter.
-        /// </summary>
+        
         [Parameter(
                 Position = 0,
                 Mandatory = true,
@@ -81,9 +73,7 @@ namespace Microsoft.PowerShell.Commands
                             Justification = "A string[] is required here because that is the type Powershell supports")]
         public string[] ListProvider { get; set; } = { "*" };
 
-        /// <summary>
-        /// ProviderName parameter.
-        /// </summary>
+        
         [Parameter(
                 Position = 0,
                 Mandatory = true,
@@ -97,9 +87,7 @@ namespace Microsoft.PowerShell.Commands
                             Justification = "A string[] is required here because that is the type Powershell supports")]
         public string[] ProviderName { get; set; }
 
-        /// <summary>
-        /// Path parameter.
-        /// </summary>
+        
         [Parameter(
                 Position = 0,
                 Mandatory = true,
@@ -114,9 +102,7 @@ namespace Microsoft.PowerShell.Commands
                             Justification = "A string[] is required here because that is the type Powershell supports")]
         public string[] Path { get; set; }
 
-        /// <summary>
-        /// MaxEvents parameter.
-        /// </summary>
+        
         [Parameter(
                 ParameterSetName = "FileSet",
                 ValueFromPipeline = false,
@@ -150,9 +136,7 @@ namespace Microsoft.PowerShell.Commands
         [ValidateRange((long)1, long.MaxValue)]
         public long MaxEvents { get; set; } = -1;
 
-        /// <summary>
-        /// ComputerName parameter.
-        /// </summary>
+        
         [Parameter(
                 ParameterSetName = "ListProviderSet",
                 HelpMessageBaseName = "GetEventResources",
@@ -181,9 +165,7 @@ namespace Microsoft.PowerShell.Commands
         [Alias("Cn")]
         public string ComputerName { get; set; } = string.Empty;
 
-        /// <summary>
-        /// Credential parameter.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "ListProviderSet")]
         [Parameter(ParameterSetName = "GetProviderSet")]
         [Parameter(ParameterSetName = "ListLogSet")]
@@ -194,9 +176,7 @@ namespace Microsoft.PowerShell.Commands
         [Credential]
         public PSCredential Credential { get; set; } = PSCredential.Empty;
 
-        /// <summary>
-        /// FilterXPath parameter.
-        /// </summary>
+        
         [Parameter(
                 ParameterSetName = "FileSet",
                 ValueFromPipeline = false,
@@ -215,9 +195,7 @@ namespace Microsoft.PowerShell.Commands
         [ValidateNotNull]
         public string FilterXPath { get; set; } = "*";
 
-        /// <summary>
-        /// FilterXml parameter.
-        /// </summary>
+        
         [Parameter(
                 Position = 0,
                 Mandatory = true,
@@ -227,9 +205,7 @@ namespace Microsoft.PowerShell.Commands
                 HelpMessageBaseName = "GetEventResources")]
         public XmlDocument FilterXml { get; set; }
 
-        /// <summary>
-        /// FilterHashtable parameter.
-        /// </summary>
+        
         [Parameter(
                 Position = 0,
                 Mandatory = true,
@@ -243,18 +219,14 @@ namespace Microsoft.PowerShell.Commands
                             Justification = "A string[] is required here because that is the type Powershell supports")]
         public Hashtable[] FilterHashtable { get; set; }
 
-        /// <summary>
-        /// Force switch.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "ListLogSet")]
         [Parameter(ParameterSetName = "GetProviderSet")]
         [Parameter(ParameterSetName = "GetLogSet")]
         [Parameter(ParameterSetName = "HashQuerySet")]
         public SwitchParameter Force { get; set; }
 
-        /// <summary>
-        /// Oldest switch.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "FileSet")]
         [Parameter(ParameterSetName = "GetProviderSet")]
         [Parameter(ParameterSetName = "GetLogSet")]
@@ -323,17 +295,13 @@ namespace Microsoft.PowerShell.Commands
         private const string hashkey_data_lc = "data";
         private const string hashkey_supress_lc = "suppresshashfilter";
 
-        /// <summary>
-        /// BeginProcessing() is invoked once per pipeline: we will load System.Core.dll here.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             _resourceMgr = Microsoft.PowerShell.Commands.Diagnostics.Common.CommonUtilities.GetResourceManager();
         }
 
-        /// <summary>
-        /// EndProcessing() is invoked once per pipeline.
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             switch (ParameterSetName)
@@ -355,10 +323,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// ProcessRecord() override.
-        /// This is the main entry point for the cmdlet.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             switch (ParameterSetName)

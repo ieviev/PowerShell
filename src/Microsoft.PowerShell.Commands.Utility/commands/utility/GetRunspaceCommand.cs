@@ -11,9 +11,7 @@ using Dbg = System.Management.Automation.Diagnostics;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// This cmdlet returns runspaces in the PowerShell session.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Get, "Runspace", DefaultParameterSetName = GetRunspaceCommand.NameParameterSet,
         HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096616")]
     [OutputType(typeof(Runspace))]
@@ -29,9 +27,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Parameters
 
-        /// <summary>
-        /// Specifies name or names of Runspaces to return.
-        /// </summary>
+        
         [Parameter(Position = 0,
                    ParameterSetName = GetRunspaceCommand.NameParameterSet)]
         [ValidateNotNullOrEmpty()]
@@ -42,9 +38,7 @@ namespace Microsoft.PowerShell.Commands
             set;
         }
 
-        /// <summary>
-        /// Specifies one or more Ids of Runspaces to return.
-        /// </summary>
+        
         [Parameter(Position = 0,
                    Mandatory = true,
                    ParameterSetName = GetRunspaceCommand.IdParameterSet)]
@@ -55,9 +49,7 @@ namespace Microsoft.PowerShell.Commands
             set;
         }
 
-        /// <summary>
-        /// Specifies one or more InstanceId Guids of Runspaces to return.
-        /// </summary>
+        
         [Parameter(Position = 0,
                    Mandatory = true,
                    ParameterSetName = GetRunspaceCommand.InstanceIdParameterSet)]
@@ -72,9 +64,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Overrides
 
-        /// <summary>
-        /// Process record.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             IReadOnlyList<Runspace> results;

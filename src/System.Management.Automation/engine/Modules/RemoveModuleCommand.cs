@@ -19,15 +19,11 @@ using Dbg = System.Management.Automation.Diagnostics;
 namespace Microsoft.PowerShell.Commands
 {
     #region Remove-Module
-    /// <summary>
-    /// Implements a cmdlet that gets the list of loaded modules...
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Remove, "Module", SupportsShouldProcess = true, HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096802")]
     public sealed class RemoveModuleCommand : ModuleCmdletBase
     {
-        /// <summary>
-        /// This parameter specifies the current pipeline object.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ParameterSetName = "name", ValueFromPipeline = true, Position = 0)]
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays", Justification = "Cmdlets use arrays for parameters.")]
         public string[] Name
@@ -39,16 +35,12 @@ namespace Microsoft.PowerShell.Commands
 
         private string[] _name = Array.Empty<string>();
 
-        /// <summary>
-        /// This parameter specifies the current pipeline object.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ParameterSetName = "FullyQualifiedName", ValueFromPipeline = true, Position = 0)]
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays", Justification = "Cmdlets use arrays for parameters.")]
         public ModuleSpecification[] FullyQualifiedName { get; set; }
 
-        /// <summary>
-        /// This parameter specifies the current pipeline object.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ParameterSetName = "ModuleInfo", ValueFromPipeline = true, Position = 0)]
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays", Justification = "Cmdlets use arrays for parameters.")]
         public PSModuleInfo[] ModuleInfo
@@ -60,9 +52,7 @@ namespace Microsoft.PowerShell.Commands
 
         private PSModuleInfo[] _moduleInfo = Array.Empty<PSModuleInfo>();
 
-        /// <summary>
-        /// If provided, this parameter will allow readonly modules to be removed.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter Force
         {
@@ -73,9 +63,7 @@ namespace Microsoft.PowerShell.Commands
 
         private int _numberRemoved = 0;  // Maintains a count of the number of modules removed...
 
-        /// <summary>
-        /// Remove the specified modules. Modules can be specified either through a ModuleInfo or a name.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             // This dictionary has the list of modules to be removed.
@@ -312,9 +300,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Returns a map from a module to the list of modules that require it.
-        /// </summary>
+        
         private Dictionary<PSModuleInfo, List<PSModuleInfo>> GetRequiredDependencies()
         {
             Dictionary<PSModuleInfo, List<PSModuleInfo>> requiredDependencies = new Dictionary<PSModuleInfo, List<PSModuleInfo>>();
@@ -337,9 +323,7 @@ namespace Microsoft.PowerShell.Commands
             return requiredDependencies;
         }
 
-        /// <summary>
-        /// Reports an error if no modules were removed...
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             // Write an error record if specific modules were to be removed.

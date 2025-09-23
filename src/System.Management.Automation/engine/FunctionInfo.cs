@@ -7,16 +7,12 @@ using System.Text;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Provides information about a function that is stored in session state.
-    /// </summary>
+    
     public class FunctionInfo : CommandInfo, IScriptCommandInfo
     {
         #region ctor
 
-        /// <summary>
-        /// Creates an instance of the FunctionInfo class with the specified name and ScriptBlock.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the function.
         /// </param>
@@ -33,9 +29,7 @@ namespace System.Management.Automation
         {
         }
 
-        /// <summary>
-        /// Creates an instance of the FunctionInfo class with the specified name and ScriptBlock.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the function.
         /// </param>
@@ -66,9 +60,7 @@ namespace System.Management.Automation
             _helpFile = helpFile;
         }
 
-        /// <summary>
-        /// Creates an instance of the FunctionInfo class with the specified name and ScriptBlock.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the function.
         /// </param>
@@ -88,9 +80,7 @@ namespace System.Management.Automation
         {
         }
 
-        /// <summary>
-        /// Creates an instance of the FunctionInfo class with the specified name and ScriptBlock.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the function.
         /// </param>
@@ -115,9 +105,7 @@ namespace System.Management.Automation
             _options = options;
         }
 
-        /// <summary>
-        /// This is a copy constructor, used primarily for get-command.
-        /// </summary>
+        
         internal FunctionInfo(FunctionInfo other)
             : base(other)
         {
@@ -134,9 +122,7 @@ namespace System.Management.Automation
             _helpFile = other._helpFile;
         }
 
-        /// <summary>
-        /// This is a copy constructor, used primarily for get-command.
-        /// </summary>
+        
         internal FunctionInfo(string name, FunctionInfo other)
             : base(name, other)
         {
@@ -146,10 +132,7 @@ namespace System.Management.Automation
             CmdletInfo.SplitCmdletName(name, out _verb, out _noun);
         }
 
-        /// <summary>
-        /// Create a copy of commandInfo for GetCommandCommand so that we can generate parameter
-        /// sets based on an argument list (so we can get the dynamic parameters.)
-        /// </summary>
+        
         internal override CommandInfo CreateGetCommandCopy(object[] arguments)
         {
             FunctionInfo copy = new FunctionInfo(this) { IsGetCommandCopy = true, Arguments = arguments };
@@ -163,9 +146,7 @@ namespace System.Management.Automation
             get { return HelpCategory.Function; }
         }
 
-        /// <summary>
-        /// Gets the ScriptBlock which is the implementation of the function.
-        /// </summary>
+        
         public ScriptBlock ScriptBlock
         {
             get { return _scriptBlock; }
@@ -173,9 +154,7 @@ namespace System.Management.Automation
 
         private ScriptBlock _scriptBlock;
 
-        /// <summary>
-        /// Updates a function.
-        /// </summary>
+        
         /// <param name="newFunction">
         /// The script block that the function should represent.
         /// </param>
@@ -200,9 +179,7 @@ namespace System.Management.Automation
             Update(newFunction.ScriptBlock, force, options, helpFile);
         }
 
-        /// <summary>
-        /// Updates a function.
-        /// </summary>
+        
         /// <param name="newFunction">
         /// The script block that the function should represent.
         /// </param>
@@ -264,9 +241,7 @@ namespace System.Management.Automation
             _helpFile = helpFile;
         }
 
-        /// <summary>
-        /// Returns <see langword="true"/> if this function uses cmdlet binding mode for its parameters; otherwise returns <see langword="false"/>.
-        /// </summary>
+        
         public bool CmdletBinding
         {
             get
@@ -275,10 +250,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the name of the default parameter set.
-        /// Returns <see langword="null"/> if this function doesn't use cmdlet parameter binding or if the default parameter set wasn't specified.
-        /// </summary>
+        
         public string DefaultParameterSet
         {
             get
@@ -287,15 +259,10 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the definition of the function which is the
-        /// ToString() of the ScriptBlock that implements the function.
-        /// </summary>
+        
         public override string Definition { get { return _scriptBlock.ToString(); } }
 
-        /// <summary>
-        /// Gets or sets the scope options for the function.
-        /// </summary>
+        
         /// <exception cref="SessionStateUnauthorizedAccessException">
         /// If the trying to set a function that is constant or
         ///     if the value trying to be set is ScopedItemOptions.Constant
@@ -371,9 +338,7 @@ namespace System.Management.Automation
 
         private ScopedItemOptions _options = ScopedItemOptions.None;
 
-        /// <summary>
-        /// Gets or sets the description associated with the function.
-        /// </summary>
+        
         public string Description
         {
             get
@@ -396,9 +361,7 @@ namespace System.Management.Automation
 
         private string _description = null;
 
-        /// <summary>
-        /// Gets the verb of the function.
-        /// </summary>
+        
         public string Verb
         {
             get
@@ -409,9 +372,7 @@ namespace System.Management.Automation
 
         private string _verb = string.Empty;
 
-        /// <summary>
-        /// Gets the noun of the function.
-        /// </summary>
+        
         public string Noun
         {
             get
@@ -422,9 +383,7 @@ namespace System.Management.Automation
 
         private string _noun = string.Empty;
 
-        /// <summary>
-        /// Gets the help file path for the function.
-        /// </summary>
+        
         public string HelpFile
         {
             get
@@ -440,9 +399,7 @@ namespace System.Management.Automation
 
         private string _helpFile = string.Empty;
 
-        /// <summary>
-        /// Returns the syntax of a command.
-        /// </summary>
+        
         internal override string Syntax
         {
             get
@@ -464,17 +421,13 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// True if the command has dynamic parameters, false otherwise.
-        /// </summary>
+        
         internal override bool ImplementsDynamicParameters
         {
             get { return ScriptBlock.HasDynamicParameters; }
         }
 
-        /// <summary>
-        /// The command metadata for the function or filter.
-        /// </summary>
+        
         internal override CommandMetadata CommandMetadata
         {
             get
@@ -486,9 +439,7 @@ namespace System.Management.Automation
 
         private CommandMetadata _commandMetadata;
 
-        /// <summary>
-        /// The output type(s) is specified in the script block.
-        /// </summary>
+        
         public override ReadOnlyCollection<PSTypeName> OutputType
         {
             get { return ScriptBlock.OutputType; }

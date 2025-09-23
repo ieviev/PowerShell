@@ -14,10 +14,7 @@ using System.Text;
 
 namespace Microsoft.PowerShell.Commands.Internal.Format
 {
-    /// <summary>
-    /// Class containing miscellaneous helpers to deal with
-    /// PSObject manipulation.
-    /// </summary>
+    
     internal static class PSObjectHelper
     {
         #region tracer
@@ -42,10 +39,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             return string.Equals(typeNames[1], "System.Enum", StringComparison.Ordinal);
         }
 
-        /// <summary>
-        /// Retrieve the display name. It looks for a well known property and,
-        /// if not found, it uses some heuristics to get a "close" match.
-        /// </summary>
+        
         /// <param name="target">Shell object to process.</param>
         /// <param name="expressionFactory">Expression factory to create PSPropertyExpression.</param>
         /// <returns>Resolved PSPropertyExpression; null if no match was found.</returns>
@@ -90,9 +84,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             return null;
         }
 
-        /// <summary>
-        /// It gets the display name value.
-        /// </summary>
+        
         /// <param name="target">Shell object to process.</param>
         /// <param name="expressionFactory">Expression factory to create PSPropertyExpression.</param>
         /// <returns>PSPropertyExpressionResult if successful; null otherwise.</returns>
@@ -115,9 +107,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             return resList[0];
         }
 
-        /// <summary>
-        /// This is necessary only to consider IDictionaries as IEnumerables, since LanguagePrimitives.GetEnumerable does not.
-        /// </summary>
+        
         /// <param name="obj">Object to extract the IEnumerable from.</param>
         internal static IEnumerable GetEnumerable(object obj)
         {
@@ -199,10 +189,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             return objName;
         }
 
-        /// <summary>
-        /// Helper to convert an PSObject into a string
-        /// It takes into account enumerations (use display name)
-        /// </summary>
+        
         /// <param name="so">Shell object to process.</param>
         /// <param name="expressionFactory">Expression factory to create PSPropertyExpression.</param>
         /// <param name="enumerationLimit">Limit on IEnumerable enumeration.</param>
@@ -335,9 +322,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             return (obj == null) ? s_emptyPSObject : PSObject.AsPSObject(obj);
         }
 
-        /// <summary>
-        /// Format an object using a provided format string directive.
-        /// </summary>
+        
         /// <param name="directive">Format directive object to use.</param>
         /// <param name="val">Object to format.</param>
         /// <param name="enumerationLimit">Limit on IEnumerable enumeration.</param>
@@ -433,9 +418,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             return new List<PSPropertyExpression>();
         }
 
-        /// <summary>
-        /// Helper to retrieve the default property set of a shell object.
-        /// </summary>
+        
         /// <param name="so">Shell object to process.</param>
         /// <returns>Resolved expression; empty list if not found.</returns>
         internal static List<PSPropertyExpression> GetDefaultPropertySet(PSObject so)
@@ -476,9 +459,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             return retVal;
         }
 
-        /// <summary>
-        /// Helper to retrieve the value of an PSPropertyExpression and to format it.
-        /// </summary>
+        
         /// <param name="so">Shell object to process.</param>
         /// <param name="enumerationLimit">Limit on IEnumerable enumeration.</param>
         /// <param name="ex">Expression to use for retrieval.</param>
@@ -513,9 +494,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             return PSObjectHelper.FormatField(directive, result.Result, enumerationLimit, formatErrorObject, expressionFactory);
         }
 
-        /// <summary>
-        /// Queries PSObject and determines if ComputerName property should be shown.
-        /// </summary>
+        
         /// <param name="so"></param>
         /// <returns></returns>
         internal static bool ShouldShowComputerNameProperty(PSObject so)
@@ -569,9 +548,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
 
     internal delegate ScriptBlock CreateScriptBlockFromString(string scriptBlockString);
 
-    /// <summary>
-    /// Helper class to create PSPropertyExpression's from format.ps1xml data structures.
-    /// </summary>
+    
     internal sealed class PSPropertyExpressionFactory
     {
         /// <exception cref="ParseException"></exception>
@@ -580,9 +557,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             ScriptBlock.Create(scriptText);
         }
 
-        /// <summary>
-        /// Create an expression from an expression token.
-        /// </summary>
+        
         /// <param name="et">Expression token to use.</param>
         /// <returns>Constructed expression.</returns>
         /// <exception cref="ParseException"></exception>
@@ -591,9 +566,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             return CreateFromExpressionToken(et, null);
         }
 
-        /// <summary>
-        /// Create an expression from an expression token.
-        /// </summary>
+        
         /// <param name="et">Expression token to use.</param>
         /// <param name="loadingInfo">The context from which the file was loaded.</param>
         /// <returns>Constructed expression.</returns>

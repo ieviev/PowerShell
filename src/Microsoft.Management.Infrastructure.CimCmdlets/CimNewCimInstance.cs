@@ -13,15 +13,10 @@ using System.Management.Automation;
 
 namespace Microsoft.Management.Infrastructure.CimCmdlets
 {
-    /// <summary>
-    /// Containing all information originated from
-    /// the parameters of <see cref="NewCimInstanceCommand"/>
-    /// </summary>
+    
     internal class CimNewCimInstanceContext : XOperationContextBase
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CimNewCimInstanceContext"/> class.
-        /// </summary>
+        
         /// <param name="methodName"></param>
         /// <param name="propertyName"></param>
         /// <param name="qualifierName"></param>
@@ -34,30 +29,16 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
     }
 
-    /// <summary>
-    /// <para>
-    /// Implements operations of new-ciminstance cmdlet.
-    /// </para>
-    /// </summary>
+    
     internal sealed class CimNewCimInstance : CimAsyncOperation
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CimNewCimInstance"/> class.
-        /// <para>
-        /// Constructor
-        /// </para>
-        /// </summary>
+        
         public CimNewCimInstance()
             : base()
         {
         }
 
-        /// <summary>
-        /// <para>
-        /// Base on parametersetName to create ciminstances,
-        /// either remotely or locally
-        /// </para>
-        /// </summary>
+        
         /// <param name="cmdlet"><see cref="GetCimInstanceCommand"/> object.</param>
         public void NewCimInstance(NewCimInstanceCommand cmdlet)
         {
@@ -169,11 +150,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         #region Get CimInstance after creation (on server)
 
-        /// <summary>
-        /// <para>
-        /// Get full <see cref="CimInstance"/> from server based on the key
-        /// </para>
-        /// </summary>
+        
         /// <param name="cimInstance"></param>
         internal void GetCimInstance(CimInstance cimInstance, XOperationContextBase context)
         {
@@ -194,11 +171,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         #region private methods
 
-        /// <summary>
-        /// <para>
-        /// Set <see cref="CimSessionProxy"/> properties
-        /// </para>
-        /// </summary>
+        
         /// <param name="proxy"></param>
         /// <param name="cmdlet"></param>
         private static void SetSessionProxyProperties(
@@ -212,11 +185,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             }
         }
 
-        /// <summary>
-        /// <para>
-        /// Create <see cref="CimSessionProxy"/> and set properties
-        /// </para>
-        /// </summary>
+        
         /// <param name="computerName"></param>
         /// <param name="cmdlet"></param>
         /// <returns></returns>
@@ -230,9 +199,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             return proxy;
         }
 
-        /// <summary>
-        /// Create <see cref="CimSessionProxy"/> and set properties.
-        /// </summary>
+        
         /// <param name="session"></param>
         /// <param name="cmdlet"></param>
         /// <returns></returns>
@@ -246,11 +213,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             return proxy;
         }
 
-        /// <summary>
-        /// <para>
-        /// Create <see cref="CimInstance"/> with given properties.
-        /// </para>
-        /// </summary>
+        
         /// <param name="className"></param>
         /// <param name="key"></param>
         /// <param name="properties"></param>
@@ -312,11 +275,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             return cimInstance;
         }
 
-        /// <summary>
-        /// <para>
-        /// Create <see cref="CimInstance"/> with given properties.
-        /// </para>
-        /// </summary>
+        
         /// <param name="cimClass"></param>
         /// <param name="properties"></param>
         /// <param name="cmdlet"></param>
@@ -354,9 +313,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         #endregion
 
         #region const strings
-        /// <summary>
-        /// Action.
-        /// </summary>
+        
         private const string action = @"New-CimInstance";
         #endregion
     }

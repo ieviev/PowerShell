@@ -12,19 +12,14 @@ using Dbg = System.Management.Automation.Diagnostics;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// This cmdlet waits for job to complete.
-    /// </summary>
+    
     [Cmdlet(VerbsLifecycle.Wait, "Job", DefaultParameterSetName = JobCmdletBase.SessionIdParameterSet, HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096902")]
     [OutputType(typeof(Job))]
     public class WaitJobCommand : JobCmdletBase, IDisposable
     {
         #region Parameters
 
-        /// <summary>
-        /// Specifies the Jobs objects which need to be
-        /// removed.
-        /// </summary>
+        
         [Parameter(Mandatory = true,
             Position = 0,
             ValueFromPipeline = true,
@@ -34,16 +29,11 @@ namespace Microsoft.PowerShell.Commands
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
         public Job[] Job { get; set; }
 
-        /// <summary>
-        /// Complete the cmdlet when any of the job is completed, instead of waiting for all of them to be completed.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter Any { get; set; }
 
-        /// <summary>
-        /// If timeout is specified, the cmdlet will only wait for this number of seconds.
-        /// Value of -1 means never timeout.
-        /// </summary>
+        
         [Parameter]
         [Alias("TimeoutSec")]
         [ValidateRange(-1, Int32.MaxValue)]
@@ -62,15 +52,11 @@ namespace Microsoft.PowerShell.Commands
 
         private int _timeoutInSeconds = -1; // -1: infinite, this default is to wait for as long as it takes.
 
-        /// <summary>
-        /// Forces the cmdlet to wait for Finished states (Completed, Failed, Stopped) instead of
-        /// persistent states, which also include Suspended and Disconnected.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter Force { get; set; }
 
-        /// <summary>
-        /// </summary>
+        
         public override string[] Command { get; set; }
         #endregion Parameters
 
@@ -286,25 +272,19 @@ namespace Microsoft.PowerShell.Commands
 
         #region Overrides
 
-        /// <summary>
-        /// Cancel the Wait-Job cmdlet.
-        /// </summary>
+        
         protected override void StopProcessing()
         {
             this.SetEndProcessingAction(this.EndProcessingDoNothing);
         }
 
-        /// <summary>
-        /// In this method, we initialize the timer if timeout parameter is specified.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             this.StartTimeoutTracking(_timeoutInSeconds);
         }
 
-        /// <summary>
-        /// This method just collects the Jobs which will be waited on in the EndProcessing method.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             // List of jobs to wait
@@ -340,9 +320,7 @@ namespace Microsoft.PowerShell.Commands
             this.AddJobsThatNeedJobChangesTracking(matches);
         }
 
-        /// <summary>
-        /// Wait on the collected Jobs.
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             this.StartJobChangesTracking();
@@ -392,10 +370,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region IDisposable Members
 
-        /// <summary>
-        /// Dispose all managed resources. This will suppress finalizer on the object from getting called by
-        /// calling System.GC.SuppressFinalize(this).
-        /// </summary>
+        
         public void Dispose()
         {
             Dispose(true);
@@ -404,9 +379,7 @@ namespace Microsoft.PowerShell.Commands
             System.GC.SuppressFinalize(this);
         }
 
-        /// <summary>
-        /// Release all the resources.
-        /// </summary>
+        
         /// <param name="disposing">
         /// if true, release all the managed objects.
         /// </param>

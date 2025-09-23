@@ -26,9 +26,7 @@ namespace Microsoft.WSMan.Management
 {
     #region WSManCredSSP cmdlet base
 
-    /// <summary>
-    /// Base class used *-WSManCredSSP cmdlets (Enable-WSManCredSSP, Disable-WSManCredSSP)
-    /// </summary>
+    
     [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Cred")]
     [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "SSP")]
     public class WSManCredSSPCommandBase : PSCmdlet
@@ -42,9 +40,7 @@ namespace Microsoft.WSMan.Management
 
         #region Parameters
 
-        /// <summary>
-        /// Role can either "Client" or "Server".
-        /// </summary>
+        
         [Parameter(Mandatory = true, Position = 0)]
         [ValidateSet(Client, Server)]
         public string Role
@@ -59,8 +55,7 @@ namespace Microsoft.WSMan.Management
 
         #region Utilities
 
-        /// <summary>
-        /// </summary>
+        
         /// <returns>
         /// Returns a session object upon successful creation..otherwise
         /// writes an error using WriteError and returns null.
@@ -91,12 +86,7 @@ namespace Microsoft.WSMan.Management
 
     #region DisableWsManCredSsp
 
-    /// <summary>
-    /// Disables CredSSP authentication on the client. CredSSP authentication
-    /// enables an application to delegate the user's credentials from the client to
-    /// the server, hence allowing the user to perform management operations that
-    /// access a second hop.
-    /// </summary>
+    
     [Cmdlet(VerbsLifecycle.Disable, "WSManCredSSP", HelpUri = "https://go.microsoft.com/fwlink/?LinkId=2096628")]
     [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Cred")]
     [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "SSP")]
@@ -329,9 +319,7 @@ namespace Microsoft.WSMan.Management
             }
         }
         #endregion private
-        /// <summary>
-        /// Begin processing method.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             // If not running elevated, then throw an "elevation required" error message.
@@ -350,9 +338,7 @@ namespace Microsoft.WSMan.Management
 
         #region IDisposable Members
 
-        /// <summary>
-        /// Public dispose method.
-        /// </summary>
+        
         public
         void
         Dispose()
@@ -360,9 +346,7 @@ namespace Microsoft.WSMan.Management
             // CleanUp();
             GC.SuppressFinalize(this);
         }
-        /// <summary>
-        /// Public dispose method.
-        /// </summary>
+        
         public
         void
         Dispose(IWSManSession sessionObject)
@@ -376,28 +360,14 @@ namespace Microsoft.WSMan.Management
     #endregion DisableWsManCredSSP
 
     #region EnableCredSSP
-    /// <summary>
-    /// Enables CredSSP authentication on the client. CredSSP authentication enables
-    /// an application to delegate the user's credentials from the client to the
-    /// server, hence allowing the user to perform management operations that access
-    /// a second hop.
-    /// This cmdlet performs the following:
-    ///
-    /// On the client:
-    /// 1. Enables WSMan local configuration on client to enable CredSSP
-    /// 2. Sets CredSSP policy AllowFreshCredentials to wsman/Delegate. This policy
-    /// allows delegating explicit credentials to a server when server
-    /// authentication is achieved via a trusted X509 certificate or Kerberos.
-    /// </summary>
+    
     [Cmdlet(VerbsLifecycle.Enable, "WSManCredSSP", HelpUri = "https://go.microsoft.com/fwlink/?LinkId=2096719")]
     [OutputType(typeof(XmlElement))]
     [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Cred")]
     [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "SSP")]
     public class EnableWSManCredSSPCommand : WSManCredSSPCommandBase, IDisposable
     {
-        /// <summary>
-        /// Delegate parameter.
-        /// </summary>
+        
         [Parameter(Position = 1)]
         [ValidateNotNullOrEmpty]
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
@@ -410,9 +380,7 @@ namespace Microsoft.WSMan.Management
 
         private string[] delegatecomputer;
 
-        /// <summary>
-        /// Property that sets force parameter.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter Force
         {
@@ -432,9 +400,7 @@ namespace Microsoft.WSMan.Management
 
         #region Cmdlet Overloads
 
-        /// <summary>
-        /// BeginProcessing method.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             // If not running elevated, then throw an "elevation required" error message.
@@ -477,8 +443,7 @@ namespace Microsoft.WSMan.Management
 
         #endregion
 
-        /// <summary>
-        /// </summary>
+        
         /// <exception cref="InvalidOperationException">
         /// </exception>
         private void EnableClientSideSettings()
@@ -622,8 +587,7 @@ namespace Microsoft.WSMan.Management
             }
         }
 
-        /// <summary>
-        /// </summary>
+        
         private void UpdateCurrentUserRegistrySettings()
         {
             System.IntPtr KeyHandle = System.IntPtr.Zero;
@@ -645,9 +609,7 @@ namespace Microsoft.WSMan.Management
             GPO.Save(true, true, new Guid("35378EAC-683F-11D2-A89A-00C04FBBCFA2"), new Guid("7A9206BD-33AF-47af-B832-D4128730E990"));
         }
 
-        /// <summary>
-        /// Updates the grouppolicy registry settings.
-        /// </summary>
+        
         /// <param name="applicationname"></param>
         /// <param name="delegatestring"></param>
         /// <param name="rootKey"></param>
@@ -699,18 +661,14 @@ namespace Microsoft.WSMan.Management
 
         #region IDisposable Members
 
-        /// <summary>
-        /// Public dispose method.
-        /// </summary>
+        
         public
         void
         Dispose()
         {
             GC.SuppressFinalize(this);
         }
-        /// <summary>
-        /// Public dispose method.
-        /// </summary>
+        
         public
         void
         Dispose(IWSManSession sessionObject)
@@ -725,19 +683,7 @@ namespace Microsoft.WSMan.Management
 
     #region Get-CredSSP
 
-    /// <summary>
-    /// Gets the CredSSP related configuration on the client. CredSSP authentication
-    /// enables an application to delegate the user's credentials from the client to
-    /// the server, hence allowing the user to perform management operations that
-    /// access a second hop.
-    /// This cmdlet performs the following:
-    /// 1. Gets the configuration for WSMan policy on client to enable/disable
-    /// CredSSP
-    /// 2. Gets the configuration information for the CredSSP policy
-    /// AllowFreshCredentials . This policy allows delegating explicit credentials
-    /// to a server when server authentication is achieved via a trusted X509
-    /// certificate or Kerberos.
-    /// </summary>
+    
     [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Cred")]
     [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "SSP")]
     [Cmdlet(VerbsCommon.Get, "WSManCredSSP", HelpUri = "https://go.microsoft.com/fwlink/?LinkId=2096838")]
@@ -746,9 +692,7 @@ namespace Microsoft.WSMan.Management
     {
         #region private
         private WSManHelper helper = null;
-        /// <summary>
-        /// Method to get the values.
-        /// </summary>
+        
         private string GetDelegateSettings(string applicationname)
         {
             RegistryKey rootKey = Registry.LocalMachine;
@@ -809,9 +753,7 @@ namespace Microsoft.WSMan.Management
         #endregion private
 
         #region overrides
-        /// <summary>
-        /// Method to begin processing.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             // If not running elevated, then throw an "elevation required" error message.
@@ -900,18 +842,14 @@ namespace Microsoft.WSMan.Management
         #endregion overrides
         #region IDisposable Members
 
-        /// <summary>
-        /// Public dispose method.
-        /// </summary>
+        
         public
         void
         Dispose()
         {
             GC.SuppressFinalize(this);
         }
-        /// <summary>
-        /// Public dispose method.
-        /// </summary>
+        
         public
         void
         Dispose(IWSManSession sessionObject)

@@ -11,32 +11,16 @@ using AstUtils = System.Management.Automation.Interpreter.Utils;
 
 namespace System.Management.Automation.Interpreter
 {
-    /// <summary>
-    /// Visits a LambdaExpression, replacing the constants with direct accesses
-    /// to their StrongBox fields. This is very similar to what
-    /// ExpressionQuoter does for LambdaCompiler.
-    ///
-    /// Also inserts debug information tracking similar to what the interpreter
-    /// would do.
-    /// </summary>
+    
     internal sealed class LightLambdaClosureVisitor : ExpressionVisitor
     {
-        /// <summary>
-        /// Local variable mapping.
-        /// </summary>
+        
         private readonly Dictionary<ParameterExpression, LocalVariable> _closureVars;
 
-        /// <summary>
-        /// The variable that holds onto the StrongBox{object}[] closure from
-        /// the interpreter.
-        /// </summary>
+        
         private readonly ParameterExpression _closureArray;
 
-        /// <summary>
-        /// A stack of variables that are defined in nested scopes. We search
-        /// this first when resolving a variable in case a nested scope shadows
-        /// one of our variable instances.
-        /// </summary>
+        
         private readonly Stack<HashSet<ParameterExpression>> _shadowedVars = new Stack<HashSet<ParameterExpression>>();
 
         private LightLambdaClosureVisitor(Dictionary<ParameterExpression, LocalVariable> closureVariables, ParameterExpression closureArray)
@@ -46,10 +30,7 @@ namespace System.Management.Automation.Interpreter
             _closureVars = closureVariables;
         }
 
-        /// <summary>
-        /// Walks the lambda and produces a higher order function, which can be
-        /// used to bind the lambda to a closure array from the interpreter.
-        /// </summary>
+        
         /// <param name="lambda">The lambda to bind.</param>
         /// <param name="closureVariables">Variables which are being accessed defined in the outer scope.</param>
         /// <returns>A delegate that can be called to produce a delegate bound to the passed in closure array.</returns>
@@ -233,9 +214,7 @@ namespace System.Management.Automation.Interpreter
 
         #region MergedRuntimeVariables
 
-        /// <summary>
-        /// Provides a list of variables, supporting read/write of the values.
-        /// </summary>
+        
         private sealed class MergedRuntimeVariables : IRuntimeVariables
         {
             private readonly IRuntimeVariables _first;

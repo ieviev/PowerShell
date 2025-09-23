@@ -13,14 +13,10 @@ using Dbg = System.Management.Automation.Diagnostics;
 
 namespace Microsoft.PowerShell
 {
-    /// <summary>
-    /// Contains auxiliary ToString CodeMethod implementations for some types.
-    /// </summary>
+    
     public static partial class ToStringCodeMethods
     {
-        /// <summary>
-        /// ToString implementation for PropertyValueCollection.
-        /// </summary>
+        
         /// <param name="instance">Instance of PSObject wrapping a PropertyValueCollection.</param>
         public static string PropertyValueCollection(PSObject instance)
         {
@@ -45,20 +41,12 @@ namespace Microsoft.PowerShell
         }
     }
 
-    /// <summary>
-    /// Contains CodeMethod implementations for some adapted types like:
-    ///
-    /// 1. DirectoryEntry Related Code Methods
-    ///    (a) Convert from DE LargeInteger to Int64.
-    ///    (b) Convert from DE Dn-With-Binary to string.
-    /// </summary>
+    
     public static class AdapterCodeMethods
     {
         #region DirectoryEntry related CodeMethods
 
-        /// <summary>
-        /// Converts instance of LargeInteger to .net Int64.
-        /// </summary>
+        
         /// <param name="deInstance">Instance of PSObject wrapping DirectoryEntry object.</param>
         /// <param name="largeIntegerInstance">Instance of PSObject wrapping LargeInteger instance.</param>
         /// <returns>Converted Int64.</returns>
@@ -100,9 +88,7 @@ namespace Microsoft.PowerShell
             return BitConverter.ToInt64(data, 0);
         }
 
-        /// <summary>
-        /// Converts instance of DN-With-Binary to .net String.
-        /// </summary>
+        
         /// <param name="deInstance">Instance of PSObject wrapping DirectoryEntry object.</param>
         /// <param name="dnWithBinaryInstance">Instance of PSObject wrapping DN-With-Binary object.</param>
         /// <returns>Converted string.</returns>

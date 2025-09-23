@@ -13,9 +13,7 @@ using System.Management.Automation;
 
 namespace Microsoft.Management.Infrastructure.CimCmdlets
 {
-    /// <summary>
-    /// This Cmdlet allows the to remove, or terminate, one or more CimSession(s).
-    /// </summary>
+    
     [Alias("rcms")]
     [Cmdlet(VerbsCommon.Remove, "CimSession",
              SupportsShouldProcess = true,
@@ -25,9 +23,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
     {
         #region constructor
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RemoveCimSessionCommand"/> class.
-        /// </summary>
+        
         public RemoveCimSessionCommand()
             : base(parameters, parameterSets)
         {
@@ -37,11 +33,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         #region parameters
 
-        /// <summary>
-        /// The following is the definition of the input parameter "CimSession".
-        /// Specifies one or more CimSession object to be removed from the local PS
-        /// session/runspace.
-        /// </summary>
+        
         [Parameter(
             Mandatory = true,
             Position = 0,
@@ -65,13 +57,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         private CimSession[] cimsession;
 
-        /// <summary>
-        /// <para>The following is the definition of the input parameter "ComputerName".
-        /// Specified one or more computer names for which all CimSession(s)
-        /// (connections) should be removed (terminated).</para>
-        /// <para>This is the only optional parameter. If no value for this parameter is
-        /// provided, all CimSession(s) are terminated.</para>
-        /// </summary>
+        
         [Alias(AliasCN, AliasServerName)]
         [Parameter(
             Mandatory = true,
@@ -95,11 +81,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         private string[] computername;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "Id".
-        /// Specifies the friendly Id(s) of the CimSession(s) that should be removed
-        /// (terminated).
-        /// </summary>
+        
         [Parameter(Mandatory = true,
                    Position = 0,
                    ValueFromPipelineByPropertyName = true,
@@ -121,11 +103,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         private uint[] id;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "InstanceId".
-        /// Specifies one or more automatically generated InstanceId(s) (GUIDs) of the
-        /// CimSession(s) that should be removed (terminated).
-        /// </summary>
+        
         [Parameter(
             Mandatory = true,
             ValueFromPipelineByPropertyName = true,
@@ -147,11 +125,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         private Guid[] instanceid;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "Name".
-        /// Specifies one or more of friendly Names of the CimSession(s) that should be
-        /// removed (terminated).
-        /// </summary>
+        
         [Parameter(
             Mandatory = true,
             ValueFromPipelineByPropertyName = true,
@@ -175,18 +149,14 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         #endregion
 
-        /// <summary>
-        /// BeginProcessing method.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             this.cimRemoveSession = new CimRemoveSession();
             this.AtBeginProcess = false;
         }
 
-        /// <summary>
-        /// ProcessRecord method.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             base.CheckParameterSet();
@@ -194,10 +164,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         #region private members
-        /// <summary>
-        /// <see cref="CimRemoveSession"/> object used to remove the session from
-        /// session cache.
-        /// </summary>
+        
         private CimRemoveSession cimRemoveSession;
 
         #region const string of parameter names
@@ -208,9 +175,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         internal const string nameName = "Name";
         #endregion
 
-        /// <summary>
-        /// Static parameter definition entries.
-        /// </summary>
+        
         private static readonly Dictionary<string, HashSet<ParameterDefinitionEntry>> parameters = new()
         {
             {
@@ -240,9 +205,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             },
         };
 
-        /// <summary>
-        /// Static parameter set entries.
-        /// </summary>
+        
         private static readonly Dictionary<string, ParameterSetEntry> parameterSets = new()
         {
             {   CimBaseCommand.CimSessionSet, new ParameterSetEntry(1, true)     },

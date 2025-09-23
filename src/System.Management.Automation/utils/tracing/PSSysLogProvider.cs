@@ -11,9 +11,7 @@ using System.Collections.Generic;
 
 namespace System.Management.Automation.Tracing
 {
-    /// <summary>
-    /// SysLog LogProvider implementation.
-    /// </summary>
+    
     internal class PSSysLogProvider : LogProvider
     {
         private static readonly SysLogProvider s_provider;
@@ -24,9 +22,7 @@ namespace System.Management.Automation.Tracing
         // the default enabled channel(s)
         internal const PSChannel DefaultChannels = PSChannel.Operational;
 
-        /// <summary>
-        /// Class constructor.
-        /// </summary>
+        
         static PSSysLogProvider()
         {
             s_provider = new SysLogProvider(PowerShellConfig.Instance.GetSysLogIdentity(),
@@ -35,9 +31,7 @@ namespace System.Management.Automation.Tracing
                                             PowerShellConfig.Instance.GetLogChannels());
         }
 
-        /// <summary>
-        /// Defines a thread local StringBuilder for building event payload strings.
-        /// </summary>
+        
         /// <remarks>
         /// NOTE: do not access this field directly, use the PayloadBuilder
         /// property to ensure correct thread initialization; otherwise, a null reference can occur.
@@ -56,9 +50,7 @@ namespace System.Management.Automation.Tracing
             }
         }
 
-        /// <summary>
-        /// Determines whether any session is requesting the specified event from the provider.
-        /// </summary>
+        
         /// <param name="level"></param>
         /// <param name="keywords"></param>
         /// <returns></returns>
@@ -73,9 +65,7 @@ namespace System.Management.Automation.Tracing
             return s_provider.IsEnabled(level, keywords);
         }
 
-        /// <summary>
-        /// Provider interface function for logging health event.
-        /// </summary>
+        
         /// <param name="logContext"></param>
         /// <param name="eventId"></param>
         /// <param name="exception"></param>
@@ -92,9 +82,7 @@ namespace System.Management.Automation.Tracing
             WriteEvent(PSEventId.Engine_Health, PSChannel.Operational, PSOpcode.Exception, PSTask.ExecutePipeline, logContext, payload.ToString());
         }
 
-        /// <summary>
-        /// Provider interface function for logging provider health event.
-        /// </summary>
+        
         /// <param name="state">This the action performed in AmsiUtil class, like init, scan, etc</param>
         /// <param name="context">The amsiContext handled - Session pair</param>
         internal override void LogAmsiUtilStateEvent(string state, string context)
@@ -102,9 +90,7 @@ namespace System.Management.Automation.Tracing
             WriteEvent(PSEventId.Amsi_Init, PSChannel.Analytic, PSOpcode.Method, PSLevel.Informational, PSTask.Amsi, (PSKeyword)0x0, state, context);
         }
 
-        /// <summary>
-        /// Provider interface function for logging WDAC query event.
-        /// </summary>
+        
         /// <param name="queryName">Name of the WDAC query.</param>
         /// <param name="fileName">Name of script file for policy query. Can be null value.</param>
         /// <param name="querySuccess">Query call succeed code.</param>
@@ -118,9 +104,7 @@ namespace System.Management.Automation.Tracing
             WriteEvent(PSEventId.WDAC_Query, PSChannel.Analytic, PSOpcode.Method, PSLevel.Informational, PSTask.WDAC, (PSKeyword)0x0, queryName, fileName, querySuccess, queryResult);
         }
 
-        /// <summary>
-        /// Provider interface function for logging WDAC audit event.
-        /// </summary>
+        
         /// <param name="title">Title of WDAC audit event.</param>
         /// <param name="message">WDAC audit event message.</param>
         /// <param name="fqid">FullyQualifiedId of WDAC audit event.</param>
@@ -132,9 +116,7 @@ namespace System.Management.Automation.Tracing
             WriteEvent(PSEventId.WDAC_Audit, PSChannel.Operational, PSOpcode.Method, PSLevel.Informational, PSTask.WDAC, (PSKeyword)0x0, title, message, fqid);
         }
 
-        /// <summary>
-        /// Provider interface function for logging engine lifecycle event.
-        /// </summary>
+        
         /// <param name="logContext"></param>
         /// <param name="newState"></param>
         /// <param name="previousState"></param>
@@ -161,9 +143,7 @@ namespace System.Management.Automation.Tracing
             }
         }
 
-        /// <summary>
-        /// Provider interface function for logging command health event.
-        /// </summary>
+        
         /// <param name="logContext"></param>
         /// <param name="exception"></param>
         internal override void LogCommandHealthEvent(LogContext logContext, Exception exception)
@@ -176,9 +156,7 @@ namespace System.Management.Automation.Tracing
             WriteEvent(PSEventId.Command_Health, PSChannel.Operational, PSOpcode.Exception, PSTask.ExecutePipeline, logContext, payload.ToString());
         }
 
-        /// <summary>
-        /// Provider interface function for logging command lifecycle event.
-        /// </summary>
+        
         /// <param name="getLogContext"></param>
         /// <param name="newState"></param>
         internal override void LogCommandLifecycleEvent(Func<LogContext> getLogContext, CommandState newState)
@@ -213,9 +191,7 @@ namespace System.Management.Automation.Tracing
             }
         }
 
-        /// <summary>
-        /// Provider interface function for logging pipeline execution detail.
-        /// </summary>
+        
         /// <param name="logContext"></param>
         /// <param name="pipelineExecutionDetail"></param>
         internal override void LogPipelineExecutionDetailEvent(LogContext logContext, List<string> pipelineExecutionDetail)
@@ -234,9 +210,7 @@ namespace System.Management.Automation.Tracing
             WriteEvent(PSEventId.Pipeline_Detail, PSChannel.Operational, PSOpcode.Method, PSTask.ExecutePipeline, logContext, payload.ToString());
         }
 
-        /// <summary>
-        /// Provider interface function for logging provider health event.
-        /// </summary>
+        
         /// <param name="logContext"></param>
         /// <param name="providerName"></param>
         /// <param name="exception"></param>
@@ -257,9 +231,7 @@ namespace System.Management.Automation.Tracing
             WriteEvent(PSEventId.Provider_Health, PSChannel.Operational, PSOpcode.Exception, PSTask.ExecutePipeline, logContext, payload.ToString());
         }
 
-        /// <summary>
-        /// Provider interface function for logging provider lifecycle event.
-        /// </summary>
+        
         /// <param name="logContext"></param>
         /// <param name="providerName"></param>
         /// <param name="newState"></param>
@@ -283,9 +255,7 @@ namespace System.Management.Automation.Tracing
             }
         }
 
-        /// <summary>
-        /// Provider interface function for logging settings event.
-        /// </summary>
+        
         /// <param name="logContext"></param>
         /// <param name="variableName"></param>
         /// <param name="value"></param>
@@ -310,18 +280,14 @@ namespace System.Management.Automation.Tracing
             }
         }
 
-        /// <summary>
-        /// The SysLog provider does not use logging variables.
-        /// </summary>
+        
         /// <returns></returns>
         internal override bool UseLoggingVariables()
         {
             return false;
         }
 
-        /// <summary>
-        /// Writes a single event.
-        /// </summary>
+        
         /// <param name="id">Event id.</param>
         /// <param name="channel"></param>
         /// <param name="opcode"></param>
@@ -336,9 +302,7 @@ namespace System.Management.Automation.Tracing
                            payLoad);
         }
 
-        /// <summary>
-        /// Writes an event.
-        /// </summary>
+        
         /// <param name="id"></param>
         /// <param name="channel"></param>
         /// <param name="opcode"></param>
@@ -351,17 +315,13 @@ namespace System.Management.Automation.Tracing
             s_provider.Log(id, channel, task, opcode, level, keyword, args);
         }
 
-        /// <summary>
-        /// Writes an activity transfer event.
-        /// </summary>
+        
         internal void WriteTransferEvent(Guid parentActivityId)
         {
             s_provider.LogTransfer(parentActivityId);
         }
 
-        /// <summary>
-        /// Sets the activity id for the current thread.
-        /// </summary>
+        
         /// <param name="newActivityId">The GUID identifying the activity.</param>
         internal void SetActivityIdForCurrentThread(Guid newActivityId)
         {

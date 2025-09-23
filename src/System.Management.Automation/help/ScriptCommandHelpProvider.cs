@@ -3,20 +3,14 @@
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Class ScriptCommandHelpProvider implement the help provider for Functions/ExternalScripts.
-    /// This class does the same thing as CommandHelpProvider except for decision making: whether
-    /// a particular command is Function/Script or not.
-    /// </summary>
+    
     /// <remarks>
     /// Command Help information are stored in 'help.xml' files. Location of these files
     /// can be found from through the engine execution context.
     /// </remarks>
     internal class ScriptCommandHelpProvider : CommandHelpProvider
     {
-        /// <summary>
-        /// Constructor for CommandHelpProvider.
-        /// </summary>
+        
         internal ScriptCommandHelpProvider(HelpSystem helpSystem)
             : base(helpSystem)
         {
@@ -24,9 +18,7 @@ namespace System.Management.Automation
 
         #region Overrides
 
-        /// <summary>
-        /// Help category for this provider, which is a constant: HelpCategory.Command.
-        /// </summary>
+        
         /// <value>Help category for this provider</value>
         internal override HelpCategory HelpCategory
         {
@@ -41,9 +33,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets a command searcher used for ExactMatch help lookup.
-        /// </summary>
+        
         /// <param name="commandName"></param>
         /// <param name="context"></param>
         /// <returns></returns>
@@ -58,9 +48,7 @@ namespace System.Management.Automation
             return searcher;
         }
 
-        /// <summary>
-        /// Gets a command searcher used for searching help.
-        /// </summary>
+        
         /// <param name="pattern"></param>
         /// <param name="context"></param>
         /// <returns></returns>

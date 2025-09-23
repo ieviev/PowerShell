@@ -10,17 +10,12 @@ using System.Management.Automation.Security;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// A SessionStateScope defines the scope of visibility for a set
-    /// of virtual drives and their data.
-    /// </summary>
+    
     internal sealed class SessionStateScope
     {
         #region constructor
 
-        /// <summary>
-        /// Constructor for a session state scope.
-        /// </summary>
+        
         /// <param name="parentScope">
         /// The parent of this scope.  It can be null for the global scope.
         /// </param>
@@ -44,22 +39,13 @@ namespace System.Management.Automation
 
         #region Internal properties
 
-        /// <summary>
-        /// Gets the parent scope of this scope.  May be null
-        /// for the global scope.
-        /// </summary>
+        
         internal SessionStateScope Parent { get; set; }
 
-        /// <summary>
-        /// Defines the origin of the command that resulted in this scope
-        /// being created.
-        /// </summary>
+        
         internal CommandOrigin ScopeOrigin { get; set; }
 
-        /// <summary>
-        /// The script scope for this scope. It may reference itself but may not
-        /// be a null reference.
-        /// </summary>
+        
         /// <exception cref="ArgumentNullException">
         /// If <paramref name="value"/> is null when setting the property.
         /// </exception>
@@ -79,34 +65,20 @@ namespace System.Management.Automation
 
         private SessionStateScope _scriptScope;
 
-        /// <summary>
-        /// The version of strict mode for the interpreter.
-        /// </summary>
+        
         /// <value>Which version of strict mode is active for this scope and it's children.</value>
         internal Version StrictModeVersion { get; set; }
 
-        /// <summary>
-        /// Some local variables are stored in this tuple (for non-global scope, any variable assigned to,
-        /// or parameters, or some predefined locals.)
-        /// </summary>
+        
         internal MutableTuple LocalsTuple { get; set; }
 
-        /// <summary>
-        /// When dotting a script, no new scope is created.  Automatic variables must go somewhere, so rather than store
-        /// them in the scope they are dotted into, we just store them in a tuple like any other local variable so we
-        /// can skip saving and restoring them as the scopes change, instead it's a simple push/pop of this stack.
-        ///
-        /// This works because in a dotted script block, the only locals in the tuple are the automatic variables, all
-        /// other variables use the variable apis to find the variable and get/set it.
-        /// </summary>
+        
         internal Stack<MutableTuple> DottedScopes { get { return _dottedScopes; } }
 
         private readonly Stack<MutableTuple> _dottedScopes = new Stack<MutableTuple>();
 
         #region Drives
-        /// <summary>
-        /// Adds a new drive to the scope's drive collection.
-        /// </summary>
+        
         /// <param name="newDrive">
         /// The new drive to be added.
         /// </param>
@@ -158,9 +130,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Removes the specified drive from this scope.
-        /// </summary>
+        
         /// <param name="drive">
         /// The drive to be removed.
         /// </param>
@@ -200,18 +170,14 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Removes all the drives from the scope.
-        /// </summary>
+        
         internal void RemoveAllDrives()
         {
             GetDrives().Clear();
             GetAutomountedDrives().Clear();
         }
 
-        /// <summary>
-        /// Retrieves the drive of the specified name.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the drive to retrieve.
         /// </param>
@@ -242,9 +208,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Gets an IEnumerable for the drives in this scope.
-        /// </summary>
+        
         internal IEnumerable<PSDriveInfo> Drives
         {
             get
@@ -273,14 +237,10 @@ namespace System.Management.Automation
 
         #region Variables
 
-        /// <summary>
-        /// Gets an IDictionary for the variables in this scope.
-        /// </summary>
+        
         internal IDictionary<string, PSVariable> Variables { get { return GetPrivateVariables(); } }
 
-        /// <summary>
-        /// Gets the specified variable from the variable table.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the variable to retrieve.
         /// </param>
@@ -297,9 +257,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Gets the specified variable from the variable table.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the variable to retrieve.
         /// </param>
@@ -311,10 +269,7 @@ namespace System.Management.Automation
             return GetVariable(name, ScopeOrigin);
         }
 
-        /// <summary>
-        /// Looks up a variable, returns true and the variable if found and is visible, throws if the found variable is not visible,
-        /// and returns false if there is no variable with the given name in the current scope.
-        /// </summary>
+        
         /// <param name="name">The name of the variable.</param>
         /// <param name="origin">The command origin (where the scope was created), used to decide if the variable is visible.</param>
         /// <param name="fromNewOrSet">True if looking up the variable as part of a new or set variable operation.</param>
@@ -340,8 +295,7 @@ namespace System.Management.Automation
             return false;
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="variable"></param>
         /// <returns></returns>
         internal object GetAutomaticVariableValue(AutomaticVariable variable)
@@ -365,9 +319,7 @@ namespace System.Management.Automation
             return AutomationNull.Value;
         }
 
-        /// <summary>
-        /// Sets a variable to the given value.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the variable to set.
         /// </param>
@@ -509,10 +461,7 @@ namespace System.Management.Automation
             return variable;
         }
 
-        /// <summary>
-        /// Sets a variable to scope without any checks.
-        /// This is intended to be used only for global scope.
-        /// </summary>
+        
         /// <param name="variableToSet">PSVariable to set.</param>
         /// <param name="sessionState">SessionState for variable.</param>
         /// <returns></returns>
@@ -527,9 +476,7 @@ namespace System.Management.Automation
             GetPrivateVariables()[variableToSet.Name] = variableToSet;
         }
 
-        /// <summary>
-        /// Sets a variable to the given value.
-        /// </summary>
+        
         /// <param name="newVariable">
         /// The new variable to create.
         /// </param>
@@ -607,9 +554,7 @@ namespace System.Management.Automation
             return variable;
         }
 
-        /// <summary>
-        /// Removes a variable from the variable table.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the variable to remove.
         /// </param>
@@ -671,12 +616,7 @@ namespace System.Management.Automation
             return LocalsTuple != null && LocalsTuple.TrySetParameter(name, value);
         }
 
-        /// <summary>
-        /// For most scopes (global scope being the notable exception), most variables are known ahead of
-        /// time and stored in a tuple.  The names of those variables are stored separately, this method
-        /// determines if variable name is active in this scope, and if so, returns a wrapper around the
-        /// tuple to access the property in the tuple for the given variable.
-        /// </summary>
+        
         internal bool TryGetLocalVariableFromTuple(string name, bool fromNewOrSet, out PSVariable result)
         {
             foreach (var dottedScope in _dottedScopes)
@@ -695,9 +635,7 @@ namespace System.Management.Automation
 
         #region Aliases
 
-        /// <summary>
-        /// Gets an IEnumerable for the aliases in this scope.
-        /// </summary>
+        
         internal IEnumerable<AliasInfo> AliasTable
         {
             get
@@ -706,9 +644,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the specified alias from the alias table.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the alias to retrieve.
         /// </param>
@@ -727,9 +663,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Sets an alias to the given value.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the alias to set.
         /// </param>
@@ -799,9 +733,7 @@ namespace System.Management.Automation
             return aliasInfos[name];
         }
 
-        /// <summary>
-        /// Sets an alias to the given value.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the alias to set.
         /// </param>
@@ -915,9 +847,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Sets an alias to the given value.
-        /// </summary>
+        
         /// <param name="aliasToSet">
         /// The information about the alias to be set
         /// </param>
@@ -988,9 +918,7 @@ namespace System.Management.Automation
             return aliasToSet;
         }
 
-        /// <summary>
-        /// Removes a alias from the alias table.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the alias to remove.
         /// </param>
@@ -1035,9 +963,7 @@ namespace System.Management.Automation
 
         #region Functions
 
-        /// <summary>
-        /// Gets an IEnumerable for the functions in this scope.
-        /// </summary>
+        
         internal Dictionary<string, FunctionInfo> FunctionTable
         {
             get
@@ -1046,9 +972,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the specified function from the function table.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the function to retrieve.
         /// </param>
@@ -1068,9 +992,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Sets an function to the given function declaration.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the function to set.
         /// </param>
@@ -1102,9 +1024,7 @@ namespace System.Management.Automation
         {
             return SetFunction(name, function, null, ScopedItemOptions.Unspecified, force, origin, context);
         }
-        /// <summary>
-        /// Sets an function to the given function declaration.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the function to set.
         /// </param>
@@ -1141,9 +1061,7 @@ namespace System.Management.Automation
             return SetFunction(name, function, originalFunction, ScopedItemOptions.Unspecified, force, origin, context);
         }
 
-        /// <summary>
-        /// Sets an function to the given function declaration.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the function to set.
         /// </param>
@@ -1197,9 +1115,7 @@ namespace System.Management.Automation
             return SetFunction(name, function, originalFunction, options, force, origin, context, helpFile, CreateFunction);
         }
 
-        /// <summary>
-        /// Sets an function to the given function declaration.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the function to set.
         /// </param>
@@ -1345,9 +1261,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Removes a function from the function table.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the function to remove.
         /// </param>
@@ -1393,9 +1307,7 @@ namespace System.Management.Automation
 
         #region Cmdlets
 
-        /// <summary>
-        /// Gets an IEnumerable for the cmdlets in this scope.
-        /// </summary>
+        
         internal Dictionary<string, List<CmdletInfo>> CmdletTable
         {
             get
@@ -1404,9 +1316,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the specified cmdlet from the cmdlet table.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the cmdlet to retrieve.
         /// </param>
@@ -1434,9 +1344,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Adds a cmdlet to the cmdlet cache.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the cmdlet to add.
         /// </param>
@@ -1543,9 +1451,7 @@ namespace System.Management.Automation
             return _cmdlets[name][0];
         }
 
-        /// <summary>
-        /// Removes a cmdlet from the cmdlet table.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the cmdlet to remove.
         /// </param>
@@ -1587,9 +1493,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Removes a cmdlet entry from the cmdlet table.
-        /// </summary>
+        
         /// <param name="name">
         /// The key for the cmdlet entry to remove.
         /// </param>
@@ -1707,9 +1611,7 @@ namespace System.Management.Automation
             return newValue;
         }
 
-        /// <summary>
-        /// Contains the virtual drives for this scope.
-        /// </summary>
+        
         // Initializing all of the session state items every time we create a new scope causes a measurable
         // performance degradation, so we use lazy initialization for all of them.
         private Dictionary<string, PSDriveInfo> GetDrives()
@@ -1719,9 +1621,7 @@ namespace System.Management.Automation
 
         private Dictionary<string, PSDriveInfo> _drives;
 
-        /// <summary>
-        /// Contains the drives that have been automounted by the system.
-        /// </summary>
+        
         // Initializing all of the session state items every time we create a new scope causes a measurable
         // performance degradation, so we use lazy initialization for all of them.
         private Dictionary<string, PSDriveInfo> GetAutomountedDrives()
@@ -1750,9 +1650,7 @@ namespace System.Management.Automation
             return _variables;
         }
 
-        /// <summary>
-        /// Add the built-in variables defined by the session state scope.
-        /// </summary>
+        
         internal void AddSessionStateScopeDefaultVariables()
         {
             if (Parent == null)
@@ -1776,9 +1674,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// A collection of the aliases defined for the session.
-        /// </summary>
+        
         // Initializing all of the session state items every time we create a new scope causes a measurable
         // performance degradation, so we use lazy initialization for all of them.
         private Dictionary<string, AliasInfo> GetAliases()
@@ -1806,9 +1702,7 @@ namespace System.Management.Automation
 
         private Dictionary<string, AliasInfo> _alias;
 
-        /// <summary>
-        /// A collection of the functions defined in this scope...
-        /// </summary>
+        
         // Initializing all of the session state items every time we create a new scope causes a measurable
         // performance degradation, so we use lazy initialization for all of them.
         private Dictionary<string, FunctionInfo> GetFunctions()
@@ -1833,11 +1727,7 @@ namespace System.Management.Automation
 
         private Dictionary<string, FunctionInfo> _functions;
 
-        /// <summary>
-        /// All entries in this table should also be in the normal function
-        /// table. The entries in this table are automatically propagated
-        /// to new scopes.
-        /// </summary>
+        
         // Initializing all of the session state items every time we create a new scope causes a measurable
         // performance degradation, so we use lazy initialization for all of them.
         private Dictionary<string, FunctionInfo> GetAllScopeFunctions()
@@ -1868,18 +1758,10 @@ namespace System.Management.Automation
 
         private readonly Dictionary<string, List<CmdletInfo>> _cmdlets = new Dictionary<string, List<CmdletInfo>>(StringComparer.OrdinalIgnoreCase);
 
-        /// <summary>
-        /// All entries in this table should also be in the normal cmdlet
-        /// table. The entries in this table are automatically propagated
-        /// to new scopes.
-        /// </summary>
+        
         private readonly Dictionary<string, List<CmdletInfo>> _allScopeCmdlets = new Dictionary<string, List<CmdletInfo>>(StringComparer.OrdinalIgnoreCase);
 
-        /// <summary>
-        /// The variable that represents $true in the language.
-        /// We don't need a new reference in each scope since it
-        /// is ScopedItemOptions.Constant.
-        /// </summary>
+        
         private static readonly PSVariable s_trueVar =
             new PSVariable(
                 StringLiterals.True,
@@ -1887,11 +1769,7 @@ namespace System.Management.Automation
                 ScopedItemOptions.Constant | ScopedItemOptions.AllScope,
                 "Boolean True");
 
-        /// <summary>
-        /// The variable that represents $false in the language.
-        /// We don't need a new reference in each scope since it
-        /// is ScopedItemOptions.Constant.
-        /// </summary>
+        
         private static readonly PSVariable s_falseVar =
             new PSVariable(
                 StringLiterals.False,
@@ -1899,11 +1777,7 @@ namespace System.Management.Automation
                 ScopedItemOptions.Constant | ScopedItemOptions.AllScope,
                 "Boolean False");
 
-        /// <summary>
-        /// The variable that represents $null in the language.
-        /// We don't need a new reference in each scope since it
-        /// is ScopedItemOptions.Constant.
-        /// </summary>
+        
         private static readonly NullVariable s_nullVar =
             new NullVariable();
 
@@ -1913,9 +1787,7 @@ namespace System.Management.Automation
 
         private readonly Dictionary<string, List<string>> _commandsToAliasesCache = new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
 
-        /// <summary>
-        /// Gets the aliases by command name (used by metadata-driven help)
-        /// </summary>
+        
         /// <param name="command"></param>
         /// <returns></returns>
         internal IEnumerable<string> GetAliasesByCommandName(string command)
@@ -1932,8 +1804,7 @@ namespace System.Management.Automation
             yield break;
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="alias"></param>
         /// <param name="value"></param>
         private void AddAliasToCache(string alias, string value)
@@ -1954,8 +1825,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="alias"></param>
         /// <param name="value"></param>
         private void RemoveAliasFromCache(string alias, string value)

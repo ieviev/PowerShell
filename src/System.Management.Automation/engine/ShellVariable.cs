@@ -9,16 +9,12 @@ using System.Runtime.CompilerServices;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Represents a variable in the PowerShell language.
-    /// </summary>
+    
     public class PSVariable : IHasSessionStateEntryVisibility
     {
         #region Ctor
 
-        /// <summary>
-        /// Constructs a variable with the given name.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the variable.
         /// </param>
@@ -30,9 +26,7 @@ namespace System.Management.Automation
         {
         }
 
-        /// <summary>
-        /// Constructs a variable with the given name, and value.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the variable.
         /// </param>
@@ -47,9 +41,7 @@ namespace System.Management.Automation
         {
         }
 
-        /// <summary>
-        /// Constructs a variable with the given name, value, and options.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the variable.
         /// </param>
@@ -68,9 +60,7 @@ namespace System.Management.Automation
         {
         }
 
-        /// <summary>
-        /// Constructs a variable with the given name, value, options, and description.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the variable.
         /// </param>
@@ -93,9 +83,7 @@ namespace System.Management.Automation
             _description = description;
         }
 
-        /// <summary>
-        /// Constructs a variable with the given name, value, options, and description.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the variable.
         /// </param>
@@ -127,9 +115,7 @@ namespace System.Management.Automation
             _description = description;
         }
 
-        /// <summary>
-        /// Constructs a variable with the given name, value, options, and attributes.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the variable.
         /// </param>
@@ -199,14 +185,10 @@ namespace System.Management.Automation
 
         #endregion ctor
 
-        /// <summary>
-        /// Gets the name of the variable.
-        /// </summary>
+        
         public string Name { get; } = string.Empty;
 
-        /// <summary>
-        /// Gets or sets the description of the variable.
-        /// </summary>
+        
         public virtual string Description
         {
             get
@@ -244,17 +226,13 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the value without triggering debugger check.
-        /// </summary>
+        
         internal virtual object GetValueRaw()
         {
             return _value;
         }
 
-        /// <summary>
-        /// Gets or sets the value of the variable.
-        /// </summary>
+        
         /// <exception cref="SessionStateUnauthorizedAccessException">
         /// If the variable is read-only or constant upon call to set.
         /// </exception>
@@ -278,14 +256,10 @@ namespace System.Management.Automation
 
         private object _value;
 
-        /// <summary>
-        /// If true, then this variable is visible outside the runspace.
-        /// </summary>
+        
         public SessionStateEntryVisibility Visibility { get; set; } = SessionStateEntryVisibility.Public;
 
-        /// <summary>
-        /// The module where this variable was defined.
-        /// </summary>
+        
         public PSModuleInfo Module { get; private set; }
 
         internal void SetModule(PSModuleInfo module)
@@ -293,9 +267,7 @@ namespace System.Management.Automation
             Module = module;
         }
 
-        /// <summary>
-        /// The name of the module that defined this variable.
-        /// </summary>
+        
         public string ModuleName
         {
             get
@@ -306,9 +278,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets or sets the scope options on the variable.
-        /// </summary>
+        
         /// <exception cref="SessionStateUnauthorizedAccessException">
         /// Upon set, if the variable is constant or if <paramref name="value"/>
         /// contains the constant flag.
@@ -386,9 +356,7 @@ namespace System.Management.Automation
 
         private ScopedItemOptions _options = ScopedItemOptions.None;
 
-        /// <summary>
-        /// Gets the collection that contains the attributes for the variable.
-        /// </summary>
+        
         /// <remarks>
         /// To add or remove attributes, get the collection and then add or remove
         /// attributes to that collection.
@@ -400,9 +368,7 @@ namespace System.Management.Automation
 
         private PSVariableAttributeCollection _attributes;
 
-        /// <summary>
-        /// Checks if the given value meets the validation attribute constraints on the PSVariable.
-        /// </summary>
+        
         /// <param name="value">
         /// value which needs to be checked
         /// </param>
@@ -434,9 +400,7 @@ namespace System.Management.Automation
             return true;
         }
 
-        /// <summary>
-        /// Determines if the value is valid for the specified attribute.
-        /// </summary>
+        
         /// <param name="value">
         /// The variable value to validate.
         /// </param>
@@ -476,10 +440,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Runs all ArgumentTransformationAttributes that are specified in the Attributes
-        /// collection on the given value in the order that they are in the collection.
-        /// </summary>
+        
         /// <param name="attributes">
         /// The attributes to use to transform the value.
         /// </param>
@@ -521,11 +482,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Parameter binding does the checking and conversions as specified by the
-        /// attributes, so repeating that process is slow and wrong.  This function
-        /// applies the attributes without repeating the checks.
-        /// </summary>
+        
         /// <param name="attributes">The list of attributes to add.</param>
         internal void AddParameterAttributesNoChecks(Collection<Attribute> attributes)
         {
@@ -537,10 +494,7 @@ namespace System.Management.Automation
 
         #region internal members
 
-        /// <summary>
-        /// Returns true if the PSVariable is constant (only visible in the
-        /// current scope), false otherwise.
-        /// </summary>
+        
         internal bool IsConstant
         {
             get
@@ -549,10 +503,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Returns true if the PSVariable is readonly (only visible in the
-        /// current scope), false otherwise.
-        /// </summary>
+        
         internal bool IsReadOnly
         {
             get
@@ -561,10 +512,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Returns true if the PSVariable is private (only visible in the
-        /// current scope), false otherwise.
-        /// </summary>
+        
         internal bool IsPrivate
         {
             get
@@ -573,10 +521,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Returns true if the PSVariable is propagated to all scopes
-        /// when the scope is created.
-        /// </summary>
+        
         internal bool IsAllScope
         {
             get
@@ -585,12 +530,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Indicates that the variable has been removed from session state
-        /// and should no longer be considered valid. This is necessary because
-        /// we surface variable references and can consequently not maintain
-        /// transparent integrity.
-        /// </summary>
+        
         internal bool WasRemoved
         {
             get
@@ -618,9 +558,7 @@ namespace System.Management.Automation
 
         #endregion internal members
 
-        /// <summary>
-        /// Verifies the constraints and attributes before setting the value.
-        /// </summary>
+        
         /// <param name="value">
         /// The value to be set.
         /// </param>
@@ -820,24 +758,15 @@ namespace System.Management.Automation
         }
     }
 
-    /// <summary>
-    /// This class is used for $null.  It always returns null as a value and accepts
-    /// any value when it is set and throws it away.
-    /// </summary>
+    
     internal class NullVariable : PSVariable
     {
-        /// <summary>
-        /// Constructor that calls the base class constructor with name "null" and
-        /// value null.
-        /// </summary>
+        
         internal NullVariable() : base(StringLiterals.Null, null, ScopedItemOptions.Constant | ScopedItemOptions.AllScope)
         {
         }
 
-        /// <summary>
-        /// Always returns null from get, and always accepts
-        /// but ignores the value on set.
-        /// </summary>
+        
         public override object Value
         {
             get
@@ -851,9 +780,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the description for $null.
-        /// </summary>
+        
         public override string Description
         {
             get { return _description ??= SessionStateStrings.DollarNullDescription; }
@@ -863,9 +790,7 @@ namespace System.Management.Automation
 
         private string _description;
 
-        /// <summary>
-        /// Gets the scope options for $null which is always None.
-        /// </summary>
+        
         public override ScopedItemOptions Options
         {
             get { return ScopedItemOptions.None; }
@@ -874,43 +799,26 @@ namespace System.Management.Automation
         }
     }
 
-    /// <summary>
-    /// The options that define some of the constraints for session state items like
-    /// variables, aliases, and functions.
-    /// </summary>
+    
     [Flags]
     public enum ScopedItemOptions
     {
-        /// <summary>
-        /// There are no constraints on the item.
-        /// </summary>
+        
         None = 0,
 
-        /// <summary>
-        /// The item is readonly. It can be removed but cannot be changed.
-        /// </summary>
+        
         ReadOnly = 0x1,
 
-        /// <summary>
-        /// The item cannot be removed or changed.
-        /// This flag can only be set a variable creation.
-        /// </summary>
+        
         Constant = 0x2,
 
-        /// <summary>
-        /// The item is private to the scope it was created in and
-        /// cannot be seen from child scopes.
-        /// </summary>
+        
         Private = 0x4,
 
-        /// <summary>
-        /// The item is propagated to each new child scope created.
-        /// </summary>
+        
         AllScope = 0x8,
 
-        /// <summary>
-        /// The option is not specified by the user.
-        /// </summary>
+        
         Unspecified = 0x10
     }
 }

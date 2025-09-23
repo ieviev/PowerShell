@@ -13,82 +13,44 @@ using System.Threading;
 
 namespace Microsoft.PowerShell.Telemetry
 {
-    /// <summary>
-    /// The category of telemetry.
-    /// </summary>
+    
     internal enum TelemetryType
     {
-        /// <summary>
-        /// Telemetry of the application type (cmdlet, script, etc).
-        /// </summary>
+        
         ApplicationType,
 
-        /// <summary>
-        /// Send telemetry when we load a module, only module names in the s_knownModules list
-        /// will be reported, otherwise it will be "anonymous".
-        /// </summary>
+        
         ModuleLoad,
 
-        /// <summary>
-        /// Send telemetry when we load a module using Windows compatibility feature, only module names in the s_knownModules list
-        /// will be reported, otherwise it will be "anonymous".
-        /// </summary>
+        
         WinCompatModuleLoad,
 
-        /// <summary>
-        /// Send telemetry for experimental module feature deactivation.
-        /// All experimental engine features will be have telemetry.
-        /// </summary>
+        
         ExperimentalEngineFeatureDeactivation,
 
-        /// <summary>
-        /// Send telemetry for experimental module feature activation.
-        /// All experimental engine features will be have telemetry.
-        /// </summary>
+        
         ExperimentalEngineFeatureActivation,
 
-        /// <summary>
-        /// Send telemetry for an experimental feature when use.
-        /// </summary>
+        
         ExperimentalFeatureUse,
 
-        /// <summary>
-        /// Send telemetry for experimental module feature deactivation.
-        /// Experimental module features will send telemetry based on the module it is in.
-        /// If we send telemetry for the module, we will also do so for any experimental feature
-        /// in that module.
-        /// </summary>
+        
         ExperimentalModuleFeatureDeactivation,
 
-        /// <summary>
-        /// Send telemetry for experimental module feature activation.
-        /// Experimental module features will send telemetry based on the module it is in.
-        /// If we send telemetry for the module, we will also do so for any experimental feature
-        /// in that module.
-        /// </summary>
+        
         ExperimentalModuleFeatureActivation,
 
-        /// <summary>
-        /// Send telemetry for each PowerShell.Create API.
-        /// </summary>
+        
         PowerShellCreate,
 
-        /// <summary>
-        /// Remote session creation.
-        /// </summary>
+        
         RemoteSessionOpen,
 
-        /// <summary>
-        /// Send telemetry for a stable feature when used.
-        /// By making a distinction between this and experimental feature use, it will make
-        /// queries much easier.
-        /// </summary>
+        
         FeatureUse,
     }
 
-    /// <summary>
-    /// Send up telemetry for startup.
-    /// </summary>
+    
     public static class ApplicationInsightsTelemetry
     {
         // The string for SubsystermRegistration
@@ -128,23 +90,15 @@ namespace Microsoft.PowerShell.Telemetry
         /// If it's not in the list (initialized in the static constructor), then we report anonymous
         /// or don't report anything (in the case of tags).
 
-        /// <summary>Gets a value indicating whether telemetry can be sent.</summary>
+        
         public static bool CanSendTelemetry { get; private set; } = false;
 
-        /// <summary>
-        /// Initializes static members of the <see cref="ApplicationInsightsTelemetry"/> class.
-        /// Static constructor determines whether telemetry is to be sent, and then
-        /// sets the telemetry key and set the telemetry delivery mode.
-        /// Creates the session ID and initializes the HashSet of known module names.
-        /// Gets or constructs the unique identifier.
-        /// </summary>
+        
         static ApplicationInsightsTelemetry()
         {
         }
 
-        /// <summary>
-        /// Determine whether the environment variable is set and how.
-        /// </summary>
+        
         /// <param name="name">The name of the environment variable.</param>
         /// <param name="defaultValue">If the environment variable is not set, use this as the default value.</param>
         /// <returns>A boolean representing the value of the environment variable.</returns>
@@ -208,31 +162,21 @@ namespace Microsoft.PowerShell.Telemetry
             return defaultValue;
         }
 
-        /// <summary>
-        /// Send module load telemetry as a metric.
-        /// For modules we send the module name (if allowed), and the version.
-        /// Some modules (CIM) will continue use the string alternative method.
-        /// </summary>
+        
         /// <param name="telemetryType">The type of telemetry that we'll be sending.</param>
         /// <param name="moduleInfo">The module to report. If it is not allowed, then it is set to 'anonymous'.</param>
         internal static void SendModuleTelemetryMetric(TelemetryType telemetryType, PSModuleInfo moduleInfo)
         {
         }
 
-        /// <summary>
-        /// Send module load telemetry as a metric.
-        /// For modules we send the module name (if allowed), and the version.
-        /// Some modules (CIM) will continue use the string alternative method.
-        /// </summary>
+        
         /// <param name="telemetryType">The type of telemetry that we'll be sending.</param>
         /// <param name="moduleName">The module name to report. If it is not allowed, then it is set to 'anonymous'.</param>
         internal static void SendModuleTelemetryMetric(TelemetryType telemetryType, string moduleName)
         {
         }
 
-        /// <summary>
-        /// Send telemetry as a metric.
-        /// </summary>
+        
         /// <param name="metricId">The type of telemetry that we'll be sending.</param>
         /// <param name="data">The specific details about the telemetry.</param>
         /// <param name="value">The count of instances for the telemetry payload.</param>
@@ -240,9 +184,7 @@ namespace Microsoft.PowerShell.Telemetry
         {
         }
 
-        /// <summary>
-        /// Send additional information about an feature as it is used.
-        /// </summary>
+        
         /// <param name="featureName">The name of the feature.</param>
         /// <param name="detail">The details about the feature use.</param>
         /// <param name="value">The value to report when sending the payload.</param>
@@ -250,19 +192,14 @@ namespace Microsoft.PowerShell.Telemetry
         {
         }
 
-        /// <summary>
-        /// Send additional information about an experimental feature as it is used.
-        /// </summary>
+        
         /// <param name="featureName">The name of the experimental feature.</param>
         /// <param name="detail">The details about the experimental feature use.</param>
         internal static void SendExperimentalUseData(string featureName, string detail)
         {
         }
 
-        /// <summary>
-        /// Create the startup payload and send it up.
-        /// This is done only once during for the console host.
-        /// </summary>
+        
         /// <param name="mode">The "mode" of the startup.</param>
         /// <param name="parametersUsed">The parameter bitmap used when starting.</param>
         internal static void SendPSCoreStartupTelemetry(string mode, double parametersUsed)

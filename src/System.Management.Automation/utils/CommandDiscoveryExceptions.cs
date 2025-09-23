@@ -8,14 +8,10 @@ using System.Text;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// This exception is thrown when a command cannot be found.
-    /// </summary>
+    
     public class CommandNotFoundException : RuntimeException
     {
-        /// <summary>
-        /// Constructs a CommandNotFoundException. This is the recommended constructor.
-        /// </summary>
+        
         /// <param name="commandName">
         /// The name of the command that could not be found.
         /// </param>
@@ -45,22 +41,16 @@ namespace System.Management.Automation
             _errorId = errorIdAndResourceId;
         }
 
-        /// <summary>
-        /// Constructs a CommandNotFoundException.
-        /// </summary>
+        
         public CommandNotFoundException() : base() { }
 
-        /// <summary>
-        /// Constructs a CommandNotFoundException.
-        /// </summary>
+        
         /// <param name="message">
         /// The message used in the exception.
         /// </param>
         public CommandNotFoundException(string message) : base(message) { }
 
-        /// <summary>
-        /// Constructs a CommandNotFoundException.
-        /// </summary>
+        
         /// <param name="message">
         /// The message used in the exception.
         /// </param>
@@ -69,9 +59,7 @@ namespace System.Management.Automation
         /// </param>
         public CommandNotFoundException(string message, Exception innerException) : base(message, innerException) { }
 
-        /// <summary>
-        /// Serialization constructor for class CommandNotFoundException.
-        /// </summary>
+        
         /// <param name="info">
         /// serialization information
         /// </param>
@@ -86,9 +74,7 @@ namespace System.Management.Automation
         }
 
         #region Properties
-        /// <summary>
-        /// Gets the ErrorRecord information for this exception.
-        /// </summary>
+        
         public override ErrorRecord ErrorRecord
         {
             get
@@ -105,9 +91,7 @@ namespace System.Management.Automation
 
         private ErrorRecord _errorRecord;
 
-        /// <summary>
-        /// Gets the name of the command that could not be found.
-        /// </summary>
+        
         public string CommandName
         {
             get { return _commandName; }
@@ -146,16 +130,10 @@ namespace System.Management.Automation
         }
         #endregion Private
     }
-    /// <summary>
-    /// Defines the exception thrown when a script's requirements to run specified by the #requires
-    /// statements are not met.
-    /// </summary>
+    
     public class ScriptRequiresException : RuntimeException
     {
-        /// <summary>
-        /// Constructs an ScriptRequiresException. Recommended constructor for the class for
-        /// #requires -shellId MyShellId.
-        /// </summary>
+        
         /// <param name="commandName">
         /// The name of the script containing the #requires statement.
         /// </param>
@@ -184,10 +162,7 @@ namespace System.Management.Automation
             this.SetTargetObject(commandName);
             this.SetErrorCategory(ErrorCategory.ResourceUnavailable);
         }
-        /// <summary>
-        /// Constructs an ScriptRequiresException. Recommended constructor for the class for
-        /// #requires -version N.
-        /// </summary>
+        
         /// <param name="commandName">
         /// The name of the script containing the #requires statement.
         /// </param>
@@ -217,10 +192,7 @@ namespace System.Management.Automation
             this.SetErrorCategory(ErrorCategory.ResourceUnavailable);
         }
 
-        /// <summary>
-        /// Constructs an ScriptRequiresException. Recommended constructor for the class for the
-        /// #requires -PSSnapin MyPSSnapIn statement.
-        /// </summary>
+        
         /// <param name="commandName">
         /// The name of the script containing the #requires statement.
         /// </param>
@@ -242,10 +214,7 @@ namespace System.Management.Automation
         {
         }
 
-        /// <summary>
-        /// Constructs an ScriptRequiresException. Recommended constructor for the class for the
-        /// #requires -PSSnapin MyPSSnapIn statement.
-        /// </summary>
+        
         /// <param name="commandName">
         /// The name of the script containing the #requires statement.
         /// </param>
@@ -279,10 +248,7 @@ namespace System.Management.Automation
             this.SetErrorCategory(ErrorCategory.ResourceUnavailable);
         }
 
-        /// <summary>
-        /// Constructs an ScriptRequiresException. Recommended constructor for the class for
-        /// #requires -RunAsAdministrator statement.
-        /// </summary>
+        
         /// <param name="commandName">
         /// The name of the script containing the #requires statement.
         /// </param>
@@ -302,22 +268,16 @@ namespace System.Management.Automation
             this.SetErrorCategory(ErrorCategory.PermissionDenied);
         }
 
-        /// <summary>
-        /// Constructs an PSVersionNotCompatibleException.
-        /// </summary>
+        
         public ScriptRequiresException() : base() { }
 
-        /// <summary>
-        /// Constructs an PSVersionNotCompatibleException.
-        /// </summary>
+        
         /// <param name="message">
         /// The message used in the exception.
         /// </param>
         public ScriptRequiresException(string message) : base(message) { }
 
-        /// <summary>
-        /// Constructs an PSVersionNotCompatibleException.
-        /// </summary>
+        
         /// <param name="message">
         /// The message used in the exception.
         /// </param>
@@ -327,9 +287,7 @@ namespace System.Management.Automation
         public ScriptRequiresException(string message, Exception innerException) : base(message, innerException) { }
 
         #region Serialization
-        /// <summary>
-        /// Constructs an PSVersionNotCompatibleException using serialized data.
-        /// </summary>
+        
         /// <param name="info">
         /// serialization information
         /// </param>
@@ -347,9 +305,7 @@ namespace System.Management.Automation
 
         #region Properties
 
-        /// <summary>
-        /// Gets the name of the script that contained the #requires statement.
-        /// </summary>
+        
         public string CommandName
         {
             get { return _commandName; }
@@ -357,9 +313,7 @@ namespace System.Management.Automation
 
         private readonly string _commandName = string.Empty;
 
-        /// <summary>
-        /// Gets the PSVersion that the script requires.
-        /// </summary>
+        
         public Version RequiresPSVersion
         {
             get { return _requiresPSVersion; }
@@ -367,9 +321,7 @@ namespace System.Management.Automation
 
         private readonly Version _requiresPSVersion;
 
-        /// <summary>
-        /// Gets the missing snap-ins that the script requires.
-        /// </summary>
+        
         public ReadOnlyCollection<string> MissingPSSnapIns
         {
             get { return _missingPSSnapIns; }
@@ -377,9 +329,7 @@ namespace System.Management.Automation
 
         private readonly ReadOnlyCollection<string> _missingPSSnapIns = new ReadOnlyCollection<string>(Array.Empty<string>());
 
-        /// <summary>
-        /// Gets or sets the ID of the shell.
-        /// </summary>
+        
         public string RequiresShellId
         {
             get { return _requiresShellId; }
@@ -387,9 +337,7 @@ namespace System.Management.Automation
 
         private readonly string _requiresShellId;
 
-        /// <summary>
-        /// Gets or sets the path to the incompatible shell.
-        /// </summary>
+        
         public string RequiresShellPath
         {
             get { return _requiresShellPath; }

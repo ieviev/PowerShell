@@ -8,9 +8,7 @@ using System.Windows.Automation.Provider;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <summary>
-    /// Provides an automation peer for <see cref="ExpanderButton"/>.
-    /// </summary>
+    
     [SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public class ExpanderButtonAutomationPeer : ToggleButtonAutomationPeer, IExpandCollapseProvider
     {
@@ -22,9 +20,7 @@ namespace Microsoft.Management.UI.Internal
 
         #region Structors
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ExpanderButtonAutomationPeer" /> class.
-        /// </summary>
+        
         /// <param name="owner">The owner of the automation peer.</param>
         public ExpanderButtonAutomationPeer(ExpanderButton owner)
             : base(owner)
@@ -36,18 +32,14 @@ namespace Microsoft.Management.UI.Internal
 
         #region Overrides
 
-        /// <summary>
-        /// Gets the class name.
-        /// </summary>
+        
         /// <returns>The class name.</returns>
         protected override string GetClassNameCore()
         {
             return this.Owner.GetType().Name;
         }
 
-        /// <summary>
-        /// Gets the control pattern for the <see cref="ExpanderButton"/> that is associated with this <see cref="ExpanderButtonAutomationPeer"/>.
-        /// </summary>
+        
         /// <param name="patternInterface">Specifies the control pattern that is returned.</param>
         /// <returns>The control pattern for the <see cref="ExpanderButton"/> that is associated with this <see cref="ExpanderButtonAutomationPeer"/>.</returns>
         public override object GetPattern(PatternInterface patternInterface)
@@ -65,9 +57,7 @@ namespace Microsoft.Management.UI.Internal
 
         #region IExpandCollapseProvider Implementations
 
-        /// <summary>
-        /// Gets the expand/collapse state of this <see cref="ExpanderButton"/> instance.
-        /// </summary>
+        
         ExpandCollapseState IExpandCollapseProvider.ExpandCollapseState
         {
             get
@@ -83,9 +73,7 @@ namespace Microsoft.Management.UI.Internal
             }
         }
 
-        /// <summary>
-        /// Expands this instance of <see cref="ExpanderButton"/>.
-        /// </summary>
+        
         void IExpandCollapseProvider.Expand()
         {
             if (!this.IsEnabled())
@@ -96,9 +84,7 @@ namespace Microsoft.Management.UI.Internal
             this.expanderButton.IsChecked = true;
         }
 
-        /// <summary>
-        /// Collapses this instance of <see cref="ExpanderButton"/>.
-        /// </summary>
+        
         void IExpandCollapseProvider.Collapse()
         {
             if (!this.IsEnabled())

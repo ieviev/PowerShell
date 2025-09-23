@@ -14,9 +14,7 @@ using Dbg = System.Diagnostics.Debug;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// This class represents the compiled metadata for a parameter set.
-    /// </summary>
+    
     public sealed class ParameterSetMetadata
     {
         #region Private Data
@@ -34,8 +32,7 @@ namespace System.Management.Automation
 
         #region Constructor
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="psMD"></param>
         internal ParameterSetMetadata(ParameterSetSpecificMetadata psMD)
         {
@@ -43,9 +40,7 @@ namespace System.Management.Automation
             Initialize(psMD);
         }
 
-        /// <summary>
-        /// A copy constructor that creates a deep copy of the <paramref name="other"/> ParameterSetMetadata object.
-        /// </summary>
+        
         /// <param name="other">Object to copy.</param>
         internal ParameterSetMetadata(ParameterSetMetadata other)
         {
@@ -68,9 +63,7 @@ namespace System.Management.Automation
 
         #region Public Properties
 
-        /// <summary>
-        /// Returns true if the parameter is mandatory for this parameterset, false otherwise.
-        /// </summary>
+        
         /// <value></value>
         public bool IsMandatory
         {
@@ -85,10 +78,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// If the parameter is allowed to be positional for this parameter set, this returns
-        /// the position it is allowed to be in. If it is not positional, this returns int.MinValue.
-        /// </summary>
+        
         /// <value></value>
         public int Position
         {
@@ -103,9 +93,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Specifies that this parameter can take values from the incoming pipeline object.
-        /// </summary>
+        
         public bool ValueFromPipeline
         {
             get
@@ -119,10 +107,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Specifies that this parameter can take values from a property from the incoming
-        /// pipeline object with the same name as the parameter.
-        /// </summary>
+        
         public bool ValueFromPipelineByPropertyName
         {
             get
@@ -136,10 +121,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Specifies if this parameter takes all the remaining unbound
-        /// arguments that were specified.
-        /// </summary>
+        
         /// <value></value>
         public bool ValueFromRemainingArguments
         {
@@ -154,9 +136,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// A short description for this parameter, suitable for presentation as a tool tip.
-        /// </summary>
+        
         public string HelpMessage
         {
             get
@@ -170,9 +150,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// The base name of the resource for a help message.
-        /// </summary>
+        
         public string HelpMessageBaseName
         {
             get
@@ -186,9 +164,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// The Id of the resource for a help message.
-        /// </summary>
+        
         public string HelpMessageResourceId
         {
             get
@@ -206,8 +182,7 @@ namespace System.Management.Automation
 
         #region Private / Internal Methods & Properties
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="psMD"></param>
         internal void Initialize(ParameterSetSpecificMetadata psMD)
         {
@@ -221,9 +196,7 @@ namespace System.Management.Automation
             _helpMessageResourceId = psMD.HelpMessageResourceId;
         }
 
-        /// <summary>
-        /// Compares this instance with the supplied <paramref name="second"/>.
-        /// </summary>
+        
         /// <param name="second">
         /// An object to compare this instance with
         /// </param>
@@ -285,9 +258,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Constructor used by rehydration.
-        /// </summary>
+        
         internal ParameterSetMetadata(
             int position,
             ParameterFlags flags,
@@ -309,8 +280,7 @@ namespace System.Management.Automation
         private const string ValueFromRemainingArgumentsFormat = @"{0}ValueFromRemainingArguments=$true";
         private const string HelpMessageFormat = @"{0}HelpMessage='{1}'";
 
-        /// <summary>
-        /// </summary>
+        
         /// <returns></returns>
         internal string GetProxyParameterData()
         {
@@ -363,9 +333,7 @@ namespace System.Management.Automation
         #endregion
     }
 
-    /// <summary>
-    /// This class represents the compiled metadata for a parameter.
-    /// </summary>
+    
     public sealed class ParameterMetadata
     {
         #region Private Data
@@ -381,9 +349,7 @@ namespace System.Management.Automation
 
         #region Constructor
 
-        /// <summary>
-        /// Constructs a ParameterMetadata instance.
-        /// </summary>
+        
         /// <param name="name">
         /// Name of the parameter.
         /// </param>
@@ -395,9 +361,7 @@ namespace System.Management.Automation
         {
         }
 
-        /// <summary>
-        /// Constructs a ParameterMetadata instance.
-        /// </summary>
+        
         /// <param name="name">
         /// Name of the parameter.
         /// </param>
@@ -422,10 +386,7 @@ namespace System.Management.Automation
             _parameterSets = new Dictionary<string, ParameterSetMetadata>();
         }
 
-        /// <summary>
-        /// A copy constructor that creates a deep copy of the <paramref name="other"/> ParameterMetadata object.
-        /// Instances of Attribute and Type classes are copied by reference.
-        /// </summary>
+        
         /// <param name="other">Object to copy.</param>
         public ParameterMetadata(ParameterMetadata other)
         {
@@ -475,11 +436,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// An internal constructor which constructs a ParameterMetadata object
-        /// from compiled command parameter metadata. ParameterMetadata
-        /// is a proxy written on top of CompiledCommandParameter.
-        /// </summary>
+        
         /// <param name="cmdParameterMD">
         /// Internal CompiledCommandParameter metadata
         /// </param>
@@ -491,9 +448,7 @@ namespace System.Management.Automation
             Initialize(cmdParameterMD);
         }
 
-        /// <summary>
-        /// Constructor used by implicit remoting.
-        /// </summary>
+        
         internal ParameterMetadata(
             Collection<string> aliases,
             bool isDynamic,
@@ -513,9 +468,7 @@ namespace System.Management.Automation
 
         #region Public Methods/Properties
 
-        /// <summary>
-        /// Gets the name of the parameter.
-        /// </summary>
+        
         public string Name
         {
             get
@@ -534,9 +487,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the Type information of the Parameter.
-        /// </summary>
+        
         public Type ParameterType
         {
             get
@@ -550,9 +501,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the ParameterSets metadata that this parameter belongs to.
-        /// </summary>
+        
         public Dictionary<string, ParameterSetMetadata> ParameterSets
         {
             get
@@ -561,18 +510,14 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Specifies if the parameter is Dynamic.
-        /// </summary>
+        
         public bool IsDynamic
         {
             get { return _isDynamic; }
 
             set { _isDynamic = value; }
         }
-        /// <summary>
-        /// Specifies the alias names for this parameter.
-        /// </summary>
+        
         public Collection<string> Aliases
         {
             get
@@ -581,9 +526,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// A collection of the attributes found on the member.
-        /// </summary>
+        
         public Collection<Attribute> Attributes
         {
             get
@@ -592,9 +535,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Specifies if the parameter is a SwitchParameter.
-        /// </summary>
+        
         public bool SwitchParameter
         {
             get
@@ -608,9 +549,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets a dictionary of parameter metadata for the supplied <paramref name="type"/>.
-        /// </summary>
+        
         /// <param name="type">
         /// CLR Type for which the parameter metadata is constructed.
         /// </param>
@@ -639,8 +578,7 @@ namespace System.Management.Automation
 
         #region Internal Methods/Properties
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="compiledParameterMD"></param>
         internal void Initialize(CompiledCommandParameter compiledParameterMD)
         {
@@ -671,8 +609,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="cmdParameterMetadata"></param>
         /// <returns></returns>
         internal static Dictionary<string, ParameterMetadata> GetParameterMetadata(MergedCommandParameterMetadata
@@ -778,8 +715,7 @@ namespace System.Management.Automation
         private const string ObsoleteFormat = @"{0}[Obsolete({1})]";
         private const string CredentialAttributeFormat = @"{0}[System.Management.Automation.CredentialAttribute()]";
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="prefix">
         /// prefix that is added to every new-line. Used for tabbing content.
         /// </param>
@@ -884,9 +820,7 @@ namespace System.Management.Automation
             return result.ToString();
         }
 
-        /// <summary>
-        /// Generates proxy data for attributes like ValidateLength, ValidateRange etc.
-        /// </summary>
+        
         /// <param name="attrib">
         /// Attribute to process.
         /// </param>
@@ -1091,16 +1025,12 @@ namespace System.Management.Automation
         #endregion
     }
 
-    /// <summary>
-    /// The metadata associated with a bindable type.
-    /// </summary>
+    
     internal class InternalParameterMetadata
     {
         #region ctor
 
-        /// <summary>
-        /// Gets or constructs an instance of the InternalParameterMetadata for the specified runtime-defined parameters.
-        /// </summary>
+        
         /// <param name="runtimeDefinedParameters">
         /// The runtime-defined parameter collection that describes the parameters and their metadata.
         /// </param>
@@ -1133,9 +1063,7 @@ namespace System.Management.Automation
             return new InternalParameterMetadata(runtimeDefinedParameters, processingDynamicParameters, checkNames);
         }
 
-        /// <summary>
-        /// Gets or constructs an instance of the InternalParameterMetadata for the specified type.
-        /// </summary>
+        
         /// <param name="type">
         /// The type to get the metadata for.
         /// </param>
@@ -1178,10 +1106,7 @@ namespace System.Management.Automation
         }
 
         //
-        /// <summary>
-        /// Constructs an instance of the InternalParameterMetadata using the metadata in the
-        /// runtime-defined parameter collection.
-        /// </summary>
+        
         /// <param name="runtimeDefinedParameters">
         /// The collection of runtime-defined parameters that declare the parameters and their
         /// metadata.
@@ -1210,10 +1135,7 @@ namespace System.Management.Automation
         }
 
         //
-        /// <summary>
-        /// Constructs an instance of the InternalParameterMetadata using the reflection information retrieved
-        /// from the enclosing bindable object type.
-        /// </summary>
+        
         /// <param name="type">
         /// The type information for the bindable object
         /// </param>
@@ -1242,45 +1164,28 @@ namespace System.Management.Automation
 
         #endregion ctor
 
-        /// <summary>
-        /// Gets the type name of the bindable type.
-        /// </summary>
+        
         internal string TypeName { get; } = string.Empty;
 
-        /// <summary>
-        /// Gets a dictionary of the compiled parameter metadata for this Type.
-        /// The dictionary keys are the names of the parameters (or aliases) and
-        /// the values are the compiled parameter metadata.
-        /// </summary>
+        
         internal Dictionary<string, CompiledCommandParameter> BindableParameters { get; }
 
             = new Dictionary<string, CompiledCommandParameter>(StringComparer.OrdinalIgnoreCase);
 
-        /// <summary>
-        /// Gets a dictionary of the parameters that have been aliased to other names. The key is
-        /// the alias name and the value is the CompiledCommandParameter metadata.
-        /// </summary>
+        
         internal Dictionary<string, CompiledCommandParameter> AliasedParameters { get; }
 
             = new Dictionary<string, CompiledCommandParameter>(StringComparer.OrdinalIgnoreCase);
 
-        /// <summary>
-        /// The type information for the class that implements the bindable object.
-        /// This member is null in all cases except when constructed with using reflection
-        /// against the Type.
-        /// </summary>
+        
         private readonly Type _type;
 
-        /// <summary>
-        /// The flags used when reflecting against the object to create the metadata.
-        /// </summary>
+        
         internal static readonly BindingFlags metaDataBindingFlags = (BindingFlags.FlattenHierarchy | BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
 
         #region helper methods
 
-        /// <summary>
-        /// Fills in the data for an instance of this class using the specified runtime-defined parameters.
-        /// </summary>
+        
         /// <param name="runtimeDefinedParameters">
         /// A description of the parameters and their metadata.
         /// </param>
@@ -1318,9 +1223,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Compiles the parameter using reflection against the CLR type.
-        /// </summary>
+        
         /// <param name="processingDynamicParameters">
         /// True if dynamic parameters are being processed, or false otherwise.
         /// </param>
@@ -1479,9 +1382,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Determines if the specified member represents a parameter based on its attributes.
-        /// </summary>
+        
         /// <param name="member">
         /// The member to check to see if it is a parameter.
         /// </param>
@@ -1535,10 +1436,7 @@ namespace System.Management.Automation
 
         #region Metadata cache
 
-        /// <summary>
-        /// The cache of the type metadata. The key for the cache is the Type.FullName.
-        /// Note, this is a case-sensitive dictionary because Type names are case sensitive.
-        /// </summary>
+        
         private static readonly System.Collections.Concurrent.ConcurrentDictionary<string, InternalParameterMetadata> s_parameterMetadataCache =
             new System.Collections.Concurrent.ConcurrentDictionary<string, InternalParameterMetadata>(StringComparer.Ordinal);
 

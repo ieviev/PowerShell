@@ -6,15 +6,7 @@ using System.Runtime.CompilerServices;
 
 namespace System.Management.Automation.Interpreter
 {
-    /// <summary>
-    /// A simple forth-style stack machine for executing Expression trees
-    /// without the need to compile to IL and then invoke the JIT.  This trades
-    /// off much faster compilation time for a slower execution performance.
-    /// For code that is only run a small number of times this can be a
-    /// sweet spot.
-    ///
-    /// The core loop in the interpreter is the RunInstructions method.
-    /// </summary>
+    
     internal sealed class Interpreter
     {
         internal static readonly object NoValue = new object();
@@ -73,9 +65,7 @@ namespace System.Management.Automation.Interpreter
 
         internal HybridReferenceDictionary<LabelTarget, BranchLabel> LabelMapping { get; }
 
-        /// <summary>
-        /// Runs instructions within the given frame.
-        /// </summary>
+        
         /// <remarks>
         /// Interpreted stack frames are linked via Parent reference so that each CLR frame of this method corresponds
         /// to an interpreted stack frame in the chain. It is therefore possible to combine CLR stack traces with

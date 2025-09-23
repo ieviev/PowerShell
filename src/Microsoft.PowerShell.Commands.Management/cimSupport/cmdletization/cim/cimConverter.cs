@@ -92,18 +92,14 @@ namespace Microsoft.PowerShell.Cim
                 Dispose(false);
             }
 
-            /// <summary>
-            /// Releases resources associated with this object.
-            /// </summary>
+            
             public void Dispose()
             {
                 this.Dispose(true);
                 GC.SuppressFinalize(this);
             }
 
-            /// <summary>
-            /// Releases resources associated with this object.
-            /// </summary>
+            
             private void Dispose(bool disposing)
             {
                 if (_string == null)
@@ -122,18 +118,14 @@ namespace Microsoft.PowerShell.Cim
 
         private readonly List<IDisposable> _trackedDisposables = new();
 
-        /// <summary>
-        /// Releases resources associated with this object.
-        /// </summary>
+        
         public void Dispose()
         {
             this.Dispose(true);
             GC.SuppressFinalize(this);
         }
 
-        /// <summary>
-        /// Releases resources associated with this object.
-        /// </summary>
+        
         private void Dispose(bool disposing)
         {
             lock (_trackedDisposables)
@@ -557,9 +549,7 @@ namespace Microsoft.PowerShell.Cim
             return null;
         }
 
-        /// <summary>
-        /// Returns a type of CIM representation if conversion from/to CIM can be done purely with LanguagePrimitives.ConvertTo.
-        /// </summary>
+        
         /// <param name="dotNetType"></param>
         /// <returns></returns>
         private static Type GetConvertibleCimType(Type dotNetType)

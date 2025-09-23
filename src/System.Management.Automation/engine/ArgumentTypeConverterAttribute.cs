@@ -10,15 +10,10 @@ using Dbg = System.Management.Automation.Diagnostics;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// This is used for automatic conversions to be performed in shell variables.
-    /// </summary>
+    
     internal sealed class ArgumentTypeConverterAttribute : ArgumentTransformationAttribute
     {
-        /// <summary>
-        /// This ctor form is used to initialize shell variables
-        /// whose type is not permitted to change.
-        /// </summary>
+        
         /// <param name="types"></param>
         internal ArgumentTypeConverterAttribute(params Type[] types)
         {

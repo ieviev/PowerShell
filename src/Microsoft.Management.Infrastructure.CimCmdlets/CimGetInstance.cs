@@ -12,22 +12,13 @@ using System.Text;
 
 namespace Microsoft.Management.Infrastructure.CimCmdlets
 {
-    /// <summary>
-    /// A class used to add pstypename to partial ciminstance
-    /// for <see cref="GetCimInstanceCommand"/>, if -KeyOnly
-    /// or -SelectProperties is been specified, then add a pstypename:
-    /// "Microsoft.Management.Infrastructure.CimInstance#__PartialCIMInstance"
-    /// </summary>
+    
     internal class FormatPartialCimInstance : IObjectPreProcess
     {
-        /// <summary>
-        /// Partial ciminstance pstypename.
-        /// </summary>
+        
         internal const string PartialPSTypeName = @"Microsoft.Management.Infrastructure.CimInstance#__PartialCIMInstance";
 
-        /// <summary>
-        /// Add pstypename to the resultobject if necessary.
-        /// </summary>
+        
         /// <param name="resultObject"></param>
         /// <returns></returns>
         public object Process(object resultObject)
@@ -43,39 +34,22 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
     }
 
-    /// <summary>
-    /// <para>
-    /// Implements operations of get-ciminstance cmdlet.
-    /// </para>
-    /// </summary>
+    
     internal class CimGetInstance : CimAsyncOperation
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CimGetInstance"/> class.
-        /// <para>
-        /// Constructor
-        /// </para>
-        /// </summary>
+        
         public CimGetInstance() : base()
         {
         }
 
-        /// <summary>
-        /// <para>
-        /// Base on parametersetName to retrieve ciminstances
-        /// </para>
-        /// </summary>
+        
         /// <param name="cmdlet"><see cref="GetCimInstanceCommand"/> object.</param>
         public void GetCimInstance(GetCimInstanceCommand cmdlet)
         {
             GetCimInstanceInternal(cmdlet);
         }
 
-        /// <summary>
-        /// <para>
-        /// Refactor to be reused by Get-CimInstance;Remove-CimInstance;Set-CimInstance
-        /// </para>
-        /// </summary>
+        
         /// <param name="cmdlet"></param>
         protected void GetCimInstanceInternal(CimBaseCommand cmdlet)
         {
@@ -365,11 +339,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         #region help methods
 
-        /// <summary>
-        /// <para>
-        /// Set <see cref="CimSessionProxy"/> properties
-        /// </para>
-        /// </summary>
+        
         /// <param name="proxy"></param>
         /// <param name="cmdlet"></param>
         private static void SetSessionProxyProperties(
@@ -420,11 +390,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             }
         }
 
-        /// <summary>
-        /// <para>
-        /// Create <see cref="CimSessionProxy"/> and set properties.
-        /// </para>
-        /// </summary>
+        
         /// <param name="computerName"></param>
         /// <param name="cmdlet"></param>
         /// <returns></returns>
@@ -437,11 +403,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             return proxy;
         }
 
-        /// <summary>
-        /// <para>
-        /// Create <see cref="CimSessionProxy"/> and set properties.
-        /// </para>
-        /// </summary>
+        
         /// <param name="computerName"></param>
         /// <param name="cimInstance"></param>
         /// <param name="cmdlet"></param>
@@ -457,9 +419,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             return proxy;
         }
 
-        /// <summary>
-        /// Create <see cref="CimSessionProxy"/> and set properties.
-        /// </summary>
+        
         /// <param name="session"></param>
         /// <param name="cmdlet"></param>
         /// <returns></returns>
@@ -472,11 +432,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             return proxy;
         }
 
-        /// <summary>
-        /// <para>
-        /// Create <see cref="CimSessionProxy"/> and set properties
-        /// </para>
-        /// </summary>
+        
         /// <param name="computerName"></param>
         /// <param name="cimInstance"></param>
         /// <param name="cmdlet"></param>
@@ -491,9 +447,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             return proxy;
         }
 
-        /// <summary>
-        /// Create <see cref="CimSessionProxy"/> and set properties.
-        /// </summary>
+        
         /// <param name="session"></param>
         /// <param name="cmdlet"></param>
         /// <returns></returns>
@@ -507,10 +461,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             return proxy;
         }
 
-        /// <summary>
-        /// Set <see cref="IObjectPreProcess"/> object to proxy to pre-process
-        /// the result object if necessary.
-        /// </summary>
+        
         /// <param name="proxy"></param>
         /// <param name="cmdlet"></param>
         private static void SetPreProcess(CimSessionProxy proxy, GetCimInstanceCommand cmdlet)
@@ -523,14 +474,10 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         #endregion
 
         #region const strings
-        /// <summary>
-        /// Wql query format with where clause.
-        /// </summary>
+        
         private const string queryWithWhere = @"SELECT {0} FROM {1} WHERE {2}";
 
-        /// <summary>
-        /// Wql query format without where clause.
-        /// </summary>
+        
         private const string queryWithoutWhere = @"SELECT {0} FROM {1}";
         #endregion
     }

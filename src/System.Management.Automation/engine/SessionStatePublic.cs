@@ -8,16 +8,12 @@ using Dbg = System.Management.Automation;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Exposes the APIs to manipulate the providers, Runspace data, and location to the Cmdlet base class.
-    /// </summary>
+    
     public sealed class SessionState
     {
         #region Constructors
 
-        /// <summary>
-        /// The internal constructor for this object. It should be the only one that gets called.
-        /// </summary>
+        
         /// <param name="sessionState">
         /// An instance of SessionState that the APIs should work against.
         /// </param>
@@ -34,9 +30,7 @@ namespace System.Management.Automation
             _sessionState = sessionState;
         }
 
-        /// <summary>
-        /// The internal constructor for this object. It should be the only one that gets called.
-        /// </summary>
+        
         /// <param name="context">
         /// An instance of ExecutionContext whose EngineSessionState represents the parent session state.
         /// </param>
@@ -66,9 +60,7 @@ namespace System.Management.Automation
             _sessionState.PublicSessionState = this;
         }
 
-        /// <summary>
-        /// Construct a new session state object...
-        /// </summary>
+        
         public SessionState()
         {
             ExecutionContext ecFromTLS = LocalPipeline.GetExecutionContextFromTLS();
@@ -83,41 +75,31 @@ namespace System.Management.Automation
 
         #region Public methods
 
-        /// <summary>
-        /// Gets the APIs to access drives.
-        /// </summary>
+        
         public DriveManagementIntrinsics Drive
         {
             get { return _drive ??= new DriveManagementIntrinsics(_sessionState); }
         }
 
-        /// <summary>
-        /// Gets the APIs to access providers.
-        /// </summary>
+        
         public CmdletProviderManagementIntrinsics Provider
         {
             get { return _provider ??= new CmdletProviderManagementIntrinsics(_sessionState); }
         }
 
-        /// <summary>
-        /// Gets the APIs to access paths and location.
-        /// </summary>
+        
         public PathIntrinsics Path
         {
             get { return _path ??= new PathIntrinsics(_sessionState); }
         }
 
-        /// <summary>
-        /// Gets the APIs to access variables in session state.
-        /// </summary>
+        
         public PSVariableIntrinsics PSVariable
         {
             get { return _variable ??= new PSVariableIntrinsics(_sessionState); }
         }
 
-        /// <summary>
-        /// Get/set constraints for this execution environment.
-        /// </summary>
+        
         public PSLanguageMode LanguageMode
         {
             get { return _sessionState.LanguageMode; }
@@ -125,61 +107,43 @@ namespace System.Management.Automation
             set { _sessionState.LanguageMode = value; }
         }
 
-        /// <summary>
-        /// If true the PowerShell debugger will use FullLanguage mode, otherwise it will use the current language mode.
-        /// </summary>
+        
         public bool UseFullLanguageModeInDebugger
         {
             get { return _sessionState.UseFullLanguageModeInDebugger; }
         }
 
-        /// <summary>
-        /// Public proxy for the list of scripts that are allowed to be run. If the name "*"
-        /// is in the list, then all scripts can be run. (This is the default.)
-        /// </summary>
+        
         public List<string> Scripts
         {
             get { return _sessionState.Scripts; }
         }
 
-        /// <summary>
-        /// Public proxy for the list of applications that are allowed to be run. If the name "*"
-        /// is in the list, then all applications can be run. (This is the default.)
-        /// </summary>
+        
         public List<string> Applications
         {
             get { return _sessionState.Applications; }
         }
 
-        /// <summary>
-        /// The module associated with this session state instance...
-        /// </summary>
+        
         public PSModuleInfo Module
         {
             get { return _sessionState.Module; }
         }
 
-        /// <summary>
-        /// The provider intrinsics for this session state instance.
-        /// </summary>
+        
         public ProviderIntrinsics InvokeProvider
         {
             get { return _sessionState.InvokeProvider; }
         }
 
-        /// <summary>
-        /// The command invocation intrinsics for this session state instance.
-        /// </summary>
+        
         public CommandInvocationIntrinsics InvokeCommand
         {
             get { return _sessionState.ExecutionContext.EngineIntrinsics.InvokeCommand; }
         }
 
-        /// <summary>
-        /// Utility to check the visibility of an object based on the current
-        /// command origin. If the object implements IHasSessionStateEntryVisibility
-        /// then the check will be made. If the check fails, then an exception will be thrown...
-        /// </summary>
+        
         /// <param name="origin">The command origin value to check against...</param>
         /// <param name="valueToCheck">The object to check.</param>
         public static void ThrowIfNotVisible(CommandOrigin origin, object valueToCheck)
@@ -243,9 +207,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Checks the visibility of an object based on the command origin argument.
-        /// </summary>
+        
         /// <param name="origin">The origin to check against.</param>
         /// <param name="valueToCheck">The object to check.</param>
         /// <returns>Returns true if the object is visible, false otherwise.</returns>
@@ -261,9 +223,7 @@ namespace System.Management.Automation
 
             return true;
         }
-        /// <summary>
-        /// Checks the visibility of an object based on the command origin argument.
-        /// </summary>
+        
         /// <param name="origin">The origin to check against.</param>
         /// <param name="variable">The variable to check.</param>
         /// <returns>Returns true if the object is visible, false otherwise.</returns>
@@ -278,9 +238,7 @@ namespace System.Management.Automation
 
             return (variable.Visibility == SessionStateEntryVisibility.Public);
         }
-        /// <summary>
-        /// Checks the visibility of an object based on the command origin argument.
-        /// </summary>
+        
         /// <param name="origin">The origin to check against.</param>
         /// <param name="commandInfo">The command to check.</param>
         /// <returns>Returns true if the object is visible, false otherwise.</returns>
@@ -300,9 +258,7 @@ namespace System.Management.Automation
 
         #region Internal methods
 
-        /// <summary>
-        /// Gets a reference to the "real" session state object instead of the facade.
-        /// </summary>
+        
         internal SessionStateInternal Internal
         {
             get { return _sessionState; }
@@ -320,19 +276,13 @@ namespace System.Management.Automation
         #endregion private data
     }
 
-    /// <summary>
-    /// This enum defines the visibility of execution environment elements...
-    /// </summary>
+    
     public enum SessionStateEntryVisibility
     {
-        /// <summary>
-        /// Entries are visible to requests from outside the runspace.
-        /// </summary>
+        
         Public = 0,
 
-        /// <summary>
-        /// Entries are not visible to requests from outside the runspace.
-        /// </summary>
+        
         Private = 1
     }
 
@@ -342,33 +292,19 @@ namespace System.Management.Automation
         SessionStateEntryVisibility Visibility { get; set; }
     }
 
-    /// <summary>
-    /// This enum defines what subset of the PowerShell language is permitted when
-    /// calling into this execution environment.
-    /// </summary>
+    
     public enum PSLanguageMode
     {
-        /// <summary>
-        /// All PowerShell language elements are available.
-        /// </summary>
+        
         FullLanguage = 0,
 
-        /// <summary>
-        /// A subset of language elements are available to external requests.
-        /// </summary>
+        
         RestrictedLanguage = 1,
 
-        /// <summary>
-        /// Commands containing script text to evaluate are not allowed. You can only
-        /// call commands using the Runspace APIs when in this mode.
-        /// </summary>
+        
         NoLanguage = 2,
 
-        /// <summary>
-        /// Exposes a subset of the PowerShell language that limits itself to core PowerShell
-        /// types, does not support method invocation (except on those types), and does not
-        /// support property setters (except on those types).
-        /// </summary>
+        
         ConstrainedLanguage = 3
     }
 }

@@ -5,10 +5,7 @@ using Dbg = System.Management.Automation.Diagnostics;
 
 namespace System.Management.Automation.Host
 {
-    /// <summary>
-    /// Provides a description of a choice for use by <see cref="System.Management.Automation.Host.PSHostUserInterface.PromptForChoice"/>.
-    /// 
-    /// </summary>
+    
     public sealed
     class ChoiceDescription
     {
@@ -19,9 +16,7 @@ namespace System.Management.Automation.Host
 
         #endregion
 
-        /// <summary>
-        /// Initializes an new instance of ChoiceDescription and defines the Label value.
-        /// </summary>
+        
         /// <param name="label">
         /// The label to identify this field description
         /// </param>
@@ -42,9 +37,7 @@ namespace System.Management.Automation.Host
             this.label = label;
         }
 
-        /// <summary>
-        /// Initializes an new instance of ChoiceDescription and defines the Label and HelpMessage values.
-        /// </summary>
+        
         /// <param name="label">
         /// The label to identify this field description.
         /// </param>
@@ -78,9 +71,7 @@ namespace System.Management.Automation.Host
             this.helpMessage = helpMessage;
         }
 
-        /// <summary>
-        /// Gets a short, human-presentable message to describe and identify the choice.  Think Button label.
-        /// </summary>
+        
         /// <remarks>
         /// Note that the special character &amp; (ampersand) may be embedded in the label string to identify the next character in the label
         /// as a "hot key" (aka "keyboard accelerator") that the Console.PromptForChoice implementation may use to allow the user to
@@ -101,9 +92,7 @@ namespace System.Management.Automation.Host
             }
         }
 
-        /// <summary>
-        /// Gets and sets the help message for this field.
-        /// </summary>
+        
         /// <exception cref="System.Management.Automation.PSArgumentNullException">
         /// Set to null.
         /// </exception>

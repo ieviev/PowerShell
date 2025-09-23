@@ -26,121 +26,77 @@ using System.Xml;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// The valid values for the -Authentication parameter for Invoke-RestMethod and Invoke-WebRequest.
-    /// </summary>
+    
     public enum WebAuthenticationType
     {
-        /// <summary>
-        /// No authentication. Default.
-        /// </summary>
+        
         None,
 
-        /// <summary>
-        /// RFC-7617 Basic Authentication. Requires -Credential.
-        /// </summary>
+        
         Basic,
 
-        /// <summary>
-        /// RFC-6750 OAuth 2.0 Bearer Authentication. Requires -Token.
-        /// </summary>
+        
         Bearer,
 
-        /// <summary>
-        /// RFC-6750 OAuth 2.0 Bearer Authentication. Requires -Token.
-        /// </summary>
+        
         OAuth,
     }
 
     // WebSslProtocol is used because not all SslProtocols are supported by HttpClientHandler.
     // Also SslProtocols.Default is not the "default" for HttpClientHandler as SslProtocols.Ssl3 is not supported.
-    /// <summary>
-    /// The valid values for the -SslProtocol parameter for Invoke-RestMethod and Invoke-WebRequest.
-    /// </summary>
+    
     [Flags]
     public enum WebSslProtocol
     {
-        /// <summary>
-        /// No SSL protocol will be set and the system defaults will be used.
-        /// </summary>
+        
         Default = SslProtocols.None,
 
-        /// <summary>
-        /// Specifies the TLS 1.0 is obsolete. Using this value now defaults to TLS 1.2.
-        /// </summary>
+        
         Tls = SslProtocols.Tls12,
 
-        /// <summary>
-        /// Specifies the TLS 1.1 is obsolete. Using this value now defaults to TLS 1.2.
-        /// </summary>
+        
         Tls11 = SslProtocols.Tls12,
 
-        /// <summary>
-        /// Specifies the TLS 1.2 security protocol. The TLS protocol is defined in IETF RFC 5246.
-        /// </summary>
+        
         Tls12 = SslProtocols.Tls12,
 
-        /// <summary>
-        /// Specifies the TLS 1.3 security protocol. The TLS protocol is defined in IETF RFC 8446.
-        /// </summary>
+        
         Tls13 = SslProtocols.Tls13
     }
 
-    /// <summary>
-    /// Base class for Invoke-RestMethod and Invoke-WebRequest commands.
-    /// </summary>
+    
     public abstract class WebRequestPSCmdlet : PSCmdlet, IDisposable
     {
         #region Fields
 
-        /// <summary>
-        /// Used to prefix the headers in debug and verbose messaging.
-        /// </summary>
+        
         internal const string DebugHeaderPrefix = "--- ";
 
-        /// <summary>
-        /// Cancellation token source.
-        /// </summary>
+        
         internal CancellationTokenSource _cancelToken = null;
 
-        /// <summary>
-        /// Automatically follow Rel Links.
-        /// </summary>
+        
         internal bool _followRelLink = false;
 
-        /// <summary>
-        /// Maximum number of Rel Links to follow.
-        /// </summary>
+        
         internal int _maximumFollowRelLink = int.MaxValue;
 
-        /// <summary>
-        /// Maximum number of Redirects to follow.
-        /// </summary>
+        
         internal int _maximumRedirection;
 
-        /// <summary>
-        /// Parse Rel Links.
-        /// </summary>
+        
         internal bool _parseRelLink = false;
 
-        /// <summary>
-        /// Automatically follow Rel Links.
-        /// </summary>
+        
         internal Dictionary<string, string> _relationLink = null;
 
-        /// <summary>
-        /// The current size of the local file being resumed.
-        /// </summary>
+        
         private long _resumeFileSize = 0;
 
-        /// <summary>
-        /// The remote endpoint returned a 206 status code indicating successful resume.
-        /// </summary>
+        
         private bool _resumeSuccess = false;
 
-        /// <summary>
-        /// True if the Dispose() method has already been called to cleanup Disposable fields.
-        /// </summary>
+        
         private bool _disposed = false;
 
         #endregion Fields
@@ -149,15 +105,11 @@ namespace Microsoft.PowerShell.Commands
 
         #region URI
 
-        /// <summary>
-        /// Deprecated. Gets or sets UseBasicParsing. This has no affect on the operation of the Cmdlet.
-        /// </summary>
+        
         [Parameter(DontShow = true)]
         public virtual SwitchParameter UseBasicParsing { get; set; } = true;
 
-        /// <summary>
-        /// Gets or sets the Uri property.
-        /// </summary>
+        
         [Parameter(Position = 0, Mandatory = true)]
         [ValidateNotNullOrEmpty]
         public virtual Uri Uri { get; set; }
@@ -166,9 +118,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region HTTP Version
 
-        /// <summary>
-        /// Gets or sets the HTTP Version property.
-        /// </summary>
+        
         [Parameter]
         [ArgumentToVersionTransformation]
         [HttpVersionCompletions]
@@ -177,15 +127,11 @@ namespace Microsoft.PowerShell.Commands
         #endregion HTTP Version
 
         #region Session
-        /// <summary>
-        /// Gets or sets the Session property.
-        /// </summary>
+        
         [Parameter]
         public virtual WebRequestSession WebSession { get; set; }
 
-        /// <summary>
-        /// Gets or sets the SessionVariable property.
-        /// </summary>
+        
         [Parameter]
         [Alias("SV")]
         public virtual string SessionVariable { get; set; }
@@ -194,64 +140,42 @@ namespace Microsoft.PowerShell.Commands
 
         #region Authorization and Credentials
 
-        /// <summary>
-        /// Gets or sets the AllowUnencryptedAuthentication property.
-        /// </summary>
+        
         [Parameter]
         public virtual SwitchParameter AllowUnencryptedAuthentication { get; set; }
 
-        /// <summary>
-        /// Gets or sets the Authentication property used to determine the Authentication method for the web session.
-        /// Authentication does not work with UseDefaultCredentials.
-        /// Authentication over unencrypted sessions requires AllowUnencryptedAuthentication.
-        /// Basic: Requires Credential.
-        /// OAuth/Bearer: Requires Token.
-        /// </summary>
+        
         [Parameter]
         public virtual WebAuthenticationType Authentication { get; set; } = WebAuthenticationType.None;
 
-        /// <summary>
-        /// Gets or sets the Credential property.
-        /// </summary>
+        
         [Parameter]
         [Credential]
         public virtual PSCredential Credential { get; set; }
 
-        /// <summary>
-        /// Gets or sets the UseDefaultCredentials property.
-        /// </summary>
+        
         [Parameter]
         public virtual SwitchParameter UseDefaultCredentials { get; set; }
 
-        /// <summary>
-        /// Gets or sets the CertificateThumbprint property.
-        /// </summary>
+        
         [Parameter]
         [ValidateNotNullOrEmpty]
         public virtual string CertificateThumbprint { get; set; }
 
-        /// <summary>
-        /// Gets or sets the Certificate property.
-        /// </summary>
+        
         [Parameter]
         [ValidateNotNull]
         public virtual X509Certificate Certificate { get; set; }
 
-        /// <summary>
-        /// Gets or sets the SkipCertificateCheck property.
-        /// </summary>
+        
         [Parameter]
         public virtual SwitchParameter SkipCertificateCheck { get; set; }
 
-        /// <summary>
-        /// Gets or sets the TLS/SSL protocol used by the Web Cmdlet.
-        /// </summary>
+        
         [Parameter]
         public virtual WebSslProtocol SslProtocol { get; set; } = WebSslProtocol.Default;
 
-        /// <summary>
-        /// Gets or sets the Token property. Token is required by Authentication OAuth and Bearer.
-        /// </summary>
+        
         [Parameter]
         public virtual SecureString Token { get; set; }
 
@@ -259,21 +183,15 @@ namespace Microsoft.PowerShell.Commands
 
         #region Headers
 
-        /// <summary>
-        /// Gets or sets the UserAgent property.
-        /// </summary>
+        
         [Parameter]
         public virtual string UserAgent { get; set; }
 
-        /// <summary>
-        /// Gets or sets the DisableKeepAlive property.
-        /// </summary>
+        
         [Parameter]
         public virtual SwitchParameter DisableKeepAlive { get; set; }
 
-        /// <summary>
-        /// Gets or sets the ConnectionTimeoutSeconds property.
-        /// </summary>
+        
         /// <remarks>
         /// This property applies to sending the request and receiving the response headers only.
         /// </remarks>
@@ -282,9 +200,7 @@ namespace Microsoft.PowerShell.Commands
         [ValidateRange(0, int.MaxValue)]
         public virtual int ConnectionTimeoutSeconds { get; set; }
 
-        /// <summary>
-        /// Gets or sets the OperationTimeoutSeconds property.
-        /// </summary>
+        
         /// <remarks>
         /// This property applies to each read operation when receiving the response body.
         /// </remarks>
@@ -292,16 +208,12 @@ namespace Microsoft.PowerShell.Commands
         [ValidateRange(0, int.MaxValue)]
         public virtual int OperationTimeoutSeconds { get; set; }
 
-        /// <summary>
-        /// Gets or sets the Headers property.
-        /// </summary>
+        
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         [Parameter]
         public virtual IDictionary Headers { get; set; }
 
-        /// <summary>
-        /// Gets or sets the SkipHeaderValidation property.
-        /// </summary>
+        
         /// <remarks>
         /// This property adds headers to the request's header collection without validation.
         /// </remarks>
@@ -312,29 +224,21 @@ namespace Microsoft.PowerShell.Commands
 
         #region Redirect
 
-        /// <summary>
-        /// Gets or sets the AllowInsecureRedirect property used to follow HTTP redirects from HTTPS.
-        /// </summary>
+        
         [Parameter]
         public virtual SwitchParameter AllowInsecureRedirect { get; set; }
 
-        /// <summary>
-        /// Gets or sets the RedirectMax property.
-        /// </summary>
+        
         [Parameter]
         [ValidateRange(0, int.MaxValue)]
         public virtual int MaximumRedirection { get; set; } = -1;
 
-        /// <summary>
-        /// Gets or sets the MaximumRetryCount property, which determines the number of retries of a failed web request.
-        /// </summary>
+        
         [Parameter]
         [ValidateRange(0, int.MaxValue)]
         public virtual int MaximumRetryCount { get; set; }
 
-        /// <summary>
-        /// Gets or sets the PreserveAuthorizationOnRedirect property.
-        /// </summary>
+        
         /// <remarks>
         /// This property overrides compatibility with web requests on Windows.
         /// On FullCLR (WebRequest), authorization headers are stripped during redirect.
@@ -347,9 +251,7 @@ namespace Microsoft.PowerShell.Commands
         [Parameter]
         public virtual SwitchParameter PreserveAuthorizationOnRedirect { get; set; }
 
-        /// <summary>
-        /// Gets or sets the RetryIntervalSec property, which determines the number seconds between retries.
-        /// </summary>
+        
         [Parameter]
         [ValidateRange(1, int.MaxValue)]
         public virtual int RetryIntervalSec { get; set; } = 5;
@@ -358,16 +260,12 @@ namespace Microsoft.PowerShell.Commands
 
         #region Method
 
-        /// <summary>
-        /// Gets or sets the Method property.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "StandardMethod")]
         [Parameter(ParameterSetName = "StandardMethodNoProxy")]
         public virtual WebRequestMethod Method { get; set; } = WebRequestMethod.Default;
 
-        /// <summary>
-        /// Gets or sets the CustomMethod property.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ParameterSetName = "CustomMethod")]
         [Parameter(Mandatory = true, ParameterSetName = "CustomMethodNoProxy")]
         [Alias("CM")]
@@ -376,15 +274,11 @@ namespace Microsoft.PowerShell.Commands
 
         private string _customMethod;
 
-        /// <summary>
-        /// Gets or sets the PreserveHttpMethodOnRedirect property.
-        /// </summary>
+        
         [Parameter]
         public virtual SwitchParameter PreserveHttpMethodOnRedirect { get; set; }
 
-        /// <summary>
-        /// Gets or sets the UnixSocket property.
-        /// </summary>
+        
         [Parameter]
         [ValidateNotNullOrEmpty]
         public virtual UnixDomainSocketEndPoint UnixSocket { get; set; }
@@ -393,9 +287,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region NoProxy
 
-        /// <summary>
-        /// Gets or sets the NoProxy property.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ParameterSetName = "CustomMethodNoProxy")]
         [Parameter(Mandatory = true, ParameterSetName = "StandardMethodNoProxy")]
         public virtual SwitchParameter NoProxy { get; set; }
@@ -404,24 +296,18 @@ namespace Microsoft.PowerShell.Commands
 
         #region Proxy
 
-        /// <summary>
-        /// Gets or sets the Proxy property.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "StandardMethod")]
         [Parameter(ParameterSetName = "CustomMethod")]
         public virtual Uri Proxy { get; set; }
 
-        /// <summary>
-        /// Gets or sets the ProxyCredential property.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "StandardMethod")]
         [Parameter(ParameterSetName = "CustomMethod")]
         [Credential]
         public virtual PSCredential ProxyCredential { get; set; }
 
-        /// <summary>
-        /// Gets or sets the ProxyUseDefaultCredentials property.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "StandardMethod")]
         [Parameter(ParameterSetName = "CustomMethod")]
         public virtual SwitchParameter ProxyUseDefaultCredentials { get; set; }
@@ -430,71 +316,49 @@ namespace Microsoft.PowerShell.Commands
 
         #region Input
 
-        /// <summary>
-        /// Gets or sets the Body property.
-        /// </summary>
+        
         [Parameter(ValueFromPipeline = true)]
         public virtual object Body { get; set; }
 
-        /// <summary>
-        /// Dictionary for use with RFC-7578 multipart/form-data submissions.
-        /// Keys are form fields and their respective values are form values.
-        /// A value may be a collection of form values or single form value.
-        /// </summary>
+        
         [Parameter]
         public virtual IDictionary Form { get; set; }
 
-        /// <summary>
-        /// Gets or sets the ContentType property.
-        /// </summary>
+        
         [Parameter]
         public virtual string ContentType { get; set; }
 
-        /// <summary>
-        /// Gets or sets the TransferEncoding property.
-        /// </summary>
+        
         [Parameter]
         [ValidateSet("chunked", "compress", "deflate", "gzip", "identity", IgnoreCase = true)]
         public virtual string TransferEncoding { get; set; }
 
-        /// <summary>
-        /// Gets or sets the InFile property.
-        /// </summary>
+        
         [Parameter]
         [ValidateNotNullOrEmpty]
         public virtual string InFile { get; set; }
 
-        /// <summary>
-        /// Keep the original file path after the resolved provider path is assigned to InFile.
-        /// </summary>
+        
         private string _originalFilePath;
 
         #endregion Input
 
         #region Output
 
-        /// <summary>
-        /// Gets or sets the OutFile property.
-        /// </summary>
+        
         [Parameter]
         [ValidateNotNullOrEmpty]
         public virtual string OutFile { get; set; }
 
-        /// <summary>
-        /// Gets or sets the PassThrough property.
-        /// </summary>
+        
         [Parameter]
         public virtual SwitchParameter PassThru { get; set; }
 
-        /// <summary>
-        /// Resumes downloading a partial or incomplete file. OutFile is required.
-        /// </summary>
+        
         [Parameter]
         public virtual SwitchParameter Resume { get; set; }
 
-        /// <summary>
-        /// Gets or sets whether to skip checking HTTP status for error codes.
-        /// </summary>
+        
         [Parameter]
         public virtual SwitchParameter SkipHttpErrorCheck { get; set; }
 
@@ -510,9 +374,7 @@ namespace Microsoft.PowerShell.Commands
 
         internal bool ShouldCheckHttpStatus => !SkipHttpErrorCheck;
 
-        /// <summary>
-        /// Determines whether writing to a file should Resume and append rather than overwrite.
-        /// </summary>
+        
         internal bool ShouldResume => Resume.IsPresent && _resumeSuccess;
 
         internal bool ShouldSaveToOutFile => !string.IsNullOrEmpty(OutFile);
@@ -523,9 +385,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Abstract Methods
 
-        /// <summary>
-        /// Read the supplied WebResponse object and push the resulting output into the pipeline.
-        /// </summary>
+        
         /// <param name="response">Instance of a WebResponse object to be processed.</param>
         internal abstract void ProcessResponse(HttpResponseMessage response);
 
@@ -533,9 +393,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Overrides
 
-        /// <summary>
-        /// The main execution method for cmdlets derived from WebRequestPSCmdlet.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             try
@@ -716,14 +574,10 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// To implement ^C.
-        /// </summary>
+        
         protected override void StopProcessing() => _cancelToken?.Cancel();
 
-        /// <summary>
-        /// Disposes the associated WebSession if it is not being used as part of a persistent session.
-        /// </summary>
+        
         /// <param name="disposing">True when called from Dispose() and false when called from finalizer.</param>
         protected virtual void Dispose(bool disposing)
         {
@@ -739,9 +593,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Disposes the associated WebSession if it is not being used as part of a persistent session.
-        /// </summary>
+        
         public void Dispose()
         {
             Dispose(disposing: true);
@@ -1736,9 +1588,7 @@ namespace Microsoft.PowerShell.Commands
 
         private bool IsPersistentSession() => MyInvocation.BoundParameters.ContainsKey(nameof(WebSession)) || MyInvocation.BoundParameters.ContainsKey(nameof(SessionVariable));
 
-        /// <summary>
-        /// Sets the ContentLength property of the request and writes the specified content to the request's RequestStream.
-        /// </summary>
+        
         /// <param name="request">The WebRequest who's content is to be set.</param>
         /// <param name="content">A byte array containing the content data.</param>
         /// <remarks>
@@ -1753,9 +1603,7 @@ namespace Microsoft.PowerShell.Commands
             request.Content = new ByteArrayContent(content);
         }
 
-        /// <summary>
-        /// Sets the ContentLength property of the request and writes the specified content to the request's RequestStream.
-        /// </summary>
+        
         /// <param name="request">The WebRequest who's content is to be set.</param>
         /// <param name="content">A String object containing the content data.</param>
         /// <remarks>
@@ -1817,9 +1665,7 @@ namespace Microsoft.PowerShell.Commands
             request.Content = new ByteArrayContent(bytes);
         }
 
-        /// <summary>
-        /// Sets the ContentLength property of the request and writes the specified content to the request's RequestStream.
-        /// </summary>
+        
         /// <param name="request">The WebRequest who's content is to be set.</param>
         /// <param name="contentStream">A Stream object containing the content data.</param>
         /// <remarks>
@@ -1834,9 +1680,7 @@ namespace Microsoft.PowerShell.Commands
             request.Content = new StreamContent(contentStream);
         }
 
-        /// <summary>
-        /// Sets the ContentLength property of the request and writes the ContentLength property of the request and writes the specified content to the request's RequestStream.
-        /// </summary>
+        
         /// <param name="request">The WebRequest who's content is to be set.</param>
         /// <param name="multipartContent">A MultipartFormDataContent object containing multipart/form-data content.</param>
         /// <remarks>
@@ -1901,9 +1745,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Adds content to a <see cref="MultipartFormDataContent"/>. Object type detection is used to determine if the value is string, File, or Collection.
-        /// </summary>
+        
         /// <param name="fieldName">The Field Name to use.</param>
         /// <param name="fieldValue">The Field Value to use.</param>
         /// <param name="formData">The <see cref="MultipartFormDataContent"/> to update.</param>
@@ -1954,9 +1796,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets a <see cref="StringContent"/> from the supplied field name and field value. Uses <see cref="LanguagePrimitives.ConvertTo{T}(object)"/> to convert the objects to strings.
-        /// </summary>
+        
         /// <param name="fieldName">The Field Name to use for the <see cref="StringContent"/></param>
         /// <param name="fieldValue">The Field Value to use for the <see cref="StringContent"/></param>
         private static StringContent GetMultipartStringContent(object fieldName, object fieldValue)
@@ -1971,9 +1811,7 @@ namespace Microsoft.PowerShell.Commands
             return result;
         }
 
-        /// <summary>
-        /// Gets a <see cref="StreamContent"/> from the supplied field name and <see cref="Stream"/>. Uses <see cref="LanguagePrimitives.ConvertTo{T}(object)"/> to convert the fieldname to a string.
-        /// </summary>
+        
         /// <param name="fieldName">The Field Name to use for the <see cref="StreamContent"/></param>
         /// <param name="stream">The <see cref="Stream"/> to use for the <see cref="StreamContent"/></param>
         private static StreamContent GetMultipartStreamContent(object fieldName, Stream stream)
@@ -1988,9 +1826,7 @@ namespace Microsoft.PowerShell.Commands
             return result;
         }
 
-        /// <summary>
-        /// Gets a <see cref="StreamContent"/> from the supplied field name and file. Calls <see cref="GetMultipartStreamContent(object, Stream)"/> to create the <see cref="StreamContent"/> and then sets the file name.
-        /// </summary>
+        
         /// <param name="fieldName">The Field Name to use for the <see cref="StreamContent"/></param>
         /// <param name="file">The file to use for the <see cref="StreamContent"/></param>
         private static StreamContent GetMultipartFileContent(object fieldName, FileInfo file)
@@ -2102,14 +1938,10 @@ namespace Microsoft.PowerShell.Commands
         #endregion Helper Methods
     }
 
-    /// <summary>
-    /// Exception class for webcmdlets to enable returning HTTP error response.
-    /// </summary>
+    
     public sealed class HttpResponseException : HttpRequestException
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="HttpResponseException"/> class.
-        /// </summary>
+        
         /// <param name="message">Message for the exception.</param>
         /// <param name="response">Response from the HTTP server.</param>
         public HttpResponseException(string message, HttpResponseMessage response) : base(message, inner: null, response.StatusCode)
@@ -2117,9 +1949,7 @@ namespace Microsoft.PowerShell.Commands
             Response = response;
         }
 
-        /// <summary>
-        /// HTTP error response.
-        /// </summary>
+        
         public HttpResponseMessage Response { get; }
     }
 }

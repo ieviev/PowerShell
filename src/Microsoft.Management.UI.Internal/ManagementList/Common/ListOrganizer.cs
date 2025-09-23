@@ -9,23 +9,17 @@ using System.Windows.Input;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <summary>
-    /// Picker control that displays a list with basic editing functionality.
-    /// </summary>
+    
     [SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public partial class ListOrganizer : ContentControl
     {
-        /// <summary>
-        /// Creates a new instance of the ListOrganizer class.
-        /// </summary>
+        
         public ListOrganizer()
         {
             // empty
         }
 
-        /// <summary>
-        /// Prevents keyboard focus from leaving the dropdown.
-        /// </summary>
+        
         /// <param name="e">The event args.</param>
         protected override void OnKeyDown(KeyEventArgs e)
         {

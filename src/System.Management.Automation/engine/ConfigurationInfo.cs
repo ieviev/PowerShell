@@ -3,16 +3,12 @@
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Provides information about a configuration that is stored in session state.
-    /// </summary>
+    
     public class ConfigurationInfo : FunctionInfo
     {
         #region ctor
 
-        /// <summary>
-        /// Creates an instance of the ConfigurationInfo class with the specified name and ScriptBlock.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the configuration.
         /// </param>
@@ -29,9 +25,7 @@ namespace System.Management.Automation
         {
         }
 
-        /// <summary>
-        /// Creates an instance of the ConfigurationInfo class with the specified name and ScriptBlock.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the configuration.
         /// </param>
@@ -53,9 +47,7 @@ namespace System.Management.Automation
             SetCommandType(CommandTypes.Configuration);
         }
 
-        /// <summary>
-        /// Creates an instance of the ConfigurationInfo class with the specified name and ScriptBlock.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the configuration.
         /// </param>
@@ -75,9 +67,7 @@ namespace System.Management.Automation
         {
         }
 
-        /// <summary>
-        /// Creates an instance of the ConfigurationInfo class with the specified name and ScriptBlock.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the configuration.
         /// </param>
@@ -104,9 +94,7 @@ namespace System.Management.Automation
             IsMetaConfiguration = isMetaConfig;
         }
 
-        /// <summary>
-        /// Creates an instance of the ConfigurationInfo class with the specified name and ScriptBlock.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the configuration.
         /// </param>
@@ -130,26 +118,19 @@ namespace System.Management.Automation
         {
         }
 
-        /// <summary>
-        /// This is a copy constructor, used primarily for get-command.
-        /// </summary>
+        
         internal ConfigurationInfo(ConfigurationInfo other)
             : base(other)
         {
         }
 
-        /// <summary>
-        /// This is a copy constructor, used primarily for get-command.
-        /// </summary>
+        
         internal ConfigurationInfo(string name, ConfigurationInfo other)
             : base(name, other)
         {
         }
 
-        /// <summary>
-        /// Create a copy of commandInfo for GetCommandCommand so that we can generate parameter
-        /// sets based on an argument list (so we can get the dynamic parameters.)
-        /// </summary>
+        
         internal override CommandInfo CreateGetCommandCopy(object[] arguments)
         {
             var copy = new ConfigurationInfo(this) { IsGetCommandCopy = true, Arguments = arguments };
@@ -163,9 +144,7 @@ namespace System.Management.Automation
             get { return HelpCategory.Configuration; }
         }
 
-        /// <summary>
-        /// Indication whether the configuration is a meta-configuration.
-        /// </summary>
+        
         public bool IsMetaConfiguration
         { get; internal set; }
     }

@@ -13,11 +13,7 @@ using Microsoft.PowerShell.MarkdownRender;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// Show the VT100EncodedString or Html property of on console or show.
-    /// VT100EncodedString will be displayed on console.
-    /// Html will be displayed in default browser.
-    /// </summary>
+    
     [Cmdlet(
         VerbsCommon.Show, "Markdown",
         DefaultParameterSetName = "Path",
@@ -25,24 +21,18 @@ namespace Microsoft.PowerShell.Commands
     [OutputType(typeof(string))]
     public class ShowMarkdownCommand : PSCmdlet
     {
-        /// <summary>
-        /// Gets or sets InputObject of type Microsoft.PowerShell.MarkdownRender.MarkdownInfo to display.
-        /// </summary>
+        
         [ValidateNotNullOrEmpty]
         [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = "InputObject")]
         public PSObject InputObject { get; set; }
 
-        /// <summary>
-        /// Gets or sets path to markdown file(s) to display.
-        /// </summary>
+        
         [ValidateNotNullOrEmpty]
         [Parameter(Position = 0, Mandatory = true,
                    ValueFromPipelineByPropertyName = true, ParameterSetName = "Path")]
         public string[] Path { get; set; }
 
-        /// <summary>
-        /// Gets or sets the literal path parameter to markdown files(s) to display.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "LiteralPath",
                    Mandatory = true, ValueFromPipeline = false, ValueFromPipelineByPropertyName = true)]
         [Alias("PSPath", "LP")]
@@ -53,25 +43,19 @@ namespace Microsoft.PowerShell.Commands
             set { Path = value; }
         }
 
-        /// <summary>
-        /// Gets or sets the switch to view Html in default browser.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter UseBrowser { get; set; }
 
         private System.Management.Automation.PowerShell _powerShell;
 
-        /// <summary>
-        /// Override BeginProcessing.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             _powerShell = System.Management.Automation.PowerShell.Create(RunspaceMode.CurrentRunspace);
         }
 
-        /// <summary>
-        /// Override ProcessRecord.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             switch (ParameterSetName)
@@ -98,9 +82,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Process markdown as path.
-        /// </summary>
+        
         /// <param name="parameter">Name of parameter to pass to `ConvertFrom-Markdown`.</param>
         /// <param name="input">Value of parameter.</param>
         private void ConvertFromMarkdown(string parameter, object input)
@@ -127,9 +109,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Process markdown as input objects.
-        /// </summary>
+        
         /// <param name="markdownInfo">Markdown object to process.</param>
         private void ProcessMarkdownInfo(MarkdownInfo markdownInfo)
         {
@@ -219,9 +199,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Override EndProcessing.
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             _powerShell?.Dispose();

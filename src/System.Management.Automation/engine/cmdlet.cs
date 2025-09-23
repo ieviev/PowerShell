@@ -14,10 +14,7 @@ using System.Threading;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Defines members and overrides used by Cmdlets.
-    /// All Cmdlets must derive from <see cref="System.Management.Automation.Cmdlet"/>.
-    /// </summary>
+    
     /// <remarks>
     /// There are two ways to create a Cmdlet: by deriving from the Cmdlet base class, and by
     /// deriving from the PSCmdlet base class.  The Cmdlet base class is the primary means by
@@ -34,10 +31,7 @@ namespace System.Management.Automation
     {
         #region public_properties
 
-        /// <summary>
-        /// Lists the common parameters that are added by the PowerShell engine to any cmdlet that derives
-        /// from PSCmdlet.
-        /// </summary>
+        
         public static HashSet<string> CommonParameters
         {
             get
@@ -56,10 +50,7 @@ namespace System.Management.Automation
             }
         );
 
-        /// <summary>
-        /// Lists the common parameters that are added by the PowerShell engine when a cmdlet defines
-        /// additional capabilities (SupportsShouldProcess, SupportsTransactions)
-        /// </summary>
+        
         public static HashSet<string> OptionalCommonParameters
         {
             get
@@ -76,9 +67,7 @@ namespace System.Management.Automation
             }
         );
 
-        /// <summary>
-        /// Is this command stopping?
-        /// </summary>
+        
         /// <remarks>
         /// If Stopping is true, many Cmdlet methods will throw
         /// <see cref="System.Management.Automation.PipelineStoppedException"/>.
@@ -100,23 +89,17 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the CancellationToken that is signaled when the pipeline is stopping.
-        /// </summary>
+        
         public CancellationToken PipelineStopToken => StopToken;
 
-        /// <summary>
-        /// The name of the parameter set in effect.
-        /// </summary>
+        
         /// <value>the parameter set name</value>
         internal string _ParameterSetName
         {
             get { return _parameterSetName; }
         }
 
-        /// <summary>
-        /// Sets the parameter set.
-        /// </summary>
+        
         /// <param name="parameterSetName">
         /// The name of the valid parameter set.
         /// </param>
@@ -129,11 +112,7 @@ namespace System.Management.Automation
 
         #region Override Internal
 
-        /// <summary>
-        /// When overridden in the derived class, performs initialization
-        /// of command execution.
-        /// Default implementation in the base class just returns.
-        /// </summary>
+        
         /// <exception cref="Exception">
         /// This method is overridden in the implementation of
         /// individual cmdlets, and can throw literally any exception.
@@ -165,10 +144,7 @@ namespace System.Management.Automation
             this.BeginProcessing();
         }
 
-        /// <summary>
-        /// When overridden in the derived class, performs execution
-        /// of the command.
-        /// </summary>
+        
         /// <exception cref="Exception">
         /// This method is overridden in the implementation of
         /// individual cmdlets, and can throw literally any exception.
@@ -178,11 +154,7 @@ namespace System.Management.Automation
             this.ProcessRecord();
         }
 
-        /// <summary>
-        /// When overridden in the derived class, performs clean-up
-        /// after the command execution.
-        /// Default implementation in the base class just returns.
-        /// </summary>
+        
         /// <exception cref="Exception">
         /// This method is overridden in the implementation of
         /// individual cmdlets, and can throw literally any exception.
@@ -192,12 +164,7 @@ namespace System.Management.Automation
             this.EndProcessing();
         }
 
-        /// <summary>
-        /// When overridden in the derived class, interrupts currently
-        /// running code within the command. It should interrupt BeginProcessing,
-        /// ProcessRecord, and EndProcessing.
-        /// Default implementation in the base class just returns.
-        /// </summary>
+        
         /// <exception cref="Exception">
         /// This method is overridden in the implementation of
         /// individual cmdlets, and can throw literally any exception.
@@ -213,9 +180,7 @@ namespace System.Management.Automation
 
         #region ctor
 
-        /// <summary>
-        /// Initializes the new instance of Cmdlet class.
-        /// </summary>
+        
         /// <remarks>
         /// Only subclasses of <see cref="System.Management.Automation.Cmdlet"/>
         /// can be created.
@@ -230,11 +195,7 @@ namespace System.Management.Automation
 
         #region Cmdlet virtuals
 
-        /// <summary>
-        /// Gets the resource string corresponding to
-        /// baseName and resourceId from the current assembly.
-        /// You should override this if you require a different behavior.
-        /// </summary>
+        
         /// <param name="baseName">The base resource name.</param>
         /// <param name="resourceId">The resource id.</param>
         /// <returns>The resource string corresponding to baseName and resourceId.</returns>
@@ -287,10 +248,7 @@ namespace System.Management.Automation
 
         #region Write
 
-        /// <summary>
-        /// Holds the command runtime object for this command. This object controls
-        /// what actually happens when a write is called.
-        /// </summary>
+        
         public ICommandRuntime CommandRuntime
         {
             get
@@ -310,9 +268,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Internal variant: Writes the specified error to the error pipe.
-        /// </summary>
+        
         /// <remarks>
         /// Do not call WriteError(e.ErrorRecord).
         /// The ErrorRecord contained in the ErrorRecord property of
@@ -353,9 +309,7 @@ namespace System.Management.Automation
                     throw new System.NotImplementedException("WriteError");
             }
         }
-        /// <summary>
-        /// Writes the object to the output pipe.
-        /// </summary>
+        
         /// <param name="sendToPipeline">
         /// The object that needs to be written.  This will be written as
         /// a single object, even if it is an enumeration.
@@ -384,12 +338,7 @@ namespace System.Management.Automation
                     throw new System.NotImplementedException("WriteObject");
             }
         }
-        /// <summary>
-        /// Writes one or more objects to the output pipe.
-        /// If the object is a collection and the enumerateCollection flag
-        /// is true, the objects in the collection
-        /// will be written individually.
-        /// </summary>
+        
         /// <param name="sendToPipeline">
         /// The object that needs to be written to the pipeline.
         /// </param>
@@ -421,9 +370,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Display verbose information.
-        /// </summary>
+        
         /// <param name="text">Verbose output.</param>
         /// <exception cref="System.Management.Automation.PipelineStoppedException">
         /// The pipeline has already been terminated, or was terminated
@@ -461,9 +408,7 @@ namespace System.Management.Automation
         internal bool IsWriteVerboseEnabled()
             => commandRuntime is not MshCommandRuntime mshRuntime || mshRuntime.IsWriteVerboseEnabled();
 
-        /// <summary>
-        /// Display warning information.
-        /// </summary>
+        
         /// <param name="text">Warning output.</param>
         /// <exception cref="System.Management.Automation.PipelineStoppedException">
         /// The pipeline has already been terminated, or was terminated
@@ -501,9 +446,7 @@ namespace System.Management.Automation
         internal bool IsWriteWarningEnabled()
             => commandRuntime is not MshCommandRuntime mshRuntime || mshRuntime.IsWriteWarningEnabled();
 
-        /// <summary>
-        /// Write text into pipeline execution log.
-        /// </summary>
+        
         /// <param name="text">Text to be written to log.</param>
         /// <exception cref="System.Management.Automation.PipelineStoppedException">
         /// The pipeline has already been terminated, or was terminated
@@ -538,9 +481,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Display progress information.
-        /// </summary>
+        
         /// <param name="progressRecord">Progress information.</param>
         /// <exception cref="System.Management.Automation.PipelineStoppedException">
         /// The pipeline has already been terminated, or was terminated
@@ -577,9 +518,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Displays progress output if enabled.
-        /// </summary>
+        
         /// <param name="sourceId">
         /// Identifies which command is reporting progress
         /// </param>
@@ -612,9 +551,7 @@ namespace System.Management.Automation
         internal bool IsWriteProgressEnabled()
             => commandRuntime is not MshCommandRuntime mshRuntime || mshRuntime.IsWriteProgressEnabled();
 
-        /// <summary>
-        /// Display debug information.
-        /// </summary>
+        
         /// <param name="text">Debug output.</param>
         /// <exception cref="System.Management.Automation.PipelineStoppedException">
         /// The pipeline has already been terminated, or was terminated
@@ -658,9 +595,7 @@ namespace System.Management.Automation
         internal bool IsWriteDebugEnabled()
             => commandRuntime is not MshCommandRuntime mshRuntime || mshRuntime.IsWriteDebugEnabled();
 
-        /// <summary>
-        /// Route information to the user or host.
-        /// </summary>
+        
         /// <param name="messageData">The object / message data to transmit to the hosting application.</param>
         /// <param name="tags">
         /// Any tags to be associated with the message data. These can later be used to filter
@@ -720,9 +655,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Route information to the user or host.
-        /// </summary>
+        
         /// <param name="informationRecord">The information record to write.</param>
         /// <exception cref="System.Management.Automation.PipelineStoppedException">
         /// The pipeline has already been terminated, or was terminated
@@ -771,12 +704,7 @@ namespace System.Management.Automation
         #endregion Write
 
         #region ShouldProcess
-        /// <summary>
-        /// Confirm the operation with the user.  Cmdlets which make changes
-        /// (e.g. delete files, stop services etc.) should call ShouldProcess
-        /// to give the user the opportunity to confirm that the operation
-        /// should actually be performed.
-        /// </summary>
+        
         /// <param name="target">
         /// Name of the target resource being acted upon. This will
         /// potentially be displayed to the user.
@@ -862,15 +790,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Confirm the operation with the user.  Cmdlets which make changes
-        /// (e.g. delete files, stop services etc.) should call ShouldProcess
-        /// to give the user the opportunity to confirm that the operation
-        /// should actually be performed.
-        ///
-        /// This variant allows the caller to specify text for both the
-        /// target resource and the action.
-        /// </summary>
+        
         /// <param name="target">
         /// Name of the target resource being acted upon. This will
         /// potentially be displayed to the user.
@@ -958,15 +878,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Confirm the operation with the user.  Cmdlets which make changes
-        /// (e.g. delete files, stop services etc.) should call ShouldProcess
-        /// to give the user the opportunity to confirm that the operation
-        /// should actually be performed.
-        ///
-        /// This variant allows the caller to specify the complete text
-        /// describing the operation, rather than just the name and action.
-        /// </summary>
+        
         /// <param name="verboseDescription">
         /// Textual description of the action to be performed.
         /// This is what will be displayed to the user for
@@ -1068,15 +980,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Confirm the operation with the user.  Cmdlets which make changes
-        /// (e.g. delete files, stop services etc.) should call ShouldProcess
-        /// to give the user the opportunity to confirm that the operation
-        /// should actually be performed.
-        ///
-        /// This variant allows the caller to specify the complete text
-        /// describing the operation, rather than just the name and action.
-        /// </summary>
+        
         /// <param name="verboseDescription">
         /// Textual description of the action to be performed.
         /// This is what will be displayed to the user for
@@ -1193,13 +1097,7 @@ namespace System.Management.Automation
         #endregion ShouldProcess
 
         #region ShouldContinue
-        /// <summary>
-        /// Confirm an operation or grouping of operations with the user.
-        /// This differs from ShouldProcess in that it is not affected by
-        /// preference settings or command-line parameters,
-        /// it always does the query.
-        /// This variant only offers Yes/No, not YesToAll/NoToAll.
-        /// </summary>
+        
         /// <param name="query">
         /// Textual query of whether the action should be performed,
         /// usually in the form of a question.
@@ -1314,13 +1212,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Confirm an operation or grouping of operations with the user.
-        /// This differs from ShouldProcess in that it is not affected by
-        /// preference settings or command-line parameters,
-        /// it always does the query.
-        /// This variant offers Yes, No, YesToAll and NoToAll.
-        /// </summary>
+        
         /// <param name="query">
         /// Textual query of whether the action should be performed,
         /// usually in the form of a question.
@@ -1450,13 +1342,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Confirm an operation or grouping of operations with the user.
-        /// This differs from ShouldProcess in that it is not affected by
-        /// preference settings or command-line parameters,
-        /// it always does the query.
-        /// This variant offers Yes, No, YesToAll and NoToAll.
-        /// </summary>
+        
         /// <param name="query">
         /// Textual query of whether the action should be performed,
         /// usually in the form of a question.
@@ -1600,11 +1486,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Run the cmdlet and get the results as a collection. This is an internal
-        /// routine that is used by Invoke to build the underlying collection of
-        /// results.
-        /// </summary>
+        
         /// <returns>Returns an list of results.</returns>
         internal List<object> GetResults()
         {
@@ -1628,9 +1510,7 @@ namespace System.Management.Automation
 
             return result;
         }
-        /// <summary>
-        /// Invoke this cmdlet object returning a collection of results.
-        /// </summary>
+        
         /// <returns>The results that were produced by this class.</returns>
         public IEnumerable Invoke()
         {
@@ -1642,9 +1522,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Returns a strongly-typed enumerator for the results of this cmdlet.
-        /// </summary>
+        
         /// <typeparam name="T">The type returned by the enumerator</typeparam>
         /// <returns>An instance of the appropriate enumerator.</returns>
         /// <exception cref="InvalidCastException">Thrown when the object returned by the cmdlet cannot be converted to the target type.</exception>
@@ -1662,9 +1540,7 @@ namespace System.Management.Automation
 
         #region Transaction Support
 
-        /// <summary>
-        /// Returns true if a transaction is available and active.
-        /// </summary>
+        
         public bool TransactionAvailable()
         {
             using (PSTransactionManager.GetEngineProtectionScope())
@@ -1677,10 +1553,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets an object that surfaces the current PowerShell transaction.
-        /// When this object is disposed, PowerShell resets the active transaction.
-        /// </summary>
+        
         [SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
         public PSTransactionContext CurrentPSTransaction
         {
@@ -1697,9 +1570,7 @@ namespace System.Management.Automation
         #endregion Transaction Support
 
         #region ThrowTerminatingError
-        /// <summary>
-        /// Terminate the command and report an error.
-        /// </summary>
+        
         /// <param name="errorRecord">
         /// The error which caused the command to be terminated
         /// </param>
@@ -1759,11 +1630,7 @@ namespace System.Management.Automation
 
         #region Exposed API Override
 
-        /// <summary>
-        /// When overridden in the derived class, performs initialization
-        /// of command execution.
-        /// Default implementation in the base class just returns.
-        /// </summary>
+        
         /// <exception cref="Exception">
         /// This method is overridden in the implementation of
         /// individual Cmdlets, and can throw literally any exception.
@@ -1775,10 +1642,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// When overridden in the derived class, performs execution
-        /// of the command.
-        /// </summary>
+        
         /// <exception cref="Exception">
         /// This method is overridden in the implementation of
         /// individual Cmdlets, and can throw literally any exception.
@@ -1790,11 +1654,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// When overridden in the derived class, performs clean-up
-        /// after the command execution.
-        /// Default implementation in the base class just returns.
-        /// </summary>
+        
         /// <exception cref="Exception">
         /// This method is overridden in the implementation of
         /// individual Cmdlets, and can throw literally any exception.
@@ -1806,12 +1666,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// When overridden in the derived class, interrupts currently
-        /// running code within the command. It should interrupt BeginProcessing,
-        /// ProcessRecord, and EndProcessing.
-        /// Default implementation in the base class just returns.
-        /// </summary>
+        
         /// <exception cref="Exception">
         /// This method is overridden in the implementation of
         /// individual Cmdlets, and can throw literally any exception.
@@ -1828,28 +1683,15 @@ namespace System.Management.Automation
         #endregion public_methods
     }
 
-    /// <summary>
-    /// This describes the reason why ShouldProcess returned what it returned.
-    /// Not all possible reasons are covered.
-    /// </summary>
+    
     /// <seealso cref="System.Management.Automation.Cmdlet.ShouldProcess(string,string,string,out ShouldProcessReason)"/>
     [Flags]
     public enum ShouldProcessReason
     {
-        /// <summary> none of the reasons below </summary>
+        
         None = 0x0,
 
-        /// <summary>
-        /// <para>
-        /// WhatIf behavior was requested.
-        /// </para>
-        /// <para>
-        /// In the host, WhatIf behavior can be requested explicitly
-        /// for one cmdlet instance using the -WhatIf commandline parameter,
-        /// or implicitly for all SupportsShouldProcess cmdlets with $WhatIfPreference.
-        /// Other hosts may have other ways to request WhatIf behavior.
-        /// </para>
-        /// </summary>
+        
         WhatIf = 0x1,
     }
 }

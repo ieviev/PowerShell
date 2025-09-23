@@ -14,9 +14,7 @@ using Microsoft.PowerShell;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Deals with DirectoryEntry objects.
-    /// </summary>
+    
     internal class DirectoryEntryAdapter : DotNetAdapter
     {
         #region private data
@@ -36,10 +34,7 @@ namespace System.Management.Automation
             return false;
         }
 
-        /// <summary>
-        /// Returns null if memberName is not a member in the adapter or
-        /// the corresponding PSMemberInfo.
-        /// </summary>
+        
         /// <param name="obj">Object to retrieve the PSMemberInfo from.</param>
         /// <param name="memberName">Name of the member to be retrieved.</param>
         /// <returns>The PSMemberInfo corresponding to memberName from obj.</returns>
@@ -123,16 +118,7 @@ namespace System.Management.Automation
             return null;
         }
 
-        /// <summary>
-        /// Retrieves all the members available in the object.
-        /// The adapter implementation is encouraged to cache all properties/methods available
-        /// in the first call to GetMember and GetMembers so that subsequent
-        /// calls can use the cache.
-        /// In the case of the .NET adapter that would be a cache from the .NET type to
-        /// the public properties and fields available in that type.
-        /// In the case of the DirectoryEntry adapter, this could be a cache of the objectClass
-        /// to the properties available in it.
-        /// </summary>
+        
         /// <param name="obj">Object to get all the member information from.</param>
         /// <returns>All members in obj.</returns>
         protected override PSMemberInfoInternalCollection<T> GetMembers<T>(object obj)
@@ -173,9 +159,7 @@ namespace System.Management.Automation
 
         #region property
 
-        /// <summary>
-        /// Returns the value from a property coming from a previous call to GetMember.
-        /// </summary>
+        
         /// <param name="property">PSProperty coming from a previous call to GetMember.</param>
         /// <returns>The value of the property.</returns>
         protected override object PropertyGet(PSProperty property)
@@ -183,9 +167,7 @@ namespace System.Management.Automation
             return property.adapterData;
         }
 
-        /// <summary>
-        /// Sets the value of a property coming from a previous call to GetMember.
-        /// </summary>
+        
         /// <param name="property">PSProperty coming from a previous call to GetMember.</param>
         /// <param name="setValue">Value to set the property with.</param>
         /// <param name="convertIfPossible">Instructs the adapter to convert before setting, if the adapter supports conversion.</param>
@@ -251,9 +233,7 @@ namespace System.Management.Automation
             return;
         }
 
-        /// <summary>
-        /// Returns true if the property is settable.
-        /// </summary>
+        
         /// <param name="property">Property to check.</param>
         /// <returns>True if the property is settable.</returns>
         protected override bool PropertyIsSettable(PSProperty property)
@@ -261,9 +241,7 @@ namespace System.Management.Automation
             return true;
         }
 
-        /// <summary>
-        /// Returns true if the property is gettable.
-        /// </summary>
+        
         /// <param name="property">Property to check.</param>
         /// <returns>True if the property is gettable.</returns>
         protected override bool PropertyIsGettable(PSProperty property)
@@ -271,9 +249,7 @@ namespace System.Management.Automation
             return true;
         }
 
-        /// <summary>
-        /// Returns the name of the type corresponding to the property's value.
-        /// </summary>
+        
         /// <param name="property">PSProperty obtained in a previous GetMember.</param>
         /// <param name="forDisplay">True if the result is for display purposes only.</param>
         /// <returns>The name of the type corresponding to the member.</returns>
@@ -301,10 +277,7 @@ namespace System.Management.Automation
             return this.MethodInvoke(method, arguments);
         }
 
-        /// <summary>
-        /// Called after a non null return from GetMember to try to call
-        /// the method with the arguments.
-        /// </summary>
+        
         /// <param name="method">The non empty return from GetMethods.</param>
         /// <param name="arguments">The arguments to use.</param>
         /// <returns>The return value for the method.</returns>
@@ -363,9 +336,7 @@ namespace System.Management.Automation
             throw exception;
         }
 
-        /// <summary>
-        /// Returns the string representation of the method in the object.
-        /// </summary>
+        
         /// <returns>The string representation of the method in the object.</returns>
         protected override string MethodToString(PSMethod method)
         {

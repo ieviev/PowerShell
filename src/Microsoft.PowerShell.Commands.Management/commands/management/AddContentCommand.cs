@@ -8,19 +8,14 @@ using System.Management.Automation.Internal;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// A command that appends the specified content to the item at the specified path.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Add, "Content", DefaultParameterSetName = "Path", SupportsShouldProcess = true, SupportsTransactions = true,
         HelpUri = "https://go.microsoft.com/fwlink/?linkid=2096489")]
     public class AddContentCommand : WriteContentCommandBase
     {
         #region protected members
 
-        /// <summary>
-        /// Seeks to the end of the writer stream in each of the writers in the
-        /// content holders.
-        /// </summary>
+        
         /// <param name="contentHolders">
         /// The content holders that contain the writers to be moved.
         /// </param>
@@ -61,9 +56,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Makes the call to ShouldProcess with appropriate action and target strings.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item on which the content will be added.
         /// </param>

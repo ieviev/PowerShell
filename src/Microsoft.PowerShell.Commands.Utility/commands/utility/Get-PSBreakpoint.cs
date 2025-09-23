@@ -8,24 +8,20 @@ using System.Management.Automation;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// Types of breakpoints.
-    /// </summary>
+    
     public enum BreakpointType
     {
-        /// <summary>Breakpoint on a line within a script</summary>
+        
         Line,
 
-        /// <summary>Breakpoint on a variable</summary>
+        
         Variable,
 
-        /// <summary>Breakpoint on a command</summary>
+        
         Command
     }
 
-    /// <summary>
-    /// This class implements Get-PSBreakpoint.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Get, "PSBreakpoint", DefaultParameterSetName = LineParameterSetName, HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097108")]
     [OutputType(typeof(CommandBreakpoint), ParameterSetName = new[] { CommandParameterSetName })]
     [OutputType(typeof(LineBreakpoint), ParameterSetName = new[] { LineParameterSetName })]
@@ -41,9 +37,7 @@ namespace Microsoft.PowerShell.Commands
         #endregion strings
 
         #region parameters
-        /// <summary>
-        /// Scripts of the breakpoints to output.
-        /// </summary>
+        
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays", Justification = "It's OK to use arrays for cmdlet parameters")]
         [Parameter(ParameterSetName = LineParameterSetName, Position = 0, ValueFromPipeline = true)]
         [Parameter(ParameterSetName = CommandParameterSetName)]
@@ -52,33 +46,25 @@ namespace Microsoft.PowerShell.Commands
         [ValidateNotNullOrEmpty()]
         public string[] Script { get; set; }
 
-        /// <summary>
-        /// IDs of the breakpoints to output.
-        /// </summary>
+        
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays", Justification = "It's OK to use arrays for cmdlet parameters")]
         [Parameter(ParameterSetName = IdParameterSetName, Mandatory = true, Position = 0, ValueFromPipeline = true)]
         [ValidateNotNull]
         public int[] Id { get; set; }
 
-        /// <summary>
-        /// Variables of the breakpoints to output.
-        /// </summary>
+        
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays", Justification = "It's OK to use arrays for cmdlet parameters")]
         [Parameter(ParameterSetName = VariableParameterSetName, Mandatory = true)]
         [ValidateNotNull]
         public string[] Variable { get; set; }
 
-        /// <summary>
-        /// Commands of the breakpoints to output.
-        /// </summary>
+        
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays", Justification = "It's OK to use arrays for cmdlet parameters")]
         [Parameter(ParameterSetName = CommandParameterSetName, Mandatory = true)]
         [ValidateNotNull]
         public string[] Command { get; set; }
 
-        /// <summary>
-        /// Commands of the breakpoints to output.
-        /// </summary>
+        
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays", Justification = "It's OK to use arrays for cmdlet parameters")]
         [SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods", Justification = "Type is OK for a cmdlet parameter")]
         [Parameter(ParameterSetName = TypeParameterSetName, Mandatory = true, Position = 0, ValueFromPipeline = true)]
@@ -89,9 +75,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region overrides
 
-        /// <summary>
-        /// Remove breakpoints.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             List<Breakpoint> breakpoints = Runspace.Debugger.GetBreakpoints();
@@ -212,15 +196,10 @@ namespace Microsoft.PowerShell.Commands
 
         #region private methods
 
-        /// <summary>
-        /// Gives the criteria to filter breakpoints.
-        /// </summary>
+        
         private delegate bool FilterSelector<T>(Breakpoint breakpoint, T target);
 
-        /// <summary>
-        /// Returns the items in the input list that match an item in the filter array according to
-        /// the given selection criterion.
-        /// </summary>
+        
         private static List<Breakpoint> Filter<T>(List<Breakpoint> input, T[] filter, FilterSelector<T> selector)
         {
             List<Breakpoint> output = new();

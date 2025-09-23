@@ -112,10 +112,7 @@ namespace System.Management.Automation.SecurityAccountsManager.Native
         public uint flags;
     }
 
-    /// <summary>
-    /// The UNICODE_STRING structure is passed to a number of the SAM and LSA
-    /// API functions. This adds cleanup and managed-string conversion behaviors.
-    /// </summary>
+    
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
     internal struct UNICODE_STRING
     {

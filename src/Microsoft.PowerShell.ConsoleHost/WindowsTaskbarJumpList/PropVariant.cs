@@ -6,10 +6,7 @@ using System.Runtime.InteropServices;
 
 namespace Microsoft.PowerShell
 {
-    /// <summary>
-    /// Represents the OLE struct PROPVARIANT.
-    /// This class is intended for internal use only.
-    /// </summary>
+    
     /// <remarks>
     /// Originally sourced from https://blogs.msdn.com/adamroot/pages/interop-with-propvariants-in-net.aspx
     /// and modified to add ability to set values
@@ -24,9 +21,7 @@ namespace Microsoft.PowerShell
         [FieldOffset(8)]
         private readonly IntPtr _ptr;
 
-        /// <summary>
-        /// Set a string value.
-        /// </summary>
+        
         internal PropVariant(string value)
         {
             if (value == null)
@@ -38,9 +33,7 @@ namespace Microsoft.PowerShell
             _ptr = Marshal.StringToCoTaskMemUni(value);
         }
 
-        /// <summary>
-        /// Disposes the object, calls the clear function.
-        /// </summary>
+        
         public void Dispose()
         {
             PropVariantNativeMethods.PropVariantClear(this);
@@ -48,9 +41,7 @@ namespace Microsoft.PowerShell
             GC.SuppressFinalize(this);
         }
 
-        /// <summary>
-        /// Finalizes an instance of the <see cref="PropVariant"/> class.
-        /// </summary>
+        
         ~PropVariant()
         {
             Dispose();

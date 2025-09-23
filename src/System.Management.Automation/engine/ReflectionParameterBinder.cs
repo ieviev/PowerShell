@@ -10,17 +10,12 @@ using Microsoft.PowerShell.Commands;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// The parameter binder for real CLR objects that have properties and fields decorated with the parameter attributes.
-    /// </summary>
+    
     internal class ReflectionParameterBinder : ParameterBinderBase
     {
         #region ctor
 
-        /// <summary>
-        /// Constructs the parameter binder with the specified type metadata. The binder is only valid
-        /// for a single instance of a bindable object and only for the duration of a command.
-        /// </summary>
+        
         /// <param name="target">
         /// The target object that the parameter values will be bound to.
         /// </param>
@@ -34,10 +29,7 @@ namespace System.Management.Automation
         {
         }
 
-        /// <summary>
-        /// Constructs the parameter binder with the specified type metadata. The binder is only valid
-        /// for a single instance of a bindable object and only for the duration of a command.
-        /// </summary>
+        
         /// <param name="target">
         /// The target object that the parameter values will be bound to.
         /// </param>
@@ -62,9 +54,7 @@ namespace System.Management.Automation
 
         #region Parameter default values
 
-        /// <summary>
-        /// Gets the default value for the specified parameter.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the parameter to get the default value of.
         /// </param>
@@ -101,10 +91,7 @@ namespace System.Management.Automation
 
         #region Parameter binding
 
-        /// <summary>
-        /// Uses ETS to set the property specified by name to the value on
-        /// the target bindable object.
-        /// </summary>
+        
         /// <param name="name">
         ///     The name of the parameter to bind the value to.
         /// </param>

@@ -14,57 +14,41 @@ using System.Management.Automation.Language;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// Base class for Enable/Disable-ExperimentalFeature cmdlet.
-    /// </summary>
+    
     public class EnableDisableExperimentalFeatureCommandBase : PSCmdlet
     {
-        /// <summary>
-        /// Gets or sets the feature names.
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true, Position = 0, Mandatory = true)]
         [ArgumentCompleter(typeof(ExperimentalFeatureNameCompleter))]
         public string[] Name { get; set; }
 
-        /// <summary>
-        /// Gets or sets the scope of persistence of updating the PowerShell configuration json.
-        /// </summary>
+        
         [Parameter]
         public ConfigScope Scope { get; set; } = ConfigScope.CurrentUser;
 
-        /// <summary>
-        /// EndProcessing method.
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             WriteWarning(ExperimentalFeatureStrings.ExperimentalFeaturePending);
         }
     }
 
-    /// <summary>
-    /// Implements Enable-ExperimentalFeature cmdlet.
-    /// </summary>
+    
     [Cmdlet(VerbsLifecycle.Enable, "ExperimentalFeature", SupportsShouldProcess = true, HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2046964")]
     public class EnableExperimentalFeatureCommand : EnableDisableExperimentalFeatureCommandBase
     {
-        /// <summary>
-        /// ProcessRecord method of this cmdlet.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             ExperimentalFeatureConfigHelper.UpdateConfig(this, Name, Scope, enable: true);
         }
     }
 
-    /// <summary>
-    /// Implements Enable-ExperimentalFeature cmdlet.
-    /// </summary>
+    
     [Cmdlet(VerbsLifecycle.Disable, "ExperimentalFeature", SupportsShouldProcess = true, HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2046963")]
     public class DisableExperimentalFeatureCommand : EnableDisableExperimentalFeatureCommandBase
     {
-        /// <summary>
-        /// ProcessRecord method of this cmdlet.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             ExperimentalFeatureConfigHelper.UpdateConfig(this, Name, Scope, enable: false);
@@ -99,14 +83,10 @@ namespace Microsoft.PowerShell.Commands
         }
     }
 
-    /// <summary>
-    /// Provides argument completion for ExperimentalFeature names.
-    /// </summary>
+    
     public class ExperimentalFeatureNameCompleter : IArgumentCompleter
     {
-        /// <summary>
-        /// Returns completion results for experimental feature names used as arguments to experimental feature cmdlets.
-        /// </summary>
+        
         /// <param name="commandName">The command name.</param>
         /// <param name="parameterName">The parameter name.</param>
         /// <param name="wordToComplete">The word to complete.</param>

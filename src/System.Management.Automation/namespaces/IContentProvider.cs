@@ -6,10 +6,7 @@ namespace System.Management.Automation.Provider
 {
     #region IContentCmdletProvider
 
-    /// <summary>
-    /// An interface that can be implemented on a Cmdlet provider to expose an item's
-    /// content.
-    /// </summary>
+    
     /// <remarks>
     /// An IContentCmdletProvider provider implements a set of methods that allows
     /// the use of a set of core commands against the data store that the provider
@@ -28,9 +25,7 @@ namespace System.Management.Automation.Provider
     /// </remarks>
     public interface IContentCmdletProvider
     {
-        /// <summary>
-        /// Gets the content reader for the item at the specified path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to get the content reader for.
         /// </param>
@@ -49,10 +44,7 @@ namespace System.Management.Automation.Provider
         /// </remarks>
         IContentReader? GetContentReader(string path);
 
-        /// <summary>
-        /// Gives the provider an opportunity to attach additional parameters to the
-        /// get-content cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// If the path was specified on the command line, this is the path
         /// to the item to get the dynamic parameters for.
@@ -66,9 +58,7 @@ namespace System.Management.Automation.Provider
         /// </returns>
         object? GetContentReaderDynamicParameters(string path);
 
-        /// <summary>
-        /// Gets the content writer for the item at the specified path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to get the content writer for.
         /// </param>
@@ -90,10 +80,7 @@ namespace System.Management.Automation.Provider
         /// </remarks>
         IContentWriter? GetContentWriter(string path);
 
-        /// <summary>
-        /// Gives the provider an opportunity to attach additional parameters to the
-        /// set-content and add-content cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// If the path was specified on the command line, this is the path
         /// to the item to get the dynamic parameters for.
@@ -107,9 +94,7 @@ namespace System.Management.Automation.Provider
         /// </returns>
         object? GetContentWriterDynamicParameters(string path);
 
-        /// <summary>
-        /// Clears the content from the specified item.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to clear the content from.
         /// </param>
@@ -127,10 +112,7 @@ namespace System.Management.Automation.Provider
         /// </remarks>
         void ClearContent(string path);
 
-        /// <summary>
-        /// Gives the provider an opportunity to attach additional parameters to the
-        /// clear-content cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// If the path was specified on the command line, this is the path
         /// to the item to get the dynamic parameters for.

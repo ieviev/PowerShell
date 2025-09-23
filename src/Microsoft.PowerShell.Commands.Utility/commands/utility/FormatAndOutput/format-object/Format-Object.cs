@@ -7,17 +7,12 @@ using Microsoft.PowerShell.Commands.Internal.Format;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// Implementation for the Format-Custom command. It just calls the formatting engine on complex shape.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Format, "Custom", HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096929")]
     [OutputType(typeof(FormatStartData), typeof(FormatEntryData), typeof(FormatEndData), typeof(GroupStartData), typeof(GroupEndData))]
     public class FormatCustomCommand : OuterFormatShapeCommandBase
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="FormatCustomCommand"/> class
-        /// and sets the inner command.
-        /// </summary>
+        
         public FormatCustomCommand()
         {
             this.implementation = new InnerFormatShapeCommand(FormatShape.Complex);
@@ -25,12 +20,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Command Line Switches
 
-        /// <summary>
-        /// Positional parameter for properties, property sets and table sets.
-        /// specified on the command line.
-        /// The parameter is optional, since the defaults
-        /// will be determined using property sets, etc.
-        /// </summary>
+        
         [Parameter(Position = 0)]
         public object[] Property
         {
@@ -41,8 +31,7 @@ namespace Microsoft.PowerShell.Commands
 
         private object[] _props;
 
-        /// <summary>
-        /// </summary>
+        
         /// <value></value>
         [ValidateRange(1, int.MaxValue)]
         [Parameter]

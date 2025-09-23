@@ -10,9 +10,7 @@ using Dbg = System.Management.Automation.Diagnostics;
 
 namespace System.Management.Automation.Remoting
 {
-    /// <summary>
-    /// Implements ServerRemoteSessionDataStructureHandler.
-    /// </summary>
+    
     internal sealed class ClientRemoteSessionDSHandlerImpl : ClientRemoteSessionDataStructureHandler, IDisposable
     {
         [TraceSource("CRSDSHdlerImpl", "ClientRemoteSessionDSHandlerImpl")]
@@ -55,9 +53,7 @@ namespace System.Management.Automation.Remoting
 
         #region constructors
 
-        /// <summary>
-        /// Creates an instance of ClientRemoteSessionDSHandlerImpl.
-        /// </summary>
+        
         internal ClientRemoteSessionDSHandlerImpl(ClientRemoteSession session,
             PSRemotingCryptoHelper cryptoHelper,
             RunspaceConnectionInfo connectionInfo,
@@ -109,9 +105,7 @@ namespace System.Management.Automation.Remoting
 
         #region create
 
-        /// <summary>
-        /// Makes a create call asynchronously.
-        /// </summary>
+        
         internal override void CreateAsync()
         {
             // errors are reported through WSManTransportErrorOccured event on
@@ -120,9 +114,7 @@ namespace System.Management.Automation.Remoting
             _transportManager.CreateAsync();
         }
 
-        /// <summary>
-        /// This callback is called on complete of async connect call.
-        /// </summary>
+        
         /// <param name="sender"></param>
         /// <param name="args"></param>
         private void HandleCreateComplete(object sender, EventArgs args)
@@ -206,9 +198,7 @@ namespace System.Management.Automation.Remoting
 
         #region close
 
-        /// <summary>
-        /// Close the connection asynchronously.
-        /// </summary>
+        
         internal override void CloseConnectionAsync()
         {
             lock (_syncObject)
@@ -235,9 +225,7 @@ namespace System.Management.Automation.Remoting
 
         #region negotiation
 
-        /// <summary>
-        /// Sends the negotiation package asynchronously.
-        /// </summary>
+        
         internal override void SendNegotiationAsync(RemoteSessionState sessionState)
         {
             // This state change is made before the call to CreateAsync to ensure the state machine
@@ -270,9 +258,7 @@ namespace System.Management.Automation.Remoting
 
         #region state change
 
-        /// <summary>
-        /// This event indicates that the connection state has changed.
-        /// </summary>
+        
         internal override event EventHandler<RemoteSessionStateEventArgs> ConnectionStateChanged;
 
         private void HandleStateChanged(object sender, RemoteSessionStateEventArgs arg)
@@ -328,10 +314,7 @@ namespace System.Management.Automation.Remoting
             }
         }
 
-        /// <summary>
-        /// Clubbing negotiation packet + runspace creation and then doing transportManager.ConnectAsync().
-        /// This will save us 2 network calls by doing all the work in one network call.
-        /// </summary>
+        
         private void HandleNegotiationSendingStateChange()
         {
             RemoteSessionCapability clientCapability = _session.Context.ClientCapability;
@@ -357,14 +340,7 @@ namespace System.Management.Automation.Remoting
 
         #region URI Redirection
 
-        /// <summary>
-        /// Transport reported an error saying that uri is redirected. This method
-        /// will perform the redirection to the new URI by doing the following:
-        /// 1. Close the current transport manager to clean resources
-        /// 2. Raise a warning that URI is getting redirected.
-        /// 3. Using the new URI, ask the same transport manager to redirect
-        /// Step 1 is performed here. Step2-3 is performed in another method.
-        /// </summary>
+        
         /// <param name="newURIString"></param>
         /// <exception cref="ArgumentNullException">
         /// newURIString is a null reference.
@@ -427,10 +403,7 @@ namespace System.Management.Automation.Remoting
             HandleTransportError(sender, e);
         }
 
-        /// <summary>
-        /// This is step 2 of URI redirection. This is called after the current transport manager
-        /// is closed. This is usually called from the close complete callback.
-        /// </summary>
+        
         /// <param name="newURI"></param>
         private void PerformURIRedirectionStep2(System.Uri newURI)
         {
@@ -455,9 +428,7 @@ namespace System.Management.Automation.Remoting
 
         #region data handling
 
-        /// <summary>
-        /// Handler which handles transport errors.
-        /// </summary>
+        
         /// <param name="sender"></param>
         /// <param name="e"></param>
         internal void HandleTransportError(object sender, TransportErrorOccuredEventArgs e)
@@ -527,9 +498,7 @@ namespace System.Management.Automation.Remoting
             _stateMachine.RaiseEvent(errorArgs);
         }
 
-        /// <summary>
-        /// Dispatches data when it arrives from the input queue.
-        /// </summary>
+        
         /// <param name="sender"></param>
         /// <param name="dataArg">
         /// arg which contains the data received from input queue
@@ -597,10 +566,7 @@ namespace System.Management.Automation.Remoting
         // TODO: If this is not used remove this
         // internal override event EventHandler<RemoteDataEventArgs> DataReceived;
 
-        /// <summary>
-        /// This processes the object received from transport which are
-        /// targeted for session.
-        /// </summary>
+        
         /// <param name="arg">
         /// argument contains the data object
         /// </param>
@@ -670,10 +636,7 @@ namespace System.Management.Automation.Remoting
             }
         }
 
-        /// <summary>
-        /// This processes the object received from transport which are
-        /// not targeted for session.
-        /// </summary>
+        
         /// <param name="rcvdData">
         /// received data.
         /// </param>
@@ -735,9 +698,7 @@ namespace System.Management.Automation.Remoting
 
         #region IDisposable
 
-        /// <summary>
-        /// Release all resources.
-        /// </summary>
+        
         public void Dispose()
         {
             _transportManager.Dispose();
@@ -750,9 +711,7 @@ namespace System.Management.Automation.Remoting
         internal override event EventHandler<RemoteDataEventArgs<string>> EncryptedSessionKeyReceived;
 
         internal override event EventHandler<RemoteDataEventArgs<string>> PublicKeyRequestReceived;
-        /// <summary>
-        /// Send the specified local public key to the remote end.
-        /// </summary>
+        
         /// <param name="localPublicKey">Local public key as a string.</param>
         internal override void SendPublicKeyAsync(string localPublicKey)
         {
@@ -761,9 +720,7 @@ namespace System.Management.Automation.Remoting
                     localPublicKey, RemotingDestination.Server));
         }
 
-        /// <summary>
-        /// Raise the public key received event.
-        /// </summary>
+        
         /// <param name="receivedData">Received data.</param>
         /// <remarks>This method is a hook to be called
         /// from the transport manager</remarks>

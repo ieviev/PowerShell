@@ -12,9 +12,7 @@ using System.Runtime.InteropServices;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// A cmdlet to retrieve time zone information.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Get, "TimeZone", DefaultParameterSetName = "Name",
         HelpUri = "https://go.microsoft.com/fwlink/?LinkId=2096904")]
     [OutputType(typeof(TimeZoneInfo))]
@@ -23,32 +21,23 @@ namespace Microsoft.PowerShell.Commands
     {
         #region Parameters
 
-        /// <summary>
-        /// A list of the local time zone ids that the cmdlet should look up.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, ParameterSetName = "Id")]
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
         public string[] Id { get; set; }
 
-        /// <summary>
-        /// Specifies that the cmdlet should produce a collection of the
-        /// TimeZoneInfo objects that are available on the system.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ParameterSetName = "ListAvailable")]
         public SwitchParameter ListAvailable { get; set; }
 
-        /// <summary>
-        /// A list of the local time zone names that the cmdlet should look up.
-        /// </summary>
+        
         [Parameter(Position = 0, ValueFromPipeline = true, ParameterSetName = "Name")]
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
         public string[] Name { get; set; }
 
         #endregion Parameters
 
-        /// <summary>
-        /// Implementation of the ProcessRecord method for Get-TimeZone.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             // make sure we've got the latest time zone settings
@@ -115,9 +104,7 @@ namespace Microsoft.PowerShell.Commands
 
 #if !UNIX
 
-    /// <summary>
-    /// A cmdlet to set the system's local time zone.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Set, "TimeZone",
         SupportsShouldProcess = true,
         DefaultParameterSetName = "Name",
@@ -134,35 +121,25 @@ namespace Microsoft.PowerShell.Commands
 
         #region Parameters
 
-        /// <summary>
-        /// The name of the local time zone that the system should use.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ParameterSetName = "Id", ValueFromPipelineByPropertyName = true)]
         public string Id { get; set; }
 
-        /// <summary>
-        /// A TimeZoneInfo object identifying the local time zone that the system should use.
-        /// </summary>
+        
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = "InputObject", ValueFromPipeline = true)]
         public TimeZoneInfo InputObject { get; set; }
 
-        /// <summary>
-        /// The name of the local time zone that the system should use.
-        /// </summary>
+        
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = "Name")]
         public string Name { get; set; }
 
-        /// <summary>
-        /// Request return of the new local time zone as a TimeZoneInfo object.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter PassThru { get; set; }
 
         #endregion Parameters
 
-        /// <summary>
-        /// Implementation of the ProcessRecord method for Set-TimeZone.
-        /// </summary>
+        
         [SuppressMessage("Microsoft.Usage", "CA2208:InstantiateArgumentExceptionsCorrectly", Justification = "Since Name is not a parameter of this method, it confuses FXCop. It is the appropriate value for the exception.")]
         protected override void ProcessRecord()
         {
@@ -324,9 +301,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Helper functions
 
-        /// <summary>
-        /// True if the current process has access to change the time zone setting.
-        /// </summary>
+        
         protected bool HasAccess
         {
             get
@@ -374,9 +349,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Set the SeTimeZonePrivilege, which controls access to the SetDynamicTimeZoneInformation API.
-        /// </summary>
+        
         /// <param name="enable">Set to true to enable (or false to disable) the privilege.</param>
         protected void SetAccessToken(bool enable)
         {
@@ -417,9 +390,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Get the Win32 error code from GetLastError and throw an exception.
-        /// </summary>
+        
         protected void ThrowWin32Error()
         {
             int error = Marshal.GetLastWin32Error();
@@ -448,149 +419,93 @@ namespace Microsoft.PowerShell.Commands
 
             #region Win32 SetDynamicTimeZoneInformation imports
 
-            /// <summary>
-            /// Used to marshal win32 SystemTime structure to managed code layer.
-            /// </summary>
+            
             [StructLayout(LayoutKind.Sequential)]
             public struct SystemTime
             {
-                /// <summary>
-                /// The year.
-                /// </summary>
+                
                 [MarshalAs(UnmanagedType.U2)]
                 public short Year;
-                /// <summary>
-                /// The month.
-                /// </summary>
+                
                 [MarshalAs(UnmanagedType.U2)]
                 public short Month;
-                /// <summary>
-                /// The day of the week.
-                /// </summary>
+                
                 [MarshalAs(UnmanagedType.U2)]
                 public short DayOfWeek;
-                /// <summary>
-                /// The day of the month.
-                /// </summary>
+                
                 [MarshalAs(UnmanagedType.U2)]
                 public short Day;
-                /// <summary>
-                /// The hour.
-                /// </summary>
+                
                 [MarshalAs(UnmanagedType.U2)]
                 public short Hour;
-                /// <summary>
-                /// The minute.
-                /// </summary>
+                
                 [MarshalAs(UnmanagedType.U2)]
                 public short Minute;
-                /// <summary>
-                /// The second.
-                /// </summary>
+                
                 [MarshalAs(UnmanagedType.U2)]
                 public short Second;
-                /// <summary>
-                /// The millisecond.
-                /// </summary>
+                
                 [MarshalAs(UnmanagedType.U2)]
                 public short Milliseconds;
             }
 
-            /// <summary>
-            /// Used to marshal win32 DYNAMIC_TIME_ZONE_INFORMATION structure to managed code layer.
-            /// </summary>
+            
             [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
             public struct DYNAMIC_TIME_ZONE_INFORMATION
             {
-                /// <summary>
-                /// The current bias for local time translation on this computer, in minutes.
-                /// </summary>
+                
                 [MarshalAs(UnmanagedType.I4)]
                 public int Bias;
-                /// <summary>
-                /// A description for standard time.
-                /// </summary>
+                
                 [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 0x20)]
                 public string StandardName;
-                /// <summary>
-                /// A SystemTime structure that contains a date and local time when the transition from daylight saving time to standard time occurs on this operating system.
-                /// </summary>
+                
                 public SystemTime StandardDate;
-                /// <summary>
-                /// The bias value to be used during local time translations that occur during standard time.
-                /// </summary>
+                
                 [MarshalAs(UnmanagedType.I4)]
                 public int StandardBias;
-                /// <summary>
-                /// A description for daylight saving time (DST).
-                /// </summary>
+                
                 [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 0x20)]
                 public string DaylightName;
-                /// <summary>
-                /// A SystemTime structure that contains a date and local time when the transition from standard time to daylight saving time occurs on this operating system.
-                /// </summary>
+                
                 public SystemTime DaylightDate;
-                /// <summary>
-                /// The bias value to be used during local time translations that occur during daylight saving time.
-                /// </summary>
+                
                 [MarshalAs(UnmanagedType.I4)]
                 public int DaylightBias;
-                /// <summary>
-                /// The name of the time zone registry key on the local computer.
-                /// </summary>
+                
                 [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 0x80)]
                 public string TimeZoneKeyName;
-                /// <summary>
-                /// Indicates whether dynamic daylight saving time is disabled.
-                /// </summary>
+                
                 [MarshalAs(UnmanagedType.U1)]
                 public bool DynamicDaylightTimeDisabled;
             }
 
-            /// <summary>
-            /// Used to marshal win32 TIME_ZONE_INFORMATION structure to managed code layer.
-            /// </summary>
+            
             [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
             public struct TIME_ZONE_INFORMATION
             {
-                /// <summary>
-                /// The current bias for local time translation on this computer, in minutes.
-                /// </summary>
+                
                 [MarshalAs(UnmanagedType.I4)]
                 public int Bias;
-                /// <summary>
-                /// A description for standard time.
-                /// </summary>
+                
                 [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 0x20)]
                 public string StandardName;
-                /// <summary>
-                /// A SystemTime structure that contains a date and local time when the transition from daylight saving time to standard time occurs on this operating system.
-                /// </summary>
+                
                 public SystemTime StandardDate;
-                /// <summary>
-                /// The bias value to be used during local time translations that occur during standard time.
-                /// </summary>
+                
                 [MarshalAs(UnmanagedType.I4)]
                 public int StandardBias;
-                /// <summary>
-                /// A description for daylight saving time (DST).
-                /// </summary>
+                
                 [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 0x20)]
                 public string DaylightName;
-                /// <summary>
-                /// A SystemTime structure that contains a date and local time when the transition from standard time to daylight saving time occurs on this operating system.
-                /// </summary>
+                
                 public SystemTime DaylightDate;
-                /// <summary>
-                /// The bias value to be used during local time translations that occur during daylight saving time.
-                /// </summary>
+                
                 [MarshalAs(UnmanagedType.I4)]
                 public int DaylightBias;
             }
 
-            /// <summary>
-            /// PInvoke SetDynamicTimeZoneInformation API.
-            /// </summary>
+            
             /// <param name="lpTimeZoneInformation">A DYNAMIC_TIME_ZONE_INFORMATION structure representing the desired local time zone.</param>
             /// <returns></returns>
             [DllImport(SetDynamicTimeZoneApiDllName, SetLastError = true)]
@@ -605,36 +520,24 @@ namespace Microsoft.PowerShell.Commands
 
             #region Win32 AdjustTokenPrivilege imports
 
-            /// <summary>
-            /// Definition of TOKEN_QUERY constant from Win32 API.
-            /// </summary>
+            
             public const int TOKEN_QUERY = 0x00000008;
 
-            /// <summary>
-            /// Definition of TOKEN_ADJUST_PRIVILEGES constant from Win32 API.
-            /// </summary>
+            
             public const int TOKEN_ADJUST_PRIVILEGES = 0x00000020;
 
-            /// <summary>
-            /// Definition of SE_PRIVILEGE_ENABLED constant from Win32 API.
-            /// </summary>
+            
             public const int SE_PRIVILEGE_ENABLED = 0x00000002;
 
-            /// <summary>
-            /// Definition of SE_TIME_ZONE_NAME constant from Win32 API.
-            /// </summary>
+            
             public const string SE_TIME_ZONE_NAME = "SeTimeZonePrivilege"; // https://msdn.microsoft.com/library/bb530716(VS.85).aspx
 
-            /// <summary>
-            /// PInvoke GetCurrentProcess API.
-            /// </summary>
+            
             /// <returns></returns>
             [DllImport(GetCurrentProcessApiDllName, ExactSpelling = true)]
             public static extern IntPtr GetCurrentProcess();
 
-            /// <summary>
-            /// PInvoke OpenProcessToken API.
-            /// </summary>
+            
             /// <param name="ProcessHandle"></param>
             /// <param name="DesiredAccess"></param>
             /// <param name="TokenHandle"></param>
@@ -643,9 +546,7 @@ namespace Microsoft.PowerShell.Commands
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool OpenProcessToken(IntPtr ProcessHandle, int DesiredAccess, ref IntPtr TokenHandle);
 
-            /// <summary>
-            /// PInvoke LookupPrivilegeValue API.
-            /// </summary>
+            
             /// <param name="lpSystemName"></param>
             /// <param name="lpName"></param>
             /// <param name="lpLuid"></param>
@@ -654,9 +555,7 @@ namespace Microsoft.PowerShell.Commands
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool LookupPrivilegeValue(string lpSystemName, string lpName, ref long lpLuid);
 
-            /// <summary>
-            /// PInvoke PrivilegeCheck API.
-            /// </summary>
+            
             /// <param name="ClientToken"></param>
             /// <param name="RequiredPrivileges"></param>
             /// <param name="pfResult"></param>
@@ -665,9 +564,7 @@ namespace Microsoft.PowerShell.Commands
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool PrivilegeCheck(IntPtr ClientToken, ref PRIVILEGE_SET RequiredPrivileges, ref bool pfResult);
 
-            /// <summary>
-            /// PInvoke AdjustTokenPrivilege API.
-            /// </summary>
+            
             /// <param name="TokenHandle"></param>
             /// <param name="DisableAllPrivileges"></param>
             /// <param name="NewState"></param>
@@ -680,18 +577,14 @@ namespace Microsoft.PowerShell.Commands
             public static extern bool AdjustTokenPrivileges(IntPtr TokenHandle, bool DisableAllPrivileges,
                 ref TOKEN_PRIVILEGES NewState, int BufferLength, IntPtr PreviousState, IntPtr ReturnLength);
 
-            /// <summary>
-            /// PInvoke CloseHandle API.
-            /// </summary>
+            
             /// <param name="hObject"></param>
             /// <returns></returns>
             [DllImport(CloseHandleApiDllName, ExactSpelling = true, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool CloseHandle(IntPtr hObject);
 
-            /// <summary>
-            /// Used to marshal win32 PRIVILEGE_SET structure to managed code layer.
-            /// </summary>
+            
             [StructLayout(LayoutKind.Sequential, Pack = 1)]
             public struct PRIVILEGE_SET
             {
@@ -701,9 +594,7 @@ namespace Microsoft.PowerShell.Commands
                 public int Attributes;
             }
 
-            /// <summary>
-            /// Used to marshal win32 TOKEN_PRIVILEGES structure to managed code layer.
-            /// </summary>
+            
             [StructLayout(LayoutKind.Sequential, Pack = 1)]
             public struct TOKEN_PRIVILEGES
             {
@@ -716,24 +607,16 @@ namespace Microsoft.PowerShell.Commands
 
             #region Win32 SendMessage imports
 
-            /// <summary>
-            /// Definition of WM_SETTINGCHANGE constant from Win32 API.
-            /// </summary>
+            
             public const int WM_SETTINGCHANGE = 0x001A;
 
-            /// <summary>
-            /// Definition of HWND_BROADCAST constant from Win32 API.
-            /// </summary>
+            
             public const int HWND_BROADCAST = (-1);
 
-            /// <summary>
-            /// Definition of SMTO_ABORTIFHUNG constant from Win32 API.
-            /// </summary>
+            
             public const int SMTO_ABORTIFHUNG = 0x0002;
 
-            /// <summary>
-            /// PInvoke SendMessageTimeout API.
-            /// </summary>
+            
             /// <param name="hWnd"></param>
             /// <param name="Msg"></param>
             /// <param name="wParam"></param>
@@ -752,9 +635,7 @@ namespace Microsoft.PowerShell.Commands
     }
 
 #endif
-    /// <summary>
-    /// Static Helper class for working with system time zones.
-    /// </summary>
+    
     internal static class TimeZoneHelper
     {
         #region Error Ids
@@ -766,10 +647,7 @@ namespace Microsoft.PowerShell.Commands
 
         #endregion Error Ids
 
-        /// <summary>
-        /// Find the system time zone by checking first against StandardName and then,
-        /// if no matches were found, against the DaylightName.
-        /// </summary>
+        
         /// <param name="name">The name (or wildcard pattern) of the system time zone to find.</param>
         /// <returns>A TimeZoneInfo object array containing information about the specified system time zones.</returns>
         internal static TimeZoneInfo[] LookupSystemTimeZoneInfoByName(string name)

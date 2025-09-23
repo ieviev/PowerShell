@@ -7,18 +7,12 @@ using System.Management.Automation.Internal;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// This is the interface between the ScriptCommandProcessor and the
-    /// parameter binders required to bind parameters to a shell function.
-    /// </summary>
+    
     internal class ScriptParameterBinderController : ParameterBinderController
     {
         #region ctor
 
-        /// <summary>
-        /// Initializes the cmdlet parameter binder controller for
-        /// the specified cmdlet and engine context.
-        /// </summary>
+        
         /// <param name="script">
         /// The script that contains the parameter metadata.
         /// </param>
@@ -60,14 +54,10 @@ namespace System.Management.Automation
 
         #endregion ctor
 
-        /// <summary>
-        /// Holds the set of parameters that were not bound to any argument (i.e $args)
-        /// </summary>
+        
         internal List<object> DollarArgs { get; }
 
-        /// <summary>
-        /// Binds the command line parameters for shell functions/filters/scripts/scriptblocks.
-        /// </summary>
+        
         /// <param name="arguments">
         ///     The arguments to be bound.
         /// </param>
@@ -109,10 +99,7 @@ namespace System.Management.Automation
             return;
         }
 
-        /// <summary>
-        /// Passes the binding directly through to the parameter binder.
-        /// It does no verification against metadata.
-        /// </summary>
+        
         /// <param name="argument">
         /// The name and value of the variable to bind.
         /// </param>
@@ -130,10 +117,7 @@ namespace System.Management.Automation
             return true;
         }
 
-        /// <summary>
-        /// Takes the remaining arguments that haven't been bound, and binds
-        /// them to $args.
-        /// </summary>
+        
         /// <param name="arguments">
         ///     The remaining unbound arguments.
         /// </param>

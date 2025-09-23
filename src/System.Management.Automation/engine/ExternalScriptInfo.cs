@@ -13,17 +13,12 @@ using Microsoft.PowerShell.Commands;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Provides information for scripts that are directly executable by PowerShell
-    /// but are not built into the runspace configuration.
-    /// </summary>
+    
     public class ExternalScriptInfo : CommandInfo, IScriptCommandInfo
     {
         #region ctor
 
-        /// <summary>
-        /// Creates an instance of the ExternalScriptInfo class with the specified name, and path.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the script.
         /// </param>
@@ -54,10 +49,7 @@ namespace System.Management.Automation
             CommonInitialization();
         }
 
-        /// <summary>
-        /// Creates an instance of ExternalScriptInfo that has no ExecutionContext.
-        /// This is used exclusively to pass it to the AuthorizationManager that just uses the path parameter.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the script.
         /// </param>
@@ -81,9 +73,7 @@ namespace System.Management.Automation
             CommonInitialization();
         }
 
-        /// <summary>
-        /// This is a copy constructor, used primarily for get-command.
-        /// </summary>
+        
         internal ExternalScriptInfo(ExternalScriptInfo other)
             : base(other)
         {
@@ -91,9 +81,7 @@ namespace System.Management.Automation
             CommonInitialization();
         }
 
-        /// <summary>
-        /// Common initialization for all constructors.
-        /// </summary>
+        
         private void CommonInitialization()
         {
             // Assume external scripts are untrusted by default (for Get-Command, etc)
@@ -122,10 +110,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Create a copy of commandInfo for GetCommandCommand so that we can generate parameter
-        /// sets based on an argument list (so we can get the dynamic parameters.)
-        /// </summary>
+        
         internal override CommandInfo CreateGetCommandCopy(object[] argumentList)
         {
             ExternalScriptInfo copy = new ExternalScriptInfo(this) { IsGetCommandCopy = true, Arguments = argumentList };
@@ -139,9 +124,7 @@ namespace System.Management.Automation
             get { return HelpCategory.ExternalScript; }
         }
 
-        /// <summary>
-        /// Gets the path to the script file.
-        /// </summary>
+        
         public string Path
         {
             get { return _path; }
@@ -149,25 +132,19 @@ namespace System.Management.Automation
 
         private readonly string _path = string.Empty;
 
-        /// <summary>
-        /// Gets the path to the script file.
-        /// </summary>
+        
         public override string Definition
         {
             get { return Path; }
         }
 
-        /// <summary>
-        /// Gets the source of this command.
-        /// </summary>
+        
         public override string Source
         {
             get { return this.Definition; }
         }
 
-        /// <summary>
-        /// Returns the syntax of a command.
-        /// </summary>
+        
         internal override string Syntax
         {
             get
@@ -188,9 +165,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Determine the visibility for this script...
-        /// </summary>
+        
         public override SessionStateEntryVisibility Visibility
         {
             get
@@ -209,9 +184,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// The script block that represents the external script.
-        /// </summary>
+        
         public ScriptBlock ScriptBlock
         {
             get
@@ -322,9 +295,7 @@ namespace System.Management.Automation
             return _scriptBlockAst;
         }
 
-        /// <summary>
-        /// Validates the external script info.
-        /// </summary>
+        
         /// <param name="host"></param>
         public void ValidateScriptInfo(Host.PSHost host)
         {
@@ -347,9 +318,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// The output type(s) is specified in the script block.
-        /// </summary>
+        
         public override ReadOnlyCollection<PSTypeName> OutputType
         {
             get { return ScriptBlock.OutputType; }
@@ -364,9 +333,7 @@ namespace System.Management.Automation
 
         #region Internal
 
-        /// <summary>
-        /// The command metadata for the script.
-        /// </summary>
+        
         internal override CommandMetadata CommandMetadata
         {
             get
@@ -378,9 +345,7 @@ namespace System.Management.Automation
 
         private CommandMetadata _commandMetadata;
 
-        /// <summary>
-        /// True if the command has dynamic parameters, false otherwise.
-        /// </summary>
+        
         internal override bool ImplementsDynamicParameters
         {
             get
@@ -465,9 +430,7 @@ namespace System.Management.Automation
             get { return 0; }
         }
 
-        /// <summary>
-        /// Gets the original contents of the script.
-        /// </summary>
+        
         public string ScriptContents
         {
             get
@@ -483,9 +446,7 @@ namespace System.Management.Automation
 
         private string _scriptContents;
 
-        /// <summary>
-        /// Gets the original encoding of the script.
-        /// </summary>
+        
         public Encoding OriginalEncoding
         {
             get
@@ -597,9 +558,7 @@ namespace System.Management.Automation
         }
     }
 
-    /// <summary>
-    /// Thrown when fail to parse #requires statements. Caught by CommandDiscovery.
-    /// </summary>
+    
     internal class ScriptRequiresSyntaxException : ScriptRequiresException
     {
         internal ScriptRequiresSyntaxException(string message)
@@ -608,9 +567,7 @@ namespace System.Management.Automation
         }
     }
 
-    /// <summary>
-    /// Defines the name and version tuple of a PSSnapin.
-    /// </summary>
+    
     public class PSSnapInSpecification
     {
         internal PSSnapInSpecification(string psSnapinName)
@@ -620,14 +577,10 @@ namespace System.Management.Automation
             Version = null;
         }
 
-        /// <summary>
-        /// The name of the snapin.
-        /// </summary>
+        
         public string Name { get; internal set; }
 
-        /// <summary>
-        /// The version of the snapin.
-        /// </summary>
+        
         public Version Version { get; internal set; }
     }
 }

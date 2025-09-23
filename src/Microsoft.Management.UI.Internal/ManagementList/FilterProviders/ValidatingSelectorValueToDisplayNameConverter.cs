@@ -9,17 +9,11 @@ using System.Windows.Data;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <summary>
-    /// The ValidatingSelectorValueToDisplayNameConverterTakes class is responsible for returning a display
-    /// friendly name for the ValidatingSelectorValue class.
-    /// </summary>
+    
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public class ValidatingSelectorValueToDisplayNameConverter : IMultiValueConverter
     {
-        /// <summary>
-        /// Takes in a value and a converter and runs the converter on the value returning
-        /// a display friendly name.
-        /// </summary>
+        
         /// <param name="values">
         /// The first parameter is the value to get the display name for.
         /// The second parameter is the converter.
@@ -62,9 +56,7 @@ namespace Microsoft.Management.UI.Internal
             return converter.Convert(input, targetType, parameter, culture);
         }
 
-        /// <summary>
-        /// The method is not used.
-        /// </summary>
+        
         /// <param name="value">
         /// The parameter is not used.
         /// </param>

@@ -12,9 +12,7 @@ using Microsoft.Management.Infrastructure.Options;
 
 namespace Microsoft.Management.Infrastructure.CimCmdlets
 {
-    /// <summary>
-    /// Define Protocol type.
-    /// </summary>
+    
     public enum ProtocolType
     {
         Default,
@@ -26,17 +24,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         Wsman
     }
 
-    /// <summary>
-    /// The Cmdlet allows the IT Pro to create a CimSessionOptions object that she/he
-    /// can subsequently use to create one or more CimSession connections. The
-    /// options object holds the CIM Session information that is less commonly set
-    /// and used by the IT Pro, and most commonly defaulted.
-    ///
-    /// The Cmdlet has two parameter sets, one for WMMan options and one for DCOM
-    /// options. Depending on the arguments the Cmdlet will return an instance of
-    /// DComSessionOptions or WSManSessionOptions, which derive from
-    /// CimSessionOptions.
-    /// </summary>
+    
     [Alias("ncso")]
     [Cmdlet(VerbsCommon.New, "CimSessionOption", DefaultParameterSetName = ProtocolNameParameterSet, HelpUri = "https://go.microsoft.com/fwlink/?LinkId=227969")]
     [OutputType(typeof(CimSessionOptions))]
@@ -44,9 +32,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
     {
         #region constructor
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="NewCimSessionOptionCommand"/> class.
-        /// </summary>
+        
         public NewCimSessionOptionCommand()
             : base(parameters, parameterSets)
         {
@@ -57,10 +43,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         #region cmdlet parameters
 
-        /// <summary>
-        /// The following is the definition of the input parameter "NoEncryption".
-        /// Switch indicating if WSMan can use no encryption in the given CimSession (there are also global client and server WSMan settings - AllowUnencrypted).
-        /// </summary>
+        
         [Parameter(ParameterSetName = WSManParameterSet)]
         public SwitchParameter NoEncryption
         {
@@ -80,10 +63,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         private SwitchParameter noEncryption;
         private bool noEncryptionSet = false;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "CertificateCACheck".
-        /// Switch indicating if Certificate Authority should be validated.
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true,
                    ParameterSetName = WSManParameterSet)]
         public SwitchParameter SkipCACheck
@@ -104,10 +84,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         private SwitchParameter skipCACheck;
         private bool skipCACheckSet = false;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "CertificateCNCheck".
-        /// Switch indicating if Certificate Name should be validated.
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true,
                    ParameterSetName = WSManParameterSet)]
         public SwitchParameter SkipCNCheck
@@ -128,10 +105,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         private SwitchParameter skipCNCheck;
         private bool skipCNCheckSet = false;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "CertRevocationCheck".
-        /// Switch indicating if certificate should be revoked.
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true,
                    ParameterSetName = WSManParameterSet)]
         public SwitchParameter SkipRevocationCheck
@@ -152,10 +126,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         private SwitchParameter skipRevocationCheck;
         private bool skipRevocationCheckSet = false;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "EncodePortInServicePrincipalName".
-        /// Switch indicating if to encode Port In Service Principal Name.
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true,
                    ParameterSetName = WSManParameterSet)]
         public SwitchParameter EncodePortInServicePrincipalName
@@ -176,12 +147,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         private SwitchParameter encodeportinserviceprincipalname;
         private bool encodeportinserviceprincipalnameSet = false;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "Encoding".
-        /// Defined the message encoding.
-        /// The allowed encodings are { Default | Utf8 | Utf16 }. The default value
-        /// should be Utf8.
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true,
                    ParameterSetName = WSManParameterSet)]
         public PacketEncoding Encoding
@@ -202,11 +168,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         private PacketEncoding encoding;
         private bool encodingSet = false;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "HttpPrefix".
-        /// This is the HTTP URL on the server on which the WSMan service is listening.
-        /// In most cases it is /wsman, which is the default.
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true,
                    ParameterSetName = WSManParameterSet)]
         public Uri HttpPrefix
@@ -225,10 +187,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         private Uri httpprefix;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "MaxEnvelopeSizeKB".
-        /// Sets the limit to the maximum size of the WSMan message envelope.
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true,
                    ParameterSetName = WSManParameterSet)]
         public uint MaxEnvelopeSizeKB
@@ -249,10 +208,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         private uint maxenvelopesizekb;
         private bool maxenvelopesizekbSet = false;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "ProxyAuthentication".
-        /// Which proxy authentication types to use: Allowed set is:
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true,
                    ParameterSetName = WSManParameterSet)]
         public PasswordAuthenticationMechanism ProxyAuthentication
@@ -273,9 +229,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         private PasswordAuthenticationMechanism proxyAuthentication;
         private bool proxyauthenticationSet = false;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "ProxyCertificateThumbprint".
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true,
                    ParameterSetName = WSManParameterSet)]
         public string ProxyCertificateThumbprint
@@ -294,10 +248,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         private string proxycertificatethumbprint;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "ProxyCredential".
-        /// Ps Credential used by the proxy server when required by the server.
-        /// </summary>
+        
         [Parameter(ParameterSetName = WSManParameterSet)]
         [Credential]
         public PSCredential ProxyCredential
@@ -316,11 +267,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         private PSCredential proxycredential;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "ProxyType".
-        /// Which proxy type to use: Valid set is:
-        ///  { InternetExplorer | WinHttp | Auto | None }
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true,
                    ParameterSetName = WSManParameterSet)]
         public ProxyType ProxyType
@@ -341,10 +288,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         private ProxyType proxytype;
         private bool proxytypeSet = false;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "UseSSL".
-        /// Switch indicating if Secure Sockets Layer connection should be used.
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true,
                    ParameterSetName = WSManParameterSet)]
         public SwitchParameter UseSsl
@@ -365,11 +309,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         private SwitchParameter usessl;
         private bool usesslSet = false;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "Impersonation".
-        /// Used to select if, and if so what kind of, impersonation should be used.
-        /// Applies only to the DCOM channel.
-        /// </summary>
+        
         [Parameter(ParameterSetName = DcomParameterSet)]
         public ImpersonationType Impersonation
         {
@@ -389,11 +329,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         private ImpersonationType impersonation;
         private bool impersonationSet = false;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "PacketIntegrity".
-        /// Switch indicating if the package integrity in DCOM connections should be
-        /// checked/enforced.
-        /// </summary>
+        
         [Parameter(ParameterSetName = DcomParameterSet)]
         public SwitchParameter PacketIntegrity
         {
@@ -413,11 +349,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         private SwitchParameter packetintegrity;
         private bool packetintegritySet = false;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "PacketPrivacy".
-        /// Switch indicating if packet privacy of the packets in DCOM communications
-        /// should be checked/enforced.
-        /// </summary>
+        
         [Parameter(ParameterSetName = DcomParameterSet)]
         public SwitchParameter PacketPrivacy
         {
@@ -437,10 +369,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         private SwitchParameter packetprivacy;
         private bool packetprivacySet = false;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "Protocol".
-        /// Switch indicating if to encode Port In Service Principal Name.
-        /// </summary>
+        
         [Parameter(
             Mandatory = true,
             Position = 0,
@@ -462,17 +391,11 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         private ProtocolType protocol;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "UICulture".
-        /// Specifies the UI Culture to use. i.e. en-us, ar-sa.
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true)]
         public CultureInfo UICulture { get; set; }
 
-        /// <summary>
-        /// The following is the definition of the input parameter "Culture".
-        /// Specifies the culture to use. i.e. en-us, ar-sa.
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true)]
         public CultureInfo Culture { get; set; }
 
@@ -480,18 +403,14 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         #region cmdlet processing methods
 
-        /// <summary>
-        /// BeginProcessing method.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             this.CmdletOperation = new CmdletOperationBase(this);
             this.AtBeginProcess = false;
         }
 
-        /// <summary>
-        /// ProcessRecord method.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             base.CheckParameterSet();
@@ -543,9 +462,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             }
         }
 
-        /// <summary>
-        /// EndProcessing method.
-        /// </summary>
+        
         protected override void EndProcessing()
         {
         }
@@ -553,9 +470,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         #endregion
 
         #region helper functions
-        /// <summary>
-        /// Create DComSessionOptions.
-        /// </summary>
+        
         /// <returns></returns>
         internal DComSessionOptions CreateDComSessionOptions()
         {
@@ -593,9 +508,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             return dcomoptions;
         }
 
-        /// <summary>
-        /// Create WSMANSessionOptions.
-        /// </summary>
+        
         /// <returns></returns>
         internal WSManSessionOptions CreateWSMANSessionOptions()
         {
@@ -746,9 +659,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         internal const string nameProtocol = "Protocol";
         #endregion
 
-        /// <summary>
-        /// Static parameter definition entries.
-        /// </summary>
+        
         private static readonly Dictionary<string, HashSet<ParameterDefinitionEntry>> parameters = new()
         {
             {
@@ -847,9 +758,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             },
         };
 
-        /// <summary>
-        /// Static parameter set entries.
-        /// </summary>
+        
         private static readonly Dictionary<string, ParameterSetEntry> parameterSets = new()
         {
             {   CimBaseCommand.ProtocolNameParameterSet, new ParameterSetEntry(1, true)     },

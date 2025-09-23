@@ -12,9 +12,7 @@ using System.Management.Automation;
 
 namespace Microsoft.Management.Infrastructure.CimCmdlets
 {
-    /// <summary>
-    /// Enables the user to remove a CimInstance.
-    /// </summary>
+    
     [Alias("rcim")]
     [Cmdlet(
         VerbsCommon.Remove,
@@ -26,9 +24,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
     {
         #region constructor
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RemoveCimInstanceCommand"/> class.
-        /// </summary>
+        
         public RemoveCimInstanceCommand()
             : base(parameters, parameterSets)
         {
@@ -38,10 +34,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         #endregion
 
         #region parameters
-        /// <summary>
-        /// The following is the definition of the input parameter "Session".
-        /// CIM session used to remove the CIM Instance.
-        /// </summary>
+        
         [Parameter(
             Mandatory = true,
             ValueFromPipeline = true,
@@ -67,12 +60,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         private CimSession[] cimSession;
 
-        /// <summary>
-        /// <para>
-        /// The following is the definition of the input parameter "ResourceUri".
-        /// Define the Resource Uri for which the instances are retrieved.
-        /// </para>
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true,
                    ParameterSetName = CimBaseCommand.CimInstanceComputerSet)]
         [Parameter(ValueFromPipelineByPropertyName = true,
@@ -93,9 +81,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         private Uri resourceUri;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "ComputerName".
-        /// </summary>
+        
         [Alias(AliasCN, AliasServerName)]
         [Parameter(
             ValueFromPipelineByPropertyName = true,
@@ -119,10 +105,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         private string[] computername;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "Namespace".
-        /// The Namespace used to look for the Class instances under.
-        /// </summary>
+        
         [Parameter(
             Position = 1,
             ValueFromPipelineByPropertyName = true,
@@ -147,19 +130,12 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         private string nameSpace;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "OperationTimeoutSec".
-        /// Used to set the invocation operation time out. This value overrides the
-        /// CimSession operation timeout.
-        /// </summary>
+        
         [Alias(AliasOT)]
         [Parameter]
         public uint OperationTimeoutSec { get; set; }
 
-        /// <summary>
-        /// The following is the definition of the input parameter "InputObject".
-        /// Used to get a CimInstance using Get-CimInstance | Remove-CimInstance.
-        /// </summary>
+        
         [Parameter(
             Mandatory = true,
             Position = 0,
@@ -185,14 +161,10 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             }
         }
 
-        /// <summary>
-        /// Property for internal usage purpose.
-        /// </summary>
+        
         internal CimInstance CimInstance { get; private set; }
 
-        /// <summary>
-        /// The following is the definition of the input parameter "Query".
-        /// </summary>
+        
         [Parameter(
             Mandatory = true,
             Position = 0,
@@ -219,11 +191,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         private string query;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "QueryDialect".
-        /// Specifies the dialect used by the query Engine that interprets the Query
-        /// string.
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true,
                    ParameterSetName = CimBaseCommand.QuerySessionSet)]
         [Parameter(ValueFromPipelineByPropertyName = true,
@@ -248,9 +216,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         #region cmdlet methods
 
-        /// <summary>
-        /// BeginProcessing method.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             CimRemoveCimInstance cimRemoveInstance = this.GetOperationAgent() ?? CreateOperationAgent();
@@ -259,9 +225,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             this.AtBeginProcess = false;
         }
 
-        /// <summary>
-        /// ProcessRecord method.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             base.CheckParameterSet();
@@ -270,9 +234,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             cimRemoveInstance.ProcessActions(this.CmdletOperation);
         }
 
-        /// <summary>
-        /// EndProcessing method.
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             CimRemoveCimInstance cimRemoveInstance = this.GetOperationAgent();
@@ -283,23 +245,13 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         #region helper methods
 
-        /// <summary>
-        /// <para>
-        /// Get <see cref="CimRemoveCimInstance"/> object, which is
-        /// used to delegate all Remove-CimInstance operations.
-        /// </para>
-        /// </summary>
+        
         private CimRemoveCimInstance GetOperationAgent()
         {
             return this.AsyncOperation as CimRemoveCimInstance;
         }
 
-        /// <summary>
-        /// <para>
-        /// Create <see cref="CimRemoveCimInstance"/> object, which is
-        /// used to delegate all Remove-CimInstance operations.
-        /// </para>
-        /// </summary>
+        
         /// <returns></returns>
         private CimRemoveCimInstance CreateOperationAgent()
         {
@@ -322,9 +274,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         internal const string nameQueryDialect = "QueryDialect";
         #endregion
 
-        /// <summary>
-        /// Static parameter definition entries.
-        /// </summary>
+        
         private static readonly Dictionary<string, HashSet<ParameterDefinitionEntry>> parameters = new()
         {
             {
@@ -371,9 +321,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             },
         };
 
-        /// <summary>
-        /// Static parameter set entries.
-        /// </summary>
+        
         private static readonly Dictionary<string, ParameterSetEntry> parameterSets = new()
         {
             {   CimBaseCommand.CimInstanceComputerSet, new ParameterSetEntry(1, true)     },

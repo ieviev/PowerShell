@@ -15,16 +15,10 @@ using Dbg = System.Management.Automation.Diagnostics;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Used to enumerate the commands on the system that match the specified
-    /// command name.
-    /// </summary>
+    
     internal class CommandSearcher : IEnumerable<CommandInfo>, IEnumerator<CommandInfo>
     {
-        /// <summary>
-        /// Constructs a command searching enumerator that resolves the location
-        /// to a command using a standard algorithm.
-        /// </summary>
+        
         /// <param name="commandName">The name of the command to look for.</param>
         /// <param name="options">Determines which types of commands glob resolution of the name will take place on.</param>
         /// <param name="commandTypes">The types of commands to look for.</param>
@@ -53,9 +47,7 @@ namespace System.Management.Automation
             this.Reset();
         }
 
-        /// <summary>
-        /// Gets an instance of a command enumerator.
-        /// </summary>
+        
         /// <returns>
         /// An instance of this class as IEnumerator.
         /// </returns>
@@ -69,9 +61,7 @@ namespace System.Management.Automation
             return this;
         }
 
-        /// <summary>
-        /// Moves the enumerator to the next command match. Public for IEnumerable.
-        /// </summary>
+        
         /// <returns>
         /// true if there was another command that matches, false otherwise.
         /// </returns>
@@ -385,9 +375,7 @@ namespace System.Management.Automation
             return currentMatch;
         }
 
-        /// <summary>
-        /// Gets the CommandInfo representing the current command match.
-        /// </summary>
+        
         /// <value></value>
         /// <exception cref="InvalidOperationException">
         /// The enumerator is positioned before the first element of
@@ -416,10 +404,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Required by the IEnumerator generic interface.
-        /// Resets the searcher.
-        /// </summary>
+        
         public void Dispose()
         {
             if (_pathSearcher != null)
@@ -434,9 +419,7 @@ namespace System.Management.Automation
 
         #region private members
 
-        /// <summary>
-        /// Gets the next command info using the command name as a path.
-        /// </summary>
+        
         /// <returns>
         /// A CommandInfo for the next command if it exists as a path, or null otherwise.
         /// </returns>
@@ -507,9 +490,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Gets the next path using WildCards.
-        /// </summary>
+        
         /// <param name="command">
         /// The command to search for.
         /// </param>
@@ -570,9 +551,7 @@ namespace System.Management.Automation
             return path.StartsWith(commandName, StringComparison.OrdinalIgnoreCase);
         }
 
-        /// <summary>
-        /// Gets the appropriate CommandInfo instance given the specified path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to create the CommandInfo for.
         /// </param>
@@ -672,9 +651,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Gets the next matching alias.
-        /// </summary>
+        
         /// <returns>
         /// A CommandInfo representing the next matching alias if found, otherwise null.
         /// </returns>
@@ -752,9 +729,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Gets the next matching function.
-        /// </summary>
+        
         /// <returns>
         /// A CommandInfo representing the next matching function if found, otherwise null.
         /// </returns>
@@ -935,9 +910,7 @@ namespace System.Management.Automation
             return module;
         }
 
-        /// <summary>
-        /// Gets the FunctionInfo or FilterInfo for the specified function name.
-        /// </summary>
+        
         /// <param name="function">
         /// The name of the function/filter to retrieve.
         /// </param>
@@ -967,11 +940,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Gets the next cmdlet from the collection of matching cmdlets.
-        /// If the collection doesn't exist yet it is created and the
-        /// enumerator is moved to the first item in the collection.
-        /// </summary>
+        
         /// <returns>
         /// A CmdletInfo for the next matching Cmdlet or null if there are
         /// no more matches.
@@ -1100,10 +1069,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Resolves the given path as an PSPath and ensures that it was resolved
-        /// by the FileSystemProvider.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to resolve.
         /// </param>
@@ -1209,11 +1175,7 @@ namespace System.Management.Automation
 
             return result;
         }
-        /// <summary>
-        /// Gets the next literal path.
-        /// Filtering to ones that exist for the filesystem.
-        /// Handles Exceptions
-        /// </summary>
+        
         /// <param name="command">
         /// The command to search for.
         /// </param>
@@ -1272,10 +1234,7 @@ namespace System.Management.Automation
             return null;
         }
 
-        /// <summary>
-        /// Gets the next literal path.
-        /// Filtering to ones that exist for the filesystem.
-        /// </summary>
+        
         /// <param name="command">
         /// The command to search for.
         /// </param>
@@ -1298,9 +1257,7 @@ namespace System.Management.Automation
             return resolvedPath;
         }
 
-        /// <summary>
-        /// Creates a collection of patterns used to find the command.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the command to search for.
         /// </param>
@@ -1362,9 +1319,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Determines if the given command name is a qualified PowerShell path.
-        /// </summary>
+        
         /// <param name="commandName">
         /// The name of the command.
         /// </param>
@@ -1396,11 +1351,7 @@ namespace System.Management.Automation
             IllegalCharacters
         }
 
-        /// <summary>
-        /// Determines if the command name has any path special
-        /// characters which would require resolution. If so,
-        /// path lookup will not succeed.
-        /// </summary>
+        
         /// <param name="possiblePath">
         /// The command name (or possible path) to look for the special characters.
         /// </param>
@@ -1458,40 +1409,25 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// The command name to search for.
-        /// </summary>
+        
         private string _commandName;
 
-        /// <summary>
-        /// Determines which command types will be globbed.
-        /// </summary>
+        
         private readonly SearchResolutionOptions _commandResolutionOptions;
 
-        /// <summary>
-        /// Determines which types of commands to look for.
-        /// </summary>
+        
         private CommandTypes _commandTypes = CommandTypes.All;
 
-        /// <summary>
-        /// The enumerator that uses the Path to
-        /// search for commands.
-        /// </summary>
+        
         private CommandPathSearch? _pathSearcher;
 
-        /// <summary>
-        /// The execution context instance for the current engine...
-        /// </summary>
+        
         private readonly ExecutionContext _context;
 
-        /// <summary>
-        /// The fuzzy matcher to use for fuzzy searching.
-        /// </summary>
+        
         private readonly FuzzyMatcher? _fuzzyMatcher;
 
-        /// <summary>
-        /// A routine to initialize the path searcher...
-        /// </summary>
+        
         /// <exception cref="ArgumentException">
         /// If the commandName used to construct this object
         /// contains one or more of the invalid characters defined
@@ -1612,9 +1548,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Resets the enumerator to before the first command match, public for IEnumerable.
-        /// </summary>
+        
         public void Reset()
         {
             // If this is a command coming from outside the runspace and there are no
@@ -1645,27 +1579,19 @@ namespace System.Management.Automation
 
         private CommandOrigin _commandOrigin = CommandOrigin.Internal;
 
-        /// <summary>
-        /// An enumerator of the matching aliases.
-        /// </summary>
+        
         private IEnumerator<AliasInfo>? _matchingAlias;
 
-        /// <summary>
-        /// An enumerator of the matching functions.
-        /// </summary>
+        
         private IEnumerator<CommandInfo?>? _matchingFunctionEnumerator;
 
-        /// <summary>
-        /// The CommandInfo that references the command that matches the pattern.
-        /// </summary>
+        
         private CommandInfo? _currentMatch;
 
         private bool _canDoPathLookup;
         private CanDoPathLookupResult _canDoPathLookupResult = CanDoPathLookupResult.Yes;
 
-        /// <summary>
-        /// The current state of the enumerator.
-        /// </summary>
+        
         private SearchState _currentState = SearchState.SearchingAliases;
 
         private enum SearchState
@@ -1707,10 +1633,7 @@ namespace System.Management.Automation
         #endregion private members
     }
 
-    /// <summary>
-    /// Determines which types of commands should be globbed using the specified
-    /// pattern. Any flag that is not specified will only match if exact.
-    /// </summary>
+    
     [Flags]
     internal enum SearchResolutionOptions
     {
@@ -1720,14 +1643,10 @@ namespace System.Management.Automation
         CommandNameIsPattern = 0x04,
         SearchAllScopes = 0x08,
 
-        /// <summary>
-        /// Enable searching for cmdlets/functions by abbreviation expansion.
-        /// </summary>
+        
         UseAbbreviationExpansion = 0x10,
 
-        /// <summary>
-        /// Enable resolving wildcard in paths.
-        /// </summary>
+        
         ResolveLiteralThenPathPatterns = 0x20
     }
 }

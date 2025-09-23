@@ -116,9 +116,7 @@ namespace Microsoft.PowerShell.Cmdletization.Cim
         }
     }
 
-    /// <summary>
-    /// CimQuery supports building of queries against CIM object model.
-    /// </summary>
+    
     internal static class CimOperationOptionsHelper
     {
         internal static void SetCustomOptions(

@@ -14,16 +14,12 @@ using System.Threading;
 
 namespace Microsoft.PowerShell.Commands.Internal.Format
 {
-    /// <summary>
-    /// Class to manage the database instances, do the reloading, etc.
-    /// </summary>
+    
     internal sealed class TypeInfoDataBaseManager
     {
         #region Private Data
 
-        /// <summary>
-        /// Instance of the object holding the format.ps1xml in memory database.
-        /// </summary>
+        
         internal TypeInfoDataBase Database { get; private set; }
 
         // for locking the F&O database
@@ -47,8 +43,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             _formatFileList = new List<string>();
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="formatFiles"></param>
         /// <param name="isShared"></param>
         /// <param name="authorizationManager">
@@ -109,10 +104,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             return Database;
         }
 
-        /// <summary>
-        /// Adds the <paramref name="formatFile"/> to the current FormatTable's file list.
-        /// The FormatTable will not reflect the change until Update is called.
-        /// </summary>
+        
         /// <param name="formatFile"></param>
         /// <param name="shouldPrepend">
         /// if true, <paramref name="formatFile"/> is prepended to the current FormatTable's file list.
@@ -138,10 +130,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             }
         }
 
-        /// <summary>
-        /// Removes the <paramref name="formatFile"/> from the current FormatTable's file list.
-        /// The FormatTable will not reflect the change until Update is called.
-        /// </summary>
+        
         /// <param name="formatFile"></param>
         internal void Remove(string formatFile)
         {
@@ -151,11 +140,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             }
         }
 
-        /// <summary>
-        /// Update a shared formatting database with formatData of 'ExtendedTypeDefinition' type.
-        /// This method should only be called from the FormatTable, where are shared formatting
-        /// database is created.
-        /// </summary>
+        
         /// <param name="formatData">
         /// The format data to update the database
         /// </param>
@@ -221,11 +206,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             }
         }
 
-        /// <summary>
-        /// Update the current formattable with the existing formatFileList.
-        /// New files might have been added using Add() or Files might
-        /// have been removed using Remove.
-        /// </summary>
+        
         /// <param name="authorizationManager">
         /// Authorization manager to perform signature checks before reading ps1xml files (or null of no checks are needed)
         /// </param>
@@ -257,11 +238,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             UpdateDataBase(filesToLoad, authorizationManager, host, false);
         }
 
-        /// <summary>
-        /// Update the format data database. If there is any error in loading the format xml files,
-        /// the old database is unchanged.
-        /// The reference returned should NOT be modified by any means by the caller.
-        /// </summary>
+        
         /// <param name="mshsnapins">Files to be loaded and errors to be updated.</param>
         /// <param name="authorizationManager">
         /// Authorization manager to perform signature checks before reading ps1xml files (or null of no checks are needed)
@@ -296,10 +273,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             LoadFromFile(mshsnapins, expressionFactory, false, authorizationManager, host, preValidated, out logEntries);
         }
 
-        /// <summary>
-        /// Load the database
-        /// NOTE: need to be protected by lock since not thread safe per se.
-        /// </summary>
+        
         /// <param name="files">*.formal.xml files to be loaded.</param>
         /// <param name="expressionFactory">Expression factory to validate script blocks.</param>
         /// <param name="acceptLoadingErrors">If true, load the database even if there are loading errors.</param>
@@ -359,9 +333,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             return success;
         }
 
-        /// <summary>
-        /// It loads a database from file(s).
-        /// </summary>
+        
         /// <param name="files">*.formal.xml files to be loaded.</param>
         /// <param name="expressionFactory">Expression factory to validate script blocks.</param>
         /// <param name="authorizationManager">
@@ -541,18 +513,14 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             }
         }
 
-        /// <summary>
-        /// Helper to add any pre-load intrinsics to the db.
-        /// </summary>
+        
         /// <param name="db">Db being initialized.</param>
         private static void AddPreLoadIntrinsics(TypeInfoDataBase db)
         {
             // NOTE: nothing to add for the time being. Add here if needed.
         }
 
-        /// <summary>
-        /// Helper to add any post-load intrinsics to the db.
-        /// </summary>
+        
         /// <param name="db">Db being initialized.</param>
         private static void AddPostLoadIntrinsics(TypeInfoDataBase db)
         {

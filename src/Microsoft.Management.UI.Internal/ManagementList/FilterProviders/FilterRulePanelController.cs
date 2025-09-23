@@ -8,10 +8,7 @@ using System.Diagnostics;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <summary>
-    /// The FilterRulePanelController is responsible managing the addition and removal of
-    /// <see cref="FilterRulePanelItems" />s to a <see cref="FilterRulePanel"/>.
-    /// </summary>
+    
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public class FilterRulePanelController : IFilterExpressionProvider
     {
@@ -20,19 +17,13 @@ namespace Microsoft.Management.UI.Internal
         private ObservableCollection<FilterRulePanelItem> filterRulePanelItems;
         private ReadOnlyObservableCollection<FilterRulePanelItem> readOnlyFilterRulePanelItems;
 
-        /// <summary>
-        /// Gets the collection of FilterRulePanelItems that are currently
-        /// displayed in the panel.
-        /// </summary>
+        
         public ReadOnlyCollection<FilterRulePanelItem> FilterRulePanelItems
         {
             get { return this.readOnlyFilterRulePanelItems; }
         }
 
-        /// <summary>
-        /// Gets a FilterExpression representing the current
-        /// relational organization of FilterRules for this provider.
-        /// </summary>
+        
         public FilterExpressionNode FilterExpression
         {
             get
@@ -41,9 +32,7 @@ namespace Microsoft.Management.UI.Internal
             }
         }
 
-        /// <summary>
-        /// Gets a value indicating whether this provider currently has a non-empty filter expression.
-        /// </summary>
+        
         public bool HasFilterExpression
         {
             get
@@ -56,18 +45,14 @@ namespace Microsoft.Management.UI.Internal
 
         #region Events
 
-        /// <summary>
-        /// Raised when a FilterRulePanelItem has been added or removed.
-        /// </summary>
+        
         public event EventHandler FilterExpressionChanged;
 
         #endregion Events
 
         #region Ctor
 
-        /// <summary>
-        /// Initializes a new instance of the FilterRulePanelController class.
-        /// </summary>
+        
         public FilterRulePanelController()
         {
             this.filterRulePanelItems =
@@ -80,9 +65,7 @@ namespace Microsoft.Management.UI.Internal
 
         #region Public Methods
 
-        /// <summary>
-        /// Adds an item to the panel.
-        /// </summary>
+        
         /// <param name="item">
         /// The item to add.
         /// </param>
@@ -105,9 +88,7 @@ namespace Microsoft.Management.UI.Internal
             this.NotifyFilterExpressionChanged();
         }
 
-        /// <summary>
-        /// Removes an item from the panel.
-        /// </summary>
+        
         /// <param name="item">
         /// The item to remove.
         /// </param>
@@ -123,9 +104,7 @@ namespace Microsoft.Management.UI.Internal
             this.NotifyFilterExpressionChanged();
         }
 
-        /// <summary>
-        /// Removes all items from the panel.
-        /// </summary>
+        
         public void ClearFilterRulePanelItems()
         {
             this.filterRulePanelItems.Clear();
@@ -255,9 +234,7 @@ namespace Microsoft.Management.UI.Internal
 
         #region Notify Filter Expression Changed
 
-        /// <summary>
-        /// Notifies any listeners that the filter expression has changed.
-        /// </summary>
+        
         protected virtual void NotifyFilterExpressionChanged()
         {
             EventHandler eh = this.FilterExpressionChanged;

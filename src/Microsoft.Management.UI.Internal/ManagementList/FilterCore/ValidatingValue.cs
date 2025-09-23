@@ -7,26 +7,19 @@ using System.Globalization;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <summary>
-    /// The ValidatingValue class supports setting a value and validating the
-    /// value.
-    /// </summary>
+    
     /// <typeparam name="T">
     /// The generic parameter.
     /// </typeparam>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public class ValidatingValue<T> : ValidatingValueBase
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ValidatingValue{T}"/> class.
-        /// </summary>
+        
         public ValidatingValue()
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ValidatingValue{T}"/> class.
-        /// </summary>
+        
         /// <param name="source">The source to initialize from.</param>
         public ValidatingValue(ValidatingValue<T> source)
             : base(source)
@@ -42,9 +35,7 @@ namespace Microsoft.Management.UI.Internal
 
         private object value;
 
-        /// <summary>
-        /// Gets or sets a value.
-        /// </summary>
+        
         public object Value
         {
             get
@@ -72,10 +63,7 @@ namespace Microsoft.Management.UI.Internal
             return new ValidatingValue<T>(this);
         }
 
-        /// <summary>
-        /// Gets the raw value cast/transformed into
-        /// type T.
-        /// </summary>
+        
         /// <returns>
         /// The cast value.
         /// </returns>
@@ -97,9 +85,7 @@ namespace Microsoft.Management.UI.Internal
 
         #region ForceValidationUpdate
 
-        /// <summary>
-        /// Forces a validation update to occur.
-        /// </summary>
+        
         /// <remarks>
         /// The validation update occurs via signaling that
         /// the Value property has changed.
@@ -113,9 +99,7 @@ namespace Microsoft.Management.UI.Internal
 
         #region Validate
 
-        /// <summary>
-        /// Called to validate the entire object.
-        /// </summary>
+        
         /// <returns>
         /// Returns a DataErrorInfoValidationResult which indicates the validation state
         /// of the object.
@@ -125,9 +109,7 @@ namespace Microsoft.Management.UI.Internal
             return this.Validate(ValuePropertyName);
         }
 
-        /// <summary>
-        /// Called to validate the property with the given name.
-        /// </summary>
+        
         /// <param name="columnName">
         /// The name of the property whose error message will be checked.
         /// </param>

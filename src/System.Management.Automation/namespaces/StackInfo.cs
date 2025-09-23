@@ -5,14 +5,10 @@ using System.Collections.Generic;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// An object that represents a stack of paths.
-    /// </summary>
+    
     public sealed class PathInfoStack : Stack<PathInfo>
     {
-        /// <summary>
-        /// Constructor for the PathInfoStack class.
-        /// </summary>
+        
         /// <param name="stackName">
         /// The name of the stack.
         /// </param>
@@ -53,9 +49,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the name of the stack.
-        /// </summary>
+        
         public string Name { get; } = null;
     }
 }

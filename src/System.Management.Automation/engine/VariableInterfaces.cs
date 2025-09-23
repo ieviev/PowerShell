@@ -5,16 +5,12 @@ using Dbg = System.Management.Automation;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Exposes the APIs to manipulate variables in the Runspace.
-    /// </summary>
+    
     public sealed class PSVariableIntrinsics
     {
         #region Constructors
 
-        /// <summary>
-        /// Hide the default constructor since we always require an instance of SessionState.
-        /// </summary>
+        
         private PSVariableIntrinsics()
         {
             Dbg.Diagnostics.Assert(
@@ -22,9 +18,7 @@ namespace System.Management.Automation
                 "This constructor should never be called. Only the constructor that takes an instance of SessionState should be called.");
         }
 
-        /// <summary>
-        /// Constructs a facade for the specified session.
-        /// </summary>
+        
         /// <param name="sessionState">
         /// The session for which the facade wraps.
         /// </param>
@@ -45,9 +39,7 @@ namespace System.Management.Automation
 
         #region Public methods
 
-        /// <summary>
-        /// Gets the specified variable from session state.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the variable to get. The name can contain drive and/or
         /// scope specifiers like "ENV:path" or "global:myvar".
@@ -80,11 +72,7 @@ namespace System.Management.Automation
             return _sessionState.GetVariable(name);
         }
 
-        /// <summary>
-        /// Gets the specified variable from session state in the specified scope.
-        /// If the variable doesn't exist in the specified scope no additional lookup
-        /// will be done.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the variable to get. The name can contain drive and/or
         /// scope specifiers like "ENV:path" or "global:myvar".
@@ -117,9 +105,7 @@ namespace System.Management.Automation
             return _sessionState.GetVariableAtScope(name, scope);
         }
 
-        /// <summary>
-        /// Gets the specified variable value from session state.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the variable to get. The name can contain drive and/or
         /// scope specifiers like "ENV:path" or "global:myvar".
@@ -154,10 +140,7 @@ namespace System.Management.Automation
             return _sessionState.GetVariableValue(name);
         }
 
-        /// <summary>
-        /// Gets the specified variable from session state. If the variable
-        /// is not found the default value is returned.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the variable to get. The name can contain drive and/or
         /// scope specifiers like "ENV:path" or "global:myvar".
@@ -196,11 +179,7 @@ namespace System.Management.Automation
             return _sessionState.GetVariableValue(name) ?? defaultValue;
         }
 
-        /// <summary>
-        /// Gets the specified variable from session state in the specified scope.
-        /// If the variable doesn't exist in the specified scope no additional lookup
-        /// will be done.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the variable to get. The name can contain drive and/or
         /// scope specifiers like "ENV:path" or "global:myvar".
@@ -246,9 +225,7 @@ namespace System.Management.Automation
             return _sessionState.GetVariableValueAtScope(name, scope);
         }
 
-        /// <summary>
-        /// Sets the variable to the specified value.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the variable to be set. The name can contain drive and/or
         /// scope specifiers like "ENV:path" or "global:myvar".
@@ -286,9 +263,7 @@ namespace System.Management.Automation
             _sessionState.SetVariableValue(name, value, CommandOrigin.Internal);
         }
 
-        /// <summary>
-        /// Sets the variable.
-        /// </summary>
+        
         /// <param name="variable">
         /// The variable to set
         /// </param>
@@ -309,9 +284,7 @@ namespace System.Management.Automation
             _sessionState.SetVariable(variable, false, CommandOrigin.Internal);
         }
 
-        /// <summary>
-        /// Removes the specified variable from session state.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the variable to be removed. The name can contain drive and/or
         /// scope specifiers like "ENV:path" or "global:myvar".
@@ -346,9 +319,7 @@ namespace System.Management.Automation
             _sessionState.RemoveVariable(name);
         }
 
-        /// <summary>
-        /// Removes the specified variable from session state.
-        /// </summary>
+        
         /// <param name="variable">
         /// The variable to be removed. It is removed based on the name of the variable.
         /// </param>
@@ -369,9 +340,7 @@ namespace System.Management.Automation
             _sessionState.RemoveVariable(variable);
         }
 
-        /// <summary>
-        /// Removes the specified variable from the specified scope.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the variable to remove.
         /// </param>
@@ -405,9 +374,7 @@ namespace System.Management.Automation
             _sessionState.RemoveVariableAtScope(name, scope);
         }
 
-        /// <summary>
-        /// Removes the specified variable from the specified scope.
-        /// </summary>
+        
         /// <param name="variable">
         /// The variable to be removed. It is removed based on the name of the variable.
         /// </param>

@@ -91,9 +91,7 @@ namespace Microsoft.WSMan.Management
         // Below class is just a static container which would release sessions in case this DLL is unloaded.
         internal class Sessions
         {
-            /// <summary>
-            /// Dictionary object to store the connection.
-            /// </summary>
+            
             internal static readonly Dictionary<string, object> SessionObjCache = new Dictionary<string, object>();
 
             ~Sessions()
@@ -193,9 +191,7 @@ namespace Microsoft.WSMan.Management
             return result;
         }
 
-        /// <summary>
-        /// Add a session to dictionary.
-        /// </summary>
+        
         /// <param name="key">Connection string.</param>
         /// <param name="value">Session object.</param>
         internal void AddtoDictionary(string key, object value)
@@ -591,14 +587,7 @@ namespace Microsoft.WSMan.Management
             return m_resource;
         }
 
-        /// <summary>
-        /// Used to resolve authentication from the parameters chosen by the user.
-        /// User has the following options:
-        /// 1. AuthMechanism + Credential
-        /// 2. CertificateThumbPrint
-        ///
-        /// All the above are mutually exclusive.
-        /// </summary>
+        
         /// <exception cref="InvalidOperationException">
         /// If there is ambiguity as specified above.
         /// </exception>
@@ -911,9 +900,7 @@ namespace Microsoft.WSMan.Management
             return sburi.ToString();
         }
 
-        /// <summary>
-        /// This method is used by Connect-WsMan Cmdlet and New-Item of WsMan Provider to create connection to WsMan.
-        /// </summary>
+        
         /// <param name="ParameterSetName"></param>
         /// <param name="connectionuri"></param>
         /// <param name="port"></param>
@@ -961,9 +948,7 @@ namespace Microsoft.WSMan.Management
             }
         }
 
-        /// <summary>
-        /// Verifies all the registry keys are set as expected. In case of failure .. try ecery second for 60 seconds before returning false.
-        /// </summary>
+        
         /// <param name="AllowFreshCredentialsValueShouldBePresent">True if trying to Enable CredSSP.</param>
         /// <param name="DelegateComputer">Names of the delegate computer.</param>
         /// <param name="applicationname">Name of the application.</param>
@@ -1087,10 +1072,7 @@ namespace Microsoft.WSMan.Management
             }
         }
 
-        /// <summary>
-        /// Get the resource value from WinRm.ini
-        /// from %windir%\system32\winrm\[Hexadecimal Language Folder]\winrm.ini.
-        /// </summary>
+        
         /// <param name="Key"></param>
         /// <returns></returns>
         internal static string GetResourceString(string Key)
@@ -1110,8 +1092,7 @@ namespace Microsoft.WSMan.Management
             return value.Trim();
         }
 
-        /// <summary>
-        /// </summary>
+        
         private static readonly Dictionary<string, string> ResourceValueCache = new Dictionary<string, string>();
     }
 }

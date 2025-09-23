@@ -5,15 +5,10 @@ using System;
 
 namespace Microsoft.PowerShell.Commands.Internal.Format
 {
-    /// <summary>
-    /// Class providing an algorithm for automatic resizing
-    /// of table columns.
-    /// </summary>
+    
     internal sealed class ColumnWidthManager
     {
-        /// <summary>
-        /// Class providing an algorithm for automatic resizing.
-        /// </summary>
+        
         /// <param name="tableWidth">Overall width of the table in characters.</param>
         /// <param name="minimumColumnWidth">Minimum usable column width.</param>
         /// <param name="separatorWidth">Number of separator characters.</param>
@@ -24,12 +19,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             _separatorWidth = separatorWidth;
         }
 
-        /// <summary>
-        /// Calculate the widths by applying some heuristics to get them to fit on the
-        /// allotted table width. It first assigns widths to the columns that do not have a specified
-        /// width, then it checks if the total width exceeds the screen widths. If so, it proceeds
-        /// with column elimination, starting from the right most column.
-        /// </summary>
+        
         /// <param name="columnWidths">Array of column widths to appropriately size.</param>
         internal void CalculateColumnWidths(Span<int> columnWidths)
         {
@@ -43,10 +33,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             TrimToFit(columnWidths);
         }
 
-        /// <summary>
-        /// Do not remove columns, just assign widths to columns that have a zero width
-        /// (meaning unassigned)
-        /// </summary>
+        
         /// <param name="columnWidths">Columns to process.</param>
         /// <returns>True if there was a fit, false if there is need for trimming.</returns>
         private bool AssignColumnWidths(Span<int> columnWidths)
@@ -125,9 +112,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             return true; // we fit
         }
 
-        /// <summary>
-        /// Trim columns if the total column width is too much for the screen.
-        /// </summary>
+        
         /// <param name="columnWidths">Column widths to trim.</param>
         private void TrimToFit(Span<int> columnWidths)
         {
@@ -163,9 +148,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             }
         }
 
-        /// <summary>
-        /// Computes the total table width from the column width array.
-        /// </summary>
+        
         /// <param name="columnWidths">Column widths array.</param>
         /// <returns></returns>
         private int CurrentTableWidth(Span<int> columnWidths)
@@ -185,9 +168,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             return sum + _separatorWidth * (visibleColumns - 1);
         }
 
-        /// <summary>
-        /// Get the last visible column (i.e. with a width >= 0)
-        /// </summary>
+        
         /// <param name="columnWidths">Column widths array.</param>
         /// <returns>Index of the last visible column, -1 if none.</returns>
         private static int GetLastVisibleColumn(Span<int> columnWidths)

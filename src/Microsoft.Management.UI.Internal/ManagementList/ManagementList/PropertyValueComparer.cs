@@ -10,18 +10,14 @@ using System.Management.Automation;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <summary>
-    /// Provides a mechanism for comparing objects based on specific properties.
-    /// </summary>
+    
     internal class PropertyValueComparer : IComparer
     {
         private IPropertyValueGetter propertyValueGetter;
         private List<UIPropertyGroupDescription> dataDescriptions;
         private bool sortRecursively = true;
 
-        /// <summary>
-        /// Initializes a new instance of <see cref="PropertyValueComparer"/>.
-        /// </summary>
+        
         /// <param name="dataDescriptions">The data descriptions containing sort information for all columns.</param>
         /// <param name="sortRecursively">Whether sorting should compare additional columns when equal values are found.</param>
         /// <param name="valueGetter">The <see cref="PropertyValueGetter"/> used to retrieve property values.</param>
@@ -32,9 +28,7 @@ namespace Microsoft.Management.UI.Internal
             this.sortRecursively = sortRecursively;
         }
 
-        /// <summary>
-        /// Compares properties of the specified objects and returns a value indicating whether one is less than, equal to or greater than the other.
-        /// </summary>
+        
         /// <param name="a">The first object to compare.</param>
         /// <param name="b">The second object to compare.</param>
         /// <returns>

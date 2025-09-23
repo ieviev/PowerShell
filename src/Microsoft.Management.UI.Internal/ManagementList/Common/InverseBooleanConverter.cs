@@ -6,15 +6,11 @@ using System.Windows.Data;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <summary>
-    /// Takes a bool value and returns the inverse.
-    /// </summary>
+    
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public class InverseBooleanConverter : IValueConverter
     {
-        /// <summary>
-        /// Converts a boolean value to be it's inverse.
-        /// </summary>
+        
         /// <param name="value">The source value.</param>
         /// <param name="targetType">The parameter is not used.</param>
         /// <param name="parameter">The parameter is not used.</param>
@@ -29,9 +25,7 @@ namespace Microsoft.Management.UI.Internal
             return !boolValue;
         }
 
-        /// <summary>
-        /// This method is not used.
-        /// </summary>
+        
         /// <param name="value">The parameter is not used.</param>
         /// <param name="targetType">The parameter is not used.</param>
         /// <param name="parameter">The parameter is not used.</param>

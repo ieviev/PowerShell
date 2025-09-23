@@ -8,27 +8,19 @@ using System.Windows.Controls;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <summary>
-    /// The FilterRuleTemplateSelector class selects a template based upon the type of
-    /// the item and the corresponding template that is registered in the TemplateDictionary.
-    /// </summary>
+    
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public class FilterRuleTemplateSelector : DataTemplateSelector
     {
         private Dictionary<Type, DataTemplate> templateDictionary = new Dictionary<Type, DataTemplate>();
 
-        /// <summary>
-        /// Gets the dictionary containing the type-template values.
-        /// </summary>
+        
         public IDictionary<Type, DataTemplate> TemplateDictionary
         {
             get { return this.templateDictionary; }
         }
 
-        /// <summary>
-        /// Selects a template based upon the type of the item and the
-        /// corresponding template that is registered in the TemplateDictionary.
-        /// </summary>
+        
         /// <param name="item">
         /// The item to return a template for.
         /// </param>

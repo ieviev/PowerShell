@@ -15,22 +15,14 @@ using System.Xml;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Defines generic utilities and helper methods for PowerShell.
-    /// </summary>
+    
     internal static class PsUtils
     {
         // Cache of the current process' parentId
         private static int? s_currentParentProcessId;
         private static readonly int s_currentProcessId = Environment.ProcessId;
 
-        /// <summary>
-        /// Retrieve the parent process of a process.
-        ///
-        /// Previously this code used WMI, but WMI is causing a CPU spike whenever the query gets called as it results in
-        /// tzres.dll and tzres.mui.dll being loaded into every process to convert the time information to local format.
-        /// For perf reasons, we resort to P/Invoke.
-        /// </summary>
+        
         /// <param name="current">The process we want to find the
         /// parent of</param>
         internal static Process GetParentProcess(Process current)
@@ -73,9 +65,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Return true/false to indicate whether the process architecture is ARM.
-        /// </summary>
+        
         /// <returns></returns>
         internal static bool IsRunningOnProcessArchitectureARM()
         {
@@ -111,16 +101,7 @@ namespace System.Management.Automation
 
         #region ASTUtils
 
-        /// <summary>
-        /// This method is to get the unique key for a UsingExpressionAst. The key is a base64
-        /// encoded string based on the text of the UsingExpressionAst.
-        ///
-        /// This method is used when handling a script block that contains $using for Invoke-Command.
-        ///
-        /// When run Invoke-Command targeting a machine that runs PSv3 or above, we pass a dictionary
-        /// to the remote end that contains the key of each UsingExpressionAst and its value. This method
-        /// is used to generate the key.
-        /// </summary>
+        
         /// <param name="usingAst">A using expression.</param>
         /// <returns>Base64 encoded string as the key of the UsingExpressionAst.</returns>
         internal static string GetUsingExpressionKey(Language.UsingExpressionAst usingAst)
@@ -151,9 +132,7 @@ namespace System.Management.Automation
 
         #region EvaluatePowerShellDataFile
 
-        /// <summary>
-        /// Evaluate a powershell data file as if it's a module manifest.
-        /// </summary>
+        
         /// <param name="parameterName"></param>
         /// <param name="psDataFilePath"></param>
         /// <param name="context"></param>
@@ -177,9 +156,7 @@ namespace System.Management.Automation
                       skipPathValidation: skipPathValidation);
         }
 
-        /// <summary>
-        /// Get a Hashtable object out of a PowerShell data file (.psd1)
-        /// </summary>
+        
         /// <param name="parameterName">
         /// Name of the parameter that takes the specified .psd1 file as a value
         /// </param>
@@ -384,15 +361,10 @@ namespace System.Management.Automation
         }
     }
 
-    /// <summary>
-    /// This class provides helper methods for converting to/fro from
-    /// string to base64string.
-    /// </summary>
+    
     internal static class StringToBase64Converter
     {
-        /// <summary>
-        /// Converts string to base64 encoded string.
-        /// </summary>
+        
         /// <param name="input">String to encode.</param>
         /// <returns>Base64 encoded string.</returns>
         internal static string StringToBase64String(string input)
@@ -411,9 +383,7 @@ namespace System.Management.Automation
             return base64;
         }
 
-        /// <summary>
-        /// Decodes base64 encoded string.
-        /// </summary>
+        
         /// <param name="base64">Base64 string to decode.</param>
         /// <returns>Decoded string.</returns>
         internal static string Base64ToString(string base64)
@@ -427,9 +397,7 @@ namespace System.Management.Automation
             return output;
         }
 
-        /// <summary>
-        /// Decodes base64 encoded string in to args array.
-        /// </summary>
+        
         /// <param name="base64"></param>
         /// <returns></returns>
         internal static object[] Base64ToArgsConverter(string base64)
@@ -471,10 +439,7 @@ namespace System.Management.Automation
         }
     }
 
-    /// <summary>
-    /// A simple implementation of CRC32.
-    /// See "CRC-32 algorithm" in https://en.wikipedia.org/wiki/Cyclic_redundancy_check.
-    /// </summary>
+    
     internal static class CRC32Hash
     {
         // CRC-32C polynomial representations
@@ -533,9 +498,7 @@ namespace System.Management.Automation
 
     #region ReferenceEqualityComparer
 
-    /// <summary>
-    /// Equality comparer based on Object Identity.
-    /// </summary>
+    
     internal class ReferenceEqualityComparer : IEqualityComparer
     {
         bool IEqualityComparer.Equals(object x, object y)

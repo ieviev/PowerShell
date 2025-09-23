@@ -9,18 +9,14 @@ using System.Windows;
 namespace Microsoft.Management.UI.Internal
 {
 
-    /// <summary>
-    /// Represents a toggle button used to expand or collapse elements.
-    /// </summary>
+    
     [Localizability(LocalizationCategory.None)]
     partial class ExpanderButton
     {
         //
         // CreateAutomationPeer
         //
-        /// <summary>
-        /// Create an instance of the AutomationPeer.
-        /// </summary>
+        
         /// <returns>
         /// An instance of the AutomationPeer.
         /// </returns>

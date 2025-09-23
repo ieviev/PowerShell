@@ -6,18 +6,14 @@ using System.Management.Automation;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// A command to move a property on an item to another item.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Move, "ItemProperty", SupportsShouldProcess = true, DefaultParameterSetName = "Path", SupportsTransactions = true,
         HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096817")]
     public class MoveItemPropertyCommand : PassThroughItemPropertyCommandBase
     {
         #region Parameters
 
-        /// <summary>
-        /// Gets or sets the path parameter to the command.
-        /// </summary>
+        
         [Parameter(Position = 0, ParameterSetName = "Path",
                    Mandatory = true, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true)]
         public string[] Path
@@ -27,9 +23,7 @@ namespace Microsoft.PowerShell.Commands
             set { paths = value; }
         }
 
-        /// <summary>
-        /// Gets or sets the literal path parameter to the command.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "LiteralPath",
                    Mandatory = true, ValueFromPipeline = false, ValueFromPipelineByPropertyName = true)]
         [Alias("PSPath", "LP")]
@@ -47,9 +41,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// The name of the property to create on the item.
-        /// </summary>
+        
         [Parameter(Position = 2, Mandatory = true, ValueFromPipelineByPropertyName = true)]
         [Alias("PSProperty")]
         public string[] Name
@@ -67,17 +59,11 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// The path to the destination item to copy the property to.
-        /// </summary>
+        
         [Parameter(Mandatory = true, Position = 1, ValueFromPipelineByPropertyName = true)]
         public string Destination { get; set; }
 
-        /// <summary>
-        /// A virtual method for retrieving the dynamic parameters for a cmdlet. Derived cmdlets
-        /// that require dynamic parameters should override this method and return the
-        /// dynamic parameter object.
-        /// </summary>
+        
         /// <param name="context">
         /// The context under which the command is running.
         /// </param>
@@ -110,18 +96,14 @@ namespace Microsoft.PowerShell.Commands
 
         #region parameter data
 
-        /// <summary>
-        /// The property to be created.
-        /// </summary>
+        
         private string[] _property = Array.Empty<string>();
 
         #endregion parameter data
 
         #region Command code
 
-        /// <summary>
-        /// Creates the property on the item.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             foreach (string path in Path)

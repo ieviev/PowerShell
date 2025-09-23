@@ -15,35 +15,25 @@ using System.Text;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// A command to Set WMI Instance.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Set, "WmiInstance", DefaultParameterSetName = "class", SupportsShouldProcess = true,
         HelpUri = "https://go.microsoft.com/fwlink/?LinkID=113402", RemotingCapability = RemotingCapability.OwnedByCommand)]
     public sealed class SetWmiInstance : WmiBaseCmdlet
     {
         #region Parameters
-        /// <summary>
-        /// The WMI Object to use.
-        /// </summary>
+        
         [Parameter(ValueFromPipeline = true, Mandatory = true, ParameterSetName = "object")]
         public ManagementObject InputObject { get; set; } = null;
 
-        /// <summary>
-        /// The WMI Path to use.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "path", Mandatory = true)]
         public string Path { get; set; } = null;
 
-        /// <summary>
-        /// The WMI class to use.
-        /// </summary>
+        
         [Parameter(Position = 0, Mandatory = true, ParameterSetName = "class")]
         public string Class { get; set; } = null;
 
-        /// <summary>
-        /// The property name /value pair.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "path")]
         [Parameter(Position = 2, ParameterSetName = "class")]
         [Parameter(ParameterSetName = "object")]
@@ -51,9 +41,7 @@ namespace Microsoft.PowerShell.Commands
         [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public Hashtable Arguments { get; set; } = null;
 
-        /// <summary>
-        /// The Flag to use.
-        /// </summary>
+        
         [Parameter]
         public PutType PutType
         {
@@ -70,9 +58,7 @@ namespace Microsoft.PowerShell.Commands
         #endregion parameter data
 
         #region Command code
-        /// <summary>
-        /// Create or modify WMI Instance given either path,class name or pipeline input.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             if (this.AsJob)

@@ -269,10 +269,7 @@ namespace System.Management.Automation.Interpreter
         }
     }
 
-    /// <summary>
-    /// Wraps all arguments passed to a dynamic site with more arguments than can be accepted by a Func/Action delegate.
-    /// The binder generating a rule for such a site should unwrap the arguments first and then perform a binding to them.
-    /// </summary>
+    
     internal sealed class ArgumentArray
     {
         private readonly object[] _arguments;
@@ -322,10 +319,7 @@ namespace System.Management.Automation.Interpreter
     {
         private const string prevStackTraces = "PreviousStackTraces";
 
-        /// <summary>
-        /// Updates an exception before it's getting re-thrown so
-        /// we can present a reasonable stack trace to the user.
-        /// </summary>
+        
         public static Exception UpdateForRethrow(Exception rethrow)
         {
 #if !SILVERLIGHT
@@ -346,9 +340,7 @@ namespace System.Management.Automation.Interpreter
             return rethrow;
         }
 
-        /// <summary>
-        /// Returns all the stack traces associates with an exception.
-        /// </summary>
+        
         public static IList<StackTrace> GetExceptionStackTraces(Exception rethrow)
         {
             List<StackTrace> result;
@@ -367,9 +359,7 @@ namespace System.Management.Automation.Interpreter
         }
     }
 
-    /// <summary>
-    /// A hybrid dictionary which compares based upon object identity.
-    /// </summary>
+    
     internal class HybridReferenceDictionary<TKey, TValue> where TKey : class
     {
         private KeyValuePair<TKey, TValue>[] _keysAndValues;
@@ -571,31 +561,21 @@ namespace System.Management.Automation.Interpreter
         }
     }
 
-    /// <summary>
-    /// Provides a dictionary-like object used for caches which holds onto a maximum
-    /// number of elements specified at construction time.
-    ///
-    /// This class is not thread safe.
-    /// </summary>
+    
     internal class CacheDict<TKey, TValue>
     {
         private readonly Dictionary<TKey, KeyInfo> _dict = new Dictionary<TKey, KeyInfo>();
         private readonly LinkedList<TKey> _list = new LinkedList<TKey>();
         private readonly int _maxSize;
 
-        /// <summary>
-        /// Creates a dictionary-like object used for caches.
-        /// </summary>
+        
         /// <param name="maxSize">The maximum number of elements to store.</param>
         public CacheDict(int maxSize)
         {
             _maxSize = maxSize;
         }
 
-        /// <summary>
-        /// Tries to get the value associated with 'key', returning true if it's found and
-        /// false if it's not present.
-        /// </summary>
+        
         public bool TryGetValue(TKey key, out TValue value)
         {
             KeyInfo storedValue;
@@ -617,10 +597,7 @@ namespace System.Management.Automation.Interpreter
             return false;
         }
 
-        /// <summary>
-        /// Adds a new element to the cache, replacing and moving it to the front if the
-        /// element is already present.
-        /// </summary>
+        
         public void Add(TKey key, TValue value)
         {
             KeyInfo keyInfo;
@@ -644,10 +621,7 @@ namespace System.Management.Automation.Interpreter
             _dict[key] = new CacheDict<TKey, TValue>.KeyInfo(value, listNode);
         }
 
-        /// <summary>
-        /// Returns the value associated with the given key, or throws KeyNotFoundException
-        /// if the key is not present.
-        /// </summary>
+        
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
         public TValue this[TKey key]
         {
@@ -691,16 +665,7 @@ namespace System.Management.Automation.Interpreter
         {
         }
 
-        /// <summary>
-        /// True if the caller will guarantee that all cleanup happens as the thread
-        /// unwinds.
-        ///
-        /// This is typically used in a case where the thread local is surrounded by
-        /// a try/finally block.  The try block pushes some state, the finally block
-        /// restores the previous state.  Therefore when the thread exits the thread
-        /// local is back to it's original state.  This allows the ThreadLocal object
-        /// to not check the current owning thread on retrieval.
-        /// </summary>
+        
         public ThreadLocal(bool refCounted)
         {
             _refCounted = refCounted;
@@ -708,9 +673,7 @@ namespace System.Management.Automation.Interpreter
 
         #region Public API
 
-        /// <summary>
-        /// Gets or sets the value for the current thread.
-        /// </summary>
+        
         public T Value
         {
             get
@@ -724,10 +687,7 @@ namespace System.Management.Automation.Interpreter
             }
         }
 
-        /// <summary>
-        /// Gets the current value if its not == null or calls the provided function
-        /// to create a new value.
-        /// </summary>
+        
         public T GetOrCreate(Func<T> func)
         {
             Assert.NotNull(func);
@@ -742,10 +702,7 @@ namespace System.Management.Automation.Interpreter
             return res;
         }
 
-        /// <summary>
-        /// Calls the provided update function with the current value and
-        /// replaces the current value with the result of the function.
-        /// </summary>
+        
         public T Update(Func<T, T> updater)
         {
             Assert.NotNull(updater);
@@ -754,9 +711,7 @@ namespace System.Management.Automation.Interpreter
             return si.Value = updater(si.Value);
         }
 
-        /// <summary>
-        /// Replaces the current value with a new one and returns the old value.
-        /// </summary>
+        
         public T Update(T newValue)
         {
             StorageInfo si = GetStorageInfo();
@@ -769,9 +724,7 @@ namespace System.Management.Automation.Interpreter
 
         #region Storage implementation
 
-        /// <summary>
-        /// Gets the StorageInfo for the current thread.
-        /// </summary>
+        
         public StorageInfo GetStorageInfo()
         {
             return GetStorageInfo(_stores);
@@ -795,11 +748,7 @@ namespace System.Management.Automation.Interpreter
             return RetryOrCreateStorageInfo(curStorage);
         }
 
-        /// <summary>
-        /// Called when the fast path storage lookup fails. if we encountered the Empty storage
-        /// during the initial fast check then spin until we hit non-empty storage and try the fast
-        /// path again.
-        /// </summary>
+        
         private StorageInfo RetryOrCreateStorageInfo(StorageInfo[] curStorage)
         {
             if (curStorage == s_updating)
@@ -818,9 +767,7 @@ namespace System.Management.Automation.Interpreter
             return CreateStorageInfo();
         }
 
-        /// <summary>
-        /// Creates the StorageInfo for the thread when one isn't already present.
-        /// </summary>
+        
         private StorageInfo CreateStorageInfo()
         {
             // we do our own locking, tell hosts this is a bad time to interrupt us.
@@ -878,10 +825,7 @@ namespace System.Management.Automation.Interpreter
             }
         }
 
-        /// <summary>
-        /// Helper class for storing the value.  We need to track if a ManagedThreadId
-        /// has been re-used so we also store the thread which owns the value.
-        /// </summary>
+        
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")] // TODO
         internal sealed class StorageInfo
         {

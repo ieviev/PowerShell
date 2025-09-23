@@ -19,25 +19,19 @@ namespace Microsoft.Management.UI.Internal
     {
         private bool isClickInProgress = false;
 
-        /// <summary>
-        /// Tooltip to show to expand.
-        /// </summary>
+        
         protected override string ExpandToolTip
         {
             get { return XamlLocalizableResources.AutoResXGen_ManagementList2_ToolTip_132; }
         }
 
-        /// <summary>
-        /// Constructs an instance of PopupControlButton.
-        /// </summary>
+        
         public PopupControlButton()
         {
             // nothing
         }
 
-        /// <summary>
-        /// Called when the IsChecked property becomes true.
-        /// </summary>
+        
         /// <param name="e">The event data for the Checked event.</param>
         protected override void OnChecked(RoutedEventArgs e)
         {
@@ -45,9 +39,7 @@ namespace Microsoft.Management.UI.Internal
             this.UpdateIsPopupOpen();
         }
 
-        /// <summary>
-        /// Called when the IsChecked property becomes false.
-        /// </summary>
+        
         /// <param name="e">The event data for the Unchecked event.</param>
         protected override void OnUnchecked(RoutedEventArgs e)
         {
@@ -60,9 +52,7 @@ namespace Microsoft.Management.UI.Internal
             this.IsPopupOpen = this.IsChecked.GetValueOrDefault();
         }
 
-        /// <summary>
-        /// Invoked when an unhandled PreviewMouseLeftButtonUp routed event reaches an element in its route that is derived from this class. Implement this method to add class handling for this event.
-        /// </summary>
+        
         /// <param name="e">The MouseButtonEventArgs that contains the event data. The event data reports that the left mouse button was released.</param>
         protected override void OnPreviewMouseLeftButtonUp(MouseButtonEventArgs e)
         {

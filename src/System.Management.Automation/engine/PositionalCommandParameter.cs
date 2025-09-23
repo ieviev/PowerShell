@@ -9,10 +9,7 @@ namespace System.Management.Automation
     {
         #region ctor
 
-        /// <summary>
-        /// Constructs a container for the merged parameter metadata and
-        /// parameter set specific metadata for a positional parameter.
-        /// </summary>
+        
         internal PositionalCommandParameter(MergedCompiledCommandParameter parameter)
         {
             Parameter = parameter;

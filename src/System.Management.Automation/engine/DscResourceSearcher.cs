@@ -9,9 +9,7 @@ using Dbg = System.Management.Automation.Diagnostics;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Searcher class for finding DscResources on the system.
-    /// </summary>
+    
     internal class DscResourceSearcher : IEnumerable<DscResourceInfo>, IEnumerator<DscResourceInfo>
     {
         internal DscResourceSearcher(
@@ -37,45 +35,35 @@ namespace System.Management.Automation
 
         #region public methods
 
-        /// <summary>
-        /// Reset the Iterator.
-        /// </summary>
+        
         public void Reset()
         {
             _currentMatch = null;
             _matchingResource = null;
         }
 
-        /// <summary>
-        /// Reset and dispose the Iterator.
-        /// </summary>
+        
         public void Dispose()
         {
             Reset();
             GC.SuppressFinalize(this);
         }
 
-        /// <summary>
-        /// Get the Enumerator.
-        /// </summary>
+        
         /// <returns></returns>
         IEnumerator<DscResourceInfo> IEnumerable<DscResourceInfo>.GetEnumerator()
         {
             return this;
         }
 
-        /// <summary>
-        /// Get the Enumerator.
-        /// </summary>
+        
         /// <returns></returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
             return this;
         }
 
-        /// <summary>
-        /// Move to the Next value in the enumerator.
-        /// </summary>
+        
         /// <returns></returns>
         public bool MoveNext()
         {
@@ -87,9 +75,7 @@ namespace System.Management.Automation
             return false;
         }
 
-        /// <summary>
-        /// Return the current DscResource.
-        /// </summary>
+        
         DscResourceInfo IEnumerator<DscResourceInfo>.Current
         {
             get
@@ -98,9 +84,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Return the current DscResource as object.
-        /// </summary>
+        
         object IEnumerator.Current
         {
             get
@@ -113,10 +97,7 @@ namespace System.Management.Automation
 
         #region private methods
 
-        /// <summary>
-        /// Invoke command Get-DscResource with resource name to find the resource.
-        /// When found add them to the enumerator. If we have already got it, return the next resource.
-        /// </summary>
+        
         /// <returns>Next DscResource Info object or null if none are found.</returns>
         private DscResourceInfo GetNextDscResource()
         {

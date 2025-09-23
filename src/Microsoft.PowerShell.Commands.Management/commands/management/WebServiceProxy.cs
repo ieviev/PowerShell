@@ -32,17 +32,13 @@ namespace Microsoft.PowerShell.Commands
 {
     #region New-WebServiceProxy
 
-    /// <summary>
-    /// Cmdlet for new-WebService Proxy.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.New, "WebServiceProxy", DefaultParameterSetName = "NoCredentials", HelpUri = "https://go.microsoft.com/fwlink/?LinkID=135238")]
     public sealed class NewWebServiceProxy : PSCmdlet
     {
         #region Parameters
 
-        /// <summary>
-        /// URI of the web service.
-        /// </summary>
+        
         [Parameter(Mandatory = true, Position = 0)]
         [ValidateNotNullOrEmpty]
         [Alias("WL", "WSDL", "Path")]
@@ -58,9 +54,7 @@ namespace Microsoft.PowerShell.Commands
 
         private System.Uri _uri;
 
-        /// <summary>
-        /// Parameter Class name.
-        /// </summary>
+        
         [Parameter(Position = 1)]
         [ValidateNotNullOrEmpty]
         [Alias("FileName", "FN")]
@@ -76,9 +70,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string _class;
 
-        /// <summary>
-        /// Namespace.
-        /// </summary>
+        
         [Parameter(Position = 2)]
         [ValidateNotNullOrEmpty]
         [Alias("NS")]
@@ -94,9 +86,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string _namespace;
 
-        /// <summary>
-        /// Credential.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "Credential")]
         [ValidateNotNullOrEmpty]
         [Credential]
@@ -113,9 +103,7 @@ namespace Microsoft.PowerShell.Commands
 
         private PSCredential _credential;
 
-        /// <summary>
-        /// Use default credential..
-        /// </summary>
+        
         [Parameter(ParameterSetName = "UseDefaultCredential")]
         [ValidateNotNull]
         [Alias("UDC")]
@@ -134,29 +122,19 @@ namespace Microsoft.PowerShell.Commands
         #endregion
 
         #region overrides
-        /// <summary>
-        /// Cache for storing URIs.
-        /// </summary>
+        
         private static Dictionary<Uri, string> s_uriCache = new Dictionary<Uri, string>();
 
-        /// <summary>
-        /// Cache for storing sourcecodehashes.
-        /// </summary>
+        
         private static Dictionary<int, object> s_srccodeCache = new Dictionary<int, object>();
 
-        /// <summary>
-        /// Holds the hash code of the source generated.
-        /// </summary>
+        
         private int _sourceHash;
-        /// <summary>
-        /// Random class.
-        /// </summary>
+        
 
         private object _cachelock = new object();
         private static Random s_rnd = new Random();
-        /// <summary>
-        /// BeginProcessing code.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             if (string.IsNullOrWhiteSpace(_uri.ToString()))
@@ -275,9 +253,7 @@ namespace Microsoft.PowerShell.Commands
         private static ulong s_sequenceNumber = 1;
         private static object s_sequenceNumberLock = new object();
 
-        /// <summary>
-        /// Generates a random name.
-        /// </summary>
+        
         /// <returns>String.</returns>
         private string GenerateRandomName()
         {
@@ -310,9 +286,7 @@ namespace Microsoft.PowerShell.Commands
             return (sequenceString + rndname);
         }
 
-        /// <summary>
-        /// Generates the Assembly.
-        /// </summary>
+        
         /// <param name="NameSpace"></param>
         /// <param name="ClassName"></param>
         /// <returns></returns>
@@ -437,9 +411,7 @@ namespace Microsoft.PowerShell.Commands
             return results.CompiledAssembly;
         }
 
-        /// <summary>
-        /// Function to add all the assemblies required to generate the web proxy.
-        /// </summary>
+        
         /// <param name="assembly"></param>
         /// <param name="parameters"></param>
         private void GetReferencedAssemblies(Assembly assembly, CompilerParameters parameters)
@@ -455,10 +427,7 @@ namespace Microsoft.PowerShell.Commands
                 }
             }
         }
-        /// <summary>
-        /// Instantiates the object
-        ///  if a type of WebServiceBindingAttribute is not found, throw an exception.
-        /// </summary>
+        
         /// <param name="assembly"></param>
         /// <returns></returns>
         private object InstantiateWebServiceProxy(Assembly assembly)

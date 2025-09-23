@@ -5,18 +5,14 @@ using System.Management.Automation;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// A command that appends the specified content to the item at the specified path.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Clear, "Content", DefaultParameterSetName = "Path", SupportsShouldProcess = true, SupportsTransactions = true,
         HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096807")]
     public class ClearContentCommand : ContentCommandBase
     {
         #region Command code
 
-        /// <summary>
-        /// Clears the contents from the item at the specified path.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             // Default to the CmdletProviderContext that will direct output to
@@ -63,9 +59,7 @@ namespace Microsoft.PowerShell.Commands
         }
         #endregion Command code
 
-        /// <summary>
-        /// Determines if the provider for the specified path supports ShouldProcess.
-        /// </summary>
+        
         /// <value></value>
         protected override bool ProviderSupportsShouldProcess
         {
@@ -75,11 +69,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// A virtual method for retrieving the dynamic parameters for a cmdlet. Derived cmdlets
-        /// that require dynamic parameters should override this method and return the
-        /// dynamic parameter object.
-        /// </summary>
+        
         /// <param name="context">
         /// The context under which the command is running.
         /// </param>

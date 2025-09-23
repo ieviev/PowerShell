@@ -8,14 +8,10 @@ using System.Windows;
 
 namespace Microsoft.Management.UI
 {
-    /// <summary>
-    /// Utilities in common in this assembly.
-    /// </summary>
+    
     internal static class CommonHelper
     {
-        /// <summary>
-        /// Restore the values from the settings to the actual window position, size and state.
-        /// </summary>
+        
         /// <param name="target">The window we are setting position and size of.</param>
         /// <param name="userSettingTop">The value for top from the user settings.</param>
         /// <param name="userSettingLeft">The value for left from the user settings.</param>

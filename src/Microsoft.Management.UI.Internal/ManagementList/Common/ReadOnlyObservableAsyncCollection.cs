@@ -9,9 +9,7 @@ using System.ComponentModel;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <summary>
-    /// Represents a read-only ObservableCollection which also implement IAsyncProgress.
-    /// </summary>
+    
     /// <typeparam name="T">The type held by the collection.</typeparam>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public class ReadOnlyObservableAsyncCollection<T> :
@@ -24,9 +22,7 @@ namespace Microsoft.Management.UI.Internal
         #endregion Private fields
 
         #region Constructors
-        /// <summary>
-        /// The constructor.
-        /// </summary>
+        
         /// <param name="list">The collection with which to create this instance of the ReadOnlyObservableAsyncCollection class.
         /// The object must also implement IAsyncProgress, INotifyCollectionChanged and INotifyPropertyChanged.</param>
         public ReadOnlyObservableAsyncCollection(IList<T> list)
@@ -40,17 +36,13 @@ namespace Microsoft.Management.UI.Internal
         #endregion Constructors
 
         #region Events
-        /// <summary>
-        /// Occurs when the collection changes, either by adding or removing an item.
-        /// </summary>
+        
         /// <remarks>
         /// see <see cref="INotifyCollectionChanged"/>
         /// </remarks>
         public event NotifyCollectionChangedEventHandler CollectionChanged;
 
-        /// <summary>
-        /// Occurs when a property changes.
-        /// </summary>
+        
         /// <remarks>
         /// see <see cref="INotifyPropertyChanged"/>
         /// </remarks>
@@ -58,9 +50,7 @@ namespace Microsoft.Management.UI.Internal
         #endregion Events
 
         #region IAsyncProgress
-        /// <summary>
-        /// Gets a value indicating whether the async operation is currently running.
-        /// </summary>
+        
         public bool OperationInProgress
         {
             get
@@ -76,10 +66,7 @@ namespace Microsoft.Management.UI.Internal
             }
         }
 
-        /// <summary>
-        /// Gets the error for the async operation.  This field is only valid if
-        /// OperationInProgress is false.  null indicates there was no error.
-        /// </summary>
+        
         public Exception OperationError
         {
             get

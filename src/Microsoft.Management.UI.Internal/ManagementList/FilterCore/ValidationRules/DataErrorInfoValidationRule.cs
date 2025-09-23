@@ -5,15 +5,11 @@ using System;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <summary>
-    /// Provides a way to create a custom rule in order to check the validity of user input.
-    /// </summary>
+    
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public abstract class DataErrorInfoValidationRule : IDeepCloneable
     {
-        /// <summary>
-        /// When overridden in a derived class, performs validation checks on a value.
-        /// </summary>
+        
         /// <param name="value">
         /// The value to check.
         /// </param>

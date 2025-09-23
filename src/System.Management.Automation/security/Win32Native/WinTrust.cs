@@ -80,9 +80,7 @@ internal enum WinTrustProviderFlags
     WTD_CACHE_ONLY_URL_RETRIEVAL = 0x00001000
 }
 
-/// <summary>
-/// Pinvoke methods from wintrust.dll
-/// </summary>
+
 internal static class WinTrustMethods
 {
     private const string WinTrustDll = "wintrust.dll";
@@ -427,11 +425,7 @@ internal static class WinTrustMethods
         return data;
     }
 
-    /// <summary>
-    /// Signature of call back function used by CryptCATCDFOpen,
-    /// CryptCATCDFEnumCatAttributes, CryptCATCDFEnumAttributesWithCDFTag, and
-    /// and CryptCATCDFEnumMembersByCDFTagEx.
-    /// </summary>
+    
     internal delegate void CryptCATCDFParseErrorCallBack(
         uint dwErrorArea,
         uint dwLocalArea,

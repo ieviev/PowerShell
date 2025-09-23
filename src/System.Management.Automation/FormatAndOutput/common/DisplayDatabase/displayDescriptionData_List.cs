@@ -12,20 +12,13 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
 {
     #region List View Definitions
 
-    /// <summary>
-    /// In line definition of a list control.
-    /// </summary>
+    
     internal sealed class ListControlBody : ControlBody
     {
-        /// <summary>
-        /// Default list entry definition
-        /// It's mandatory.
-        /// </summary>
+        
         internal ListControlEntryDefinition defaultEntryDefinition = null;
 
-        /// <summary>
-        /// Optional list of list entry definition overrides. It can be empty if there are no overrides.
-        /// </summary>
+        
         internal List<ListControlEntryDefinition> optionalEntryList = new List<ListControlEntryDefinition>();
 
         internal override ControlBase Copy()
@@ -46,26 +39,16 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
     }
 
-    /// <summary>
-    /// Definition of the data to be displayed in a list entry.
-    /// </summary>
+    
     internal sealed class ListControlEntryDefinition
     {
-        /// <summary>
-        /// Applicability clause
-        /// Only valid if not the default definition.
-        /// </summary>
+        
         internal AppliesTo appliesTo = null;
 
-        /// <summary>
-        /// Mandatory list of list view items.
-        /// It cannot be empty.
-        /// </summary>
+        
         internal List<ListControlItemDefinition> itemDefinitionList = new List<ListControlItemDefinition>();
 
-        /// <summary>
-        /// Returns a Shallow Copy of the current object.
-        /// </summary>
+        
         /// <returns></returns>
         internal ListControlEntryDefinition Copy()
         {
@@ -80,30 +63,16 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
     }
 
-    /// <summary>
-    /// Cell definition inside a row.
-    /// </summary>
+    
     internal sealed class ListControlItemDefinition
     {
-        /// <summary>
-        /// Optional expression for conditional binding.
-        /// </summary>
+        
         internal ExpressionToken conditionToken;
 
-        /// <summary>
-        /// Optional label
-        /// If not present, use the name of the property from the matching
-        /// mandatory item description.
-        /// </summary>
+        
         internal TextToken label = null;
 
-        /// <summary>
-        /// Format directive body telling how to format the cell
-        /// RULE: the body can only contain
-        ///     * TextToken
-        ///     * PropertyToken
-        ///     * NOTHING (provide an empty cell)
-        /// </summary>
+        
         internal List<FormatToken> formatTokenList = new List<FormatToken>();
     }
 
@@ -112,15 +81,13 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Defines a list control.
-    /// </summary>
+    
     public sealed class ListControl : PSControl
     {
-        /// <summary>Entries in this list control</summary>
+        
         public List<ListControlEntry> Entries { get; internal set; }
 
-        /// <summary></summary>
+        
         public static ListControlBuilder Create(bool outOfBand = false)
         {
             var list = new ListControl { OutOfBand = false };
@@ -132,7 +99,7 @@ namespace System.Management.Automation
             writer.WriteListControl(this);
         }
 
-        /// <summary>Indicates if this control does not have any script blocks and is safe to export</summary>
+        
         internal override bool SafeForExport()
         {
             if (!base.SafeForExport())
@@ -147,13 +114,13 @@ namespace System.Management.Automation
             return true;
         }
 
-        /// <summary>Initiate an instance of ListControl</summary>
+        
         public ListControl()
         {
             Entries = new List<ListControlEntry>();
         }
 
-        /// <summary>To go from internal representation to external - for Get-FormatData</summary>
+        
         internal ListControl(ListControlBody listcontrolbody, ViewDefinition viewDefinition)
             : this()
         {
@@ -168,7 +135,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>Public constructor for ListControl</summary>
+        
         public ListControl(IEnumerable<ListControlEntry> entries)
             : this()
         {
@@ -195,15 +162,13 @@ namespace System.Management.Automation
         }
     }
 
-    /// <summary>
-    /// Defines one entry in a list control.
-    /// </summary>
+    
     public sealed class ListControlEntry
     {
-        /// <summary>List of items in the entry</summary>
+        
         public List<ListControlEntryItem> Items { get; internal set; }
 
-        /// <summary>List of typenames which select this entry, deprecated, use EntrySelectedBy</summary>
+        
         public List<string> SelectedBy
         {
             get
@@ -213,10 +178,10 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>List of typenames and/or a script block which select this entry.</summary>
+        
         public EntrySelectedBy EntrySelectedBy { get; internal set; }
 
-        /// <summary>Initiate an instance of ListControlEntry</summary>
+        
         public ListControlEntry()
         {
             Items = new List<ListControlEntryItem>();
@@ -236,7 +201,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>Public constructor for ListControlEntry</summary>
+        
         public ListControlEntry(IEnumerable<ListControlEntryItem> listItems)
             : this()
         {
@@ -248,7 +213,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>Public constructor for ListControlEntry</summary>
+        
         public ListControlEntry(IEnumerable<ListControlEntryItem> listItems, IEnumerable<string> selectedBy)
         {
             if (listItems == null)
@@ -286,25 +251,19 @@ namespace System.Management.Automation
         }
     }
 
-    /// <summary>
-    /// Defines one row in a list control entry.
-    /// </summary>
+    
     public sealed class ListControlEntryItem
     {
-        /// <summary>
-        /// Gets the label for this List Control Entry Item
-        /// If nothing is specified, then it uses the
-        /// property name.
-        /// </summary>
+        
         public string Label { get; internal set; }
 
-        /// <summary>Display entry</summary>
+        
         public DisplayEntry DisplayEntry { get; internal set; }
 
         /// <summary/>
         public DisplayEntry ItemSelectionCondition { get; internal set; }
 
-        /// <summary>Format string to apply</summary>
+        
         public string FormatString { get; internal set; }
 
         internal ListControlEntryItem()
@@ -333,10 +292,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Public constructor for ListControlEntryItem
-        /// Label and Entry could be null.
-        /// </summary>
+        
         /// <param name="label"></param>
         /// <param name="entry"></param>
         public ListControlEntryItem(string label, DisplayEntry entry)
@@ -385,26 +341,26 @@ namespace System.Management.Automation
             return this;
         }
 
-        /// <summary></summary>
+        
         public ListEntryBuilder AddItemScriptBlock(string scriptBlock, string label = null, string format = null)
         {
             return AddItem(scriptBlock, label, DisplayEntryValueType.ScriptBlock, format);
         }
 
-        /// <summary></summary>
+        
         public ListEntryBuilder AddItemProperty(string property, string label = null, string format = null)
         {
             return AddItem(property, label, DisplayEntryValueType.Property, format);
         }
 
-        /// <summary></summary>
+        
         public ListControlBuilder EndEntry()
         {
             return _listBuilder;
         }
     }
 
-    /// <summary></summary>
+    
     public class ListControlBuilder
     {
         internal ListControl _list;
@@ -414,7 +370,7 @@ namespace System.Management.Automation
             _list = list;
         }
 
-        /// <summary>Group instances by the property name with an optional label.</summary>
+        
         public ListControlBuilder GroupByProperty(string property, CustomControl customControl = null, string label = null)
         {
             _list.GroupBy = new PSControlGroupBy
@@ -426,7 +382,7 @@ namespace System.Management.Automation
             return this;
         }
 
-        /// <summary>Group instances by the script block expression with an optional label.</summary>
+        
         public ListControlBuilder GroupByScriptBlock(string scriptBlock, CustomControl customControl = null, string label = null)
         {
             _list.GroupBy = new PSControlGroupBy
@@ -438,7 +394,7 @@ namespace System.Management.Automation
             return this;
         }
 
-        /// <summary></summary>
+        
         public ListEntryBuilder StartEntry(IEnumerable<string> entrySelectedByType = null, IEnumerable<DisplayEntry> entrySelectedByCondition = null)
         {
             var listEntry = new ListControlEntry
@@ -449,7 +405,7 @@ namespace System.Management.Automation
             return new ListEntryBuilder(this, listEntry);
         }
 
-        /// <summary></summary>
+        
         public ListControl EndList()
         {
             return _list;

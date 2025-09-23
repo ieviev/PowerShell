@@ -11,22 +11,16 @@ using Microsoft.PowerShell.Commands.Internal.Format;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// Null sink to absorb pipeline output.
-    /// </summary>
+    
     [Cmdlet("Out", "Null", SupportsShouldProcess = false,
         HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096792", RemotingCapability = RemotingCapability.None)]
     public class OutNullCommand : PSCmdlet
     {
-        /// <summary>
-        /// This parameter specifies the current pipeline object.
-        /// </summary>
+        
         [Parameter(ValueFromPipeline = true)]
         public PSObject InputObject { get; set; } = AutomationNull.Value;
 
-        /// <summary>
-        /// Do nothing.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             // explicitely overridden:
@@ -34,35 +28,21 @@ namespace Microsoft.PowerShell.Commands
         }
     }
 
-    /// <summary>
-    /// Implementation for the out-default command
-    /// this command it implicitly inject by the
-    /// powershell host at the end of the pipeline as the
-    /// default sink (display to console screen)
-    /// </summary>
+    
     [Cmdlet(VerbsData.Out, "Default", HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096486", RemotingCapability = RemotingCapability.None)]
     public class OutDefaultCommand : FrontEndCommandBase
     {
-        /// <summary>
-        /// Determines whether objects should be sent to API consumers.
-        /// This command is automatically added to the pipeline when PowerShell is transcribing and
-        /// invoked via API. This ensures that the objects pass through the formatting and output
-        /// system, but can still make it to the API consumer.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter Transcript { get; set; }
 
-        /// <summary>
-        /// Set inner command.
-        /// </summary>
+        
         public OutDefaultCommand()
         {
             this.implementation = new OutputManagerInner();
         }
 
-        /// <summary>
-        /// Just hook up the LineOutput interface.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             var lineOutput = new ConsoleLineOutput(Host, false, new TerminatingErrorContext(this));
@@ -89,9 +69,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Process the OutVar, if set.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             if (Transcript)
@@ -118,9 +96,7 @@ namespace Microsoft.PowerShell.Commands
             base.ProcessRecord();
         }
 
-        /// <summary>
-        /// Swap the outVar with what we've processed, if OutVariable is set.
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             // This needs to be done directly through the command runtime, as Out-Default
@@ -139,9 +115,7 @@ namespace Microsoft.PowerShell.Commands
             base.EndProcessing();
         }
 
-        /// <summary>
-        /// Revert transcription state on Dispose.
-        /// </summary>
+        
         protected override void InternalDispose()
         {
             try
@@ -162,34 +136,24 @@ namespace Microsoft.PowerShell.Commands
         private IDisposable _transcribeOnlyCookie = null;
     }
 
-    /// <summary>
-    /// Implementation for the out-host command.
-    /// </summary>
+    
     [Cmdlet(VerbsData.Out, "Host", HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096863", RemotingCapability = RemotingCapability.None)]
     public class OutHostCommand : FrontEndCommandBase
     {
         #region Command Line Parameters
 
-        /// <summary>
-        /// Non positional parameter to specify paging.
-        /// </summary>
+        
         private bool _paging;
 
         #endregion
 
-        /// <summary>
-        /// Constructor of OutHostCommand.
-        /// </summary>
+        
         public OutHostCommand()
         {
             this.implementation = new OutputManagerInner();
         }
 
-        /// <summary>
-        /// Optional, non positional parameter to specify paging
-        /// FALSE: names only
-        /// TRUE: full info.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter Paging
         {
@@ -198,9 +162,7 @@ namespace Microsoft.PowerShell.Commands
             set { _paging = value; }
         }
 
-        /// <summary>
-        /// Just hook up the LineOutput interface.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             var lineOutput = new ConsoleLineOutput(Host, _paging, new TerminatingErrorContext(this));

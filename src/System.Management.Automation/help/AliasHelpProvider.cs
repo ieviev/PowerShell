@@ -7,9 +7,7 @@ using System.Management.Automation.Internal;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Implements the help provider for alias help.
-    /// </summary>
+    
     /// <remarks>
     /// Unlike other help providers, AliasHelpProvider directly inherits from HelpProvider
     /// instead of HelpProviderWithCache. This is because alias can be created/removed/updated
@@ -20,9 +18,7 @@ namespace System.Management.Automation
     /// </remarks>
     internal class AliasHelpProvider : HelpProvider
     {
-        /// <summary>
-        /// Initializes a new instance of AliasHelpProvider class.
-        /// </summary>
+        
         internal AliasHelpProvider(HelpSystem helpSystem) : base(helpSystem)
         {
             _sessionState = helpSystem.ExecutionContext.SessionState;
@@ -32,9 +28,7 @@ namespace System.Management.Automation
 
         private readonly ExecutionContext _context;
 
-        /// <summary>
-        /// Session state for current Microsoft Command Shell session.
-        /// </summary>
+        
         /// <remarks>
         /// _sessionState is mainly used for alias help search in the case
         /// of wildcard search patterns. This is currently not achievable
@@ -42,9 +36,7 @@ namespace System.Management.Automation
         /// </remarks>
         private readonly SessionState _sessionState;
 
-        /// <summary>
-        /// Command Discovery object for current session.
-        /// </summary>
+        
         /// <remarks>
         /// _commandDiscovery is mainly used for exact match help for alias.
         /// The AliasInfo object returned from _commandDiscovery is essential
@@ -54,9 +46,7 @@ namespace System.Management.Automation
 
         #region Common Properties
 
-        /// <summary>
-        /// Name of alias help provider.
-        /// </summary>
+        
         /// <value>Name of alias help provider</value>
         internal override string Name
         {
@@ -66,9 +56,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Help category of alias help provider, which is a constant: HelpCategory.Alias.
-        /// </summary>
+        
         /// <value>Help category of alias help provider.</value>
         internal override HelpCategory HelpCategory
         {
@@ -82,9 +70,7 @@ namespace System.Management.Automation
 
         #region Help Provider Interface
 
-        /// <summary>
-        /// Exact match an alias help target.
-        /// </summary>
+        
         /// <remarks>
         /// This will
         ///     a. use _commandDiscovery object to retrieve AliasInfo object.
@@ -118,9 +104,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Search an alias help target.
-        /// </summary>
+        
         /// <remarks>
         /// This will,
         ///     a. use _sessionState object to get a list of alias that match the target.

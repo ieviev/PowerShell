@@ -21,16 +21,12 @@ namespace Microsoft.PowerShell.Commands
 {
     #region ServiceBaseCommand
 
-    /// <summary>
-    /// This class implements the base for service commands.
-    /// </summary>
+    
     public abstract class ServiceBaseCommand : Cmdlet
     {
         #region Internal
 
-        /// <summary>
-        /// Confirm that the operation should proceed.
-        /// </summary>
+        
         /// <param name="service">Service object to be acted on.</param>
         /// <returns>True if operation should continue, false otherwise.</returns>
         protected bool ShouldProcessServiceOperation(ServiceController service)
@@ -40,9 +36,7 @@ namespace Microsoft.PowerShell.Commands
                 service.ServiceName);
         }
 
-        /// <summary>
-        /// Confirm that the operation should proceed.
-        /// </summary>
+        
         /// <param name="displayName">Display name of service to be acted on.</param>
         /// <param name="serviceName">Service name of service to be acted on.</param>
         /// <returns>True if operation should continue, false otherwise.</returns>
@@ -56,9 +50,7 @@ namespace Microsoft.PowerShell.Commands
             return ShouldProcess(name);
         }
 
-        /// <summary>
-        /// Writes a non-terminating error.
-        /// </summary>
+        
         /// <param name="service"></param>
         /// <param name="innerException"></param>
         /// <param name="errorId"></param>
@@ -81,9 +73,7 @@ namespace Microsoft.PowerShell.Commands
                 category);
         }
 
-        /// <summary>
-        /// Writes a non-terminating error.
-        /// </summary>
+        
         /// <param name="serviceName"></param>
         /// <param name="displayName"></param>
         /// <param name="targetObject"></param>
@@ -150,39 +140,24 @@ namespace Microsoft.PowerShell.Commands
 
     #region MultipleServiceCommandBase
 
-    /// <summary>
-    /// This class implements the base for service commands which can
-    /// operate on multiple services.
-    /// </summary>
+    
     public abstract class MultipleServiceCommandBase : ServiceBaseCommand
     {
         #region Parameters
 
-        /// <summary>
-        /// The various process selection modes.
-        /// </summary>
+        
         internal enum SelectionMode
         {
-            /// <summary>
-            /// Select all services.
-            /// </summary>
+            
             Default = 0,
-            /// <summary>
-            /// Select services matching the supplied names.
-            /// </summary>
+            
             DisplayName = 1,
-            /// <summary>
-            /// Select services based on pipeline input.
-            /// </summary>
+            
             InputObject = 2,
-            /// <summary>
-            /// Select services by Service name.
-            /// </summary>
+            
             ServiceName = 3
         }
-        /// <summary>
-        /// Holds the selection mode setting.
-        /// </summary>
+        
         internal SelectionMode selectionMode;
 
         /// <remarks>
@@ -191,9 +166,7 @@ namespace Microsoft.PowerShell.Commands
         /// </remarks>
         internal string[] serviceNames = null;
 
-        /// <summary>
-        /// Gets/sets an array of display names for services.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "DisplayName", Mandatory = true)]
         public string[] DisplayName
         {
@@ -211,12 +184,7 @@ namespace Microsoft.PowerShell.Commands
 
         internal string[] displayNames = null;
 
-        /// <summary>
-        /// Lets you include particular services.  Services not matching
-        /// one of these (if specified) are excluded.
-        /// These are interpreted as either ServiceNames or DisplayNames
-        /// according to the parameter set.
-        /// </summary>
+        
         [Parameter]
         [ValidateNotNullOrEmpty]
         public string[] Include
@@ -234,12 +202,7 @@ namespace Microsoft.PowerShell.Commands
 
         internal string[] include = null;
 
-        /// <summary>
-        /// Lets you exclude particular services.  Services matching
-        /// one of these (if specified) are excluded.
-        /// These are interpreted as either ServiceNames or DisplayNames
-        /// according to the parameter set.
-        /// </summary>
+        
         [Parameter]
         [ValidateNotNullOrEmpty]
         public string[] Exclude
@@ -258,14 +221,7 @@ namespace Microsoft.PowerShell.Commands
         internal string[] exclude = null;
 
         // 1054295-2004/12/01-JonN This also works around 1054295.
-        /// <summary>
-        /// If the input is a stream of [collections of]
-        /// ServiceController objects, we bypass the ServiceName and
-        /// DisplayName parameters and read the ServiceControllers
-        /// directly.  This allows us to deal with services which
-        /// have wildcard characters in their name (servicename or
-        /// displayname).
-        /// </summary>
+        
         /// <value>ServiceController objects</value>
         [Parameter(ParameterSetName = "InputObject", ValueFromPipeline = true)]
         [ValidateNotNullOrEmpty]
@@ -289,9 +245,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Internal
 
-        /// <summary>
-        /// Gets an array of all services.
-        /// </summary>
+        
         /// <value>
         /// An array of <see cref="ServiceController"/> components that represents all the service resources.
         /// </value>
@@ -323,10 +277,7 @@ namespace Microsoft.PowerShell.Commands
             return null;
         }
 
-        /// <summary>
-        /// Retrieve the list of all services matching the ServiceName,
-        /// DisplayName, Include and Exclude parameters, sorted by ServiceName.
-        /// </summary>
+        
         /// <returns></returns>
         internal List<ServiceController> MatchingServices()
         {
@@ -355,13 +306,7 @@ namespace Microsoft.PowerShell.Commands
             return string.Compare(x.ServiceName, y.ServiceName, StringComparison.OrdinalIgnoreCase);
         }
 
-        /// <summary>
-        /// Retrieves the list of all services matching the ServiceName,
-        /// Include and Exclude parameters.
-        /// Generates a non-terminating error for each specified
-        /// service name which is not found even though it contains
-        /// no wildcards.
-        /// </summary>
+        
         /// <returns></returns>
         /// <remarks>
         /// We do not use the ServiceController(string serviceName)
@@ -424,13 +369,7 @@ namespace Microsoft.PowerShell.Commands
             return matchingServices;
         }
 
-        /// <summary>
-        /// Retrieves the list of all services matching the DisplayName,
-        /// Include and Exclude parameters.
-        /// Generates a non-terminating error for each specified
-        /// display name which is not found even though it contains
-        /// no wildcards.
-        /// </summary>
+        
         /// <returns></returns>
         private List<ServiceController> MatchingServicesByDisplayName()
         {
@@ -470,10 +409,7 @@ namespace Microsoft.PowerShell.Commands
             return matchingServices;
         }
 
-        /// <summary>
-        /// Retrieves the list of all services matching the InputObject,
-        /// Include and Exclude parameters.
-        /// </summary>
+        
         /// <returns></returns>
         private List<ServiceController> MatchingServicesByInput()
         {
@@ -493,12 +429,7 @@ namespace Microsoft.PowerShell.Commands
             return matchingServices;
         }
 
-        /// <summary>
-        /// Add <paramref name="service"/> to <paramref name="list"/>,
-        /// but only if it passes the Include and Exclude filters (if present)
-        /// and (if <paramref name="checkDuplicates"/>) if it is not
-        /// already on  <paramref name="list"/>.
-        /// </summary>
+        
         /// <param name="list">List of services.</param>
         /// <param name="service">Service to add to list.</param>
         /// <param name="checkDuplicates">Check list for duplicates.</param>
@@ -526,10 +457,7 @@ namespace Microsoft.PowerShell.Commands
             list.Add(service);
         }
 
-        /// <summary>
-        /// Check whether <paramref name="service"/> matches the list of
-        /// patterns in <paramref name="matchList"/>.
-        /// </summary>
+        
         /// <param name="service"></param>
         /// <param name="matchList"></param>
         /// <returns></returns>
@@ -555,18 +483,14 @@ namespace Microsoft.PowerShell.Commands
     #endregion MultipleServiceCommandBase
 
     #region GetServiceCommand
-    /// <summary>
-    /// This class implements the get-service command.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Get, "Service", DefaultParameterSetName = "Default",
         HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096496", RemotingCapability = RemotingCapability.SupportedByCommand)]
     [OutputType(typeof(ServiceController))]
     public sealed class GetServiceCommand : MultipleServiceCommandBase
     {
         #region Parameters
-        /// <summary>
-        /// Gets/sets an array of service names.
-        /// </summary>
+        
         /// <remarks>
         /// The ServiceName parameter is declared in subclasses,
         /// since it is optional for GetService and mandatory otherwise.
@@ -588,16 +512,12 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// This returns the DependentServices of the specified service.
-        /// </summary>
+        
         [Parameter]
         [Alias("DS")]
         public SwitchParameter DependentServices { get; set; }
 
-        /// <summary>
-        /// This returns the ServicesDependedOn of the specified service.
-        /// </summary>
+        
         [Parameter]
         [Alias("SDO", "ServicesDependedOn")]
         public SwitchParameter RequiredServices { get; set; }
@@ -605,9 +525,7 @@ namespace Microsoft.PowerShell.Commands
         #endregion Parameters
 
         #region Overrides
-        /// <summary>
-        /// Write the service objects.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             nint scManagerHandle = nint.Zero;
@@ -674,9 +592,7 @@ namespace Microsoft.PowerShell.Commands
         #endregion Overrides
 
 #nullable enable
-        /// <summary>
-        /// Adds UserName, Description, BinaryPathName, DelayedAutoStart and StartupType to a ServiceController object.
-        /// </summary>
+        
         /// <param name="scManagerHandle">Handle to the local SCManager instance.</param>
         /// <param name="service"></param>
         /// <returns>ServiceController as PSObject with UserName, Description and StartupType added.</returns>
@@ -770,16 +686,11 @@ namespace Microsoft.PowerShell.Commands
     #endregion GetServiceCommand
 
     #region ServiceOperationBaseCommand
-    /// <summary>
-    /// This class implements the base for service commands which actually
-    /// act on the service(s).
-    /// </summary>
+    
     public abstract class ServiceOperationBaseCommand : MultipleServiceCommandBase
     {
         #region Parameters
-        /// <summary>
-        /// Gets/sets an array of service names.
-        /// </summary>
+        
         /// <remarks>
         /// The ServiceName parameter is declared in subclasses,
         /// since it is optional for GetService and mandatory otherwise.
@@ -800,9 +711,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Service controller objects.
-        /// </summary>
+        
         [Parameter(Position = 0, Mandatory = true, ParameterSetName = "InputObject", ValueFromPipeline = true)]
         [ValidateNotNullOrEmpty]
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
@@ -819,20 +728,14 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Specifies whether to write the objects successfully operated upon
-        /// to the success stream.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter PassThru { get; set; }
 
         #endregion Parameters
 
         #region Internal
-        /// <summary>
-        /// Waits forever for the service to reach the desired status, but
-        /// writes a string to WriteWarning every 2 seconds.
-        /// </summary>
+        
         /// <param name="serviceController">Service on which to operate.</param>
         /// <param name="targetStatus">Desired status.</param>
         /// <param name="pendingStatus">
@@ -901,9 +804,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// This will start the service.
-        /// </summary>
+        
         /// <param name="serviceController">Service to start.</param>
         /// <returns>True if-and-only-if the service was started.</returns>
         internal bool DoStartService(ServiceController serviceController)
@@ -955,9 +856,7 @@ namespace Microsoft.PowerShell.Commands
             return true;
         }
 
-        /// <summary>
-        /// This will stop the service.
-        /// </summary>
+        
         /// <param name="serviceController">Service to stop.</param>
         /// <param name="force">Stop dependent services.</param>
         /// <param name="waitForServiceToStop"></param>
@@ -1082,9 +981,7 @@ namespace Microsoft.PowerShell.Commands
             return stoppedServices;
         }
 
-        /// <summary>
-        /// Check if all dependent services are stopped.
-        /// </summary>
+        
         /// <param name="dependentServices"></param>
         /// <returns>
         /// True if all dependent services are stopped
@@ -1095,9 +992,7 @@ namespace Microsoft.PowerShell.Commands
             return Array.TrueForAll(dependentServices, static service => service.Status == ServiceControllerStatus.Stopped);
         }
 
-        /// <summary>
-        /// This removes all services that are not stopped from a list of services.
-        /// </summary>
+        
         /// <param name="services">A list of services.</param>
         internal void RemoveNotStoppedServices(List<ServiceController> services)
         {
@@ -1107,9 +1002,7 @@ namespace Microsoft.PowerShell.Commands
                 service.Status != ServiceControllerStatus.StopPending);
         }
 
-        /// <summary>
-        /// This will pause the service.
-        /// </summary>
+        
         /// <param name="serviceController">Service to pause.</param>
         /// <returns>True if-and-only-if the service was paused.</returns>
         internal bool DoPauseService(ServiceController serviceController)
@@ -1187,9 +1080,7 @@ namespace Microsoft.PowerShell.Commands
             return true;
         }
 
-        /// <summary>
-        /// This will resume the service.
-        /// </summary>
+        
         /// <param name="serviceController">Service to resume.</param>
         /// <returns>True if-and-only-if the service was resumed.</returns>
         internal bool DoResumeService(ServiceController serviceController)
@@ -1271,9 +1162,7 @@ namespace Microsoft.PowerShell.Commands
 
     #region StopServiceCommand
 
-    /// <summary>
-    /// This class implements the stop-service command.
-    /// </summary>
+    
     /// <remarks>
     /// Note that the services will be sorted before being stopped.
     /// PM confirms that this is OK.
@@ -1282,26 +1171,15 @@ namespace Microsoft.PowerShell.Commands
     [OutputType(typeof(ServiceController))]
     public sealed class StopServiceCommand : ServiceOperationBaseCommand
     {
-        /// <summary>
-        /// Specifies whether to force a service to stop
-        /// even if it has dependent services.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter Force { get; set; }
 
-        /// <summary>
-        /// Specifies whether to wait for a service to reach the stopped state before returning.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter NoWait { get; set; }
 
-        /// <summary>
-        /// Stop the services.
-        /// It is a non-terminating error if -Force is not specified and
-        ///  the service has dependent services, whether or not they
-        ///  are running.
-        /// It is a non-terminating error if the service stop operation fails.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             foreach (ServiceController serviceController in MatchingServices())
@@ -1328,16 +1206,12 @@ namespace Microsoft.PowerShell.Commands
     #endregion StopServiceCommand
 
     #region StartServiceCommand
-    /// <summary>
-    /// This class implements the start-service command.
-    /// </summary>
+    
     [Cmdlet(VerbsLifecycle.Start, "Service", DefaultParameterSetName = "InputObject", SupportsShouldProcess = true, HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097051")]
     [OutputType(typeof(ServiceController))]
     public sealed class StartServiceCommand : ServiceOperationBaseCommand
     {
-        /// <summary>
-        /// Start the services.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             foreach (ServiceController serviceController in MatchingServices())
@@ -1360,16 +1234,12 @@ namespace Microsoft.PowerShell.Commands
     #endregion StartServiceCommand
 
     #region SuspendServiceCommand
-    /// <summary>
-    /// This class implements the suspend-service command.
-    /// </summary>
+    
     [Cmdlet(VerbsLifecycle.Suspend, "Service", DefaultParameterSetName = "InputObject", SupportsShouldProcess = true, HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097053")]
     [OutputType(typeof(ServiceController))]
     public sealed class SuspendServiceCommand : ServiceOperationBaseCommand
     {
-        /// <summary>
-        /// Start the services.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             foreach (ServiceController serviceController in MatchingServices())
@@ -1392,17 +1262,13 @@ namespace Microsoft.PowerShell.Commands
     #endregion SuspendServiceCommand
 
     #region ResumeServiceCommand
-    /// <summary>
-    /// This class implements the resume-service command.
-    /// </summary>
+    
     [Cmdlet(VerbsLifecycle.Resume, "Service", DefaultParameterSetName = "InputObject", SupportsShouldProcess = true,
         HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097150")]
     [OutputType(typeof(ServiceController))]
     public sealed class ResumeServiceCommand : ServiceOperationBaseCommand
     {
-        /// <summary>
-        /// Start the services.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             foreach (ServiceController serviceController in MatchingServices())
@@ -1426,28 +1292,17 @@ namespace Microsoft.PowerShell.Commands
 
     #region RestartServiceCommand
 
-    /// <summary>
-    /// This class implements the restart-service command.
-    /// </summary>
+    
     [Cmdlet(VerbsLifecycle.Restart, "Service", DefaultParameterSetName = "InputObject", SupportsShouldProcess = true,
         HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097059")]
     [OutputType(typeof(ServiceController))]
     public sealed class RestartServiceCommand : ServiceOperationBaseCommand
     {
-        /// <summary>
-        /// Specifies whether to force a service to stop
-        /// even if it has dependent services.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter Force { get; set; }
 
-        /// <summary>
-        /// Stop and restart the services.
-        /// It is a non-terminating error if the service is running,
-        ///  -Force is not specified and the service has dependent services,
-        ///  whether or not the dependent services are running.
-        /// It is a non-terminating error if the service stop operation fails.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             foreach (ServiceController serviceController in MatchingServices())
@@ -1480,9 +1335,7 @@ namespace Microsoft.PowerShell.Commands
 
     #region SetServiceCommand
 
-    /// <summary>
-    /// This class implements the set-service command.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Set, "Service", SupportsShouldProcess = true, DefaultParameterSetName = "Name",
         HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097148", RemotingCapability = RemotingCapability.SupportedByCommand)]
     [OutputType(typeof(ServiceController))]
@@ -1490,9 +1343,7 @@ namespace Microsoft.PowerShell.Commands
     {
         #region Parameters
 
-        /// <summary>
-        /// Service name.
-        /// </summary>
+        
         /// <value></value>
         [Parameter(Mandatory = true, ParameterSetName = "Name", Position = 0, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true)]
         [Alias("ServiceName", "SN")]
@@ -1511,19 +1362,11 @@ namespace Microsoft.PowerShell.Commands
 
         internal string serviceName = null;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "InputObject".
-        /// Specifies a ServiceController object that represents the service to change.
-        /// Enter a variable that contains the objects or type a command or expression
-        /// that gets the objects.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ParameterSetName = "InputObject", Position = 0, ValueFromPipeline = true)]
         public new ServiceController InputObject { get; set; }
 
-        /// <summary>
-        /// The following is the definition of the input parameter "DisplayName".
-        /// Specifies a new display name for the cmdlet.
-        /// </summary>
+        
         [Parameter]
         [ValidateNotNullOrEmpty]
         [Alias("DN")]
@@ -1542,21 +1385,13 @@ namespace Microsoft.PowerShell.Commands
 
         internal string displayName = null;
 
-        /// <summary>
-        /// Account under which the service should run.
-        /// </summary>
+        
         /// <value></value>
         [Parameter]
         [Credential()]
         public PSCredential Credential { get; set; }
 
-        /// <summary>
-        /// The following is the definition of the input parameter "Description".
-        /// Specifies a new description for the service.
-        /// The service description appears in Services in Computer Management.
-        /// Description is not a property of the ServiceController object that
-        /// Get-Service retrieve.
-        /// </summary>
+        
         [Parameter]
         [ValidateNotNullOrEmpty]
         public string Description
@@ -1574,14 +1409,7 @@ namespace Microsoft.PowerShell.Commands
 
         internal string description = null;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "StartupType".
-        /// "Set-Service -StartType" sets ServiceController.InputObject.StartType.
-        /// Changes the starting mode of the service. Valid values for StartupType are:
-        /// -- Automatic: Start when the system starts.
-        /// -- Manual   : Starts only when started by a user or program.
-        /// -- Disabled : Can.
-        /// </summary>
+        
         [Parameter]
         [Alias("StartMode", "SM", "ST", "StartType")]
         [ValidateNotNullOrEmpty]
@@ -1602,9 +1430,7 @@ namespace Microsoft.PowerShell.Commands
         // distinguish when this is and is not set.
         internal ServiceStartupType startupType = ServiceStartupType.InvalidValue;
 
-        /// <summary>
-        /// Sets the SecurityDescriptorSddl of the service using a SDDL string.
-        /// </summary>
+        
         [Parameter]
         [Alias("sd")]
         [ValidateNotNullOrEmpty]
@@ -1614,14 +1440,7 @@ namespace Microsoft.PowerShell.Commands
             set;
         }
 
-        /// <summary>
-        /// The following is the definition of the input parameter "Status".
-        /// This specifies what state the service should be in (e.g. Running, Stopped,
-        /// Paused).  If it is already in that state, do nothing.  If it is not, do the
-        /// appropriate action to bring about the desired result (start/stop/suspend the
-        /// service) and issue an error if this cannot be achieved.
-        ///  Status can be Paused ,  Running and Stopped.
-        /// </summary>
+        
         [Parameter]
         [ValidateSetAttribute(new string[] { "Running", "Stopped", "Paused" })]
         public string Status
@@ -1639,18 +1458,11 @@ namespace Microsoft.PowerShell.Commands
 
         internal string serviceStatus = null;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "Force".
-        /// This parameter is useful only when parameter "Stop" is enabled.
-        /// If "Force" is enabled, it will also stop the dependent services.
-        /// If not, it will send an error when this service has dependent ones.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter Force { get; set; }
 
-        /// <summary>
-        /// This is not a parameter for this cmdlet.
-        /// </summary>
+        
         // This has been shadowed from base class and removed parameter tag to fix gcm "Set-Service" -syntax
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
         public new string[] Include
@@ -1668,9 +1480,7 @@ namespace Microsoft.PowerShell.Commands
 
         internal new string[] include = null;
 
-        /// <summary>
-        /// This is not a parameter for this cmdlet.
-        /// </summary>
+        
         // This has been shadowed from base class and removed parameter tag to fix gcm "Set-Service" -syntax
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
         public new string[] Exclude
@@ -1690,8 +1500,7 @@ namespace Microsoft.PowerShell.Commands
         #endregion Parameters
 
         #region Overrides
-        /// <summary>
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             ServiceController service = null;
@@ -1998,17 +1807,13 @@ namespace Microsoft.PowerShell.Commands
     #endregion SetServiceCommand
 
     #region NewServiceCommand
-    /// <summary>
-    /// This class implements the New-Service command.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.New, "Service", SupportsShouldProcess = true, HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096905")]
     [OutputType(typeof(ServiceController))]
     public class NewServiceCommand : ServiceBaseCommand
     {
         #region Parameters
-        /// <summary>
-        /// Name of the service to create.
-        /// </summary>
+        
         /// <value></value>
         [Parameter(Position = 0, Mandatory = true)]
         [Alias("ServiceName")]
@@ -2021,9 +1826,7 @@ namespace Microsoft.PowerShell.Commands
 
         internal string serviceName = null;
 
-        /// <summary>
-        /// The executable which implements this service.
-        /// </summary>
+        
         /// <value></value>
         [Parameter(Position = 1, Mandatory = true)]
         [Alias("Path")]
@@ -2036,9 +1839,7 @@ namespace Microsoft.PowerShell.Commands
 
         internal string binaryPathName = null;
 
-        /// <summary>
-        /// DisplayName of the service to create.
-        /// </summary>
+        
         /// <value></value>
         [Parameter]
         [ValidateNotNullOrEmpty]
@@ -2051,9 +1852,7 @@ namespace Microsoft.PowerShell.Commands
 
         internal string displayName = null;
 
-        /// <summary>
-        /// Description of the service to create.
-        /// </summary>
+        
         /// <value></value>
         [Parameter]
         [ValidateNotNullOrEmpty]
@@ -2066,9 +1865,7 @@ namespace Microsoft.PowerShell.Commands
 
         internal string description = null;
 
-        /// <summary>
-        /// Should the service start automatically?
-        /// </summary>
+        
         /// <value></value>
         [Parameter]
         public ServiceStartupType StartupType
@@ -2080,9 +1877,7 @@ namespace Microsoft.PowerShell.Commands
 
         internal ServiceStartupType startupType = ServiceStartupType.Automatic;
 
-        /// <summary>
-        /// Account under which the service should run.
-        /// </summary>
+        
         /// <value></value>
         [Parameter]
         [Credential()]
@@ -2095,9 +1890,7 @@ namespace Microsoft.PowerShell.Commands
 
         internal PSCredential credential = null;
 
-        /// <summary>
-        /// Sets the SecurityDescriptorSddl of the service using a SDDL string.
-        /// </summary>
+        
         [Parameter]
         [Alias("sd")]
         [ValidateNotNullOrEmpty]
@@ -2107,9 +1900,7 @@ namespace Microsoft.PowerShell.Commands
             set;
         }
 
-        /// <summary>
-        /// Other services on which the new service depends.
-        /// </summary>
+        
         /// <value></value>
         [Parameter]
         public string[] DependsOn
@@ -2123,9 +1914,7 @@ namespace Microsoft.PowerShell.Commands
         #endregion Parameters
 
         #region Overrides
-        /// <summary>
-        /// Create the service.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             ServiceController service = null;
@@ -2364,36 +2153,25 @@ namespace Microsoft.PowerShell.Commands
     #endregion NewServiceCommand
 
     #region RemoveServiceCommand
-    /// <summary>
-    /// This class implements the Remove-Service command.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Remove, "Service", SupportsShouldProcess = true, DefaultParameterSetName = "Name", HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2248980")]
     public class RemoveServiceCommand : ServiceBaseCommand
     {
         #region Parameters
 
-        /// <summary>
-        /// Name of the service to remove.
-        /// </summary>
+        
         [Parameter(Position = 0, Mandatory = true, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true, ParameterSetName = "Name")]
         [Alias("ServiceName", "SN")]
         public string Name { get; set; }
 
-        /// <summary>
-        /// The following is the definition of the input parameter "InputObject".
-        /// Specifies ServiceController object representing the services to be removed.
-        /// Enter a variable that contains the objects or type a command or expression
-        /// that gets the objects.
-        /// </summary>
+        
         [Parameter(ValueFromPipeline = true, ParameterSetName = "InputObject")]
         public ServiceController InputObject { get; set; }
 
         #endregion Parameters
 
         #region Overrides
-        /// <summary>
-        /// Remove the service.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             ServiceController service = null;
@@ -2533,15 +2311,11 @@ namespace Microsoft.PowerShell.Commands
     #endregion RemoveServiceCommand
 
     #region ServiceCommandException
-    /// <summary>
-    /// Non-terminating errors occurring in the service noun commands.
-    /// </summary>
+    
     public class ServiceCommandException : SystemException
     {
         #region ctors
-        /// <summary>
-        /// Unimplemented standard constructor.
-        /// </summary>
+        
         /// <returns>Doesn't return.</returns>
         public ServiceCommandException()
             : base()
@@ -2549,9 +2323,7 @@ namespace Microsoft.PowerShell.Commands
             throw new NotImplementedException();
         }
 
-        /// <summary>
-        /// Standard constructor.
-        /// </summary>
+        
         /// <param name="message"></param>
         /// <returns>Constructed object.</returns>
         public ServiceCommandException(string message)
@@ -2559,9 +2331,7 @@ namespace Microsoft.PowerShell.Commands
         {
         }
 
-        /// <summary>
-        /// Standard constructor.
-        /// </summary>
+        
         /// <param name="message"></param>
         /// <param name="innerException"></param>
         public ServiceCommandException(string message, Exception innerException)
@@ -2571,9 +2341,7 @@ namespace Microsoft.PowerShell.Commands
         #endregion ctors
 
         #region Serialization
-        /// <summary>
-        /// Serialization constructor.
-        /// </summary>
+        
         /// <param name="info"></param>
         /// <param name="context"></param>
         /// <returns>Constructed object.</returns>
@@ -2586,9 +2354,7 @@ namespace Microsoft.PowerShell.Commands
         #endregion Serialization
 
         #region Properties
-        /// <summary>
-        /// Name of the service which could not be found or operated upon.
-        /// </summary>
+        
         /// <value></value>
         public string ServiceName
         {
@@ -2829,9 +2595,7 @@ namespace Microsoft.PowerShell.Commands
             return status;
         }
 
-        /// <summary>
-        /// Get appropriate win32 StartupType.
-        /// </summary>
+        
         /// <param name="StartupType">
         /// StartupType provided by the user.
         /// </param>
@@ -2890,20 +2654,18 @@ namespace Microsoft.PowerShell.Commands
     #endregion NativeMethods
 
     #region ServiceStartupType
-    /// <summary>
-    /// Enum for usage with StartupType. Automatic, Manual and Disabled index matched from System.ServiceProcess.ServiceStartMode
-    /// </summary>
+    
     public enum ServiceStartupType
     {
-        /// <summary>Invalid service</summary>
+        
         InvalidValue = -1,
-        /// <summary>Automatic service</summary>
+        
         Automatic = 2,
-        /// <summary>Manual service</summary>
+        
         Manual = 3,
-        /// <summary>Disabled service</summary>
+        
         Disabled = 4,
-        /// <summary>Automatic (Delayed Start) service</summary>
+        
         AutomaticDelayedStart = 10
     }
     #endregion ServiceStartupType

@@ -123,9 +123,7 @@ namespace {0} {{
 using System;
 using System.Reflection;
 
-/// <summary>
-///   A strongly-typed resource class, for looking up localized strings, etc.
-/// </summary>
+
 [global::System.CodeDom.Compiler.GeneratedCodeAttribute(""System.Resources.Tools.StronglyTypedResourceBuilder"", ""4.0.0.0"")]
 [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
 [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -136,14 +134,12 @@ using System.Reflection;
 
     private static global::System.Globalization.CultureInfo resourceCulture;
 
-    /// <summary>constructor</summary>
+    
     [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute(""Microsoft.Performance"", ""CA1811:AvoidUncalledPrivateCode"")]
     {4} {0}() {{
     }}
 
-    /// <summary>
-    ///   Returns the cached ResourceManager instance used by this class.
-    /// </summary>
+    
     [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
     {4} static global::System.Resources.ResourceManager ResourceManager {{
         get {{
@@ -156,10 +152,7 @@ using System.Reflection;
         }}
     }}
 
-    /// <summary>
-    ///   Overrides the current threads CurrentUICulture property for all
-    ///   resource lookups using this strongly typed resource class.
-    /// </summary>
+    
     [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
     {4} static global::System.Globalization.CultureInfo Culture {{
         get {{
@@ -176,9 +169,7 @@ using System.Reflection;
 
     private static readonly string ENTRY = @"
 
-    /// <summary>
-    ///   Looks up a localized string similar to {1}
-    /// </summary>
+    
     {2} static string {0} {{
         get {{
             return ResourceManager.GetString(""{0}"", resourceCulture);

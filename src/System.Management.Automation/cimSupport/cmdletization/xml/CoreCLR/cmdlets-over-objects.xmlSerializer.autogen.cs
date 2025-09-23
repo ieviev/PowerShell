@@ -433,12 +433,7 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <summary>
-        /// In the context of CDXML deserialization, GetXsiType() will
-        /// always return null, as all CDXML files are under the namespace
-        /// "http://schemas.microsoft.com/cmdlets-over-objects/2009/11",
-        /// so the GetAttribute(..) operation here will always return null.
-        /// </summary>
+        
         protected XmlQualifiedName GetXsiType()
         {
             string type = _r.GetAttribute(_typeID, _instanceNsID);

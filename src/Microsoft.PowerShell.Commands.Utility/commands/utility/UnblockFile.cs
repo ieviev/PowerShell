@@ -20,7 +20,7 @@ using System.Management.Automation.Internal;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>Removes the Zone.Identifier stream from a file.</summary>
+    
     [Cmdlet(VerbsSecurity.Unblock, "File", DefaultParameterSetName = "ByPath", SupportsShouldProcess = true,
         HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097033")]
     public sealed class UnblockFileCommand : PSCmdlet
@@ -30,9 +30,7 @@ namespace Microsoft.PowerShell.Commands
         private const int RemovexattrFollowSymLink = 0;
 #endif
 
-        /// <summary>
-        /// The path of the file to unblock.
-        /// </summary>
+        
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = "ByPath")]
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
         public string[] Path
@@ -48,9 +46,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// The literal path of the file to unblock.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ParameterSetName = "ByLiteralPath", ValueFromPipelineByPropertyName = true)]
         [Alias("PSPath", "LP")]
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
@@ -69,9 +65,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string[] _paths;
 
-        /// <summary>
-        /// Generate the type(s)
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             List<string> pathsToProcess = new();
@@ -162,10 +156,7 @@ namespace Microsoft.PowerShell.Commands
 #endif
         }
 
-        /// <summary>
-        /// IsValidFileForUnblocking is a helper method used to validate if
-        /// the supplied file path has to be considered for unblocking.
-        /// </summary>
+        
         /// <param name="resolvedpath">File or directory path.</param>
         /// <returns>True is the supplied path is a
         /// valid file path or else false is returned.

@@ -55,18 +55,10 @@ namespace System.Management.Automation
         }
     }
 
-    /// <summary>
-    /// The type extension methods within this partial class are used/shared by both FullCLR and CoreCLR powershell.
-    ///
-    /// * If you want to add an extension method that will be used by both FullCLR and CoreCLR powershell, please add it here.
-    /// * If you want to add an extension method that will be used only by CoreCLR powershell, please add it to the partial
-    ///   'PSTypeExtensions' class in 'CorePsExtensions.cs'.
-    /// </summary>
+    
     internal static class PSTypeExtensions
     {
-        /// <summary>
-        /// Check does the type have an instance default constructor with visibility that allows calling it from subclass.
-        /// </summary>
+        
         /// <param name="type">Type.</param>
         /// <returns>True when type has a default ctor.</returns>
         internal static bool HasDefaultCtor(this Type type)

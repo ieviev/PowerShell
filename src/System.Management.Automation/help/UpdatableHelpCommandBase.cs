@@ -18,9 +18,7 @@ using System.Net;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// The base class of all updatable help system cmdlets (Update-Help, Save-Help)
-    /// </summary>
+    
     public class UpdatableHelpCommandBase : PSCmdlet
     {
         internal const string PathParameterSetName = "Path";
@@ -35,9 +33,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Parameters
 
-        /// <summary>
-        /// Specifies the languages to update.
-        /// </summary>
+        
         [Parameter(Position = 2)]
         [ValidateNotNull]
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
@@ -75,9 +71,7 @@ namespace Microsoft.PowerShell.Commands
 
         internal string[] _language;
 
-        /// <summary>
-        /// Gets or sets the credential parameter.
-        /// </summary>
+        
         [Parameter]
         [Credential]
         public PSCredential Credential
@@ -89,9 +83,7 @@ namespace Microsoft.PowerShell.Commands
 
         internal PSCredential _credential;
 
-        /// <summary>
-        /// Directs System.Net.WebClient whether or not to use default credentials.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter UseDefaultCredentials
         {
@@ -108,9 +100,7 @@ namespace Microsoft.PowerShell.Commands
 
         private bool _useDefaultCredentials = false;
 
-        /// <summary>
-        /// Forces the operation to complete.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter Force
         {
@@ -127,9 +117,7 @@ namespace Microsoft.PowerShell.Commands
 
         internal bool _force;
 
-        /// <summary>
-        /// Sets the scope to which help is saved.
-        /// </summary>
+        
         [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = true)]
         public UpdateHelpScope Scope
         {
@@ -141,9 +129,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Events
 
-        /// <summary>
-        /// Handles help system progress events.
-        /// </summary>
+        
         /// <param name="sender">Event sender.</param>
         /// <param name="e">Event arguments.</param>
         private void HandleProgressChanged(object sender, UpdatableHelpProgressEventArgs e)
@@ -167,12 +153,7 @@ namespace Microsoft.PowerShell.Commands
 
         private static readonly Dictionary<string, string> s_metadataCache;
 
-        /// <summary>
-        /// Static constructor
-        ///
-        /// NOTE: HelpInfoUri for core PowerShell modules are needed since they get loaded as snapins in a Remoting Endpoint.
-        /// When we moved to modules in V3, we were not able to make this change as it was a risky change to make at that time.
-        /// </summary>
+        
         static UpdatableHelpCommandBase()
         {
             s_metadataCache = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
@@ -188,10 +169,7 @@ namespace Microsoft.PowerShell.Commands
             s_metadataCache.Add("Microsoft.WSMan.Management", "https://aka.ms/powershell75-help");
         }
 
-        /// <summary>
-        /// Checks if a module is a system module, a module is a system module
-        /// if it exists in the metadata cache.
-        /// </summary>
+        
         /// <param name="module">Module name.</param>
         /// <returns>True if system module, false if not.</returns>
         internal static bool IsSystemModule(string module)
@@ -199,9 +177,7 @@ namespace Microsoft.PowerShell.Commands
             return s_metadataCache.ContainsKey(module);
         }
 
-        /// <summary>
-        /// Class constructor.
-        /// </summary>
+        
         /// <param name="commandType">Command type.</param>
         internal UpdatableHelpCommandBase(UpdatableHelpCommandType commandType)
         {
@@ -268,9 +244,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets a list of modules from the given pattern.
-        /// </summary>
+        
         /// <param name="context">Execution context.</param>
         /// <param name="pattern">Pattern to search.</param>
         /// <param name="fullyQualifiedName">Module Specification.</param>
@@ -349,18 +323,14 @@ namespace Microsoft.PowerShell.Commands
             return helpModules;
         }
 
-        /// <summary>
-        /// Handles Ctrl+C.
-        /// </summary>
+        
         protected override void StopProcessing()
         {
             _stopping = true;
             _helpSystem.CancelDownload();
         }
 
-        /// <summary>
-        /// End processing.
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             foreach (UpdatableHelpExceptionContext exception in _exceptions.Values)
@@ -391,9 +361,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Main cmdlet logic for processing module names or fully qualified module names.
-        /// </summary>
+        
         /// <param name="moduleNames">Module names given by the user.</param>
         /// <param name="fullyQualifiedNames">FullyQualifiedNames.</param>
         internal void Process(IEnumerable<string> moduleNames, IEnumerable<ModuleSpecification> fullyQualifiedNames)
@@ -438,9 +406,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Processing module objects for Save-Help.
-        /// </summary>
+        
         /// <param name="modules">Module objects given by the user.</param>
         internal void Process(IEnumerable<PSModuleInfo> modules)
         {
@@ -462,9 +428,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Processes a module with potential globbing.
-        /// </summary>
+        
         /// <param name="name">Module name with globbing.</param>
         private void ProcessModuleWithGlobbing(string name)
         {
@@ -481,9 +445,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Processes a ModuleSpecification with potential globbing.
-        /// </summary>
+        
         /// <param name="fullyQualifiedName">ModuleSpecification.</param>
         private void ProcessModuleWithGlobbing(ModuleSpecification fullyQualifiedName)
         {
@@ -493,9 +455,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Processes a single module with multiple cultures.
-        /// </summary>
+        
         /// <param name="module">Module to process.</param>
         private void ProcessModule(UpdatableHelpModuleInfo module)
         {
@@ -608,9 +568,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Process a single module with a given culture.
-        /// </summary>
+        
         /// <param name="module">Module to process.</param>
         /// <param name="culture">Culture to use.</param>
         /// <returns>True if the module has been processed, false if not.</returns>
@@ -623,9 +581,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Common methods
 
-        /// <summary>
-        /// Gets a list of modules from the given pattern or ModuleSpecification.
-        /// </summary>
+        
         /// <param name="pattern">Pattern to match.</param>
         /// <param name="fullyQualifiedName">ModuleSpecification.</param>
         /// <param name="noErrors">Skip errors.</param>
@@ -648,9 +604,7 @@ namespace Microsoft.PowerShell.Commands
             return modules;
         }
 
-        /// <summary>
-        /// Checks if it is necessary to update help.
-        /// </summary>
+        
         /// <param name="module">ModuleInfo.</param>
         /// <param name="currentHelpInfo">Current HelpInfo.xml.</param>
         /// <param name="newHelpInfo">New HelpInfo.xml.</param>
@@ -686,9 +640,7 @@ namespace Microsoft.PowerShell.Commands
             return true;
         }
 
-        /// <summary>
-        /// Checks if the user has attempted to update more than once per day per module.
-        /// </summary>
+        
         /// <param name="moduleName">Module name.</param>
         /// <param name="path">Path to help info.</param>
         /// <param name="filename">Help info file name.</param>
@@ -731,9 +683,7 @@ namespace Microsoft.PowerShell.Commands
             return false;
         }
 
-        /// <summary>
-        /// Resolves a given path to a list of directories.
-        /// </summary>
+        
         /// <param name="path">Path to resolve.</param>
         /// <param name="recurse">Resolve recursively?</param>
         /// <param name="isLiteralPath">Treat the path / start path as a literal path?</param>///
@@ -791,9 +741,7 @@ namespace Microsoft.PowerShell.Commands
             yield break;
         }
 
-        /// <summary>
-        /// Resolves a given path to a list of directories recursively.
-        /// </summary>
+        
         /// <param name="path">Path to resolve.</param>
         /// <returns>A list of directories.</returns>
         private static IEnumerable<string> RecursiveResolvePathHelper(string path)
@@ -818,9 +766,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Static methods
 
-        /// <summary>
-        /// Validates the provider of the path, only FileSystem provider is accepted.
-        /// </summary>
+        
         /// <param name="path">Path to validate.</param>
         internal void ValidatePathProvider(PathInfo path)
         {
@@ -835,9 +781,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Logging
 
-        /// <summary>
-        /// Logs a command message.
-        /// </summary>
+        
         /// <param name="message">Message to log.</param>
         internal void LogMessage(string message)
         {
@@ -849,9 +793,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Exception processing
 
-        /// <summary>
-        /// Processes an exception for help cmdlets.
-        /// </summary>
+        
         /// <param name="moduleName">Module name.</param>
         /// <param name="culture">Culture info.</param>
         /// <param name="e">Exception to check.</param>
@@ -897,19 +839,13 @@ namespace Microsoft.PowerShell.Commands
         #endregion
     }
 
-    /// <summary>
-    /// Scope to which the help should be saved.
-    /// </summary>
+    
     public enum UpdateHelpScope
     {
-        /// <summary>
-        /// Save the help content to the user directory.
-        /// </summary>
+        
         CurrentUser,
 
-        /// <summary>
-        /// Save the help content to the module directory. This is the default behavior.
-        /// </summary>
+        
         AllUsers
     }
 }

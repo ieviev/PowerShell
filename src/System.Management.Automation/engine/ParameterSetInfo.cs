@@ -13,17 +13,12 @@ using Dbg = System.Management.Automation.Diagnostics;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// The information about a parameter set and its parameters for a cmdlet.
-    /// </summary>
+    
     public class CommandParameterSetInfo
     {
         #region ctor
 
-        /// <summary>
-        /// Constructs the parameter set information using the specified parameter name,
-        /// and type metadata.
-        /// </summary>
+        
         /// <param name="name">
         /// The formal name of the parameter.
         /// </param>
@@ -69,24 +64,16 @@ namespace System.Management.Automation
 
         #region public members
 
-        /// <summary>
-        /// Gets the name of the parameter set.
-        /// </summary>
+        
         public string Name { get; }
 
-        /// <summary>
-        /// Gets whether the parameter set is the default parameter set.
-        /// </summary>
+        
         public bool IsDefault { get; }
 
-        /// <summary>
-        /// Gets the parameter information for the parameters in this parameter set.
-        /// </summary>
+        
         public ReadOnlyCollection<CommandParameterInfo> Parameters { get; private set; }
 
-        /// <summary>
-        /// Gets the synopsis for the cmdlet as a string.
-        /// </summary>
+        
         public override string ToString()
         {
             Text.StringBuilder result = new Text.StringBuilder();
@@ -108,16 +95,7 @@ namespace System.Management.Automation
             return result.ToString();
         }
 
-        /// <summary>
-        /// GenerateParameters parameters in display order
-        /// ie., Positional followed by
-        ///      Named Mandatory (in alpha numeric) followed by
-        ///      Named (in alpha numeric).
-        ///
-        /// Callers use <paramref name="parameterAction"/> and
-        /// <paramref name="commonParameterAction"/> to handle
-        /// syntax generation etc.
-        /// </summary>
+        
         /// <param name="parameterAction"></param>
         /// <param name="commonParameterAction"></param>
         /// <returns></returns>

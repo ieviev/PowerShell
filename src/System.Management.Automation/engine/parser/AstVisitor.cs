@@ -8,8 +8,7 @@ using System.Reflection.Emit;
 
 namespace System.Management.Automation.Language
 {
-    /// <summary>
-    /// </summary>
+    
 #nullable enable
     public interface ICustomAstVisitor
     {
@@ -380,9 +379,7 @@ namespace System.Management.Automation.Language
         public override AstVisitAction VisitPipelineChain(PipelineChainAst ast) => CheckParent(ast);
     }
 
-    /// <summary>
-    /// Check if <see cref="TypeConstraintAst"/> contains <see cref="TypeBuilder "/> type.
-    /// </summary>
+    
     internal class CheckTypeBuilder : AstVisitor2
     {
         public override AstVisitAction VisitTypeConstraint(TypeConstraintAst ast)
@@ -398,9 +395,7 @@ namespace System.Management.Automation.Language
     }
 #endif
 
-    /// <summary>
-    /// Searches an AST, using the evaluation function provided by either of the constructors.
-    /// </summary>
+    
     internal class AstSearcher : AstVisitor2
     {
         #region External interface
@@ -616,9 +611,7 @@ namespace System.Management.Automation.Language
         public override AstVisitAction VisitPipelineChain(PipelineChainAst ast) { return Check(ast); }
     }
 
-    /// <summary>
-    /// Default implementation of <see cref="ICustomAstVisitor"/> interface.
-    /// </summary>
+    
     public abstract class DefaultCustomAstVisitor : ICustomAstVisitor
     {
         /// <summary/>
@@ -787,9 +780,7 @@ namespace System.Management.Automation.Language
         public virtual object VisitScriptBlockExpression(ScriptBlockExpressionAst scriptBlockExpressionAst) => DefaultVisit(scriptBlockExpressionAst);
     }
 
-    /// <summary>
-    /// Default implementation of <see cref="ICustomAstVisitor2"/> interface.
-    /// </summary>
+    
     public abstract class DefaultCustomAstVisitor2 : DefaultCustomAstVisitor, ICustomAstVisitor2
     {
         /// <summary/>

@@ -8,17 +8,12 @@ using System.Text;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// The command information for cmdlets that are directly executable by PowerShell.
-    /// </summary>
+    
     public class CmdletInfo : CommandInfo
     {
         #region ctor
 
-        /// <summary>
-        /// Constructs a CmdletInfo object from the raw cmdlet data.  This should only
-        /// be used for Intrinsic commands.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the cmdlet.
         /// </param>
@@ -67,9 +62,7 @@ namespace System.Management.Automation
             this.DefiningLanguageMode = PSLanguageMode.FullLanguage;
         }
 
-        /// <summary>
-        /// This is a copy constructor, used primarily for get-command.
-        /// </summary>
+        
         internal CmdletInfo(CmdletInfo other)
             : base(other)
         {
@@ -81,10 +74,7 @@ namespace System.Management.Automation
             _options = ScopedItemOptions.ReadOnly;
         }
 
-        /// <summary>
-        /// Create a copy of commandInfo for GetCommandCommand so that we can generate parameter
-        /// sets based on an argument list (so we can get the dynamic parameters.)
-        /// </summary>
+        
         internal override CommandInfo CreateGetCommandCopy(object[] arguments)
         {
             CmdletInfo copy = new CmdletInfo(this);
@@ -93,11 +83,7 @@ namespace System.Management.Automation
             return copy;
         }
 
-        /// <summary>
-        /// Directly create a cmdlet object from a type. This allows
-        /// unregistered commands to be called. It also allows the overhead of
-        /// command discovery to be bypassed.
-        /// </summary>
+        
         /// <param name="name">The name to use for the cmdlet, must be in the form Noun-Verb.</param>
         /// <param name="implementingType">The .NET class implementing this cmdlet.</param>
         public CmdletInfo(string name, Type implementingType)
@@ -138,9 +124,7 @@ namespace System.Management.Automation
 
         #region public members
 
-        /// <summary>
-        /// Gets the verb of the cmdlet.
-        /// </summary>
+        
         public string Verb
         {
             get
@@ -151,9 +135,7 @@ namespace System.Management.Automation
 
         private readonly string _verb = string.Empty;
 
-        /// <summary>
-        /// Gets the noun of the cmdlet.
-        /// </summary>
+        
         public string Noun
         {
             get
@@ -190,9 +172,7 @@ namespace System.Management.Automation
             return false;
         }
 
-        /// <summary>
-        /// Gets the help file path for the cmdlet.
-        /// </summary>
+        
         public string HelpFile
         {
             get
@@ -213,9 +193,7 @@ namespace System.Management.Automation
             get { return HelpCategory.Cmdlet; }
         }
 
-        /// <summary>
-        /// Gets the Snap-in in which the cmdlet is implemented.
-        /// </summary>
+        
         public PSSnapInInfo PSSnapIn
         {
             get
@@ -226,9 +204,7 @@ namespace System.Management.Automation
 
         private readonly PSSnapInInfo _PSSnapin;
 
-        /// <summary>
-        /// Gets the name of the PSSnapin the cmdlet is implemented in.
-        /// </summary>
+        
         internal string PSSnapInName
         {
             get
@@ -243,9 +219,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the source version.
-        /// </summary>
+        
         public override Version Version
         {
             get
@@ -268,9 +242,7 @@ namespace System.Management.Automation
 
         private Version _version;
 
-        /// <summary>
-        /// Gets the type that implements the cmdlet.
-        /// </summary>
+        
         public Type ImplementingType
         {
             get
@@ -281,9 +253,7 @@ namespace System.Management.Automation
 
         private readonly Type _implementingType = null;
 
-        /// <summary>
-        /// Gets the synopsis of the cmdlet.
-        /// </summary>
+        
         public override string Definition
         {
             get
@@ -321,9 +291,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the name of the default parameter set.
-        /// </summary>
+        
         public string DefaultParameterSet
         {
             get
@@ -332,9 +300,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Return the output types specified on the cmdlet.
-        /// </summary>
+        
         public override ReadOnlyCollection<PSTypeName> OutputType
         {
             get
@@ -397,9 +363,7 @@ namespace System.Management.Automation
 
         private List<PSTypeName> _outputType = null;
 
-        /// <summary>
-        /// Gets or sets the scope options for the alias.
-        /// </summary>
+        
         /// <exception cref="System.Management.Automation.SessionStateUnauthorizedAccessException">
         /// If the trying to set an cmdlet that is constant or
         ///     if the value trying to be set is ScopedItemOptions.Constant
@@ -419,9 +383,7 @@ namespace System.Management.Automation
 
         private ScopedItemOptions _options = ScopedItemOptions.None;
 
-        /// <summary>
-        /// Sets the options for the cmdlet and allows changes ReadOnly options only if force is specified.
-        /// </summary>
+        
         /// <param name="newOptions">
         /// The new options value.
         /// </param>
@@ -452,9 +414,7 @@ namespace System.Management.Automation
 
         #region internal/private members
 
-        /// <summary>
-        /// Gets the full name of the cmdlet including the PSSnapin name.
-        /// </summary>
+        
         private static string GetFullName(string moduleName, string cmdletName)
         {
             System.Diagnostics.Debug.Assert(cmdletName != null, "cmdletName != null");
@@ -467,17 +427,13 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Gets the full name of the cmdlet including the PSSnapin name.
-        /// </summary>
+        
         private static string GetFullName(CmdletInfo cmdletInfo)
         {
             return GetFullName(cmdletInfo.ModuleName, cmdletInfo.Name);
         }
 
-        /// <summary>
-        /// Gets the full name of the cmdlet including the PSSnapin name.
-        /// </summary>
+        
         internal static string GetFullName(PSObject psObject)
         {
             // If this is a high-fidelity object then extract full-name normally.
@@ -499,9 +455,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the full name of the cmdlet including the PSSnapin name.
-        /// </summary>
+        
         internal string FullName
         {
             get
@@ -510,9 +464,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the CommandMetadata for this cmdlet.
-        /// </summary>
+        
         /// <exception cref="ArgumentException">
         /// The type name is invalid or the length of the type name
         /// exceeds 1024 characters.

@@ -6,19 +6,14 @@ using System.Management.Automation.Internal;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// A command to set the content of an item at a specified path.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Set, "Content", DefaultParameterSetName = "Path", SupportsShouldProcess = true, SupportsTransactions = true,
         HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097142")]
     public class SetContentCommand : WriteContentCommandBase
     {
         #region protected members
 
-        /// <summary>
-        /// Called by the base class before the streams are open for the path.
-        /// This override clears the content from the item.
-        /// </summary>
+        
         /// <param name="paths">
         /// The path to the items that will be opened for writing content.
         /// </param>
@@ -68,9 +63,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Makes the call to ShouldProcess with appropriate action and target strings.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item on which the content will be set.
         /// </param>

@@ -16,10 +16,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// The Remove-LocalGroupMember cmdlet removes one or more members (users or
-    /// groups) from a local security group.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Remove, "LocalGroupMember",
             SupportsShouldProcess = true,
             HelpUri = "https://go.microsoft.com/fwlink/?LinkId=717989")]
@@ -31,10 +28,7 @@ namespace Microsoft.PowerShell.Commands
         #endregion Instance Data
 
         #region Parameter Properties
-        /// <summary>
-        /// The following is the definition of the input parameter "Group".
-        /// Specifies a security group from the local Security Accounts Manager.
-        /// </summary>
+        
         [Parameter(Mandatory = true,
                    Position = 0,
                    ParameterSetName = "Group")]
@@ -48,12 +42,7 @@ namespace Microsoft.PowerShell.Commands
 
         private Microsoft.PowerShell.Commands.LocalGroup group;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "Member".
-        /// Specifies one or more users or groups to remove from this local group. You can
-        /// identify users or groups by specifying their names or SIDs, or by passing
-        /// Microsoft.PowerShell.Commands.LocalPrincipal objects.
-        /// </summary>
+        
         [Parameter(Mandatory = true,
                    Position = 1,
                    ValueFromPipeline = true,
@@ -69,10 +58,7 @@ namespace Microsoft.PowerShell.Commands
 
         private Microsoft.PowerShell.Commands.LocalPrincipal[] member;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "Name".
-        /// The security group from the local Security Accounts Manager.
-        /// </summary>
+        
         [Parameter(Mandatory = true,
                    Position = 0,
                    ParameterSetName = "Default")]
@@ -86,10 +72,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string name;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "SID".
-        /// Specifies a security group from the local Security Accounts Manager.
-        /// </summary>
+        
         [Parameter(Mandatory = true,
                    Position = 0,
                    ParameterSetName = "SecurityIdentifier")]
@@ -105,17 +88,13 @@ namespace Microsoft.PowerShell.Commands
         #endregion Parameter Properties
 
         #region Cmdlet Overrides
-        /// <summary>
-        /// BeginProcessing method.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             sam = new Sam();
         }
 
-        /// <summary>
-        /// ProcessRecord method.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             try
@@ -133,9 +112,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// EndProcessing method.
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             if (sam != null)
@@ -148,10 +125,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Private Methods
 
-        /// <summary>
-        /// Creates a list of <see cref="LocalPrincipal"/> objects
-        /// ready to be processed by the cmdlet.
-        /// </summary>
+        
         /// <param name="groupId">
         /// Name or SID (as a string) of the group we'll be removing from.
         /// This string is used primarily for specifying the target
@@ -216,11 +190,7 @@ namespace Microsoft.PowerShell.Commands
             return null;
         }
 
-        /// <summary>
-        /// Determine if a principal should be processed.
-        /// Just a wrapper around Cmdlet.ShouldProcess, with localized string
-        /// formatting.
-        /// </summary>
+        
         /// <param name="principal">Name of the principal to be removed.</param>
         /// <param name="groupName">
         /// Name of the group from which the members will be removed.
@@ -238,9 +208,7 @@ namespace Microsoft.PowerShell.Commands
             return ShouldProcess(groupName, msg);
         }
 
-        /// <summary>
-        /// Remove members from a group.
-        /// </summary>
+        
         /// <param name="group">
         /// A <see cref="LocalGroup"/> object representing the group from which
         /// the members will be removed.
@@ -262,9 +230,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Remove members from a group specified by name.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the group from which the members will be removed.
         /// </param>
@@ -273,9 +239,7 @@ namespace Microsoft.PowerShell.Commands
             ProcessGroup(sam.GetLocalGroup(name));
         }
 
-        /// <summary>
-        /// Remove members from a group specified by SID.
-        /// </summary>
+        
         /// <param name="groupSid">
         /// A <see cref="SecurityIdentifier"/> object identifying the group
         /// from which the members will be removed.

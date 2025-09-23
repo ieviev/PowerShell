@@ -7,27 +7,17 @@ using System.Resources;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// </summary>
+    
     internal static class ResourceManagerCache
     {
-        /// <summary>
-        /// Maintains a cache of ResourceManager objects. This is a dictionary that is keyed based on the path
-        /// to the default resource assembly. The value is another dictionary that is keyed based on the base
-        /// name for the resource that is being retrieved. The value for this dictionary is the ResourceManager.
-        /// </summary>
+        
         private static readonly Dictionary<string, Dictionary<string, ResourceManager>> s_resourceManagerCache =
             new Dictionary<string, Dictionary<string, ResourceManager>>(StringComparer.OrdinalIgnoreCase);
 
-        /// <summary>
-        /// Used to synchronize access to the ResourceManagerCache.
-        /// </summary>
+        
         private static readonly object s_syncRoot = new object();
 
-        /// <summary>
-        /// Gets the ResourceManager from the cache or gets an instance of the ResourceManager
-        /// and returns it if it isn't already present in the cache.
-        /// </summary>
+        
         /// <param name="assembly">
         /// The assembly to be used as the base for resource lookup.
         /// </param>
@@ -109,9 +99,7 @@ namespace System.Management.Automation
             return manager;
         }
 
-        /// <summary>
-        /// Design For Testability -- assert on failed resource lookup.
-        /// </summary>
+        
         private static bool s_DFT_monitorFailingResourceLookup = true;
 
         internal static bool DFT_DoMonitorFailingResourceLookup
@@ -121,10 +109,7 @@ namespace System.Management.Automation
             set { ResourceManagerCache.s_DFT_monitorFailingResourceLookup = value; }
         }
 
-        /// <summary>
-        /// Gets the string from the resource manager based on the assembly,
-        /// base name, resource ID, and culture specified.
-        /// </summary>
+        
         /// <param name="assembly">
         /// The base assembly from which to get the resources from.
         /// </param>
@@ -208,9 +193,7 @@ namespace System.Management.Automation
             return text;
         }
 
-        /// <summary>
-        /// Creates a Resource manager instance based on the assembly specified.
-        /// </summary>
+        
         /// <param name="baseName">
         /// The root name of the resources.
         /// For example, the root name for the resource file

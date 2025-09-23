@@ -9,21 +9,15 @@ using Dbg = System.Management.Automation.Diagnostics;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// The ProviderContext class.
-    /// </summary>
+    
     internal class ProviderContext
     {
-        /// <summary>
-        /// Requested path.
-        /// </summary>
+        
         private readonly string _requestedPath;
         private readonly ExecutionContext _executionContext;
         private readonly PathIntrinsics _pathIntrinsics;
 
-        /// <summary>
-        /// Requested path.
-        /// </summary>
+        
         internal string RequestedPath
         {
             get
@@ -32,9 +26,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Create a new instance of ProviderContext.
-        /// </summary>
+        
         internal ProviderContext(
             string requestedPath,
             ExecutionContext executionContext,
@@ -46,9 +38,7 @@ namespace System.Management.Automation
             _pathIntrinsics = pathIntrinsics;
         }
 
-        /// <summary>
-        /// Get provider specific help info.
-        /// </summary>
+        
         internal MamlCommandHelpInfo GetProviderSpecificHelpInfo(string helpItemName)
         {
             if (InternalTestHooks.BypassOnlineHelpRetrieval)

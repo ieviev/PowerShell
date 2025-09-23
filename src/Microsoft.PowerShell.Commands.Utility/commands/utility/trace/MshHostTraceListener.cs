@@ -8,11 +8,7 @@ using System.Text;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// This subclass of TraceListener allows for the trace output
-    /// coming from a System.Management.Automation.TraceSwitch
-    /// to be passed to the Msh host's RawUI methods.
-    /// </summary>
+    
     /// <remarks>
     /// This trace listener cannot be specified in the app.config file.
     /// It must be added through the add-tracelistener cmdlet.
@@ -22,9 +18,7 @@ namespace Microsoft.PowerShell.Commands
     {
         #region TraceListener constructors and disposer
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PSHostTraceListener"/> class.
-        /// </summary>
+        
         internal PSHostTraceListener(PSCmdlet cmdlet)
             : base(string.Empty)
         {
@@ -45,9 +39,7 @@ namespace Microsoft.PowerShell.Commands
             Dispose(false);
         }
 
-        /// <summary>
-        /// Closes the TraceListenerDialog so that it no longer receives trace output.
-        /// </summary>
+        
         /// <param name="disposing">
         /// True if the TraceListener is being disposed, false otherwise.
         /// </param>
@@ -68,9 +60,7 @@ namespace Microsoft.PowerShell.Commands
 
         #endregion TraceListener constructors and disposer
 
-        /// <summary>
-        /// Sends the given output string to the host for processing.
-        /// </summary>
+        
         /// <param name="output">
         /// The trace output to be written.
         /// </param>
@@ -89,9 +79,7 @@ namespace Microsoft.PowerShell.Commands
 
         private readonly StringBuilder _cachedWrite = new();
 
-        /// <summary>
-        /// Sends the given output string to the host for processing.
-        /// </summary>
+        
         /// <param name="output">
         /// The trace output to be written.
         /// </param>
@@ -112,9 +100,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// The host interface to write the debug line to.
-        /// </summary>
+        
         private readonly InternalHostUserInterface _ui;
     }
 }

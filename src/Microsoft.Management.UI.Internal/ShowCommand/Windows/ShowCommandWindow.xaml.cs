@@ -7,16 +7,12 @@ using Microsoft.Management.UI.Internal.ShowCommand;
 
 namespace Microsoft.PowerShell.Commands.ShowCommandInternal
 {
-    /// <summary>
-    /// Interaction logic for CmdletGUI.xaml.
-    /// </summary>
+    
     public partial class ShowCommandWindow : Window
     {
         #region Construction and Destructor
 
-        /// <summary>
-        /// Initializes a new instance of the ShowCommandWindow class.
-        /// </summary>
+        
         public ShowCommandWindow()
         {
             this.InitializeComponent();
@@ -25,9 +21,7 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
             this.StateChanged += this.ShowCommandWindow_StateChanged;
         }
 
-        /// <summary>
-        /// Saves the user settings.
-        /// </summary>
+        
         /// <param name="e">Event arguments.</param>
         protected override void OnClosed(System.EventArgs e)
         {
@@ -35,9 +29,7 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
             base.OnClosed(e);
         }
 
-        /// <summary>
-        /// Saves size changes in user settings.
-        /// </summary>
+        
         /// <param name="sender">Event sender.</param>
         /// <param name="e">Event arguments.</param>
         private void ShowCommandWindow_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -46,9 +38,7 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
             ShowCommandSettings.Default.ShowOneCommandHeight = this.Height;
         }
 
-        /// <summary>
-        /// Saves position changes in user settings.
-        /// </summary>
+        
         /// <param name="sender">Event sender.</param>
         /// <param name="e">Event arguments.</param>
         private void ShowCommandWindow_LocationChanged(object sender, System.EventArgs e)
@@ -57,9 +47,7 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
             ShowCommandSettings.Default.ShowOneCommandLeft = this.Left;
         }
 
-        /// <summary>
-        /// Updates the user setting with window state.
-        /// </summary>
+        
         /// <param name="sender">Event sender.</param>
         /// <param name="e">Event arguments.</param>
         private void ShowCommandWindow_StateChanged(object sender, System.EventArgs e)

@@ -6,8 +6,7 @@ using System.Management.Automation;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// </summary>
+    
     [Cmdlet("Sort",
             "Object",
             HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097038",
@@ -17,9 +16,7 @@ namespace Microsoft.PowerShell.Commands
     {
         #region Command Line Switches
 
-        /// <summary>
-        /// Gets or sets a value indicating whether a stable sort is required.
-        /// </summary>
+        
         /// <value></value>
         /// <remarks>
         /// Items that are duplicates according to the sort algorithm will appear
@@ -28,9 +25,7 @@ namespace Microsoft.PowerShell.Commands
         [Parameter(ParameterSetName = "Default")]
         public SwitchParameter Stable { get; set; }
 
-        /// <summary>
-        /// Gets or sets a value indicating whether the sort order is descending.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter Descending
         {
@@ -39,32 +34,24 @@ namespace Microsoft.PowerShell.Commands
             set { DescendingOrder = value; }
         }
 
-        /// <summary>
-        /// Gets or sets a value indicating whether the sort filters out any duplicate objects.
-        /// </summary>
+        
         /// <value></value>
         [Parameter]
         public SwitchParameter Unique { get; set; }
 
         #endregion
 
-        /// <summary>
-        /// Gets or sets the number of items to return in a Top N sort.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "Top", Mandatory = true)]
         [ValidateRange(1, int.MaxValue)]
         public int Top { get; set; }
 
-        /// <summary>
-        /// Gets or sets the number of items to return in a Bottom N sort.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "Bottom", Mandatory = true)]
         [ValidateRange(1, int.MaxValue)]
         public int Bottom { get; set; }
 
-        /// <summary>
-        /// Moves unique entries to the front of the list.
-        /// </summary>
+        
         private int MoveUniqueEntriesToFront(List<OrderByPropertyEntry> sortedData, OrderByPropertyComparer comparer)
         {
             // If we have sorted data then we know we have at least one unique item
@@ -93,9 +80,7 @@ namespace Microsoft.PowerShell.Commands
             return uniqueCount;
         }
 
-        /// <summary>
-        /// Sort unsorted OrderByPropertyEntry data using a full sort.
-        /// </summary>
+        
         private int FullSort(List<OrderByPropertyEntry> dataToSort, OrderByPropertyComparer comparer)
         {
             // Track how many items in the list are sorted
@@ -116,9 +101,7 @@ namespace Microsoft.PowerShell.Commands
             return sortedItemCount;
         }
 
-        /// <summary>
-        /// Sort unsorted OrderByPropertyEntry data using an indexed min-/max-heap sort.
-        /// </summary>
+        
         private int Heapify(List<OrderByPropertyEntry> dataToSort, OrderByPropertyComparer orderByPropertyComparer)
         {
             // Instantiate the Heapify comparer, which takes index into account for sort stability
@@ -234,8 +217,7 @@ namespace Microsoft.PowerShell.Commands
             return heapCount;
         }
 
-        /// <summary>
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             OrderByProperty orderByProperty = new(

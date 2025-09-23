@@ -10,18 +10,12 @@ using Microsoft.Management.Infrastructure.Options;
 
 namespace Microsoft.Management.Infrastructure.CimCmdlets
 {
-    /// <summary>
-    /// <para>
-    /// Write message to message channel
-    /// </para>
-    /// </summary>
+    
     internal sealed class CimWriteMessage : CimBaseAction
     {
         #region members
 
-        /// <summary>
-        /// Channel id.
-        /// </summary>
+        
         #endregion
 
         #region Properties
@@ -32,9 +26,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         #endregion
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CimWriteMessage"/> class.
-        /// </summary>
+        
         public CimWriteMessage(uint channel,
             string message)
         {
@@ -42,11 +34,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             this.Message = message;
         }
 
-        /// <summary>
-        /// <para>
-        /// Write message to the target channel
-        /// </para>
-        /// </summary>
+        
         /// <param name="cmdlet"></param>
         public override void Execute(CmdletOperationBase cmdlet)
         {

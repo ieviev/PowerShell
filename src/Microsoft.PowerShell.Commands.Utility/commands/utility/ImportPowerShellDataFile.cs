@@ -8,26 +8,20 @@ using System.Management.Automation.Language;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// This class implements Import-PowerShellDataFile command.
-    /// </summary>
+    
     [Cmdlet(VerbsData.Import, "PowerShellDataFile", DefaultParameterSetName = "ByPath",
         HelpUri = "https://go.microsoft.com/fwlink/?LinkID=623621", RemotingCapability = RemotingCapability.None)]
     public class ImportPowerShellDataFileCommand : PSCmdlet
     {
         private bool _isLiteralPath;
 
-        /// <summary>
-        /// Path specified, using globbing to resolve.
-        /// </summary>
+        
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = "ByPath")]
         [ValidateNotNullOrEmpty]
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
         public string[] Path { get; set; }
 
-        /// <summary>
-        /// Specifies a path to one or more locations, without globbing.
-        /// </summary>
+        
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = "ByLiteralPath", ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         [Alias("PSPath", "LP")]
@@ -39,15 +33,11 @@ namespace Microsoft.PowerShell.Commands
             set { _isLiteralPath = true; Path = value; }
         }
 
-        /// <summary>
-        /// Gets or sets switch that determines if built-in limits are applied to the data.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter SkipLimitCheck { get; set; }
 
-        /// <summary>
-        /// For each path, resolve it, parse it and write all hashtables to the output stream.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             foreach (var path in Path)

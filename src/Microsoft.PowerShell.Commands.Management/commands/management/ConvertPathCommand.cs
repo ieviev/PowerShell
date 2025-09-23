@@ -6,10 +6,7 @@ using System.Management.Automation;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// A command to convert a drive qualified or provider qualified path to
-    /// a provider internal path.
-    /// </summary>
+    
     [Cmdlet(VerbsData.Convert, "Path", DefaultParameterSetName = "Path", SupportsTransactions = true,
         HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096588", RemotingCapability = RemotingCapability.None)]
     [OutputType(typeof(string))]
@@ -17,9 +14,7 @@ namespace Microsoft.PowerShell.Commands
     {
         #region Parameters
 
-        /// <summary>
-        /// Gets or sets the path parameter to the command.
-        /// </summary>
+        
         [Parameter(Position = 0, ParameterSetName = "Path",
                    Mandatory = true, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true)]
         public string[] Path
@@ -35,9 +30,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets or sets the literal path parameter to the command.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "LiteralPath",
                    Mandatory = true, ValueFromPipeline = false, ValueFromPipelineByPropertyName = true)]
         [Alias("PSPath", "LP")]
@@ -55,9 +48,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets or sets the force property.
-        /// </summary>
+        
         [Parameter]
         public override SwitchParameter Force
         {
@@ -69,19 +60,14 @@ namespace Microsoft.PowerShell.Commands
 
         #region parameter data
 
-        /// <summary>
-        /// The path(s) to the item(s) to convert.
-        /// </summary>
+        
         private string[] _paths;
 
         #endregion parameter data
 
         #region Command code
 
-        /// <summary>
-        /// Converts a drive qualified or provider qualified path to a provider
-        /// internal path.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             ProviderInfo provider = null;

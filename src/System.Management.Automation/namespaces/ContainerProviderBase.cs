@@ -8,9 +8,7 @@ namespace System.Management.Automation.Provider
 {
     #region ContainerCmdletProvider
 
-    /// <summary>
-    /// The base class for Cmdlet providers that expose a single level of items.
-    /// </summary>
+    
     /// <remarks>
     /// The ContainerCmdletProvider class is base class that a provider derives from
     /// to implement methods that allow
@@ -31,11 +29,7 @@ namespace System.Management.Automation.Provider
     {
         #region Internal methods
 
-        /// <summary>
-        /// Internal wrapper for the GetChildItems protected method. It is called instead
-        /// of the protected method that is overridden by derived classes so that the
-        /// context of the command can be set.
-        /// </summary>
+        
         /// <param name="path">
         /// The path (or name in a flat namespace) to the item from which to retrieve the children.
         /// </param>
@@ -67,10 +61,7 @@ namespace System.Management.Automation.Provider
             GetChildItems(path, recurse, depth);
         }
 
-        /// <summary>
-        /// Gives the provider to attach additional parameters to
-        /// the get-childitem cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// If the path was specified on the command line, this is the path
         /// to the item to get the dynamic parameters for.
@@ -99,11 +90,7 @@ namespace System.Management.Automation.Provider
             return GetChildItemsDynamicParameters(path, recurse);
         }
 
-        /// <summary>
-        /// Internal wrapper for the GetChildNames protected method. It is called instead
-        /// of the protected method that is overridden by derived classes so that the
-        /// context of the command can be set.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item from which to retrieve the child names.
         /// </param>
@@ -135,10 +122,7 @@ namespace System.Management.Automation.Provider
             GetChildNames(path, returnContainers);
         }
 
-        /// <summary>
-        /// Gets a new provider-specific path and filter (if any) that corresponds to the given
-        /// path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item. Unlike most other provider APIs, this path is likely to
         /// contain PowerShell wildcards.
@@ -187,10 +171,7 @@ namespace System.Management.Automation.Provider
             return ConvertPath(path, filter, ref updatedPath, ref updatedFilter);
         }
 
-        /// <summary>
-        /// Gives the provider to attach additional parameters to
-        /// the get-childitem -name cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// If the path was specified on the command line, this is the path
         /// to the item to get the dynamic parameters for.
@@ -213,11 +194,7 @@ namespace System.Management.Automation.Provider
             return GetChildNamesDynamicParameters(path);
         }
 
-        /// <summary>
-        /// Internal wrapper for the RenameItem protected method. It is called instead
-        /// of the protected method that is overridden by derived classes so that the
-        /// context of the command can be set.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to rename.
         /// </param>
@@ -244,10 +221,7 @@ namespace System.Management.Automation.Provider
             RenameItem(path, newName);
         }
 
-        /// <summary>
-        /// Gives the provider to attach additional parameters to
-        /// the rename-item cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// If the path was specified on the command line, this is the path
         /// to the item to get the dynamic parameters for.
@@ -272,11 +246,7 @@ namespace System.Management.Automation.Provider
             return RenameItemDynamicParameters(path, newName);
         }
 
-        /// <summary>
-        /// Internal wrapper for the New protected method. It is called instead
-        /// of the protected method that is overridden by derived classes so that the
-        /// context of the command can be set.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to create.
         /// </param>
@@ -307,10 +277,7 @@ namespace System.Management.Automation.Provider
             NewItem(path, type, newItemValue);
         }
 
-        /// <summary>
-        /// Gives the provider to attach additional parameters to
-        /// the new-item cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// If the path was specified on the command line, this is the path
         /// to the item to get the dynamic parameters for.
@@ -339,11 +306,7 @@ namespace System.Management.Automation.Provider
             return NewItemDynamicParameters(path, type, newItemValue);
         }
 
-        /// <summary>
-        /// Internal wrapper for the Remove protected method. It is called instead
-        /// of the protected method that is overridden by derived classes so that the
-        /// context of the command can be set.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to remove.
         /// </param>
@@ -367,10 +330,7 @@ namespace System.Management.Automation.Provider
             RemoveItem(path, recurse);
         }
 
-        /// <summary>
-        /// Gives the provider to attach additional parameters to
-        /// the remove-item cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// If the path was specified on the command line, this is the path
         /// to the item to get the dynamic parameters for.
@@ -396,11 +356,7 @@ namespace System.Management.Automation.Provider
             return RemoveItemDynamicParameters(path, recurse);
         }
 
-        /// <summary>
-        /// Internal wrapper for the HasChildItems protected method. It is called instead
-        /// of the protected method that is overridden by derived classes so that the
-        /// context of the command can be set.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to see if it has children.
         /// </param>
@@ -425,11 +381,7 @@ namespace System.Management.Automation.Provider
             return HasChildItems(path);
         }
 
-        /// <summary>
-        /// Internal wrapper for the Copy protected method. It is called instead
-        /// of the protected method that is overridden by derived classes so that the
-        /// context of the command can be set.
-        /// </summary>
+        
         /// <param name="path">
         /// The path of the item to copy.
         /// </param>
@@ -459,10 +411,7 @@ namespace System.Management.Automation.Provider
             CopyItem(path, copyPath, recurse);
         }
 
-        /// <summary>
-        /// Gives the provider to attach additional parameters to
-        /// the copy-item cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// If the path was specified on the command line, this is the path
         /// to the item to get the dynamic parameters for.
@@ -494,9 +443,7 @@ namespace System.Management.Automation.Provider
 
         #region Protected methods
 
-        /// <summary>
-        /// Gets the children of the item at the specified path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path (or name in a flat namespace) to the item from which to retrieve the children.
         /// </param>
@@ -538,9 +485,7 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <summary>
-        /// Gets the children of the item at the specified path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path (or name in a flat namespace) to the item from which to retrieve the children.
         /// </param>
@@ -593,10 +538,7 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <summary>
-        /// Gives the provider an opportunity to attach additional parameters to
-        /// the get-childitem cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// If the path was specified on the command line, this is the path
         /// to the item to get the dynamic parameters for.
@@ -621,9 +563,7 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <summary>
-        /// Gets names of the children of the specified path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item from which to retrieve the child names.
         /// </param>
@@ -666,10 +606,7 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <summary>
-        /// Gets a new provider-specific path and filter (if any) that corresponds to the given
-        /// path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item. Unlike most other provider APIs, this path is likely to
         /// contain PowerShell wildcards.
@@ -717,10 +654,7 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <summary>
-        /// Gives the provider an opportunity to attach additional parameters to
-        /// the get-childitem -name cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// If the path was specified on the command line, this is the path
         /// to the item to get the dynamic parameters for.
@@ -740,9 +674,7 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <summary>
-        /// Renames the item at the specified path to the new name provided.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to rename.
         /// </param>
@@ -783,10 +715,7 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <summary>
-        /// Gives the provider an opportunity to attach additional parameters to
-        /// the rename-item cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// If the path was specified on the command line, this is the path
         /// to the item to get the dynamic parameters for.
@@ -810,9 +739,7 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <summary>
-        /// Creates a new item at the specified path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to create.
         /// </param>
@@ -858,10 +785,7 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <summary>
-        /// Gives the provider an opportunity to attach additional parameters to
-        /// the new-item cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// If the path was specified on the command line, this is the path
         /// to the item to get the dynamic parameters for.
@@ -891,9 +815,7 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <summary>
-        /// Removes (deletes) the item at the specified path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to remove.
         /// </param>
@@ -935,10 +857,7 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <summary>
-        /// Gives the provider an opportunity to attach additional parameters to
-        /// the remove-item cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// If the path was specified on the command line, this is the path
         /// to the item to get the dynamic parameters for.
@@ -965,9 +884,7 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <summary>
-        /// Determines if the item at the specified path has children.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to see if it has children.
         /// </param>
@@ -998,9 +915,7 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <summary>
-        /// Copies an item at the specified path to an item at the <paramref name="copyPath"/>.
-        /// </summary>
+        
         /// <param name="path">
         /// The path of the item to copy.
         /// </param>
@@ -1047,10 +962,7 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <summary>
-        /// Gives the provider an opportunity to attach additional parameters to
-        /// the copy-item cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// If the path was specified on the command line, this is the path
         /// to the item to get the dynamic parameters for.

@@ -14,9 +14,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
 {
     internal class TableWriter
     {
-        /// <summary>
-        /// Information about each column boundaries.
-        /// </summary>
+        
         private sealed class ColumnInfo
         {
             internal int startCol = 0;
@@ -24,9 +22,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             internal int alignment = TextAlignment.Left;
             internal bool HeaderMatchesProperty = true;
         }
-        /// <summary>
-        /// Class containing information about the tabular layout.
-        /// </summary>
+        
         private sealed class ScreenInfo
         {
             internal int screenColumns = 0;
@@ -76,9 +72,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             }
         }
 
-        /// <summary>
-        /// Initialize the table specifying the width of each column.
-        /// </summary>
+        
         /// <param name="leftMarginIndent">Left margin indentation.</param>
         /// <param name="screenColumns">Number of character columns on the screen.</param>
         /// <param name="columnWidths">Array of specified column widths.</param>

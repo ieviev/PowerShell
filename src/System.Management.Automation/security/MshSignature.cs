@@ -23,81 +23,45 @@ namespace System.Management.Automation
         internal const DWORD NTE_BAD_ALGID = 0x80090008;
     }
 
-    /// <summary>
-    /// Defines the valid status flags that a signature
-    /// on a file may have.
-    /// </summary>
+    
     public enum SignatureStatus
     {
-        /// <summary>
-        /// The file has a valid signature.  This means only that
-        /// the signature is syntactically valid.  It does not
-        /// imply trust in any way.
-        /// </summary>
+        
         Valid,
 
-        /// <summary>
-        /// The file has an invalid signature.
-        /// </summary>
+        
         UnknownError,
 
-        /// <summary>
-        /// The file has no signature.
-        /// </summary>
+        
         NotSigned,
 
-        /// <summary>
-        /// The hash of the file does not match the hash stored
-        /// along with the signature.
-        /// </summary>
+        
         HashMismatch,
 
-        /// <summary>
-        /// The certificate was signed by a publisher not trusted
-        /// on the system.
-        /// </summary>
+        
         NotTrusted,
 
-        /// <summary>
-        /// The specified file format is not supported by the system
-        /// for signing operations.  This usually means that the
-        /// system does not know how to sign or verify the file
-        /// type requested.
-        /// </summary>
+        
         NotSupportedFileFormat,
 
-        /// <summary>
-        /// The signature cannot be verified because it is incompatible
-        /// with the current system.
-        /// </summary>
+        
         Incompatible
     }
 
-    /// <summary>
-    /// Defines the valid types of signatures.
-    /// </summary>
+    
     public enum SignatureType
     {
-        /// <summary>
-        /// The file is not signed.
-        /// </summary>
+        
         None = 0,
 
-        /// <summary>
-        /// The signature is an Authenticode signature embedded into the file itself.
-        /// </summary>
+        
         Authenticode = 1,
 
-        /// <summary>
-        /// The signature is a catalog signature.
-        /// </summary>
+        
         Catalog = 2
     }
 
-    /// <summary>
-    /// Represents a digital signature on a signed
-    /// file.
-    /// </summary>
+    
     public sealed class Signature
     {
         private string _path;
@@ -116,10 +80,7 @@ namespace System.Management.Automation
         //   - Null: it's not determined yet whether catalog API can be relied on or not.
         internal static bool? CatalogApiAvailable = null;
 
-        /// <summary>
-        /// Gets the X509 certificate of the publisher that
-        /// signed the file.
-        /// </summary>
+        
         public X509Certificate2 SignerCertificate
         {
             get
@@ -128,10 +89,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the X509 certificate of the authority that
-        /// time-stamped the file.
-        /// </summary>
+        
         public X509Certificate2 TimeStamperCertificate
         {
             get
@@ -140,9 +98,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the status of the signature on the file.
-        /// </summary>
+        
         public SignatureStatus Status
         {
             get
@@ -151,10 +107,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the message corresponding to the status of the
-        /// signature on the file.
-        /// </summary>
+        
         public string StatusMessage
         {
             get
@@ -163,10 +116,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the path of the file to which this signature
-        /// applies.
-        /// </summary>
+        
         public string Path
         {
             get
@@ -175,21 +125,13 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Returns the signature type of the signature.
-        /// </summary>
+        
         public SignatureType SignatureType { get; internal set; }
 
-        /// <summary>
-        /// True if the item is signed as part of an operating system release.
-        /// </summary>
+        
         public bool IsOSBinary { get; internal set; }
 
-        /// <summary>
-        /// Constructor for class Signature
-        ///
-        /// Call this to create a validated time-stamped signature object.
-        /// </summary>
+        
         /// <param name="filePath">This signature is found in this file.</param>
         /// <param name="error">Win32 error code.</param>
         /// <param name="signer">Cert of the signer.</param>
@@ -207,11 +149,7 @@ namespace System.Management.Automation
             Init(filePath, signer, error, timestamper);
         }
 
-        /// <summary>
-        /// Constructor for class Signature
-        ///
-        /// Call this to create a validated signature object.
-        /// </summary>
+        
         /// <param name="filePath">This signature is found in this file.</param>
         /// <param name="signer">Cert of the signer.</param>
         /// <returns>Constructed object.</returns>
@@ -224,11 +162,7 @@ namespace System.Management.Automation
             Init(filePath, signer, 0, null);
         }
 
-        /// <summary>
-        /// Constructor for class Signature
-        ///
-        /// Call this ctor when creating an invalid signature object.
-        /// </summary>
+        
         /// <param name="filePath">This signature is found in this file.</param>
         /// <param name="error">Win32 error code.</param>
         /// <param name="signer">Cert of the signer.</param>
@@ -243,11 +177,7 @@ namespace System.Management.Automation
             Init(filePath, signer, error, null);
         }
 
-        /// <summary>
-        /// Constructor for class Signature
-        ///
-        /// Call this ctor when creating an invalid signature object.
-        /// </summary>
+        
         /// <param name="filePath">This signature is found in this file.</param>
         /// <param name="error">Win32 error code.</param>
         /// <returns>Constructed object.</returns>

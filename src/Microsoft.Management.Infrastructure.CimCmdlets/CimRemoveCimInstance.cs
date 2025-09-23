@@ -10,15 +10,10 @@ using System.Diagnostics;
 
 namespace Microsoft.Management.Infrastructure.CimCmdlets
 {
-    /// <summary>
-    /// Containing all necessary information originated from
-    /// the parameters of <see cref="RemoveCimInstanceCommand"/>
-    /// </summary>
+    
     internal class CimRemoveCimInstanceContext : XOperationContextBase
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CimRemoveCimInstanceContext"/> class.
-        /// </summary>
+        
         /// <param name="theNamespace"></param>
         /// <param name="theProxy"></param>
         internal CimRemoveCimInstanceContext(string theNamespace,
@@ -29,26 +24,16 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
     }
 
-    /// <summary>
-    /// <para>
-    /// Implements operations of remove-ciminstance cmdlet.
-    /// </para>
-    /// </summary>
+    
     internal sealed class CimRemoveCimInstance : CimGetInstance
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CimRemoveCimInstance"/> class.
-        /// </summary>
+        
         public CimRemoveCimInstance()
             : base()
         {
         }
 
-        /// <summary>
-        /// <para>
-        /// Base on parametersetName to retrieve ciminstances
-        /// </para>
-        /// </summary>
+        
         /// <param name="cmdlet"><see cref="GetCimInstanceCommand"/> object.</param>
         public void RemoveCimInstance(RemoveCimInstanceCommand cmdlet)
         {
@@ -112,11 +97,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             }
         }
 
-        /// <summary>
-        /// <para>
-        /// Remove <see cref="CimInstance"/> from namespace specified in cmdlet
-        /// </para>
-        /// </summary>
+        
         /// <param name="cimInstance"></param>
         internal void RemoveCimInstance(CimInstance cimInstance, XOperationContextBase context, CmdletOperationBase cmdlet)
         {
@@ -136,9 +117,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         #region const strings
-        /// <summary>
-        /// Action.
-        /// </summary>
+        
         private const string action = @"Remove-CimInstance";
         #endregion
     }

@@ -21,48 +21,14 @@ using Dbg = System.Management.Automation.Diagnostics;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// Cmdlet used for receiving results from job object.
-    /// This cmdlet is intended to have a slightly different behavior
-    /// in the following two cases:
-    ///          1. The job object to receive results from is a PSRemotingJob
-    ///               In this case, the cmdlet can use two additional
-    ///               parameters to filter results - ComputerName and Runspace
-    ///               The parameters help filter out results for a specified
-    ///               computer or runspace from the job object
-    ///
-    ///               $job = Start-PSJob -Command 'get-process' -ComputerName server1, server2
-    ///               Receive-PSJob -Job $job -ComputerName server1
-    ///
-    ///               $job = Start-PSJob -Command 'get-process' -Session $r1, $r2
-    ///               Receive-PSJob -Job $job -Session $r1
-    ///
-    ///         2. The job object to receive results is a PSJob (or derivative
-    ///            other than PSRemotingJob)
-    ///              In this case, the user cannot will use the location parameter
-    ///              to do any filtering and will not have ComputerName and Runspace
-    ///              parameters
-    ///
-    ///              $job = Get-WMIObject '....' -AsJob
-    ///              Receive-PSJob -Job $job -Location "Server2"
-    ///
-    ///              The following will result in an error:
-    ///
-    ///              $job = Get-WMIObject '....' -AsJob
-    ///              Receive-PSJob -Job $job -ComputerName "Server2"
-    ///              The parameter ComputerName cannot be used with jobs which are
-    ///              not PSRemotingJob.
-    /// </summary>
+    
     [Cmdlet(VerbsCommunications.Receive, "Job", DefaultParameterSetName = ReceiveJobCommand.LocationParameterSet,
         HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096965", RemotingCapability = RemotingCapability.SupportedByCommand)]
     public class ReceiveJobCommand : JobCmdletBase, IDisposable
     {
         #region Properties
 
-        /// <summary>
-        /// Job object from which specific results need to
-        /// be extracted.
-        /// </summary>
+        
         [Parameter(Position = 0,
                    Mandatory = true,
                    ValueFromPipeline = true,
@@ -94,10 +60,7 @@ namespace Microsoft.PowerShell.Commands
 
         private Job[] _jobs;
 
-        /// <summary>
-        /// Name of the computer for which the results needs to be
-        /// returned.
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true,
                    ParameterSetName = ReceiveJobCommand.ComputerNameParameterSet,
                    Position = 1)]
@@ -119,11 +82,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string[] _computerNames;
 
-        /// <summary>
-        /// Locations for which the results needs to be returned.
-        /// This will cater to all kinds of jobs and not only
-        /// remoting jobs.
-        /// </summary>
+        
         [Parameter(ParameterSetName = ReceiveJobCommand.LocationParameterSet,
                    Position = 1)]
         [ValidateNotNullOrEmpty]
@@ -143,10 +102,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string[] _locations;
 
-        /// <summary>
-        /// Runspaces for which the results needs to be
-        /// returned.
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true,
                    ParameterSetName = ReceiveJobCommand.SessionParameterSet,
                    Position = 1)]
@@ -167,10 +123,7 @@ namespace Microsoft.PowerShell.Commands
 
         private PSSession[] _remoteRunspaceInfos;
 
-        /// <summary>
-        /// If the results need to be not removed from the store
-        /// after being written. Default is results are removed.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter Keep
         {
@@ -188,8 +141,7 @@ namespace Microsoft.PowerShell.Commands
 
         private bool _flush = true;
 
-        /// <summary>
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter NoRecurse
         {
@@ -206,14 +158,12 @@ namespace Microsoft.PowerShell.Commands
 
         private bool _recurse = true;
 
-        /// <summary>
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter Force
         { get; set; }
 
-        /// <summary>
-        /// </summary>
+        
         public override JobState State
         {
             get
@@ -222,15 +172,13 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// </summary>
+        
         public override Hashtable Filter
         {
             get { return null; }
         }
 
-        /// <summary>
-        /// </summary>
+        
         public override string[] Command
         {
             get
@@ -239,12 +187,10 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// </summary>
+        
         protected const string LocationParameterSet = "Location";
 
-        /// <summary>
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter Wait
         {
@@ -260,8 +206,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter AutoRemoveJob
         {
@@ -276,8 +221,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter WriteEvents
         {
@@ -292,8 +236,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter WriteJobInResults
         {
@@ -331,8 +274,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Overrides
 
-        /// <summary>
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             ValidateAutoRemove();
@@ -341,10 +283,7 @@ namespace Microsoft.PowerShell.Commands
             ValidateForce();
         }
 
-        /// <summary>
-        /// Retrieve the results for the specified computers or
-        /// runspaces.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             bool checkForRecurse = false;
@@ -538,11 +477,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// StopProcessing - when the command is stopped,
-        /// unregister all the event handlers from the jobs
-        /// and decrement reference for results.
-        /// </summary>
+        
         protected override void StopProcessing()
         {
             _tracer.WriteMessage(ClassNameTrace, "StopProcessing", Guid.Empty, (Job)null, "Entered Stop Processing",
@@ -581,10 +516,7 @@ namespace Microsoft.PowerShell.Commands
                      null);
         }
 
-        /// <summary>
-        /// If we are not stopping, continue writing output
-        /// as and when they are available.
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             try
@@ -628,16 +560,14 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// </summary>
+        
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="disposing"></param>
         protected void Dispose(bool disposing)
         {
@@ -726,10 +656,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Write the results from this Job object. This does not write from the
-        /// child jobs of this job object.
-        /// </summary>
+        
         /// <param name="job">Job object from which to write the results from
         /// </param>
         private void WriteJobResults(Job job)
@@ -907,9 +834,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Returns all the results from supplied PSDataCollection.
-        /// </summary>
+        
         /// <param name="psDataCollection">Data collection to read from.</param>
         /// <returns>Collection with copy of data.</returns>
         private Collection<T> ReadAll<T>(PSDataCollection<T> psDataCollection)
@@ -930,10 +855,7 @@ namespace Microsoft.PowerShell.Commands
             return collection;
         }
 
-        /// <summary>
-        /// Write the results from this Job object. It also writes the
-        /// results from its child objects recursively.
-        /// </summary>
+        
         /// <param name="duplicate">Hashtable used for duplicate detection.</param>
         /// <param name="job">Job whose results are written.</param>
         /// <param name="registerInsteadOfWrite"></param>
@@ -974,9 +896,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Writes the job objects if required by the cmdlet.
-        /// </summary>
+        
         /// <param name="jobsToWrite">Collection of jobs to write.</param>
         /// <remarks>this method is intended to be called only from
         /// ProcessRecord. When any changes are made ensure that this
@@ -992,8 +912,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="job"></param>
         /// <remarks>this method should always be called before
         /// writeExistingData is set in ProcessRecord</remarks>
@@ -1440,10 +1359,7 @@ namespace Microsoft.PowerShell.Commands
             _results.Add(new PSStreamObject(PSStreamObjectType.Error, removeError));
         }
 
-        /// <summary>
-        /// Write the results from this Job object. It also writes the
-        /// results from its child objects recursively.
-        /// </summary>
+        
         /// <param name="job">Job whose results are written.</param>
         /// <param name="registerInsteadOfWrite"></param>
         private void WriteJobResultsRecursively(Job job, bool registerInsteadOfWrite)
@@ -1453,8 +1369,7 @@ namespace Microsoft.PowerShell.Commands
             duplicateDetector.Clear();
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="jobs"></param>
         /// <param name="checkForRecurse"></param>
         /// <param name="registerInsteadOfWrite"></param>

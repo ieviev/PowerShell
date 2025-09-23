@@ -25,14 +25,10 @@ using Microsoft.Win32;
 
 namespace System.Management.Automation.Help
 {
-    /// <summary>
-    /// Updatable help system exception.
-    /// </summary>
+    
     internal class UpdatableHelpSystemException : Exception
     {
-        /// <summary>
-        /// Class constructor.
-        /// </summary>
+        
         /// <param name="errorId">FullyQualifiedErrorId.</param>
         /// <param name="message">Exception message.</param>
         /// <param name="cat">Category.</param>
@@ -47,9 +43,7 @@ namespace System.Management.Automation.Help
         }
 
 #if !CORECLR
-        /// <summary>
-        /// Class constructor.
-        /// </summary>
+        
         /// <param name="serializationInfo">Serialization info.</param>
         /// <param name="streamingContext">Streaming context.</param>
         protected UpdatableHelpSystemException(SerializationInfo serializationInfo, StreamingContext streamingContext)
@@ -58,30 +52,20 @@ namespace System.Management.Automation.Help
         }
 #endif
 
-        /// <summary>
-        /// Fully qualified error id.
-        /// </summary>
+        
         internal string FullyQualifiedErrorId { get; }
 
-        /// <summary>
-        /// Error category.
-        /// </summary>
+        
         internal ErrorCategory ErrorCategory { get; }
 
-        /// <summary>
-        /// Target object.
-        /// </summary>
+        
         internal object TargetObject { get; }
     }
 
-    /// <summary>
-    /// Exception context.
-    /// </summary>
+    
     internal class UpdatableHelpExceptionContext
     {
-        /// <summary>
-        /// Class constructor.
-        /// </summary>
+        
         /// <param name="exception">Exception to wrap.</param>
         internal UpdatableHelpExceptionContext(UpdatableHelpSystemException exception)
         {
@@ -90,24 +74,16 @@ namespace System.Management.Automation.Help
             Cultures = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         }
 
-        /// <summary>
-        /// A list of modules.
-        /// </summary>
+        
         internal HashSet<string> Modules { get; set; }
 
-        /// <summary>
-        /// A list of UI cultures.
-        /// </summary>
+        
         internal HashSet<string> Cultures { get; set; }
 
-        /// <summary>
-        /// Gets the help system exception.
-        /// </summary>
+        
         internal UpdatableHelpSystemException Exception { get; }
 
-        /// <summary>
-        /// Creates an error record from this context.
-        /// </summary>
+        
         /// <param name="commandType">Command type.</param>
         /// <returns>Error record.</returns>
         internal ErrorRecord CreateErrorRecord(UpdatableHelpCommandType commandType)
@@ -118,9 +94,7 @@ namespace System.Management.Automation.Help
                 Exception.TargetObject);
         }
 
-        /// <summary>
-        /// Gets the exception message.
-        /// </summary>
+        
         /// <param name="commandType"></param>
         /// <returns></returns>
         internal string GetExceptionMessage(UpdatableHelpCommandType commandType)
@@ -158,9 +132,7 @@ namespace System.Management.Automation.Help
         }
     }
 
-    /// <summary>
-    /// Enumeration showing Update or Save help.
-    /// </summary>
+    
     internal enum UpdatableHelpCommandType
     {
         UnknownCommand = 0,
@@ -168,14 +140,10 @@ namespace System.Management.Automation.Help
         SaveHelpCommand = 2
     }
 
-    /// <summary>
-    /// Progress event arguments.
-    /// </summary>
+    
     internal class UpdatableHelpProgressEventArgs : EventArgs
     {
-        /// <summary>
-        /// Class constructor.
-        /// </summary>
+        
         /// <param name="moduleName">Module name.</param>
         /// <param name="status">Progress status.</param>
         /// <param name="percent">Progress percentage.</param>
@@ -189,9 +157,7 @@ namespace System.Management.Automation.Help
             ModuleName = moduleName;
         }
 
-        /// <summary>
-        /// Class constructor.
-        /// </summary>
+        
         /// <param name="moduleName">Module name.</param>
         /// <param name="type">Command type.</param>
         /// <param name="status">Progress status.</param>
@@ -206,30 +172,20 @@ namespace System.Management.Automation.Help
             ModuleName = moduleName;
         }
 
-        /// <summary>
-        /// Progress status.
-        /// </summary>
+        
         internal string ProgressStatus { get; }
 
-        /// <summary>
-        /// Progress percentage.
-        /// </summary>
+        
         internal int ProgressPercent { get; }
 
-        /// <summary>
-        /// Module name.
-        /// </summary>
+        
         internal string ModuleName { get; }
 
-        /// <summary>
-        /// Command type.
-        /// </summary>
+        
         internal UpdatableHelpCommandType CommandType { get; set; }
     }
 
-    /// <summary>
-    /// This class implements the Updatable Help System common operations.
-    /// </summary>
+    
     internal class UpdatableHelpSystem : IDisposable
     {
         private readonly TimeSpan _defaultTimeout;
@@ -245,9 +201,7 @@ namespace System.Management.Automation.Help
 
         internal string CurrentModule { get; set; }
 
-        /// <summary>
-        /// Class constructor.
-        /// </summary>
+        
         internal UpdatableHelpSystem(UpdatableHelpCommandBase cmdlet, bool useDefaultCredentials)
         {
             HttpClient = new HttpClient();
@@ -267,9 +221,7 @@ namespace System.Management.Automation.Help
 #endif
         }
 
-        /// <summary>
-        /// Disposes the help system.
-        /// </summary>
+        
         public void Dispose()
         {
 #if !CORECLR
@@ -280,14 +232,10 @@ namespace System.Management.Automation.Help
             GC.SuppressFinalize(this);
         }
 
-        /// <summary>
-        /// Help system errors.
-        /// </summary>
+        
         internal Collection<Exception> Errors { get; }
 
-        /// <summary>
-        /// Gets the current UIculture (includes the fallback chain)
-        /// </summary>
+        
         /// <returns>A list of cultures.</returns>
         internal IEnumerable<string> GetCurrentUICulture()
         {
@@ -304,9 +252,7 @@ namespace System.Management.Automation.Help
 
         #region Help Metadata Retrieval
 
-        /// <summary>
-        /// Gets an internal help URI.
-        /// </summary>
+        
         /// <param name="module">Internal module information.</param>
         /// <param name="culture">Help content culture.</param>
         /// <returns>Internal help uri representation.</returns>
@@ -315,9 +261,7 @@ namespace System.Management.Automation.Help
             return new UpdatableHelpUri(module.ModuleName, module.ModuleGuid, culture, ResolveUri(module.HelpInfoUri, false));
         }
 
-        /// <summary>
-        /// Gets the HelpInfo xml from the given URI.
-        /// </summary>
+        
         /// <param name="commandType">Command type.</param>
         /// <param name="uri">HelpInfo URI.</param>
         /// <param name="moduleName">Module name.</param>
@@ -366,9 +310,7 @@ namespace System.Management.Automation.Help
             }
         }
 
-        /// <summary>
-        /// Sends a standard HTTP request to get the resolved URI (potential FwLinks)
-        /// </summary>
+        
         /// <param name="baseUri">Base URI.</param>
         /// <param name="verbose"></param>
         /// <returns>Resolved URI.</returns>
@@ -477,9 +419,7 @@ namespace System.Management.Automation.Help
                 ErrorCategory.InvalidOperation, null, null);
         }
 
-        /// <summary>
-        /// HelpInfo.xml schema.
-        /// </summary>
+        
         private const string HelpInfoXmlSchema = @"<?xml version=""1.0"" encoding=""utf-8""?>
             <xs:schema attributeFormDefault=""unqualified"" elementFormDefault=""qualified""
                 targetNamespace=""http://schemas.microsoft.com/powershell/help/2010/05"" xmlns:xs=""http://www.w3.org/2001/XMLSchema"">
@@ -512,9 +452,7 @@ namespace System.Management.Automation.Help
         private const string CommandXmlNamespace = "http://schemas.microsoft.com/maml/dev/command/2004/10";
         private const string DscResourceXmlNamespace = "http://schemas.microsoft.com/maml/dev/dscResource/2004/10";
 
-        /// <summary>
-        /// Creates a HelpInfo object.
-        /// </summary>
+        
         /// <param name="xml">XML text.</param>
         /// <param name="moduleName">Module name.</param>
         /// <param name="moduleGuid">Module GUID.</param>
@@ -607,9 +545,7 @@ namespace System.Management.Automation.Help
             return helpInfo;
         }
 
-        /// <summary>
-        /// Creates a valid xml document.
-        /// </summary>
+        
         /// <param name="xml">Input xml.</param>
         /// <param name="ns">Schema namespace.</param>
         /// <param name="schema">Xml schema.</param>
@@ -650,9 +586,7 @@ namespace System.Management.Automation.Help
             return document;
         }
 
-        /// <summary>
-        /// Handles HelpInfo XML validation events.
-        /// </summary>
+        
         /// <param name="sender">Event sender.</param>
         /// <param name="arg">Event arguments.</param>
         private void HelpInfoValidationHandler(object sender, ValidationEventArgs arg)
@@ -670,9 +604,7 @@ namespace System.Management.Automation.Help
             }
         }
 
-        /// <summary>
-        /// Handles Help content MAML validation events.
-        /// </summary>
+        
         /// <param name="sender">Event sender.</param>
         /// <param name="arg">Event arguments.</param>
         private void HelpContentValidationHandler(object sender, ValidationEventArgs arg)
@@ -694,18 +626,14 @@ namespace System.Management.Automation.Help
 
         #region Help Content Retrieval
 
-        /// <summary>
-        /// Cancels all asynchronous download operations.
-        /// </summary>
+        
         internal void CancelDownload()
         {
             _cancelTokenSource.Cancel();
             _stopping = true;
         }
 
-        /// <summary>
-        /// Downloads and installs help content.
-        /// </summary>
+        
         /// <param name="commandType">Command type.</param>
         /// <param name="context">Execution context.</param>
         /// <param name="destPaths">Destination paths.</param>
@@ -737,9 +665,7 @@ namespace System.Management.Automation.Help
             return true;
         }
 
-        /// <summary>
-        /// Downloads the help content.
-        /// </summary>
+        
         /// <param name="commandType">Command type.</param>
         /// <param name="path">Destination path.</param>
         /// <param name="helpContentUri">Help content uri.</param>
@@ -766,9 +692,7 @@ namespace System.Management.Automation.Help
             return DownloadHelpContentHttpClient(uri, Path.Combine(path, fileName), commandType);
         }
 
-        /// <summary>
-        /// Downloads the help content and saves it to a directory.
-        /// </summary>
+        
         /// <param name="uri"></param>
         /// <param name="fileName"></param>
         /// <param name="commandType"></param>
@@ -831,9 +755,7 @@ namespace System.Management.Automation.Help
             return (Errors.Count == 0);
         }
 
-        /// <summary>
-        /// Writes the content of an HTTP response to the specified file.
-        /// </summary>
+        
         /// <param name="response"></param>
         /// <param name="fileName"></param>
         private void WriteResponseToFile(HttpResponseMessage response, string fileName)
@@ -869,9 +791,7 @@ namespace System.Management.Automation.Help
             }
         }
 
-        /// <summary>
-        /// Installs HelpInfo.xml.
-        /// </summary>
+        
         /// <param name="moduleName"></param>
         /// <param name="moduleGuid"></param>
         /// <param name="culture">Culture updated.</param>
@@ -988,9 +908,7 @@ namespace System.Management.Automation.Help
             }
         }
 
-        /// <summary>
-        /// Removes the read only attribute.
-        /// </summary>
+        
         /// <param name="path"></param>
         private static void RemoveReadOnly(string path)
         {
@@ -1006,9 +924,7 @@ namespace System.Management.Automation.Help
             }
         }
 
-        /// <summary>
-        /// Installs (unzips) the help content.
-        /// </summary>
+        
         /// <param name="commandType">Command type.</param>
         /// <param name="context">Execution context.</param>
         /// <param name="sourcePath">Source directory.</param>
@@ -1112,9 +1028,7 @@ namespace System.Management.Automation.Help
         }
 #endif
 
-        /// <summary>
-        /// Unzips to help content to a given location.
-        /// </summary>
+        
         /// <param name="context">Execution context.</param>
         /// <param name="srcPath">Source path.</param>
         /// <param name="destPath">Destination path.</param>
@@ -1212,9 +1126,7 @@ namespace System.Management.Automation.Help
             }
         }
 
-        /// <summary>
-        /// Validates all XML files within a given path.
-        /// </summary>
+        
         /// <param name="sourcePath">Path containing files to validate.</param>
         /// <param name="destPaths">Destination paths.</param>
         /// <param name="culture">Culture name.</param>
@@ -1403,9 +1315,7 @@ namespace System.Management.Automation.Help
             }
         }
 
-        /// <summary>
-        /// Loads string from the given path.
-        /// </summary>
+        
         /// <param name="cmdlet">Cmdlet instance.</param>
         /// <param name="path">Path to load.</param>
         /// <param name="credential">Credential.</param>
@@ -1448,9 +1358,7 @@ namespace System.Management.Automation.Help
             return null;
         }
 
-        /// <summary>
-        /// Validate the given path. If it exists, return the full path to the file.
-        /// </summary>
+        
         /// <param name="path"></param>
         /// <returns></returns>
         internal static string GetFilePath(string path)
@@ -1486,9 +1394,7 @@ namespace System.Management.Automation.Help
             return null;
         }
 
-        /// <summary>
-        /// Gets the default source path from GP.
-        /// </summary>
+        
         /// <returns></returns>
         internal string GetDefaultSourcePath()
         {
@@ -1503,9 +1409,7 @@ namespace System.Management.Automation.Help
 
 #if !CORECLR
 
-        /// <summary>
-        /// Handles the download completion event.
-        /// </summary>
+        
         /// <param name="sender">Event sender.</param>
         /// <param name="e">Event arguments.</param>
         private void HandleDownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
@@ -1543,9 +1447,7 @@ namespace System.Management.Automation.Help
             }
         }
 
-        /// <summary>
-        /// Handles the download progress changed event.
-        /// </summary>
+        
         /// <param name="sender">Event sender.</param>
         /// <param name="e">Event arguments.</param>
         private void HandleDownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
@@ -1568,17 +1470,13 @@ namespace System.Management.Automation.Help
         #endregion
     }
 
-    /// <summary>
-    /// Controls the updatable help system drive.
-    /// </summary>
+    
     internal class UpdatableHelpSystemDrive : IDisposable
     {
         private readonly string _driveName;
         private readonly PSCmdlet _cmdlet;
 
-        /// <summary>
-        /// Gets the drive name.
-        /// </summary>
+        
         internal string DriveName
         {
             get
@@ -1587,8 +1485,7 @@ namespace System.Management.Automation.Help
             }
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="cmdlet"></param>
         /// <param name="path"></param>
         /// <param name="credential"></param>
@@ -1632,9 +1529,7 @@ namespace System.Management.Automation.Help
             }
         }
 
-        /// <summary>
-        /// Disposes the class.
-        /// </summary>
+        
         public void Dispose()
         {
             PSDriveInfo mappedDrive = _cmdlet.SessionState.Drive.GetAtScope(_driveName, "local");

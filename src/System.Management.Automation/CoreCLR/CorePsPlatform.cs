@@ -10,14 +10,10 @@ using Microsoft.Win32;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// These are platform abstractions and platform specific implementations.
-    /// </summary>
+    
     public static partial class Platform
     {
-        /// <summary>
-        /// True if the current platform is Linux.
-        /// </summary>
+        
         public static bool IsLinux
         {
             get
@@ -26,9 +22,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// True if the current platform is macOS.
-        /// </summary>
+        
         public static bool IsMacOS
         {
             get
@@ -37,9 +31,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// True if the current platform is Windows.
-        /// </summary>
+        
         public static bool IsWindows
         {
             get
@@ -48,9 +40,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// True if PowerShell was built targeting .NET Core.
-        /// </summary>
+        
         public static bool IsCoreCLR
         {
             get
@@ -59,9 +49,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// True if the underlying system is NanoServer.
-        /// </summary>
+        
         public static bool IsNanoServer
         {
             get
@@ -92,9 +80,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// True if the underlying system is IoT.
-        /// </summary>
+        
         public static bool IsIoT
         {
             get
@@ -125,9 +111,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// True if underlying system is Windows Desktop.
-        /// </summary>
+        
         public static bool IsWindowsDesktop
         {
             get
@@ -146,9 +130,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets a value indicating whether the underlying system supports single-threaded apartment.
-        /// </summary>
+        
         public static bool IsStaSupported
         {
             get
@@ -205,10 +187,7 @@ namespace System.Management.Automation
             "WSMan.format.ps1xml"
         };
 
-        /// <summary>
-        /// Some common environment variables used in PS have different
-        /// names in different OS platforms.
-        /// </summary>
+        
         internal static class CommonEnvVariableNames
         {
 #if UNIX
@@ -221,9 +200,7 @@ namespace System.Management.Automation
 #if UNIX
         private static string s_tempHome = null;
 
-        /// <summary>
-        /// Get the 'HOME' environment variable or create a temporary home directory if the environment variable is not set.
-        /// </summary>
+        
         private static string GetHomeOrCreateTempHome()
         {
             const string tempHomeFolderName = "pwsh-{0}-98288ff9-5712-4a14-9a11-23693b9cd91a";
@@ -249,28 +226,24 @@ namespace System.Management.Automation
             return s_tempHome;
         }
 
-        /// <summary>
-        /// X Desktop Group configuration type enum.
-        /// </summary>
+        
         public enum XDG_Type
         {
-            /// <summary> XDG_CONFIG_HOME/powershell </summary>
+            
             CONFIG,
-            /// <summary> XDG_CACHE_HOME/powershell </summary>
+            
             CACHE,
-            /// <summary> XDG_DATA_HOME/powershell </summary>
+            
             DATA,
-            /// <summary> XDG_DATA_HOME/powershell/Modules </summary>
+            
             USER_MODULES,
-            /// <summary> /usr/local/share/powershell/Modules </summary>
+            
             SHARED_MODULES,
-            /// <summary> XDG_CONFIG_HOME/powershell </summary>
+            
             DEFAULT
         }
 
-        /// <summary>
-        /// Function for choosing directory location of PowerShell for profile loading.
-        /// </summary>
+        
         public static string SelectProductNameForDirectory(XDG_Type dirpath)
         {
             // TODO: XDG_DATA_DIRS implementation as per GitHub issue #1060
@@ -347,9 +320,7 @@ namespace System.Management.Automation
         }
 #endif
 
-        /// <summary>
-        /// Mimic 'Environment.GetFolderPath(folder)' on Unix.
-        /// </summary>
+        
         internal static string GetFolderPath(Environment.SpecialFolder folder)
         {
 #if UNIX
@@ -460,135 +431,135 @@ namespace System.Management.Automation
         // No manual mapping is required. .NET Core maps the Linux errno
         // to a PAL value and calls strerror_r underneath to generate the message.
 
-        /// <summary>Unix specific implementations of required functionality.</summary>
+        
         internal static partial class Unix
         {
             private static readonly Dictionary<int, string> usernameCache = new();
             private static readonly Dictionary<int, string> groupnameCache = new();
 
-            /// <summary>The type of a Unix file system item.</summary>
+            
             public enum ItemType
             {
-                /// <summary>The item is a Directory.</summary>
+                
                 Directory,
 
-                /// <summary>The item is a File.</summary>
+                
                 File,
 
-                /// <summary>The item is a Symbolic Link.</summary>
+                
                 SymbolicLink,
 
-                /// <summary>The item is a Block Device.</summary>
+                
                 BlockDevice,
 
-                /// <summary>The item is a Character Device.</summary>
+                
                 CharacterDevice,
 
-                /// <summary>The item is a Named Pipe.</summary>
+                
                 NamedPipe,
 
-                /// <summary>The item is a Socket.</summary>
+                
                 Socket,
             }
 
-            /// <summary>The mask to use to retrieve specific mode bits from the mode value in the stat class.</summary>
+            
             public enum StatMask
             {
-                /// <summary>The mask to collect the owner mode.</summary>
+                
                 OwnerModeMask = 0x1C0,
 
-                /// <summary>The mask to get the owners read bit.</summary>
+                
                 OwnerRead = 0x100,
 
-                /// <summary>The mask to get the owners write bit.</summary>
+                
                 OwnerWrite = 0x080,
 
-                /// <summary>The mask to get the owners execute bit.</summary>
+                
                 OwnerExecute = 0x040,
 
-                /// <summary>The mask to get the group mode.</summary>
+                
                 GroupModeMask = 0x038,
 
-                /// <summary>The mask to get the group mode.</summary>
+                
                 GroupRead = 0x20,
 
-                /// <summary>The mask to get the group mode.</summary>
+                
                 GroupWrite = 0x10,
 
-                /// <summary>The mask to get the group mode.</summary>
+                
                 GroupExecute = 0x8,
 
-                /// <summary>The mask to get the "other" mode.</summary>
+                
                 OtherModeMask = 0x007,
 
-                /// <summary>The mask to get the "other" read bit.</summary>
+                
                 OtherRead = 0x004,
 
-                /// <summary>The mask to get the "other" write bit.</summary>
+                
                 OtherWrite = 0x002,
 
-                /// <summary>The mask to get the "other" execute bit.</summary>
+                
                 OtherExecute = 0x001,
 
-                /// <summary>The mask to retrieve the sticky bit.</summary>
+                
                 SetStickyMask = 0x200,
 
-                /// <summary>The mask to retrieve the setgid bit.</summary>
+                
                 SetGidMask = 0x400,
 
-                /// <summary>The mask to retrieve the setuid bit.</summary>
+                
                 SetUidMask = 0x800,
             }
 
-            /// <summary>The Common Stat class.</summary>
+            
             public class CommonStat
             {
-                /// <summary>The inode of the filesystem item.</summary>
+                
                 public long Inode;
 
-                /// <summary>The Mode of the filesystem item.</summary>
+                
                 public int Mode;
 
-                /// <summary>The user id of the filesystem item.</summary>
+                
                 public int UserId;
 
-                /// <summary>The group id of the filesystem item.</summary>
+                
                 public int GroupId;
 
-                /// <summary>The number of hard links for the filesystem item.</summary>
+                
                 public int HardlinkCount;
 
-                /// <summary>The size in bytes of the filesystem item.</summary>
+                
                 public long Size;
 
-                /// <summary>The last access time of the filesystem item.</summary>
+                
                 public DateTime AccessTime;
 
-                /// <summary>The last modified time for the filesystem item.</summary>
+                
                 public DateTime ModifiedTime;
 
-                /// <summary>The last time the status changes for the filesystem item.</summary>
+                
                 public DateTime StatusChangeTime;
 
-                /// <summary>The block size of the filesystem.</summary>
+                
                 public long BlockSize;
 
-                /// <summary>The device id of the filesystem item.</summary>
+                
                 public int DeviceId;
 
-                /// <summary>The number of blocks used by the filesystem item.</summary>
+                
                 public int NumberOfBlocks;
 
-                /// <summary>The type of the filesystem item.</summary>
+                
                 public ItemType ItemType;
 
-                /// <summary>Whether the filesystem item has the setuid bit enabled.</summary>
+                
                 public bool IsSetUid;
 
-                /// <summary>Whether the filesystem item has the setgid bit enabled.</summary>
+                
                 public bool IsSetGid;
 
-                /// <summary>Whether the filesystem item has the sticky bit enabled. This is only available for directories.</summary>
+                
                 public bool IsSticky;
 
                 private const char CanRead = 'r';
@@ -617,7 +588,7 @@ namespace System.Management.Automation
                 private const string OwnerReadWriteGroupReadOtherRead = "-rw-r--r--";
                 private const string DirectoryOwnerFullGroupReadExecOtherReadExec = "drwxr-xr-x";
 
-                /// <summary>Convert the mode to a string which is usable in our formatting.</summary>
+                
                 /// <returns>The mode converted into a Unix style string similar to the output of ls.</returns>
                 public string GetModeString()
                 {
@@ -660,10 +631,7 @@ namespace System.Management.Automation
                     return new string(modeCharacters);
                 }
 
-                /// <summary>
-                /// Get the user name. This is used in formatting, but we shouldn't
-                /// do the pinvoke this unless we're going to use it.
-                /// </summary>
+                
                 /// <returns>The user name.</returns>
                 public string GetUserName()
                 {
@@ -680,10 +648,7 @@ namespace System.Management.Automation
                     return username;
                 }
 
-                /// <summary>
-                /// Get the group name. This is used in formatting, but we shouldn't
-                /// do the pinvoke this unless we're going to use it.
-                /// </summary>
+                
                 /// <returns>The name of the group.</returns>
                 public string GetGroupName()
                 {
@@ -707,7 +672,7 @@ namespace System.Management.Automation
                 return (ErrorCategory)Unix.NativeMethods.GetErrorCategory(errno);
             }
 
-            /// <summary>Determine if the item is a hardlink.</summary>
+            
             /// <param name="fs">A FileSystemInfo to check to determine if it is a hardlink.</param>
             /// <returns>A boolean that represents whether the item is a hardlink.</returns>
             public static bool IsHardLink(FileSystemInfo fs)
@@ -728,9 +693,7 @@ namespace System.Management.Automation
                 throw new Win32Exception(Marshal.GetLastWin32Error());
             }
 
-            /// <summary>
-            /// Create a managed replica of the native stat structure.
-            /// </summary>
+            
             /// <param name="css">The common stat structure from which we copy.</param>
             /// <returns>A managed common stat class instance.</returns>
             private static CommonStat CopyStatStruct(NativeMethods.CommonStatStruct css)
@@ -812,7 +775,7 @@ namespace System.Management.Automation
                 return cs;
             }
 
-            /// <summary>Get the lstat info from a path.</summary>
+            
             /// <param name="path">The path to the lstat information.</param>
             /// <returns>An instance of the CommonStat for the path.</returns>
             public static CommonStat GetLStat(string path)
@@ -826,7 +789,7 @@ namespace System.Management.Automation
                 throw new Win32Exception(Marshal.GetLastWin32Error());
             }
 
-            /// <summary>Get the stat info from a path.</summary>
+            
             /// <param name="path">The path to the stat information.</param>
             /// <returns>An instance of the CommonStat for the path.</returns>
             public static CommonStat GetStat(string path)
@@ -840,7 +803,7 @@ namespace System.Management.Automation
                 throw new Win32Exception(Marshal.GetLastWin32Error());
             }
 
-            /// <summary>Read the /proc file system for information about the parent.</summary>
+            
             /// <param name="pid">The process id used to get the parent process.</param>
             /// <returns>The process id.</returns>
             public static int GetProcFSParentPid(int pid)
@@ -888,7 +851,7 @@ namespace System.Management.Automation
                 }
             }
 
-            /// <summary>The native methods class.</summary>
+            
             internal static partial class NativeMethods
             {
                 private const string psLib = "libpsl-native";
@@ -925,31 +888,31 @@ namespace System.Management.Automation
                 [StructLayout(LayoutKind.Sequential, Pack = 4)]
                 internal unsafe struct UnixTm
                 {
-                    /// <summary>Seconds (0-60).</summary>
+                    
                     internal int tm_sec;
 
-                    /// <summary>Minutes (0-59).</summary>
+                    
                     internal int tm_min;
 
-                    /// <summary>Hours (0-23).</summary>
+                    
                     internal int tm_hour;
 
-                    /// <summary>Day of the month (1-31).</summary>
+                    
                     internal int tm_mday;
 
-                    /// <summary>Month (0-11).</summary>
+                    
                     internal int tm_mon;
 
-                    /// <summary>The year - 1900.</summary>
+                    
                     internal int tm_year;
 
-                    /// <summary>Day of the week (0-6, Sunday = 0).</summary>
+                    
                     internal int tm_wday;
 
-                    /// <summary>Day in the year (0-365, 1 Jan = 0).</summary>
+                    
                     internal int tm_yday;
 
-                    /// <summary>Daylight saving time.</summary>
+                    
                     internal int tm_isdst;
                 }
 
@@ -989,79 +952,74 @@ namespace System.Management.Automation
                 [LibraryImport(psLib, StringMarshalling = StringMarshalling.Utf8)]
                 internal static partial int GetInodeData(string path, out ulong device, out ulong inode);
 
-                /// <summary>
-                /// This is a struct from getcommonstat.h in the native library.
-                /// It presents each member of the stat structure as the largest type of that member across
-                /// all stat structures on the platforms we support. This allows us to present a common
-                /// stat structure for all our platforms.
-                /// </summary>
+                
                 [StructLayout(LayoutKind.Sequential)]
                 internal struct CommonStatStruct
                 {
-                    /// <summary>The inode of the filesystem item.</summary>
+                    
                     internal long Inode;
 
-                    /// <summary>The mode of the filesystem item.</summary>
+                    
                     internal int Mode;
 
-                    /// <summary>The user id of the filesystem item.</summary>
+                    
                     internal int UserId;
 
-                    /// <summary>The group id of the filesystem item.</summary>
+                    
                     internal int GroupId;
 
-                    /// <summary>The number of hard links to the filesystem item.</summary>
+                    
                     internal int HardlinkCount;
 
-                    /// <summary>The size in bytes of the filesystem item.</summary>
+                    
                     internal long Size;
 
-                    /// <summary>The time of the last access for the filesystem item.</summary>
+                    
                     internal long AccessTime;
 
-                    /// <summary>The time of the last modification for the filesystem item.</summary>
+                    
                     internal long ModifiedTime;
 
-                    /// <summary>The time of the last status change for the filesystem item.</summary>
+                    
                     internal long StatusChangeTime;
 
-                    /// <summary>The size in bytes of the file system.</summary>
+                    
                     internal long BlockSize;
 
-                    /// <summary>The device id for the filesystem item.</summary>
+                    
                     internal int DeviceId;
 
-                    /// <summary>The number of filesystem blocks that the filesystem item uses.</summary>
+                    
                     internal int NumberOfBlocks;
 
-                    /// <summary>This filesystem item is a directory.</summary>
+                    
                     internal int IsDirectory;
 
-                    /// <summary>This filesystem item is a file.</summary>
+                    
                     internal int IsFile;
 
-                    /// <summary>This filesystem item is a symbolic link.</summary>
+                    
                     internal int IsSymbolicLink;
 
-                    /// <summary>This filesystem item is a block device.</summary>
+                    
                     internal int IsBlockDevice;
 
-                    /// <summary>This filesystem item is a character device.</summary>
+                    
                     internal int IsCharacterDevice;
 
-                    /// <summary>This filesystem item is a named pipe.</summary>
+                    
                     internal int IsNamedPipe;
 
-                    /// <summary>This filesystem item is a socket.</summary>
+                    
                     internal int IsSocket;
 
-                    /// <summary>This filesystem item will run as the owner if executed.</summary>
+                    
                     internal int IsSetUid;
 
-                    /// <summary>This filesystem item will run as the group if executed.</summary>
+                    
                     internal int IsSetGid;
 
-                    /// <summary>Whether the sticky bit is set on the filesystem item.</summary>
+                    
                     internal int IsSticky;
                 }
 

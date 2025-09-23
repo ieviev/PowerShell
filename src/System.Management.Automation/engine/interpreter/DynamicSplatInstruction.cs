@@ -4,9 +4,7 @@ using System.Runtime.CompilerServices;
 
 namespace System.Management.Automation.Interpreter
 {
-    /// <summary>
-    /// Implements dynamic call site with many arguments. Wraps the arguments into <see cref="ArgumentArray"/>.
-    /// </summary>
+    
     internal sealed class DynamicSplatInstruction : Instruction
     {
         private readonly CallSite<Func<CallSite, ArgumentArray, object>> _site;

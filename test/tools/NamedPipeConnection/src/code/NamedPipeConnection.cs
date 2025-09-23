@@ -17,11 +17,7 @@ namespace Microsoft.PowerShell.CustomNamedPipeConnection
 {
     #region NamedPipeClient
 
-    /// <summary>
-    /// This class is based on PowerShell core source code, and handles creating
-    /// a client side named pipe object that can connect to a running PowerShell 
-    /// process by its process Id.
-    /// </summary>
+    
     internal sealed class NamedPipeClient : IDisposable
     {
         #region Members
@@ -33,28 +29,20 @@ namespace Microsoft.PowerShell.CustomNamedPipeConnection
 
         #region Properties
 
-        /// <summary>
-        /// Accessor for the named pipe reader.
-        /// </summary>
+        
         public StreamReader TextReader { get; private set; }
 
-        /// <summary>
-        /// Accessor for the named pipe writer.
-        /// </summary>
+        
         public StreamWriter TextWriter { get; private set; }
 
-        /// <summary>
-        /// Name of the pipe.
-        /// </summary>
+        
         public string PipeName { get; private set; }
 
         #endregion
 
         #region IDisposable
 
-        /// <summary>
-        /// Dispose object.
-        /// </summary>
+        
         public void Dispose()
         {
             Dispose(true);
@@ -98,9 +86,7 @@ namespace Microsoft.PowerShell.CustomNamedPipeConnection
         private NamedPipeClient()
         { }
 
-        /// <summary>
-        /// Constructor. Creates Named Pipe based on process Id.
-        /// </summary>
+        
         /// <param name="procId">Target process Id for pipe.</param>
         public NamedPipeClient(int procId)
         {
@@ -112,10 +98,7 @@ namespace Microsoft.PowerShell.CustomNamedPipeConnection
 
         #region Static methods
 
-        /// <summary>
-        /// Create a pipe name based on process and appdomain name information.
-        /// E.g., "PSHost.ProcessStartTime.ProcessId.DefaultAppDomain.ProcessName"
-        /// </summary>
+        
         /// <param name="proc">Process object.</param>
         /// <returns>Pipe name.</returns>
         private static string CreateProcessPipeName(System.Diagnostics.Process proc)
@@ -149,10 +132,7 @@ namespace Microsoft.PowerShell.CustomNamedPipeConnection
 
         #region Public methods
 
-        /// <summary>
-        /// Connect to named pipe server.  This is a blocking call until a
-        /// connection occurs or the timeout time has elapsed.
-        /// </summary>
+        
         /// <param name="timeout">Connection attempt timeout in milliseconds.</param>
         public void Connect(
             int timeout)
@@ -166,9 +146,7 @@ namespace Microsoft.PowerShell.CustomNamedPipeConnection
             TextWriter.AutoFlush = true;
         }
 
-        /// <summary>
-        /// Closes the named pipe.
-        /// </summary>
+        
         public void Close()
         {
             if (_clientPipeStream != null)
@@ -177,9 +155,7 @@ namespace Microsoft.PowerShell.CustomNamedPipeConnection
             }
         }
 
-        /// <summary>
-        /// Abort connection attempt.
-        /// </summary>
+        
         public void AbortConnect()
         {
             _connecting = false;
@@ -189,9 +165,7 @@ namespace Microsoft.PowerShell.CustomNamedPipeConnection
 
         #region Private methods
 
-        /// <summary>
-        /// Begin connection attempt.
-        /// </summary>
+        
         private NamedPipeClientStream DoConnect(int timeout)
         {
             // Repeatedly attempt connection to pipe until timeout expires.
@@ -243,18 +217,14 @@ namespace Microsoft.PowerShell.CustomNamedPipeConnection
 
         #region Properties
 
-        /// <summary>
-        /// Process Id to attach to.
-        /// </summary>
+        
         public int ProcessId
         {
             get;
             set;
         }
 
-        /// <summary>
-        /// ConnectingTimeout in Milliseconds
-        /// </summary>
+        
         public int ConnectingTimeout
         {
             get;
@@ -268,9 +238,7 @@ namespace Microsoft.PowerShell.CustomNamedPipeConnection
         private NamedPipeInfo()
         { }
 
-        /// <summary>
-        /// Construct instance.
-        /// </summary>
+        
         public NamedPipeInfo(
             int processId,
             int connectingTimeout)
@@ -285,45 +253,35 @@ namespace Microsoft.PowerShell.CustomNamedPipeConnection
 
         #region Overrides
 
-        /// <summary>
-        /// ComputerName
-        /// </summary>
+        
         public override string ComputerName
         {
             get { return _computerName; }
             set { throw new NotImplementedException(); }
         }
 
-        /// <summary>
-        /// Credential
-        /// </summary>
+        
         public override PSCredential Credential
         {
             get { return null; }
             set { throw new NotImplementedException(); }
         }
 
-        /// <summary>
-        /// AuthenticationMechanism
-        /// </summary>
+        
         public override AuthenticationMechanism AuthenticationMechanism
         {
             get { return AuthenticationMechanism.Default; }
             set { throw new NotImplementedException(); }
         }
 
-        /// <summary>
-        /// CertificateThumbprint
-        /// </summary>
+        
         public override string CertificateThumbprint
         {
             get { return string.Empty; }
             set { throw new NotImplementedException(); }
         }
 
-        /// <summary>
-        /// Create shallow copy of NamedPipeInfo object.
-        /// </summary>
+        
         public override RunspaceConnectionInfo Clone()
         {
             var connectionInfo = new NamedPipeInfo(ProcessId, ConnectingTimeout);
@@ -331,9 +289,7 @@ namespace Microsoft.PowerShell.CustomNamedPipeConnection
             return connectionInfo;
         }
 
-        /// <summary>
-        /// Create an instance of ClientSessionTransportManager.
-        /// </summary>
+        
         public override BaseClientSessionTransportManager CreateClientSessionTransportManager(
             Guid instanceId,
             string sessionName,
@@ -349,10 +305,7 @@ namespace Microsoft.PowerShell.CustomNamedPipeConnection
     
         #region Public Methods
 
-        /// <summary>
-        /// Attempt to connect to process Id.
-        /// If connection fails, is aborted, or times out, an exception is thrown.
-        /// </summary>
+        
         /// <param name="textWriter">Named pipe text stream writer.</param>
         /// <param name="textReader">Named pipe text stream reader.</param>
         /// <exception cref="TimeoutException">Connect attempt times out or is aborted.</exception>
@@ -368,9 +321,7 @@ namespace Microsoft.PowerShell.CustomNamedPipeConnection
             textReader = _clientPipe.TextReader;
         }
 
-        /// <summary>
-        /// Stops a connection attempt, or closes the connection that has been established.
-        /// </summary>
+        
         public void StopConnect()
         {
             _clientPipe?.AbortConnect();
@@ -414,10 +365,7 @@ namespace Microsoft.PowerShell.CustomNamedPipeConnection
 
         #region Overrides
 
-        /// <summary>
-        /// Create a named pipe connection to the target process and set up
-        /// transport reader/writer.
-        /// </summary>
+        
         public override void CreateAsync()
         {
             _connectionInfo.Connect(
@@ -517,10 +465,7 @@ namespace Microsoft.PowerShell.CustomNamedPipeConnection
 
     #region New-NamedPipeSession
 
-    /// <summary>
-    /// Attempts to connect to the specified host computer and returns
-    /// a PSSession object representing the remote session.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.New, "NamedPipeSession")]
     [OutputType(typeof(PSSession))]
     public sealed class NewNamedPipeSessionCommand : PSCmdlet
@@ -535,23 +480,17 @@ namespace Microsoft.PowerShell.CustomNamedPipeConnection
 
         #region Parameters
 
-        /// <summary>
-        /// Name of host computer to connect to.
-        /// </summary>
+        
         [Parameter(Position=0, Mandatory=true)]
         [ValidateNotNullOrEmpty]
         public int ProcessId { get; set; }
 
-        /// <summary>
-        /// Optional value in seconds that limits the time allowed for a connection to be established.
-        /// </summary>
+        
         [Parameter]
         [ValidateRange(-1, 86400)]
         public int ConnectingTimeout { get; set; } = Timeout.Infinite;
 
-        /// <summary>
-        /// Optional name for the new PSSession.
-        /// </summary>
+        
         [Parameter]
         [ValidateNotNullOrEmpty]
         public string Name { get; set; }
@@ -560,9 +499,7 @@ namespace Microsoft.PowerShell.CustomNamedPipeConnection
 
         #region Overrides
 
-        /// <summary>
-        /// EndProcessing override.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             // Convert ConnectingTimeout value from seconds to milliseconds.
@@ -597,9 +534,7 @@ namespace Microsoft.PowerShell.CustomNamedPipeConnection
             }
         }
 
-        /// <summary>
-        /// StopProcessing override.
-        /// </summary>
+        
         protected override void StopProcessing()
         {
             _connectionInfo?.StopConnect();

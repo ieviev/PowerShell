@@ -11,20 +11,14 @@ using System.Management.Automation.Remoting;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// Test-PSSessionConfigurationFile command implementation
-    ///
-    /// See Declarative Initial Session Config (DISC)
-    /// </summary>
+    
     [Cmdlet(VerbsDiagnostic.Test, "PSSessionConfigurationFile", HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096797")]
     [OutputType(typeof(bool))]
     public class TestPSSessionConfigurationFileCommand : PSCmdlet
     {
         #region Parameters
 
-        /// <summary>
-        /// The output path for the generated file...
-        /// </summary>
+        
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, ValueFromPipelineByPropertyName = true)]
         public string Path
         {
@@ -39,8 +33,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Overrides
 
-        /// <summary>
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             ProviderInfo provider = null;

@@ -8,9 +8,7 @@ using System.Runtime.InteropServices;
 
 namespace Microsoft.PowerShell.GlobalTool.Shim
 {
-    /// <summary>
-    /// Shim layer to chose the appropriate runtime for PowerShell DotNet Global tool.
-    /// </summary>
+    
     public static class EntryPoint
     {
         private const string PwshDllName = "pwsh.dll";
@@ -19,9 +17,7 @@ namespace Microsoft.PowerShell.GlobalTool.Shim
 
         private const string UnixFolderName = "unix";
 
-        /// <summary>
-        /// Entry point for the global tool.
-        /// </summary>
+        
         /// <param name="args">Arguments passed to the global tool.</param>'
         /// <returns>Exit code returned by pwsh.</returns>
         public static int Main(string[] args)

@@ -26,9 +26,7 @@ using Dbg = System.Management.Automation.Diagnostics;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Various types of input/output supported by native commands.
-    /// </summary>
+    
     /// <remarks>
     /// Most native commands only support text. Other formats
     /// are supported by minishell
@@ -39,9 +37,7 @@ namespace System.Management.Automation
         Xml
     }
 
-    /// <summary>
-    /// Different streams produced by minishell output.
-    /// </summary>
+    
     internal enum MinishellStream
     {
         Output,
@@ -54,10 +50,7 @@ namespace System.Management.Automation
         Unknown
     }
 
-    /// <summary>
-    /// Helper class which holds stream names and also provide conversion
-    /// method.
-    /// </summary>
+    
     internal static class StringToMinishellStreamConverter
     {
         internal const string OutputStream = "output";
@@ -106,26 +99,17 @@ namespace System.Management.Automation
         }
     }
 
-    /// <summary>
-    /// An output object from the child process.
-    /// If it's from the error stream isError will be true.
-    /// </summary>
+    
     internal class ProcessOutputObject
     {
-        /// <summary>
-        /// Get the data from this object.
-        /// </summary>
+        
         /// <value>The data</value>
         internal object Data { get; }
 
-        /// <summary>
-        /// Stream to which data belongs.
-        /// </summary>
+        
         internal MinishellStream Stream { get; }
 
-        /// <summary>
-        /// Build an output object.
-        /// </summary>
+        
         /// <param name="data">The data to output.</param>
         /// <param name="stream">Stream to which data belongs.</param>
         internal ProcessOutputObject(object data, MinishellStream stream)
@@ -136,10 +120,7 @@ namespace System.Management.Automation
     }
 
 #nullable enable
-    /// <summary>
-    /// This exception is used by the NativeCommandProcessor to indicate an error
-    /// when a native command returns a non-zero exit code.
-    /// </summary>
+    
     public sealed class NativeCommandExitException : RuntimeException
     {
         // NOTE:
@@ -152,10 +133,7 @@ namespace System.Management.Automation
 
         #region Constructors
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="NativeCommandExitException"/> class with information on the native
-        /// command, a specified error message and a specified error ID.
-        /// </summary>
+        
         /// <param name="path">The full path of the native command.</param>
         /// <param name="exitCode">The exit code returned by the native command.</param>
         /// <param name="processId">The process ID of the process before it ended.</param>
@@ -173,32 +151,22 @@ namespace System.Management.Automation
 
         #endregion Constructors
 
-        /// <summary>
-        /// Gets the path of the native command.
-        /// </summary>
+        
         public string? Path { get; }
 
-        /// <summary>
-        /// Gets the exit code returned by the native command.
-        /// </summary>
+        
         public int ExitCode { get; }
 
-        /// <summary>
-        /// Gets the native command's process ID.
-        /// </summary>
+        
         public int ProcessId { get; }
 
     }
 #nullable restore
 
-    /// <summary>
-    /// Provides way to create and execute native commands.
-    /// </summary>
+    
     internal class NativeCommandProcessor : CommandProcessorBase
     {
-        /// <summary>
-        /// This is the list of files which will trigger Legacy behavior if 'PSNativeCommandArgumentPassing' is set to "Windows".
-        /// </summary>
+        
         private static readonly HashSet<string> s_legacyFileExtensions = new(StringComparer.OrdinalIgnoreCase)
             {
                 ".js",
@@ -208,10 +176,7 @@ namespace System.Management.Automation
                 ".vbs",
             };
 
-        /// <summary>
-        /// This is the list of native commands that have non-standard behavior with regard to argument passing.
-        /// We use Legacy argument parsing for them when 'PSNativeCommandArgumentPassing' is set to "Windows".
-        /// </summary>
+        
         private static readonly HashSet<string> s_legacyCommands = new(StringComparer.OrdinalIgnoreCase)
             {
                 "cmd",
@@ -222,24 +187,17 @@ namespace System.Management.Automation
             };
 
 #if !UNIX
-        /// <summary>
-        /// List of known package managers pulled from the registry.
-        /// </summary>
+        
         private static readonly HashSet<string> s_knownPackageManagers = GetPackageManagerListFromRegistry();
 
-        /// <summary>
-        /// Indicates whether the Path Update feature is enabled in a given session.
-        /// PowerShell sessions could reuse the same thread, so we cannot cache the value with a thread static variable.
-        /// </summary>
+        
         private static readonly ConditionalWeakTable<ExecutionContext, string> s_pathUpdateFeatureEnabled = new();
 
         private readonly bool _isPackageManager;
         private string _originalUserEnvPath;
         private string _originalSystemEnvPath;
 
-        /// <summary>
-        /// Gets the known package managers from the registry.
-        /// </summary>
+        
         private static HashSet<string> GetPackageManagerListFromRegistry()
         {
             // We only account for the first 8 package managers. This is the same behavior as in CMD.
@@ -271,9 +229,7 @@ namespace System.Management.Automation
             return retSet;
         }
 
-        /// <summary>
-        /// Check if the given name is a known package manager from the registry list.
-        /// </summary>
+        
         private static bool IsKnownPackageManager(string name)
         {
             if (s_knownPackageManagers is null)
@@ -299,9 +255,7 @@ namespace System.Management.Automation
             return false;
         }
 
-        /// <summary>
-        /// Check if the Path Update feature is enabled for the given session.
-        /// </summary>
+        
         private static bool IsPathUpdateFeatureEnabled(ExecutionContext context)
         {
             // We check only once per session.
@@ -321,9 +275,7 @@ namespace System.Management.Automation
             return enabled;
         }
 
-        /// <summary>
-        /// Gets the added part of the new string compared to the old string.
-        /// </summary>
+        
         private static ReadOnlySpan<char> GetAddedPartOfString(string oldString, string newString)
         {
             if (oldString.Length >= newString.Length)
@@ -351,9 +303,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Update the process-scope environment variable Path based on the changes in the user-scope and system-scope Path.
-        /// </summary>
+        
         /// <param name="oldUserPath">The old value of the user-scope Path retrieved from registry.</param>
         /// <param name="oldSystemPath">The old value of the system-scope Path retrieved from registry.</param>
         private static void UpdateProcessEnvPath(string oldUserPath, string oldSystemPath)
@@ -404,15 +354,10 @@ namespace System.Management.Automation
 
         #region ctor/native command properties
 
-        /// <summary>
-        /// Information about application which is invoked by this instance of
-        /// NativeCommandProcessor.
-        /// </summary>
+        
         private readonly ApplicationInfo _applicationInfo;
 
-        /// <summary>
-        /// Initializes the new instance of NativeCommandProcessor class.
-        /// </summary>
+        
         /// <param name="applicationInfo">
         /// The information about the application to run.
         /// </param>
@@ -455,9 +400,7 @@ namespace System.Management.Automation
 #endif
         }
 
-        /// <summary>
-        /// Gets the NativeCommand associated with this command processor.
-        /// </summary>
+        
         private NativeCommand nativeCommand
         {
             get
@@ -468,9 +411,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets or sets the name of the native command.
-        /// </summary>
+        
         private string NativeCommandName
         {
             get
@@ -480,9 +421,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets or sets path to the native command.
-        /// </summary>
+        
         private string Path
         {
             get
@@ -502,14 +441,10 @@ namespace System.Management.Automation
 
         #region parameter binder
 
-        /// <summary>
-        /// Parameter binder used by this command processor.
-        /// </summary>
+        
         private NativeCommandParameterBinderController _nativeParameterBinderController;
 
-        /// <summary>
-        /// Gets a new instance of a ParameterBinderController using a NativeCommandParameterBinder.
-        /// </summary>
+        
         /// <param name="command">
         /// The native command to be run.
         /// </param>
@@ -551,9 +486,7 @@ namespace System.Management.Automation
 
         #region internal overrides
 
-        /// <summary>
-        /// Prepares the command for execution with the specified CommandParameterInternal.
-        /// </summary>
+        
         internal override void Prepare(IDictionary psDefaultParameterValues)
         {
             // Check if the application is minishell
@@ -578,9 +511,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Executes the command. This method assumes that Prepare is already called.
-        /// </summary>
+        
         internal override void ProcessRecord()
         {
             try
@@ -605,49 +536,29 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Process object for the invoked application.
-        /// </summary>
+        
         private Process _nativeProcess;
 
-        /// <summary>
-        /// This is used for writing input to the process.
-        /// </summary>
+        
         private readonly ProcessInputWriter _inputWriter = null;
 
-        /// <summary>
-        /// Is true if this command is to be run "standalone" - that is, with
-        /// no redirection.
-        /// </summary>
+        
         private bool _runStandAlone;
 
-        /// <summary>
-        /// Indicate whether we need to consider redirecting the output/error of the current native command.
-        /// Usually a windows program which is the last command in a pipeline can be executed as 'background' -- we don't need to capture its output/error streams.
-        /// </summary>
+        
         private bool _isRunningInBackground;
 
-        /// <summary>
-        /// Indicate if we have called 'NotifyBeginApplication()' on the host, so that
-        /// we can call the counterpart 'NotifyEndApplication' as appropriate.
-        /// </summary>
+        
         private bool _hasNotifiedBeginApplication;
 
-        /// <summary>
-        /// This output queue helps us keep the output and error (if redirected) order correct.
-        /// We could do a blocking read in the Complete block instead,
-        /// but then we would not be able to restore the order reasonable.
-        /// </summary>
+        
         private BlockingCollection<ProcessOutputObject> _nativeProcessOutputQueue;
 
         private static bool? s_supportScreenScrape = null;
         private readonly bool _isTranscribing;
         private Host.Coordinates _startPosition;
 
-        /// <summary>
-        /// Object used for synchronization between StopProcessing thread and
-        /// Pipeline thread.
-        /// </summary>
+        
         private readonly object _sync = new object();
 
         private SemaphoreSlim _processInitialized;
@@ -673,9 +584,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Creates a pipe representing the streaming of unprocessed bytes.
-        /// </summary>
+        
         /// <param name="stdout">
         /// The stream that the pipe should represent. <see langword="true" />
         /// for stdout, <see langword="false" /> for stdin.
@@ -683,10 +592,7 @@ namespace System.Management.Automation
         /// <returns>A new byte pipe representing the specified stream.</returns>
         internal BytePipe CreateBytePipe(bool stdout) => new NativeCommandProcessorBytePipe(this, stdout);
 
-        /// <summary>
-        /// Gets the specified base <see cref="Stream" /> for the underlying
-        /// <see cref="Process" />.
-        /// </summary>
+        
         /// <param name="stdout">
         /// The stream that should be retrieved. <see langword="true" /> for
         /// stdout, <see langword="false" /> for stdin.
@@ -703,9 +609,7 @@ namespace System.Management.Automation
                 : _nativeProcess.StandardInput.BaseStream;
         }
 
-        /// <summary>
-        /// Executes the native command once all of the input has been gathered.
-        /// </summary>
+        
         /// <exception cref="PipelineStoppedException">
         /// The pipeline is stopping
         /// </exception>
@@ -1036,9 +940,7 @@ namespace System.Management.Automation
             return record;
         }
 
-        /// <summary>
-        /// Read the output from the native process and send it down the line.
-        /// </summary>
+        
         private void ConsumeAvailableNativeProcessOutput(bool blocking)
         {
             if (_isRunningInBackground)
@@ -1236,12 +1138,7 @@ namespace System.Management.Automation
 
         #region Process cleanup with Child Process cleanup
 
-        /// <summary>
-        /// Utility routine to kill a process, discarding non-critical exceptions.
-        /// This utility makes two passes at killing a process. In the first pass,
-        /// if the process handle is invalid (as seems to be the case with an ntvdm)
-        /// then we try to get a fresh handle based on the original process id.
-        /// </summary>
+        
         /// <param name="processToKill">The process to kill.</param>
         private static void KillProcess(Process processToKill)
         {
@@ -1277,12 +1174,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Used by remote server to kill a process tree given
-        /// a process id. Process class does not have ParentId
-        /// property, so this wrapper uses WMI to get ParentId
-        /// and wraps the original process.
-        /// </summary>
+        
         internal struct ProcessWithParentId
         {
             public Process OriginalProcessInstance;
@@ -1347,9 +1239,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Kills the process tree (process + associated child processes)
-        /// </summary>
+        
         /// <param name="processToKill"></param>
         /// <param name="currentlyRunningProcs"></param>
         private static void KillProcessAndChildProcesses(Process processToKill,
@@ -1400,9 +1290,7 @@ namespace System.Management.Automation
 
         #region checkForConsoleApplication
 
-        /// <summary>
-        /// Check if the passed in process is a windows application.
-        /// </summary>
+        
         /// <param name="fileName"></param>
         /// <returns></returns>
         private static bool IsWindowsApplication(string fileName)
@@ -1437,13 +1325,9 @@ namespace System.Management.Automation
 
         #endregion checkForConsoleApplication
 
-        /// <summary>
-        /// This is set to true when StopProcessing is called.
-        /// </summary>
+        
         private bool _stopped = false;
-        /// <summary>
-        /// Routine used to stop this processing on this node...
-        /// </summary>
+        
         internal void StopProcessing()
         {
             lock (_sync)
@@ -1474,9 +1358,7 @@ namespace System.Management.Automation
 
         #endregion internal overrides
 
-        /// <summary>
-        /// Aggressively clean everything up...
-        /// </summary>
+        
         /// <param name="killBackgroundProcess">If set, also terminate background process.</param>
         private void CleanUp(bool killBackgroundProcess)
         {
@@ -1577,9 +1459,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Get whether we should treat this executable with special handling and use the legacy passing style.
-        /// </summary>
+        
         /// <param name="filePath"></param>
         private bool UseSpecialArgumentPassing(string filePath) =>
             NativeParameterBinderController.ArgumentPassingStyle switch
@@ -1589,9 +1469,7 @@ namespace System.Management.Automation
                 _ => false
             };
 
-        /// <summary>
-        /// Gets the ProcessStartInfo for process.
-        /// </summary>
+        
         /// <param name="redirectOutput">A boolean that indicates that, when true, output from the process is redirected to a stream, and otherwise is sent to stdout.</param>
         /// <param name="redirectError">A boolean that indicates that, when true, error output from the process is redirected to a stream, and otherwise is sent to stderr.</param>
         /// <param name="redirectInput">A boolean that indicates that, when true, input to the process is taken from a stream, and otherwise is taken from stdin.</param>
@@ -1709,10 +1587,7 @@ namespace System.Management.Automation
             return startInfo;
         }
 
-        /// <summary>
-        /// Determine if we have a special file which will change the way native argument passing
-        /// is done on Windows. We use legacy behavior for cmd.exe, .bat, .cmd files.
-        /// </summary>
+        
         /// <param name="filePath">The file to use when checking how to pass arguments.</param>
         /// <returns>A boolean indicating what passing style should be used.</returns>
         private static bool ShouldUseLegacyPassingStyle(string filePath)
@@ -1750,9 +1625,7 @@ namespace System.Management.Automation
             return false;
         }
 
-        /// <summary>
-        /// This method calculates if input and output of the process are redirected.
-        /// </summary>
+        
         /// <param name="isWindowsApplication"></param>
         /// <param name="redirectOutput"></param>
         /// <param name="redirectError"></param>
@@ -1922,9 +1795,7 @@ namespace System.Management.Automation
 
         private bool _isMiniShell = false;
 
-        /// <summary>
-        /// Returns true if native command being invoked is mini-shell.
-        /// </summary>
+        
         /// <returns></returns>
         /// <remarks>
         /// If any of the argument supplied to native command is script block,
@@ -2225,17 +2096,13 @@ namespace System.Management.Automation
         }
     }
 
-    /// <summary>
-    /// Helper class to handle writing input to a process.
-    /// </summary>
+    
     internal class ProcessInputWriter
     {
         #region constructor
 
         private readonly InternalCommand _command;
-        /// <summary>
-        /// Creates an instance of ProcessInputWriter.
-        /// </summary>
+        
         internal ProcessInputWriter(InternalCommand command)
         {
             Dbg.Assert(command != null, "Caller should validate the parameter");
@@ -2247,9 +2114,7 @@ namespace System.Management.Automation
         private SteppablePipeline _pipeline;
         private Serializer _xmlSerializer;
 
-        /// <summary>
-        /// Add an object to write to process.
-        /// </summary>
+        
         /// <param name="input"></param>
         internal void Add(object input)
         {
@@ -2324,19 +2189,13 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Stream to which input is written.
-        /// </summary>
+        
         private StreamWriter _streamWriter;
 
-        /// <summary>
-        /// Format of input.
-        /// </summary>
+        
         private NativeCommandIOFormat _inputFormat;
 
-        /// <summary>
-        /// Start writing input to process.
-        /// </summary>
+        
         /// <param name="process">
         /// process to which input is written
         /// </param>
@@ -2372,9 +2231,7 @@ namespace System.Management.Automation
 
         private bool _stopping = false;
 
-        /// <summary>
-        /// Stop writing input to process.
-        /// </summary>
+        
         internal void Stop()
         {
             _stopping = true;
@@ -2438,22 +2295,13 @@ namespace System.Management.Automation
         }
     }
 
-    /// <summary>
-    /// Static class that allows you to show and hide the console window
-    /// associated with this process.
-    /// </summary>
+    
     internal static class ConsoleVisibility
     {
-        /// <summary>
-        /// If set to true, then native commands will always be run redirected...
-        /// </summary>
+        
         public static bool AlwaysCaptureApplicationIO { get; set; }
 
-        /// <summary>
-        /// If no console window is attached to this process, then allocate one,
-        /// hide it and return true. If there's already a console window attached, then
-        /// just return false.
-        /// </summary>
+        
         /// <returns></returns>
         internal static bool AllocateHiddenConsole()
         {
@@ -2498,27 +2346,20 @@ namespace System.Management.Automation
         }
     }
 
-    /// <summary>
-    /// Exception used to wrap the error coming from
-    /// remote instance of PowerShell.
-    /// </summary>
+    
     /// <remarks>
     /// This remote instance of PowerShell can be in a separate process,
     /// appdomain or machine.
     /// </remarks>
     public class RemoteException : RuntimeException
     {
-        /// <summary>
-        /// Initializes a new instance of RemoteException.
-        /// </summary>
+        
         public RemoteException()
             : base()
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of RemoteException with a specified error message.
-        /// </summary>
+        
         /// <param name="message">
         /// The message that describes the error.
         /// </param>
@@ -2527,11 +2368,7 @@ namespace System.Management.Automation
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the RemoteException class
-        /// with a specified error message and a reference to the inner exception
-        /// that is the cause of this exception.
-        /// </summary>
+        
         /// <param name="message">
         /// The message that describes the error.
         /// </param>
@@ -2543,11 +2380,7 @@ namespace System.Management.Automation
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the RemoteException
-        /// with a specified error message, serialized Exception and
-        /// serialized InvocationInfo.
-        /// </summary>
+        
         /// <param name="message">The message that describes the error.</param>
         /// <param name="serializedRemoteException">
         /// serialized exception from remote msh
@@ -2569,10 +2402,7 @@ namespace System.Management.Automation
 
         #region ISerializable Members
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RemoteException"/>
-        ///  class with serialized data.
-        /// </summary>
+        
         /// <param name="info">
         /// The <see cref="SerializationInfo"/> that holds the serialized object
         /// data about the exception being thrown.
@@ -2595,9 +2425,7 @@ namespace System.Management.Automation
         [NonSerialized]
         private readonly PSObject _serializedRemoteInvocationInfo;
 
-        /// <summary>
-        /// Original Serialized Exception from remote PowerShell.
-        /// </summary>
+        
         /// <remarks>This is the exception which was thrown in remote.
         /// </remarks>
         public PSObject SerializedRemoteException
@@ -2608,9 +2436,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// InvocationInfo, if any, associated with the SerializedRemoteException.
-        /// </summary>
+        
         /// <remarks>
         /// This is the serialized InvocationInfo from the remote PowerShell.
         /// </remarks>
@@ -2623,18 +2449,14 @@ namespace System.Management.Automation
         }
 
         private ErrorRecord _remoteErrorRecord;
-        /// <summary>
-        /// Sets the remote error record associated with this exception.
-        /// </summary>
+        
         /// <param name="remoteError"></param>
         internal void SetRemoteErrorRecord(ErrorRecord remoteError)
         {
             _remoteErrorRecord = remoteError;
         }
 
-        /// <summary>
-        /// ErrorRecord associated with the exception.
-        /// </summary>
+        
         public override ErrorRecord ErrorRecord
         {
             get

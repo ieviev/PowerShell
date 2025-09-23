@@ -7,57 +7,37 @@ using System.Xml;
 
 namespace Microsoft.WSMan.Management
 {
-    /// <summary>
-    /// Class that queries the server and gets current configurations.
-    /// Also provides a generic way to update the configurations.
-    /// </summary>
+    
     internal class CurrentConfigurations
     {
-        /// <summary>
-        /// Prefix used to add NameSpace of root element to namespace manager.
-        /// </summary>
+        
         public const string DefaultNameSpacePrefix = "defaultNameSpace";
 
-        /// <summary>
-        /// This holds the current configurations XML.
-        /// </summary>
+        
         private readonly XmlDocument rootDocument;
 
-        /// <summary>
-        /// Holds the reference to the current document element.
-        /// </summary>
+        
         private XmlElement documentElement;
 
-        /// <summary>
-        /// Holds the Namespace Manager to use for XPATH queries.
-        /// </summary>
+        
         private XmlNamespaceManager nameSpaceManger;
 
-        /// <summary>
-        /// Session of the WsMan sserver.
-        /// </summary>
+        
         private readonly IWSManSession serverSession;
 
-        /// <summary>
-        /// Gets the server session associated with the configuration.
-        /// </summary>
+        
         public IWSManSession ServerSession
         {
             get { return serverSession; }
         }
 
-        /// <summary>
-        /// Gets the current configuration XML.
-        /// </summary>
+        
         public XmlDocument RootDocument
         {
             get { return this.rootDocument; }
         }
 
-        /// <summary>
-        /// Gets the current configuration on the given server and for given URI.
-        /// This issues a GET request to the server.
-        /// </summary>
+        
         /// <param name="serverSession">Current server session.</param>
         public CurrentConfigurations(IWSManSession serverSession)
         {
@@ -67,11 +47,7 @@ namespace Microsoft.WSMan.Management
             this.serverSession = serverSession;
         }
 
-        /// <summary>
-        /// Refresh the CurrentConfiguration. This method calls GET operation for the given
-        /// URI on the server and update the current configuration. It also initialize some
-        /// of required class members.
-        /// </summary>
+        
         /// <param name="responseOfGet">Plugin configuration.</param>
         /// <returns>False, if operation failed.</returns>
         public bool RefreshCurrentConfiguration(string responseOfGet)
@@ -87,10 +63,7 @@ namespace Microsoft.WSMan.Management
             return string.IsNullOrEmpty(this.serverSession.Error);
         }
 
-        /// <summary>
-        /// Update the server with updated XML.
-        /// Issues a PUT request with the ResourceUri provided.
-        /// </summary>
+        
         /// <param name="resourceUri">Resource URI to use.</param>
         /// <returns>False, if operation is not successful.</returns>
         public void PutConfigurationOnServer(string resourceUri)
@@ -100,11 +73,7 @@ namespace Microsoft.WSMan.Management
             this.serverSession.Put(resourceUri, this.rootDocument.InnerXml, 0);
         }
 
-        /// <summary>
-        /// This method will remove the configuration from the XML.
-        /// Currently the method will only remove the attributes. But it is extensible enough to support
-        /// Node removals in future.
-        /// </summary>
+        
         /// <param name="pathToNodeFromRoot">Path with namespace to the node from Root element. Must not end with '/'.</param>
         public void RemoveOneConfiguration(string pathToNodeFromRoot)
         {
@@ -128,11 +97,7 @@ namespace Microsoft.WSMan.Management
             }
         }
 
-        /// <summary>
-        /// Create or Update the value of the configuration on the given Node. Currently this
-        /// method is supported for updating attributes, but can be easily updated for nodes.
-        /// Caller should call this method to add a new attribute to the Node.
-        /// </summary>
+        
         /// <param name="pathToNodeFromRoot">Path with namespace to the node from Root element. Must not end with '/'.</param>
         /// <param name="configurationName">Name of the configuration with name space to update or create.</param>
         /// <param name="configurationValue">Value of the configurations.</param>
@@ -165,9 +130,7 @@ namespace Microsoft.WSMan.Management
             }
         }
 
-        /// <summary>
-        /// Gets the value of the configuration on the given Node or attribute.
-        /// </summary>
+        
         /// <param name="pathFromRoot">Path with namespace to the node from Root element.</param>
         /// <returns>Value of the Node, or Null if no node present.</returns>
         public string GetOneConfiguration(string pathFromRoot)
@@ -187,9 +150,7 @@ namespace Microsoft.WSMan.Management
             return null;
         }
 
-        /// <summary>
-        /// Removes the attribute from OwnerNode.
-        /// </summary>
+        
         /// <param name="attributeToRemove">Attribute to Remove.</param>
         private static void RemoveAttribute(XmlAttribute attributeToRemove)
         {

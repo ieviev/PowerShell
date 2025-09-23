@@ -9,22 +9,16 @@ using System.Windows.Controls;
 
 namespace Microsoft.PowerShell.Commands.ShowCommandInternal
 {
-    /// <summary>
-    /// Interaction logic for MultipleSelectionControl.xaml.
-    /// </summary>
+    
     public partial class MultipleSelectionControl : UserControl
     {
-        /// <summary>
-        /// Initializes a new instance of the MultipleSelectionControl class.
-        /// </summary>
+        
         public MultipleSelectionControl()
         {
             InitializeComponent();
         }
 
-        /// <summary>
-        /// Show more items in new dialog.
-        /// </summary>
+        
         /// <param name="sender">Event sender.</param>
         /// <param name="e">Event arguments.</param>
         private void ButtonBrowse_Click(object sender, RoutedEventArgs e)

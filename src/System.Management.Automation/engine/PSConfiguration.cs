@@ -13,26 +13,17 @@ using Newtonsoft.Json.Linq;
 
 namespace System.Management.Automation.Configuration
 {
-    /// <summary>
-    /// The scope of the configuration file.
-    /// </summary>
+    
     public enum ConfigScope
     {
-        /// <summary>
-        /// AllUsers configuration applies to all users.
-        /// </summary>
+        
         AllUsers = 0,
 
-        /// <summary>
-        /// CurrentUser configuration applies to the current user.
-        /// </summary>
+        
         CurrentUser = 1
     }
 
-    /// <summary>
-    /// Reads from and writes to the JSON configuration files.
-    /// The config values were originally stored in the Windows registry.
-    /// </summary>
+    
     /// <remarks>
     /// The config file access APIs are designed to avoid hitting the disk as much as possible.
     /// - For the first read request targeting a config file, the config data is read from the file and then cached as a 'JObject' instance;
@@ -72,11 +63,7 @@ namespace System.Management.Automation.Configuration
         private readonly JObject emptyConfig;
         private readonly JsonSerializer serializer;
 
-        /// <summary>
-        /// Lock used to enable multiple concurrent readers and singular write locks within a single process.
-        /// TODO: This solution only works for IO from a single process.
-        ///       A more robust solution is needed to enable ReaderWriterLockSlim behavior between processes.
-        /// </summary>
+        
         private readonly ReaderWriterLockSlim fileLock;
 
         private PowerShellConfig()
@@ -103,9 +90,7 @@ namespace System.Management.Automation.Configuration
             return (scope == ConfigScope.CurrentUser) ? perUserConfigFile : systemWideConfigFile;
         }
 
-        /// <summary>
-        /// Sets the system wide configuration file path.
-        /// </summary>
+        
         /// <param name="value">A fully qualified path to the system wide configuration file.</param>
         /// <exception cref="FileNotFoundException"><paramref name="value"/> is a null reference or the associated file does not exist.</exception>
         /// <remarks>
@@ -123,11 +108,7 @@ namespace System.Management.Automation.Configuration
             systemWideConfigDirectory = info.Directory.FullName;
         }
 
-        /// <summary>
-        /// Existing Key = HKLM:\System\CurrentControlSet\Control\Session Manager\Environment
-        /// Proposed value = %ProgramFiles%\PowerShell\Modules by default
-        /// Note: There is no setter because this value is immutable.
-        /// </summary>
+        
         /// <param name="scope">Whether this is a system-wide or per-user setting.</param>
         /// <returns>Value if found, null otherwise. The behavior matches ModuleIntrinsics.GetExpandedEnvironmentVariable().</returns>
         internal string GetModulePath(ConfigScope scope)
@@ -141,17 +122,7 @@ namespace System.Management.Automation.Configuration
             return modulePath;
         }
 
-        /// <summary>
-        /// Existing Key = HKCU and HKLM\SOFTWARE\Microsoft\PowerShell\1\ShellIds\Microsoft.PowerShell
-        /// Proposed value = Existing default execution policy if not already specified
-        ///
-        /// Schema:
-        /// {
-        ///     "shell-ID-string:ExecutionPolicy" : "execution policy string"
-        /// }
-        ///
-        /// TODO: In a single config file, it might be better to nest this. It is unnecessary complexity until a need arises for more nested values.
-        /// </summary>
+        
         /// <param name="scope">Whether this is a system-wide or per-user setting.</param>
         /// <param name="shellId">The shell associated with this policy. Typically, it is "Microsoft.PowerShell".</param>
         /// <returns>The execution policy if found. Null otherwise.</returns>
@@ -181,9 +152,7 @@ namespace System.Management.Automation.Configuration
                 : string.Concat(shellId, ":", "ExecutionPolicy");
         }
 
-        /// <summary>
-        /// Get the names of experimental features enabled in the config file.
-        /// </summary>
+        
         internal string[] GetExperimentalFeatures()
         {
             string[] features = ReadValueFromFile(ConfigScope.CurrentUser, "ExperimentalFeatures", Array.Empty<string>());
@@ -196,9 +165,7 @@ namespace System.Management.Automation.Configuration
             return features;
         }
 
-        /// <summary>
-        /// Set the enabled list of experimental features in the config file.
-        /// </summary>
+        
         /// <param name="scope">The ConfigScope of the configuration file to update.</param>
         /// <param name="featureName">The name of the experimental feature to change in the configuration.</param>
         /// <param name="setEnabled">If true, add to configuration; otherwise, remove from configuration.</param>
@@ -239,18 +206,14 @@ namespace System.Management.Automation.Configuration
                 ?? ReadValueFromFile<string[]>(ConfigScope.AllUsers, WindowsPowerShellCompatibilityNoClobberModuleListKey);
         }
 
-        /// <summary>
-        /// Corresponding settings of the original Group Policies.
-        /// </summary>
+        
         internal PowerShellPolicies GetPowerShellPolicies(ConfigScope scope)
         {
             return ReadValueFromFile<PowerShellPolicies>(scope, nameof(PowerShellPolicies));
         }
 
 #if UNIX
-        /// <summary>
-        /// Gets the identity name to use for writing to syslog.
-        /// </summary>
+        
         /// <returns>
         /// The string identity to use for writing to syslog. The default value is 'powershell'.
         /// </returns>
@@ -267,9 +230,7 @@ namespace System.Management.Automation.Configuration
             return identity;
         }
 
-        /// <summary>
-        /// Gets the log level filter.
-        /// </summary>
+        
         /// <returns>
         /// One of the PSLevel values indicating the level to log. The default value is PSLevel.Informational.
         /// </returns>
@@ -288,19 +249,13 @@ namespace System.Management.Automation.Configuration
             return level;
         }
 
-        /// <summary>
-        /// The supported separator characters for listing channels and keywords in configuration.
-        /// </summary>
+        
         private static readonly char[] s_valueSeparators = new char[] {' ', ',', '|'};
 
-        /// <summary>
-        /// Provides a string name to indicate the default for a configuration setting.
-        /// </summary>
+        
         private const string LogDefaultValue = "default";
 
-        /// <summary>
-        /// Gets the bitmask of the PSChannel values to log.
-        /// </summary>
+        
         /// <returns>
         /// A bitmask of PSChannel.Operational and/or PSChannel.Analytic. The default value is PSChannel.Operational.
         /// </returns>
@@ -337,9 +292,7 @@ namespace System.Management.Automation.Configuration
             return result;
         }
 
-        /// <summary>
-        /// Gets the bitmask of keywords to log.
-        /// </summary>
+        
         /// <returns>
         /// A bitmask of PSKeyword values. The default value is all keywords other than UseAlwaysAnalytic.
         /// </returns>
@@ -377,9 +330,7 @@ namespace System.Management.Automation.Configuration
         }
 #endif // UNIX
 
-        /// <summary>
-        /// Read a value from the configuration file.
-        /// </summary>
+        
         /// <typeparam name="T">The type of the value</typeparam>
         /// <param name="scope">The ConfigScope of the configuration file to update.</param>
         /// <param name="key">The string key of the value.</param>
@@ -456,9 +407,7 @@ namespace System.Management.Automation.Configuration
             throw new IOException(nameof(OpenFileStreamWithRetry));
         }
 
-        /// <summary>
-        /// Update a value in the configuration file.
-        /// </summary>
+        
         /// <typeparam name="T">The type of the value</typeparam>
         /// <param name="scope">The ConfigScope of the configuration file to update.</param>
         /// <param name="key">The string key of the value.</param>
@@ -558,9 +507,7 @@ namespace System.Management.Automation.Configuration
             }
         }
 
-        /// <summary>
-        /// TODO: Should this return success, fail, or throw?
-        /// </summary>
+        
         /// <typeparam name="T">The type of value to write.</typeparam>
         /// <param name="scope">The ConfigScope of the file to update.</param>
         /// <param name="key">The string key of the value.</param>
@@ -575,9 +522,7 @@ namespace System.Management.Automation.Configuration
             UpdateValueInFile<T>(scope, key, value, true);
         }
 
-        /// <summary>
-        /// TODO: Should this return success, fail, or throw?
-        /// </summary>
+        
         /// <typeparam name="T">The type of value to remove.</typeparam>
         /// <param name="scope">The ConfigScope of the file to update.</param>
         /// <param name="key">The string key of the value.</param>
@@ -594,50 +539,7 @@ namespace System.Management.Automation.Configuration
 
     #region GroupPolicy Configs
 
-    /// <summary>
-    /// The GroupPolicy related settings used in PowerShell are as follows in Registry:
-    ///  - Software\Policies\Microsoft\PowerShellCore -- { EnableScripts (0 or 1); ExecutionPolicy (string) }
-    ///      SubKeys                  Name-Value-Pairs
-    ///      - ScriptBlockLogging     { EnableScriptBlockLogging (0 or 1); EnableScriptBlockInvocationLogging (0 or 1) }
-    ///      - ModuleLogging          { EnableModuleLogging (0 or 1); ModuleNames (string[]) }
-    ///      - Transcription          { EnableTranscripting (0 or 1); OutputDirectory (string); EnableInvocationHeader (0 or 1) }
-    ///      - UpdatableHelp          { DefaultSourcePath (string) }
-    ///      - ConsoleSessionConfiguration { EnableConsoleSessionConfiguration (0 or 1); ConsoleSessionConfigurationName (string) }
-    ///  - Software\Policies\Microsoft\Windows\EventLog
-    ///     SubKeys                   Name-Value-Pairs
-    ///      - ProtectedEventLogging  { EnableProtectedEventLogging (0 or 1); EncryptionCertificate (string[]) }
-    ///
-    /// The JSON representation is in sync with the 'PowerShellPolicies' type. Here is an example:
-    /// {
-    ///   "PowerShellPolicies": {
-    ///     "ScriptExecution": {
-    ///       "ExecutionPolicy": "RemoteSigned"
-    ///     },
-    ///     "ScriptBlockLogging": {
-    ///       "EnableScriptBlockInvocationLogging": true,
-    ///       "EnableScriptBlockLogging": false
-    ///     },
-    ///     "ProtectedEventLogging": {
-    ///       "EnableProtectedEventLogging": false,
-    ///       "EncryptionCertificate": [
-    ///         "Joe"
-    ///       ]
-    ///     },
-    ///     "Transcription": {
-    ///       "EnableTranscripting": true,
-    ///       "EnableInvocationHeader": true,
-    ///       "OutputDirectory": "c:\\tmp"
-    ///     },
-    ///     "UpdatableHelp": {
-    ///       "DefaultSourcePath": "f:\\temp"
-    ///     },
-    ///     "ConsoleSessionConfiguration": {
-    ///       "EnableConsoleSessionConfiguration": true,
-    ///       "ConsoleSessionConfigurationName": "name"
-    ///     }
-    ///   }
-    /// }
-    /// </summary>
+    
     internal sealed class PowerShellPolicies
     {
         public ScriptExecution ScriptExecution { get; set; }
@@ -657,9 +559,7 @@ namespace System.Management.Automation.Configuration
 
     internal abstract class PolicyBase { }
 
-    /// <summary>
-    /// Setting about ScriptExecution.
-    /// </summary>
+    
     internal sealed class ScriptExecution : PolicyBase
     {
         public string ExecutionPolicy { get; set; }
@@ -667,9 +567,7 @@ namespace System.Management.Automation.Configuration
         public bool? EnableScripts { get; set; }
     }
 
-    /// <summary>
-    /// Setting about ScriptBlockLogging.
-    /// </summary>
+    
     internal sealed class ScriptBlockLogging : PolicyBase
     {
         public bool? EnableScriptBlockInvocationLogging { get; set; }
@@ -677,9 +575,7 @@ namespace System.Management.Automation.Configuration
         public bool? EnableScriptBlockLogging { get; set; }
     }
 
-    /// <summary>
-    /// Setting about ModuleLogging.
-    /// </summary>
+    
     internal sealed class ModuleLogging : PolicyBase
     {
         public bool? EnableModuleLogging { get; set; }
@@ -687,9 +583,7 @@ namespace System.Management.Automation.Configuration
         public string[] ModuleNames { get; set; }
     }
 
-    /// <summary>
-    /// Setting about Transcription.
-    /// </summary>
+    
     internal sealed class Transcription : PolicyBase
     {
         public bool? EnableTranscripting { get; set; }
@@ -699,9 +593,7 @@ namespace System.Management.Automation.Configuration
         public string OutputDirectory { get; set; }
     }
 
-    /// <summary>
-    /// Setting about UpdatableHelp.
-    /// </summary>
+    
     internal sealed class UpdatableHelp : PolicyBase
     {
         public bool? EnableUpdateHelpDefaultSourcePath { get; set; }
@@ -709,9 +601,7 @@ namespace System.Management.Automation.Configuration
         public string DefaultSourcePath { get; set; }
     }
 
-    /// <summary>
-    /// Setting about ConsoleSessionConfiguration.
-    /// </summary>
+    
     internal sealed class ConsoleSessionConfiguration : PolicyBase
     {
         public bool? EnableConsoleSessionConfiguration { get; set; }
@@ -719,9 +609,7 @@ namespace System.Management.Automation.Configuration
         public string ConsoleSessionConfigurationName { get; set; }
     }
 
-    /// <summary>
-    /// Setting about ProtectedEventLogging.
-    /// </summary>
+    
     internal sealed class ProtectedEventLogging : PolicyBase
     {
         public bool? EnableProtectedEventLogging { get; set; }

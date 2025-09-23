@@ -10,16 +10,12 @@ using System.Management.Automation.Provider;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// A base class for the commands that write content (set-content, add-content)
-    /// </summary>
+    
     public class WriteContentCommandBase : PassThroughContentCommandBase
     {
         #region Parameters
 
-        /// <summary>
-        /// The value of the content to set.
-        /// </summary>
+        
         /// <value>
         /// This value type is determined by the InvokeProvider.
         /// </value>
@@ -43,37 +39,24 @@ namespace Microsoft.PowerShell.Commands
 
         #region parameter data
 
-        /// <summary>
-        /// The value of the content to be set.
-        /// </summary>
+        
         private object[] _content;
 
         #endregion parameter data
 
         #region private Data
 
-        /// <summary>
-        /// This bool is used to determine if the path
-        /// parameter was specified on the command line or via the pipeline.
-        /// </summary>
+        
         private bool _pipingPaths;
 
-        /// <summary>
-        /// True if the content writers have been open.
-        /// This is used in conjunction with pipingPaths
-        /// to determine if the content writers need to
-        /// be closed each time ProgressRecord is called.
-        /// </summary>
+        
         private bool _contentWritersOpen;
 
         #endregion private Data
 
         #region Command code
 
-        /// <summary>
-        /// Determines if the paths are specified on the command line
-        /// or being piped in.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             if (Path != null && Path.Length > 0)
@@ -86,9 +69,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Appends the content to the specified item.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             CmdletProviderContext currentContext = GetCurrentContext();
@@ -182,9 +163,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Closes all the content writers.
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             Dispose(true);
@@ -194,11 +173,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region protected members
 
-        /// <summary>
-        /// This method is called by the base class after getting the content writer
-        /// from the provider. If the current position needs to be changed before writing
-        /// the content, this method should be overridden to do that.
-        /// </summary>
+        
         /// <param name="contentHolders">
         /// The content holders that contain the writers to be moved.
         /// </param>
@@ -207,9 +182,7 @@ namespace Microsoft.PowerShell.Commands
             // default does nothing.
         }
 
-        /// <summary>
-        /// Called by the base class before the streams are open for the path.
-        /// </summary>
+        
         /// <param name="paths">
         /// The path to the items that will be opened for writing content.
         /// </param>
@@ -217,11 +190,7 @@ namespace Microsoft.PowerShell.Commands
         {
         }
 
-        /// <summary>
-        /// A virtual method for retrieving the dynamic parameters for a cmdlet. Derived cmdlets
-        /// that require dynamic parameters should override this method and return the
-        /// dynamic parameter object.
-        /// </summary>
+        
         /// <param name="context">
         /// The context under which the command is running.
         /// </param>
@@ -239,9 +208,7 @@ namespace Microsoft.PowerShell.Commands
             return InvokeProvider.Content.GetContentWriterDynamicParameters(".", context);
         }
 
-        /// <summary>
-        /// Gets the IContentWriters for the current path(s)
-        /// </summary>
+        
         /// <returns>
         /// An array of IContentWriters for the current path(s)
         /// </returns>
@@ -318,9 +285,7 @@ namespace Microsoft.PowerShell.Commands
             return results;
         }
 
-        /// <summary>
-        /// Gets the list of paths accepted by the user.
-        /// </summary>
+        
         /// <param name="unfilteredPaths">The list of unfiltered paths.</param>
         /// <param name="currentContext">The current context.</param>
         /// <returns>The list of paths accepted by the user.</returns>

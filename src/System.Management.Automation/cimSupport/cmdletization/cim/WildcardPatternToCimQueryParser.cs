@@ -8,9 +8,7 @@ using System.Text;
 
 namespace Microsoft.PowerShell.Cmdletization.Cim
 {
-    /// <summary>
-    /// Translates a <see cref="WildcardPattern"/> into a like-operand for WQL.
-    /// </summary>
+    
     /// <remarks>
     /// Documentation on MSDN (https://msdn.microsoft.com/library/aa392263(VS.85).aspx) is
     /// 1) rather slim / incomplete
@@ -116,10 +114,7 @@ namespace Microsoft.PowerShell.Cmdletization.Cim
             _result.Append(']');
         }
 
-        /// <summary>
-        /// Converts <paramref name="wildcardPattern"/> into a value of a right-hand-side operand of LIKE operator of a WQL query.
-        /// Return value still has to be string-escaped (i.e. by doubling '\'' character), before embedding it into a query.
-        /// </summary>
+        
         internal static string Parse(WildcardPattern wildcardPattern, out bool needsClientSideFiltering)
         {
             var parser = new WildcardPatternToCimQueryParser();

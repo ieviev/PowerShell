@@ -13,15 +13,10 @@ using System.Runtime.CompilerServices;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// Class that represents the results from evaluating a PSPropertyExpression against an object.
-    /// </summary>
+    
     public class PSPropertyExpressionResult
     {
-        /// <summary>
-        /// Create a property expression result containing the original object, matching property expression
-        /// and any exception generated during the match process.
-        /// </summary>
+        
         public PSPropertyExpressionResult(object res, PSPropertyExpression re, Exception e)
         {
             Result = res;
@@ -29,32 +24,20 @@ namespace Microsoft.PowerShell.Commands
             Exception = e;
         }
 
-        /// <summary>
-        /// The value of the object property matched by this property expression.
-        /// </summary>
+        
         public object Result { get; } = null;
 
-        /// <summary>
-        /// The original property expression fully resolved.
-        /// </summary>
+        
         public PSPropertyExpression ResolvedExpression { get; } = null;
 
-        /// <summary>
-        /// Any exception thrown while evaluating the expression.
-        /// </summary>
+        
         public Exception Exception { get; } = null;
     }
 
-    /// <summary>
-    /// PSPropertyExpression class. This class is used to get the names and/or values of properties
-    /// on an object. A property expression can be constructed using either a wildcard expression string
-    /// or a scriptblock to use to get the property value.
-    /// </summary>
+    
     public class PSPropertyExpression
     {
-        /// <summary>
-        /// Constructor.
-        /// </summary>
+        
         /// <param name="s">Expression.</param>
         /// <exception cref="ArgumentNullException"></exception>
         public PSPropertyExpression(string s)
@@ -62,9 +45,7 @@ namespace Microsoft.PowerShell.Commands
         {
         }
 
-        /// <summary>
-        /// Create a property expression with a wildcard pattern.
-        /// </summary>
+        
         /// <param name="s">Property name pattern to match.</param>
         /// <param name="isResolved"><see langword="true"/> if no further attempts should be made to resolve wildcards.</param>
         /// <exception cref="ArgumentNullException"></exception>
@@ -79,9 +60,7 @@ namespace Microsoft.PowerShell.Commands
             _isResolved = isResolved;
         }
 
-        /// <summary>
-        /// Create a property expression with a ScriptBlock.
-        /// </summary>
+        
         /// <param name="scriptBlock">ScriptBlock to evaluate when retrieving the property value from an object.</param>
         /// <exception cref="ArgumentNullException"></exception>
         public PSPropertyExpression(ScriptBlock scriptBlock)
@@ -94,14 +73,10 @@ namespace Microsoft.PowerShell.Commands
             Script = scriptBlock;
         }
 
-        /// <summary>
-        /// The ScriptBlock for this expression to use when matching.
-        /// </summary>
+        
         public ScriptBlock Script { get; } = null;
 
-        /// <summary>
-        /// ToString() implementation for the property expression.
-        /// </summary>
+        
         public override string ToString()
         {
             if (Script != null)
@@ -110,19 +85,14 @@ namespace Microsoft.PowerShell.Commands
             return _stringValue;
         }
 
-        /// <summary>
-        /// Resolve the names matched by the expression.
-        /// </summary>
+        
         /// <param name="target">The object to apply the expression against.</param>
         public List<PSPropertyExpression> ResolveNames(PSObject target)
         {
             return ResolveNames(target, true);
         }
 
-        /// <summary>
-        /// Indicates if the pattern has wildcard characters in it. If the supplied pattern was
-        /// a scriptblock, this will be false.
-        /// </summary>
+        
         public bool HasWildCardCharacters
         {
             get
@@ -133,9 +103,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Resolve the names matched by the expression.
-        /// </summary>
+        
         /// <param name="target">The object to apply the expression against.</param>
         /// <param name="expand">If the matched properties are property sets, expand them.</param>
         public List<PSPropertyExpression> ResolveNames(PSObject target, bool expand)
@@ -266,18 +234,14 @@ namespace Microsoft.PowerShell.Commands
             return retVal;
         }
 
-        /// <summary>
-        /// Gets the values of the object properties matched by this expression.
-        /// </summary>
+        
         /// <param name="target">The object to match against.</param>
         public List<PSPropertyExpressionResult> GetValues(PSObject target)
         {
             return GetValues(target, true, true);
         }
 
-        /// <summary>
-        /// Gets the values of the object properties matched by this expression.
-        /// </summary>
+        
         /// <param name="target">The object to match against.</param>
         /// <param name="expand">If the matched properties are parameter sets, expand them.</param>
         /// <param name="eatExceptions">If true, any exceptions that occur during the match process are ignored.</param>

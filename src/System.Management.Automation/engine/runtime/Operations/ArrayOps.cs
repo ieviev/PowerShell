@@ -44,9 +44,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Efficiently multiplies collection by integer.
-        /// </summary>
+        
         /// <param name="array">Collection to multiply.</param>
         /// <param name="times">Number of times the collection is to be multiplied/copied.</param>
         /// <returns>Collection multiplied by integer.</returns>

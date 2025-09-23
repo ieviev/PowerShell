@@ -10,9 +10,7 @@ using System.Xml;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// Helper class for writing formatting directives to XML.
-    /// </summary>
+    
     internal sealed class FormatXmlWriter
     {
         private XmlWriter _writer;
@@ -20,9 +18,7 @@ namespace Microsoft.PowerShell.Commands
 
         private FormatXmlWriter() { }
 
-        /// <summary>
-        /// Writes a collection of format view definitions to XML file.
-        /// </summary>
+        
         /// <param name="typeDefinitions">Collection of PSTypeDefinition.</param>
         /// <param name="filepath">Path to XML file.</param>
         /// <param name="cmdlet">Cmdlet from which this si used.</param>

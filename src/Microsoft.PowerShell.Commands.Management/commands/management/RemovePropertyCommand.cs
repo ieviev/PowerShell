@@ -6,18 +6,14 @@ using System.Management.Automation;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// A command to remove a property from an item.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Remove, "ItemProperty", DefaultParameterSetName = "Path", SupportsShouldProcess = true, SupportsTransactions = true,
         HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097013")]
     public class RemoveItemPropertyCommand : ItemPropertyCommandBase
     {
         #region Parameters
 
-        /// <summary>
-        /// Gets or sets the path parameter to the command.
-        /// </summary>
+        
         [Parameter(Position = 0, ParameterSetName = "Path",
                    Mandatory = true, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true)]
         public string[] Path
@@ -33,9 +29,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets or sets the literal path parameter to the command.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "LiteralPath",
                    Mandatory = true, ValueFromPipeline = false, ValueFromPipelineByPropertyName = true)]
         [Alias("PSPath", "LP")]
@@ -53,9 +47,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// The name of the property to create on the item.
-        /// </summary>
+        
         [Parameter(Mandatory = true, Position = 1, ValueFromPipelineByPropertyName = true)]
         [Alias("PSProperty")]
         public string[] Name
@@ -65,9 +57,7 @@ namespace Microsoft.PowerShell.Commands
             set { _property = value ?? Array.Empty<string>(); }
         }
 
-        /// <summary>
-        /// Gets or sets the force property.
-        /// </summary>
+        
         /// <remarks>
         /// Gives the provider guidance on how vigorous it should be about performing
         /// the operation. If true, the provider should do everything possible to perform
@@ -85,11 +75,7 @@ namespace Microsoft.PowerShell.Commands
             set { base.Force = value; }
         }
 
-        /// <summary>
-        /// A virtual method for retrieving the dynamic parameters for a cmdlet. Derived cmdlets
-        /// that require dynamic parameters should override this method and return the
-        /// dynamic parameter object.
-        /// </summary>
+        
         /// <param name="context">
         /// The context under which the command is running.
         /// </param>
@@ -117,18 +103,14 @@ namespace Microsoft.PowerShell.Commands
 
         #region parameter data
 
-        /// <summary>
-        /// The property to be created.
-        /// </summary>
+        
         private string[] _property = Array.Empty<string>();
 
         #endregion parameter data
 
         #region Command code
 
-        /// <summary>
-        /// Removes the property from the item.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             foreach (string path in Path)

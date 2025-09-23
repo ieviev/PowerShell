@@ -8,10 +8,7 @@ using System.Runtime.Serialization;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <summary>
-    /// The IsBetweenFilterRule class evaluates an item to see if it is between
-    /// the StartValue and EndValue of the rule.
-    /// </summary>
+    
     /// <typeparam name="T">
     /// The generic parameter.
     /// </typeparam>
@@ -20,10 +17,7 @@ namespace Microsoft.Management.UI.Internal
     {
         #region Properties
 
-        /// <summary>
-        /// Gets a value indicating whether the FilterRule can be
-        /// evaluated in its current state.
-        /// </summary>
+        
         public override bool IsValid
         {
             get
@@ -32,18 +26,14 @@ namespace Microsoft.Management.UI.Internal
             }
         }
 
-        /// <summary>
-        /// Gets the start value for the range.
-        /// </summary>
+        
         public ValidatingValue<T> StartValue
         {
             get;
             protected set;
         }
 
-        /// <summary>
-        /// Gets the end value for the range.
-        /// </summary>
+        
         public ValidatingValue<T> EndValue
         {
             get;
@@ -54,9 +44,7 @@ namespace Microsoft.Management.UI.Internal
 
         #region Ctor
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="IsBetweenFilterRule{T}"/> class.
-        /// </summary>
+        
         public IsBetweenFilterRule()
         {
             this.DisplayName = UICultureResources.FilterRule_IsBetween;
@@ -68,9 +56,7 @@ namespace Microsoft.Management.UI.Internal
             this.EndValue.PropertyChanged += this.Value_PropertyChanged;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="IsBetweenFilterRule{T}"/> class.
-        /// </summary>
+        
         /// <param name="source">The source to initialize from.</param>
         public IsBetweenFilterRule(IsBetweenFilterRule<T> source)
             : base(source)
@@ -86,10 +72,7 @@ namespace Microsoft.Management.UI.Internal
 
         #region Public Methods
 
-        /// <summary>
-        /// Evaluates data and determines if it is between
-        /// StartValue and EndValue.
-        /// </summary>
+        
         /// <param name="data">
         /// The data to evaluate.
         /// </param>

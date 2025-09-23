@@ -14,9 +14,7 @@ using System.Management.Automation.Internal;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// This class implements the Update-Help cmdlet.
-    /// </summary>
+    
     [Cmdlet(VerbsData.Update, "Help", DefaultParameterSetName = PathParameterSetName,
         SupportsShouldProcess = true,
         HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096805")]
@@ -24,9 +22,7 @@ namespace Microsoft.PowerShell.Commands
     {
         #region Constructor
 
-        /// <summary>
-        /// Class constructor.
-        /// </summary>
+        
         public UpdateHelpCommand() : base(UpdatableHelpCommandType.UpdateHelpCommand)
         {
         }
@@ -37,9 +33,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Parameters
 
-        /// <summary>
-        /// Specifies the modules to update.
-        /// </summary>
+        
         [Parameter(Position = 0, ParameterSetName = PathParameterSetName, ValueFromPipelineByPropertyName = true)]
         [Parameter(Position = 0, ParameterSetName = LiteralPathParameterSetName, ValueFromPipelineByPropertyName = true)]
         [Alias("Name")]
@@ -60,18 +54,14 @@ namespace Microsoft.PowerShell.Commands
 
         private string[] _module;
 
-        /// <summary>
-        /// Specifies the Module Specifications to update.
-        /// </summary>
+        
         [Parameter(ParameterSetName = PathParameterSetName, ValueFromPipelineByPropertyName = true)]
         [Parameter(ParameterSetName = LiteralPathParameterSetName, ValueFromPipelineByPropertyName = true)]
         [ValidateNotNull]
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
         public ModuleSpecification[] FullyQualifiedModule { get; set; }
 
-        /// <summary>
-        /// Specifies the paths to update from.
-        /// </summary>
+        
         [Parameter(Position = 1, ParameterSetName = PathParameterSetName)]
         [ValidateNotNull]
         [Alias("Path")]
@@ -91,9 +81,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string[] _path;
 
-        /// <summary>
-        /// Specifies the literal path to save updates to.
-        /// </summary>
+        
         [Parameter(ParameterSetName = LiteralPathParameterSetName, ValueFromPipelineByPropertyName = true)]
         [Alias("PSPath", "LP")]
         [ValidateNotNull]
@@ -114,9 +102,7 @@ namespace Microsoft.PowerShell.Commands
 
         private bool _isLiteralPath = false;
 
-        /// <summary>
-        /// Scans paths recursively.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter Recurse
         {
@@ -139,9 +125,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Implementation
 
-        /// <summary>
-        /// Begin processing.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             if (_path == null)
@@ -156,9 +140,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Main cmdlet logic.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             try
@@ -217,9 +199,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Process a single module with a given culture.
-        /// </summary>
+        
         /// <param name="module">Module to process.</param>
         /// <param name="culture">Culture to use.</param>
         /// <returns>True if the module has been processed, false if not.</returns>
@@ -499,9 +479,7 @@ namespace Microsoft.PowerShell.Commands
             return installed;
         }
 
-        /// <summary>
-        /// Throws PathMustBeValidContainers exception.
-        /// </summary>
+        
         /// <param name="path"></param>
         /// <param name="e"></param>
         private static void ThrowPathMustBeValidContainersException(string path, Exception e)

@@ -12,15 +12,10 @@ using Microsoft.PowerShell.Commands.Internal.Format;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// Helper class to do wildcard matching on PSPropertyExpressions.
-    /// </summary>
+    
     internal sealed class PSPropertyExpressionFilter
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PSPropertyExpressionFilter"/> class
-        /// with the specified array of patterns.
-        /// </summary>
+        
         /// <param name="wildcardPatternsStrings">Array of pattern strings to use.</param>
         internal PSPropertyExpressionFilter(string[] wildcardPatternsStrings)
         {
@@ -33,10 +28,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Try to match the expression against the array of wildcard patterns.
-        /// The first match shortcircuits the search.
-        /// </summary>
+        
         /// <param name="expression">PSPropertyExpression to test against.</param>
         /// <returns>True if there is a match, else false.</returns>
         internal bool IsMatch(PSPropertyExpression expression)
@@ -62,43 +54,37 @@ namespace Microsoft.PowerShell.Commands
         }
     }
 
-    /// <summary>
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Select, "Object", DefaultParameterSetName = "DefaultParameter",
         HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096716", RemotingCapability = RemotingCapability.None)]
     public sealed class SelectObjectCommand : PSCmdlet
     {
         #region Command Line Switches
 
-        /// <summary>
-        /// </summary>
+        
         /// <value></value>
         [Parameter(ValueFromPipeline = true)]
         public PSObject InputObject { get; set; } = AutomationNull.Value;
 
-        /// <summary>
-        /// </summary>
+        
         /// <value></value>
         [Parameter(Position = 0, ParameterSetName = "DefaultParameter")]
         [Parameter(Position = 0, ParameterSetName = "SkipLastParameter")]
         public object[] Property { get; set; }
 
-        /// <summary>
-        /// </summary>
+        
         /// <value></value>
         [Parameter(ParameterSetName = "DefaultParameter")]
         [Parameter(ParameterSetName = "SkipLastParameter")]
         public string[] ExcludeProperty { get; set; }
 
-        /// <summary>
-        /// </summary>
+        
         /// <value></value>
         [Parameter(ParameterSetName = "DefaultParameter")]
         [Parameter(ParameterSetName = "SkipLastParameter")]
         public string ExpandProperty { get; set; }
 
-        /// <summary>
-        /// </summary>
+        
         /// <value></value>
         [Parameter]
         public SwitchParameter Unique
@@ -110,15 +96,11 @@ namespace Microsoft.PowerShell.Commands
 
         private bool _unique;
 
-        /// <summary>
-        /// Gets or sets case insensitive switch for string comparison.
-        /// Used in combination with Unique switch parameter.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter CaseInsensitive { get; set; }
 
-        /// <summary>
-        /// </summary>
+        
         /// <value></value>
         [Parameter(ParameterSetName = "DefaultParameter")]
         // NTRAID#Windows Out Of Band Releases-927878-2006/03/02
@@ -133,8 +115,7 @@ namespace Microsoft.PowerShell.Commands
 
         private int _last = 0;
 
-        /// <summary>
-        /// </summary>
+        
         /// <value></value>
         [Parameter(ParameterSetName = "DefaultParameter")]
         // NTRAID#Windows Out Of Band Releases-927878-2006/03/02
@@ -150,33 +131,24 @@ namespace Microsoft.PowerShell.Commands
         private int _first = 0;
         private bool _firstOrLastSpecified;
 
-        /// <summary>
-        /// Skips the specified number of items from top when used with First, from end when used with Last or SkipLast.
-        /// </summary>
+        
         /// <value></value>
         [Parameter(ParameterSetName = "DefaultParameter")]
         [Parameter(ParameterSetName = "SkipLastParameter")]
         [ValidateRange(0, int.MaxValue)]
         public int Skip { get; set; }
 
-        /// <summary>
-        /// Skip the specified number of items from end.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "SkipLastParameter")]
         [ValidateRange(0, int.MaxValue)]
         public int SkipLast { get; set; }
 
-        /// <summary>
-        /// With this switch present, the cmdlet won't "short-circuit"
-        /// (i.e. won't stop upstream cmdlets after it knows that no further objects will be emitted downstream).
-        /// </summary>
+        
         [Parameter(ParameterSetName = "DefaultParameter")]
         [Parameter(ParameterSetName = "IndexParameter")]
         public SwitchParameter Wait { get; set; }
 
-        /// <summary>
-        /// Used to display the object at the specified index.
-        /// </summary>
+        
         /// <value></value>
         [Parameter(ParameterSetName = "IndexParameter")]
         [ValidateRange(0, int.MaxValue)]
@@ -197,9 +169,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Used to display all objects at the specified indices.
-        /// </summary>
+        
         /// <value></value>
         [Parameter(ParameterSetName = "SkipIndexParameter")]
         [ValidateRange(0, int.MaxValue)]
@@ -317,14 +287,10 @@ namespace Microsoft.PowerShell.Commands
             private readonly bool _firstOrLastSpecified;
         }
 
-        /// <summary>
-        /// List of processed parameters obtained from the Expression array.
-        /// </summary>
+        
         private List<MshParameter> _propertyMshParameterList;
 
-        /// <summary>
-        /// Singleton list of process parameters obtained from ExpandProperty.
-        /// </summary>
+        
         private List<MshParameter> _expandMshParameterList;
 
         private PSPropertyExpressionFilter _exclusionFilter;
@@ -704,8 +670,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             ProcessExpressionParameter();
@@ -718,9 +683,7 @@ namespace Microsoft.PowerShell.Commands
             _selectObjectQueue = new SelectObjectQueue(_first, _last, Skip, SkipLast, _firstOrLastSpecified);
         }
 
-        /// <summary>
-        /// Handles processing of InputObject.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             if (InputObject != AutomationNull.Value && InputObject != null)
@@ -747,19 +710,13 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// The index of the active index filter.
-        /// </summary>
+        
         private int _currentFilterIndex;
 
-        /// <summary>
-        /// The index of the object being processed.
-        /// </summary>
+        
         private int _currentObjectIndex;
 
-        /// <summary>
-        /// Handles processing of InputObject if -Index or -SkipIndex is specified.
-        /// </summary>
+        
         private void ProcessIndexed()
         {
             if (_isIncludeIndex)
@@ -811,9 +768,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Completes the processing of Input.
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             // We can skip this part for 'IndexParameter' and 'SkipLastParameter' sets because:
@@ -860,9 +815,7 @@ namespace Microsoft.PowerShell.Commands
         }
     }
 
-    /// <summary>
-    /// Used only internally for select-object.
-    /// </summary>
+    
     [SuppressMessage("Microsoft.Usage", "CA2237:MarkISerializableTypesWithSerializable", Justification = "This exception is internal and never thrown by any public API")]
     [SuppressMessage("Microsoft.Design", "CA1032:ImplementStandardExceptionConstructors", Justification = "This exception is internal and never thrown by any public API")]
     [SuppressMessage("Microsoft.Design", "CA1064:ExceptionsShouldBePublic", Justification = "This exception is internal and never thrown by any public API")]

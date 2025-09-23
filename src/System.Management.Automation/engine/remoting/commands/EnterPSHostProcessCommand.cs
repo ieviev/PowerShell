@@ -18,13 +18,7 @@ using System.Text;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// This cmdlet enters into an interactive session with the specified local process by
-    /// creating a remote runspace to the process and pushing it on the current PSHost.
-    /// If the selected process does not contain PowerShell then an error message will result.
-    /// If the current user does not have sufficient privileges to attach to the selected process
-    /// then an error message will result.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Enter, "PSHostProcess", DefaultParameterSetName = EnterPSHostProcessCommand.ProcessIdParameterSet,
         HelpUri = "https://go.microsoft.com/fwlink/?LinkId=2096580")]
     public sealed class EnterPSHostProcessCommand : PSCmdlet
@@ -50,9 +44,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Parameters
 
-        /// <summary>
-        /// Process to enter.
-        /// </summary>
+        
         [Parameter(Position = 0, Mandatory = true, ValueFromPipeline = true, ParameterSetName = EnterPSHostProcessCommand.ProcessParameterSet)]
         [ValidateNotNull]
         public Process Process
@@ -61,9 +53,7 @@ namespace Microsoft.PowerShell.Commands
             set;
         }
 
-        /// <summary>
-        /// Id of process to enter.
-        /// </summary>
+        
         [Parameter(Position = 0, Mandatory = true, ParameterSetName = EnterPSHostProcessCommand.ProcessIdParameterSet)]
         [ValidateRange(0, int.MaxValue)]
         public int Id
@@ -72,9 +62,7 @@ namespace Microsoft.PowerShell.Commands
             set;
         }
 
-        /// <summary>
-        /// Name of process to enter.  An error will result if more than one such process exists.
-        /// </summary>
+        
         [Parameter(Position = 0, Mandatory = true, ParameterSetName = EnterPSHostProcessCommand.ProcessNameParameterSet)]
         [ValidateNotNullOrEmpty]
         public string Name
@@ -83,9 +71,7 @@ namespace Microsoft.PowerShell.Commands
             set;
         }
 
-        /// <summary>
-        /// Host Process Info object that describes a connectible process.
-        /// </summary>
+        
         [Parameter(Position = 0, Mandatory = true, ValueFromPipeline = true, ParameterSetName = EnterPSHostProcessCommand.PSHostProcessInfoParameterSet)]
         [ValidateNotNull]
         public PSHostProcessInfo HostProcessInfo
@@ -94,9 +80,7 @@ namespace Microsoft.PowerShell.Commands
             set;
         }
 
-        /// <summary>
-        /// Gets or sets the custom named pipe name to connect to. This is usually used in conjunction with `pwsh -CustomPipeName`.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ParameterSetName = EnterPSHostProcessCommand.PipeNameParameterSet)]
         public string CustomPipeName
         {
@@ -104,9 +88,7 @@ namespace Microsoft.PowerShell.Commands
             set;
         }
 
-        /// <summary>
-        /// Optional name of AppDomain in process to enter.  If not specified then the default AppDomain is used.
-        /// </summary>
+        
         [Parameter(Position = 1, ParameterSetName = EnterPSHostProcessCommand.ProcessParameterSet)]
         [Parameter(Position = 1, ParameterSetName = EnterPSHostProcessCommand.ProcessIdParameterSet)]
         [Parameter(Position = 1, ParameterSetName = EnterPSHostProcessCommand.ProcessNameParameterSet)]
@@ -122,9 +104,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Overrides
 
-        /// <summary>
-        /// End Processing.
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             // Check if system is in locked down mode, in which case this cmdlet is disabled.
@@ -206,9 +186,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Stop Processing.
-        /// </summary>
+        
         protected override void StopProcessing()
         {
             RemoteRunspace connectingRunspace = _connectingRemoteRunspace;
@@ -435,18 +413,14 @@ namespace Microsoft.PowerShell.Commands
         #endregion
     }
 
-    /// <summary>
-    /// This cmdlet exits an interactive session with a local process.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Exit, "PSHostProcess",
         HelpUri = "https://go.microsoft.com/fwlink/?LinkId=2096583")]
     public sealed class ExitPSHostProcessCommand : PSCmdlet
     {
         #region Overrides
 
-        /// <summary>
-        /// Process Record.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             var _interactiveHost = this.Host as IHostSupportsInteractiveSession;
@@ -468,10 +442,7 @@ namespace Microsoft.PowerShell.Commands
         #endregion
     }
 
-    /// <summary>
-    /// This cmdlet returns a collection of PSHostProcessInfo objects containing
-    /// process and AppDomain name information for processes that have PowerShell loaded.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Get, "PSHostProcessInfo", DefaultParameterSetName = GetPSHostProcessInfoCommand.ProcessNameParameterSet,
         HelpUri = "https://go.microsoft.com/fwlink/?LinkId=517012")]
     [OutputType(typeof(PSHostProcessInfo))]
@@ -495,9 +466,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Parameters
 
-        /// <summary>
-        /// Name of Process.
-        /// </summary>
+        
         [Parameter(Position = 0, ParameterSetName = GetPSHostProcessInfoCommand.ProcessNameParameterSet)]
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
         [ValidateNotNullOrEmpty]
@@ -507,9 +476,7 @@ namespace Microsoft.PowerShell.Commands
             set;
         }
 
-        /// <summary>
-        /// Process.
-        /// </summary>
+        
         [Parameter(Position = 0, Mandatory = true, ValueFromPipeline = true, ParameterSetName = GetPSHostProcessInfoCommand.ProcessParameterSet)]
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
         [ValidateNotNullOrEmpty]
@@ -519,9 +486,7 @@ namespace Microsoft.PowerShell.Commands
             set;
         }
 
-        /// <summary>
-        /// Id of process.
-        /// </summary>
+        
         [Parameter(Position = 0, Mandatory = true, ParameterSetName = GetPSHostProcessInfoCommand.ProcessIdParameterSet)]
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
         [ValidateNotNullOrEmpty]
@@ -535,9 +500,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Overrides
 
-        /// <summary>
-        /// End bock processing.
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             IReadOnlyCollection<PSHostProcessInfo> processAppDomainInfo;
@@ -620,12 +583,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Internal Methods
 
-        /// <summary>
-        /// Returns all named pipe AppDomain names for given process Ids or all PowerShell
-        /// processes if procIds parameter is null.
-        /// PowerShell pipe name example:
-        ///     PSHost.130566795082911445.8224.DefaultAppDomain.powershell.
-        /// </summary>
+        
         /// <param name="procIds">Process Ids or null.</param>
         /// <returns>Collection of process AppDomain info.</returns>
         internal static IReadOnlyCollection<PSHostProcessInfo> GetAppDomainNamesFromProcessId(int[] procIds)
@@ -750,9 +708,7 @@ namespace Microsoft.PowerShell.Commands
 
     #region PSHostProcessInfo class
 
-    /// <summary>
-    /// PowerShell host process information class.
-    /// </summary>
+    
     public sealed class PSHostProcessInfo
     {
         #region Members
@@ -763,24 +719,16 @@ namespace Microsoft.PowerShell.Commands
 
         #region Properties
 
-        /// <summary>
-        /// Name of process.
-        /// </summary>
+        
         public string ProcessName { get; }
 
-        /// <summary>
-        /// Id of process.
-        /// </summary>
+        
         public int ProcessId { get; }
 
-        /// <summary>
-        /// Name of PowerShell AppDomain in process.
-        /// </summary>
+        
         public string AppDomainName { get; }
 
-        /// <summary>
-        /// Main window title of the process.
-        /// </summary>
+        
         public string MainWindowTitle { get; }
 
         #endregion
@@ -789,9 +737,7 @@ namespace Microsoft.PowerShell.Commands
 
         private PSHostProcessInfo() { }
 
-        /// <summary>
-        /// Initializes a new instance of the PSHostProcessInfo type.
-        /// </summary>
+        
         /// <param name="processName">Name of process.</param>
         /// <param name="processId">Id of process.</param>
         /// <param name="appDomainName">Name of process AppDomain.</param>
@@ -837,9 +783,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Methods
 
-        /// <summary>
-        /// Retrieves the pipe name file path.
-        /// </summary>
+        
         /// <returns>Pipe name file path.</returns>
         public string GetPipeNameFilePath()
         {
@@ -855,10 +799,7 @@ namespace Microsoft.PowerShell.Commands
 
     internal static class PSHostProcessUtils
     {
-        /// <summary>
-        /// Return a System.Diagnostics.Process object by process Id,
-        /// or null if not found or process has exited.
-        /// </summary>
+        
         /// <param name="procId">Process of Id to find.</param>
         /// <returns>Process object or null.</returns>
         public static Process GetProcessById(int procId)

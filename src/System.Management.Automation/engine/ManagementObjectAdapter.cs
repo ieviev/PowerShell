@@ -18,20 +18,12 @@ using Dbg = System.Management.Automation.Diagnostics;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Deals with ManagementObject objects.
-    /// This is a base class that interacts with other entities.
-    /// </summary>
+    
     internal abstract class BaseWMIAdapter : Adapter
     {
         #region WMIMethodCacheEntry
 
-        /// <summary>
-        /// Method information is cached for every unique ManagementClassPath created/used.
-        /// This structure stores information such as MethodDefinition as displayed
-        /// by Get-Member cmdlet, original MethodData and computed method information such
-        /// as whether a method is static etc.
-        /// </summary>
+        
         internal class WMIMethodCacheEntry : CacheEntry
         {
             public string Name { get; }
@@ -69,10 +61,7 @@ namespace System.Management.Automation
 
         #region Member related Overrides
 
-        /// <summary>
-        /// Returns the TypeNameHierarchy using the __Derivation SystemProperties
-        /// and dotnetBaseType.
-        /// </summary>
+        
         /// <param name="managementObj"></param>
         /// <param name="dotnetBaseType"></param>
         /// <param name="shouldIncludeNamespace"></param>
@@ -126,9 +115,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Returns the TypeNameHierarchy out of an ManagementBaseObject.
-        /// </summary>
+        
         /// <param name="obj">Object to get the TypeNameHierarchy from.</param>
         /// <remarks>
         /// TypeName is of the format ObjectType#__Namespace\\__Class
@@ -161,10 +148,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Returns null if memberName is not a member in the adapter or
-        /// the corresponding PSMemberInfo.
-        /// </summary>
+        
         /// <param name="obj">Object to retrieve the PSMemberInfo from.</param>
         /// <param name="memberName">Name of the member to be retrieved.</param>
         /// <returns>The PSMemberInfo corresponding to memberName from obj.</returns>
@@ -209,16 +193,7 @@ namespace System.Management.Automation
             return null;
         }
 
-        /// <summary>
-        /// Retrieves all the members available in the object.
-        /// The adapter implementation is encouraged to cache all properties/methods available
-        /// in the first call to GetMember and GetMembers so that subsequent
-        /// calls can use the cache.
-        /// In the case of the .NET adapter that would be a cache from the .NET type to
-        /// the public properties and fields available in that type.
-        /// In the case of the DirectoryEntry adapter, this could be a cache of the objectClass
-        /// to the properties available in it.
-        /// </summary>
+        
         /// <param name="obj">Object to get all the member information from.</param>
         /// <returns>All members in obj.</returns>
         protected override PSMemberInfoInternalCollection<T> GetMembers<T>(object obj)
@@ -233,10 +208,7 @@ namespace System.Management.Automation
             return returnValue;
         }
 
-        /// <summary>
-        /// Called after a non null return from GetMember to try to call
-        /// the method with the arguments.
-        /// </summary>
+        
         /// <param name="method">The non empty return from GetMethods.</param>
         /// <param name="arguments">The arguments to use.</param>
         /// <returns>The return value for the method.</returns>
@@ -251,9 +223,7 @@ namespace System.Management.Automation
             return AuxillaryInvokeMethod(mgmtObject, methodEntry, arguments);
         }
 
-        /// <summary>
-        /// Called after a non null return from GetMember to return the overloads.
-        /// </summary>
+        
         /// <param name="method">The return of GetMember.</param>
         /// <returns></returns>
         protected override Collection<string> MethodDefinitions(PSMethod method)
@@ -265,9 +235,7 @@ namespace System.Management.Automation
             return returnValue;
         }
 
-        /// <summary>
-        /// Returns true if the property is settable.
-        /// </summary>
+        
         /// <param name="property">Property to check.</param>
         /// <returns>True if the property is settable.</returns>
         protected override bool PropertyIsSettable(PSProperty property)
@@ -301,9 +269,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Returns true if the property is gettable.
-        /// </summary>
+        
         /// <param name="property">Property to check.</param>
         /// <returns>True if the property is gettable.</returns>
         protected override bool PropertyIsGettable(PSProperty property)
@@ -311,9 +277,7 @@ namespace System.Management.Automation
             return true;
         }
 
-        /// <summary>
-        /// Returns the name of the type corresponding to the property.
-        /// </summary>
+        
         /// <param name="property">PSProperty obtained in a previous DoGetProperty.</param>
         /// <param name="forDisplay">True if the result is for display purposes only.</param>
         /// <returns>The name of the type corresponding to the property.</returns>
@@ -344,9 +308,7 @@ namespace System.Management.Automation
             return typeName;
         }
 
-        /// <summary>
-        /// Returns the value from a property coming from a previous call to DoGetProperty.
-        /// </summary>
+        
         /// <param name="property">PSProperty coming from a previous call to DoGetProperty.</param>
         /// <returns>The value of the property.</returns>
         protected override object PropertyGet(PSProperty property)
@@ -354,11 +316,7 @@ namespace System.Management.Automation
             PropertyData pd = property.adapterData as PropertyData;
             return pd.Value;
         }
-        /// <summary>
-        /// Sets the value of a property coming from a previous call to DoGetProperty.
-        /// This method will only set the property on a particular instance. If you want
-        /// to update the WMI store, call Put().
-        /// </summary>
+        
         /// <param name="property">PSProperty coming from a previous call to DoGetProperty.</param>
         /// <param name="setValue">Value to set the property with.</param>
         /// <param name="convertIfPossible">Instructs the adapter to convert before setting, if the adapter supports conversion.</param>
@@ -395,9 +353,7 @@ namespace System.Management.Automation
             return;
         }
 
-        /// <summary>
-        /// Returns the string representation of the property in the object.
-        /// </summary>
+        
         /// <param name="property">Property obtained in a previous GetMember.</param>
         /// <returns>The string representation of the property in the object.</returns>
         protected override string PropertyToString(PSProperty property)
@@ -426,9 +382,7 @@ namespace System.Management.Automation
             return returnValue.ToString();
         }
 
-        /// <summary>
-        /// Returns an array with the property attributes.
-        /// </summary>
+        
         /// <param name="property">Property we want the attributes from.</param>
         /// <returns>An array with the property attributes.</returns>
         protected override AttributeCollection PropertyAttributes(PSProperty property)
@@ -440,9 +394,7 @@ namespace System.Management.Automation
 
         #region Private/Internal Methods
 
-        /// <summary>
-        /// Retrieves the table for instance methods.
-        /// </summary>
+        
         /// <param name="wmiObject">Object containing methods to load in typeTable.</param>
         /// <param name="staticBinding">Controls what methods are adapted.</param>
         protected static CacheTable GetInstanceMethodTable(ManagementBaseObject wmiObject,
@@ -492,9 +444,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Populates methods of a ManagementClass in a CacheTable.
-        /// </summary>
+        
         /// <param name="mgmtClass">Class to get the method info from.</param>
         /// <param name="methodTable">Cachetable to update.</param>
         /// <param name="staticBinding">Controls what methods are adapted.</param>
@@ -524,11 +474,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Constructs a ManagementClass object from the supplied mgmtBaseObject.
-        /// ManagementObject has scope, options, path which need to be carried over to the ManagementClass for
-        /// retrieving method/property/parameter metadata.
-        /// </summary>
+        
         /// <param name="mgmtBaseObject"></param>
         /// <returns></returns>
         private static ManagementClass CreateClassFrmObject(ManagementBaseObject mgmtBaseObject)
@@ -553,9 +499,7 @@ namespace System.Management.Automation
             return mgmtClass;
         }
 
-        /// <summary>
-        /// Gets the object type associated with a CimType:object.
-        /// </summary>
+        
         /// <param name="pData">PropertyData representing a parameter.</param>
         /// <returns>
         /// typeof(object)#EmbeddedObjectTypeName if one found
@@ -593,9 +537,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Gets the dotnet type of a given PropertyData.
-        /// </summary>
+        
         /// <param name="pData">PropertyData input.</param>
         /// <returns>A string representing dotnet type.</returns>
         protected static Type GetDotNetType(PropertyData pData)
@@ -669,9 +611,7 @@ namespace System.Management.Automation
             return Type.GetType(retValue);
         }
 
-        /// <summary>
-        /// Checks whether a given MethodData is static or not.
-        /// </summary>
+        
         /// <param name="mdata"></param>
         /// <returns>
         /// true, if static
@@ -754,9 +694,7 @@ namespace System.Management.Automation
             return InvokeManagementMethod(obj, mdata.Name, inParameters);
         }
 
-        /// <summary>
-        /// Decode parameter information from the supplied object.
-        /// </summary>
+        
         /// <param name="parameters">A ManagementBaseObject describing the parameters.</param>
         /// <param name="parametersList">A sorted list to store parameter information.</param>
         /// <remarks>
@@ -799,9 +737,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets WMI method information.
-        /// </summary>
+        
         /// <param name="mData"></param>
         /// <returns></returns>
         /// <remarks>
@@ -886,19 +822,13 @@ namespace System.Management.Automation
 
         #region Abstract Methods
 
-        /// <summary>
-        /// Retrieves all the properties available in the object.
-        /// </summary>
+        
         /// <param name="wmiObject">Object to get all the property information from.</param>
         /// <param name="members">Collection where the members will be added.</param>
         protected abstract void AddAllProperties<T>(ManagementBaseObject wmiObject,
             PSMemberInfoInternalCollection<T> members) where T : PSMemberInfo;
 
-        /// <summary>
-        /// Adds method information of the ManagementObject. This is done by accessing
-        /// the ManagementClass corresponding to this ManagementObject. All the method
-        /// information is cached for a particular ManagementObject.
-        /// </summary>
+        
         /// <typeparam name="T">PSMemberInfo</typeparam>
         /// <param name="wmiObject">Object for which the members need to be retrieved.</param>
         /// <param name="members">Method information is added to this.</param>
@@ -908,9 +838,7 @@ namespace System.Management.Automation
         protected abstract object InvokeManagementMethod(ManagementObject wmiObject,
             string methodName, ManagementBaseObject inParams);
 
-        /// <summary>
-        /// Get a method object given method name.
-        /// </summary>
+        
         /// <typeparam name="T">PSMemberInfo</typeparam>
         /// <param name="wmiObject">Object for which the method is required.</param>
         /// <param name="methodName">Name of the method.</param>
@@ -921,25 +849,17 @@ namespace System.Management.Automation
         protected abstract T GetManagementObjectMethod<T>(ManagementBaseObject wmiObject,
             string methodName) where T : PSMemberInfo;
 
-        /// <summary>
-        /// Returns null if propertyName is not a property in the adapter or
-        /// the corresponding PSProperty with its adapterData set to information
-        /// to be used when retrieving the property.
-        /// </summary>
+        
         /// <param name="wmiObject">Object to retrieve the PSProperty from.</param>
         /// <param name="propertyName">Name of the property to be retrieved.</param>
         /// <returns>The PSProperty corresponding to propertyName from obj.</returns>
         protected abstract PSProperty DoGetProperty(ManagementBaseObject wmiObject,
             string propertyName);
 
-        /// <summary>
-        /// Returns the first property whose name matches the specified <see cref="MemberNamePredicate"/>
-        /// </summary>
+        
         protected abstract T GetFirstOrDefaultProperty<T>(ManagementBaseObject wmiObject, MemberNamePredicate predicate) where T : PSMemberInfo;
 
-        /// <summary>
-        /// Returns the first method whose name matches the specified <see cref="MemberNamePredicate"/>
-        /// </summary>
+        
         protected abstract T GetFirstOrDefaultMethod<T>(ManagementBaseObject wmiObject, MemberNamePredicate predicate) where T : PSMemberInfo;
 
         #endregion
@@ -951,11 +871,7 @@ namespace System.Management.Automation
         #endregion
     }
 
-    /// <summary>
-    /// Deals with ManagementClass objects.
-    /// Adapts only static methods and SystemProperties of a
-    /// ManagementClass object.
-    /// </summary>
+    
     internal class ManagementClassApdapter : BaseWMIAdapter
     {
         protected override void AddAllProperties<T>(ManagementBaseObject wmiObject,
@@ -986,9 +902,7 @@ namespace System.Management.Automation
             return null;
         }
 
-        /// <summary>
-        /// Invokes method represented by <paramref name="mdata"/> using supplied arguments.
-        /// </summary>
+        
         /// <param name="wmiObject">ManagementObject on which the method is invoked.</param>
         /// <param name="methodName">Method data.</param>
         /// <param name="inParams">Method arguments.</param>
@@ -1014,10 +928,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Adds method information of the ManagementClass. Only static methods are added for
-        /// an object of type ManagementClass.
-        /// </summary>
+        
         /// <typeparam name="T">PSMemberInfo</typeparam>
         /// <param name="wmiObject">Object for which the members need to be retrieved.</param>
         /// <param name="members">Method information is added to this.</param>
@@ -1045,9 +956,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Returns method information for a ManagementClass method.
-        /// </summary>
+        
         /// <typeparam name="T"></typeparam>
         /// <param name="wmiObject"></param>
         /// <param name="methodName"></param>
@@ -1113,10 +1022,7 @@ namespace System.Management.Automation
         }
     }
 
-    /// <summary>
-    /// Deals with ManagementObject objects.
-    /// This class do not adapt static methods.
-    /// </summary>
+    
     internal class ManagementObjectAdapter : ManagementClassApdapter
     {
         protected override void AddAllProperties<T>(ManagementBaseObject wmiObject,
@@ -1174,9 +1080,7 @@ namespace System.Management.Automation
             return null;
         }
 
-        /// <summary>
-        /// Invokes method represented by <paramref name="mdata"/> using supplied arguments.
-        /// </summary>
+        
         /// <param name="obj">ManagementObject on which the method is invoked.</param>
         /// <param name="methodName">Method data.</param>
         /// <param name="inParams">Method arguments.</param>
@@ -1200,10 +1104,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Adds method information of the ManagementObject. Only instance methods are added for
-        /// a ManagementObject.
-        /// </summary>
+        
         /// <typeparam name="T">PSMemberInfo</typeparam>
         /// <param name="wmiObject">Object for which the members need to be retrieved.</param>
         /// <param name="members">Method information is added to this.</param>
@@ -1231,9 +1132,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Returns method information for a ManagementObject method.
-        /// </summary>
+        
         /// <typeparam name="T"></typeparam>
         /// <param name="wmiObject"></param>
         /// <param name="methodName"></param>

@@ -5,9 +5,7 @@ using System;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <summary>
-    /// The IsNotEmptyValidationRule checks a value to see if a value is not empty.
-    /// </summary>
+    
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public class IsNotEmptyValidationRule : DataErrorInfoValidationRule
     {
@@ -19,9 +17,7 @@ namespace Microsoft.Management.UI.Internal
 
         #region Public Methods
 
-        /// <summary>
-        /// Determines if value is not empty.
-        /// </summary>
+        
         /// <param name="value">
         /// The value to validate.
         /// </param>

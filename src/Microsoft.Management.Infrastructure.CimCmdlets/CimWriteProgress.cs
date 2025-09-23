@@ -10,16 +10,10 @@ using System.Management.Automation;
 
 namespace Microsoft.Management.Infrastructure.CimCmdlets
 {
-    /// <summary>
-    /// <para>
-    /// Write progress record of given activity
-    /// </para>
-    /// </summary>
+    
     internal sealed class CimWriteProgress : CimBaseAction
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CimWriteProgress"/> class.
-        /// </summary>
+        
         /// <param name="activity">
         ///  Activity identifier of the given activity
         /// </param>
@@ -59,11 +53,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             this.SecondsRemaining = theSecondsRemaining;
         }
 
-        /// <summary>
-        /// <para>
-        /// Write progress record to powershell
-        /// </para>
-        /// </summary>
+        
         /// <param name="cmdlet"></param>
         public override void Execute(CmdletOperationBase cmdlet)
         {
@@ -89,34 +79,22 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         #region members
 
-        /// <summary>
-        /// Gets the activity of the given activity.
-        /// </summary>
+        
         internal string Activity { get; }
 
-        /// <summary>
-        /// Gets the activity identifier of the given activity.
-        /// </summary>
+        
         internal int ActivityID { get; }
 
-        /// <summary>
-        /// Gets the current operation text of the given activity.
-        /// </summary>
+        
         internal string CurrentOperation { get; }
 
-        /// <summary>
-        /// Gets the status description of the given activity.
-        /// </summary>
+        
         internal string StatusDescription { get; }
 
-        /// <summary>
-        /// Gets the percentage completed of the given activity.
-        /// </summary>
+        
         internal uint PercentageCompleted { get; }
 
-        /// <summary>
-        /// Gets the number of seconds remaining for the given activity.
-        /// </summary>
+        
         internal uint SecondsRemaining { get; }
 
         #endregion

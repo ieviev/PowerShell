@@ -194,9 +194,7 @@ namespace System.Diagnostics.Eventing
             EvtQueryTolerateQueryErrors = 0x1000
         }
 
-        /// <summary>
-        /// Evt Variant types.
-        /// </summary>
+        
         internal enum EvtVariantType
         {
             EvtVarTypeNull = 0,
@@ -346,18 +344,14 @@ namespace System.Diagnostics.Eventing
             EvtEventPath = 1
         }
 
-        /// <summary>
-        /// The query flags to get information about query.
-        /// </summary>
+        
         internal enum EvtQueryPropertyId
         {
             EvtQueryNames = 0,   // String;   // Variant will be array of EvtVarTypeString
             EvtQueryStatuses = 1 // UInt32;   // Variant will be Array of EvtVarTypeUInt32
         }
 
-        /// <summary>
-        /// Publisher Metadata properties.
-        /// </summary>
+        
         internal enum EvtPublisherMetadataPropertyId
         {
             EvtPublisherMetadataPublisherGuid = 0,      // EvtVarTypeGuid

@@ -7,25 +7,19 @@ using System.Transactions;
 
 namespace Microsoft.PowerShell.Commands.Management
 {
-    /// <summary>
-    /// Represents a string that can be used in transactions.
-    /// </summary>
+    
     public class TransactedString : IEnlistmentNotification
     {
         private StringBuilder _value;
         private StringBuilder _temporaryValue;
         private Transaction _enlistedTransaction = null;
 
-        /// <summary>
-        /// Constructor for the TransactedString class.
-        /// </summary>
+        
         public TransactedString() : this(string.Empty)
         {
         }
 
-        /// <summary>
-        /// Constructor for the TransactedString class.
-        /// </summary>
+        
         /// <param name="value">
         /// The initial value of the transacted string.
         /// </param>
@@ -35,9 +29,7 @@ namespace Microsoft.PowerShell.Commands.Management
             _temporaryValue = null;
         }
 
-        /// <summary>
-        /// Make the transacted changes permanent.
-        /// </summary>
+        
         void IEnlistmentNotification.Commit(Enlistment enlistment)
         {
             _value = new StringBuilder(_temporaryValue.ToString());
@@ -46,9 +38,7 @@ namespace Microsoft.PowerShell.Commands.Management
             enlistment.Done();
         }
 
-        /// <summary>
-        /// Discard the transacted changes.
-        /// </summary>
+        
         void IEnlistmentNotification.Rollback(Enlistment enlistment)
         {
             _temporaryValue = null;
@@ -56,9 +46,7 @@ namespace Microsoft.PowerShell.Commands.Management
             enlistment.Done();
         }
 
-        /// <summary>
-        /// Discard the transacted changes.
-        /// </summary>
+        
         void IEnlistmentNotification.InDoubt(Enlistment enlistment)
         {
             enlistment.Done();
@@ -69,9 +57,7 @@ namespace Microsoft.PowerShell.Commands.Management
             preparingEnlistment.Prepared();
         }
 
-        /// <summary>
-        /// Append text to the transacted string.
-        /// </summary>
+        
         /// <param name="text">
         /// The text to append.
         /// </param>
@@ -89,9 +75,7 @@ namespace Microsoft.PowerShell.Commands.Management
             }
         }
 
-        /// <summary>
-        /// Remove text from the transacted string.
-        /// </summary>
+        
         /// <param name="startIndex">
         /// The position in the string from which to start removing.
         /// </param>
@@ -112,12 +96,7 @@ namespace Microsoft.PowerShell.Commands.Management
             }
         }
 
-        /// <summary>
-        /// Gets the length of the transacted string. If this is
-        /// called within the transaction, it returns the length of
-        /// the transacted value. Otherwise, it returns the length of
-        /// the original value.
-        /// </summary>
+        
         public int Length
         {
             get
@@ -137,12 +116,7 @@ namespace Microsoft.PowerShell.Commands.Management
             }
         }
 
-        /// <summary>
-        /// Gets the System.String that represents the transacted
-        /// transacted string. If this is called within the
-        /// transaction, it returns the transacted value.
-        /// Otherwise, it returns the original value.
-        /// </summary>
+        
         public override string ToString()
         {
             // If we're not in a transaction, or we are in a different transaction than the one we

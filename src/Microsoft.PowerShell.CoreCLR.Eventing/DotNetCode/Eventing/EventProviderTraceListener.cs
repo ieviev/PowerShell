@@ -50,13 +50,7 @@ namespace System.Diagnostics.Eventing
             }
         }
 
-        /// <summary>
-        /// This method creates an instance of the ETW provider.
-        /// The guid argument must be a valid GUID or a format exception will be
-        /// thrown when creating an instance of the ControlGuid.
-        /// We need to be running on Vista or above. If not an
-        /// PlatformNotSupported exception will be thrown by the EventProvider.
-        /// </summary>
+        
         public EventProviderTraceListener(string providerId)
         {
             InitProvider(providerId);

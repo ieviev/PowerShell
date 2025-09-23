@@ -582,10 +582,7 @@ namespace System.Management.Automation.Language
             return AstVisitAction.Continue;
         }
 
-        /// <summary>
-        /// Check that label exists inside the method.
-        /// Only call it, when label is present and can be calculated in compile time.
-        /// </summary>
+        
         /// <param name="ast">BreakStatementAst or ContinueStatementAst.</param>
         /// <param name="label">Label name. Can be null.</param>
         private void CheckLabelExists(StatementAst ast, string label)
@@ -620,9 +617,7 @@ namespace System.Management.Automation.Language
             }
         }
 
-        /// <summary>
-        /// Check that flow doesn't leave finally.
-        /// </summary>
+        
         /// <param name="ast"></param>
         /// <param name="label">If label is null, either it's a break/continue to an unknown label
         /// (and unknown does not mean not specified, it means it's an expression we can't evaluate) or we have a return statement.
@@ -729,9 +724,7 @@ namespace System.Management.Automation.Language
             return AstVisitAction.Continue;
         }
 
-        /// <summary>
-        /// Check if the ast is a valid target for assignment.  If not, the action reportError is called.
-        /// </summary>
+        
         /// <param name="ast">The target of an assignment.</param>
         /// <param name="simpleAssignment">True if the operator '=' is used, false otherwise (e.g. false on '+=' or '++'.).</param>
         /// <param name="reportError">The action called to report any errors.</param>
@@ -1335,22 +1328,7 @@ namespace System.Management.Automation.Language
             return AstVisitAction.Continue;
         }
 
-        /// <summary>
-        /// This regular expression is for validating if a namespace string is valid.
-        ///
-        /// In C#, a legit namespace is defined as `identifier ('.' identifier)*` [see https://learn.microsoft.com/dotnet/csharp/language-reference/language-specification/namespaces#143-namespace-declarations].
-        /// And `identifier` is defined in https://learn.microsoft.com/dotnet/csharp/fundamentals/coding-style/identifier-names#naming-rules, summarized below:
-        ///   - Identifiers must start with a letter or underscore (_).
-        ///   - Identifiers can contain
-        ///     * Unicode letter characters (categories: Lu, Ll, Lt, Lm, Lo or Nl);
-        ///     * decimal digit characters (category: Nd);
-        ///     * Unicode connecting characters (category: Pc);
-        ///     * Unicode combining characters (categories: Mn, Mc);
-        ///     * Unicode formatting characters (category: Cf).
-        ///
-        /// For details about how Unicode categories are represented in regular expression, see the "Unicode Categories" section in the following article:
-        ///   - https://www.regular-expressions.info/unicode.html
-        /// </summary>
+        
         [GeneratedRegex(@"^[\p{L}\p{Nl}_][\p{L}\p{Nl}\p{Nd}\p{Pc}\p{Mn}\p{Mc}\p{Cf}_]*(?:\.[\p{L}\p{Nl}_][\p{L}\p{Nl}\p{Nd}\p{Pc}\p{Mn}\p{Mc}\p{Cf}_]*)*$")]
         private static partial Regex NamespacePattern();
 
@@ -1515,9 +1493,7 @@ namespace System.Management.Automation.Language
 
     internal static class DscResourceChecker
     {
-        /// <summary>
-        /// Check if it is a qualified DSC resource type.
-        /// </summary>
+        
         /// <param name="parser"></param>
         /// <param name="typeDefinitionAst"></param>
         /// <param name="dscResourceAttributeAst"></param>
@@ -1608,9 +1584,7 @@ namespace System.Management.Automation.Language
                     name);
             }
         }
-        /// <summary>
-        /// Look up all the way up until find all the required members.
-        /// </summary>
+        
         /// <param name="parser"></param>
         /// <param name="typeDefinitionAst">The type definition ast of the DSC resource type.</param>
         /// <param name="hasSet">Flag to indicate if the class contains Set method.</param>
@@ -1664,9 +1638,7 @@ namespace System.Management.Automation.Language
                 }
             }
         }
-        /// <summary>
-        /// Check if it is a Get method with correct return type and signature.
-        /// </summary>
+        
         /// <param name="parser"></param>
         /// <param name="functionMemberAst">The function member AST.</param>
         /// <param name="hasGet">True if it is a Get method with qualified return type and signature; otherwise, false.</param>
@@ -1709,9 +1681,7 @@ namespace System.Management.Automation.Language
             }
         }
 
-        /// <summary>
-        /// Check if it is a Test method with correct return type and signature.
-        /// </summary>
+        
         /// <param name="functionMemberAst">The function member AST.</param>
         /// <param name="hasTest">True if it is a Test method with qualified return type and signature; otherwise, false.</param>
         private static void CheckTest(FunctionMemberAst functionMemberAst, ref bool hasTest)
@@ -1726,9 +1696,7 @@ namespace System.Management.Automation.Language
                     functionMemberAst.ReturnType != null &&
                     functionMemberAst.ReturnType.TypeName.GetReflectionType() == typeof(bool));
         }
-        /// <summary>
-        /// Check if it is a Set method with correct return type and signature.
-        /// </summary>
+        
         /// <param name="functionMemberAst">The function member AST.</param>
         /// <param name="hasSet">True if it is a Set method with qualified return type and signature; otherwise, false.</param>
         private static void CheckSet(FunctionMemberAst functionMemberAst, ref bool hasSet)
@@ -1743,9 +1711,7 @@ namespace System.Management.Automation.Language
                     functionMemberAst.IsReturnTypeVoid());
         }
 
-        /// <summary>
-        /// True if it is a key property.
-        /// </summary>
+        
         /// <param name="parser"></param>
         /// <param name="propertyMemberAst">The property member AST.</param>
         /// <param name="hasKey">True if it is a key property; otherwise, false.</param>

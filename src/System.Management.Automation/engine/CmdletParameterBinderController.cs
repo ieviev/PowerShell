@@ -15,10 +15,7 @@ using System.Text;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// This is the interface between the CommandProcessor and the various
-    /// parameter binders required to bind parameters to a cmdlet.
-    /// </summary>
+    
     internal class CmdletParameterBinderController : ParameterBinderController
     {
         #region tracer
@@ -30,10 +27,7 @@ namespace System.Management.Automation
 
         #region ctor
 
-        /// <summary>
-        /// Initializes the cmdlet parameter binder controller for
-        /// the specified cmdlet and engine context.
-        /// </summary>
+        
         /// <param name="cmdlet">
         /// The cmdlet that the parameters will be bound to.
         /// </param>
@@ -87,9 +81,7 @@ namespace System.Management.Automation
 
         #region helper_methods
 
-        /// <summary>
-        /// Binds the specified command-line parameters to the target.
-        /// </summary>
+        
         /// <param name="arguments">
         /// Parameters to the command.
         /// </param>
@@ -195,10 +187,7 @@ namespace System.Management.Automation
             _prePipelineProcessingParameterSetFlags = _currentParameterSetFlag;
         }
 
-        /// <summary>
-        /// Binds the unbound arguments to parameters but does not
-        /// perform mandatory parameter validation or parameter set validation.
-        /// </summary>
+        
         internal void BindCommandLineParametersNoValidation(Collection<CommandParameterInternal> arguments)
         {
             var psCompiledScriptCmdlet = this.Command as PSScriptCmdlet;
@@ -276,9 +265,7 @@ namespace System.Management.Automation
             VerifyArgumentsProcessed(reportedBindingException);
         }
 
-        /// <summary>
-        /// Process all valid parameter sets, and filter out those that don't take any pipeline input.
-        /// </summary>
+        
         /// <returns>
         /// The new valid parameter set flags
         /// </returns>
@@ -333,9 +320,7 @@ namespace System.Management.Automation
                 return _currentParameterSetFlag;
         }
 
-        /// <summary>
-        /// Apply the binding for the default parameter defined by the user.
-        /// </summary>
+        
         /// <param name="bindingStage">
         /// Dictate which binding stage this default binding happens
         /// </param>
@@ -378,9 +363,7 @@ namespace System.Management.Automation
             return;
         }
 
-        /// <summary>
-        /// Bind the default parameter value pairs.
-        /// </summary>
+        
         /// <param name="validParameterSetFlag">ValidParameterSetFlag.</param>
         /// <param name="defaultParameterValues">Default value pairs.</param>
         /// <returns>
@@ -464,9 +447,7 @@ namespace System.Management.Automation
             return ret;
         }
 
-        /// <summary>
-        /// Wrap up current binding state to provide more information to the user.
-        /// </summary>
+        
         /// <returns></returns>
         private PSObject WrapBindingState()
         {
@@ -493,10 +474,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Get all qualified default parameter value pairs based on the
-        /// given currentParameterSetFlag.
-        /// </summary>
+        
         /// <param name="currentParameterSetFlag"></param>
         /// <param name="availableParameterValuePairs"></param>
         /// <returns>Null if no qualified pair found.</returns>
@@ -546,9 +524,7 @@ namespace System.Management.Automation
             return null;
         }
 
-        /// <summary>
-        /// Get the aliases of the current cmdlet.
-        /// </summary>
+        
         /// <returns></returns>
         private List<string> GetAliasOfCurrentCmdlet()
         {
@@ -557,9 +533,7 @@ namespace System.Management.Automation
             return results.Count > 0 ? results : null;
         }
 
-        /// <summary>
-        /// Check if the passed-in aliasName matches an alias name in _aliasList.
-        /// </summary>
+        
         /// <param name="aliasName"></param>
         /// <returns></returns>
         private bool MatchAnyAlias(string aliasName)
@@ -584,9 +558,7 @@ namespace System.Management.Automation
         }
 
         internal IDictionary DefaultParameterValues { get; set; }
-        /// <summary>
-        /// Get all available default parameter value pairs.
-        /// </summary>
+        
         /// <returns>Return the available parameter value pairs. Otherwise return null.</returns>
         private Dictionary<MergedCompiledCommandParameter, object> GetDefaultParameterValuePairs(bool needToGetAlias)
         {
@@ -782,9 +754,7 @@ namespace System.Management.Automation
             return null;
         }
 
-        /// <summary>
-        /// A helper method for GetDefaultParameterValuePairs.
-        /// </summary>
+        
         /// <param name="cmdletName"></param>
         /// <param name="paramName"></param>
         /// <param name="paramValue"></param>
@@ -845,9 +815,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Verify if all arguments from the command line are bound.
-        /// </summary>
+        
         /// <param name="originalBindingException">
         /// Previous binding exceptions that possibly causes the failure
         /// </param>
@@ -950,10 +918,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Verifies that a single parameter set is selected and throws an exception if
-        /// one of there are multiple and one of them is not the default parameter set.
-        /// </summary>
+        
         private void VerifyParameterSetSelected()
         {
             // Now verify that a parameter set has been selected if any parameter sets
@@ -988,9 +953,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Restores the specified parameter to the original value.
-        /// </summary>
+        
         /// <param name="argumentToBind">
         /// The argument containing the value to restore.
         /// </param>
@@ -1049,10 +1012,7 @@ namespace System.Management.Automation
             return true;
         }
 
-        /// <summary>
-        /// Validate the given named parameter against the specified parameter set,
-        /// and then bind the argument to the parameter.
-        /// </summary>
+        
         protected override void BindNamedParameter(
             uint parameterSets,
             CommandParameterInternal argument,
@@ -1102,9 +1062,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Determines if a ScriptBlock can be bound directly to the type of the specified parameter.
-        /// </summary>
+        
         /// <param name="parameter">
         /// The metadata of the parameter to check the type of.
         /// </param>
@@ -1167,13 +1125,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Binds the specified argument to the specified parameter using the appropriate
-        /// parameter binder. If the argument is of type ScriptBlock and the parameter takes
-        /// pipeline input, then the ScriptBlock is saved off in the delay-bind ScriptBlock
-        /// container for further processing of pipeline input and is not bound as the argument
-        /// to the parameter.
-        /// </summary>
+        
         /// <param name="parameterSets">
         /// The parameter set used to bind the arguments.
         /// </param>
@@ -1316,10 +1268,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Binds the specified argument to the specified parameter using the appropriate
-        /// parameter binder.
-        /// </summary>
+        
         /// <param name="argument">
         /// The argument to be bound.
         /// </param>
@@ -1454,9 +1403,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Binds the remaining arguments to an unbound ValueFromRemainingArguments parameter (Varargs)
-        /// </summary>
+        
         /// <exception cref="ParameterBindingException">
         /// If there was an error binding the arguments to the parameters.
         /// </exception>
@@ -1578,11 +1525,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Determines if the cmdlet supports dynamic parameters. If it does,
-        /// the dynamic parameter bindable object is retrieved and the unbound
-        /// arguments are bound to it.
-        /// </summary>
+        
         /// <param name="outgoingBindingException">
         /// Returns the underlying parameter binding exception if any was generated.
         /// </param>
@@ -1733,15 +1676,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// This method determines if the unbound mandatory parameters take pipeline input or
-        /// if we can use the default parameter set.  If all the unbound mandatory parameters
-        /// take pipeline input and the default parameter set is valid, then the default parameter
-        /// set is set as the current parameter set and processing can continue.  If there are
-        /// more than one valid parameter sets and the unbound mandatory parameters are not
-        /// consistent across parameter sets or there is no default parameter set then a
-        /// ParameterBindingException is thrown with an errorId of AmbiguousParameterSet.
-        /// </summary>
+        
         /// <param name="validParameterSetCount">
         /// The number of valid parameter sets.
         /// </param>
@@ -2392,9 +2327,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Preserve potential parameter sets as much as possible.
-        /// </summary>
+        
         /// <param name="chosenMandatorySet">The mandatory set we choose to latch on.</param>
         /// <param name="otherMandatorySetsToBeIgnored">Other mandatory parameter sets to be ignored.</param>
         /// <param name="chosenSetContainsNonpipelineableMandatoryParameters">Indicate if the chosen mandatory set contains any non-pipelineable mandatory parameters.</param>
@@ -2419,9 +2352,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Update _currentParameterSetFlag to ignore the specified mandatory sets.
-        /// </summary>
+        
         /// <remarks>
         /// This method is used only when we try to preserve parameter sets during the mandatory parameter checking.
         /// In cases where this method is used, there must be at least one parameter set declared.
@@ -2509,9 +2440,7 @@ namespace System.Management.Automation
             return parameterMandatorySets;
         }
 
-        /// <summary>
-        /// Ensures that only one parameter set is valid or throws an appropriate exception.
-        /// </summary>
+        
         /// <param name="prePipelineInput">
         /// If true, it is acceptable to have multiple valid parameter sets as long as one
         /// of those parameter sets take pipeline input.
@@ -2737,10 +2666,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Determines if there are any unbound parameters that take pipeline input
-        /// for the specified parameter sets.
-        /// </summary>
+        
         /// <param name="validParameterSetFlags">
         /// The parameter sets that should be checked for each unbound parameter to see
         /// if it accepts pipeline input.
@@ -2768,9 +2694,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Checks for unbound mandatory parameters. If any are found, an exception is thrown.
-        /// </summary>
+        
         /// <param name="missingMandatoryParameters">
         /// Returns the missing mandatory parameters, if any.
         /// </param>
@@ -2787,10 +2711,7 @@ namespace System.Management.Automation
                 out missingMandatoryParameters);
         }
 
-        /// <summary>
-        /// Checks for unbound mandatory parameters. If any are found and promptForMandatory is true,
-        /// the user will be prompted for the missing mandatory parameters.
-        /// </summary>
+        
         /// <param name="validParameterSetCount">
         /// The number of valid parameter sets.
         /// </param>
@@ -3046,12 +2967,7 @@ namespace System.Management.Automation
             return fieldDescriptionList;
         }
 
-        /// <summary>
-        /// Creates a label with a Hotkey from <paramref name="parameterName"/>. The Hotkey is
-        /// <paramref name="parameterName"/>'s first capital character not in <paramref name="usedHotKeys"/>.
-        /// If <paramref name="parameterName"/> does not have any capital character, the first lower
-        ///  case character is used. The Hotkey is preceded by an ampersand in the label.
-        /// </summary>
+        
         /// <param name="parameterName">
         /// The parameter name from which the Hotkey is created
         /// </param>
@@ -3120,9 +3036,7 @@ namespace System.Management.Automation
             return label.ToString();
         }
 
-        /// <summary>
-        /// Gets the parameter set name for the current parameter set.
-        /// </summary>
+        
         internal string CurrentParameterSetName
         {
             get
@@ -3133,10 +3047,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Binds the specified object or its properties to parameters
-        /// that accept pipeline input.
-        /// </summary>
+        
         /// <param name="inputToOperateOn">
         /// The pipeline object to bind.
         /// </param>
@@ -3217,9 +3128,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Binds the pipeline parameters using the specified input and parameter set.
-        /// </summary>
+        
         /// <param name="inputToOperateOn">
         /// The pipeline input to be bound to the parameters.
         /// </param>
@@ -3625,9 +3534,7 @@ namespace System.Management.Automation
             return bindResult;
         }
 
-        /// <summary>
-        /// Used for defining the state of the binding state machine.
-        /// </summary>
+        
         private enum CurrentlyBinding
         {
             ValueFromPipelineNoCoercion = 0,
@@ -3636,10 +3543,7 @@ namespace System.Management.Automation
             ValueFromPipelineByPropertyNameWithCoercion = 3
         }
 
-        /// <summary>
-        /// Invokes any delay bind script blocks and binds the resulting value
-        /// to the appropriate parameter.
-        /// </summary>
+        
         /// <param name="inputToOperateOn">
         /// The input to the script block.
         /// </param>
@@ -3768,10 +3672,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Determines the number of valid parameter sets based on the valid parameter
-        /// set flags.
-        /// </summary>
+        
         /// <param name="parameterSetFlags">
         /// The valid parameter set flags.
         /// </param>
@@ -3802,11 +3703,7 @@ namespace System.Management.Automation
 
         #region private_members
 
-        /// <summary>
-        /// This method gets a backup of the default value of a parameter.
-        /// Derived classes may override this method to get the default parameter
-        /// value in a different way.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the parameter to get the default value of.
         /// </param>
@@ -3873,17 +3770,12 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Gets or sets the command that this parameter binder controller
-        /// will bind parameters to.
-        /// </summary>
+        
         internal Cmdlet Command { get; }
 
         #region DefaultParameterBindingStructures
 
-        /// <summary>
-        /// The separator used in GetDefaultParameterValuePairs function.
-        /// </summary>
+        
         private const string Separator = ":::";
 
         // Hold all aliases of the current cmdlet
@@ -3904,24 +3796,16 @@ namespace System.Management.Automation
 
         private uint _parameterSetToBePrioritizedInPipelineBinding = 0;
 
-        /// <summary>
-        /// The cmdlet metadata.
-        /// </summary>
+        
         private readonly CommandMetadata _commandMetadata;
 
-        /// <summary>
-        /// THe command runtime object for this cmdlet.
-        /// </summary>
+        
         private readonly MshCommandRuntime _commandRuntime;
 
-        /// <summary>
-        /// Keep the obsolete parameter warnings generated from parameter binding.
-        /// </summary>
+        
         internal List<WarningRecord> ObsoleteParameterWarningList { get; private set; }
 
-        /// <summary>
-        /// Keep names of the parameters for which we have generated obsolete warning messages.
-        /// </summary>
+        
         private HashSet<string> BoundObsoleteParameterNames
         {
             get
@@ -3932,15 +3816,10 @@ namespace System.Management.Automation
 
         private HashSet<string> _boundObsoleteParameterNames;
 
-        /// <summary>
-        /// The parameter binder for the dynamic parameters. Currently this
-        /// can be either a ReflectionParameterBinder or a RuntimeDefinedParameterBinder.
-        /// </summary>
+        
         private ParameterBinderBase _dynamicParameterBinder;
 
-        /// <summary>
-        /// The parameter binder for the ShouldProcess parameters.
-        /// </summary>
+        
         internal ReflectionParameterBinder ShouldProcessParametersBinder
         {
             get
@@ -3965,9 +3844,7 @@ namespace System.Management.Automation
 
         private ReflectionParameterBinder _shouldProcessParameterBinder;
 
-        /// <summary>
-        /// The parameter binder for the Paging parameters.
-        /// </summary>
+        
         internal ReflectionParameterBinder PagingParametersBinder
         {
             get
@@ -3992,9 +3869,7 @@ namespace System.Management.Automation
 
         private ReflectionParameterBinder _pagingParameterBinder;
 
-        /// <summary>
-        /// The parameter binder for the Transactions parameters.
-        /// </summary>
+        
         internal ReflectionParameterBinder TransactionParametersBinder
         {
             get
@@ -4019,9 +3894,7 @@ namespace System.Management.Automation
 
         private ReflectionParameterBinder _transactionParameterBinder;
 
-        /// <summary>
-        /// The parameter binder for the CommonParameters.
-        /// </summary>
+        
         internal ReflectionParameterBinder CommonParametersBinder
         {
             get
@@ -4060,25 +3933,17 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// This dictionary is used to contain the arguments that were passed in as ScriptBlocks
-        /// but the parameter isn't a ScriptBlock. So we have to wait to bind the parameter
-        /// until there is a pipeline object available to invoke the ScriptBlock with.
-        /// </summary>
+        
         private readonly Dictionary<MergedCompiledCommandParameter, DelayedScriptBlockArgument> _delayBindScriptBlocks =
             new Dictionary<MergedCompiledCommandParameter, DelayedScriptBlockArgument>();
 
-        /// <summary>
-        /// A collection of the default values of the parameters.
-        /// </summary>
+        
         private readonly Dictionary<string, CommandParameterInternal> _defaultParameterValues =
             new Dictionary<string, CommandParameterInternal>(StringComparer.OrdinalIgnoreCase);
 
         #endregion private_members
 
-        /// <summary>
-        /// Binds the specified value to the specified parameter.
-        /// </summary>
+        
         /// <param name="parameterValue">
         /// The value to bind to the parameter
         /// </param>
@@ -4139,13 +4004,7 @@ namespace System.Management.Automation
                     false));
         }
 
-        /// <summary>
-        /// Backs up the specified parameter value by calling the GetDefaultParameterValue
-        /// abstract method.
-        ///
-        /// This method is called when binding a parameter value that came from a pipeline
-        /// object.
-        /// </summary>
+        
         /// <exception cref="ParameterBindingParameterDefaultValueException">
         /// If the parameter binder encounters an error getting the default value.
         /// </exception>
@@ -4163,10 +4022,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Replaces the values of the parameters with their initial value for the
-        /// parameters specified.
-        /// </summary>
+        
         /// <param name="parameters">
         /// The parameters that should have their default values restored.
         /// </param>
@@ -4269,17 +4125,13 @@ namespace System.Management.Automation
         }
     }
 
-    /// <summary>
-    /// A versionable hashtable, so the caching of UserInput -> ParameterBindingResult will work.
-    /// </summary>
+    
     [SuppressMessage("Microsoft.Usage", "CA2237:MarkISerializableTypesWithSerializable", Justification = "DefaultParameterDictionary will only be used for $PSDefaultParameterValues.")]
     public sealed class DefaultParameterDictionary : Hashtable
     {
         private bool _isChanged;
 
-        /// <summary>
-        /// Check to see if the hashtable has been changed since last check.
-        /// </summary>
+        
         /// <returns>True for changed; false for not changed.</returns>
         public bool ChangeSinceLastCheck()
         {
@@ -4290,18 +4142,14 @@ namespace System.Management.Automation
 
         #region Constructor
 
-        /// <summary>
-        /// Default constructor.
-        /// </summary>
+        
         public DefaultParameterDictionary()
             : base(StringComparer.OrdinalIgnoreCase)
         {
             _isChanged = true;
         }
 
-        /// <summary>
-        /// Constructor takes a hash table.
-        /// </summary>
+        
         /// <remarks>
         /// Check for the keys' formats and make it versionable
         /// </remarks>
@@ -4368,17 +4216,13 @@ namespace System.Management.Automation
 
         #endregion Constructor
 
-        /// <summary>
-        /// Override Contains.
-        /// </summary>
+        
         public override bool Contains(object key)
         {
             return this.ContainsKey(key);
         }
 
-        /// <summary>
-        /// Override ContainsKey.
-        /// </summary>
+        
         public override bool ContainsKey(object key)
         {
             if (key == null)
@@ -4395,9 +4239,7 @@ namespace System.Management.Automation
             return base.ContainsKey(keyAfterTrim);
         }
 
-        /// <summary>
-        /// Override the Add to check for key's format and make it versionable.
-        /// </summary>
+        
         /// <param name="key">Key.</param>
         /// <param name="value">Value.</param>
         public override void Add(object key, object value)
@@ -4405,9 +4247,7 @@ namespace System.Management.Automation
             AddImpl(key, value, isSelfIndexing: false);
         }
 
-        /// <summary>
-        /// Actual implementation for Add.
-        /// </summary>
+        
         private void AddImpl(object key, object value, bool isSelfIndexing)
         {
             if (key == null)
@@ -4449,9 +4289,7 @@ namespace System.Management.Automation
             base.Add(keyAfterTrim, value);
         }
 
-        /// <summary>
-        /// Override the indexing to check for key's format and make it versionable.
-        /// </summary>
+        
         /// <param name="key"></param>
         /// <returns></returns>
         public override object this[object key]
@@ -4478,9 +4316,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Override the Remove to make it versionable.
-        /// </summary>
+        
         /// <param name="key">Key.</param>
         public override void Remove(object key)
         {
@@ -4502,9 +4338,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Override the Clear to make it versionable.
-        /// </summary>
+        
         public override void Clear()
         {
             base.Clear();
@@ -4513,9 +4347,7 @@ namespace System.Management.Automation
 
         #region KeyValidation
 
-        /// <summary>
-        /// Check if the key is in valid format. If it is, get the cmdlet name and parameter name.
-        /// </summary>
+        
         /// <param name="key"></param>
         /// <param name="cmdletName"></param>
         /// <param name="parameterName"></param>
@@ -4558,9 +4390,7 @@ namespace System.Management.Automation
             return true;
         }
 
-        /// <summary>
-        /// Get the cmdlet name and the parameter name.
-        /// </summary>
+        
         /// <param name="index">Point to a non-whitespace character.</param>
         /// <param name="key">The key to iterate over.</param>
         /// <param name="name"></param>
@@ -4627,9 +4457,7 @@ namespace System.Management.Automation
             return -1;
         }
 
-        /// <summary>
-        /// Skip whitespace characters.
-        /// </summary>
+        
         /// <param name="index">Start index.</param>
         /// <param name="key">The string to iterate over.</param>
         /// <returns>

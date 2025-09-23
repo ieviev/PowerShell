@@ -7,9 +7,7 @@ using System.Management.Automation.Runspaces;
 
 namespace System.Management.Automation.Internal
 {
-    /// <summary>
-    /// Corresponds to -OutputVariable, -ErrorVariable, -WarningVariable, and -InformationVariable.
-    /// </summary>
+    
     internal enum VariableStreamKind
     {
         Output,
@@ -18,9 +16,7 @@ namespace System.Management.Automation.Internal
         Information
     }
 
-    /// <summary>
-    /// Pipe provides a way to stitch two commands.
-    /// </summary>
+    
     /// <remarks>
     /// The Pipe class is not thread-safe, so methods such as
     /// AddItems and Retrieve should not be called simultaneously.
@@ -34,10 +30,7 @@ namespace System.Management.Automation.Internal
         // write objects to it, stepping one at a time...
         internal PipelineProcessor PipelineProcessor { get; }
 
-        /// <summary>
-        /// This is the downstream cmdlet in the "streamlet model"
-        /// which is invoked during each call to Add/AddItems.
-        /// </summary>
+        
         internal CommandProcessorBase DownstreamCmdlet
         {
             get
@@ -54,29 +47,10 @@ namespace System.Management.Automation.Internal
 
         private CommandProcessorBase _downstreamCmdlet;
 
-        /// <summary>
-        /// This is the upstream external object source.  If this is set,
-        /// Retrieve() will attempt to read objects from the upstream source
-        /// before indicating that the pipe is empty.
-        /// <remarks>
-        /// It is improper to change this once the pipeline has started
-        /// executing, although the checks for this are in the
-        /// PipelineProcessor class and not here.
-        /// </remarks>
-        /// </summary>
+        
         internal PipelineReader<object> ExternalReader { get; set; }
 
-        /// <summary>
-        /// This is the downstream object recipient.  If this is set,
-        /// Add() and AddItems() write to this recipient instead of
-        /// to the internal queue.  This also disables the
-        /// DownstreamCmdlet.
-        /// <remarks>
-        /// It is improper to change this once the pipeline has started
-        /// executing, although the checks for this are in the
-        /// PipelineProcessor class and not here.
-        /// </remarks>
-        /// </summary>
+        
         internal PipelineWriter ExternalWriter
         {
             get
@@ -93,9 +67,7 @@ namespace System.Management.Automation.Internal
 
         private PipelineWriter _externalWriter;
 
-        /// <summary>
-        /// For diagnostic purposes.
-        /// </summary>
+        
         /// <returns></returns>
         public override string ToString()
         {
@@ -104,21 +76,13 @@ namespace System.Management.Automation.Internal
             return base.ToString();
         }
 
-        /// <summary>
-        /// OutBufferCount configures the number of objects to buffer before calling the downstream Cmdlet.
-        /// </summary>
+        
         internal int OutBufferCount { get; set; } = 0;
 
-        /// <summary>
-        /// Gets whether the out variable list should be ignored.
-        /// This is used for scenarios like the `clean` block, where writing to output stream is intentionally
-        /// disabled and thus out variables should also be ignored.
-        /// </summary>
+        
         internal bool IgnoreOutVariableList { get; set; }
 
-        /// <summary>
-        /// If true, then all input added to this pipe will simply be discarded...
-        /// </summary>
+        
         internal bool NullPipe
         {
             get
@@ -135,19 +99,10 @@ namespace System.Management.Automation.Internal
 
         private bool _nullPipe;
 
-        /// <summary>
-        /// A queue that is shared between commands on either side of the pipe to transfer objects.
-        /// </summary>
+        
         internal Queue<object> ObjectQueue { get; }
 
-        /// <summary>
-        /// True if there are items in this pipe that need processing...
-        /// <remarks>
-        /// This does not take into account the presence of ExternalInput;
-        /// it only indicates whether there is currently any data queued up
-        /// or if there is data in the enumerator...
-        /// </remarks>
-        /// </summary>
+        
         internal bool Empty
         {
             get
@@ -161,10 +116,7 @@ namespace System.Management.Automation.Internal
             }
         }
 
-        /// <summary>
-        /// Is true if there is someone consuming this pipe already, either through
-        /// a Pipe object that processes it's output or there is downstream cmdlet...
-        /// </summary>
+        
         internal bool IsRedirected
         {
             get { return _downstreamCmdlet != null || _isRedirected; }
@@ -172,30 +124,19 @@ namespace System.Management.Automation.Internal
 
         private bool _isRedirected;
 
-        /// <summary>
-        /// If non-null, output written to the pipe are also added to this list.
-        /// </summary>
+        
         private List<IList> _outVariableList;
 
-        /// <summary>
-        /// If non-null, errors written to the pipe are also added to this list.
-        /// </summary>
+        
         private List<IList> _errorVariableList;
 
-        /// <summary>
-        /// If non-null, warnings written to the pipe are also added to this list.
-        /// </summary>
+        
         private List<IList> _warningVariableList;
 
-        /// <summary>
-        /// If non-null, information objects written to the pipe are also added to this list.
-        /// </summary>
+        
         private List<IList> _informationVariableList;
 
-        /// <summary>
-        /// If non-null, the current object being written to the pipe is stored in
-        /// this variable.
-        /// </summary>
+        
         private PSVariable _pipelineVariableObject;
 
         private static void AddToVarList(List<IList> varList, object obj)
@@ -288,14 +229,7 @@ namespace System.Management.Automation.Internal
             }
         }
 
-        /// <summary>
-        /// When a temporary pipe is used in the middle of execution, then we need to pass along
-        /// the error and warning variable list to hold the errors and warnings get written out
-        /// while the temporary pipe is being used.
-        ///
-        /// We don't need to pass along the out variable list because we don't care about the output
-        /// generated in the middle of execution.
-        /// </summary>
+        
         internal void SetVariableListForTemporaryPipe(Pipe tempPipe)
         {
             CopyVariableToTempPipe(VariableStreamKind.Error, _errorVariableList, tempPipe);
@@ -316,9 +250,7 @@ namespace System.Management.Automation.Internal
 
         #region ctor
 
-        /// <summary>
-        /// Default constructor - Creates the object queue.
-        /// </summary>
+        
         /// <remarks>
         /// The initial Queue capacity is 1, but it will grow automatically.
         /// </remarks>
@@ -327,9 +259,7 @@ namespace System.Management.Automation.Internal
             ObjectQueue = new Queue<object>();
         }
 
-        /// <summary>
-        /// This overload causes output to be written into a List.
-        /// </summary>
+        
         /// <param name="resultList"></param>
         internal Pipe(List<object> resultList)
         {
@@ -340,11 +270,7 @@ namespace System.Management.Automation.Internal
 
         private readonly List<object> _resultList;
 
-        /// <summary>
-        /// This overload causes output to be
-        /// written onto an Collection[PSObject] which is more useful
-        /// in many circumstances than arraylist.
-        /// </summary>
+        
         /// <param name="resultCollection">The collection to write into.</param>
         internal Pipe(System.Collections.ObjectModel.Collection<PSObject> resultCollection)
         {
@@ -355,10 +281,7 @@ namespace System.Management.Automation.Internal
 
         private readonly System.Collections.ObjectModel.Collection<PSObject> _resultCollection;
 
-        /// <summary>
-        /// This pipe writes into another pipeline processor allowing
-        /// pipelines to be chained together...
-        /// </summary>
+        
         /// <param name="context">The execution context object for this engine instance.</param>
         /// <param name="outputPipeline">The pipeline to write into...</param>
         internal Pipe(ExecutionContext context, PipelineProcessor outputPipeline)
@@ -370,9 +293,7 @@ namespace System.Management.Automation.Internal
             PipelineProcessor = outputPipeline;
         }
 
-        /// <summary>
-        /// Read from an enumerator instead of a pipeline reader...
-        /// </summary>
+        
         /// <param name="enumeratorToProcess">The enumerator to process...</param>
         internal Pipe(IEnumerator enumeratorToProcess)
         {
@@ -389,10 +310,7 @@ namespace System.Management.Automation.Internal
 
         #endregion ctor
 
-        /// <summary>
-        /// Writes an object to the pipe.  This could recursively call to the
-        /// downstream cmdlet, or write the object to the external output.
-        /// </summary>
+        
         /// <param name="obj">The object to add to the pipe.</param>
         /// <remarks>
         /// AutomationNull.Value is ignored
@@ -465,11 +383,7 @@ namespace System.Management.Automation.Internal
             }
         }
 
-        /// <summary>
-        /// Writes a set of objects to the pipe.  This could recursively
-        /// call to the downstream cmdlet, or write the objects to the
-        /// external output.
-        /// </summary>
+        
         /// <param name="objects">
         /// Each of the objects are added to the pipe
         /// </param>
@@ -531,10 +445,7 @@ namespace System.Management.Automation.Internal
             }
         }
 
-        /// <summary>
-        /// Returns an object from the pipe. If pipe is empty returns null.
-        /// This will try the ExternalReader if there are no queued objects.
-        /// </summary>
+        
         /// <returns>
         /// object that is retrieved, or AutomationNull.Value if none
         /// </returns>
@@ -600,16 +511,10 @@ namespace System.Management.Automation.Internal
                 return AutomationNull.Value;
         }
 
-        /// <summary>
-        /// Removes all the objects from the Pipe.
-        /// </summary>
+        
         internal void Clear() => ObjectQueue?.Clear();
 
-        /// <summary>
-        /// Returns the currently queued items in the pipe.  Note that this will
-        /// not block on ExternalInput, and it does not modify the contents of
-        /// the pipe.
-        /// </summary>
+        
         /// <returns>Possibly empty array of objects, but not null.</returns>
         internal object[] ToArray()
         {

@@ -9,30 +9,13 @@ using System.Management.Automation;
 
 namespace Microsoft.Management.Infrastructure.CimCmdlets
 {
-    /// <summary>
-    /// <para>
-    /// Wrapper of Cmdlet, forward the operation to Cmdlet directly.
-    /// This is for unit test purpose, unit test can derive from this class,
-    /// to hook up all of the cmdlet related operation and verify the correctness.
-    /// </para>
-    /// </summary>
+    
     internal class CmdletOperationBase
     {
-        /// <summary>
-        /// <para>
-        /// Wrap the Cmdlet object.
-        /// </para>
-        /// </summary>
+        
         private readonly Cmdlet cmdlet;
 
-        /// <summary>
-        /// <para>
-        /// Wrap the Cmdlet methods, for testing purpose.
-        /// Test binary can define a child class of CmdletOperationBase.
-        /// While Execute method of <seealso cref="CimBaseAction"/> accept the
-        /// object of CmdletOperationBase as parameter.
-        /// </para>
-        /// </summary>
+        
         #region CMDLET methods
 
         public virtual bool ShouldContinue(string query, string caption)
@@ -111,11 +94,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             cmdlet.WriteWarning(text);
         }
 
-        /// <summary>
-        /// <para>
-        /// Throw terminating error
-        /// </para>
-        /// </summary>
+        
         [System.Diagnostics.CodeAnalysis.DoesNotReturn]
         internal void ThrowTerminatingError(Exception exception, string operation)
         {
@@ -124,9 +103,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
         #endregion
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CmdletOperationBase"/> class.
-        /// </summary>
+        
         public CmdletOperationBase(Cmdlet cmdlet)
         {
             ValidationHelper.ValidateNoNullArgument(cmdlet, "cmdlet");
@@ -136,17 +113,10 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
     #region Class CmdletOperationRemoveCimInstance
 
-    /// <summary>
-    /// <para>
-    /// Wrapper of Cmdlet, override WriteObject function call since
-    /// we need to remove <see cref="CimInstance"/>.
-    /// </para>
-    /// </summary>
+    
     internal class CmdletOperationRemoveCimInstance : CmdletOperationBase
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CmdletOperationRemoveCimInstance"/> class.
-        /// </summary>
+        
         /// <param name="cmdlet"></param>
         public CmdletOperationRemoveCimInstance(Cmdlet cmdlet,
             CimRemoveCimInstance cimRemoveCimInstance)
@@ -156,11 +126,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             this.removeCimInstance = cimRemoveCimInstance;
         }
 
-        /// <summary>
-        /// <para>
-        /// Object here need to be removed if it is CimInstance
-        /// </para>
-        /// </summary>
+        
         /// <param name="sendToPipeline"></param>
         public override void WriteObject(object sendToPipeline, XOperationContextBase context)
         {
@@ -200,17 +166,10 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
     #region Class CmdletOperationSetCimInstance
 
-    /// <summary>
-    /// <para>
-    /// Wrapper of Cmdlet, override WriteObject function call since
-    /// we need to set <see cref="CimInstance"/>.
-    /// </para>
-    /// </summary>
+    
     internal class CmdletOperationSetCimInstance : CmdletOperationBase
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CmdletOperationSetCimInstance"/> class.
-        /// </summary>
+        
         /// <param name="cmdlet"></param>
         public CmdletOperationSetCimInstance(Cmdlet cmdlet,
             CimSetCimInstance theCimSetCimInstance)
@@ -220,11 +179,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             this.setCimInstance = theCimSetCimInstance;
         }
 
-        /// <summary>
-        /// <para>
-        /// Object here need to be removed if it is CimInstance
-        /// </para>
-        /// </summary>
+        
         /// <param name="sendToPipeline"></param>
         public override void WriteObject(object sendToPipeline, XOperationContextBase context)
         {
@@ -277,17 +232,10 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
     #endregion
 
     #region Class CmdletOperationInvokeCimMethod
-    /// <summary>
-    /// <para>
-    /// Wrapper of Cmdlet, override WriteObject function call since
-    /// we need to invoke cim method.
-    /// </para>
-    /// </summary>
+    
     internal class CmdletOperationInvokeCimMethod : CmdletOperationBase
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CmdletOperationInvokeCimMethod"/> class.
-        /// </summary>
+        
         /// <param name="cmdlet"></param>
         public CmdletOperationInvokeCimMethod(Cmdlet cmdlet,
             CimInvokeCimMethod theCimInvokeCimMethod)
@@ -297,11 +245,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             this.cimInvokeCimMethod = theCimInvokeCimMethod;
         }
 
-        /// <summary>
-        /// <para>
-        /// Object here need to be removed if it is CimInstance
-        /// </para>
-        /// </summary>
+        
         /// <param name="sendToPipeline"></param>
         public override void WriteObject(object sendToPipeline, XOperationContextBase context)
         {
@@ -342,17 +286,10 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
     #region Class CmdletOperationTestCimSession
 
-    /// <summary>
-    /// <para>
-    /// Wrapper of Cmdlet, override WriteObject function call since
-    /// we need to add cim session to global cache.
-    /// </para>
-    /// </summary>
+    
     internal class CmdletOperationTestCimSession : CmdletOperationBase
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CmdletOperationTestCimSession"/> class.
-        /// </summary>
+        
         /// <param name="cmdlet"></param>
         public CmdletOperationTestCimSession(Cmdlet cmdlet,
             CimNewSession theCimNewSession)
@@ -362,11 +299,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             this.cimNewSession = theCimNewSession;
         }
 
-        /// <summary>
-        /// <para>
-        /// Add session object to cache
-        /// </para>
-        /// </summary>
+        
         /// <param name="sendToPipeline"></param>
         public override void WriteObject(object sendToPipeline, XOperationContextBase context)
         {

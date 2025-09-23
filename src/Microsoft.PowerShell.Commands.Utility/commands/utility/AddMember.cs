@@ -13,9 +13,7 @@ using System.Reflection;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// This class implements get-member command.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Add, "Member", DefaultParameterSetName = "TypeNameSet",
         HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097109", RemotingCapability = RemotingCapability.None)]
     public class AddMemberCommand : PSCmdlet
@@ -28,9 +26,7 @@ namespace Microsoft.PowerShell.Commands
         }
 
         private PSObject _inputObject;
-        /// <summary>
-        /// The object to add a member to.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = "MemberSet")]
         [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = "TypeNameSet")]
         [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = NotePropertySingleMemberSet)]
@@ -43,9 +39,7 @@ namespace Microsoft.PowerShell.Commands
         }
 
         private PSMemberTypes _memberType;
-        /// <summary>
-        /// The member type of to be added.
-        /// </summary>
+        
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = "MemberSet")]
         [Alias("Type")]
         public PSMemberTypes MemberType
@@ -56,9 +50,7 @@ namespace Microsoft.PowerShell.Commands
         }
 
         private string _memberName;
-        /// <summary>
-        /// The name of the new member.
-        /// </summary>
+        
         [Parameter(Mandatory = true, Position = 1, ParameterSetName = "MemberSet")]
         public string Name
         {
@@ -68,9 +60,7 @@ namespace Microsoft.PowerShell.Commands
         }
 
         private object _value1 = s_notSpecified;
-        /// <summary>
-        /// First value of the new member. The meaning of this value changes according to the member type.
-        /// </summary>
+        
         [Parameter(Position = 2, ParameterSetName = "MemberSet")]
         public object Value
         {
@@ -80,9 +70,7 @@ namespace Microsoft.PowerShell.Commands
         }
 
         private object _value2 = s_notSpecified;
-        /// <summary>
-        /// Second value of the new member. The meaning of this value changes according to the member type.
-        /// </summary>
+        
         [Parameter(Position = 3, ParameterSetName = "MemberSet")]
         public object SecondValue
         {
@@ -92,9 +80,7 @@ namespace Microsoft.PowerShell.Commands
         }
 
         private string _typeName;
-        /// <summary>
-        /// Add new type name to the specified object for TypeNameSet.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ParameterSetName = "TypeNameSet")]
         [Parameter(ParameterSetName = "MemberSet")]
         [Parameter(ParameterSetName = NotePropertySingleMemberSet)]
@@ -108,9 +94,7 @@ namespace Microsoft.PowerShell.Commands
         }
 
         private bool _force;
-        /// <summary>
-        /// True if we should overwrite a possibly existing member.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "MemberSet")]
         [Parameter(ParameterSetName = NotePropertySingleMemberSet)]
         [Parameter(ParameterSetName = NotePropertyMultiMemberSet)]
@@ -123,9 +107,7 @@ namespace Microsoft.PowerShell.Commands
 
         private bool _passThru ;
 
-        /// <summary>
-        /// Gets or sets the parameter -passThru which states output from the command should be placed in the pipeline.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "MemberSet")]
         [Parameter(ParameterSetName = "TypeNameSet")]
         [Parameter(ParameterSetName = NotePropertySingleMemberSet)]
@@ -143,9 +125,7 @@ namespace Microsoft.PowerShell.Commands
         private const string NotePropertyMultiMemberSet = "NotePropertyMultiMemberSet";
 
         private string _notePropertyName;
-        /// <summary>
-        /// The name of the new NoteProperty member.
-        /// </summary>
+        
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = NotePropertySingleMemberSet)]
         [ValidateNotePropertyName]
         [NotePropertyTransformation]
@@ -158,9 +138,7 @@ namespace Microsoft.PowerShell.Commands
         }
 
         private object _notePropertyValue;
-        /// <summary>
-        /// The value of the new NoteProperty member.
-        /// </summary>
+        
         [Parameter(Mandatory = true, Position = 1, ParameterSetName = NotePropertySingleMemberSet)]
         [AllowNull]
         public object NotePropertyValue
@@ -173,9 +151,7 @@ namespace Microsoft.PowerShell.Commands
         // Use IDictionary to support both Hashtable and OrderedHashtable
         private IDictionary _property;
 
-        /// <summary>
-        /// The NoteProperty members to be set.
-        /// </summary>
+        
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = NotePropertyMultiMemberSet)]
         [ValidateNotNullOrEmpty]
         public IDictionary NotePropertyMembers
@@ -344,9 +320,7 @@ namespace Microsoft.PowerShell.Commands
             return new PSScriptProperty(_memberName, value1ScriptBlock, value2ScriptBlock);
         }
 
-        /// <summary>
-        /// This method implements the ProcessRecord method for add-member command.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             if (_typeName != null && string.IsNullOrWhiteSpace(_typeName))
@@ -448,9 +422,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Add the member to the target object.
-        /// </summary>
+        
         /// <param name="member"></param>
         /// <returns></returns>
         private bool AddMemberToTarget(PSMemberInfo member)
@@ -485,9 +457,7 @@ namespace Microsoft.PowerShell.Commands
             return true;
         }
 
-        /// <summary>
-        /// Process the 'NotePropertyMultiMemberSet' parameter set.
-        /// </summary>
+        
         private void ProcessNotePropertyMultiMemberSet()
         {
             bool result = false;
@@ -544,12 +514,7 @@ namespace Microsoft.PowerShell.Commands
             return errorRecord;
         }
 
-        /// <summary>
-        /// This ValidateArgumentsAttribute is used to guarantee the argument to be bound to
-        /// -NotePropertyName parameter cannot be converted to the enum type PSMemberTypes.
-        /// So when given a string or a number that can be converted, we make sure it gets
-        /// bound to -MemberType, instead of -NotePropertyName.
-        /// </summary>
+        
         /// <remarks>
         /// This exception will be hidden in the positional binding phase. So we make sure
         /// if the argument can be converted to PSMemberTypes, it gets bound to the -MemberType
@@ -582,9 +547,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Transform the integer arguments to strings for the parameter NotePropertyName.
-        /// </summary>
+        
         internal sealed class NotePropertyTransformationAttribute : ArgumentTransformationAttribute
         {
             public override object Transform(EngineIntrinsics engineIntrinsics, object inputData)

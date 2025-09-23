@@ -11,35 +11,23 @@ using Dbg = System.Management.Automation.Diagnostics;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// This class provides functionality for serializing a PSObject.
-    /// </summary>
+    
     internal sealed class CustomSerialization
     {
         #region constructor
-        /// <summary>
-        /// Depth of serialization.
-        /// </summary>
+        
         private readonly int _depth;
 
-        /// <summary>
-        /// XmlWriter to be used for writing.
-        /// </summary>
+        
         private readonly XmlWriter _writer;
 
-        /// <summary>
-        /// Whether type information should be included in the xml.
-        /// </summary>
+        
         private readonly bool _notypeinformation;
 
-        /// <summary>
-        /// CustomerSerializer used for formatting the output for _writer.
-        /// </summary>
+        
         private CustomInternalSerializer _serializer;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CustomSerialization"/> class.
-        /// </summary>
+        
         /// <param name="writer">
         /// writer to be used for serialization.
         /// </param>
@@ -68,14 +56,10 @@ namespace System.Management.Automation
             _serializer = null;
         }
 
-        /// <summary>
-        /// Default depth of serialization.
-        /// </summary>
+        
         public static int MshDefaultSerializationDepth { get; } = 1;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CustomSerialization"/> class.
-        /// </summary>
+        
         /// <param name="writer">
         /// writer to be used for serialization.
         /// </param>
@@ -93,9 +77,7 @@ namespace System.Management.Automation
 
         private bool _firstCall = true;
 
-        /// <summary>
-        /// Serializes passed in object.
-        /// </summary>
+        
         /// <param name="source">
         /// Object to be serialized.
         /// </param>
@@ -118,9 +100,7 @@ namespace System.Management.Automation
             _serializer = null;
         }
 
-        /// <summary>
-        /// Serializes passed in object.
-        /// </summary>
+        
         /// <param name="source">
         /// Object to be serialized.
         /// </param>
@@ -136,17 +116,13 @@ namespace System.Management.Automation
             _serializer = null;
         }
 
-        /// <summary>
-        /// Writes the start of root element.
-        /// </summary>
+        
         private void Start()
         {
             CustomInternalSerializer.WriteStartElement(_writer, CustomSerializationStrings.RootElementTag);
         }
 
-        /// <summary>
-        /// Write the end of root element.
-        /// </summary>
+        
         internal void Done()
         {
             if (_firstCall)
@@ -159,9 +135,7 @@ namespace System.Management.Automation
             _writer.Flush();
         }
 
-        /// <summary>
-        /// Flush the writer.
-        /// </summary>
+        
         internal void DoneAsStream()
         {
             _writer.Flush();
@@ -176,36 +150,24 @@ namespace System.Management.Automation
         #endregion
     }
 
-    /// <summary>
-    /// This internal helper class provides methods for serializing mshObject.
-    /// </summary>
+    
     internal sealed class CustomInternalSerializer
     {
         #region constructor
 
-        /// <summary>
-        /// Xml writer to be used.
-        /// </summary>
+        
         private readonly XmlWriter _writer;
 
-        /// <summary>
-        /// Check first call for every pipeline object to write Object tag else property tag.
-        /// </summary>
+        
         private bool _firstcall;
 
-        /// <summary>
-        /// Should the type information to be shown.
-        /// </summary>
+        
         private readonly bool _notypeinformation;
 
-        /// <summary>
-        /// Check object call.
-        /// </summary>
+        
         private bool _firstobjectcall = true;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CustomInternalSerializer"/> class.
-        /// </summary>
+        
         /// <param name="writer">
         /// Xml writer to be used.
         /// </param>
@@ -230,9 +192,7 @@ namespace System.Management.Automation
 
         private bool _isStopping = false;
 
-        /// <summary>
-        /// Called from a separate thread will stop the serialization process.
-        /// </summary>
+        
         internal void Stop()
         {
             _isStopping = true;
@@ -248,9 +208,7 @@ namespace System.Management.Automation
 
         #endregion Stopping
 
-        /// <summary>
-        /// This writes one object.
-        /// </summary>
+        
         /// <param name="source">
         /// source to be serialized.
         /// </param>
@@ -302,9 +260,7 @@ namespace System.Management.Automation
             return;
         }
 
-        /// <summary>
-        /// Serializes Primitive Known Types.
-        /// </summary>
+        
         /// <returns>
         /// true if source is handled, else false.
         /// </returns>
@@ -323,9 +279,7 @@ namespace System.Management.Automation
             return false;
         }
 
-        /// <summary>
-        /// Serializes PSObject whose base objects are of primitive known type.
-        /// </summary>
+        
         /// <param name="source"></param>
         /// <param name="property"></param>
         /// <param name="depth"></param>
@@ -429,9 +383,7 @@ namespace System.Management.Automation
             return true;
         }
 
-        /// <summary>
-        /// Checks if source is known container type and returns appropriate information.
-        /// </summary>
+        
         /// <param name="source"></param>
         /// <param name="ct"></param>
         /// <param name="dictionary"></param>
@@ -507,9 +459,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Checks if derived is of type baseType or a type derived from baseType.
-        /// </summary>
+        
         /// <param name="derived"></param>
         /// <param name="baseType"></param>
         /// <returns></returns>
@@ -535,10 +485,7 @@ namespace System.Management.Automation
 
         #region Write PSObject
 
-        /// <summary>
-        /// Serializes an PSObject whose baseobject is of primitive type.
-        /// and which has notes.
-        /// </summary>
+        
         /// <param name="source">
         /// Source from which notes are written.
         /// </param>
@@ -624,9 +571,7 @@ namespace System.Management.Automation
             _writer.WriteEndElement();
         }
 
-        /// <summary>
-        /// Writes start element, attributes and typeNames for PSObject.
-        /// </summary>
+        
         /// <param name="mshObject"></param>
         /// <param name="property"></param>
         /// <param name="writeTNH">
@@ -664,9 +609,7 @@ namespace System.Management.Automation
 
         #region membersets
 
-        /// <summary>
-        /// Returns true if PSObject has notes.
-        /// </summary>
+        
         /// <param name="source"></param>
         /// <returns>
         /// </returns>
@@ -680,10 +623,7 @@ namespace System.Management.Automation
             return false;
         }
 
-        /// <summary>
-        /// Serialize member set. This method serializes without writing.
-        /// enclosing tags and attributes.
-        /// </summary>
+        
         /// <param name="me">
         /// Enumerable containing members
         /// </param>
@@ -722,9 +662,7 @@ namespace System.Management.Automation
 
         #region properties
 
-        /// <summary>
-        /// Serializes properties of PSObject.
-        /// </summary>
+        
         private void WritePSObjectProperties(PSObject source, int depth)
         {
             Dbg.Assert(source != null, "caller should validate the information");
@@ -777,9 +715,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Serializes properties from collection.
-        /// </summary>
+        
         /// <param name="propertyCollection">
         /// Collection of properties to serialize.
         /// </param>
@@ -824,9 +760,7 @@ namespace System.Management.Automation
 
         #region enumerable and dictionary
 
-        /// <summary>
-        /// Serializes IEnumerable.
-        /// </summary>
+        
         /// <param name="enumerable">
         /// Enumerable which is serialized.
         /// </param>
@@ -874,9 +808,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Serializes IDictionary.
-        /// </summary>
+        
         /// <param name="dictionary">Dictionary which is serialized.</param>
         /// <param name="depth"></param>
         private void WriteDictionary(IDictionary dictionary, int depth)
@@ -939,10 +871,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the string from PSObject using the information from
-        /// types.ps1xml. This string is used for serializing the PSObject.
-        /// </summary>
+        
         /// <param name="source">
         /// PSObject to be converted to string.
         /// </param>
@@ -986,10 +915,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Reads the information the PSObject
-        /// and returns true if this object should be serialized as string.
-        /// </summary>
+        
         /// <param name="source">PSObject to be serialized.</param>
         /// <returns>True if the object needs to be serialized as a string.</returns>
         private static bool SerializeAsString(PSObject source)
@@ -999,9 +925,7 @@ namespace System.Management.Automation
 
         #endregion serialize as string
 
-        /// <summary>
-        /// Compute the serialization depth for an PSObject instance subtree.
-        /// </summary>
+        
         /// <param name="source">PSObject whose serialization depth has to be computed.</param>
         /// <param name="depth">Current depth.</param>
         /// <returns></returns>
@@ -1023,9 +947,7 @@ namespace System.Management.Automation
             return objectLevelDepth;
         }
 
-        /// <summary>
-        /// Writes null.
-        /// </summary>
+        
         /// <param name="property"></param>
         private void WriteNull(string property)
         {
@@ -1090,9 +1012,7 @@ namespace System.Management.Automation
             writer.WriteEndElement();
         }
 
-        /// <summary>
-        /// Writes an item or property in Monad namespace.
-        /// </summary>
+        
         /// <param name="writer">The XmlWriter stream to which the object is serialized.</param>
         /// <param name="property">Name of property. Pass null for item.</param>
         /// <param name="source">Object to be written.</param>
@@ -1107,9 +1027,7 @@ namespace System.Management.Automation
 
         #region misc
 
-        /// <summary>
-        /// Writes start element in Monad namespace.
-        /// </summary>
+        
         /// <param name="writer"></param>
         /// <param name="elementTag">Tag of element.</param>
         internal static void WriteStartElement(XmlWriter writer, string elementTag)
@@ -1117,9 +1035,7 @@ namespace System.Management.Automation
             writer.WriteStartElement(elementTag);
         }
 
-        /// <summary>
-        /// Writes attribute in monad namespace.
-        /// </summary>
+        
         /// <param name="writer"></param>
         /// <param name="name">Name of attribute.</param>
         /// <param name="value">Value of attribute.</param>

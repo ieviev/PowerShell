@@ -13,31 +13,23 @@ using Dbg = System.Management.Automation;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// Implementation for the set-date command.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Set, "Date", DefaultParameterSetName = "Date", SupportsShouldProcess = true, HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097133")]
     [OutputType(typeof(DateTime))]
     public sealed class SetDateCommand : PSCmdlet
     {
         #region parameters
 
-        /// <summary>
-        /// Allows user to override the date/time object that will be processed.
-        /// </summary>
+        
         [Parameter(Position = 0, Mandatory = true, ParameterSetName = "Date", ValueFromPipeline = true, ValueFromPipelineByPropertyName = true)]
         public DateTime Date { get; set; }
 
-        /// <summary>
-        /// Allows a use to specify a timespan with which to apply to the current time.
-        /// </summary>
+        
         [Parameter(Position = 0, Mandatory = true, ParameterSetName = "Adjust", ValueFromPipelineByPropertyName = true)]
         [AllowNull]
         public TimeSpan Adjust { get; set; }
 
-        /// <summary>
-        /// This option determines the default output format used to display the object set-date emits.
-        /// </summary>
+        
         [Parameter]
         public DisplayHintType DisplayHint { get; set; } = DisplayHintType.DateTime;
 
@@ -45,9 +37,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region methods
 
-        /// <summary>
-        /// Set the date.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             DateTime dateToUse;

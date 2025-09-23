@@ -8,16 +8,11 @@ using Microsoft.PowerShell.Commands;
 
 namespace System.Management.Automation.Runspaces
 {
-    /// <summary>
-    /// Defines the attribute used to designate a cmdlet parameter as one that
-    /// should accept runspaces.
-    /// </summary>
+    
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property, AllowMultiple = false)]
     public sealed class RunspaceAttribute : ArgumentTransformationAttribute
     {
-        /// <summary>
-        /// Transforms the input data to a Runspace.
-        /// </summary>
+        
         /// <param name="engineIntrinsics">
         /// The engine APIs for the context under which the transformation is being
         /// made.
@@ -87,9 +82,7 @@ namespace System.Management.Automation.Runspaces
             return inputData;
         }
 
-        /// <summary>
-        /// Gets a flag indicating whether or not null optional parameters are transformed.
-        /// </summary>
+        
         public override bool TransformNullOptionalParameters { get { return false; } }
     }
 }

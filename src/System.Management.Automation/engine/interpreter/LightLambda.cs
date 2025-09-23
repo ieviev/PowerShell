@@ -38,9 +38,7 @@ namespace System.Management.Automation.Interpreter
         private Delegate _compiled;
         private int _compilationThreshold;
 
-        /// <summary>
-        /// Provides notification that the LightLambda has been compiled.
-        /// </summary>
+        
         public event EventHandler<LightLambdaCompileEventArgs> Compile;
 
         internal LightLambda(LightDelegateCreator delegateCreator, StrongBox<object>[] closure, int compilationThreshold)

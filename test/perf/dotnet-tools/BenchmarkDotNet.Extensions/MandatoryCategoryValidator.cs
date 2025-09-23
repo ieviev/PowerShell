@@ -9,10 +9,7 @@ using BenchmarkDotNet.Validators;
 
 namespace BenchmarkDotNet.Extensions
 {
-    /// <summary>
-    /// this class makes sure that every benchmark belongs to a mandatory category
-    /// categories are used by the CI for filtering
-    /// </summary>
+    
     public class MandatoryCategoryValidator : IValidator
     {
         private readonly ImmutableHashSet<string> _mandatoryCategories;

@@ -8,16 +8,11 @@ using Dbg = System.Management.Automation;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// A command that begins a transaction.
-    /// </summary>
+    
     [Cmdlet(VerbsLifecycle.Start, "Transaction", SupportsShouldProcess = true, HelpUri = "https://go.microsoft.com/fwlink/?LinkID=135262")]
     public class StartTransactionCommand : PSCmdlet
     {
-        /// <summary>
-        /// The time, in minutes, before this transaction is rolled back
-        /// automatically.
-        /// </summary>
+        
         [Parameter]
         [Alias("TimeoutMins")]
         public int Timeout
@@ -43,10 +38,7 @@ namespace Microsoft.PowerShell.Commands
         private bool _timeoutSpecified = false;
         private TimeSpan _timeout = TimeSpan.MinValue;
 
-        /// <summary>
-        /// Gets or sets the flag to determine if this transaction can
-        /// be committed or rolled back independently of other transactions.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter Independent
         {
@@ -57,9 +49,7 @@ namespace Microsoft.PowerShell.Commands
 
         private SwitchParameter _independent;
 
-        /// <summary>
-        /// Gets or sets the rollback preference for this transaction.
-        /// </summary>
+        
         [Parameter]
         public RollbackSeverity RollbackPreference
         {
@@ -70,9 +60,7 @@ namespace Microsoft.PowerShell.Commands
 
         private RollbackSeverity _rollbackPreference = RollbackSeverity.Error;
 
-        /// <summary>
-        /// Creates a new transaction.
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             if (ShouldProcess(

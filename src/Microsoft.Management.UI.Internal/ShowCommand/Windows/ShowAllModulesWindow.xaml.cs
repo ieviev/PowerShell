@@ -10,36 +10,24 @@ using Microsoft.Management.UI.Internal.ShowCommand;
 
 namespace Microsoft.PowerShell.Commands.ShowCommandInternal
 {
-    /// <summary>
-    /// Interaction logic for CmdletGUI.xaml.
-    /// </summary>
+    
     public partial class ShowAllModulesWindow : Window
     {
-        /// <summary>
-        /// private constants for ZoomLevel.
-        /// </summary>
+        
         private double zoomLevel = 1.0;
 
-        /// <summary>
-        /// Zoom Increments.
-        /// </summary>
+        
         private const double ZOOM_INCREMENT = 0.2;
 
-        /// <summary>
-        /// Max ZoomLevel.
-        /// </summary>
+        
         private const double ZOOM_MAX = 3.0;
 
-        /// <summary>
-        /// Min ZoomLevel.
-        /// </summary>
+        
         private const double ZOOM_MIN = 0.5;
 
         #region Construction and Destructor
 
-        /// <summary>
-        /// Initializes a new instance of the ShowAllModulesWindow class.
-        /// </summary>
+        
         public ShowAllModulesWindow()
         {
             this.InitializeComponent();
@@ -92,9 +80,7 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
             }
         }
 
-        /// <summary>
-        /// Saves the user settings.
-        /// </summary>
+        
         /// <param name="e">Event arguments.</param>
         protected override void OnClosed(System.EventArgs e)
         {
@@ -102,9 +88,7 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
             base.OnClosed(e);
         }
 
-        /// <summary>
-        /// Sets the focus on the CommandName control.
-        /// </summary>
+        
         /// <param name="sender">Event sender.</param>
         /// <param name="e">Event arguments.</param>
         private void ShowAllModulesWindow_Loaded(object sender, RoutedEventArgs e)
@@ -112,9 +96,7 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
             this.AllModulesControl.CommandName.Focus();
         }
 
-        /// <summary>
-        /// Saves size changes in user settings.
-        /// </summary>
+        
         /// <param name="sender">Event sender.</param>
         /// <param name="e">Event arguments.</param>
         private void ShowAllModulesWindow_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -123,9 +105,7 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
             ShowCommandSettings.Default.ShowCommandsHeight = this.Height;
         }
 
-        /// <summary>
-        /// Saves position changes in user settings.
-        /// </summary>
+        
         /// <param name="sender">Event sender.</param>
         /// <param name="e">Event arguments.</param>
         private void ShowAllModulesWindow_LocationChanged(object sender, System.EventArgs e)
@@ -134,9 +114,7 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
             ShowCommandSettings.Default.ShowCommandsLeft = this.Left;
         }
 
-        /// <summary>
-        /// Updates the user setting with window state.
-        /// </summary>
+        
         /// <param name="sender">Event sender.</param>
         /// <param name="e">Event arguments.</param>
         private void ShowAllModulesWindow_StateChanged(object sender, System.EventArgs e)
@@ -144,9 +122,7 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
             ShowCommandSettings.Default.ShowCommandsWindowMaximized = this.WindowState == WindowState.Maximized;
         }
 
-        /// <summary>
-        /// Implements ZoomIn.
-        /// </summary>
+        
         /// <param name="sender">.</param>
         /// <param name="e">.</param>
         private void ZoomEventHandlerPlus(object sender, ExecutedRoutedEventArgs e)
@@ -171,9 +147,7 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
             }
         }
 
-        /// <summary>
-        /// Implements ZoomOut.
-        /// </summary>
+        
         /// <param name="sender">.</param>
         /// <param name="e">.</param>
         private void ZoomEventHandlerMinus(object sender, ExecutedRoutedEventArgs e)

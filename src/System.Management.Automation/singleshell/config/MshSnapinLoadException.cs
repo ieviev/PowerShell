@@ -7,15 +7,11 @@ using System.Security.Permissions;
 
 namespace System.Management.Automation.Runspaces
 {
-    /// <summary>
-    /// Defines exception thrown when a PSSnapin was not able to load into current runspace.
-    /// </summary>
+    
     /// 
     public class PSSnapInException : RuntimeException
     {
-        /// <summary>
-        /// Initiate an instance of PSSnapInException.
-        /// </summary>
+        
         /// <param name="PSSnapin">PSSnapin for the exception.</param>
         /// <param name="message">Message with load failure detail.</param>
         internal PSSnapInException(string PSSnapin, string message)
@@ -26,9 +22,7 @@ namespace System.Management.Automation.Runspaces
             CreateErrorRecord();
         }
 
-        /// <summary>
-        /// Initiate an instance of PSSnapInException.
-        /// </summary>
+        
         /// <param name="PSSnapin">PSSnapin for the exception.</param>
         /// <param name="message">Message with load failure detail.</param>
         /// <param name="warning">Whether this is just a warning for PSSnapin load.</param>
@@ -41,9 +35,7 @@ namespace System.Management.Automation.Runspaces
             CreateErrorRecord();
         }
 
-        /// <summary>
-        /// Initiate an instance of PSSnapInException.
-        /// </summary>
+        
         /// <param name="PSSnapin">PSSnapin for the exception.</param>
         /// <param name="message">Message with load failure detail.</param>
         /// <param name="exception">Exception for PSSnapin load failure.</param>
@@ -55,25 +47,19 @@ namespace System.Management.Automation.Runspaces
             CreateErrorRecord();
         }
 
-        /// <summary>
-        /// Initiate an instance of PSSnapInException.
-        /// </summary>
+        
         public PSSnapInException() : base()
         {
         }
 
-        /// <summary>
-        /// Initiate an instance of PSSnapInException.
-        /// </summary>
+        
         /// <param name="message">Error message.</param>
         public PSSnapInException(string message)
             : base(message)
         {
         }
 
-        /// <summary>
-        /// Initiate an instance of PSSnapInException.
-        /// </summary>
+        
         /// <param name="message">Error message.</param>
         /// <param name="innerException">Inner exception.</param>
         public PSSnapInException(string message, Exception innerException)
@@ -81,10 +67,7 @@ namespace System.Management.Automation.Runspaces
         {
         }
 
-        /// <summary>
-        /// Create the internal error record.
-        /// The ErrorRecord created will be stored in the _errorRecord member.
-        /// </summary>
+        
         private void CreateErrorRecord()
         {
             // if _PSSnapin or _reason is empty, this exception is created using default
@@ -112,9 +95,7 @@ namespace System.Management.Automation.Runspaces
         private ErrorRecord _errorRecord;
         private bool _isErrorRecordOriginallyNull;
 
-        /// <summary>
-        /// Gets error record embedded in this exception.
-        /// </summary>
+        
         /// 
         public override ErrorRecord ErrorRecord
         {
@@ -137,9 +118,7 @@ namespace System.Management.Automation.Runspaces
         private readonly string _PSSnapin = string.Empty;
         private readonly string _reason = string.Empty;
 
-        /// <summary>
-        /// Gets message for this exception.
-        /// </summary>
+        
         public override string Message
         {
             get
@@ -155,9 +134,7 @@ namespace System.Management.Automation.Runspaces
 
         #region Serialization
 
-        /// <summary>
-        /// Initiate a PSSnapInException instance.
-        /// </summary>
+        
         /// <param name="info">Serialization information.</param>
         /// <param name="context">Streaming context.</param>
         [Obsolete("Legacy serialization support is deprecated since .NET 8", DiagnosticId = "SYSLIB0051")] 

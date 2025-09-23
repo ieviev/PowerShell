@@ -10,17 +10,12 @@ using System.Reflection;
 
 namespace Microsoft.PowerShell.Commands.Internal.Format
 {
-    /// <summary>
-    /// Class to deserialize property bags into formatting objects
-    /// by using ERS functionality.
-    /// </summary>
+    
     internal sealed class FormatObjectDeserializer
     {
         internal TerminatingErrorContext TerminatingErrorContext { get; }
 
-        /// <summary>
-        /// Expansion of TAB character to the following string.
-        /// </summary>
+        
         private const string TabExpansionString = "    ";
 
         internal FormatObjectDeserializer(TerminatingErrorContext errorContext)
@@ -75,12 +70,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             return false;
         }
 
-        /// <summary>
-        /// Given a raw object out of the pipeline, it deserializes it accordingly to
-        /// its type.
-        /// If the object is not one of the well known ones (i.e. derived from FormatInfoData)
-        /// it just returns the object unchanged.
-        /// </summary>
+        
         /// <param name="so">Object to deserialize.</param>
         /// <returns>Deserialized object or null.</returns>
         internal object Deserialize(PSObject so)
@@ -155,9 +145,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         NOTE: this code is commented out because the current schema does not have the need for
         it. We retail it because future schema extensions might require it
 
-        /// <summary>
-        /// ERS helper to reconstitute a string[] out of IEnumerable property.
-        /// </summary>
+        
         /// <param name="rawObject">Object to process.</param>
         /// <param name="propertyName">Property to look up.</param>
         /// <returns>String[] representation of the property.</returns>
@@ -253,9 +241,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             return objRaw;
         }
 
-        /// <summary>
-        /// Deserialization of string without TAB expansion (RAW)
-        /// </summary>
+        
         /// <param name="so">Object whose the property belongs to.</param>
         /// <param name="property">Name of the string property.</param>
         /// <returns>String out of the MsObject.</returns>
@@ -264,9 +250,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             return (string)DeserializeMemberVariable(so, property, typeof(string), false );
         }
 
-        /// <summary>
-        /// Deserialization of string performing TAB expansion.
-        /// </summary>
+        
         /// <param name="so">Object whose the property belongs to.</param>
         /// <param name="property">Name of the string property.</param>
         /// <returns>String out of the MsObject.</returns>

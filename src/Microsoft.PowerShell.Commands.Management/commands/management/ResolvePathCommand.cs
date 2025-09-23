@@ -7,19 +7,14 @@ using System.Management.Automation;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// A command to resolve PowerShell paths containing glob characters to
-    /// PowerShell paths that match the glob strings.
-    /// </summary>
+    
     [Cmdlet(VerbsDiagnostic.Resolve, "Path", DefaultParameterSetName = "Path", SupportsTransactions = true,
         HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097143")]
     public class ResolvePathCommand : CoreCommandWithCredentialsBase
     {
         #region Parameters
 
-        /// <summary>
-        /// Gets or sets the path parameter to the command.
-        /// </summary>
+        
         [Parameter(Position = 0, ParameterSetName = "Path",
                    Mandatory = true, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true)]
         public string[] Path
@@ -35,9 +30,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets or sets the literal path parameter to the command.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "LiteralPath",
                    Mandatory = true, ValueFromPipeline = false, ValueFromPipelineByPropertyName = true)]
         [Alias("PSPath", "LP")]
@@ -55,10 +48,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets or sets the value that determines if the resolved path should
-        /// be resolved to its relative version.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "Path")]
         [Parameter(ParameterSetName = "LiteralPath")]
         public SwitchParameter Relative
@@ -76,9 +66,7 @@ namespace Microsoft.PowerShell.Commands
 
         private SwitchParameter _relative;
 
-        /// <summary>
-        /// Gets or sets the path the resolved relative path should be based off.
-        /// </summary>
+        
         [Parameter]
         public string RelativeBasePath
         { 
@@ -93,9 +81,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets or sets the force property.
-        /// </summary>
+        
         [Parameter]
         public override SwitchParameter Force
         {
@@ -107,9 +93,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region parameter data
 
-        /// <summary>
-        /// The path to resolve.
-        /// </summary>
+        
         private string[] _paths;
 
         private PSDriveInfo _relativeDrive;
@@ -119,10 +103,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Command code
 
-        /// <summary>
-        /// Finds the path and drive that should be used for relative path resolution
-        /// represents.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             if (!string.IsNullOrEmpty(RelativeBasePath))
@@ -172,10 +153,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Resolves the path containing glob characters to the PowerShell paths that it
-        /// represents.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             foreach (string path in Path)

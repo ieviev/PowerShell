@@ -8,19 +8,13 @@ using System.Diagnostics.Tracing;
 
 namespace System.Management.Automation.Internal
 {
-    /// <summary>
-    /// This wrapper is for encapsulating all the internal details of Asimov-compatible telemetry in Windows Threshold.
-    /// </summary>
+    
     internal static class TelemetryWrapper
     {
         private static readonly PSObject s_eventSourceInstance;
         private static readonly object s_eventSourceOptionsForWrite;
 
-        /// <summary>
-        /// Performing EventSource initialization in the Static Constructor since this is thread safe.
-        /// Static constructors are guaranteed to be run only once per application domain, before any instances of a class are created or any static members are accessed.
-        /// https://learn.microsoft.com/dotnet/csharp/programming-guide/classes-and-structs/static-constructors.
-        /// </summary>
+        
         static TelemetryWrapper()
         {
             try
@@ -84,10 +78,7 @@ namespace System.Management.Automation.Internal
             get { return s_eventSourceInstance != null && ((EventSource)s_eventSourceInstance.BaseObject).IsEnabled(); }
         }
 
-        /// <summary>
-        /// TRACEMESSAGE is the Generic method to use to log messages using UTC [Universal Telemetry Client] in Windows Threshold
-        /// TRACEMESSAGE calls into EventSource.Write dynamically - https://msdn.microsoft.com/library/dn823293(v=vs.110).aspx.
-        /// </summary>
+        
 
         // EventSource data gets raised on the Client containing OS Environment information and supplied arguments as "data"
         // Events are queued and uploaded to Cosmos/xPert.

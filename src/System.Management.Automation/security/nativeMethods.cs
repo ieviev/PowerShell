@@ -23,120 +23,74 @@ namespace System.Management.Automation.Security
     // Safer native constants
     internal partial class NativeConstants
     {
-        /// <Summary>
-        /// SAFER_TOKEN_NULL_IF_EQUAL -> 0x00000001.
-        /// </Summary>
+        
         public const int SAFER_TOKEN_NULL_IF_EQUAL = 1;
 
-        /// <Summary>
-        /// SAFER_TOKEN_COMPARE_ONLY -> 0x00000002.
-        /// </Summary>
+        
         public const int SAFER_TOKEN_COMPARE_ONLY = 2;
 
-        /// <Summary>
-        /// SAFER_TOKEN_MAKE_INERT -> 0x00000004.
-        /// </Summary>
+        
         public const int SAFER_TOKEN_MAKE_INERT = 4;
 
-        /// <Summary>
-        /// SAFER_CRITERIA_IMAGEPATH -> 0x00001.
-        /// </Summary>
+        
         public const int SAFER_CRITERIA_IMAGEPATH = 1;
 
-        /// <Summary>
-        /// SAFER_CRITERIA_NOSIGNEDHASH -> 0x00002.
-        /// </Summary>
+        
         public const int SAFER_CRITERIA_NOSIGNEDHASH = 2;
 
-        /// <Summary>
-        /// SAFER_CRITERIA_IMAGEHASH -> 0x00004.
-        /// </Summary>
+        
         public const int SAFER_CRITERIA_IMAGEHASH = 4;
 
-        /// <Summary>
-        /// SAFER_CRITERIA_AUTHENTICODE -> 0x00008.
-        /// </Summary>
+        
         public const int SAFER_CRITERIA_AUTHENTICODE = 8;
 
-        /// <Summary>
-        /// SAFER_CRITERIA_URLZONE -> 0x00010.
-        /// </Summary>
+        
         public const int SAFER_CRITERIA_URLZONE = 16;
 
-        /// <Summary>
-        /// SAFER_CRITERIA_IMAGEPATH_NT -> 0x01000.
-        /// </Summary>
+        
         public const int SAFER_CRITERIA_IMAGEPATH_NT = 4096;
 
-        /// <Summary>
-        /// WTD_UI_NONE -> 0x00002.
-        /// </Summary>
+        
         public const int WTD_UI_NONE = 2;
 
-        /// <Summary>
-        /// S_OK -> ((HRESULT)0L)
-        /// </Summary>
+        
         public const int S_OK = 0;
 
-        /// <Summary>
-        /// S_FALSE -> ((HRESULT)1L)
-        /// </Summary>
+        
         public const int S_FALSE = 1;
 
-        /// <Summary>
-        /// ERROR_MORE_DATA -> 234L.
-        /// </Summary>
+        
         public const int ERROR_MORE_DATA = 234;
 
-        /// <Summary>
-        /// ERROR_ACCESS_DISABLED_BY_POLICY -> 1260L.
-        /// </Summary>
+        
         public const int ERROR_ACCESS_DISABLED_BY_POLICY = 1260;
 
-        /// <Summary>
-        /// ERROR_ACCESS_DISABLED_NO_SAFER_UI_BY_POLICY -> 786L.
-        /// </Summary>
+        
         public const int ERROR_ACCESS_DISABLED_NO_SAFER_UI_BY_POLICY = 786;
 
-        /// <Summary>
-        /// SAFER_MAX_HASH_SIZE -> 64.
-        /// </Summary>
+        
         public const int SAFER_MAX_HASH_SIZE = 64;
 
-        /// <Summary>
-        /// SRP_POLICY_SCRIPT -> L"SCRIPT"
-        /// </Summary>
+        
         public const string SRP_POLICY_SCRIPT = "SCRIPT";
 
-        /// <Summary>
-        /// SIGNATURE_DISPLAYNAME_LENGTH -> MAX_PATH.
-        /// </Summary>
+        
         internal const int SIGNATURE_DISPLAYNAME_LENGTH = NativeConstants.MAX_PATH;
 
-        /// <Summary>
-        /// SIGNATURE_PUBLISHER_LENGTH -> 128.
-        /// </Summary>
+        
         internal const int SIGNATURE_PUBLISHER_LENGTH = 128;
 
-        /// <Summary>
-        /// SIGNATURE_HASH_LENGTH -> 64.
-        /// </Summary>
+        
         internal const int SIGNATURE_HASH_LENGTH = 64;
 
-        /// <Summary>
-        /// MAX_PATH -> 260.
-        /// </Summary>
+        
         internal const int MAX_PATH = 260;
 
-        /// <Summary>
-        /// This function is not supported on this system.
-        /// </Summary>
+        
         internal const int FUNCTION_NOT_SUPPORTED = 120;
     }
 
-    /// <summary>
-    /// Pinvoke methods from crypt32.dll.
-    /// </summary>
+    
     internal static partial class NativeMethods
     {
         // -------------------------------------------------------------------
@@ -150,9 +104,7 @@ namespace System.Management.Automation.Security
                                  IntPtr notUsed2,
                                  CertEnumSystemStoreCallBackProto fn);
 
-        /// <summary>
-        /// Signature of call back function used by CertEnumSystemStore.
-        /// </summary>
+        
         internal delegate
         bool CertEnumSystemStoreCallBackProto([MarshalAs(UnmanagedType.LPWStr)]
                                                string storeName,
@@ -161,17 +113,13 @@ namespace System.Management.Automation.Security
                                                IntPtr notUsed2,
                                                IntPtr notUsed3);
 
-        /// <summary>
-        /// Signature of cert enumeration function.
-        /// </summary>
+        
         [DllImport("crypt32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
         internal static extern
         IntPtr CertEnumCertificatesInStore(IntPtr storeHandle,
                                             IntPtr certContext);
 
-        /// <summary>
-        /// Signature of cert find function.
-        /// </summary>
+        
         [DllImport("crypt32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
         internal static extern
         IntPtr CertFindCertificateInStore(
@@ -331,125 +279,77 @@ namespace System.Management.Automation.Security
 
         internal enum PROV : uint
         {
-            /// <summary>
-            /// The PROV_RSA_FULL type.
-            /// </summary>
+            
             RSA_FULL = 1,
 
-            /// <summary>
-            /// The PROV_RSA_SIG type.
-            /// </summary>
+            
             RSA_SIG = 2,
 
-            /// <summary>
-            /// The PROV_RSA_DSS type.
-            /// </summary>
+            
             DSS = 3,
 
-            /// <summary>
-            /// The PROV_FORTEZZA type.
-            /// </summary>
+            
             FORTEZZA = 4,
 
-            /// <summary>
-            /// The PROV_MS_EXCHANGE type.
-            /// </summary>
+            
             MS_EXCHANGE = 5,
 
-            /// <summary>
-            /// The PROV_SSL type.
-            /// </summary>
+            
             SSL = 6,
 
-            /// <summary>
-            /// The PROV_RSA_SCHANNEL type. SSL certificates are generated with these providers.
-            /// </summary>
+            
             RSA_SCHANNEL = 12,
 
-            /// <summary>
-            /// The PROV_DSS_DH type.
-            /// </summary>
+            
             DSS_DH = 13,
 
-            /// <summary>
-            /// The PROV_EC_ECDSA type.
-            /// </summary>
+            
             EC_ECDSA_SIG = 14,
 
-            /// <summary>
-            /// The PROV_EC_ECNRA_SIG type.
-            /// </summary>
+            
             EC_ECNRA_SIG = 15,
 
-            /// <summary>
-            /// The PROV_EC_ECDSA_FULL type.
-            /// </summary>
+            
             EC_ECDSA_FULL = 16,
 
-            /// <summary>
-            /// The PROV_EC_ECNRA_FULL type.
-            /// </summary>
+            
             EC_ECNRA_FULL = 17,
 
-            /// <summary>
-            /// The PROV_DH_SCHANNEL type.
-            /// </summary>
+            
             DH_SCHANNEL = 18,
 
-            /// <summary>
-            /// The PROV_SPYRUS_LYNKS type.
-            /// </summary>
+            
             SPYRUS_LYNKS = 20,
 
-            /// <summary>
-            /// The PROV_RNG type.
-            /// </summary>
+            
             RNG = 21,
 
-            /// <summary>
-            /// The PROV_INTEL_SEC type.
-            /// </summary>
+            
             INTEL_SEC = 22
         }
 
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
         internal struct CRYPT_KEY_PROV_INFO
         {
-            /// <summary>
-            /// String naming a key container within a particular CSP.
-            /// </summary>
+            
             public string pwszContainerName;
 
-            /// <summary>
-            /// String that names a CSP.
-            /// </summary>
+            
             public string pwszProvName;
 
-            /// <summary>
-            /// CSP type.
-            /// </summary>
+            
             public PROV dwProvType;
 
-            /// <summary>
-            /// Flags value indicating whether a key container is to be created or destroyed, and
-            /// whether an application is allowed access to a key container.
-            /// </summary>
+            
             public uint dwFlags;
 
-            /// <summary>
-            /// Number of elements in the rgProvParam array.
-            /// </summary>
+            
             public uint cProvParam;
 
-            /// <summary>
-            /// Array of pointers to CRYPT_KEY_PROV_PARAM structures.
-            /// </summary>
+            
             public IntPtr rgProvParam;
 
-            /// <summary>
-            /// The specification of the private key to retrieve. AT_KEYEXCHANGE and AT_SIGNATURE
-            /// are defined for the default provider.
-            /// </summary>
+            
             public uint dwKeySpec;
         }
 
@@ -1046,9 +946,7 @@ namespace System.Management.Automation.Security
         }
     }
 
-    /// <summary>
-    /// Pinvoke methods from certca.dll.
-    /// </summary>
+    
     internal static partial class NativeMethods
     {
         internal const int CRYPT_E_NOT_FOUND = unchecked((int)0x80092004);
@@ -1217,9 +1115,7 @@ namespace System.Management.Automation.Security
 
     #endregion SAFER_APIs
 
-    /// <summary>
-    /// Pinvoke methods from advapi32.dll.
-    /// </summary>
+    
     internal static partial class NativeMethods
     {
         //

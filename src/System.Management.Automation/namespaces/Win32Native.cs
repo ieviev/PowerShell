@@ -85,10 +85,7 @@ namespace Microsoft.PowerShell.Commands.Internal
 
         #region PInvoke methods
 
-        /// <summary>
-        /// The LookupAccountSid function accepts a security identifier (SID) as input. It retrieves the name
-        /// of the account for this SID and the name of the first domain on which this SID is found.
-        /// </summary>
+        
         /// <param name="lpSystemName"></param>
         /// <param name="sid"></param>
         /// <param name="lpName"></param>
@@ -132,9 +129,7 @@ namespace Microsoft.PowerShell.Commands.Internal
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool CloseHandle(IntPtr handle);
 
-        /// <summary>
-        /// Retrieves the current process token.
-        /// </summary>
+        
         /// <param name="processHandle">Process handle.</param>
         /// <param name="desiredAccess">Token access.</param>
         /// <param name="tokenHandle">Process token.</param>
@@ -143,10 +138,7 @@ namespace Microsoft.PowerShell.Commands.Internal
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool OpenProcessToken(IntPtr processHandle, uint desiredAccess, out IntPtr tokenHandle);
 
-        /// <summary>
-        /// The GetTokenInformation function retrieves a specified type of information about an access token.
-        /// The calling process must have appropriate access rights to obtain the information.
-        /// </summary>
+        
         /// <param name="tokenHandle"></param>
         /// <param name="tokenInformationClass"></param>
         /// <param name="tokenInformation"></param>

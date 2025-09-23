@@ -20,17 +20,13 @@ namespace Microsoft.Management.UI.Internal
         private string startingText;
         private FrameworkElement templatedParent;
 
-        /// <summary>
-        /// Creates a new instance of the ListOrganizerItem class.
-        /// </summary>
+        
         public ListOrganizerItem()
         {
             // empty
         }
 
-        /// <summary>
-        /// Gets a value indicating whether the item is in edit mode.
-        /// </summary>
+        
         public bool IsInEditMode
         {
             get
@@ -39,9 +35,7 @@ namespace Microsoft.Management.UI.Internal
             }
         }
 
-        /// <summary>
-        /// Selects the current item.
-        /// </summary>
+        
         public void Select()
         {
             if (!this.IsLoaded)
@@ -54,26 +48,19 @@ namespace Microsoft.Management.UI.Internal
             CommandHelper.ExecuteCommand(this.linkButton.Command, this.linkButton.CommandParameter, this.linkButton.CommandTarget);
         }
 
-        /// <summary>
-        /// Allows modification of the item.
-        /// </summary>
+        
         public void Rename()
         {
             this.renameButton.IsChecked = true;
         }
 
-        /// <summary>
-        /// Deletes the item.
-        /// </summary>
+        
         public void Delete()
         {
             CommandHelper.ExecuteCommand(this.deleteButton.Command, this.deleteButton.CommandParameter, this.deleteButton.CommandTarget);
         }
 
-        /// <summary>
-        /// Provides class handling for the KeyDown routed event that
-        /// occurs when the user presses a key while this control has focus.
-        /// </summary>
+        
         /// <param name="e">The event data.</param>
         protected override void OnKeyDown(KeyEventArgs e)
         {

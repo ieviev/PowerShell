@@ -12,25 +12,16 @@ using Dbg = System.Management.Automation;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// This provider is the data accessor for environment variables. It uses
-    /// the SessionStateProviderBase as the base class to produce a view on
-    /// session state data.
-    /// </summary>
+    
     [CmdletProvider(EnvironmentProvider.ProviderName, ProviderCapabilities.ShouldProcess)]
     public sealed class EnvironmentProvider : SessionStateProviderBase
     {
-        /// <summary>
-        /// Gets the name of the provider.
-        /// </summary>
+        
         public const string ProviderName = "Environment";
 
         #region Constructor
 
-        /// <summary>
-        /// The constructor for the provider that exposes environment variables to the user
-        /// as drives.
-        /// </summary>
+        
         public EnvironmentProvider()
         {
         }
@@ -39,9 +30,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region DriveCmdletProvider overrides
 
-        /// <summary>
-        /// Initializes the alias drive.
-        /// </summary>
+        
         /// <returns>
         /// An array of a single PSDriveInfo object representing the alias drive.
         /// </returns>
@@ -66,9 +55,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region protected members
 
-        /// <summary>
-        /// Gets a environment variable from session state.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the environment variable to retrieve.
         /// </param>
@@ -93,9 +80,7 @@ namespace Microsoft.PowerShell.Commands
             return result;
         }
 
-        /// <summary>
-        /// Sets the environment variable of the specified name to the specified value.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the environment variable to set.
         /// </param>
@@ -146,9 +131,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Removes the specified environment variable from session state.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the environment variable to remove from session state.
         /// </param>
@@ -161,9 +144,7 @@ namespace Microsoft.PowerShell.Commands
             Environment.SetEnvironmentVariable(name, null);
         }
 
-        /// <summary>
-        /// Gets a flattened view of the environment variables in session state.
-        /// </summary>
+        
         /// <returns>
         /// An IDictionary representing the flattened view of the environment variables in
         /// session state.
@@ -217,9 +198,7 @@ namespace Microsoft.PowerShell.Commands
             return providerTable;
         }
 
-        /// <summary>
-        /// Gets the Value property of the DictionaryEntry item.
-        /// </summary>
+        
         /// <param name="item">
         /// The item to get the value from.
         /// </param>

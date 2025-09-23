@@ -7,15 +7,11 @@ using System.Windows.Data;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <summary>
-    /// Formatting string with a given format.
-    /// </summary>
+    
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public class StringFormatConverter : IValueConverter
     {
-        /// <summary>
-        /// Formatting string with a given format.
-        /// </summary>
+        
         /// <param name="value">The value produced by the binding source.</param>
         /// <param name="targetType">The type of the binding target property.  This is not used.</param>
         /// <param name="parameter">The converter parameter to use.  It should be a formatting string.</param>
@@ -35,9 +31,7 @@ namespace Microsoft.Management.UI.Internal
             return string.Format(culture, formatString, str);
         }
 
-        /// <summary>
-        /// Converts a value.
-        /// </summary>
+        
         /// <remarks>
         /// This method is not implemented.
         /// </remarks>

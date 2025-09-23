@@ -6,9 +6,7 @@ using System.Globalization;
 
 namespace System.Management.Automation.Help
 {
-    /// <summary>
-    /// Updatable help system internal representation of the PSModuleInfo class.
-    /// </summary>
+    
     internal class UpdatableHelpModuleInfo
     {
 #if UNIX
@@ -18,9 +16,7 @@ namespace System.Management.Automation.Help
 #endif
         internal static readonly string HelpIntoXmlName = "HelpInfo.xml";
 
-        /// <summary>
-        /// Class constructor.
-        /// </summary>
+        
         /// <param name="name">Module name.</param>
         /// <param name="guid">Module GUID.</param>
         /// <param name="path">Module path.</param>
@@ -37,14 +33,10 @@ namespace System.Management.Automation.Help
             HelpInfoUri = uri;
         }
 
-        /// <summary>
-        /// Module name.
-        /// </summary>
+        
         internal string ModuleName { get; }
 
-        /// <summary>
-        /// Module GUID.
-        /// </summary>
+        
         internal Guid ModuleGuid
         {
             get
@@ -55,19 +47,13 @@ namespace System.Management.Automation.Help
 
         private readonly Guid _moduleGuid;
 
-        /// <summary>
-        /// Module path.
-        /// </summary>
+        
         internal string ModuleBase { get; }
 
-        /// <summary>
-        /// HelpInfo URI.
-        /// </summary>
+        
         internal string HelpInfoUri { get; }
 
-        /// <summary>
-        /// Gets the combined HelpContent.zip name.
-        /// </summary>
+        
         /// <param name="culture">Current culture.</param>
         /// <returns>HelpContent name.</returns>
         internal string GetHelpContentName(CultureInfo culture)
@@ -77,9 +63,7 @@ namespace System.Management.Automation.Help
             return ModuleName + "_" + _moduleGuid.ToString() + "_" + culture.Name + "_" + HelpContentZipName;
         }
 
-        /// <summary>
-        /// Gets the combined HelpInfo.xml name.
-        /// </summary>
+        
         /// <returns>HelpInfo name.</returns>
         internal string GetHelpInfoName()
         {

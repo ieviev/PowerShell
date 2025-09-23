@@ -13,14 +13,10 @@ using System.Text.RegularExpressions;
 
 namespace Microsoft.PowerShell.Commands.Internal.Format
 {
-    /// <summary>
-    /// Writer class to handle Complex Object formatting.
-    /// </summary>
+    
     internal sealed class ComplexWriter
     {
-        /// <summary>
-        /// Initialization method to be called before any other operation.
-        /// </summary>
+        
         /// <param name="lineOutput">LineOutput interfaces to write to.</param>
         /// <param name="numberOfTextColumns">Number of columns used to write out.</param>
         internal void Initialize(LineOutput lineOutput, int numberOfTextColumns)
@@ -29,9 +25,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             _textColumns = numberOfTextColumns;
         }
 
-        /// <summary>
-        /// Writes a string.
-        /// </summary>
+        
         /// <param name="s"></param>
         internal void WriteString(string s)
         {
@@ -42,9 +36,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             WriteToScreen();
         }
 
-        /// <summary>
-        /// It interprets a list of format value tokens and outputs it.
-        /// </summary>
+        
         /// <param name="formatValueList">List of FormatValue tokens to interpret.</param>
         internal void WriteObject(List<FormatValue> formatValueList)
         {
@@ -61,9 +53,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             WriteToScreen();
         }
 
-        /// <summary>
-        /// Operate on a single entry.
-        /// </summary>
+        
         /// <param name="fe">Entry to process.</param>
         /// <param name="currentDepth">Current depth of recursion.</param>
         private void GenerateFormatEntryDisplay(FormatEntry fe, int currentDepth)
@@ -112,18 +102,14 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             }
         }
 
-        /// <summary>
-        /// Add a string to the current buffer, waiting for a FlushBuffer()
-        /// </summary>
+        
         /// <param name="s">String to add to buffer.</param>
         private void AddToBuffer(string s)
         {
             _stringBuffer.Append(s);
         }
 
-        /// <summary>
-        /// Write to the output interface.
-        /// </summary>
+        
         private void WriteToScreen()
         {
             int leftIndentation = _indentationManager.LeftIndentation;
@@ -202,24 +188,16 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             _stringBuffer = new StringBuilder();
         }
 
-        /// <summary>
-        /// Helper object to manage the frame-based indentation and margins.
-        /// </summary>
+        
         private readonly IndentationManager _indentationManager = new IndentationManager();
 
-        /// <summary>
-        /// Buffer to accumulate partially constructed text.
-        /// </summary>
+        
         private StringBuilder _stringBuffer = new StringBuilder();
 
-        /// <summary>
-        /// Interface to write to.
-        /// </summary>
+        
         private LineOutput _lo;
 
-        /// <summary>
-        /// Number of columns for the output device.
-        /// </summary>
+        
         private int _textColumns;
 
         private const int maxRecursionDepth = 50;
@@ -310,18 +288,14 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         private readonly Stack<FrameInfo> _frameInfoStack = new Stack<FrameInfo>();
     }
 
-    /// <summary>
-    /// Result of GetWords.
-    /// </summary>
+    
     internal struct GetWordsResult
     {
         internal string Word;
         internal string Delim;
     }
 
-    /// <summary>
-    /// Collection of helper functions for string formatting.
-    /// </summary>
+    
     internal sealed class StringManipulationHelper
     {
         private const char SoftHyphen = '\u00AD';
@@ -340,11 +314,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             s_cultureCollection.Add("es");        // Spanish
         }
 
-        /// <summary>
-        /// Breaks a string into a collection of words
-        /// TODO: we might be able to improve this function in the future
-        /// so that we do not break paths etc.
-        /// </summary>
+        
         /// <param name="s">Input string.</param>
         /// <returns>A collection of words.</returns>
         private static IEnumerable<GetWordsResult> GetWords(string s)
@@ -727,10 +697,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             return retVal;
         }
 
-        /// <summary>
-        /// Split a multiline string into an array of strings
-        /// by honoring both \n and \r\n.
-        /// </summary>
+        
         /// <param name="s">String to split.</param>
         /// <returns>String array with the values.</returns>
         internal static List<string> SplitLines(string s)

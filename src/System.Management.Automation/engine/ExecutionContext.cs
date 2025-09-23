@@ -20,25 +20,17 @@ using Microsoft.PowerShell.Commands.Internal.Format;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// This class contains the execution context that gets passed
-    /// around to commands. This is all of the information that lets you get
-    /// at session state and the host interfaces.
-    /// </summary>
+    
     internal class ExecutionContext
     {
         #region Properties
 
-        /// <summary>
-        /// The events received by this runspace.
-        /// </summary>
+        
         internal PSLocalEventManager Events { get; private set; }
 
         internal HashSet<string> AutoLoadingModuleInProgress { get; } = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
-        /// <summary>
-        /// The debugger for the interpreter.
-        /// </summary>
+        
         internal ScriptDebugger Debugger
         {
             get { return _debugger; }
@@ -48,9 +40,7 @@ namespace System.Management.Automation
 
         internal int _debuggingMode;
 
-        /// <summary>
-        /// Reset or clear the various context managers so the runspace can be reused without contamination.
-        /// </summary>
+        
         internal void ResetManagers()
         {
             _debugger?.ResetDebugger();
@@ -61,9 +51,7 @@ namespace System.Management.Automation
             this.transactionManager?.Dispose();
             this.transactionManager = new PSTransactionManager();
         }
-        /// <summary>
-        /// The tracing mode for the interpreter.
-        /// </summary>
+        
         /// <value>True if tracing is turned on, false if it's turned off.</value>
         internal int PSDebugTraceLevel
         {
@@ -81,9 +69,7 @@ namespace System.Management.Automation
 
         private int _debugTraceLevel;
 
-        /// <summary>
-        /// The step mode for the interpreter.
-        /// </summary>
+        
         /// <value>True of stepping is turned on, false if it's turned off.</value>
         internal bool PSDebugTraceStep
         {
@@ -108,10 +94,7 @@ namespace System.Management.Automation
 
             return (context != null) && context.IsStrictVersion(majorVersion);
         }
-        /// <summary>
-        /// Check to see a specific version of strict mode is enabled.  The check is always scoped,
-        /// even though in version 1 the check was engine wide.
-        /// </summary>
+        
         /// <param name="majorVersion">The version for a strict check about to be performed.</param>
         /// <returns></returns>
         internal bool IsStrictVersion(int majorVersion)
@@ -139,9 +122,7 @@ namespace System.Management.Automation
             return false;
         }
 
-        /// <summary>
-        /// Is true if the current statement in the interpreter should be traced...
-        /// </summary>
+        
         internal bool ShouldTraceStatement
         {
             get
@@ -151,57 +132,31 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// If true, then a script command processor should rethrow the exit exception instead of
-        /// simply capturing it. This is used by the -file option on the console host.
-        /// </summary>
+        
         internal bool ScriptCommandProcessorShouldRethrowExit { get; set; } = false;
 
-        /// <summary>
-        /// If this flag is set to true, script trace output
-        /// will not be generated regardless of the state of the
-        /// trace flag.
-        /// </summary>
+        
         /// <value>The current state of the IgnoreScriptDebug flag.</value>
         internal bool IgnoreScriptDebug { get; set; } = true;
 
-        /// <summary>
-        /// Gets the automation engine instance.
-        /// </summary>
+        
         internal AutomationEngine Engine { get; private set; }
 
         internal InitialSessionState InitialSessionState { get; }
 
-        /// <summary>
-        /// Added for Win8: 336382
-        /// Contains the name of the previous module that was processed. This
-        /// allows you to skip this module when doing a lookup.
-        /// </summary>
+        
         internal string PreviousModuleProcessed { get; set; }
 
-        /// <summary>
-        /// Added for 4980967
-        /// Contains the name of the latest module that was imported,
-        /// Allows "module\function" to call the function from latest imported module instead of randomly choosing the first module in the moduletable.
-        /// </summary>
+        
         internal Hashtable previousModuleImported { get; set; } = new Hashtable();
 
-        /// <summary>
-        /// Contains the name of the module currently being processed. This
-        /// allows you to skip this module when doing a lookup.
-        /// </summary>
+        
         internal string ModuleBeingProcessed { get; set; }
 
-        /// <summary>
-        /// Authorization manager for this runspace.
-        /// </summary>
+        
         internal AuthorizationManager AuthorizationManager { get; private set; }
 
-        /// <summary>
-        /// Gets the appropriate provider names for the default
-        /// providers based on the type of the shell
-        /// (single shell or custom shell).
-        /// </summary>
+        
         internal ProviderNames ProviderNames
         {
             get
@@ -214,14 +169,10 @@ namespace System.Management.Automation
 
         private ProviderNames _providerNames;
 
-        /// <summary>
-        /// The module information for this engine...
-        /// </summary>
+        
         internal ModuleIntrinsics Modules { get; private set; }
 
-        /// <summary>
-        /// Get the shellID for this runspace...
-        /// </summary>
+        
         internal string ShellID
         {
             get
@@ -247,20 +198,13 @@ namespace System.Management.Automation
 
         private string _shellId;
 
-        /// <summary>
-        /// Session State with which this instance of engine works.
-        /// </summary>
+        
         internal SessionStateInternal EngineSessionState { get; set; }
 
-        /// <summary>
-        /// The default or top-level session state instance for the
-        /// engine.
-        /// </summary>
+        
         internal SessionStateInternal TopLevelSessionState { get; private set; }
 
-        /// <summary>
-        /// Get the SessionState facade for the internal session state APIs.
-        /// </summary>
+        
         internal SessionState SessionState
         {
             get
@@ -269,9 +213,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Get/set constraints for this execution environment.
-        /// </summary>
+        
         internal PSLanguageMode LanguageMode
         {
             get
@@ -329,34 +271,21 @@ namespace System.Management.Automation
 
         private PSLanguageMode _languageMode = PSLanguageMode.FullLanguage;
 
-        /// <summary>
-        /// True if this runspace has ever used constrained language mode.
-        /// </summary>
+        
         internal bool HasRunspaceEverUsedConstrainedLanguageMode { get; private set; }
 
-        /// <summary>
-        /// Indicate if a parameter binding is happening that transitions the execution from ConstrainedLanguage
-        /// mode to a trusted FullLanguage command.
-        /// </summary>
+        
         internal bool LanguageModeTransitionInParameterBinding { get; set; }
 
-        /// <summary>
-        /// True if we've ever used ConstrainedLanguage. If this is the case, then the binding restrictions
-        /// need to also validate against the language mode.
-        /// </summary>
+        
         internal static bool HasEverUsedConstrainedLanguage { get; private set; }
 
         #region Variable Tracking
 
-        /// <summary>
-        /// Initialized when 'ConstrainedLanguage' is applied.
-        /// The objects contained in this table are considered to be untrusted.
-        /// </summary>
+        
         private static ConditionalWeakTable<object, object> UntrustedObjects { get; set; }
 
-        /// <summary>
-        /// Helper for checking if the given value is marked as untrusted.
-        /// </summary>
+        
         internal static bool IsMarkedAsUntrusted(object value)
         {
             bool result = false;
@@ -369,9 +298,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Helper for marking a value as untrusted.
-        /// </summary>
+        
         internal static void MarkObjectAsUntrusted(object value)
         {
             // If the value is a PSObject, then we mark its base object untrusted
@@ -397,9 +324,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Helper for setting the untrusted value of an assignment to either a 'Global:' variable, or a 'Script:' variable in a module scope.
-        /// </summary>
+        
         /// <remarks>
         /// This method is for tracking assignment to global variables and module script scope varaibles in ConstrainedLanguage mode. Those variables
         /// can go across boundaries between ConstrainedLanguage and FullLanguage, and make it easy for a trusted script to use data from an untrusted
@@ -419,10 +344,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// The result object is assumed generated by operating on the original object.
-        /// So if the original object is from an untrusted input source, we mark the result object as untrusted.
-        /// </summary>
+        
         internal static void PropagateInputSource(object originalObject, object resultObject, PSLanguageMode currentLanguageMode)
         {
             // The untrusted flag is populated only in FullLanguage mode and ConstrainedLanguage has been used in the process before.
@@ -434,9 +356,7 @@ namespace System.Management.Automation
 
         #endregion
 
-        /// <summary>
-        /// If true the PowerShell debugger will use FullLanguage mode, otherwise it will use the current language mode.
-        /// </summary>
+        
         internal bool UseFullLanguageModeInDebugger
         {
             get
@@ -450,18 +370,13 @@ namespace System.Management.Automation
                 Utils.ScheduledJobModuleName,
             };
 
-        /// <summary>
-        /// Is true if the PSScheduledJob module is loaded for this runspace.
-        /// </summary>
+        
         internal bool IsModuleWithJobSourceAdapterLoaded
         {
             get; set;
         }
 
-        /// <summary>
-        /// Gets the location globber for the session state for
-        /// this instance of the runspace.
-        /// </summary>
+        
         internal LocationGlobber LocationGlobber
         {
             get
@@ -473,17 +388,13 @@ namespace System.Management.Automation
 
         private LocationGlobber _locationGlobber;
 
-        /// <summary>
-        /// The assemblies that have been loaded for this runspace.
-        /// </summary>
+        
         internal Dictionary<string, Assembly> AssemblyCache { get; private set; }
         #endregion Properties
 
         #region Engine State
 
-        /// <summary>
-        /// The state for current engine that is running.
-        /// </summary>
+        
         /// <value></value>
         internal EngineState EngineState { get; set; } = EngineState.None;
 
@@ -491,9 +402,7 @@ namespace System.Management.Automation
 
         #region GetSetVariable methods
 
-        /// <summary>
-        /// Get a variable out of session state.
-        /// </summary>
+        
         internal object GetVariableValue(VariablePath path)
         {
             CmdletProviderContext context;
@@ -501,18 +410,13 @@ namespace System.Management.Automation
             return EngineSessionState.GetVariableValue(path, out context, out scope);
         }
 
-        /// <summary>
-        /// Get a variable out of session state. This calls GetVariable(name) and returns the
-        /// value unless it is null in which case it returns the defaultValue provided by the caller.
-        /// </summary>
+        
         internal object GetVariableValue(VariablePath path, object defaultValue)
         {
             return EngineSessionState.GetVariableValue(path, out _, out _) ?? defaultValue;
         }
 
-        /// <summary>
-        /// Set a variable in session state.
-        /// </summary>
+        
         internal void SetVariable(VariablePath path, object newValue)
         {
             EngineSessionState.SetVariable(path, newValue, true, CommandOrigin.Internal);
@@ -583,9 +487,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Same as GetEnumPreference, but for boolean values.
-        /// </summary>
+        
         /// <param name="preferenceVariablePath"></param>
         /// <param name="defaultPref"></param>
         /// <param name="defaultUsed"></param>
@@ -606,9 +508,7 @@ namespace System.Management.Automation
 
         #region HelpSystem
 
-        /// <summary>
-        /// Help system for this engine context.
-        /// </summary>
+        
         /// <value></value>
         internal HelpSystem HelpSystem
         {
@@ -628,9 +528,7 @@ namespace System.Management.Automation
 
         internal Dictionary<string, ScriptBlock> NativeArgumentCompleters { get; set; }
 
-        /// <summary>
-        /// Routine to create a command(processor) instance using the factory.
-        /// </summary>
+        
         /// <param name="command">The name of the command to lookup.</param>
         /// <param name="dotSource"></param>
         /// <param name="forCompletion"></param>
@@ -649,15 +547,11 @@ namespace System.Management.Automation
             return commandProcessor;
         }
 
-        /// <summary>
-        /// Hold the current command.
-        /// </summary>
+        
         /// <value>Reference to command discovery</value>
         internal CommandProcessorBase CurrentCommandProcessor { get; set; }
 
-        /// <summary>
-        /// Redirect to the CommandDiscovery in the engine.
-        /// </summary>
+        
         /// <value>Reference to command discovery</value>
         internal CommandDiscovery CommandDiscovery
         {
@@ -667,29 +561,20 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Interface that should be used for interaction with host.
-        /// </summary>
+        
         internal InternalHost EngineHostInterface
         {
             // set not provided: it's not meaningful to change the host post-construction.
             get; private set;
         }
 
-        /// <summary>
-        /// Interface to be used for interaction with internal
-        /// host. InternalHost wraps the host supplied
-        /// during construction. Use this wrapper to access
-        /// functionality specific to InternalHost.
-        /// </summary>
+        
         internal InternalHost InternalHost
         {
             get { return EngineHostInterface; }
         }
 
-        /// <summary>
-        /// Interface to the public API for the engine.
-        /// </summary>
+        
         internal EngineIntrinsics EngineIntrinsics
         {
             get { return _engineIntrinsics ??= new EngineIntrinsics(this); }
@@ -697,25 +582,17 @@ namespace System.Management.Automation
 
         private EngineIntrinsics _engineIntrinsics;
 
-        /// <summary>
-        /// Log context cache.
-        /// </summary>
+        
         internal LogContextCache LogContextCache { get; } = new LogContextCache();
 
         #region Output pipes
-        /// <summary>
-        /// The PipelineWriter provided by the connection object for success output.
-        /// </summary>
+        
         internal PipelineWriter ExternalSuccessOutput { get; set; }
 
-        /// <summary>
-        /// The PipelineWriter provided by the connection object for error output.
-        /// </summary>
+        
         internal PipelineWriter ExternalErrorOutput { get; set; }
 
-        /// <summary>
-        /// The PipelineWriter provided by the connection object for progress output.
-        /// </summary>
+        
         internal PipelineWriter ExternalProgressOutput { get; set; }
 
         internal class SavedContextData
@@ -745,9 +622,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Host uses this to saves context data when entering a nested prompt.
-        /// </summary>
+        
         /// <returns></returns>
         internal SavedContextData SaveContextData()
         {
@@ -766,49 +641,31 @@ namespace System.Management.Automation
             return oldPipe;
         }
 
-        /// <summary>
-        /// Reset all of the redirection book keeping variables. This routine should be called when starting to
-        /// execute a script.
-        /// </summary>
+        
         internal void ResetRedirection()
         {
             ShellFunctionErrorOutputPipe = null;
         }
 
-        /// <summary>
-        /// Function and Script command processors will route their error output to
-        /// this pipe if set, unless explicitly routed elsewhere. We also keep track
-        /// of the first time this value is set so we can know if it's the default
-        /// error output or not.
-        /// </summary>
+        
         internal Pipe ShellFunctionErrorOutputPipe { get; set; }
 
-        /// <summary>
-        /// Supports expression Warning output redirection.
-        /// </summary>
+        
         internal Pipe ExpressionWarningOutputPipe { get; set; }
 
-        /// <summary>
-        /// Supports expression Verbose output redirection.
-        /// </summary>
+        
         internal Pipe ExpressionVerboseOutputPipe { get; set; }
 
-        /// <summary>
-        /// Supports expression Verbose output redirection.
-        /// </summary>
+        
         internal Pipe ExpressionDebugOutputPipe { get; set; }
 
-        /// <summary>
-        /// Supports expression Information output redirection.
-        /// </summary>
+        
         internal Pipe ExpressionInformationOutputPipe { get; set; }
 
         #endregion Output pipes
 
         #region Append to $error
-        /// <summary>
-        /// Appends the object to $global:error if it's an error record or exception.
-        /// </summary>
+        
         /// <param name="obj">
         /// ErrorRecord or Exception to be written to $global:error
         /// </param>
@@ -860,9 +717,7 @@ namespace System.Management.Automation
 
         #region Scope or Commands (in pipeline) Depth Count
 
-        /// <summary>
-        /// Check if the stack would overflow soon, if so, throw ScriptCallDepthException.
-        /// </summary>
+        
         /// <exception cref="ScriptCallDepthException">
         /// If the stack would overflow soon.
         /// </exception>
@@ -880,14 +735,10 @@ namespace System.Management.Automation
 
         #endregion
 
-        /// <summary>
-        /// The current connection object.
-        /// </summary>
+        
         private Runspace _currentRunspace;
         // This should be internal, but it need to be friend of remoting dll.
-        /// <summary>
-        /// The current connection object.
-        /// </summary>
+        
         internal Runspace CurrentRunspace
         {
             get { return _currentRunspace; }
@@ -895,10 +746,7 @@ namespace System.Management.Automation
             set { _currentRunspace = value; }
         }
 
-        /// <summary>
-        /// Each pipeline has a stack of pipeline processor. This method
-        /// pushes pp in to stack for currently executing pipeline.
-        /// </summary>
+        
         /// <param name="pp"></param>
         internal void PushPipelineProcessor(PipelineProcessor pp)
         {
@@ -910,10 +758,7 @@ namespace System.Management.Automation
             lpl.Stopper.Push(pp);
         }
 
-        /// <summary>
-        /// Each pipeline has a stack of pipeline processor. This method pops the
-        /// top item from the stack.
-        /// </summary>
+        
         internal void PopPipelineProcessor(bool fromSteppablePipeline)
         {
             if (_currentRunspace == null)
@@ -924,9 +769,7 @@ namespace System.Management.Automation
             lpl.Stopper.Pop(fromSteppablePipeline);
         }
 
-        /// <summary>
-        /// This flag is checked by parser to stop loops etc.
-        /// </summary>
+        
         /// <returns></returns>
         internal bool CurrentPipelineStopping
         {
@@ -941,25 +784,17 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// True means one of these:
-        /// 1) there is a trap statement in a dynamically enclosing statement block that might catch an exception.
-        /// 2) execution happens inside a PS class and exceptions should be propagated all the way up, even if there is no enclosing try-catch-finally.
-        /// </summary>
+        
         /// <value></value>
         internal bool PropagateExceptionsToEnclosingStatementBlock { get; set; }
 
         internal RuntimeException CurrentExceptionBeingHandled { get; set; }
 
-        /// <summary>
-        /// Shortcut to get at $?
-        /// </summary>
+        
         /// <value>The current value of $? </value>
         internal bool QuestionMarkVariableValue { get; set; } = true;
 
-        /// <summary>
-        /// Shortcut to get at $error.
-        /// </summary>
+        
         /// <value>The current value of $global:error </value>
         internal object DollarErrorVariable
         {
@@ -1154,9 +989,7 @@ namespace System.Management.Automation
             this.transactionManager = null;
         }
 
-        /// <summary>
-        /// Gets the type table instance for this engine.
-        /// </summary>
+        
         internal TypeTable TypeTable
         {
             get
@@ -1177,9 +1010,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Here for PSObject, should probably not be used elsewhere, maybe not even in PSObject.
-        /// </summary>
+        
         internal WeakReference<TypeTable> TypeTableWeakReference
         {
             get
@@ -1196,9 +1027,7 @@ namespace System.Management.Automation
         private TypeTable _typeTable;
         private WeakReference<TypeTable> _typeTableWeakReference;
 
-        /// <summary>
-        /// Gets the format info database for this engine.
-        /// </summary>
+        
         internal TypeInfoDataBaseManager FormatDBManager
         {
             get
@@ -1228,10 +1057,7 @@ namespace System.Management.Automation
 
         private TypeInfoDataBaseManager _formatDBManager;
 
-        /// <summary>
-        /// Gets the TransactionManager instance that controls transactions in the current
-        /// instance.
-        /// </summary>
+        
         internal PSTransactionManager TransactionManager
         {
             get
@@ -1242,9 +1068,7 @@ namespace System.Management.Automation
 
         internal PSTransactionManager transactionManager;
 
-        /// <summary>
-        /// This method is used for assembly loading requests stemmed from 'InitialSessionState' binding and module loading.
-        /// </summary>
+        
         /// <param name="source">Source of the assembly loading request, should be a module name when specified.</param>
         /// <param name="assemblyName">Name of the assembly to be loaded.</param>
         /// <param name="filePath">Path of the assembly to be loaded.</param>
@@ -1309,11 +1133,7 @@ namespace System.Management.Automation
             return loadedAssembly;
         }
 
-        /// <summary>
-        /// Add a loaded assembly to the 'AssemblyCache'.
-        /// The <paramref name="source"/> is used as a prefix for the key to make it easy to remove all associated
-        /// assemblies from the cache when a module gets unloaded.
-        /// </summary>
+        
         /// <param name="source">The source where the assembly comes from, should be a module name when specified.</param>
         /// <param name="assembly">The assembly we try to cache.</param>
         internal void AddToAssemblyCache(string source, Assembly assembly)
@@ -1333,9 +1153,7 @@ namespace System.Management.Automation
             AssemblyCache.TryAdd(key, assembly);
         }
 
-        /// <summary>
-        /// Remove all cache entries that are associated with the specified source.
-        /// </summary>
+        
         internal void RemoveFromAssemblyCache(string source)
         {
             if (string.IsNullOrEmpty(source))
@@ -1360,9 +1178,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Try to get an assembly from the cache.
-        /// </summary>
+        
         private bool TryGetFromAssemblyCache(string source, string filePath, out Assembly assembly)
         {
             if (string.IsNullOrEmpty(filePath))
@@ -1454,9 +1270,7 @@ namespace System.Management.Automation
             return loadedAssembly;
         }
 
-        /// <summary>
-        /// Report an initialization-time error.
-        /// </summary>
+        
         /// <param name="resourceString">Resource string.</param>
         /// <param name="arguments">Arguments.</param>
         internal void ReportEngineStartupError(string resourceString, params object[] arguments)
@@ -1493,9 +1307,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Report an initialization-time error.
-        /// </summary>
+        
         /// <param name="error">Error to report.</param>
         internal void ReportEngineStartupError(string error)
         {
@@ -1530,9 +1342,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Report an initialization-time error.
-        /// </summary>
+        
         /// <param name="e"></param>
         internal void ReportEngineStartupError(Exception e)
         {
@@ -1573,9 +1383,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Report an initialization-time error.
-        /// </summary>
+        
         /// <param name="errorRecord"></param>
         internal void ReportEngineStartupError(ErrorRecord errorRecord)
         {
@@ -1632,9 +1440,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Constructs an Execution context object for Automation Engine.
-        /// </summary>
+        
         /// <param name="engine">
         /// Engine that hosts this execution context
         /// </param>
@@ -1678,34 +1484,22 @@ namespace System.Management.Automation
         private static readonly object lockObject = new object();
     }
 
-    /// <summary>
-    /// Enum that defines state of monad engine.
-    /// </summary>
+    
     internal enum EngineState
     {
-        /// <summary>
-        /// Engine state is not defined or initialized.
-        /// </summary>
+        
         None = 0,
 
-        /// <summary>
-        /// Engine available.
-        /// </summary>
+        
         Available = 1,
 
-        /// <summary>
-        /// Engine service is degraded.
-        /// </summary>
+        
         Degraded = 2,
 
-        /// <summary>
-        /// Engine is out of service.
-        /// </summary>
+        
         OutOfService = 3,
 
-        /// <summary>
-        /// Engine is stopped.
-        /// </summary>
+        
         Stopped = 4
     }
 }

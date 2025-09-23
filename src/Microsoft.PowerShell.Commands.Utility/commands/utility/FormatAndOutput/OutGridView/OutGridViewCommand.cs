@@ -12,30 +12,18 @@ using Microsoft.PowerShell.Commands.Internal.Format;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// Enum for SelectionMode parameter.
-    /// </summary>
+    
     public enum OutputModeOption
     {
-        /// <summary>
-        /// None is the default and it means OK and Cancel will not be present
-        /// and no objects will be written to the pipeline.
-        /// The selectionMode of the actual list will still be multiple.
-        /// </summary>
+        
         None,
-        /// <summary>
-        /// Allow selection of one single item to be written to the pipeline.
-        /// </summary>
+        
         Single,
-        /// <summary>
-        ///Allow select of multiple items to be written to the pipeline.
-        /// </summary>
+        
         Multiple
     }
 
-    /// <summary>
-    /// Implementation for the Out-GridView command.
-    /// </summary>
+    
     [Cmdlet(VerbsData.Out, "GridView", DefaultParameterSetName = "PassThru", HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2109378")]
     public class OutGridViewCommand : PSCmdlet, IDisposable
     {
@@ -53,9 +41,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Constructors
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="OutGridViewCommand"/> class.
-        /// </summary>
+        
         public OutGridViewCommand()
         {
         }
@@ -64,36 +50,24 @@ namespace Microsoft.PowerShell.Commands
 
         #region Input Parameters
 
-        /// <summary>
-        /// This parameter specifies the current pipeline object.
-        /// </summary>
+        
         [Parameter(ValueFromPipeline = true)]
         public PSObject InputObject { get; set; } = AutomationNull.Value;
 
-        /// <summary>
-        /// Gets/sets the title of the Out-GridView window.
-        /// </summary>
+        
         [Parameter]
         [ValidateNotNullOrEmpty]
         public string Title { get; set; }
 
-        /// <summary>
-        /// Get or sets a value indicating whether the cmdlet should wait for the window to be closed.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "Wait")]
         public SwitchParameter Wait { get; set; }
 
-        /// <summary>
-        /// Get or sets a value indicating whether the selected items should be written to the pipeline
-        /// and if it should be possible to select multiple or single list items.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "OutputMode")]
         public OutputModeOption OutputMode { get; set; }
 
-        /// <summary>
-        /// Gets or sets a value indicating whether the selected items should be written to the pipeline.
-        /// Setting this to true is the same as setting the OutputMode to Multiple.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "PassThru")]
         public SwitchParameter PassThru
         {
@@ -106,9 +80,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Public Methods
 
-        /// <summary>
-        /// Provides a one-time, pre-processing functionality for the cmdlet.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             // Set up the ExpressionFactory
@@ -129,9 +101,7 @@ namespace Microsoft.PowerShell.Commands
             _typeInfoDataBase = this.Context.FormatDBManager.GetTypeInfoDataBase();
         }
 
-        /// <summary>
-        /// Blocks depending on the wait and selected.
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             base.EndProcessing();
@@ -170,9 +140,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Provides a record-by-record processing functionality for the cmdlet.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             if (InputObject == null || InputObject == AutomationNull.Value)
@@ -194,9 +162,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// StopProcessing is called close the window when Ctrl+C in the command prompt.
-        /// </summary>
+        
         protected override void StopProcessing()
         {
             if (this.Wait || this.OutputMode != OutputModeOption.None)
@@ -205,9 +171,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Converts the provided PSObject to a string preserving PowerShell formatting.
-        /// </summary>
+        
         /// <param name="liveObject">PSObject to be converted to a string.</param>
         internal string ConvertToString(PSObject liveObject)
         {
@@ -235,9 +199,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Private Methods
 
-        /// <summary>
-        /// Execute formatting on a single object.
-        /// </summary>
+        
         /// <param name="input">Object to process.</param>
         private void ProcessObject(PSObject input)
         {
@@ -467,9 +429,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Implements IDisposable logic.
-        /// </summary>
+        
         /// <param name="isDisposing">True if being called from Dispose.</param>
         private void Dispose(bool isDisposing)
         {
@@ -483,9 +443,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Dispose method in IDisposable.
-        /// </summary>
+        
         public void Dispose()
         {
             this.Dispose(true);

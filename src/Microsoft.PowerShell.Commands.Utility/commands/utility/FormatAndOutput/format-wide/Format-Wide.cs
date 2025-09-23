@@ -9,17 +9,12 @@ using Microsoft.PowerShell.Commands.Internal.Format;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// Implementation for the Format-Wide command.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Format, "Wide", HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096930")]
     [OutputType(typeof(FormatStartData), typeof(FormatEntryData), typeof(FormatEndData), typeof(GroupStartData), typeof(GroupEndData))]
     public class FormatWideCommand : OuterFormatShapeCommandBase
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="FormatWideCommand"/> class
-        /// and sets the inner command.
-        /// </summary>
+        
         public FormatWideCommand()
         {
             this.implementation = new InnerFormatShapeCommand(FormatShape.Wide);
@@ -27,10 +22,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Command Line Switches
 
-        /// <summary>
-        /// Positional parameter for properties, property sets and table sets specified on the command line.
-        /// The parameter is optional, since the defaults will be determined using property sets, etc.
-        /// </summary>
+        
         [Parameter(Position = 0)]
         public object Property
         {
@@ -41,9 +33,7 @@ namespace Microsoft.PowerShell.Commands
 
         private object _prop;
 
-        /// <summary>
-        /// Optional, non positional parameter.
-        /// </summary>
+        
         /// <value></value>
         [Parameter]
         public SwitchParameter AutoSize
@@ -54,9 +44,7 @@ namespace Microsoft.PowerShell.Commands
 
         private bool? _autosize = null;
 
-        /// <summary>
-        /// Optional, non positional parameter.
-        /// </summary>
+        
         /// <value></value>
         [Parameter]
         [ValidateRange(1, int.MaxValue)]

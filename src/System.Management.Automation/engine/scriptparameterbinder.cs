@@ -8,16 +8,12 @@ using System.Runtime.CompilerServices;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// The parameter binder for shell functions.
-    /// </summary>
+    
     internal class ScriptParameterBinder : ParameterBinderBase
     {
         #region ctor
 
-        /// <summary>
-        /// Constructs a ScriptParameterBinder with the specified context.
-        /// </summary>
+        
         /// <param name="script">
         /// The script block representing the code being run
         /// </param>
@@ -61,9 +57,7 @@ namespace System.Management.Automation
 
         #region Parameter default values
 
-        /// <summary>
-        /// Gets the default value for the specified parameter.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the parameter to get the default value of.
         /// </param>
@@ -86,9 +80,7 @@ namespace System.Management.Automation
 
         #region Parameter binding
 
-        /// <summary>
-        /// Binds the parameters to local variables in the function scope.
-        /// </summary>
+        
         /// <param name="name">
         ///     The name of the parameter to bind the value to.
         /// </param>
@@ -136,9 +128,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Return the default value of a script parameter, evaluating the parse tree if necessary.
-        /// </summary>
+        
         internal object GetDefaultScriptParameterValue(RuntimeDefinedParameter parameter, IDictionary implicitUsingParameters = null)
         {
             object result = parameter.Value;
@@ -158,9 +148,7 @@ namespace System.Management.Automation
 
         #region private members
 
-        /// <summary>
-        /// The script that is being bound to.
-        /// </summary>
+        
         internal ScriptBlock Script { get; }
 
         internal SessionStateScope LocalScope { get; set; }

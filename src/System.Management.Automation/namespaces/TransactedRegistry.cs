@@ -24,71 +24,31 @@ namespace Microsoft.PowerShell.Commands.Internal
     {
         private const string resBaseName = "RegistryProviderStrings";
         
-        /// <summary>TransactedRegistry.CurrentUser
-        /// <para>This static method returns a TransactedRegistryKey object that represents the base
-        /// key HKEY_CURRENT_USER. Because it is a base key, there is no transaction associated with
-        /// the returned TransactedRegistryKey. This means that values modified using the returned
-        /// TransactedRegistryKey are NOT modified within a transaction.</para>
-        /// <para>However, if the returned TransactedRegistryKey is used to create, open, or delete
-        /// subkeys, there must be a Transaction.Current and the resulting TransactedRegistryKey from those operations ARE associated with
-        /// the transaction.</para>
-        /// </summary>
+        
         // The TransactedRegistryKey's members cannot be changed.
         [SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes")]
         internal static readonly TransactedRegistryKey CurrentUser = TransactedRegistryKey.GetBaseKey(BaseRegistryKeys.HKEY_CURRENT_USER);
 
         
-        /// <summary>TransactedRegistry.LocalMachine
-        /// <para>This static method returns a TransactedRegistryKey object that represents the base
-        /// key HKEY_LOCAL_MACHINE. Because it is a base key, there is no transaction associated with
-        /// the returned TransactedRegistryKey. This means that values modified using the returned
-        /// TransactedRegistryKey are NOT modified within a transaction.</para>
-        /// <para>However, if the returned TransactedRegistryKey is used to create, open, or delete
-        /// subkeys, there must be a Transaction.Current and the resulting TransactedRegistryKey from those operations ARE associated with
-        /// the transaction.</para>
-        /// </summary>
+        
         // The TransactedRegistryKey's members cannot be changed.
         [SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes")]
         internal static readonly TransactedRegistryKey LocalMachine = TransactedRegistryKey.GetBaseKey(BaseRegistryKeys.HKEY_LOCAL_MACHINE);
 
         
-        /// <summary>TransactedRegistry.ClassesRoot
-        /// <para>This static method returns a TransactedRegistryKey object that represents the base
-        /// key HKEY_CLASSES_ROOT. Because it is a base key, there is no transaction associated with
-        /// the returned TransactedRegistryKey. This means that values modified using the returned
-        /// TransactedRegistryKey are NOT modified within a transaction.</para>
-        /// <para>However, if the returned TransactedRegistryKey is used to create, open, or delete
-        /// subkeys, there must be a Transaction.Current and the resulting TransactedRegistryKey from those operations ARE associated with
-        /// the transaction.</para>
-        /// </summary>
+        
         // The TransactedRegistryKey's members cannot be changed.
         [SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes")]
         internal static readonly TransactedRegistryKey ClassesRoot = TransactedRegistryKey.GetBaseKey(BaseRegistryKeys.HKEY_CLASSES_ROOT);
 
         
-        /// <summary>TransactedRegistry.Users
-        /// <para>This static method returns a TransactedRegistryKey object that represents the base
-        /// key HKEY_USERS. Because it is a base key, there is no transaction associated with
-        /// the returned TransactedRegistryKey. This means that values modified using the returned
-        /// TransactedRegistryKey are NOT modified within a transaction.</para>
-        /// <para>However, if the returned TransactedRegistryKey is used to create, open, or delete
-        /// subkeys, there must be a Transaction.Current and the resulting TransactedRegistryKey from those operations ARE associated with
-        /// the transaction.</para>
-        /// </summary>
+        
         // The TransactedRegistryKey's members cannot be changed.
         [SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes")]
         internal static readonly TransactedRegistryKey Users = TransactedRegistryKey.GetBaseKey(BaseRegistryKeys.HKEY_USERS);
 
         
-        /// <summary>TransactedRegistry.CurrentConfig
-        /// <para>This static method returns a TransactedRegistryKey object that represents the base
-        /// key HKEY_CURRENT_CONFIG. Because it is a base key, there is no transaction associated with
-        /// the returned TransactedRegistryKey. This means that values modified using the returned
-        /// TransactedRegistryKey are NOT modified within a transaction.</para>
-        /// <para>However, if the returned TransactedRegistryKey is used to create, open, or delete
-        /// subkeys, there must be a Transaction.Current and the resulting TransactedRegistryKey from those operations ARE associated with
-        /// the transaction.</para>
-        /// </summary>
+        
         // The TransactedRegistryKey's members cannot be changed.
         [SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes")]
         internal static readonly TransactedRegistryKey CurrentConfig = TransactedRegistryKey.GetBaseKey(BaseRegistryKeys.HKEY_CURRENT_CONFIG);

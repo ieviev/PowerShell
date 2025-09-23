@@ -10,39 +10,29 @@ using System.Windows.Input;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <summary>
-    /// Represents a toggle button used to expand or collapse elements.
-    /// </summary>
+    
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public partial class ExpanderButton : ToggleButton
     {
-        /// <summary>
-        /// Tooltip to show to expand.
-        /// </summary>
+        
         protected virtual string ExpandToolTip
         {
             get { return XamlLocalizableResources.AutoResXGen_ManagementList2_ToolTip_32; }
         }
 
-        /// <summary>
-        /// Tooltip to show to collapse.
-        /// </summary>
+        
         protected virtual string CollapseToolTip
         {
             get { return XamlLocalizableResources.CollapsingTabControl_ExpandButton_AutomationName; }
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ExpanderButton" /> class.
-        /// </summary>
+        
         public ExpanderButton()
         {
             // This constructor intentionally left blank
         }
 
-        /// <summary>
-        /// Invoked whenever the effective value of any dependency property on this <see cref="ExpanderButton"/> has been updated. The specific dependency property that changed is reported in the arguments parameter. Overrides <see cref="FrameworkElement.OnPropertyChanged"/>.
-        /// </summary>
+        
         /// <param name="e">The event data that describes the property that changed, as well as old and new values.</param>
         protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
         {
@@ -54,9 +44,7 @@ namespace Microsoft.Management.UI.Internal
             }
         }
 
-        /// <summary>
-        /// Called when the <see cref="ToggleButton.IsChecked"/> property changes.
-        /// </summary>
+        
         /// <param name="args">The event data that describes the property that changed, as well as old and new values.</param>
         protected void OnIsCheckedChanged(DependencyPropertyChangedEventArgs args)
         {
@@ -86,9 +74,7 @@ namespace Microsoft.Management.UI.Internal
             }
         }
 
-        /// <summary>
-        /// Called when it has keyboard focus.
-        /// </summary>
+        
         /// <param name="args">The event data that describes getting keyboard focus.</param>
         protected override void OnGotKeyboardFocus(KeyboardFocusChangedEventArgs args)
         {
@@ -96,9 +82,7 @@ namespace Microsoft.Management.UI.Internal
             ((ToolTip)this.ToolTip).IsOpen = true;
         }
 
-        /// <summary>
-        /// Called when it lost keyboard focus.
-        /// </summary>
+        
         /// <param name="args">The event data that describes losing keyboard focus.</param>
         protected override void OnLostKeyboardFocus(KeyboardFocusChangedEventArgs args)
         {

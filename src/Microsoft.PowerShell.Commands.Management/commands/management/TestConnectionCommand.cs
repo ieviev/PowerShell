@@ -16,9 +16,7 @@ using System.Threading.Tasks;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// The implementation of the "Test-Connection" cmdlet.
-    /// </summary>
+    
     [Cmdlet(VerbsDiagnostic.Test, "Connection", DefaultParameterSetName = DefaultPingParameterSet,
         HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097144")]
     [OutputType(typeof(PingStatus), ParameterSetName = new string[] { DefaultPingParameterSet })]
@@ -68,17 +66,12 @@ namespace Microsoft.PowerShell.Commands
 
         #region Parameters
 
-        /// <summary>
-        /// Gets or sets whether to do ping test.
-        /// Default is true.
-        /// </summary>
+        
         [Parameter(ParameterSetName = DefaultPingParameterSet)]
         [Parameter(ParameterSetName = RepeatPingParameterSet)]
         public SwitchParameter Ping { get; set; } = true;
 
-        /// <summary>
-        /// Gets or sets whether to force use of IPv4 protocol.
-        /// </summary>
+        
         [Parameter(ParameterSetName = DefaultPingParameterSet)]
         [Parameter(ParameterSetName = RepeatPingParameterSet)]
         [Parameter(ParameterSetName = TraceRouteParameterSet)]
@@ -86,9 +79,7 @@ namespace Microsoft.PowerShell.Commands
         [Parameter(ParameterSetName = TcpPortParameterSet)]
         public SwitchParameter IPv4 { get; set; }
 
-        /// <summary>
-        /// Gets or sets whether to force use of IPv6 protocol.
-        /// </summary>
+        
         [Parameter(ParameterSetName = DefaultPingParameterSet)]
         [Parameter(ParameterSetName = RepeatPingParameterSet)]
         [Parameter(ParameterSetName = TraceRouteParameterSet)]
@@ -96,9 +87,7 @@ namespace Microsoft.PowerShell.Commands
         [Parameter(ParameterSetName = TcpPortParameterSet)]
         public SwitchParameter IPv6 { get; set; }
 
-        /// <summary>
-        /// Gets or sets whether to do reverse DNS lookup to get names for IP addresses.
-        /// </summary>
+        
         [Parameter(ParameterSetName = DefaultPingParameterSet)]
         [Parameter(ParameterSetName = RepeatPingParameterSet)]
         [Parameter(ParameterSetName = TraceRouteParameterSet)]
@@ -106,23 +95,14 @@ namespace Microsoft.PowerShell.Commands
         [Parameter(ParameterSetName = TcpPortParameterSet)]
         public SwitchParameter ResolveDestination { get; set; }
 
-        /// <summary>
-        /// Gets the source from which to run the selected test.
-        /// The default is localhost.
-        /// Remoting is not yet implemented internally in the cmdlet.
-        /// </summary>
+        
         [Parameter(ParameterSetName = DefaultPingParameterSet)]
         [Parameter(ParameterSetName = RepeatPingParameterSet)]
         [Parameter(ParameterSetName = TraceRouteParameterSet)]
         [Parameter(ParameterSetName = TcpPortParameterSet)]
         public string Source { get; } = Dns.GetHostName();
 
-        /// <summary>
-        /// Gets or sets the number of times the Ping data packets can be forwarded by routers.
-        /// As gateways and routers transmit packets through a network, they decrement the Time-to-Live (TTL)
-        /// value found in the packet header.
-        /// The default (from Windows) is 128 hops.
-        /// </summary>
+        
         [Parameter(ParameterSetName = DefaultPingParameterSet)]
         [Parameter(ParameterSetName = RepeatPingParameterSet)]
         [Parameter(ParameterSetName = TraceRouteParameterSet)]
@@ -130,79 +110,51 @@ namespace Microsoft.PowerShell.Commands
         [Alias("Ttl", "TimeToLive", "Hops")]
         public int MaxHops { get; set; } = DefaultMaxHops;
 
-        /// <summary>
-        /// Gets or sets the number of ping attempts.
-        /// The default (from Windows) is 4 times.
-        /// </summary>
+        
         [Parameter(ParameterSetName = DefaultPingParameterSet)]
         [Parameter(ParameterSetName = TcpPortParameterSet)]
         [ValidateRange(ValidateRangeKind.Positive)]
         public int Count { get; set; } = 4;
 
-        /// <summary>
-        /// Gets or sets the delay between ping attempts.
-        /// The default (from Windows) is 1 second.
-        /// </summary>
+        
         [Parameter(ParameterSetName = DefaultPingParameterSet)]
         [Parameter(ParameterSetName = RepeatPingParameterSet)]
         [Parameter(ParameterSetName = TcpPortParameterSet)]
         [ValidateRange(ValidateRangeKind.Positive)]
         public int Delay { get; set; } = 1;
 
-        /// <summary>
-        /// Gets or sets the buffer size to send with the ping packet.
-        /// The default (from Windows) is 32 bytes.
-        /// Max value is 65500 (limitation imposed by Windows API).
-        /// </summary>
+        
         [Parameter(ParameterSetName = DefaultPingParameterSet)]
         [Parameter(ParameterSetName = RepeatPingParameterSet)]
         [Alias("Size", "Bytes", "BS")]
         [ValidateRange(0, 65500)]
         public int BufferSize { get; set; } = DefaultSendBufferSize;
 
-        /// <summary>
-        /// Gets or sets whether to prevent fragmentation of the ICMP packets.
-        /// Currently CoreFX not supports this on Unix.
-        /// </summary>
+        
         [Parameter(ParameterSetName = DefaultPingParameterSet)]
         [Parameter(ParameterSetName = RepeatPingParameterSet)]
         public SwitchParameter DontFragment { get; set; }
 
-        /// <summary>
-        /// Gets or sets whether to continue pinging until user presses Ctrl-C (or Int.MaxValue threshold reached).
-        /// </summary>
+        
         [Parameter(Mandatory = true, ParameterSetName = RepeatPingParameterSet)]
         [Parameter(ParameterSetName = TcpPortParameterSet)]
         [Alias("Continuous")]
         public SwitchParameter Repeat { get; set; }
 
-        /// <summary>
-        /// Gets or sets whether to enable quiet output mode, reducing output to a single simple value only.
-        /// By default, PingStatus, PingMtuStatus, or TraceStatus objects are emitted.
-        /// With this switch, standard ping and -Traceroute returns only true / false, and -MtuSize returns an integer.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter Quiet { get; set; }
 
-        /// <summary>
-        /// Gets or sets whether to enable detailed output mode while running a TCP connection test.
-        /// Without this flag, the TCP test will return a boolean result.
-        /// </summary>
+        
         [Parameter(ParameterSetName = TcpPortParameterSet)]
         public SwitchParameter Detailed;
 
-        /// <summary>
-        /// Gets or sets the timeout value for an individual ping in seconds.
-        /// If a response is not received in this time, no response is assumed.
-        /// The default (from Windows) is 5 seconds.
-        /// </summary>
+        
         [Parameter]
         [ValidateRange(ValidateRangeKind.Positive)]
         public int TimeoutSeconds { get; set; } = 5;
 
-        /// <summary>
-        /// Gets or sets the destination hostname or IP address.
-        /// </summary>
+        
         [Parameter(
             Mandatory = true,
             Position = 0,
@@ -212,34 +164,23 @@ namespace Microsoft.PowerShell.Commands
         [Alias("ComputerName")]
         public string[]? TargetName { get; set; }
 
-        /// <summary>
-        /// Gets or sets whether to detect Maximum Transmission Unit size.
-        /// When selected, only a single ping result is returned, indicating the maximum buffer size
-        /// the route to the destination can support without fragmenting the ICMP packets.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ParameterSetName = MtuSizeDetectParameterSet)]
         [Alias("MtuSizeDetect")]
         public SwitchParameter MtuSize { get; set; }
 
-        /// <summary>
-        /// Gets or sets whether to perform a traceroute test.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ParameterSetName = TraceRouteParameterSet)]
         public SwitchParameter Traceroute { get; set; }
 
-        /// <summary>
-        /// Gets or sets whether to perform a TCP connection test.
-        /// </summary>
+        
         [ValidateRange(0, 65535)]
         [Parameter(Mandatory = true, ParameterSetName = TcpPortParameterSet)]
         public int TcpPort { get; set; }
 
         #endregion Parameters
 
-        /// <summary>
-        /// BeginProcessing implementation for TestConnectionCommand.
-        /// Sets Count for different types of tests unless specified explicitly.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             switch (ParameterSetName)
@@ -253,9 +194,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Process a connection test.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             if (TargetName == null)
@@ -284,10 +223,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// On receiving the StopProcessing() request, the cmdlet will immediately cancel any in-progress ping request.
-        /// This allows a cancellation to occur during a ping request without having to wait for the timeout.
-        /// </summary>
+        
         protected override void StopProcessing()
         {
             _sender?.SendAsyncCancel();
@@ -902,18 +838,14 @@ namespace Microsoft.PowerShell.Commands
             return sendBuffer;
         }
 
-        /// <summary>
-        /// IDisposable implementation, dispose of any disposable resources created by the cmdlet.
-        /// </summary>
+        
         public void Dispose()
         {
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }
 
-        /// <summary>
-        /// Implementation of IDisposable for both manual Dispose() and finalizer-called disposal of resources.
-        /// </summary>
+        
         /// <param name="disposing">
         /// Specified as true when Dispose() was called, false if this is called from the finalizer.
         /// </param>
@@ -962,14 +894,10 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// The class contains information about the TCP connection test.
-        /// </summary>
+        
         public class TcpPortStatus
         {
-            /// <summary>
-            /// Initializes a new instance of the <see cref="TcpPortStatus"/> class.
-            /// </summary>
+            
             /// <param name="id">The number of this test.</param>
             /// <param name="source">The source machine name or IP of the test.</param>
             /// <param name="target">The target machine name or IP of the test.</param>
@@ -990,58 +918,35 @@ namespace Microsoft.PowerShell.Commands
                 Status = status;
             }
 
-            /// <summary>
-            /// Gets and sets the count of the test.
-            /// </summary>
+            
             public int Id { get; set; }
 
-            /// <summary>
-            /// Gets the source from which the test was sent.
-            /// </summary>
+            
             public string Source { get; }
 
-            /// <summary>
-            /// Gets the target name.
-            /// </summary>
+            
             public string Target { get; }
 
-            /// <summary>
-            /// Gets the resolved address for the target.
-            /// </summary>
+            
             public IPAddress TargetAddress { get; }
 
-            /// <summary>
-            /// Gets the port used for the test.
-            /// </summary>
+            
             public int Port { get; }
 
-            /// <summary>
-            /// Gets or sets the latancy of the connection.
-            /// </summary>
+            
             public long Latency { get; set; }
 
-            /// <summary>
-            /// Gets or sets the result of the test.
-            /// </summary>
+            
             public bool Connected { get; set; }
 
-            /// <summary>
-            /// Gets or sets the state of the socket after the test.
-            /// </summary>
+            
             public SocketError Status { get; set; }
         }
 
-        /// <summary>
-        /// The class contains information about the source, the destination and ping results.
-        /// </summary>
+        
         public class PingStatus
         {
-            /// <summary>
-            /// Initializes a new instance of the <see cref="PingStatus"/> class.
-            /// This constructor allows manually specifying the initial values for the cases where the PingReply
-            /// object may be missing some information, specifically in the instances where PingReply objects are
-            /// utilised to perform a traceroute.
-            /// </summary>
+            
             /// <param name="source">The source machine name or IP of the ping.</param>
             /// <param name="destination">The destination machine name of the ping.</param>
             /// <param name="reply">The response from the ping attempt.</param>
@@ -1061,9 +966,7 @@ namespace Microsoft.PowerShell.Commands
                 _latency = latency;
             }
 
-            /// <summary>
-            /// Initializes a new instance of the <see cref="PingStatus"/> class.
-            /// </summary>
+            
             /// <param name="source">The source machine name or IP of the ping.</param>
             /// <param name="destination">The destination machine name of the ping.</param>
             /// <param name="reply">The response from the ping attempt.</param>
@@ -1082,60 +985,38 @@ namespace Microsoft.PowerShell.Commands
 
             private readonly long _latency = -1;
 
-            /// <summary>
-            /// Gets the sequence number of this ping in the sequence of pings to the <see cref="Destination"/>
-            /// </summary>
+            
             public uint Ping { get; }
 
-            /// <summary>
-            /// Gets the source from which the ping was sent.
-            /// </summary>
+            
             public string Source { get; }
 
-            /// <summary>
-            /// Gets the destination which was pinged.
-            /// </summary>
+            
             public string Destination { get; }
 
-            /// <summary>
-            /// Gets the target address of the ping.
-            /// </summary>
+            
             public IPAddress? Address { get => Reply.Status == IPStatus.Success ? Reply.Address : null; }
 
-            /// <summary>
-            /// Gets the target address of the ping if one is available, or "*" if it is not.
-            /// </summary>
+            
             public string DisplayAddress { get => Address?.ToString() ?? "*"; }
 
-            /// <summary>
-            /// Gets the roundtrip time of the ping in milliseconds.
-            /// </summary>
+            
             public long Latency { get => _latency >= 0 ? _latency : Reply.RoundtripTime; }
 
-            /// <summary>
-            /// Gets the returned status of the ping.
-            /// </summary>
+            
             public IPStatus Status { get => Reply.Status; }
 
-            /// <summary>
-            /// Gets the size in bytes of the buffer data sent in the ping.
-            /// </summary>
+            
             public int BufferSize { get => _bufferSize >= 0 ? _bufferSize : Reply.Buffer.Length; }
 
-            /// <summary>
-            /// Gets the reply object from this ping.
-            /// </summary>
+            
             public PingReply Reply { get; }
         }
 
-        /// <summary>
-        /// The class contains information about the source, the destination and ping results.
-        /// </summary>
+        
         public class PingMtuStatus : PingStatus
         {
-            /// <summary>
-            /// Initializes a new instance of the <see cref="PingMtuStatus"/> class.
-            /// </summary>
+            
             /// <param name="source">The source machine name or IP of the ping.</param>
             /// <param name="destination">The destination machine name of the ping.</param>
             /// <param name="reply">The response from the ping attempt.</param>
@@ -1146,20 +1027,14 @@ namespace Microsoft.PowerShell.Commands
                 MtuSize = bufferSize;
             }
 
-            /// <summary>
-            /// Gets the maximum transmission unit size on the network path between the source and destination.
-            /// </summary>
+            
             public int MtuSize { get; }
         }
 
-        /// <summary>
-        /// The class contains an information about a trace route attempt.
-        /// </summary>
+        
         public class TraceStatus
         {
-            /// <summary>
-            /// Initializes a new instance of the <see cref="TraceStatus"/> class.
-            /// </summary>
+            
             /// <param name="hop">The hop number of this trace hop.</param>
             /// <param name="status">The PingStatus response from this trace hop.</param>
             /// <param name="source">The source computer name or IP address of the traceroute.</param>
@@ -1191,61 +1066,39 @@ namespace Microsoft.PowerShell.Commands
 
             private readonly PingStatus _status;
 
-            /// <summary>
-            /// Gets the number of the current hop / router.
-            /// </summary>
+            
             public int Hop { get; }
 
-            /// <summary>
-            /// Gets the hostname of the current hop point.
-            /// </summary>
+            
             /// <value></value>
             public string? Hostname { get; }
 
-            /// <summary>
-            /// Gets the sequence number of the ping in the sequence of pings to the hop point.
-            /// </summary>
+            
             public uint Ping { get => _status.Ping; }
 
-            /// <summary>
-            /// Gets the IP address of the current hop point.
-            /// </summary>
+            
             public IPAddress? HopAddress { get => _status.Address; }
 
-            /// <summary>
-            /// Gets the latency values of each ping to the current hop point.
-            /// </summary>
+            
             public long Latency { get => _status.Latency; }
 
-            /// <summary>
-            /// Gets the status of the traceroute hop.
-            /// </summary>
+            
             public IPStatus Status { get => _status.Status; }
 
-            /// <summary>
-            /// Gets the source address of the traceroute command.
-            /// </summary>
+            
             public string Source { get; }
 
-            /// <summary>
-            /// Gets the final destination hostname of the trace.
-            /// </summary>
+            
             public string Target { get; }
 
-            /// <summary>
-            /// Gets the final destination IP address of the trace.
-            /// </summary>
+            
             public IPAddress TargetAddress { get; }
 
-            /// <summary>
-            /// Gets the raw PingReply object received from the ping to this hop point.
-            /// </summary>
+            
             public PingReply Reply { get => _status.Reply; }
         }
 
-        /// <summary>
-        /// Finalizes an instance of the <see cref="TestConnectionCommand"/> class.
-        /// </summary>
+        
         ~TestConnectionCommand()
         {
             Dispose(disposing: false);

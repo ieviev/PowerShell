@@ -6,24 +6,17 @@ using System.Management.Automation;
 
 namespace Microsoft.PowerShell
 {
-    /// <summary>
-    /// PSUtilityPSSnapIn is a class for facilitating registry
-    /// of necessary information for PowerShell utility PSSnapin.
-    /// </summary>
+    
     [RunInstaller(true)]
     public sealed class PSUtilityPSSnapIn : PSSnapIn
     {
-        /// <summary>
-        /// Create an instance of this class.
-        /// </summary>
+        
         public PSUtilityPSSnapIn()
             : base()
         {
         }
 
-        /// <summary>
-        /// Get name of this PSSnapin.
-        /// </summary>
+        
         public override string Name
         {
             get
@@ -32,9 +25,7 @@ namespace Microsoft.PowerShell
             }
         }
 
-        /// <summary>
-        /// Get the default vendor string for this PSSnapin.
-        /// </summary>
+        
         public override string Vendor
         {
             get
@@ -43,9 +34,7 @@ namespace Microsoft.PowerShell
             }
         }
 
-        /// <summary>
-        /// Get resource information for vendor. This is a string of format: resourceBaseName,resourceName.
-        /// </summary>
+        
         public override string VendorResource
         {
             get
@@ -54,9 +43,7 @@ namespace Microsoft.PowerShell
             }
         }
 
-        /// <summary>
-        /// Get the default description string for this PSSnapin.
-        /// </summary>
+        
         public override string Description
         {
             get
@@ -65,9 +52,7 @@ namespace Microsoft.PowerShell
             }
         }
 
-        /// <summary>
-        /// Get resource information for description. This is a string of format: resourceBaseName,resourceName.
-        /// </summary>
+        
         public override string DescriptionResource
         {
             get

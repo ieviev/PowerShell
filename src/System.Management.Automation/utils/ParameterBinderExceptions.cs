@@ -7,18 +7,14 @@ using System.Runtime.Serialization;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// The exception thrown if the specified value can not be bound parameter of a command.
-    /// </summary>
+    
     public class ParameterBindingException : RuntimeException
     {
         #region Constructors
 
         #region Preferred constructors
 
-        /// <summary>
-        /// Constructs a ParameterBindingException.
-        /// </summary>
+        
         /// <param name="errorCategory">
         /// The category for the error.
         /// </param>
@@ -110,9 +106,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Constructs a ParameterBindingException.
-        /// </summary>
+        
         /// <param name="innerException">
         /// The inner exception.
         /// </param>
@@ -215,8 +209,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="innerException"></param>
         /// <param name="pbex"></param>
         /// <param name="resourceString"></param>
@@ -275,9 +268,7 @@ namespace System.Management.Automation
         #endregion Preferred constructors
 
         #region serialization
-        /// <summary>
-        /// Constructors a ParameterBindingException using serialized data.
-        /// </summary>
+        
         /// <param name="info">
         /// serialization information
         /// </param>
@@ -295,17 +286,13 @@ namespace System.Management.Automation
 
         #region Do Not Use
 
-        /// <summary>
-        /// Constructs a ParameterBindingException.
-        /// </summary>
+        
         /// <remarks>
         /// DO NOT USE!!!
         /// </remarks>
         public ParameterBindingException() : base() { }
 
-        /// <summary>
-        /// Constructors a ParameterBindingException.
-        /// </summary>
+        
         /// <param name="message">
         /// Message to be included in exception.
         /// </param>
@@ -314,9 +301,7 @@ namespace System.Management.Automation
         /// </remarks>
         public ParameterBindingException(string message) : base(message) { _message = message; }
 
-        /// <summary>
-        /// Constructs a ParameterBindingException.
-        /// </summary>
+        
         /// <param name="message">
         /// Message to be included in the exception.
         /// </param>
@@ -336,9 +321,7 @@ namespace System.Management.Automation
         #endregion Constructors
 
         #region Properties
-        /// <summary>
-        /// Gets the message for the exception.
-        /// </summary>
+        
         public override string Message
         {
             get { return _message ??= BuildMessage(); }
@@ -346,10 +329,7 @@ namespace System.Management.Automation
 
         private string _message;
 
-        /// <summary>
-        /// Gets the name of the parameter that the parameter binding
-        /// error was encountered on.
-        /// </summary>
+        
         public string ParameterName
         {
             get
@@ -360,9 +340,7 @@ namespace System.Management.Automation
 
         private readonly string _parameterName = string.Empty;
 
-        /// <summary>
-        /// Gets the type the parameter is expecting.
-        /// </summary>
+        
         public Type ParameterType
         {
             get
@@ -373,9 +351,7 @@ namespace System.Management.Automation
 
         private readonly Type _parameterType;
 
-        /// <summary>
-        /// Gets the Type that was specified as the parameter value.
-        /// </summary>
+        
         public Type TypeSpecified
         {
             get
@@ -386,9 +362,7 @@ namespace System.Management.Automation
 
         private readonly Type _typeSpecified;
 
-        /// <summary>
-        /// Gets the errorId of this ParameterBindingException.
-        /// </summary>
+        
         public string ErrorId
         {
             get
@@ -399,9 +373,7 @@ namespace System.Management.Automation
 
         private readonly string _errorId;
 
-        /// <summary>
-        /// Gets the line in the script at which the error occurred.
-        /// </summary>
+        
         public Int64 Line
         {
             get
@@ -412,9 +384,7 @@ namespace System.Management.Automation
 
         private readonly Int64 _line = Int64.MinValue;
 
-        /// <summary>
-        /// Gets the offset on the line in the script at which the error occurred.
-        /// </summary>
+        
         public Int64 Offset
         {
             get
@@ -425,9 +395,7 @@ namespace System.Management.Automation
 
         private readonly Int64 _offset = Int64.MinValue;
 
-        /// <summary>
-        /// Gets the invocation information about the command.
-        /// </summary>
+        
         public InvocationInfo CommandInvocation
         {
             get
@@ -478,9 +446,7 @@ namespace System.Management.Automation
     {
         #region Preferred constructors
 
-        /// <summary>
-        /// Constructs a ParameterBindingValidationException.
-        /// </summary>
+        
         /// <param name="errorCategory">
         /// The category for the error.
         /// </param>
@@ -548,9 +514,7 @@ namespace System.Management.Automation
         {
         }
 
-        /// <summary>
-        /// Constructs a ParameterBindingValidationException.
-        /// </summary>
+        
         /// <param name="innerException">
         /// The inner exception.
         /// </param>
@@ -632,9 +596,7 @@ namespace System.Management.Automation
         #endregion Preferred constructors
 
         #region serialization
-        /// <summary>
-        /// Constructs a ParameterBindingValidationException from serialized data.
-        /// </summary>
+        
         /// <param name="info">
         /// serialization information
         /// </param>
@@ -653,9 +615,7 @@ namespace System.Management.Automation
 
         #region Property
 
-        /// <summary>
-        /// Make the positional binding ignore this validation exception when it's set to true.
-        /// </summary>
+        
         /// <remarks>
         /// This property is only used internally in the positional binding phase
         /// </remarks>
@@ -673,9 +633,7 @@ namespace System.Management.Automation
     {
         #region Preferred constructors
 
-        /// <summary>
-        /// Constructs a ParameterBindingArgumentTransformationException.
-        /// </summary>
+        
         /// <param name="errorCategory">
         /// The category for the error.
         /// </param>
@@ -743,9 +701,7 @@ namespace System.Management.Automation
         {
         }
 
-        /// <summary>
-        /// Constructs a ParameterBindingArgumentTransformationException.
-        /// </summary>
+        
         /// <param name="innerException">
         /// The inner exception.
         /// </param>
@@ -822,9 +778,7 @@ namespace System.Management.Automation
         }
         #endregion Preferred constructors
         #region serialization
-        /// <summary>
-        /// Constructs a ParameterBindingArgumentTransformationException using serialized data.
-        /// </summary>
+        
         /// <param name="info">
         /// serialization information
         /// </param>
@@ -846,9 +800,7 @@ namespace System.Management.Automation
     {
         #region Preferred constructors
 
-        /// <summary>
-        /// Constructs a ParameterBindingParameterDefaultValueException.
-        /// </summary>
+        
         /// <param name="errorCategory">
         /// The category for the error.
         /// </param>
@@ -916,9 +868,7 @@ namespace System.Management.Automation
         {
         }
 
-        /// <summary>
-        /// Constructs a ParameterBindingParameterDefaultValueException.
-        /// </summary>
+        
         /// <param name="innerException">
         /// The inner exception.
         /// </param>
@@ -996,9 +946,7 @@ namespace System.Management.Automation
         #endregion Preferred constructors
 
         #region serialization
-        /// <summary>
-        /// Constructs a ParameterBindingParameterDefaultValueException using serialized data.
-        /// </summary>
+        
         /// <param name="info">
         /// serialization information
         /// </param>

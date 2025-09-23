@@ -18,20 +18,12 @@ namespace Microsoft.WSMan.Management
 {
     #region Test-WSMAN
 
-    /// <summary>
-    /// Issues an operation against the remote machine to ensure that the wsman
-    /// service is running.
-    /// </summary>
+    
     [Cmdlet(VerbsDiagnostic.Test, "WSMan", HelpUri = "https://go.microsoft.com/fwlink/?LinkId=2097114")]
     [OutputType(typeof(XmlElement))]
     public class TestWSManCommand : AuthenticatingWSManCommand, IDisposable
     {
-        /// <summary>
-        /// The following is the definition of the input parameter "ComputerName".
-        /// Executes the management operation on the specified computer. The default is
-        /// the local computer. Type the fully qualified domain name, NETBIOS name or IP
-        /// address to indicate the remote host.
-        /// </summary>
+        
         [Parameter(Position = 0, ValueFromPipeline = true)]
         [Alias("cn")]
         public string ComputerName
@@ -53,21 +45,7 @@ namespace Microsoft.WSMan.Management
 
         private string computername = null;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "Authentication".
-        /// This parameter takes a set of authentication methods the user can select
-        /// from. The available method are an enum called AuthenticationMechanism in the
-        /// System.Management.Automation.Runspaces namespace. The available options
-        /// should be as follows:
-        /// - Default : Use the default authentication (ad defined by the underlying
-        /// protocol) for establishing a remote connection.
-        /// - Negotiate
-        /// - Kerberos
-        /// - Basic:  Use basic authentication for establishing a remote connection.
-        /// -CredSSP: Use CredSSP authentication for establishing a remote connection
-        /// which will enable the user to perform credential delegation. (i.e. second
-        /// hop)
-        /// </summary>
+        
         /// <remarks>
         /// Overriding to use a different default than the one in AuthenticatingWSManCommand base class
         /// </remarks>
@@ -90,10 +68,7 @@ namespace Microsoft.WSMan.Management
 
         private AuthenticationMechanism authentication = AuthenticationMechanism.None;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "Port".
-        /// Specifies the port to be used when connecting to the ws management service.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "ComputerName")]
         [ValidateNotNullOrEmpty]
         [ValidateRange(1, int.MaxValue)]
@@ -106,12 +81,7 @@ namespace Microsoft.WSMan.Management
 
         private int port = 0;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "UseSSL".
-        /// Uses the Secure Sockets Layer (SSL) protocol to establish a connection to
-        /// the remote computer. If SSL is not available on the port specified by the
-        /// Port parameter, the command fails.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "ComputerName")]
         [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "SSL")]
         public SwitchParameter UseSSL
@@ -123,10 +93,7 @@ namespace Microsoft.WSMan.Management
 
         private SwitchParameter usessl;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "ApplicationName".
-        /// ApplicationName identifies the remote endpoint.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "ComputerName")]
         [ValidateNotNullOrEmpty]
         public string ApplicationName
@@ -138,9 +105,7 @@ namespace Microsoft.WSMan.Management
 
         private string applicationname = null;
 
-        /// <summary>
-        /// ProcessRecord method.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             WSManHelper helper = new WSManHelper(this);
@@ -181,9 +146,7 @@ namespace Microsoft.WSMan.Management
 
         #region IDisposable Members
 
-        /// <summary>
-        /// Public dispose method.
-        /// </summary>
+        
         public
         void
         Dispose()
@@ -191,9 +154,7 @@ namespace Microsoft.WSMan.Management
             // CleanUp();
             GC.SuppressFinalize(this);
         }
-        /// <summary>
-        /// Public dispose method.
-        /// </summary>
+        
         public
         void
         Dispose(IWSManSession sessionObject)

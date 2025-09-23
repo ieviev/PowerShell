@@ -139,10 +139,7 @@ namespace System.Management.Automation
 
         protected abstract void SetValueImpl(int index, object value);
 
-        /// <summary>
-        /// Sets the value at the given index for a tuple of the given size.  This set supports
-        /// walking through nested tuples to get the correct final index.
-        /// </summary>
+        
         private void SetNestedValue(int size, int index, object value)
         {
             if (size < MutableTuple.MaxSize)
@@ -169,10 +166,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the value at the given index for a tuple of the given size.  This get
-        /// supports walking through nested tuples to get the correct final index.
-        /// </summary>
+        
         private object GetNestedValue(int size, int index)
         {
             if (size < MutableTuple.MaxSize)
@@ -193,9 +187,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the unbound generic Tuple type which has at lease size slots or null if a large enough tuple is not available.
-        /// </summary>
+        
         private static Type GetTupleType(int size)
         {
             #region Generated Tuple Get From Size
@@ -246,13 +238,7 @@ namespace System.Management.Automation
             return null;
         }
 
-        /// <summary>
-        /// Creates a generic tuple with the specified types.
-        ///
-        /// If the number of slots fits within the maximum tuple size then we simply
-        /// create a single tuple.  If it's greater then we create nested tuples
-        /// (e.g. a Tuple`2 which contains a Tuple`128 and a Tuple`8 if we had a size of 136).
-        /// </summary>
+        
         public static Type MakeTupleType(params Type[] types)
         {
             // ContractUtils.RequiresNotNull(types, "types");
@@ -260,9 +246,7 @@ namespace System.Management.Automation
             return MakeTupleType(types, 0, types.Length);
         }
 
-        /// <summary>
-        /// Gets the number of usable slots in the provided Tuple type including slots available in nested tuples.
-        /// </summary>
+        
         public static int GetSize(Type tupleType)
         {
             // ContractUtils.RequiresNotNull(tupleType, "tupleType");
@@ -314,10 +298,7 @@ namespace System.Management.Automation
                 });
         }
 
-        /// <summary>
-        /// Creates a new instance of tupleType with the specified args.  If the tuple is a nested
-        /// tuple the values are added in their nested forms.
-        /// </summary>
+        
         public static MutableTuple MakeTuple(Type tupleType, Dictionary<string, int> nameToIndexMap, Func<MutableTuple> creator = null)
         {
             // ContractUtils.RequiresNotNull(tupleType, "tupleType");
@@ -330,9 +311,7 @@ namespace System.Management.Automation
             return res;
         }
 
-        /// <summary>
-        /// Gets the values from a tuple including unpacking nested values.
-        /// </summary>
+        
         public static object[] GetTupleValues(MutableTuple tuple)
         {
             // ContractUtils.RequiresNotNull(tuple, "tuple");
@@ -344,17 +323,13 @@ namespace System.Management.Automation
             return res.ToArray();
         }
 
-        /// <summary>
-        /// Gets the series of properties that needs to be accessed to access a logical item in a potentially nested tuple.
-        /// </summary>
+        
         public static IEnumerable<PropertyInfo> GetAccessPath(Type tupleType, int index)
         {
             return GetAccessProperties(tupleType, GetSize(tupleType), index);
         }
 
-        /// <summary>
-        /// Gets the series of properties that needs to be accessed to access a logical item in a potentially nested tuple.
-        /// </summary>
+        
         internal static IEnumerable<PropertyInfo> GetAccessProperties(Type tupleType, int size, int index)
         {
             // ContractUtils.RequiresNotNull(tupleType, "tupleType");
@@ -493,9 +468,7 @@ namespace System.Management.Automation
             get;
         }
 
-        /// <summary>
-        /// Provides an expression for creating a tuple with the specified values.
-        /// </summary>
+        
         public static Expression Create(params Expression[] values)
         {
             return CreateNew(MakeTupleType(values.Select(static x => x.Type).ToArray()), 0, values.Length, values);

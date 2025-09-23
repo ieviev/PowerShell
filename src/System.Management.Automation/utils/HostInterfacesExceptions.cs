@@ -6,17 +6,12 @@ using System.Runtime.Serialization;
 
 namespace System.Management.Automation.Host
 {
-    /// <summary>
-    /// Defines the exception thrown when the Host cannot complete an operation
-    /// such as checking whether there is any input available.
-    /// </summary>
+    
     public
     class HostException : RuntimeException
     {
         #region ctors
-        /// <summary>
-        /// Initializes a new instance of the HostException class.
-        /// </summary>
+        
         public
         HostException()
             : base(StringUtil.Format(HostInterfaceExceptionsStrings.DefaultCtorMessageTemplate, typeof(HostException).FullName))
@@ -24,9 +19,7 @@ namespace System.Management.Automation.Host
             SetDefaultErrorRecord();
         }
 
-        /// <summary>
-        /// Initializes a new instance of the HostException class and defines the error message.
-        /// </summary>
+        
         /// <param name="message">
         /// The error message that explains the reason for the exception.
         /// </param>
@@ -37,10 +30,7 @@ namespace System.Management.Automation.Host
             SetDefaultErrorRecord();
         }
 
-        /// <summary>
-        /// Initializes a new instance of the HostException class and defines the error message and
-        /// inner exception.
-        /// </summary>
+        
         /// <param name="message">
         /// The error message that explains the reason for the exception.
         /// </param>
@@ -56,10 +46,7 @@ namespace System.Management.Automation.Host
             SetDefaultErrorRecord();
         }
 
-        /// <summary>
-        /// Initializes a new instance of the HostException class and defines the error message,
-        /// inner exception, the error ID, and the error category.
-        /// </summary>
+        
         /// <param name="message">
         /// The error message that explains the reason for the exception.
         /// </param>
@@ -90,10 +77,7 @@ namespace System.Management.Automation.Host
             SetErrorCategory(errorCategory);
         }
 
-        /// <summary>
-        /// Initializes a new instance of the HostException class and defines the SerializationInfo
-        /// and the StreamingContext.
-        /// </summary>
+        
         /// <param name="info">
         /// The object that holds the serialized object data.
         /// </param>
@@ -118,16 +102,12 @@ namespace System.Management.Automation.Host
 
     }
 
-    /// <summary>
-    /// Defines the exception thrown when an error occurs from prompting for a command parameter.
-    /// </summary>    
+    
     public
     class PromptingException : HostException
     {
         #region ctors
-        /// <summary>
-        /// Initializes a new instance of the PromptingException class.
-        /// </summary>
+        
         public
         PromptingException()
             : base(StringUtil.Format(HostInterfaceExceptionsStrings.DefaultCtorMessageTemplate, typeof(PromptingException).FullName))
@@ -135,9 +115,7 @@ namespace System.Management.Automation.Host
             SetDefaultErrorRecord();
         }
 
-        /// <summary>
-        /// Initializes a new instance of the PromptingException class and defines the error message.
-        /// </summary>
+        
         /// <param name="message">
         /// The error message that explains the reason for the exception.
         /// </param>
@@ -148,10 +126,7 @@ namespace System.Management.Automation.Host
             SetDefaultErrorRecord();
         }
 
-        /// <summary>
-        /// Initializes a new instance of the PromptingException class and defines the error message and
-        /// inner exception.
-        /// </summary>
+        
         /// <param name="message">
         /// The error message that explains the reason for the exception.
         /// </param>
@@ -167,10 +142,7 @@ namespace System.Management.Automation.Host
             SetDefaultErrorRecord();
         }
 
-        /// <summary>
-        /// Initializes a new instance of the PromptingException class and defines the error message,
-        /// inner exception, the error ID, and the error category.
-        /// </summary>
+        
         /// <param name="message">
         /// The error message that explains the reason for the exception.
         /// </param>
@@ -199,10 +171,7 @@ namespace System.Management.Automation.Host
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the HostException class and defines the SerializationInfo
-        /// and the StreamingContext.
-        /// </summary>
+        
         /// <param name="info">
         /// The object that holds the serialized object data.
         /// </param>

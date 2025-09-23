@@ -7,17 +7,12 @@ using Dbg = System.Management.Automation;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Exposes the Property noun of the Cmdlet Providers to the Cmdlet base class. The methods of this class
-    /// use the providers to perform operations.
-    /// </summary>
+    
     public sealed class PropertyCmdletProviderIntrinsics
     {
         #region Constructors
 
-        /// <summary>
-        /// Hide the default constructor since we always require an instance of SessionState.
-        /// </summary>
+        
         private PropertyCmdletProviderIntrinsics()
         {
             Dbg.Diagnostics.Assert(
@@ -25,9 +20,7 @@ namespace System.Management.Automation
                 "This constructor should never be called. Only the constructor that takes an instance of SessionState should be called.");
         }
 
-        /// <summary>
-        /// Constructs a facade over the "real" session state API.
-        /// </summary>
+        
         /// <param name="cmdlet">
         /// An instance of the cmdlet.
         /// </param>
@@ -45,9 +38,7 @@ namespace System.Management.Automation
             _sessionState = cmdlet.Context.EngineSessionState;
         }
 
-        /// <summary>
-        /// Constructs a facade over the "real" session state API.
-        /// </summary>
+        
         /// <param name="sessionState">
         /// An instance of the "real" session state.
         /// </param>
@@ -70,9 +61,7 @@ namespace System.Management.Automation
 
         #region GetProperty
 
-        /// <summary>
-        /// Gets the specified properties from the specified item(s)
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to get the properties from.
         /// </param>
@@ -117,9 +106,7 @@ namespace System.Management.Automation
             return _sessionState.GetProperty(new string[] { path }, providerSpecificPickList, false);
         }
 
-        /// <summary>
-        /// Gets the specified properties from the specified item(s)
-        /// </summary>
+        
         /// <param name="path">
         /// The path(s) to the item(s) to get the properties from.
         /// </param>
@@ -168,9 +155,7 @@ namespace System.Management.Automation
             return _sessionState.GetProperty(path, providerSpecificPickList, literalPath);
         }
 
-        /// <summary>
-        /// Gets the specified properties from the specified item(s)
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to get the properties from.
         /// </param>
@@ -220,9 +205,7 @@ namespace System.Management.Automation
             _sessionState.GetProperty(new string[] { path }, providerSpecificPickList, context);
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the get-itemproperty cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -272,9 +255,7 @@ namespace System.Management.Automation
 
         #region SetProperty
 
-        /// <summary>
-        /// Sets the specified properties on the specified item(s)
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to set the properties on.
         /// </param>
@@ -317,9 +298,7 @@ namespace System.Management.Automation
             return _sessionState.SetProperty(new string[] { path }, propertyValue, false, false);
         }
 
-        /// <summary>
-        /// Sets the specified properties on the specified item(s)
-        /// </summary>
+        
         /// <param name="path">
         /// The path(s) to the item(s) to set the properties on.
         /// </param>
@@ -370,9 +349,7 @@ namespace System.Management.Automation
             return _sessionState.SetProperty(path, propertyValue, force, literalPath);
         }
 
-        /// <summary>
-        /// Sets the specified properties on the specified item(s)
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to set the properties on.
         /// </param>
@@ -419,9 +396,7 @@ namespace System.Management.Automation
             _sessionState.SetProperty(new string[] { path }, propertyValue, context);
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the set-itemproperty cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -470,9 +445,7 @@ namespace System.Management.Automation
 
         #region ClearProperty
 
-        /// <summary>
-        /// Clear the specified properties from the specified item(s)
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to clear the properties from.
         /// </param>
@@ -512,9 +485,7 @@ namespace System.Management.Automation
             _sessionState.ClearProperty(new string[] { path }, propertyToClear, false, false);
         }
 
-        /// <summary>
-        /// Clear the specified properties from the specified item(s)
-        /// </summary>
+        
         /// <param name="path">
         /// The path(s) to the item(s) to clear the properties from.
         /// </param>
@@ -562,9 +533,7 @@ namespace System.Management.Automation
             _sessionState.ClearProperty(path, propertyToClear, force, literalPath);
         }
 
-        /// <summary>
-        /// Clears the specified properties from the specified item(s)
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to clear the properties from.
         /// </param>
@@ -608,9 +577,7 @@ namespace System.Management.Automation
             _sessionState.ClearProperty(new string[] { path }, propertyToClear, context);
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the clear-itemproperty cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -659,9 +626,7 @@ namespace System.Management.Automation
 
         #region NewProperty
 
-        /// <summary>
-        /// Creates a new property on the specified item.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item on which the new property should be created.
         /// </param>
@@ -713,9 +678,7 @@ namespace System.Management.Automation
             return _sessionState.NewProperty(new string[] { path }, propertyName, propertyTypeName, value, false, false);
         }
 
-        /// <summary>
-        /// Creates a new property on the specified item.
-        /// </summary>
+        
         /// <param name="path">
         /// The path(s) to the item(s0 on which the new property should be created.
         /// </param>
@@ -775,9 +738,7 @@ namespace System.Management.Automation
             return _sessionState.NewProperty(path, propertyName, propertyTypeName, value, force, literalPath);
         }
 
-        /// <summary>
-        /// Creates a new property on the specified item.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item on which the new property should be created.
         /// </param>
@@ -834,9 +795,7 @@ namespace System.Management.Automation
             _sessionState.NewProperty(new string[] { path }, propertyName, type, value, context);
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the new-itemproperty cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -893,9 +852,7 @@ namespace System.Management.Automation
 
         #region RemoveProperty
 
-        /// <summary>
-        /// Removes a property from the specified item(s)
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item(s) on which the property should be removed.
         /// </param>
@@ -933,9 +890,7 @@ namespace System.Management.Automation
             _sessionState.RemoveProperty(new string[] { path }, propertyName, false, false);
         }
 
-        /// <summary>
-        /// Removes a property from the specified item(s)
-        /// </summary>
+        
         /// <param name="path">
         /// The path(s) to the item(s) on which the property should be removed.
         /// </param>
@@ -979,9 +934,7 @@ namespace System.Management.Automation
             _sessionState.RemoveProperty(path, propertyName, force, literalPath);
         }
 
-        /// <summary>
-        /// Removes a property from the specified item(s)
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item(s) on which the property should be removed.
         /// </param>
@@ -1025,9 +978,7 @@ namespace System.Management.Automation
             _sessionState.RemoveProperty(new string[] { path }, propertyName, context);
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the remove-itemproperty cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -1076,9 +1027,7 @@ namespace System.Management.Automation
 
         #region RenameProperty
 
-        /// <summary>
-        /// Renames a property on the specified item(s)
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item(s) on which the property should be renamed.
         /// </param>
@@ -1126,9 +1075,7 @@ namespace System.Management.Automation
             return _sessionState.RenameProperty(new string[] { path }, sourceProperty, destinationProperty, false, false);
         }
 
-        /// <summary>
-        /// Renames a property on the specified item(s)
-        /// </summary>
+        
         /// <param name="path">
         /// The path(s) to the item(s) on which the property should be renamed.
         /// </param>
@@ -1184,9 +1131,7 @@ namespace System.Management.Automation
             return _sessionState.RenameProperty(path, sourceProperty, destinationProperty, force, literalPath);
         }
 
-        /// <summary>
-        /// Renames a property on the specified item(s)
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item(s) on which the property should be renamed.
         /// </param>
@@ -1239,9 +1184,7 @@ namespace System.Management.Automation
             _sessionState.RenameProperty(new string[] { path }, sourceProperty, destinationProperty, context);
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the rename-itemproperty cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -1294,9 +1237,7 @@ namespace System.Management.Automation
 
         #region CopyProperty
 
-        /// <summary>
-        /// Copies a property on the specified item(s)
-        /// </summary>
+        
         /// <param name="sourcePath">
         /// The path to the item(s) on which the property should be copied.
         /// </param>
@@ -1356,9 +1297,7 @@ namespace System.Management.Automation
                     false, false);
         }
 
-        /// <summary>
-        /// Copies a property on the specified item(s)
-        /// </summary>
+        
         /// <param name="sourcePath">
         /// The path(s) to the item(s) on which the property should be copied.
         /// </param>
@@ -1427,9 +1366,7 @@ namespace System.Management.Automation
                     literalPath);
         }
 
-        /// <summary>
-        /// Copies a property on the specified item(s)
-        /// </summary>
+        
         /// <param name="sourcePath">
         /// The path to the item(s) on which the property should be copied.
         /// </param>
@@ -1493,9 +1430,7 @@ namespace System.Management.Automation
                 context);
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the copy-itemproperty cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -1553,9 +1488,7 @@ namespace System.Management.Automation
 
         #region MoveProperty
 
-        /// <summary>
-        /// Moves a property on the specified item(s)
-        /// </summary>
+        
         /// <param name="sourcePath">
         /// The path to the item(s) on which the property should be moved.
         /// </param>
@@ -1619,9 +1552,7 @@ namespace System.Management.Automation
                     false);
         }
 
-        /// <summary>
-        /// Moves a property on the specified item(s)
-        /// </summary>
+        
         /// <param name="sourcePath">
         /// The path(s) to the item(s) on which the property should be moved.
         /// </param>
@@ -1693,9 +1624,7 @@ namespace System.Management.Automation
                     literalPath);
         }
 
-        /// <summary>
-        /// Moves a property on the specified item(s)
-        /// </summary>
+        
         /// <param name="sourcePath">
         /// The path to the item(s) on which the property should be moved.
         /// </param>
@@ -1762,9 +1691,7 @@ namespace System.Management.Automation
                 context);
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the copy-itemproperty cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>

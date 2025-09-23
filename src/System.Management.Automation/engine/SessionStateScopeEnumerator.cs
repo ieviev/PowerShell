@@ -8,10 +8,7 @@ namespace System.Management.Automation
 {
     internal sealed class SessionStateScopeEnumerator : IEnumerator<SessionStateScope>, IEnumerable<SessionStateScope>
     {
-        /// <summary>
-        /// Constructs an enumerator for enumerating through the session state scopes
-        /// using the appropriate scoping rules (default to dynamic scoping).
-        /// </summary>
+        
         /// <param name="scope">
         ///   The starting scope to start the enumeration from.
         /// </param>
@@ -21,9 +18,7 @@ namespace System.Management.Automation
             _initialScope = scope;
         }
 
-        /// <summary>
-        /// Uses the proper scoping rules to get the next scope to do the lookup in.
-        /// </summary>
+        
         /// <returns>
         /// True if the enumerator was advanced to the next scope, or false otherwise.
         /// </returns>
@@ -40,17 +35,13 @@ namespace System.Management.Automation
             return (_currentEnumeratedScope != null);
         }
 
-        /// <summary>
-        /// Sets the enumerator to before the first scope.
-        /// </summary>
+        
         public void Reset()
         {
             _currentEnumeratedScope = null;
         }
 
-        /// <summary>
-        /// Gets the current lookup scope.
-        /// </summary>
+        
         /// <exception cref="InvalidOperationException">
         /// The enumerator is positioned before the first element of the
         /// collection or after the last element.
@@ -76,9 +67,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the IEnumerator for this class.
-        /// </summary>
+        
         /// <returns>
         /// The IEnumerator interface for this class.
         /// </returns>

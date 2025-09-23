@@ -12,9 +12,7 @@ using Dbg = System.Management.Automation.Diagnostics;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Searcher class for finding PS classes on the system.
-    /// </summary>
+    
     internal class PSClassSearcher : IEnumerable<PSClassInfo>, IEnumerator<PSClassInfo>
     {
         internal PSClassSearcher(
@@ -46,45 +44,35 @@ namespace System.Management.Automation
 
         #region public methods
 
-        /// <summary>
-        /// Reset the Iterator.
-        /// </summary>
+        
         public void Reset()
         {
             _currentMatch = null;
             _matchingClass = null;
         }
 
-        /// <summary>
-        /// Reset and dispose the Iterator.
-        /// </summary>
+        
         public void Dispose()
         {
             Reset();
             GC.SuppressFinalize(this);
         }
 
-        /// <summary>
-        /// Get the Enumerator.
-        /// </summary>
+        
         /// <returns></returns>
         IEnumerator<PSClassInfo> IEnumerable<PSClassInfo>.GetEnumerator()
         {
             return this;
         }
 
-        /// <summary>
-        /// Get the Enumerator.
-        /// </summary>
+        
         /// <returns></returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
             return this;
         }
 
-        /// <summary>
-        /// Move to the Next value in the enumerator.
-        /// </summary>
+        
         /// <returns></returns>
         public bool MoveNext()
         {
@@ -96,9 +84,7 @@ namespace System.Management.Automation
             return false;
         }
 
-        /// <summary>
-        /// Return the current PSClassInfo.
-        /// </summary>
+        
         PSClassInfo IEnumerator<PSClassInfo>.Current
         {
             get
@@ -107,9 +93,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Return the current PSClassInfo as object.
-        /// </summary>
+        
         object IEnumerator.Current
         {
             get
@@ -122,10 +106,7 @@ namespace System.Management.Automation
 
         #region private methods
 
-        /// <summary>
-        /// Get all modules and find the matching type
-        /// When found add them to the enumerator. If we have already got it, return the next resource.
-        /// </summary>
+        
         /// <returns>Next PSClassInfo object or null if none are found.</returns>
         private PSClassInfo GetNextClass()
         {
@@ -201,10 +182,7 @@ namespace System.Management.Automation
             return matchFound;
         }
 
-        /// <summary>
-        /// Convert the cacheItem to a PSClassInfo object.
-        /// For this, we call Get-Module -List with module name.
-        /// </summary>
+        
         /// <param name="classNameMatcher">Wildcard pattern matcher for comparing class name.</param>
         /// <param name="modulePath">Path to the module where the class is defined.</param>
         /// <returns>Converted PSClassInfo object.</returns>

@@ -7,19 +7,11 @@ using System.Security;
 
 namespace Microsoft.PowerShell
 {
-    /// <summary>
-    /// ConsoleHostUserInterface implements console-mode user interface for powershell.
-    /// </summary>
+    
     internal partial
     class ConsoleHostUserInterface : System.Management.Automation.Host.PSHostUserInterface
     {
-        /// <summary>
-        /// Prompt for credentials.
-        ///
-        /// In future, when we have Credential object from the security team,
-        /// this function will be modified to prompt using secure-path
-        /// if so configured.
-        /// </summary>
+        
         /// <param name="userName">Name of the user whose creds are to be prompted for. If set to null or empty string, the function will prompt for user name first.</param>
         /// <param name="targetName">Name of the target for which creds are being collected.</param>
         /// <param name="message">Message to be displayed.</param>
@@ -39,9 +31,7 @@ namespace Microsoft.PowerShell
                                          PSCredentialUIOptions.Default);
         }
 
-        /// <summary>
-        /// Prompt for credentials.
-        /// </summary>
+        
         /// <param name="userName">Name of the user whose creds are to be prompted for. If set to null or empty string, the function will prompt for user name first.</param>
         /// <param name="targetName">Name of the target for which creds are being collected.</param>
         /// <param name="message">Message to be displayed.</param>

@@ -10,11 +10,7 @@ using Dbg = System.Management.Automation;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// This provider is the data accessor for shell aliases. It uses
-    /// the SessionStateProviderBase as the base class to produce a view on
-    /// session state data.
-    /// </summary>
+    
     [CmdletProvider(AliasProvider.ProviderName, ProviderCapabilities.ShouldProcess)]
     [OutputType(typeof(AliasInfo), ProviderCmdlet = ProviderCmdlet.SetItem)]
     [OutputType(typeof(AliasInfo), ProviderCmdlet = ProviderCmdlet.RenameItem)]
@@ -23,17 +19,12 @@ namespace Microsoft.PowerShell.Commands
     [OutputType(typeof(AliasInfo), ProviderCmdlet = ProviderCmdlet.NewItem)]
     public sealed class AliasProvider : SessionStateProviderBase
     {
-        /// <summary>
-        /// Gets the name of the provider.
-        /// </summary>
+        
         public const string ProviderName = "Alias";
 
         #region Constructor
 
-        /// <summary>
-        /// The constructor for the provider that exposes variables to the user
-        /// as drives.
-        /// </summary>
+        
         public AliasProvider()
         {
         }
@@ -42,9 +33,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region DriveCmdletProvider overrides
 
-        /// <summary>
-        /// Initializes the alias drive.
-        /// </summary>
+        
         /// <returns>
         /// An array of a single PSDriveInfo object representing the alias drive.
         /// </returns>
@@ -69,9 +58,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Dynamic Parameters
 
-        /// <summary>
-        /// Gets the dynamic parameters for the NewItem cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// Ignored.
         /// </param>
@@ -90,9 +77,7 @@ namespace Microsoft.PowerShell.Commands
             return new AliasProviderDynamicParameters();
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the NewItem cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// Ignored.
         /// </param>
@@ -112,9 +97,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region protected members
 
-        /// <summary>
-        /// Gets a alias from session state.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the alias to retrieve.
         /// </param>
@@ -132,10 +115,7 @@ namespace Microsoft.PowerShell.Commands
             return value;
         }
 
-        /// <summary>
-        /// Since items are often more than their value, this method should
-        /// be overridden to provide the value for an item.
-        /// </summary>
+        
         /// <param name="item">
         /// The item to extract the value from.
         /// </param>
@@ -163,9 +143,7 @@ namespace Microsoft.PowerShell.Commands
             return value;
         }
 
-        /// <summary>
-        /// Sets the alias of the specified name to the specified value.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the alias to set.
         /// </param>
@@ -250,9 +228,7 @@ namespace Microsoft.PowerShell.Commands
         }
 #pragma warning restore 0162
 
-        /// <summary>
-        /// Removes the specified alias from session state.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the alias to remove from session state.
         /// </param>
@@ -265,9 +241,7 @@ namespace Microsoft.PowerShell.Commands
             SessionState.Internal.RemoveAlias(name, Force);
         }
 
-        /// <summary>
-        /// Gets a flattened view of the alias in session state.
-        /// </summary>
+        
         /// <returns>
         /// An IDictionary representing the flattened view of the aliases in
         /// session state.
@@ -277,10 +251,7 @@ namespace Microsoft.PowerShell.Commands
             return (IDictionary)SessionState.Internal.GetAliasTable();
         }
 
-        /// <summary>
-        /// Determines if the item can be renamed. Derived classes that need
-        /// to perform a check should override this method.
-        /// </summary>
+        
         /// <param name="item">
         /// The item to verify if it can be renamed.
         /// </param>
@@ -316,14 +287,10 @@ namespace Microsoft.PowerShell.Commands
         #endregion protected members
     }
 
-    /// <summary>
-    /// The dynamic parameter object for the AliasProvider SetItem and NewItem commands.
-    /// </summary>
+    
     public class AliasProviderDynamicParameters
     {
-        /// <summary>
-        /// Gets or sets the option parameter for the alias.
-        /// </summary>
+        
         [Parameter]
         public ScopedItemOptions Options
         {
@@ -341,9 +308,7 @@ namespace Microsoft.PowerShell.Commands
 
         private ScopedItemOptions _options;
 
-        /// <summary>
-        /// Determines if the Options parameter was set.
-        /// </summary>
+        
         /// <value></value>
         internal bool OptionsSet
         {

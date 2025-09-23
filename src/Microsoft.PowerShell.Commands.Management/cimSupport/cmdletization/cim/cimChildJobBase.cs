@@ -18,9 +18,7 @@ using Dbg = System.Management.Automation.Diagnostics;
 
 namespace Microsoft.PowerShell.Cmdletization.Cim
 {
-    /// <summary>
-    /// Base class for all child jobs that wrap CIM operations.
-    /// </summary>
+    
     internal abstract class CimChildJobBase<T> :
         StartableJob,
         IObserver<T>
@@ -228,9 +226,7 @@ namespace Microsoft.PowerShell.Cmdletization.Cim
             }
         }
 
-        /// <summary>
-        /// Indicates a location where this job is running.
-        /// </summary>
+        
         public override string Location
         {
             get
@@ -248,9 +244,7 @@ namespace Microsoft.PowerShell.Cmdletization.Cim
             }
         }
 
-        /// <summary>
-        /// Status message associated with the Job.
-        /// </summary>
+        
         public override string StatusMessage
         {
             get
@@ -259,9 +253,7 @@ namespace Microsoft.PowerShell.Cmdletization.Cim
             }
         }
 
-        /// <summary>
-        /// Indicates if job has more data available.
-        /// </summary>
+        
         public override bool HasMoreData
         {
             get
@@ -539,9 +531,7 @@ namespace Microsoft.PowerShell.Cmdletization.Cim
 
         private readonly CancellationTokenSource _cancellationTokenSource = new();
 
-        /// <summary>
-        /// Stops this job.
-        /// </summary>
+        
         public override void StopJob()
         {
             lock (_jobStateLock)

@@ -46,9 +46,7 @@ namespace System.Management.Automation.Internal
                 | (FileAttributes)FILE_ATTRIBUTE_RECALL_ON_OPEN;
         }
 
-        /// <summary>
-        /// Check if a directory is likely a localized resources folder.
-        /// </summary>
+        
         /// <param name="dir">Directory to check if it is a possible resource folder.</param>
         /// <returns>True if the directory name matches a culture.</returns>
         internal static bool IsPossibleResourceDirectory(string dir)
@@ -80,10 +78,7 @@ namespace System.Management.Automation.Internal
             return false;
         }
 
-        /// <summary>
-        /// Get all module files by searching the given directory recursively.
-        /// All sub-directories that could be a module folder will be searched.
-        /// </summary>
+        
         internal static IEnumerable<string> GetAllAvailableModuleFiles(string topDirectoryToCheck)
         {
             if (!Directory.Exists(topDirectoryToCheck)) { yield break; }
@@ -124,10 +119,7 @@ namespace System.Management.Automation.Internal
             }
         }
 
-        /// <summary>
-        /// Check if the CompatiblePSEditions field of a given module
-        /// declares compatibility with the running PowerShell edition.
-        /// </summary>
+        
         /// <param name="moduleManifestPath">The path to the module manifest being checked.</param>
         /// <param name="compatiblePSEditions">The value of the CompatiblePSEditions field of the module manifest.</param>
         /// <returns>True if the module is compatible with the running PowerShell edition, false otherwise.</returns>
@@ -199,10 +191,7 @@ namespace System.Management.Automation.Internal
             }
         }
 
-        /// <summary>
-        /// Get a list of module files from the given directory without recursively searching all sub-directories.
-        /// This method assumes the given directory is a module folder or a version sub-directory of a module folder.
-        /// </summary>
+        
         internal static List<string> GetModuleFilesFromAbsolutePath(string directory)
         {
             List<string> result = new List<string>();
@@ -258,10 +247,7 @@ namespace System.Management.Automation.Internal
             return result;
         }
 
-        /// <summary>
-        /// Get a list of the available module files from the given directory.
-        /// Search all module folders under the specified directory, but do not search sub-directories under a module folder.
-        /// </summary>
+        
         internal static IEnumerable<string> GetDefaultAvailableModuleFiles(string topDirectoryToCheck)
         {
             if (!Directory.Exists(topDirectoryToCheck)) { yield break; }
@@ -345,9 +331,7 @@ namespace System.Management.Automation.Internal
             }
         }
 
-        /// <summary>
-        /// Gets the list of versions under the specified module base path in descending sorted order.
-        /// </summary>
+        
         /// <param name="moduleBase">Module base path.</param>
         /// <returns>Sorted list of versions.</returns>
         internal static List<Version> GetModuleVersionSubfolders(string moduleBase)
@@ -425,9 +409,7 @@ namespace System.Management.Automation.Internal
 #endif
         }
 
-        /// <summary>
-        /// Gets a list of fuzzy matching commands and their scores.
-        /// </summary>
+        
         /// <param name="pattern">Command pattern.</param>
         /// <param name="context">Execution context.</param>
         /// <param name="commandOrigin">Command origin.</param>
@@ -446,9 +428,7 @@ namespace System.Management.Automation.Internal
             }
         }
 
-        /// <summary>
-        /// Gets a list of matching commands.
-        /// </summary>
+        
         /// <param name="pattern">Command pattern.</param>
         /// <param name="context">Execution context.</param>
         /// <param name="commandOrigin">Command origin.</param>
@@ -626,9 +606,7 @@ namespace System.Management.Automation.Internal
             }
         }
 
-        /// <summary>
-        /// Returns abbreviated version of a command name.
-        /// </summary>
+        
         /// <param name="commandName">Name of the command to transform.</param>
         /// <returns>Abbreviated version of the command name.</returns>
         internal static string AbbreviateName(string commandName)

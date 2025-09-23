@@ -8,18 +8,13 @@ using Microsoft.PowerShell.Commands.Internal;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// Defines the implementation of the 'Get-Clipboard' cmdlet.
-    /// This cmdlet get the content from system clipboard.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Get, "Clipboard", HelpUri = "https://go.microsoft.com/fwlink/?LinkId=2109905")]
     [Alias("gcb")]
     [OutputType(typeof(string))]
     public class GetClipboardCommand : PSCmdlet
     {
-        /// <summary>
-        /// Property that sets raw parameter. This will allow clipboard return text or file list as one string.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter Raw
         {
@@ -36,17 +31,13 @@ namespace Microsoft.PowerShell.Commands
 
         private bool _raw;
 
-        /// <summary>
-        /// This method implements the ProcessRecord method for Get-Clipboard command.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             this.WriteObject(GetClipboardContentAsText(), true);
         }
 
-        /// <summary>
-        /// Returns the clipboard content as text format.
-        /// </summary>
+        
         /// <returns>Array of strings representing content from clipboard.</returns>
         private List<string> GetClipboardContentAsText()
         {

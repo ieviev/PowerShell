@@ -129,11 +129,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Creates or opens a file, file stream, directory, physical disk, volume, console buffer,
-        /// tape drive, communications resource, mailslot, or named pipe. The function returns a
-        /// handle that can be used to access the object.
-        /// </summary>
+        
         /// <param name="lpFileName">
         /// The name of the object to be created or opened.
         /// In the ANSI version of this function, the name is limited to MAX_PATH characters.
@@ -218,9 +214,7 @@ namespace System.Management.Automation
             FileAttributes dwFlagsAndAttributes,
             IntPtr hTemplateFile);
 
-        /// <summary>
-        /// Closes an open object handle.
-        /// </summary>
+        
         /// <param name="handle">
         /// A valid handle to an open object.
         /// </param>
@@ -264,11 +258,7 @@ namespace System.Management.Automation
             [MarshalAs(UnmanagedType.LPWStr)] string lpFileName, // _In_ LPCTSTR
             FileAttributes dwFileAttributes); // _In_ DWORD
 
-        /// <summary>
-        /// Enable the privilege specified by the privilegeName. If the specified privilege is already enabled, return true
-        /// with the oldPrivilegeState.PrivilegeCount set to 0. Otherwise, enable the specified privilege, and the old privilege
-        /// state will be saved in oldPrivilegeState.
-        /// </summary>
+        
         /// <param name="privilegeName"></param>
         /// <param name="oldPrivilegeState"></param>
         /// <returns></returns>
@@ -346,9 +336,7 @@ namespace System.Management.Automation
             return success;
         }
 
-        /// <summary>
-        /// Restore the previous privilege state.
-        /// </summary>
+        
         /// <param name="privilegeName"></param>
         /// <param name="previousPrivilegeState"></param>
         /// <returns></returns>
@@ -402,10 +390,7 @@ namespace System.Management.Automation
             return success;
         }
 
-        /// <summary>
-        /// The LookupPrivilegeValue function retrieves the locally unique identifier (LUID) used on a specified system to locally represent
-        /// the specified privilege name.
-        /// </summary>
+        
         /// <param name="lpSystemName"></param>
         /// <param name="lpName"></param>
         /// <param name="lpLuid"></param>
@@ -414,9 +399,7 @@ namespace System.Management.Automation
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool LookupPrivilegeValue(string lpSystemName, string lpName, ref LUID lpLuid);
 
-        /// <summary>
-        /// The PrivilegeCheck function determines whether a specified privilege is enabled in an access token.
-        /// </summary>
+        
         /// <param name="tokenHandler"></param>
         /// <param name="requiredPrivileges"></param>
         /// <param name="pfResult"></param>
@@ -425,11 +408,7 @@ namespace System.Management.Automation
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool PrivilegeCheck(IntPtr tokenHandler, ref PRIVILEGE_SET requiredPrivileges, out bool pfResult);
 
-        /// <summary>
-        /// The AdjustTokenPrivileges function enables or disables privileges in the specified access token. Enabling or disabling privileges in
-        /// an access token requires TOKEN_ADJUST_PRIVILEGES access. The TOKEN_ADJUST_PRIVILEGES and TOKEN_QUERY accesses are gained when calling
-        /// the OpenProcessToken function.
-        /// </summary>
+        
         /// <param name="tokenHandler"></param>
         /// <param name="disableAllPrivilege"></param>
         /// <param name="newPrivilegeState"></param>
@@ -473,17 +452,12 @@ namespace System.Management.Automation
             internal LUID_AND_ATTRIBUTES Privilege;
         }
 
-        /// <summary>
-        /// Get the pseudo handler of the current process.
-        /// </summary>
+        
         /// <returns></returns>
         [DllImport(PinvokeDllNames.GetCurrentProcessDllName)]
         internal static extern IntPtr GetCurrentProcess();
 
-        /// <summary>
-        /// Retrieves the current process token.
-        /// This function exists just for backward compatibility. It is preferred to use the other override that takes 'SafeHandle' as parameter.
-        /// </summary>
+        
         /// <param name="processHandle">Process handle.</param>
         /// <param name="desiredAccess">Token access.</param>
         /// <param name="tokenHandle">Process token.</param>
@@ -492,19 +466,13 @@ namespace System.Management.Automation
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool OpenProcessToken(IntPtr processHandle, uint desiredAccess, out IntPtr tokenHandle);
 
-        /// <summary>
-        /// Required to enable or disable the privileges in an access token.
-        /// </summary>
+        
         internal const int TOKEN_ADJUST_PRIVILEGES = 0x00000020;
 
-        /// <summary>
-        /// Required to query an access token.
-        /// </summary>
+        
         internal const int TOKEN_QUERY = 0x00000008;
 
-        /// <summary>
-        /// Combines all possible access rights for a token.
-        /// </summary>
+        
         internal const int TOKEN_ALL_ACCESS = 0x001f01ff;
 
         internal const uint SE_PRIVILEGE_DISABLED = 0x00000000;
@@ -543,17 +511,13 @@ namespace System.Management.Automation
                 this.hThread = IntPtr.Zero;
             }
 
-            /// <summary>
-            /// Dispose.
-            /// </summary>
+            
             public void Dispose()
             {
                 Dispose(true);
             }
 
-            /// <summary>
-            /// Dispose.
-            /// </summary>
+            
             /// <param name="disposing"></param>
             private void Dispose(bool disposing)
             {

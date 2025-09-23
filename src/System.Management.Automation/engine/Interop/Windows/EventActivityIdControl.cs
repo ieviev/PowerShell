@@ -13,29 +13,19 @@ internal static partial class Interop
     {
         internal enum ActivityControl : uint
         {
-            /// <summary>
-            /// Gets the ActivityId from thread local storage.
-            /// </summary>
+            
             Get = 1,
 
-            /// <summary>
-            /// Sets the ActivityId in the thread local storage.
-            /// </summary>
+            
             Set = 2,
 
-            /// <summary>
-            /// Creates a new activity id.
-            /// </summary>
+            
             Create = 3,
 
-            /// <summary>
-            /// Sets the activity id in thread local storage and returns the previous value.
-            /// </summary>
+            
             GetSet = 4,
 
-            /// <summary>
-            /// Creates a new activity id, sets thread local storage, and returns the previous value.
-            /// </summary>
+            
             CreateSet = 5
         }
 

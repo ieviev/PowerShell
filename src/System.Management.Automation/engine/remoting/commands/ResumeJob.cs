@@ -12,9 +12,7 @@ using System.Threading;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// This cmdlet resumes the jobs that are Job2. Errors are added for each Job that is not Job2.
-    /// </summary>
+    
 #if !CORECLR
     [SuppressMessage("Microsoft.PowerShell", "PS1012:CallShouldProcessOnlyIfDeclaringSupport")]
     [Cmdlet(VerbsLifecycle.Resume, "Job", SupportsShouldProcess = true, DefaultParameterSetName = JobCmdletBase.SessionIdParameterSet,
@@ -24,10 +22,7 @@ namespace Microsoft.PowerShell.Commands
     public class ResumeJobCommand : JobCmdletBase, IDisposable
     {
         #region Parameters
-        /// <summary>
-        /// Specifies the Jobs objects which need to be
-        /// suspended.
-        /// </summary>
+        
         [Parameter(Mandatory = true,
                    Position = 0,
                    ValueFromPipeline = true,
@@ -50,8 +45,7 @@ namespace Microsoft.PowerShell.Commands
 
         private Job[] _jobs;
 
-        /// <summary>
-        /// </summary>
+        
         public override string[] Command
         {
             get
@@ -60,10 +54,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Specifies whether to delay returning from the cmdlet until all jobs reach a running state.
-        /// This could take significant time due to workflow throttling.
-        /// </summary>
+        
         [Parameter(ParameterSetName = ParameterAttribute.AllParameterSets)]
         public SwitchParameter Wait { get; set; }
 
@@ -71,9 +62,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Overrides
 
-        /// <summary>
-        /// Resume the Job.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             // List of jobs to resume
@@ -221,9 +210,7 @@ namespace Microsoft.PowerShell.Commands
                 _waitForJobs.Set();
         }
 
-        /// <summary>
-        /// End Processing.
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             bool jobsPending = false;
@@ -259,8 +246,7 @@ namespace Microsoft.PowerShell.Commands
             base.EndProcessing();
         }
 
-        /// <summary>
-        /// </summary>
+        
         protected override void StopProcessing()
         {
             _waitForJobs.Set();
@@ -270,16 +256,14 @@ namespace Microsoft.PowerShell.Commands
 
         #region Dispose
 
-        /// <summary>
-        /// </summary>
+        
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="disposing"></param>
         protected void Dispose(bool disposing)
         {

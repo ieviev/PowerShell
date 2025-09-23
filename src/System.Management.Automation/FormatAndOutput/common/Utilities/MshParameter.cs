@@ -11,11 +11,7 @@ using System.Text;
 
 namespace Microsoft.PowerShell.Commands.Internal.Format
 {
-    /// <summary>
-    /// Normalized parameter class to be constructed from the command line parameters
-    /// using the metadata information provided by an instance of CommandParameterDefinition
-    /// it's basically the hash table with the normalized values.
-    /// </summary>
+    
     internal class MshParameter
     {
         internal Hashtable hash = null;
@@ -39,11 +35,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
     }
 
-    /// <summary>
-    /// Metadata base class for hashtable entry definitions
-    /// it contains the key name and the allowable types
-    /// it also provides hooks for type expansion.
-    /// </summary>
+    
     internal class HashtableEntryDefinition
     {
         internal HashtableEntryDefinition(string name, IEnumerable<string> secondaryNames, Type[] types, bool mandatory)
@@ -113,9 +105,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         internal IEnumerable<string> SecondaryNames { get; }
     }
 
-    /// <summary>
-    /// Metadata abstract base class to contain hash entries definitions.
-    /// </summary>
+    
     internal abstract class CommandParameterDefinition
     {
         [SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -128,12 +118,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
 
         internal virtual MshParameter CreateInstance() { return new MshParameter(); }
 
-        /// <summary>
-        /// For a key name, verify it is a legal entry:
-        ///     1. it must match (partial match allowed)
-        ///     2. it must be unambiguous (if partial match)
-        /// If an error condition occurs, an exception will be thrown.
-        /// </summary>
+        
         /// <param name="keyName">Key to verify.</param>
         /// <param name="invocationContext">Invocation context for error reporting.</param>
         /// <returns>Matching hash table entry.</returns>
@@ -219,11 +204,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         internal List<HashtableEntryDefinition> hashEntries = new List<HashtableEntryDefinition>();
     }
 
-    /// <summary>
-    /// Engine to process a generic object[] from the command line and
-    /// generate a list of MshParameter objects , given the metadata provided by
-    /// a class derived from CommandParameterDefinition.
-    /// </summary>
+    
     internal sealed class ParameterProcessor
     {
         #region tracer

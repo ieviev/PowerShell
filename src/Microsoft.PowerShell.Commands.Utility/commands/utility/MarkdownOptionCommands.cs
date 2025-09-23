@@ -11,9 +11,7 @@ using Microsoft.PowerShell.MarkdownRender;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// Class for implementing Set-MarkdownOption cmdlet.
-    /// </summary>
+    
     [Cmdlet(
         VerbsCommon.Set, "MarkdownOption",
         DefaultParameterSetName = IndividualSetting,
@@ -21,100 +19,72 @@ namespace Microsoft.PowerShell.Commands
     [OutputType(typeof(Microsoft.PowerShell.MarkdownRender.PSMarkdownOptionInfo))]
     public class SetMarkdownOptionCommand : PSCmdlet
     {
-        /// <summary>
-        /// Gets or sets the VT100 escape sequence for Header Level 1.
-        /// </summary>
+        
         [ValidatePattern(@"^\[*[0-9;]*?m{1}")]
         [Parameter(ParameterSetName = IndividualSetting)]
         public string Header1Color { get; set; }
 
-        /// <summary>
-        /// Gets or sets the VT100 escape sequence for Header Level 2.
-        /// </summary>
+        
         [ValidatePattern(@"^\[*[0-9;]*?m{1}")]
         [Parameter(ParameterSetName = IndividualSetting)]
         public string Header2Color { get; set; }
 
-        /// <summary>
-        /// Gets or sets the VT100 escape sequence for Header Level 3.
-        /// </summary>
+        
         [ValidatePattern(@"^\[*[0-9;]*?m{1}")]
         [Parameter(ParameterSetName = IndividualSetting)]
         public string Header3Color { get; set; }
 
-        /// <summary>
-        /// Gets or sets the VT100 escape sequence for Header Level 4.
-        /// </summary>
+        
         [ValidatePattern(@"^\[*[0-9;]*?m{1}")]
         [Parameter(ParameterSetName = IndividualSetting)]
         public string Header4Color { get; set; }
 
-        /// <summary>
-        /// Gets or sets the VT100 escape sequence for Header Level 5.
-        /// </summary>
+        
         [ValidatePattern(@"^\[*[0-9;]*?m{1}")]
         [Parameter(ParameterSetName = IndividualSetting)]
         public string Header5Color { get; set; }
 
-        /// <summary>
-        /// Gets or sets the VT100 escape sequence for Header Level 6.
-        /// </summary>
+        
         [ValidatePattern(@"^\[*[0-9;]*?m{1}")]
         [Parameter(ParameterSetName = IndividualSetting)]
         public string Header6Color { get; set; }
 
-        /// <summary>
-        /// Gets or sets the VT100 escape sequence for code block background.
-        /// </summary>
+        
         [ValidatePattern(@"^\[*[0-9;]*?m{1}")]
         [Parameter(ParameterSetName = IndividualSetting)]
         public string Code { get; set; }
 
-        /// <summary>
-        /// Gets or sets the VT100 escape sequence for image alt text foreground.
-        /// </summary>
+        
         [ValidatePattern(@"^\[*[0-9;]*?m{1}")]
         [Parameter(ParameterSetName = IndividualSetting)]
         public string ImageAltTextForegroundColor { get; set; }
 
-        /// <summary>
-        /// Gets or sets the VT100 escape sequence for link foreground.
-        /// </summary>
+        
         [ValidatePattern(@"^\[*[0-9;]*?m{1}")]
         [Parameter(ParameterSetName = IndividualSetting)]
         public string LinkForegroundColor { get; set; }
 
-        /// <summary>
-        /// Gets or sets the VT100 escape sequence for italics text foreground.
-        /// </summary>
+        
         [ValidatePattern(@"^\[*[0-9;]*?m{1}")]
         [Parameter(ParameterSetName = IndividualSetting)]
         public string ItalicsForegroundColor { get; set; }
 
-        /// <summary>
-        /// Gets or sets the VT100 escape sequence for bold text foreground.
-        /// </summary>
+        
         [ValidatePattern(@"^\[*[0-9;]*?m{1}")]
         [Parameter(ParameterSetName = IndividualSetting)]
         public string BoldForegroundColor { get; set; }
 
-        /// <summary>
-        /// Gets or sets the switch to PassThru the values set.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter PassThru { get; set; }
 
-        /// <summary>
-        /// Gets or sets the Theme.
-        /// </summary>
+        
         [ValidateNotNullOrEmpty]
         [Parameter(ParameterSetName = ThemeParamSet, Mandatory = true)]
         [ValidateSet(DarkThemeName, LightThemeName)]
         public string Theme { get; set; }
 
-        /// <summary>
-        /// Gets or sets InputObject.
-        /// </summary>
+        
         [ValidateNotNullOrEmpty]
         [Parameter(ParameterSetName = InputObjectParamSet, Mandatory = true, ValueFromPipeline = true, Position = 0)]
         public PSObject InputObject { get; set; }
@@ -125,9 +95,7 @@ namespace Microsoft.PowerShell.Commands
         private const string LightThemeName = "Light";
         private const string DarkThemeName = "Dark";
 
-        /// <summary>
-        /// Override EndProcessing.
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             PSMarkdownOptionInfo mdOptionInfo = null;
@@ -237,9 +205,7 @@ namespace Microsoft.PowerShell.Commands
         }
     }
 
-    /// <summary>
-    /// Implements the cmdlet for getting the Markdown options that are set.
-    /// </summary>
+    
     [Cmdlet(
         VerbsCommon.Get, "MarkdownOption",
         HelpUri = "https://go.microsoft.com/fwlink/?linkid=2006371")]
@@ -248,23 +214,14 @@ namespace Microsoft.PowerShell.Commands
     {
         private const string MarkdownOptionInfoVariableName = "PSMarkdownOptionInfo";
 
-        /// <summary>
-        /// Override EndProcessing.
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             WriteObject(PSMarkdownOptionInfoCache.Get(this.CommandInfo));
         }
     }
 
-    /// <summary>
-    /// The class manages whether we should use a module scope variable or concurrent dictionary for storing the set PSMarkdownOptions.
-    /// When we have a moduleInfo available we use the module scope variable.
-    /// In case of built-in modules, they are loaded as snapins when we are hosting PowerShell.
-    /// We use runspace Id as the key for the concurrent dictionary to have the functionality of separate settings per runspace.
-    /// Force loading the module does not unload the nested modules and hence we cannot use IModuleAssemblyCleanup to remove items from the dictionary.
-    /// Because of these reason, we continue using module scope variable when moduleInfo is available.
-    /// </summary>
+    
     internal static class PSMarkdownOptionInfoCache
     {
         private static readonly ConcurrentDictionary<Guid, PSMarkdownOptionInfo> markdownOptionInfoCache;

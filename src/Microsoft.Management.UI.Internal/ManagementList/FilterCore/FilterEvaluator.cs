@@ -8,11 +8,7 @@ using System.Diagnostics;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <summary>
-    /// The FilterEvaluator class is responsible for allowing the registration of
-    /// the FilterExpressionProviders and producing a FilterExpression composed of
-    /// the FilterExpression returned from the providers.
-    /// </summary>
+    
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public abstract class FilterEvaluator : IFilterExpressionProvider, INotifyPropertyChanged
     {
@@ -20,9 +16,7 @@ namespace Microsoft.Management.UI.Internal
 
         private Collection<IFilterExpressionProvider> filterExpressionProviders = new Collection<IFilterExpressionProvider>();
 
-        /// <summary>
-        /// Gets a readonly collection of the registered FilterExpressionProviders.
-        /// </summary>
+        
         public ReadOnlyCollection<IFilterExpressionProvider> FilterExpressionProviders
         {
             get
@@ -33,9 +27,7 @@ namespace Microsoft.Management.UI.Internal
 
         private FilterStatus filterStatus = FilterStatus.NotApplied;
 
-        /// <summary>
-        /// Gets a value indicating the status of the filter evaluation.
-        /// </summary>
+        
         public FilterStatus FilterStatus
         {
             get
@@ -52,9 +44,7 @@ namespace Microsoft.Management.UI.Internal
 
         private bool startFilterOnExpressionChanged = true;
 
-        /// <summary>
-        /// Gets a value indicating the status of the filter evaluation.
-        /// </summary>
+        
         public bool StartFilterOnExpressionChanged
         {
             get
@@ -71,9 +61,7 @@ namespace Microsoft.Management.UI.Internal
 
         private bool hasFilterExpression = false;
 
-        /// <summary>
-        /// Gets a value indicating whether this provider currently has a non-empty filter expression.
-        /// </summary>
+        
         public bool HasFilterExpression
         {
             get
@@ -92,29 +80,20 @@ namespace Microsoft.Management.UI.Internal
 
         #region Events
 
-        /// <summary>
-        /// Notifies listeners that a property has changed.
-        /// </summary>
+        
         public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion Events
 
         #region Public Methods
 
-        /// <summary>
-        /// Applies the filter.
-        /// </summary>
+        
         public abstract void StartFilter();
 
-        /// <summary>
-        /// Stops the filter.
-        /// </summary>
+        
         public abstract void StopFilter();
 
-        /// <summary>
-        /// Returns a FilterExpression composed of FilterExpressions returned from the
-        /// registered providers.
-        /// </summary>
+        
         /// <returns>
         /// The FilterExpression composed of FilterExpressions returned from the
         /// registered providers.
@@ -137,9 +116,7 @@ namespace Microsoft.Management.UI.Internal
             }
         }
 
-        /// <summary>
-        /// Adds a FilterExpressionProvider to the FilterEvaluator.
-        /// </summary>
+        
         /// <param name="provider">
         /// The provider to add.
         /// </param>
@@ -151,9 +128,7 @@ namespace Microsoft.Management.UI.Internal
             provider.FilterExpressionChanged += this.FilterProvider_FilterExpressionChanged;
         }
 
-        /// <summary>
-        /// Removes a FilterExpressionProvider from the FilterEvaluator.
-        /// </summary>
+        
         /// <param name="provider">
         /// The provider to remove.
         /// </param>
@@ -167,9 +142,7 @@ namespace Microsoft.Management.UI.Internal
 
         #region NotifyPropertyChanged
 
-        /// <summary>
-        /// Notifies listeners that a property has changed.
-        /// </summary>
+        
         /// <param name="propertyName">
         /// The propertyName which has changed.
         /// </param>
@@ -191,14 +164,10 @@ namespace Microsoft.Management.UI.Internal
 
         #region Private Methods
 
-        /// <summary>
-        /// Occurs when the filter expression has changed.
-        /// </summary>
+        
         public event EventHandler FilterExpressionChanged;
 
-        /// <summary>
-        /// Notifies any listeners that the filter expression has changed.
-        /// </summary>
+        
         protected virtual void NotifyFilterExpressionChanged()
         {
             EventHandler eh = this.FilterExpressionChanged;

@@ -13,22 +13,13 @@ using System.Globalization;
 
 namespace Microsoft.Management.Infrastructure.CimCmdlets
 {
-    /// <summary>
-    /// <para>
-    /// Implements operations of invoke-cimmethod cmdlet.
-    /// </para>
-    /// </summary>
+    
     internal sealed class CimInvokeCimMethod : CimAsyncOperation
     {
-        /// <summary>
-        /// Containing all necessary information originated from
-        /// the parameters of <see cref="InvokeCimMethodCommand"/>
-        /// </summary>
+        
         internal class CimInvokeCimMethodContext : XOperationContextBase
         {
-            /// <summary>
-            /// Initializes a new instance of the <see cref="CimInvokeCimMethodContext"/> class.
-            /// </summary>
+            
             /// <param name="theNamespace"></param>
             /// <param name="theCollection"></param>
             /// <param name="theProxy"></param>
@@ -43,30 +34,20 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
                 this.nameSpace = theNamespace;
             }
 
-            /// <summary>
-            /// <para>namespace</para>
-            /// </summary>
+            
             internal string MethodName { get; }
 
-            /// <summary>
-            /// <para>parameters collection</para>
-            /// </summary>
+            
             internal CimMethodParametersCollection ParametersCollection { get; }
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CimInvokeCimMethod"/> class.
-        /// </summary>
+        
         public CimInvokeCimMethod()
             : base()
         {
         }
 
-        /// <summary>
-        /// <para>
-        /// Base on parametersetName to retrieve ciminstances
-        /// </para>
-        /// </summary>
+        
         /// <param name="cmdlet"><see cref="GetCimInstanceCommand"/> object.</param>
         public void InvokeCimMethod(InvokeCimMethodCommand cmdlet)
         {
@@ -219,11 +200,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             }
         }
 
-        /// <summary>
-        /// <para>
-        /// Invoke cimmethod on given <see cref="CimInstance"/>
-        /// </para>
-        /// </summary>
+        
         /// <param name="cimInstance"></param>
         public void InvokeCimMethodOnCimInstance(CimInstance cimInstance, XOperationContextBase context, CmdletOperationBase operation)
         {
@@ -247,11 +224,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         #region private methods
 
-        /// <summary>
-        /// <para>
-        /// Set <see cref="CimSessionProxy"/> properties
-        /// </para>
-        /// </summary>
+        
         /// <param name="proxy"></param>
         /// <param name="cmdlet"></param>
         private static void SetSessionProxyProperties(
@@ -265,11 +238,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             }
         }
 
-        /// <summary>
-        /// <para>
-        /// Create <see cref="CimSessionProxy"/> and set properties
-        /// </para>
-        /// </summary>
+        
         /// <param name="computerName"></param>
         /// <param name="cmdlet"></param>
         /// <returns></returns>
@@ -282,11 +251,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             return proxy;
         }
 
-        /// <summary>
-        /// <para>
-        /// Create <see cref="CimSessionProxy"/> and set properties
-        /// </para>
-        /// </summary>
+        
         /// <param name="computerName"></param>
         /// <param name="cimInstance"></param>
         /// <param name="cmdlet"></param>
@@ -301,9 +266,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             return proxy;
         }
 
-        /// <summary>
-        /// Create <see cref="CimSessionProxy"/> and set properties.
-        /// </summary>
+        
         /// <param name="session"></param>
         /// <param name="cmdlet"></param>
         /// <returns></returns>
@@ -316,12 +279,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             return proxy;
         }
 
-        /// <summary>
-        /// <para>
-        /// Create <see cref="CimMethodParametersCollection"/> with given key properties.
-        /// And/or <see cref="CimClass"/> object.
-        /// </para>
-        /// </summary>
+        
         /// <param name="parameters"></param>
         /// <param name="cimClass"></param>
         /// <param name="cimInstance"></param>
@@ -439,14 +397,10 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         #endregion
 
         #region const strings
-        /// <summary>
-        /// Operation target.
-        /// </summary>
+        
         private const string targetClass = @"{0}";
 
-        /// <summary>
-        /// Action.
-        /// </summary>
+        
         private const string actionTemplate = @"Invoke-CimMethod: {0}";
         #endregion
     }

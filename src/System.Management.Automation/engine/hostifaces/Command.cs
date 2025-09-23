@@ -11,17 +11,12 @@ using Dbg = System.Management.Automation.Diagnostics;
 
 namespace System.Management.Automation.Runspaces
 {
-    /// <summary>
-    /// Defines a Command object which can be added to <see cref="Pipeline"/> object
-    /// for invocation.
-    /// </summary>
+    
     public sealed class Command
     {
         #region constructors
 
-        /// <summary>
-        /// Initializes a new instance of Command class using specified command parameter.
-        /// </summary>
+        
         /// <param name="command">Name of the command or script contents.</param>
         /// <exception cref="ArgumentNullException">Command is null.</exception>
         public Command(string command)
@@ -29,9 +24,7 @@ namespace System.Management.Automation.Runspaces
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of Command class using specified command parameter.
-        /// </summary>
+        
         /// <param name="command">The command name or script contents.</param>
         /// <param name="isScript">True if this command represents a script, otherwise; false.</param>
         /// <exception cref="ArgumentNullException">Command is null.</exception>
@@ -40,9 +33,7 @@ namespace System.Management.Automation.Runspaces
         {
         }
 
-        /// <summary>
-        /// Constructor.
-        /// </summary>
+        
         /// <param name="command">The command name or script contents.</param>
         /// <param name="isScript">True if this command represents a script, otherwise; false.</param>
         /// <param name="useLocalScope">If true local scope is used to run the script command.</param>
@@ -95,9 +86,7 @@ namespace System.Management.Automation.Runspaces
             IsScript = isScript;
         }
 
-        /// <summary>
-        /// Copy constructor for clone operations.
-        /// </summary>
+        
         /// <param name="command">The source <see cref="Command"/> instance.</param>
         internal Command(Command command)
         {
@@ -121,35 +110,24 @@ namespace System.Management.Automation.Runspaces
 
         #region Properties
 
-        /// <summary>
-        /// Gets the set of parameters for this command.
-        /// </summary>
+        
         /// <remarks>
         /// This property is used to add positional or named parameters to the command.
         /// </remarks>
         public CommandParameterCollection Parameters { get; } = new CommandParameterCollection();
 
-        /// <summary>
-        /// Access the command string.
-        /// </summary>
+        
         /// <value>The command name, if <see cref="Command.IsScript"/> is false; otherwise; the script contents</value>
         public string CommandText { get; } = string.Empty;
 
-        /// <summary>
-        /// Access the commandInfo.
-        /// </summary>
+        
         /// <value>The command info object</value>
         internal CommandInfo CommandInfo { get; }
 
-        /// <summary>
-        /// Access the value indicating if this <see cref="Command"/> represents a script.
-        /// </summary>
+        
         public bool IsScript { get; }
 
-        /// <summary>
-        /// Access the value indicating if LocalScope is to be used for running
-        /// this script command.
-        /// </summary>
+        
         /// <value>True if this command is a script and localScope is
         /// used for executing the script</value>
         /// <remarks>This value is always false for non-script commands</remarks>
@@ -158,50 +136,33 @@ namespace System.Management.Automation.Runspaces
             get { return _useLocalScope ?? false; }
         }
 
-        /// <summary>
-        /// Gets or sets the command origin for this command. A command origin
-        /// of 'Runspace' (the default) applies Runspace restrictions to this command.
-        /// A command origin of 'Internal' does not apply runspace restrictions.
-        /// </summary>
+        
         public CommandOrigin CommandOrigin { get; set; } = CommandOrigin.Runspace;
 
-        /// <summary>
-        /// Access the actual value indicating if LocalScope is to be used for running
-        /// this script command.  Needed for serialization in remoting.
-        /// </summary>
+        
         internal bool? UseLocalScopeNullable
         {
             get { return _useLocalScope; }
         }
 
-        /// <summary>
-        /// Gets or sets DollarUnderbar ($_) value to be used with script command.
-        /// This is used by foreach-object -parallel where each piped input ($_) is associated
-        /// with a parallel running script block.
-        /// </summary>
+        
         internal object DollarUnderbar { get; set; } = AutomationNull.Value;
 
-        /// <summary>
-        /// Checks if the current command marks the end of a statement (see PowerShell.AddStatement())
-        /// </summary>
+        
         public bool IsEndOfStatement { get; internal set; }
 
         #endregion Properties
 
         #region Methods
 
-        /// <summary>
-        /// Creates a new <see cref="Command"/> that is a copy of the current instance.
-        /// </summary>
+        
         /// <returns>A new <see cref="Command"/> that is a copy of this instance.</returns>
         internal Command Clone()
         {
             return new Command(this);
         }
 
-        /// <summary>
-        /// For diagnostic purposes.
-        /// </summary>
+        
         /// <returns></returns>
         public override string ToString()
         {
@@ -214,10 +175,7 @@ namespace System.Management.Automation.Runspaces
 
         private PipelineResultTypes _mergeUnclaimedPreviousCommandResults =
             PipelineResultTypes.None;
-        /// <summary>
-        /// Sets this command as the mergepoint for previous unclaimed
-        /// commands' results.
-        /// </summary>
+        
         /// <value></value>
         /// <remarks>
         /// Currently only supported operation is to merge
@@ -276,15 +234,10 @@ namespace System.Management.Automation.Runspaces
 
         internal const int MaxMergeType = (int)(MergeType.Information + 1);
 
-        /// <summary>
-        /// Internal accessor for _mergeInstructions. It is used by serialization
-        /// code.
-        /// </summary>
+        
         internal PipelineResultTypes[] MergeInstructions { get; set; } = new PipelineResultTypes[MaxMergeType];
 
-        /// <summary>
-        /// Merges this commands results.
-        /// </summary>
+        
         /// <param name="myResult">
         /// Pipeline stream to be redirected.
         /// </param>
@@ -365,9 +318,7 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// Set the merge settings on commandProcessor.
-        /// </summary>
+        
         /// <param name="commandProcessor"></param>
         private
         void
@@ -438,9 +389,7 @@ namespace System.Management.Automation.Runspaces
 
         #endregion Merge
 
-        /// <summary>
-        /// Create a CommandProcessorBase for this Command.
-        /// </summary>
+        
         /// <param name="executionContext"></param>
         /// <param name="addToHistory"></param>
         /// <param name="origin"></param>
@@ -560,24 +509,14 @@ namespace System.Management.Automation.Runspaces
 
         #region Private fields
 
-        /// <summary>
-        /// This is used for script commands (i.e. _isScript is true). If
-        /// _useLocalScope is true, script is run in LocalScope.  If
-        /// null, it was unspecified and a suitable default is used (true
-        /// for non-script, false for script).  Note that the public
-        /// property is bool, not bool? (from V1), so it should probably
-        /// be deprecated, at least for internal use.
-        /// </summary>
+        
         private readonly bool? _useLocalScope;
 
         #endregion Private fields
 
         #region Serialization / deserialization for remoting
 
-        /// <summary>
-        /// Creates a Command object from a PSObject property bag.
-        /// PSObject has to be in the format returned by ToPSObjectForRemoting method.
-        /// </summary>
+        
         /// <param name="commandAsPSObject">PSObject to rehydrate.</param>
         /// <returns>
         /// Command rehydrated from a PSObject property bag
@@ -641,10 +580,7 @@ namespace System.Management.Automation.Runspaces
             return command;
         }
 
-        /// <summary>
-        /// Returns this object as a PSObject property bag
-        /// that can be used in a remoting protocol data object.
-        /// </summary>
+        
         /// <param name="psRPVersion">PowerShell remoting protocol version.</param>
         /// <returns>This object as a PSObject property bag.</returns>
         internal PSObject ToPSObjectForRemoting(Version psRPVersion)
@@ -773,74 +709,47 @@ namespace System.Management.Automation.Runspaces
         #endregion Win Blue Extensions
     }
 
-    /// <summary>
-    /// Enum defining the types of streams coming out of a pipeline.
-    /// </summary>
+    
     [Flags]
     public enum PipelineResultTypes
     {
-        /// <summary>
-        /// Default streaming behavior.
-        /// </summary>
+        
         None,
 
-        /// <summary>
-        /// Success output.
-        /// </summary>
+        
         Output,
 
-        /// <summary>
-        /// Error output.
-        /// </summary>
+        
         Error,
 
-        /// <summary>
-        /// Warning information stream.
-        /// </summary>
+        
         Warning,
 
-        /// <summary>
-        /// Verbose information stream.
-        /// </summary>
+        
         Verbose,
 
-        /// <summary>
-        /// Debug information stream.
-        /// </summary>
+        
         Debug,
 
-        /// <summary>
-        /// Information information stream.
-        /// </summary>
+        
         Information,
 
-        /// <summary>
-        /// All streams.
-        /// </summary>
+        
         All,
 
-        /// <summary>
-        /// Redirect to nothing.
-        /// </summary>
+        
         Null
     }
 
-    /// <summary>
-    /// Defines a collection of Commands. This collection is used by <see cref="Pipeline"/> to define
-    /// elements of pipeline.
-    /// </summary>
+    
     public sealed class CommandCollection : Collection<Command>
     {
-        /// <summary>
-        /// Make the default constructor internal.
-        /// </summary>
+        
         internal CommandCollection()
         {
         }
 
-        /// <summary>
-        /// Adds a new command for given string.
-        /// </summary>
+        
         /// <exception cref="System.ArgumentNullException">
         /// command is null.
         /// </exception>
@@ -861,9 +770,7 @@ namespace System.Management.Automation.Runspaces
             this.Add(new Command(command, false, false, mergeUnclaimedPreviousCommandError));
         }
 
-        /// <summary>
-        /// Adds a new script command.
-        /// </summary>
+        
         /// <param name="scriptContents">Script contents.</param>
         /// <exception cref="System.ArgumentNullException">
         /// scriptContents is null.
@@ -873,9 +780,7 @@ namespace System.Management.Automation.Runspaces
             this.Add(new Command(scriptContents, true));
         }
 
-        /// <summary>
-        /// Adds a new scrip command for given script.
-        /// </summary>
+        
         /// <param name="scriptContents">Script contents.</param>
         /// <param name="useLocalScope">If true local scope is used to run the script command.</param>
         /// <exception cref="System.ArgumentNullException">
@@ -886,9 +791,7 @@ namespace System.Management.Automation.Runspaces
             this.Add(new Command(scriptContents, true, useLocalScope));
         }
 
-        /// <summary>
-        /// Gets the string representation of the command collection to be used for history.
-        /// </summary>
+        
         /// <returns>
         /// string representing the command(s)
         /// </returns>

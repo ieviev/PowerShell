@@ -12,14 +12,10 @@ using Microsoft.PowerShell.Commands.ShowCommandInternal;
 
 namespace Microsoft.PowerShell.Commands.Internal
 {
-    /// <summary>
-    /// Implements the WPF window part of the ShowWindow option of get-help.
-    /// </summary>
+    
     internal static class HelpWindowHelper
     {
-        /// <summary>
-        /// Shows the help window.
-        /// </summary>
+        
         /// <param name="helpObj">Object with help information.</param>
         /// <param name="cmdlet">Cmdlet calling this method.</param>
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Called from methods called using reflection")]

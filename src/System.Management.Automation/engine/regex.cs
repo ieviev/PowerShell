@@ -16,38 +16,24 @@ using Dbg = System.Management.Automation.Diagnostics;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Provides enumerated values to use to set wildcard pattern
-    /// matching options.
-    /// </summary>
+    
     [Flags]
     public enum WildcardOptions
     {
-        /// <summary>
-        /// Indicates that no special processing is required.
-        /// </summary>
+        
         None = 0,
 
-        /// <summary>
-        /// Specifies that the wildcard pattern is compiled to an assembly.
-        /// This yields faster execution but increases startup time.
-        /// </summary>
+        
         Compiled = 1,
 
-        /// <summary>
-        /// Specifies case-insensitive matching.
-        /// </summary>
+        
         IgnoreCase = 2,
 
-        /// <summary>
-        /// Specifies culture-invariant matching.
-        /// </summary>
+        
         CultureInvariant = 4
     }
 
-    /// <summary>
-    /// Represents a wildcard pattern.
-    /// </summary>
+    
     public sealed class WildcardPattern
     {
         // char that escapes special chars
@@ -73,9 +59,7 @@ namespace System.Management.Automation
         // Default is WildcardOptions.None.
         internal WildcardOptions Options { get; }
 
-        /// <summary>
-        /// Wildcard pattern converted to regex pattern.
-        /// </summary>
+        
         internal string PatternConvertedToRegex
         {
             get
@@ -85,21 +69,14 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Initializes and instance of the WildcardPattern class
-        /// for the specified wildcard pattern.
-        /// </summary>
+        
         /// <param name="pattern">The wildcard pattern to match.</param>
         /// <returns>The constructed WildcardPattern object.</returns>
         public WildcardPattern(string pattern) : this(pattern, WildcardOptions.None)
         {
         }
 
-        /// <summary>
-        /// Initializes an instance of the WildcardPattern class for
-        /// the specified wildcard pattern expression, with options
-        /// that modify the pattern.
-        /// </summary>
+        
         /// <param name="pattern">The wildcard pattern to match.</param>
         /// <param name="options">Wildcard options.</param>
         /// <returns>The constructed WildcardPattern object.</returns>
@@ -116,9 +93,7 @@ namespace System.Management.Automation
 
         private static readonly WildcardPattern s_matchAllIgnoreCasePattern = new WildcardPattern("*", WildcardOptions.None);
 
-        /// <summary>
-        /// Create a new WildcardPattern, or return an already created one.
-        /// </summary>
+        
         /// <param name="pattern">The pattern.</param>
         /// <param name="options"></param>
         /// <returns></returns>
@@ -133,9 +108,7 @@ namespace System.Management.Automation
             return new WildcardPattern(pattern, options);
         }
 
-        /// <summary>
-        /// Instantiate internal regex member if not already done.
-        /// </summary>
+        
         /// <returns>True on success, false otherwise.</returns>
         private void Init()
         {
@@ -193,10 +166,7 @@ namespace System.Management.Automation
             _isMatch = matcher.IsMatch;
         }
 
-        /// <summary>
-        /// Indicates whether the wildcard pattern specified in the WildcardPattern
-        /// constructor finds a match in the input string.
-        /// </summary>
+        
         /// <param name="input">The string to search for a match.</param>
         /// <returns>True if the wildcard pattern finds a match; otherwise, false.</returns>
         public bool IsMatch(string input)
@@ -205,9 +175,7 @@ namespace System.Management.Automation
             return input != null && _isMatch(input);
         }
 
-        /// <summary>
-        /// Escape special chars, except for those specified in <paramref name="charsNotToEscape"/>, in a string by replacing them with their escape codes.
-        /// </summary>
+        
         /// <param name="pattern">The input string containing the text to convert.</param>
         /// <param name="charsNotToEscape">Array of characters that not to escape.</param>
         /// <returns>
@@ -262,9 +230,7 @@ namespace System.Management.Automation
             return s;
         }
 
-        /// <summary>
-        /// Escape special chars in a string by replacing them with their escape codes.
-        /// </summary>
+        
         /// <param name="pattern">The input string containing the text to convert.</param>
         /// <returns>
         /// A string of characters with any metacharacters converted to their escaped form.
@@ -274,9 +240,7 @@ namespace System.Management.Automation
             return Escape(pattern, Array.Empty<char>());
         }
 
-        /// <summary>
-        /// Checks to see if the given string has any wild card characters in it.
-        /// </summary>
+        
         /// <param name="pattern">
         /// String which needs to be checked for the presence of wildcard chars
         /// </param>
@@ -314,9 +278,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Checks if the string contains a left bracket "[" followed by a right bracket "]" after any number of characters.
-        /// </summary>
+        
         /// <param name="pattern"> The string to check.</param>
         /// <returns>Returns true if the string contains both a left and right bracket "[" "]" and if the right bracket comes after the left bracket.</returns>
         internal static bool ContainsRangeWildcard(string pattern)
@@ -351,9 +313,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Unescapes any escaped characters in the input string.
-        /// </summary>
+        
         /// <param name="pattern">
         /// The input string containing the text to convert.
         /// </param>
@@ -440,10 +400,7 @@ namespace System.Management.Automation
             return (ch == '*') || (ch == '?') || (ch == '[') || (ch == ']');
         }
 
-        /// <summary>
-        /// Converts this wildcard to a string that can be used as a right-hand-side operand of the LIKE operator of WQL.
-        /// For example: "a*" will be converted to "a%".
-        /// </summary>
+        
         /// <returns></returns>
         public string ToWql()
         {
@@ -466,15 +423,10 @@ namespace System.Management.Automation
         }
     }
 
-    /// <summary>
-    /// Thrown when a wildcard pattern is invalid.
-    /// </summary>
+    
     public class WildcardPatternException : RuntimeException
     {
-        /// <summary>
-        /// Constructor for class WildcardPatternException that takes
-        /// an ErrorRecord to use in constructing this exception.
-        /// </summary>
+        
         /// <remarks>This is the recommended constructor to use for this exception.</remarks>
         /// <param name="errorRecord">
         /// ErrorRecord object containing additional information about the error condition.
@@ -491,26 +443,18 @@ namespace System.Management.Automation
         [NonSerialized]
         private readonly ErrorRecord _errorRecord;
 
-        /// <summary>
-        /// Constructs an instance of the WildcardPatternException object.
-        /// </summary>
+        
         public WildcardPatternException()
         {
         }
 
-        /// <summary>
-        /// Constructs an instance of the WildcardPatternException object taking
-        /// a message parameter to use in constructing the exception.
-        /// </summary>
+        
         /// <param name="message">The string to use as the exception message.</param>
         public WildcardPatternException(string message) : base(message)
         {
         }
 
-        /// <summary>
-        /// Constructor for class WildcardPatternException that takes both a message to use
-        /// and an inner exception to include in this object.
-        /// </summary>
+        
         /// <param name="message">The exception message to use.</param>
         /// <param name="innerException">The innerException object to encapsulate.</param>
         public WildcardPatternException(string message,
@@ -519,9 +463,7 @@ namespace System.Management.Automation
         {
         }
 
-        /// <summary>
-        /// Constructor for class WildcardPatternException for serialization.
-        /// </summary>
+        
         /// <param name="info">Serialization information.</param>
         /// <param name="context">Streaming context.</param>
         [Obsolete("Legacy serialization support is deprecated since .NET 8", DiagnosticId = "SYSLIB0051")] 
@@ -532,16 +474,10 @@ namespace System.Management.Automation
         }
     }
 
-    /// <summary>
-    /// A base class for parsers of <see cref="WildcardPattern"/> patterns.
-    /// </summary>
+    
     internal abstract class WildcardPatternParser
     {
-        /// <summary>
-        /// Called from <see cref="Parse"/> method to indicate
-        /// the beginning of the wildcard pattern.
-        /// Default implementation simply returns.
-        /// </summary>
+        
         /// <param name="pattern">
         /// <see cref="WildcardPattern"/> object that includes both
         /// the text of the pattern (<see cref="WildcardPattern.Pattern"/>)
@@ -551,39 +487,21 @@ namespace System.Management.Automation
         {
         }
 
-        /// <summary>
-        /// Called from <see cref="Parse"/> method to indicate that the next
-        /// part of the pattern should match
-        /// a literal character <paramref name="c"/>.
-        /// </summary>
+        
         protected abstract void AppendLiteralCharacter(char c);
 
-        /// <summary>
-        /// Called from <see cref="Parse"/> method to indicate that the next
-        /// part of the pattern should match
-        /// any string, including an empty string.
-        /// </summary>
+        
         protected abstract void AppendAsterix();
 
-        /// <summary>
-        /// Called from <see cref="Parse"/> method to indicate that the next
-        /// part of the pattern should match
-        /// any single character.
-        /// </summary>
+        
         protected abstract void AppendQuestionMark();
 
-        /// <summary>
-        /// Called from <see cref="Parse"/> method to indicate the end of the wildcard pattern.
-        /// Default implementation simply returns.
-        /// </summary>
+        
         protected virtual void EndWildcardPattern()
         {
         }
 
-        /// <summary>
-        /// Called from <see cref="Parse"/> method to indicate
-        /// the beginning of a bracket expression.
-        /// </summary>
+        
         /// <remarks>
         /// Bracket expressions of <see cref="WildcardPattern"/> are
         /// a greatly simplified version of bracket expressions of POSIX wildcards
@@ -595,34 +513,18 @@ namespace System.Management.Automation
         /// </remarks>
         protected abstract void BeginBracketExpression();
 
-        /// <summary>
-        /// Called from <see cref="Parse"/> method to indicate that the bracket expression
-        /// should include a literal character <paramref name="c"/>.
-        /// </summary>
+        
         protected abstract void AppendLiteralCharacterToBracketExpression(char c);
 
-        /// <summary>
-        /// Called from <see cref="Parse"/> method to indicate that the bracket expression
-        /// should include all characters from character range
-        /// starting at <paramref name="startOfCharacterRange"/>
-        /// and ending at <paramref name="endOfCharacterRange"/>
-        /// </summary>
+        
         protected abstract void AppendCharacterRangeToBracketExpression(
                         char startOfCharacterRange,
                         char endOfCharacterRange);
 
-        /// <summary>
-        /// Called from <see cref="Parse"/> method to indicate the end of a bracket expression.
-        /// </summary>
+        
         protected abstract void EndBracketExpression();
 
-        /// <summary>
-        /// PowerShell v1 and v2 treats all characters inside
-        /// <paramref name="brackedExpressionContents"/> as literal characters,
-        /// except '-' sign which denotes a range.  In particular it means that
-        /// '^', '[', ']' are escaped within the bracket expression and don't
-        /// have their regex-y meaning.
-        /// </summary>
+        
         /// <param name="brackedExpressionContents"></param>
         /// <param name="bracketExpressionOperators"></param>
         /// <param name="pattern"></param>
@@ -660,10 +562,7 @@ namespace System.Management.Automation
             this.EndBracketExpression();
         }
 
-        /// <summary>
-        /// Parses <paramref name="pattern"/>, calling appropriate overloads
-        /// in <paramref name="parser"/>
-        /// </summary>
+        
         /// <param name="pattern">Pattern to parse.</param>
         /// <param name="parser">Parser to call back.</param>
         public static void Parse(WildcardPattern pattern, WildcardPatternParser parser)
@@ -765,9 +664,7 @@ namespace System.Management.Automation
         }
     }
 
-    /// <summary>
-    /// Convert a string with wild cards into its equivalent regex.
-    /// </summary>
+    
     /// <remarks>
     /// A list of glob patterns and their equivalent regexes
     ///
@@ -933,9 +830,7 @@ namespace System.Management.Automation
             _regexPattern.Append(']');
         }
 
-        /// <summary>
-        /// Parses a <paramref name="wildcardPattern"/> into a <see cref="Regex"/>
-        /// </summary>
+        
         /// <param name="wildcardPattern">Wildcard pattern to parse.</param>
         /// <returns>Regular expression equivalent to <paramref name="wildcardPattern"/></returns>
         public static Regex Parse(WildcardPattern wildcardPattern)
@@ -1332,9 +1227,7 @@ namespace System.Management.Automation
         }
     }
 
-    /// <summary>
-    /// Translates a <see cref="WildcardPattern"/> into a DOS wildcard.
-    /// </summary>
+    
     internal class WildcardPatternToDosWildcardParser : WildcardPatternParser
     {
         private readonly StringBuilder _result = new StringBuilder();
@@ -1371,9 +1264,7 @@ namespace System.Management.Automation
             _result.Append('?');
         }
 
-        /// <summary>
-        /// Converts <paramref name="wildcardPattern"/> into a DOS wildcard.
-        /// </summary>
+        
         internal static string Parse(WildcardPattern wildcardPattern)
         {
             var parser = new WildcardPatternToDosWildcardParser();

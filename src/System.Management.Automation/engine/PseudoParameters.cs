@@ -6,9 +6,7 @@ using System.Collections.ObjectModel;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Represents a parameter declaration that can be constructed at runtime.
-    /// </summary>
+    
     /// <remarks>
     /// Instances of <see cref="RuntimeDefinedParameterDictionary"/>
     /// should be returned to cmdlet implementations of
@@ -22,16 +20,12 @@ namespace System.Management.Automation
     /// <seealso cref="IDynamicParameters.GetDynamicParameters"/>
     public class RuntimeDefinedParameter
     {
-        /// <summary>
-        /// Constructs a runtime-defined parameter instance.
-        /// </summary>
+        
         public RuntimeDefinedParameter()
         {
         }
 
-        /// <summary>
-        /// Constructs a new instance of a runtime-defined parameter using the specified parameters.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the parameter. This cannot be null or empty.
         /// </param>
@@ -70,9 +64,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets or sets the name of the parameter.
-        /// </summary>
+        
         /// <exception cref="ArgumentException">
         /// If <paramref name="value"/> is null or empty on set.
         /// </exception>
@@ -96,9 +88,7 @@ namespace System.Management.Automation
 
         private string _name = string.Empty;
 
-        /// <summary>
-        /// Gets or sets the type of the parameter.
-        /// </summary>
+        
         /// <remarks>
         /// Arguments will be coerced to this type before being bound.
         /// </remarks>
@@ -125,9 +115,7 @@ namespace System.Management.Automation
 
         private Type _parameterType;
 
-        /// <summary>
-        /// Gets or sets the value of the parameter.
-        /// </summary>
+        
         /// <remarks>
         /// If the value is set prior to parameter binding, the value will be
         /// reset before each pipeline object is processed.
@@ -148,22 +136,16 @@ namespace System.Management.Automation
 
         private object _value;
 
-        /// <summary>
-        /// Gets or sets whether this parameter value has been set.
-        /// </summary>
+        
         public bool IsSet { get; set; }
 
-        /// <summary>
-        /// Gets or sets the attribute collection that describes the parameter.
-        /// </summary>
+        
         /// <remarks>
         /// This can be any attribute that can be applied to a normal parameter.
         /// </remarks>
         public Collection<Attribute> Attributes { get; } = new Collection<Attribute>();
 
-        /// <summary>
-        /// Check if the parameter is disabled due to the associated experimental feature.
-        /// </summary>
+        
         internal bool IsDisabled()
         {
             bool hasParameterAttribute = false;
@@ -199,10 +181,7 @@ namespace System.Management.Automation
         }
     }
 
-    /// <summary>
-    /// Represents a collection of runtime-defined parameters that are keyed based on the name
-    /// of the parameter.
-    /// </summary>
+    
     /// <remarks>
     /// Instances of <see cref="RuntimeDefinedParameterDictionary"/>
     /// should be returned to cmdlet implementations of
@@ -216,17 +195,13 @@ namespace System.Management.Automation
     /// <seealso cref="IDynamicParameters.GetDynamicParameters"/>
     public class RuntimeDefinedParameterDictionary : Dictionary<string, RuntimeDefinedParameter>
     {
-        /// <summary>
-        /// Constructs a new instance of a runtime-defined parameter dictionary.
-        /// </summary>
+        
         public RuntimeDefinedParameterDictionary()
             : base(StringComparer.OrdinalIgnoreCase)
         {
         }
 
-        /// <summary>
-        /// Gets or sets the help file that documents these parameters.
-        /// </summary>
+        
         public string HelpFile
         {
             get { return _helpFile; }
@@ -236,9 +211,7 @@ namespace System.Management.Automation
 
         private string _helpFile = string.Empty;
 
-        /// <summary>
-        /// Gets or sets private data associated with the runtime-defined parameters.
-        /// </summary>
+        
         public object Data { get; set; }
 
         internal static readonly RuntimeDefinedParameter[] EmptyParameterArray = Array.Empty<RuntimeDefinedParameter>();

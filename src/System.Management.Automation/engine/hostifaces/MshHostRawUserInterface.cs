@@ -12,9 +12,7 @@ namespace System.Management.Automation.Host
     // I would have preferred to make these nested types within PSHostRawUserInterface, but that
     // is evidently discouraged by the .net design guidelines.
 
-    /// <summary>
-    /// Represents an (x,y) coordinate pair.
-    /// </summary>
+    
     public
     struct Coordinates
     {
@@ -25,9 +23,7 @@ namespace System.Management.Automation.Host
 
         #endregion
 
-        /// <summary>
-        /// Gets and sets the X coordinate.
-        /// </summary>
+        
         public int X
         {
             get { return x; }
@@ -35,9 +31,7 @@ namespace System.Management.Automation.Host
             set { x = value; }
         }
 
-        /// <summary>
-        /// Gets and sets the Y coordinate.
-        /// </summary>
+        
         public int Y
         {
             get { return y; }
@@ -45,9 +39,7 @@ namespace System.Management.Automation.Host
             set { y = value; }
         }
 
-        /// <summary>
-        /// Initializes a new instance of the Coordinates class and defines the X and Y values.
-        /// </summary>
+        
         /// <param name="x">
         /// The X coordinate
         /// </param>
@@ -61,9 +53,7 @@ namespace System.Management.Automation.Host
             this.y = y;
         }
 
-        /// <summary>
-        /// Overrides <see cref="System.Object.ToString"/>
-        /// </summary>
+        
         /// <returns>
         /// "a,b" where a and b are the values of the X and Y properties.
         /// </returns>
@@ -74,9 +64,7 @@ namespace System.Management.Automation.Host
             return string.Create(CultureInfo.InvariantCulture, $"{X},{Y}");
         }
 
-        /// <summary>
-        /// Overrides <see cref="System.Object.Equals(object)"/>
-        /// </summary>
+        
         /// <param name="obj">
         /// object to be compared for equality.
         /// </param>
@@ -98,9 +86,7 @@ namespace System.Management.Automation.Host
             return result;
         }
 
-        /// <summary>
-        /// Overrides <see cref="System.Object.GetHashCode"/>
-        /// </summary>
+        
         /// <returns>
         /// Hash code for this instance.
         /// </returns>
@@ -157,9 +143,7 @@ namespace System.Management.Automation.Host
             return result;
         }
 
-        /// <summary>
-        /// Compares two instances for equality.
-        /// </summary>
+        
         /// <param name="first">
         /// The left side operand.
         /// </param>
@@ -178,9 +162,7 @@ namespace System.Management.Automation.Host
             return result;
         }
 
-        /// <summary>
-        /// Compares two instances for inequality.
-        /// </summary>
+        
         /// <param name="first">
         /// The left side operand.
         /// </param>
@@ -198,9 +180,7 @@ namespace System.Management.Automation.Host
         }
     }
 
-    /// <summary>
-    /// Represents a width and height pair.
-    /// </summary>
+    
     public
     struct Size
     {
@@ -211,9 +191,7 @@ namespace System.Management.Automation.Host
 
         #endregion
 
-        /// <summary>
-        /// Gets and sets the Width.
-        /// </summary>
+        
         public int Width
         {
             get { return width; }
@@ -221,9 +199,7 @@ namespace System.Management.Automation.Host
             set { width = value; }
         }
 
-        /// <summary>
-        /// Gets and sets the Height.
-        /// </summary>
+        
         public int Height
         {
             get { return height; }
@@ -231,9 +207,7 @@ namespace System.Management.Automation.Host
             set { height = value; }
         }
 
-        /// <summary>
-        /// Initialize a new instance of the Size class and defines the Width and Height values.
-        /// </summary>
+        
         /// <param name="width">
         /// The Width
         /// </param>
@@ -247,9 +221,7 @@ namespace System.Management.Automation.Host
             this.height = height;
         }
 
-        /// <summary>
-        /// Overloads <see cref="System.Object.ToString"/>
-        /// </summary>
+        
         /// <returns>
         /// "a,b" where a and b are the values of the Width and Height properties.
         /// </returns>
@@ -260,9 +232,7 @@ namespace System.Management.Automation.Host
             return string.Create(CultureInfo.InvariantCulture, $"{Width},{Height}");
         }
 
-        /// <summary>
-        /// Overrides <see cref="System.Object.Equals(object)"/>
-        /// </summary>
+        
         /// <param name="obj">
         /// object to be compared for equality.
         /// </param>
@@ -284,9 +254,7 @@ namespace System.Management.Automation.Host
             return result;
         }
 
-        /// <summary>
-        /// Overrides <see cref="System.Object.GetHashCode"/>
-        /// </summary>
+        
         /// <returns>
         /// Hash code for this instance.
         /// 
@@ -344,9 +312,7 @@ namespace System.Management.Automation.Host
             return result;
         }
 
-        /// <summary>
-        /// Compares two instances for equality.
-        /// </summary>
+        
         /// <param name="first">
         /// The left side operand.
         /// </param>
@@ -365,9 +331,7 @@ namespace System.Management.Automation.Host
             return result;
         }
 
-        /// <summary>
-        /// Compares two instances for inequality.
-        /// </summary>
+        
         /// <param name="first">
         /// The left side operand.
         /// </param>
@@ -385,92 +349,59 @@ namespace System.Management.Automation.Host
         }
     }
 
-    /// <summary>
-    /// Governs the behavior of <see cref="System.Management.Automation.Host.PSHostRawUserInterface.ReadKey()"/>
-    /// and <see cref="System.Management.Automation.Host.PSHostRawUserInterface.ReadKey(System.Management.Automation.Host.ReadKeyOptions)"/>
-    /// </summary>
+    
     [Flags]
     public
     enum
     ReadKeyOptions
     {
-        /// <summary>
-        /// Allow Ctrl-C to be processed as a keystroke, as opposed to causing a break event.
-        /// </summary>
+        
         AllowCtrlC = 0x0001,
 
-        /// <summary>
-        /// Do not display the character for the key in the window when pressed.
-        /// </summary>
+        
         NoEcho = 0x0002,
 
-        /// <summary>
-        /// Include key down events.  Either one of IncludeKeyDown and IncludeKeyUp or both must be specified.
-        /// </summary>
+        
         IncludeKeyDown = 0x0004,
 
-        /// <summary>
-        /// Include key up events.  Either one of IncludeKeyDown and IncludeKeyUp or both must be specified.
-        /// </summary>
+        
         IncludeKeyUp = 0x0008
     }
 
-    /// <summary>
-    /// Defines the states of Control Key.
-    /// </summary>
+    
     [Flags]
     public
     enum ControlKeyStates
     {
-        /// <summary>
-        /// The right alt key is pressed.
-        /// </summary>
+        
         RightAltPressed = 0x0001,
 
-        /// <summary>
-        /// The left alt key is pressed.
-        /// </summary>
+        
         LeftAltPressed = 0x0002,
 
-        /// <summary>
-        /// The right ctrl key is pressed.
-        /// </summary>
+        
         RightCtrlPressed = 0x0004,
 
-        /// <summary>
-        /// The left ctrl key is pressed.
-        /// </summary>
+        
         LeftCtrlPressed = 0x0008,
 
-        /// <summary>
-        /// The shift key is pressed.
-        /// </summary>
+        
         ShiftPressed = 0x0010,
 
-        /// <summary>
-        /// The numlock light is on.
-        /// </summary>
+        
         NumLockOn = 0x0020,
 
-        /// <summary>
-        /// The scrolllock light is on.
-        /// </summary>
+        
         ScrollLockOn = 0x0040,
 
-        /// <summary>
-        /// The capslock light is on.
-        /// </summary>
+        
         CapsLockOn = 0x0080,
 
-        /// <summary>
-        /// The key is enhanced.
-        /// </summary>
+        
         EnhancedKey = 0x0100
     }
 
-    /// <summary>
-    /// Represents information of a keystroke.
-    /// </summary>
+    
     public
     struct KeyInfo
     {
@@ -483,9 +414,7 @@ namespace System.Management.Automation.Host
 
         #endregion
 
-        /// <summary>
-        /// Gets and set device-independent key.
-        /// </summary>
+        
         public int VirtualKeyCode
         {
             get { return virtualKeyCode; }
@@ -493,9 +422,7 @@ namespace System.Management.Automation.Host
             set { virtualKeyCode = value; }
         }
 
-        /// <summary>
-        /// Gets and set unicode Character of the key.
-        /// </summary>
+        
         public char Character
         {
             get { return character; }
@@ -503,9 +430,7 @@ namespace System.Management.Automation.Host
             set { character = value; }
         }
 
-        /// <summary>
-        /// State of the control keys.
-        /// </summary>
+        
         public ControlKeyStates ControlKeyState
         {
             get { return controlKeyState; }
@@ -513,9 +438,7 @@ namespace System.Management.Automation.Host
             set { controlKeyState = value; }
         }
 
-        /// <summary>
-        /// Gets and set the status of whether this instance is generated by a key pressed or released.
-        /// </summary>
+        
         public bool KeyDown
         {
             get { return keyDown; }
@@ -523,10 +446,7 @@ namespace System.Management.Automation.Host
             set { keyDown = value; }
         }
 
-        /// <summary>
-        /// Initialize a new instance of the KeyInfo class and defines the VirtualKeyCode,
-        /// Character, ControlKeyState and KeyDown values.
-        /// </summary>
+        
         /// <param name="virtualKeyCode">
         /// The virtual key code
         /// </param>
@@ -554,9 +474,7 @@ namespace System.Management.Automation.Host
             this.keyDown = keyDown;
         }
 
-        /// <summary>
-        /// Overloads <see cref="System.Object.ToString"/>
-        /// </summary>
+        
         /// <returns>
         /// "a,b,c,d" where a, b, c, and d are the values of the VirtualKeyCode, Character, ControlKeyState, and KeyDown properties.
         /// </returns>
@@ -566,9 +484,7 @@ namespace System.Management.Automation.Host
         {
             return string.Create(CultureInfo.InvariantCulture, $"{VirtualKeyCode},{Character},{ControlKeyState},{KeyDown}");
         }
-        /// <summary>
-        /// Overrides <see cref="System.Object.Equals(object)"/>
-        /// </summary>
+        
         /// <param name="obj">
         /// object to be compared for equality.
         /// </param>
@@ -590,9 +506,7 @@ namespace System.Management.Automation.Host
             return result;
         }
 
-        /// <summary>
-        /// Overrides <see cref="System.Object.GetHashCode"/>
-        /// </summary>
+        
         /// <returns>
         /// Hash code for this instance.
         /// 
@@ -617,9 +531,7 @@ namespace System.Management.Automation.Host
             return i32.GetHashCode();
         }
 
-        /// <summary>
-        /// Compares two instances for equality.
-        /// </summary>
+        
         /// <param name="first">
         /// The left side operand.
         /// </param>
@@ -641,9 +553,7 @@ namespace System.Management.Automation.Host
             return result;
         }
 
-        /// <summary>
-        /// Compares two instances for inequality.
-        /// </summary>
+        
         /// <param name="first">
         /// The left side operand.
         /// </param>
@@ -663,10 +573,7 @@ namespace System.Management.Automation.Host
         }
     }
 
-    /// <summary>
-    /// Represents a rectangular region of the screen.
-    /// 
-    /// </summary>
+    
     public
     struct Rectangle
     {
@@ -679,9 +586,7 @@ namespace System.Management.Automation.Host
 
         #endregion
 
-        /// <summary>
-        /// Gets and sets the left side of the rectangle.
-        /// </summary>
+        
         public int Left
         {
             get { return left; }
@@ -689,9 +594,7 @@ namespace System.Management.Automation.Host
             set { left = value; }
         }
 
-        /// <summary>
-        /// Gets and sets the top of the rectangle.
-        /// </summary>
+        
         public int Top
         {
             get { return top; }
@@ -699,9 +602,7 @@ namespace System.Management.Automation.Host
             set { top = value; }
         }
 
-        /// <summary>
-        /// Gets and sets the right side of the rectangle.
-        /// </summary>
+        
         public int Right
         {
             get { return right; }
@@ -709,9 +610,7 @@ namespace System.Management.Automation.Host
             set { right = value; }
         }
 
-        /// <summary>
-        /// Gets and sets the bottom of the rectangle.
-        /// </summary>
+        
         public int Bottom
         {
             get { return bottom; }
@@ -719,9 +618,7 @@ namespace System.Management.Automation.Host
             set { bottom = value; }
         }
 
-        /// <summary>
-        /// Initialize a new instance of the Rectangle class and defines the Left, Top, Right, and Bottom values.
-        /// </summary>
+        
         /// <param name="left">
         /// The left side of the rectangle
         /// </param>
@@ -759,12 +656,7 @@ namespace System.Management.Automation.Host
             this.bottom = bottom;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the Rectangle class and defines the Left, Top, Right, and Bottom values
-        /// by <paramref name="upperLeft"/>, the upper left corner and <paramref name="lowerRight"/>, the lower
-        /// right corner.
-        /// 
-        /// </summary>
+        
         /// <param name="upperLeft">
         /// The Coordinates of the upper left corner of the Rectangle
         /// </param>
@@ -778,9 +670,7 @@ namespace System.Management.Automation.Host
         {
         }
 
-        /// <summary>
-        /// Overloads <see cref="System.Object.ToString"/>
-        /// </summary>
+        
         /// <returns>
         /// "a,b ; c,d" where a, b, c, and d are values of the Left, Top, Right, and Bottom properties.
         /// </returns>
@@ -791,9 +681,7 @@ namespace System.Management.Automation.Host
             return string.Create(CultureInfo.InvariantCulture, $"{Left},{Top} ; {Right},{Bottom}");
         }
 
-        /// <summary>
-        /// Overrides <see cref="System.Object.Equals(object)"/>
-        /// </summary>
+        
         /// <param name="obj">
         /// object to be compared for equality.
         /// </param>
@@ -815,9 +703,7 @@ namespace System.Management.Automation.Host
             return result;
         }
 
-        /// <summary>
-        /// Overrides <see cref="System.Object.GetHashCode"/>
-        /// </summary>
+        
         /// <returns>
         /// Hash code for this instance.
         /// 
@@ -879,9 +765,7 @@ namespace System.Management.Automation.Host
             return result;
         }
 
-        /// <summary>
-        /// Compares two instances for equality.
-        /// </summary>
+        
         /// <param name="first">
         /// The left side operand.
         /// </param>
@@ -901,9 +785,7 @@ namespace System.Management.Automation.Host
             return result;
         }
 
-        /// <summary>
-        /// Compares two instances for inequality.
-        /// </summary>
+        
         /// <param name="first">
         /// The left side operand.
         /// </param>
@@ -922,9 +804,7 @@ namespace System.Management.Automation.Host
         }
     }
 
-    /// <summary>
-    /// Represents a character, a foregroundColor color, and background color.
-    /// </summary>
+    
     public
     struct BufferCell
     {
@@ -937,9 +817,7 @@ namespace System.Management.Automation.Host
 
         #endregion
 
-        /// <summary>
-        /// Gets and sets the character value.
-        /// </summary>
+        
         public char Character
         {
             get { return character; }
@@ -950,9 +828,7 @@ namespace System.Management.Automation.Host
         // we reuse System.ConsoleColor - it's in the core assembly, and I think it would be confusing to create another
         // essentially identical enum
 
-        /// <summary>
-        /// Gets and sets the foreground color.
-        /// </summary>
+        
         public ConsoleColor ForegroundColor
         {
             get { return foregroundColor; }
@@ -960,9 +836,7 @@ namespace System.Management.Automation.Host
             set { foregroundColor = value; }
         }
 
-        /// <summary>
-        /// Gets and sets the background color.
-        /// </summary>
+        
         public ConsoleColor BackgroundColor
         {
             get { return backgroundColor; }
@@ -970,9 +844,7 @@ namespace System.Management.Automation.Host
             set { backgroundColor = value; }
         }
 
-        /// <summary>
-        /// Gets and sets the type value.
-        /// </summary>
+        
         public BufferCellType BufferCellType
         {
             get { return bufferCellType; }
@@ -980,10 +852,7 @@ namespace System.Management.Automation.Host
             set { bufferCellType = value; }
         }
 
-        /// <summary>
-        /// Initializes a new instance of the BufferCell class and defines the
-        /// Character, ForegroundColor, BackgroundColor and Type values.
-        /// </summary>
+        
         /// <param name="character">
         /// The character in this BufferCell object
         /// </param>
@@ -1005,9 +874,7 @@ namespace System.Management.Automation.Host
             this.bufferCellType = bufferCellType;
         }
 
-        /// <summary>
-        /// Overloads <see cref="System.Object.ToString"/>
-        /// </summary>
+        
         /// <returns>
         /// "'a' b c d" where a, b, c, and d are the values of the Character, ForegroundColor, BackgroundColor, and Type properties.
         /// </returns>
@@ -1018,9 +885,7 @@ namespace System.Management.Automation.Host
             return string.Create(CultureInfo.InvariantCulture, $"'{Character}' {ForegroundColor} {BackgroundColor} {BufferCellType}");
         }
 
-        /// <summary>
-        /// Overrides <see cref="System.Object.Equals(object)"/>
-        /// </summary>
+        
         /// <param name="obj">
         /// object to be compared for equality.
         /// </param>
@@ -1042,10 +907,7 @@ namespace System.Management.Automation.Host
             return result;
         }
 
-        /// <summary>
-        /// Overrides <see cref="System.Object.GetHashCode"/>
-        /// 
-        /// </summary>
+        
         /// <returns>
         /// Hash code for this instance.
         ///
@@ -1067,9 +929,7 @@ namespace System.Management.Automation.Host
             return result;
         }
 
-        /// <summary>
-        /// Compares two instances for equality.
-        /// </summary>
+        
         /// <param name="first">
         /// The left side operand.
         /// </param>
@@ -1091,9 +951,7 @@ namespace System.Management.Automation.Host
             return result;
         }
 
-        /// <summary>
-        /// Compares two instances for inequality.
-        /// </summary>
+        
         /// <param name="first">
         /// The left side operand.
         /// </param>
@@ -1114,36 +972,23 @@ namespace System.Management.Automation.Host
         private const string StringsBaseName = "MshHostRawUserInterfaceStrings";
     }
 
-    /// <summary>
-    /// Defines three types of BufferCells to accommodate for hosts that use up to two cells
-    /// to display a character in some languages such as Chinese and Japanese.
-    /// </summary>
+    
     public enum
     BufferCellType
     {
-        /// <summary>
-        /// Character occupies one BufferCell.
-        /// </summary>
+        
         Complete,
 
-        /// <summary>
-        /// Character occupies two BufferCells and this is the leading one.
-        /// </summary>
+        
         Leading,
 
-        /// <summary>
-        /// Preceded by a Leading BufferCell.
-        /// </summary>
+        
         Trailing
     }
 
     #endregion Ancillary types
 
-    /// <summary>
-    /// Defines the lowest-level user interface functions that an interactive application hosting PowerShell
-    /// <see cref="System.Management.Automation.Runspaces.Runspace"/> can choose to implement if it wants to
-    /// support any cmdlet that does character-mode interaction with the user.
-    /// </summary>
+    
     /// <remarks>
     /// It models an 2-dimensional grid of cells called a Buffer.  A buffer has a visible rectangular region, called a window.
     /// Each cell of the grid has a character, a foreground color, and a background color.  When the buffer has input focus, it
@@ -1155,19 +1000,14 @@ namespace System.Management.Automation.Host
     public abstract
     class PSHostRawUserInterface
     {
-        /// <summary>
-        /// Protected constructor which does nothing.  Provided per .Net design guidelines section 4.3.1.
-        /// </summary>
+        
         protected
         PSHostRawUserInterface()
         {
             // do nothing
         }
 
-        /// <summary>
-        /// Gets or sets the color used to render characters on the screen buffer. Each character cell in the screen buffer can
-        /// have a separate foreground color.
-        /// </summary>
+        
         /// 
         /// <seealso cref="System.Management.Automation.Host.PSHostRawUserInterface.BackgroundColor"/>
         public abstract
@@ -1178,10 +1018,7 @@ namespace System.Management.Automation.Host
             set;
         }
 
-        /// <summary>
-        /// Gets or sets the color used to render the background behind characters on the screen buffer.  Each character cell in
-        /// the screen buffer can have a separate background color.
-        /// </summary>
+        
         /// <seealso cref="System.Management.Automation.Host.PSHostRawUserInterface.ForegroundColor"/>
         public abstract
         ConsoleColor
@@ -1191,10 +1028,7 @@ namespace System.Management.Automation.Host
             set;
         }
 
-        /// <summary>
-        /// Gets or sets the cursor position in the screen buffer.  The view window always adjusts it's location over the screen
-        /// buffer such that the cursor is always visible.
-        /// </summary>
+        
         /// <remarks>
         /// To write to the screen buffer without updating the cursor position, use
         /// <see cref="System.Management.Automation.Host.PSHostRawUserInterface.SetBufferContents(Rectangle, BufferCell)"/> or
@@ -1214,10 +1048,7 @@ namespace System.Management.Automation.Host
             set;
         }
 
-        /// <summary>
-        /// Gets or sets position of the view window relative to the screen buffer, in characters. (0,0) is the upper left of the screen
-        /// buffer.
-        /// </summary>
+        
         /// <seealso cref="System.Management.Automation.Host.PSHostRawUserInterface.MaxPhysicalWindowSize"/>
         /// <seealso cref="System.Management.Automation.Host.PSHostRawUserInterface.WindowSize"/>
         /// <seealso cref="System.Management.Automation.Host.PSHostRawUserInterface.CursorPosition"/>
@@ -1230,9 +1061,7 @@ namespace System.Management.Automation.Host
             set;
         }
 
-        /// <summary>
-        /// Gets or sets the cursor size as a percentage 0..100.
-        /// </summary>
+        
         /// <seealso cref="System.Management.Automation.Host.PSHostRawUserInterface.CursorPosition"/>
         public abstract
         int
@@ -1242,9 +1071,7 @@ namespace System.Management.Automation.Host
             set;
         }
 
-        /// <summary>
-        /// Gets or sets the current size of the screen buffer, measured in character cells.
-        /// </summary>
+        
         /// <seealso cref="System.Management.Automation.Host.PSHostRawUserInterface.MaxPhysicalWindowSize"/>
         /// <seealso cref="System.Management.Automation.Host.PSHostRawUserInterface.WindowSize"/>
         /// <seealso cref="System.Management.Automation.Host.PSHostRawUserInterface.CursorPosition"/>
@@ -1258,10 +1085,7 @@ namespace System.Management.Automation.Host
             set;
         }
 
-        /// <summary>
-        /// Gets or sets the current view window size, measured in character cells.  The window size cannot be larger than the
-        /// dimensions returned by <see cref="System.Management.Automation.Host.PSHostRawUserInterface.MaxPhysicalWindowSize"/>.
-        /// </summary>
+        
         /// <seealso cref="System.Management.Automation.Host.PSHostRawUserInterface.MaxPhysicalWindowSize"/>
         /// <seealso cref="System.Management.Automation.Host.PSHostRawUserInterface.BufferSize"/>
         /// <seealso cref="System.Management.Automation.Host.PSHostRawUserInterface.CursorPosition"/>
@@ -1275,10 +1099,7 @@ namespace System.Management.Automation.Host
             set;
         }
 
-        /// <summary>
-        /// Gets the size of the largest window possible for the current buffer, current font, and current display hardware.
-        /// The view window cannot be larger than the screen buffer or the current display (the display the window is rendered on).
-        /// </summary>
+        
         /// <value>
         /// The largest dimensions the window can be resized to without resizing the screen buffer.
         /// </value>
@@ -1298,11 +1119,7 @@ namespace System.Management.Automation.Host
             get;
         }
 
-        /// <summary>
-        /// Gets the largest window possible for the current font and display hardware, ignoring the current buffer dimensions.  In
-        /// other words, the dimensions of the largest window that could be rendered in the current display, if the buffer was
-        /// at least as large.
-        /// </summary>
+        
         /// <remarks>
         /// To resize the window to this dimension, use <see cref="System.Management.Automation.Host.PSHostRawUserInterface.BufferSize"/>
         /// to first check and, if necessary, adjust, the screen buffer size.
@@ -1319,10 +1136,7 @@ namespace System.Management.Automation.Host
             get;
         }
 
-        /// <summary>
-        /// Reads a key stroke from the keyboard device, blocking until a keystroke is typed.
-        /// Same as ReadKey(ReadKeyOptions.IncludeKeyDown)
-        /// </summary>
+        
         /// <returns>
         /// Key stroke when a key is pressed.
         /// </returns>
@@ -1342,10 +1156,7 @@ namespace System.Management.Automation.Host
             return ReadKey(ReadKeyOptions.IncludeKeyDown);
         }
 
-        /// <summary>
-        /// Reads a key stroke from the keyboard device, blocking until a keystroke is typed.
-        /// Either one of ReadKeyOptions.IncludeKeyDown and ReadKeyOptions.IncludeKeyUp or both must be specified.
-        /// </summary>
+        
         /// <param name="options">
         /// A bit mask of the options to be used to read the keyboard. Constants defined by
         /// <see cref="System.Management.Automation.Host.ReadKeyOptions"/>
@@ -1371,9 +1182,7 @@ namespace System.Management.Automation.Host
         KeyInfo
         ReadKey(ReadKeyOptions options);
 
-        /// <summary>
-        /// Resets the keyboard input buffer.
-        /// </summary>
+        
         /// <seealso cref="System.Management.Automation.Host.PSHostRawUserInterface.ReadKey()"/>
         /// <seealso cref="System.Management.Automation.Host.PSHostRawUserInterface.ReadKey(System.Management.Automation.Host.ReadKeyOptions)"/>
         /// <seealso cref="System.Management.Automation.Host.PSHostRawUserInterface.KeyAvailable"/>
@@ -1381,9 +1190,7 @@ namespace System.Management.Automation.Host
         void
         FlushInputBuffer();
 
-        /// <summary>
-        /// A non-blocking call to examine if a keystroke is waiting in the input buffer.
-        /// </summary>
+        
         /// <value>
         /// True if a keystroke is waiting in the input buffer, false if not.
         /// </value>
@@ -1397,9 +1204,7 @@ namespace System.Management.Automation.Host
             get;
         }
 
-        /// <summary>
-        /// Gets or sets the titlebar text of the current view window.
-        /// </summary>
+        
         public abstract
         string
         WindowTitle
@@ -1408,10 +1213,7 @@ namespace System.Management.Automation.Host
             set;
         }
 
-        /// <summary>
-        /// Copies the <see cref="System.Management.Automation.Host.BufferCell"/> array into the screen buffer at the
-        /// given origin, clipping such that cells in the array that would fall outside the screen buffer are ignored.
-        /// </summary>
+        
         /// <param name="origin">
         /// The top left corner of the rectangular screen area to which <paramref name="contents"/> is copied.
         /// </param>
@@ -1431,9 +1233,7 @@ namespace System.Management.Automation.Host
         void
         SetBufferContents(Coordinates origin, BufferCell[,] contents);
 
-        /// <summary>
-        /// Copies a given character to all of the character cells in the screen buffer with the indicated colors.
-        /// </summary>
+        
         /// <param name="rectangle">
         /// The rectangle on the screen buffer to which <paramref name="fill"/> is copied.
         /// If all elements are -1, the entire screen buffer will be copied with <paramref name="fill"/>.
@@ -1475,9 +1275,7 @@ namespace System.Management.Automation.Host
         void
         SetBufferContents(Rectangle rectangle, BufferCell fill);
 
-        /// <summary>
-        /// Extracts a rectangular region of the screen buffer.
-        /// </summary>
+        
         /// <param name="rectangle">
         /// The rectangle on the screen buffer to extract.
         /// </param>
@@ -1513,9 +1311,7 @@ namespace System.Management.Automation.Host
         BufferCell[,]
         GetBufferContents(Rectangle rectangle);
 
-        /// <summary>
-        /// Scroll a region of the screen buffer.
-        /// </summary>
+        
         /// <param name="source">
         /// Indicates the region of the screen to be scrolled.
         /// </param>
@@ -1549,9 +1345,7 @@ namespace System.Management.Automation.Host
             BufferCell fill
         );
 
-        /// <summary>
-        /// Determines the number of BufferCells a substring of a string occupies.
-        /// </summary>
+        
         /// <param name="source">
         /// The string whose substring length we want to know.
         /// </param>
@@ -1593,9 +1387,7 @@ namespace System.Management.Automation.Host
             return this.LengthInBufferCells(substring);
         }
 
-        /// <summary>
-        /// Determines the number of BufferCells a string occupies.
-        /// </summary>
+        
         /// <param name="source">
         /// The string whose length we want to know.
         /// </param>
@@ -1626,9 +1418,7 @@ namespace System.Management.Automation.Host
             return source.Length;
         }
 
-        /// <summary>
-        /// Determines the number of BufferCells a character occupies.
-        /// </summary>
+        
         /// <param name="source">
         /// The character whose length we want to know.
         /// </param>
@@ -1653,9 +1443,7 @@ namespace System.Management.Automation.Host
             return 1;
         }
 
-        /// <summary>
-        /// Creates a two dimensional array of BufferCells by examining each character in <paramref name="contents"/>.
-        /// </summary>
+        
         /// <param name="contents">
         /// String array based on which the two dimensional array of BufferCells will be created.
         /// </param>
@@ -1769,10 +1557,7 @@ namespace System.Management.Automation.Host
         }
 #pragma warning restore 56506
 
-        /// <summary>
-        /// Creates a 2D array of BufferCells by examining <paramref name="contents"/>.Character.
-        /// <see cref="PSHostRawUserInterface"/>
-        /// </summary>
+        
         /// <param name="width">
         /// The number of columns of the resulting array
         /// </param>
@@ -1868,9 +1653,7 @@ namespace System.Management.Automation.Host
             return buffer;
         }
 
-        /// <summary>
-        /// Same as <see cref="System.Management.Automation.Host.PSHostRawUserInterface.NewBufferCellArray(int, int, BufferCell)"/>
-        /// </summary>
+        
         /// <param name="size">
         /// The width and height of the resulting array.
         /// </param>

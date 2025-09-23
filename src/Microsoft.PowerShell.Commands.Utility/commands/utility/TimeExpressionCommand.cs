@@ -11,25 +11,18 @@ using System.Management.Automation.Internal;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// Implements a cmdlet that applies a script block
-    /// to each element of the pipeline.
-    /// </summary>
+    
     [Cmdlet(VerbsDiagnostic.Measure, "Command", HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097029", RemotingCapability = RemotingCapability.None)]
     [OutputType(typeof(TimeSpan))]
     public sealed class MeasureCommandCommand : PSCmdlet
     {
         #region parameters
 
-        /// <summary>
-        /// This parameter specifies the current pipeline object.
-        /// </summary>
+        
         [Parameter(ValueFromPipeline = true)]
         public PSObject InputObject { get; set; } = AutomationNull.Value;
 
-        /// <summary>
-        /// The script block to apply.
-        /// </summary>
+        
         [Parameter(Position = 0, Mandatory = true)]
         public ScriptBlock Expression { get; set; }
 
@@ -43,17 +36,13 @@ namespace Microsoft.PowerShell.Commands
 
         #region methods
 
-        /// <summary>
-        /// Output the timer.
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             WriteObject(_stopWatch.Elapsed);
         }
 
-        /// <summary>
-        /// Execute the script block passing in the current pipeline object as it's only parameter.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             // Only accumulate the time used by this scriptblock...

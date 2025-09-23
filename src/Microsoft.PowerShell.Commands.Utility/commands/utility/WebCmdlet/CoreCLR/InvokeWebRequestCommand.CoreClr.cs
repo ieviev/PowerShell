@@ -11,27 +11,20 @@ using System.Threading;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// The Invoke-WebRequest command.
-    /// This command makes an HTTP or HTTPS request to a web server and returns the results.
-    /// </summary>
+    
     [Cmdlet(VerbsLifecycle.Invoke, "WebRequest", HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097126", DefaultParameterSetName = "StandardMethod")]
     [OutputType(typeof(BasicHtmlWebResponseObject))]
     public class InvokeWebRequestCommand : WebRequestPSCmdlet
     {
         #region Virtual Method Overrides
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="InvokeWebRequestCommand"/> class.
-        /// </summary>
+        
         public InvokeWebRequestCommand() : base()
         {
             _parseRelLink = true;
         }
 
-        /// <summary>
-        /// Process the web response and output corresponding objects.
-        /// </summary>
+        
         /// <param name="response"></param>
         internal override void ProcessResponse(HttpResponseMessage response)
         {

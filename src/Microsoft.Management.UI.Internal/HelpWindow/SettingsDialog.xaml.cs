@@ -6,14 +6,10 @@ namespace Microsoft.Management.UI
     using System.Windows;
     using Microsoft.Management.UI.Internal;
 
-    /// <summary>
-    /// Dialog with settings for the help dialog.
-    /// </summary>
+    
     public partial class SettingsDialog : Window
     {
-        /// <summary>
-        /// Initializes a new instance of the SettingsDialog class.
-        /// </summary>
+        
         public SettingsDialog()
         {
             InitializeComponent();
@@ -31,9 +27,7 @@ namespace Microsoft.Management.UI
             this.WholeWord.IsChecked = HelpWindowSettings.Default.HelpSearchWholeWord;
         }
 
-        /// <summary>
-        /// Called when the OK button has been clicked.
-        /// </summary>
+        
         /// <param name="sender">Event sender.</param>
         /// <param name="e">Event arguments.</param>
         private void OK_Click(object sender, RoutedEventArgs e)

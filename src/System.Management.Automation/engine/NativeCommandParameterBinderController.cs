@@ -5,18 +5,12 @@ using System.Collections.ObjectModel;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// This is the interface between the NativeCommandProcessor and the
-    /// parameter binders required to bind parameters to a native command.
-    /// </summary>
+    
     internal class NativeCommandParameterBinderController : ParameterBinderController
     {
         #region ctor
 
-        /// <summary>
-        /// Initializes the cmdlet parameter binder controller for
-        /// the specified native command and engine context.
-        /// </summary>
+        
         /// <param name="command">
         /// The command that the parameters will be bound to.
         /// </param>
@@ -27,9 +21,7 @@ namespace System.Management.Automation
 
         #endregion ctor
 
-        /// <summary>
-        /// Gets the command arguments in string form.
-        /// </summary>
+        
         internal string Arguments
         {
             get
@@ -38,9 +30,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the value of the command arguments as an array of strings.
-        /// </summary>
+        
         internal string[] ArgumentList
         {
             get
@@ -49,9 +39,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the value indicating what type of native argument binding to use.
-        /// </summary>
+        
         internal NativeArgumentPassingStyle ArgumentPassingStyle
         {
             get
@@ -60,10 +48,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Passes the binding directly through to the parameter binder.
-        /// It does no verification against metadata.
-        /// </summary>
+        
         /// <param name="argument">
         /// The name and value of the variable to bind.
         /// </param>
@@ -82,9 +67,7 @@ namespace System.Management.Automation
             throw new InvalidOperationException();
         }
 
-        /// <summary>
-        /// Binds the specified parameters to the native command.
-        /// </summary>
+        
         /// <param name="parameters">
         /// The parameters to bind.
         /// </param>

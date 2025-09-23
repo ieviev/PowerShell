@@ -7,23 +7,17 @@ using System.Management.Automation.Internal;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// Base class for a variety of commandlets that take color parameters.
-    /// </summary>
+    
     public
     class ConsoleColorCmdlet : PSCmdlet
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ConsoleColorCmdlet"/> class.
-        /// </summary>
+        
         public ConsoleColorCmdlet()
         {
             _consoleColorEnumType = typeof(ConsoleColor);
         }
 
-        /// <summary>
-        /// The -ForegroundColor parameter.
-        /// </summary>
+        
         /// <value></value>
         [Parameter]
         public
@@ -55,8 +49,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <value></value>
         [Parameter]
         public

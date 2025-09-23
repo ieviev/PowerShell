@@ -5,14 +5,10 @@ using System.Diagnostics.CodeAnalysis; // for fxcop
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Stores help information related to Alias Commands.
-    /// </summary>
+    
     internal sealed class AliasHelpInfo : HelpInfo
     {
-        /// <summary>
-        /// Initializes a new instance of the AliasHelpInfo class.
-        /// </summary>
+        
         /// <remarks>
         /// The constructor is private. The only way to create an
         /// AliasHelpInfo object is through static method <see cref="GetHelpInfo"/>
@@ -45,21 +41,15 @@ namespace System.Management.Automation
             _fullHelpObject.TypeNames.Add("HelpInfo");
         }
 
-        /// <summary>
-        /// Returns the name of alias help.
-        /// </summary>
+        
         /// <value>Name of alias help.</value>
         internal override string Name { get; } = string.Empty;
 
-        /// <summary>
-        /// Returns synopsis of alias help.
-        /// </summary>
+        
         /// <value>Synopsis of alias help.</value>
         internal override string Synopsis { get; } = string.Empty;
 
-        /// <summary>
-        /// Help category for alias help. This is always HelpCategory.Alias.
-        /// </summary>
+        
         /// <value>Help category for alias help</value>
         internal override HelpCategory HelpCategory
         {
@@ -71,9 +61,7 @@ namespace System.Management.Automation
 
         private readonly PSObject _fullHelpObject;
 
-        /// <summary>
-        /// Returns full help object for alias help.
-        /// </summary>
+        
         /// <value>Full help object of alias help.</value>
         internal override PSObject FullHelp
         {
@@ -83,10 +71,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Creates an AliasHelpInfo instance based on an AliasInfo object.
-        /// This is the only way to create AliasHelpInfo object from outside this class.
-        /// </summary>
+        
         /// <param name="aliasInfo">AliasInfo object for which to create AliasHelpInfo object.</param>
         /// <returns>AliasHelpInfo object.</returns>
         internal static AliasHelpInfo GetHelpInfo(AliasInfo aliasInfo)

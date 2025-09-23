@@ -36,9 +36,7 @@ using Microsoft.PowerShell.Telemetry.Internal;
 //
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// Implements a cmdlet that loads a module.
-    /// </summary>
+    
     [Cmdlet(VerbsData.Import, "Module", DefaultParameterSetName = ParameterSet_Name, HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096585")]
     [OutputType(typeof(PSModuleInfo))]
     public sealed class ImportModuleCommand : ModuleCmdletBase, IDisposable
@@ -56,10 +54,7 @@ namespace Microsoft.PowerShell.Commands
         private const string ParameterSet_ViaWinCompat = "WinCompat";
         private const string ParameterSet_FQName_ViaWinCompat = "FullyQualifiedNameAndWinCompat";
 
-        /// <summary>
-        /// This parameter specifies whether to import to the current session state
-        /// or to the global / top-level session state.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter Global
         {
@@ -68,9 +63,7 @@ namespace Microsoft.PowerShell.Commands
             set { base.BaseGlobal = value; }
         }
 
-        /// <summary>
-        /// This parameter specified a prefix used to modify names of imported commands.
-        /// </summary>
+        
         [Parameter]
         [ValidateNotNull]
         public string Prefix
@@ -80,9 +73,7 @@ namespace Microsoft.PowerShell.Commands
             set { BasePrefix = value; }
         }
 
-        /// <summary>
-        /// This parameter names the module to load.
-        /// </summary>
+        
         [Parameter(ParameterSetName = ParameterSet_Name, Mandatory = true, ValueFromPipeline = true, Position = 0)]
         [Parameter(ParameterSetName = ParameterSet_ViaPsrpSession, Mandatory = true, ValueFromPipeline = true, Position = 0)]
         [Parameter(ParameterSetName = ParameterSet_ViaCimSession, Mandatory = true, ValueFromPipeline = true, Position = 0)]
@@ -91,9 +82,7 @@ namespace Microsoft.PowerShell.Commands
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays", Justification = "Cmdlets use arrays for parameters.")]
         public string[] Name { get; set; } = Array.Empty<string>();
 
-        /// <summary>
-        /// This parameter specifies the current pipeline object.
-        /// </summary>
+        
         [Parameter(ParameterSetName = ParameterSet_FQName, Mandatory = true, ValueFromPipeline = true, Position = 0)]
         [Parameter(ParameterSetName = ParameterSet_FQName_ViaPsrpSession, Mandatory = true, ValueFromPipeline = true, Position = 0)]
         [Parameter(ParameterSetName = ParameterSet_FQName_ViaWinCompat, Mandatory = true, ValueFromPipeline = true, Position = 0)]
@@ -101,17 +90,13 @@ namespace Microsoft.PowerShell.Commands
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays", Justification = "Cmdlets use arrays for parameters.")]
         public ModuleSpecification[] FullyQualifiedName { get; set; }
 
-        /// <summary>
-        /// A list of assembly objects to process as modules.
-        /// </summary>
+        
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays", Justification = "Cmdlets use arrays for parameters.")]
         [Parameter(ParameterSetName = ParameterSet_Assembly, Mandatory = true, ValueFromPipeline = true, Position = 0)]
         [ValidateTrustedData]
         public Assembly[] Assembly { get; set; }
 
-        /// <summary>
-        /// This patterns matching the names of functions to import from the module...
-        /// </summary>
+        
         [Parameter]
         [ValidateNotNull]
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays", Justification = "Cmdlets use arrays for parameters.")]
@@ -139,9 +124,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string[] _functionImportList = Array.Empty<string>();
 
-        /// <summary>
-        /// This patterns matching the names of cmdlets to import from the module...
-        /// </summary>
+        
         [Parameter]
         [ValidateNotNull]
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays", Justification = "Cmdlets use arrays for parameters.")]
@@ -170,9 +153,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string[] _cmdletImportList = Array.Empty<string>();
 
-        /// <summary>
-        /// This parameter specifies the variables to import from the module...
-        /// </summary>
+        
         [Parameter]
         [ValidateNotNull]
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays", Justification = "Cmdlets use arrays for parameters.")]
@@ -200,9 +181,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string[] _variableExportList;
 
-        /// <summary>
-        /// This parameter specifies the aliases to import from the module...
-        /// </summary>
+        
         [Parameter]
         [ValidateNotNull]
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays", Justification = "Cmdlets use arrays for parameters.")]
@@ -231,9 +210,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string[] _aliasExportList;
 
-        /// <summary>
-        /// This parameter causes a module to be loaded over top of the current one...
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter Force
         {
@@ -242,10 +219,7 @@ namespace Microsoft.PowerShell.Commands
             set { BaseForce = value; }
         }
 
-        /// <summary>
-        /// Skips the check on CompatiblePSEditions for modules loaded from the System32 module path.
-        /// This is mutually exclusive with UseWindowsPowerShell parameter.
-        /// </summary>
+        
         [Parameter(ParameterSetName = ParameterSet_Name)]
         [Parameter(ParameterSetName = ParameterSet_FQName)]
         [Parameter(ParameterSetName = ParameterSet_ModuleInfo)]
@@ -260,9 +234,7 @@ namespace Microsoft.PowerShell.Commands
             set { BaseSkipEditionCheck = value; }
         }
 
-        /// <summary>
-        /// This parameter causes the session state instance to be written...
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter PassThru
         {
@@ -271,9 +243,7 @@ namespace Microsoft.PowerShell.Commands
             set { BasePassThru = value; }
         }
 
-        /// <summary>
-        /// This parameter causes the session state instance to be written as a custom object...
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter AsCustomObject
         {
@@ -282,9 +252,7 @@ namespace Microsoft.PowerShell.Commands
             set { BaseAsCustomObject = value; }
         }
 
-        /// <summary>
-        /// The minimum version of the module to load.
-        /// </summary>
+        
         [Parameter(ParameterSetName = ParameterSet_Name)]
         [Parameter(ParameterSetName = ParameterSet_ViaPsrpSession)]
         [Parameter(ParameterSetName = ParameterSet_ViaCimSession)]
@@ -297,9 +265,7 @@ namespace Microsoft.PowerShell.Commands
             set { BaseMinimumVersion = value; }
         }
 
-        /// <summary>
-        /// The maximum version of the module to load.
-        /// </summary>
+        
         [Parameter(ParameterSetName = ParameterSet_Name)]
         [Parameter(ParameterSetName = ParameterSet_ViaPsrpSession)]
         [Parameter(ParameterSetName = ParameterSet_ViaCimSession)]
@@ -327,9 +293,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// The version of the module to load.
-        /// </summary>
+        
         [Parameter(ParameterSetName = ParameterSet_Name)]
         [Parameter(ParameterSetName = ParameterSet_ViaPsrpSession)]
         [Parameter(ParameterSetName = ParameterSet_ViaCimSession)]
@@ -341,17 +305,13 @@ namespace Microsoft.PowerShell.Commands
             set { BaseRequiredVersion = value; }
         }
 
-        /// <summary>
-        /// This parameter specifies the current pipeline object.
-        /// </summary>
+        
         [Parameter(ParameterSetName = ParameterSet_ModuleInfo, Mandatory = true, ValueFromPipeline = true, Position = 0)]
         [ValidateTrustedData]
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays", Justification = "Cmdlets use arrays for parameters.")]
         public PSModuleInfo[] ModuleInfo { get; set; } = Array.Empty<PSModuleInfo>();
 
-        /// <summary>
-        /// The arguments to pass to the module script.
-        /// </summary>
+        
         [Parameter]
         [Alias("Args")]
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays", Justification = "Cmdlets use arrays for parameters.")]
@@ -362,10 +322,7 @@ namespace Microsoft.PowerShell.Commands
             set { BaseArgumentList = value; }
         }
 
-        /// <summary>
-        /// Disable warnings on cmdlet and function names that have non-standard verbs
-        /// or non-standard characters in the noun.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter DisableNameChecking
         {
@@ -374,15 +331,11 @@ namespace Microsoft.PowerShell.Commands
             set { BaseDisableNameChecking = value; }
         }
 
-        /// <summary>
-        /// Does not import a command if a command with same name exists on the target sessionstate.
-        /// </summary>
+        
         [Parameter, Alias("NoOverwrite")]
         public SwitchParameter NoClobber { get; set; }
 
-        /// <summary>
-        /// Imports a command to the scope specified.
-        /// </summary>
+        
         [Parameter]
         [ValidateSet("Local", "Global")]
         public string Scope
@@ -402,9 +355,7 @@ namespace Microsoft.PowerShell.Commands
         private string _scope = string.Empty;
         private bool _isScopeSpecified = false;
 
-        /// <summary>
-        /// If specified, then Import-Module will attempt to import PowerShell modules from a remote computer using the specified session.
-        /// </summary>
+        
         [Parameter(ParameterSetName = ParameterSet_ViaPsrpSession, Mandatory = true)]
         [Parameter(ParameterSetName = ParameterSet_FQName_ViaPsrpSession, Mandatory = true)]
         [ValidateNotNull]
@@ -416,31 +367,22 @@ namespace Microsoft.PowerShell.Commands
             base.BaseDisableNameChecking = false;
         }
 
-        /// <summary>
-        /// If specified, then Import-Module will attempt to import PS-CIM modules from a remote computer using the specified session.
-        /// </summary>
+        
         [Parameter(ParameterSetName = ParameterSet_ViaCimSession, Mandatory = true)]
         [ValidateNotNull]
         public CimSession CimSession { get; set; }
 
-        /// <summary>
-        /// For interoperability with 3rd party CIM servers, user can specify custom resource URI.
-        /// </summary>
+        
         [Parameter(ParameterSetName = ParameterSet_ViaCimSession, Mandatory = false)]
         [ValidateNotNull]
         public Uri CimResourceUri { get; set; }
 
-        /// <summary>
-        /// For interoperability with 3rd party CIM servers, user can specify custom namespace.
-        /// </summary>
+        
         [Parameter(ParameterSetName = ParameterSet_ViaCimSession, Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public string CimNamespace { get; set; }
 
-        /// <summary>
-        /// This parameter causes a module to be loaded into Windows PowerShell.
-        /// This is mutually exclusive with SkipEditionCheck parameter.
-        /// </summary>
+        
         [Parameter(ParameterSetName = ParameterSet_ViaWinCompat, Mandatory = true)]
         [Parameter(ParameterSetName = ParameterSet_FQName_ViaWinCompat, Mandatory = true)]
         [Alias("UseWinPS")]
@@ -1764,12 +1706,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// When overridden in the derived class, interrupts currently
-        /// running code within the command. It should interrupt BeginProcessing,
-        /// ProcessRecord, and EndProcessing.
-        /// Default implementation in the base class just returns.
-        /// </summary>
+        
         protected override void StopProcessing()
         {
             _cancellationTokenSource.Cancel();
@@ -1779,18 +1716,14 @@ namespace Microsoft.PowerShell.Commands
 
         #region IDisposable Members
 
-        /// <summary>
-        /// Releases resources associated with this object.
-        /// </summary>
+        
         public void Dispose()
         {
             this.Dispose(true);
             GC.SuppressFinalize(this);
         }
 
-        /// <summary>
-        /// Releases resources associated with this object.
-        /// </summary>
+        
         private void Dispose(bool disposing)
         {
             if (_disposed)
@@ -1810,9 +1743,7 @@ namespace Microsoft.PowerShell.Commands
 
         #endregion
 
-        /// <summary>
-        /// BeginProcessing override.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             // Make sure that only one of (Global | Scope) is specified
@@ -1830,9 +1761,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Load the specified modules...
-        /// </summary>
+        
         /// <remarks>
         /// Examples:
         ///     c:\temp\mdir\mdir.psm1  # load absolute path

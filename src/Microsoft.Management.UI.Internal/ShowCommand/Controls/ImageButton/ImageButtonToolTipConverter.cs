@@ -8,9 +8,7 @@ using System.Windows.Data;
 
 namespace Microsoft.PowerShell.Commands.ShowCommandInternal
 {
-    /// <summary>
-    /// Converts a an ImageButtonBase to its corresponding ToolTip.
-    /// </summary>
+    
     [SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes", Justification = "Needed for XAML")]
     public class ImageButtonToolTipConverter : IValueConverter
     {
@@ -24,10 +22,7 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
         //     <ContentControl ToolTip="{Binding Path=..., Converter={StaticResource routedUICommandToString}"/>
         #region IValueConverter Members
 
-        /// <summary>
-        /// Converts a an ImageButtonBase to its corresponding ToolTip by checking if it has a tooltip property
-        /// or a command with tooltip text
-        /// </summary>
+        
         /// <param name="value">The ImageButtonBase we are trying to Convert.</param>
         /// <param name="targetType"><paramref name="targetType"/> is not used.</param>
         /// <param name="parameter"><paramref name="parameter"/> is not used.</param>
@@ -55,9 +50,7 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
             return null;
         }
 
-        /// <summary>
-        /// This method is not supported.
-        /// </summary>
+        
         /// <param name="value"><paramref name="value"/> is not used.</param>
         /// <param name="targetType"><paramref name="targetType"/> is not used.</param>
         /// <param name="parameter"><paramref name="parameter"/> is not used.</param>

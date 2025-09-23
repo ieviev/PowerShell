@@ -7,17 +7,12 @@ using Dbg = System.Management.Automation;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Exposes the Item noun of the Cmdlet Providers to the Cmdlet base class. The methods of this class
-    /// use the providers to perform operations.
-    /// </summary>
+    
     public sealed class ItemCmdletProviderIntrinsics
     {
         #region Constructors
 
-        /// <summary>
-        /// Hide the default constructor since we always require an instance of SessionState.
-        /// </summary>
+        
         private ItemCmdletProviderIntrinsics()
         {
             Dbg.Diagnostics.Assert(
@@ -25,9 +20,7 @@ namespace System.Management.Automation
                 "This constructor should never be called. Only the constructor that takes an instance of SessionState should be called.");
         }
 
-        /// <summary>
-        /// Constructs a facade over the "real" session state API.
-        /// </summary>
+        
         /// <param name="cmdlet">
         /// An instance of the cmdlet.
         /// </param>
@@ -45,9 +38,7 @@ namespace System.Management.Automation
             _sessionState = cmdlet.Context.EngineSessionState;
         }
 
-        /// <summary>
-        /// Constructs a facade over the "real" session state API.
-        /// </summary>
+        
         /// <param name="sessionState">
         /// An instance of the "real" session state class.
         /// </param>
@@ -70,9 +61,7 @@ namespace System.Management.Automation
 
         #region GetItem
 
-        /// <summary>
-        /// Gets the item at the specified path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to retrieve. It may be a drive or provider-qualified path and may include
         /// glob characters.
@@ -111,9 +100,7 @@ namespace System.Management.Automation
             return _sessionState.GetItem(new string[] { path }, false, false);
         }
 
-        /// <summary>
-        /// Gets the item at the specified path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path(s) to the item(s) to retrieve. They may be a drive or provider-qualified path(s) and may include
         /// glob characters.
@@ -158,9 +145,7 @@ namespace System.Management.Automation
             return _sessionState.GetItem(path, force, literalPath);
         }
 
-        /// <summary>
-        /// Gets the item at the specified path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to retrieve. It may be a drive or provider-qualified path and may include
         /// glob characters.
@@ -202,9 +187,7 @@ namespace System.Management.Automation
             _sessionState.GetItem(new string[] { path }, context);
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the get-item cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -247,9 +230,7 @@ namespace System.Management.Automation
 
         #region SetItem
 
-        /// <summary>
-        /// Sets the item at the specified path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to set. It may be a drive or provider-qualified path and may include
         /// glob characters.
@@ -291,9 +272,7 @@ namespace System.Management.Automation
             return _sessionState.SetItem(new string[] { path }, value, false, false);
         }
 
-        /// <summary>
-        /// Sets the item at the specified path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path(s) to the item(s) to set. They may be drive or provider-qualified paths and may include
         /// glob characters.
@@ -341,9 +320,7 @@ namespace System.Management.Automation
             return _sessionState.SetItem(path, value, force, literalPath);
         }
 
-        /// <summary>
-        /// Sets the item at the specified path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to set. It may be a drive or provider-qualified path and may include
         /// glob characters.
@@ -388,9 +365,7 @@ namespace System.Management.Automation
             _sessionState.SetItem(new string[] { path }, value, context);
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the set-item cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -439,9 +414,7 @@ namespace System.Management.Automation
 
         #region ClearItem
 
-        /// <summary>
-        /// Clears the item at the specified path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to clear. It may be a drive or provider-qualified path and may include
         /// glob characters.
@@ -480,9 +453,7 @@ namespace System.Management.Automation
             return _sessionState.ClearItem(new string[] { path }, false, false);
         }
 
-        /// <summary>
-        /// Clears the item at the specified path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path(s) to the item to clear. It may be a drive or provider-qualified path and may include
         /// glob characters.
@@ -527,9 +498,7 @@ namespace System.Management.Automation
             return _sessionState.ClearItem(path, force, literalPath);
         }
 
-        /// <summary>
-        /// Clears the item at the specified path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to be cleared. It may be a drive or provider-qualified path and may include
         /// glob characters.
@@ -571,9 +540,7 @@ namespace System.Management.Automation
             _sessionState.ClearItem(new string[] { path }, context);
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the clear-item cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -616,9 +583,7 @@ namespace System.Management.Automation
 
         #region InvokeDefaultAction
 
-        /// <summary>
-        /// Invokes the default action of the item at the specified path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to invoke. It may be a drive or provider-qualified path and may include
         /// glob characters.
@@ -654,9 +619,7 @@ namespace System.Management.Automation
             _sessionState.InvokeDefaultAction(new string[] { path }, false);
         }
 
-        /// <summary>
-        /// Invokes the default action of the item(s) at the specified path(s).
-        /// </summary>
+        
         /// <param name="path">
         /// The path(s) to the item(s) to invoke. They may be drive or provider-qualified paths and may include
         /// glob characters.
@@ -695,9 +658,7 @@ namespace System.Management.Automation
             _sessionState.InvokeDefaultAction(path, literalPath);
         }
 
-        /// <summary>
-        /// Invokes the default action for the item at the specified path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to be invoked. It may be a drive or provider-qualified path and may include
         /// glob characters.
@@ -736,9 +697,7 @@ namespace System.Management.Automation
             _sessionState.InvokeDefaultAction(new string[] { path }, context);
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the invoke-item cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -781,9 +740,7 @@ namespace System.Management.Automation
 
         #region RenameItem
 
-        /// <summary>
-        /// Renames the item at the given path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to rename. It may be a drive or provider-qualified path and may include
         /// glob characters.
@@ -825,9 +782,7 @@ namespace System.Management.Automation
             return _sessionState.RenameItem(path, newName, false);
         }
 
-        /// <summary>
-        /// Renames the item at the given path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to rename. It may be a drive or provider-qualified path and may include
         /// glob characters.
@@ -872,9 +827,7 @@ namespace System.Management.Automation
             return _sessionState.RenameItem(path, newName, force);
         }
 
-        /// <summary>
-        /// Renames the item at the given path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to rename. It may be a drive or provider-qualified path and may include
         /// glob characters.
@@ -922,9 +875,7 @@ namespace System.Management.Automation
             _sessionState.RenameItem(path, newName, context);
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the rename-item cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -973,9 +924,7 @@ namespace System.Management.Automation
 
         #region NewItem
 
-        /// <summary>
-        /// Creates a new item at the given path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the container to create item in. It may be a drive or provider-qualified path and may include
         /// glob characters.
@@ -1027,9 +976,7 @@ namespace System.Management.Automation
             return _sessionState.NewItem(new string[] { path }, name, itemTypeName, content, false);
         }
 
-        /// <summary>
-        /// Creates a new item at the given path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path(s) to the container to create item in. They may be drive or provider-qualified path and may include
         /// glob characters.
@@ -1085,9 +1032,7 @@ namespace System.Management.Automation
             return _sessionState.NewItem(path, name, itemTypeName, content, force);
         }
 
-        /// <summary>
-        /// Creates a new item at the given path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the container to create item in. It may be a drive or provider-qualified path and may include
         /// glob characters.
@@ -1143,9 +1088,7 @@ namespace System.Management.Automation
             _sessionState.NewItem(new string[] { path }, name, type, content, context);
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the new-item cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -1198,9 +1141,7 @@ namespace System.Management.Automation
 
         #region RemoveItem
 
-        /// <summary>
-        /// Removes the items at the given path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to remove. It may be a drive or provider-qualified path and may include
         /// glob characters.
@@ -1241,9 +1182,7 @@ namespace System.Management.Automation
             _sessionState.RemoveItem(new string[] { path }, recurse, false, false);
         }
 
-        /// <summary>
-        /// Removes the items at the given path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path(s) to the item(s) to remove. They may be drive or provider-qualified paths and may include
         /// glob characters.
@@ -1290,9 +1229,7 @@ namespace System.Management.Automation
             _sessionState.RemoveItem(path, recurse, force, literalPath);
         }
 
-        /// <summary>
-        /// Removes the items at the given path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to remove. It may be a drive or provider-qualified path and may include
         /// glob characters.
@@ -1336,9 +1273,7 @@ namespace System.Management.Automation
             _sessionState.RemoveItem(new string[] { path }, recurse, context);
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the remove-item cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -1389,9 +1324,7 @@ namespace System.Management.Automation
 
         #region CopyItem
 
-        /// <summary>
-        /// Copy item at the specified path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to copy. It may be a drive or provider-qualified path and may include
         /// glob characters.
@@ -1444,9 +1377,7 @@ namespace System.Management.Automation
             return _sessionState.CopyItem(new string[] { path }, destinationPath, recurse, copyContainers, false, false);
         }
 
-        /// <summary>
-        /// Copy item at the specified path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path(s) to the item(s) to copy. They may be a drive or provider-qualified path and may include
         /// glob characters.
@@ -1507,9 +1438,7 @@ namespace System.Management.Automation
             return _sessionState.CopyItem(path, destinationPath, recurse, copyContainers, force, literalPath);
         }
 
-        /// <summary>
-        /// Copy item at the specified path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to copy. It may be a drive or provider-qualified path and may include
         /// glob characters.
@@ -1566,9 +1495,7 @@ namespace System.Management.Automation
             _sessionState.CopyItem(new string[] { path }, destinationPath, recurse, copyContainers, context);
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the copy-item cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -1622,9 +1549,7 @@ namespace System.Management.Automation
 
         #region MoveItem
 
-        /// <summary>
-        /// Moves the item at the specified path to the specified destination.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to move.
         /// </param>
@@ -1674,9 +1599,7 @@ namespace System.Management.Automation
             return _sessionState.MoveItem(new string[] { path }, destination, false, false);
         }
 
-        /// <summary>
-        /// Moves the item at the specified path to the specified destination.
-        /// </summary>
+        
         /// <param name="path">
         /// The path(s) to the item to move.
         /// </param>
@@ -1732,9 +1655,7 @@ namespace System.Management.Automation
             return _sessionState.MoveItem(path, destination, force, literalPath);
         }
 
-        /// <summary>
-        /// Moves the item at the specified path to the specified destination.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to move.
         /// </param>
@@ -1781,9 +1702,7 @@ namespace System.Management.Automation
             _sessionState.MoveItem(new string[] { path }, destination, context);
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the move-item cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -1832,9 +1751,7 @@ namespace System.Management.Automation
 
         #region Exists
 
-        /// <summary>
-        /// Determines if an item at the given path exits.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to determine if it exists. It may be a drive or provider-qualified path and may include
         /// glob characters.
@@ -1869,9 +1786,7 @@ namespace System.Management.Automation
             return _sessionState.ItemExists(path, false, false);
         }
 
-        /// <summary>
-        /// Determines if an item at the given path exits.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to determine if it exists. It may be a drive or provider-qualified path and may include
         /// glob characters.
@@ -1912,9 +1827,7 @@ namespace System.Management.Automation
             return _sessionState.ItemExists(path, force, literalPath);
         }
 
-        /// <summary>
-        /// Determines if an item at the given path exits.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to determine if it exists. It may be a drive or provider-qualified path and may include
         /// glob characters.
@@ -1954,9 +1867,7 @@ namespace System.Management.Automation
             return _sessionState.ItemExists(path, context);
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the test-path cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -1999,9 +1910,7 @@ namespace System.Management.Automation
 
         #region IsContainer
 
-        /// <summary>
-        /// Determines if the specified path is to an item that is a container.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to determine if it is a container.
         /// </param>
@@ -2035,9 +1944,7 @@ namespace System.Management.Automation
             return _sessionState.IsItemContainer(path);
         }
 
-        /// <summary>
-        /// Determines if the specified path is to an item that is a container.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to determine if it is a container.
         /// </param>
@@ -2088,20 +1995,13 @@ namespace System.Management.Automation
         #endregion private data
     }
 
-    /// <summary>
-    /// Determines how the source container of a copy operation
-    /// will be used.
-    /// </summary>
+    
     public enum CopyContainers
     {
-        /// <summary>
-        /// The source container is copied.
-        /// </summary>
+        
         CopyTargetContainer,
 
-        /// <summary>
-        /// The children of the source container are copied.
-        /// </summary>
+        
         CopyChildrenOfTargetContainer
     }
 }

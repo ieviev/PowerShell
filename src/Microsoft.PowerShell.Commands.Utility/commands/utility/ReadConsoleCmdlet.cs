@@ -12,16 +12,12 @@ using System.Text;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// Retrieves input from the host virtual console and writes it to the pipeline output.
-    /// </summary>
+    
     [Cmdlet(VerbsCommunications.Read, "Host", DefaultParameterSetName = "AsString", HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096610")]
     [OutputType(typeof(string), typeof(SecureString))]
     public sealed class ReadHostCommand : PSCmdlet
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ReadHostCommand"/> class.
-        /// </summary>
+        
         public
         ReadHostCommand()
         {
@@ -30,9 +26,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Parameters
 
-        /// <summary>
-        /// The objects to display on the host before collecting input.
-        /// </summary>
+        
         [Parameter(Position = 0, ValueFromRemainingArguments = true)]
         [AllowNull]
         public
@@ -50,9 +44,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets or sets to no echo the input as is typed. If set then the cmdlet returns a secure string.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "AsSecureString")]
         public
         SwitchParameter
@@ -69,9 +61,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets or sets whether the console will echo the input as is typed. If set then the cmdlet returns a regular string.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "AsString")]
         public
         SwitchParameter
@@ -84,9 +74,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Cmdlet Overrides
 
-        /// <summary>
-        /// Write the prompt, then collect a line of input from the host, then output it to the output stream.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             PSHostUserInterface ui = Host.UI;

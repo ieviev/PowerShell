@@ -15,17 +15,13 @@ using System.Text;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// A command to Invoke WMI Method.
-    /// </summary>
+    
     [Cmdlet(VerbsLifecycle.Invoke, "WmiMethod", DefaultParameterSetName = "class", SupportsShouldProcess = true,
         HelpUri = "https://go.microsoft.com/fwlink/?LinkID=113346", RemotingCapability = RemotingCapability.OwnedByCommand)]
     public sealed class InvokeWmiMethod : WmiBaseCmdlet
     {
         #region Parameters
-        /// <summary>
-        /// The WMI Object to use.
-        /// </summary>
+        
         [Parameter(ValueFromPipeline = true, Mandatory = true, ParameterSetName = "object")]
         public ManagementObject InputObject
         {
@@ -33,9 +29,7 @@ namespace Microsoft.PowerShell.Commands
 
             set { _inputObject = value; }
         }
-        /// <summary>
-        /// The WMI Path to use.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "path", Mandatory = true)]
         public string Path
         {
@@ -43,9 +37,7 @@ namespace Microsoft.PowerShell.Commands
 
             set { _path = value; }
         }
-        /// <summary>
-        /// The WMI class to use.
-        /// </summary>
+        
         [Parameter(Position = 0, Mandatory = true, ParameterSetName = "class")]
         public string Class
         {
@@ -53,9 +45,7 @@ namespace Microsoft.PowerShell.Commands
 
             set { _className = value; }
         }
-        /// <summary>
-        /// The WMI Method to execute.
-        /// </summary>
+        
         [Parameter(Position = 1, Mandatory = true)]
         public string Name
         {
@@ -64,9 +54,7 @@ namespace Microsoft.PowerShell.Commands
             set { _methodName = value; }
         }
 
-        /// <summary>
-        /// The parameters to the method specified by MethodName.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "path")]
         [Parameter(Position = 2, ParameterSetName = "class")]
         [Parameter(ParameterSetName = "object")]
@@ -89,9 +77,7 @@ namespace Microsoft.PowerShell.Commands
 
         #endregion parameter data
         #region Command code
-        /// <summary>
-        /// Invoke WMI method given either path,class name or pipeline input.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             if (this.AsJob)
@@ -270,9 +256,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Ensure that the argument is a collection containing no PSObjects.
-        /// </summary>
+        
         /// <param name="argument"></param>
         /// <returns></returns>
         private static object MakeBaseObjectArray(object argument)

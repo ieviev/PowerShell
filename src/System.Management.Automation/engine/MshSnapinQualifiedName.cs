@@ -7,9 +7,7 @@ using Dbg = System.Management.Automation.Diagnostics;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// A class representing a name that is qualified by the PSSnapin name.
-    /// </summary>
+    
     internal sealed class PSSnapinQualifiedName
     {
         private PSSnapinQualifiedName(string[] splitName)
@@ -55,9 +53,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets an instance of the Name class.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the command.
         /// </param>
@@ -81,9 +77,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Gets the command's full name.
-        /// </summary>
+        
         internal string FullName
         {
             get
@@ -94,9 +88,7 @@ namespace System.Management.Automation
 
         private readonly string _fullName;
 
-        /// <summary>
-        /// Gets the command's PSSnapin name.
-        /// </summary>
+        
         internal string? PSSnapInName
         {
             get
@@ -107,9 +99,7 @@ namespace System.Management.Automation
 
         private readonly string? _psSnapinName;
 
-        /// <summary>
-        /// Gets the command's short name.
-        /// </summary>
+        
         internal string ShortName
         {
             get
@@ -120,9 +110,7 @@ namespace System.Management.Automation
 
         private readonly string _shortName;
 
-        /// <summary>
-        /// The full name.
-        /// </summary>
+        
         /// <returns>
         /// A string representing the full name.
         /// </returns>

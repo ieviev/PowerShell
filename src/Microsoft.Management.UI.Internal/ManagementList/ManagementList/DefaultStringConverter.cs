@@ -6,14 +6,7 @@ using System.Windows.Data;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <summary>
-    /// Converts the value of the single <see cref="Binding"/> in a
-    /// <see cref="MultiBinding"/> to a string,
-    /// and returns that string if not null/empty,
-    /// otherwise returns DefaultValue.
-    /// The <see cref="MultiBinding"/> must have exactly one
-    /// <see cref="Binding"/>.
-    /// </summary>
+    
     /// <remarks>
     /// The problem solved by this <see cref="IMultiValueConverter"/>
     /// is that for an ordinary <see cref="Binding"/> which is bound to
@@ -29,22 +22,14 @@ namespace Microsoft.Management.UI.Internal
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public class DefaultStringConverter : IMultiValueConverter
     {
-        /// <summary>
-        /// Gets or sets default string returned by the converter
-        /// if the value is null/empty.
-        /// </summary>
+        
         public string DefaultValue
         {
             get;
             set;
         }
 
-        /// <summary>
-        /// Converts the value of the single <see cref="Binding"/> in the
-        /// <see cref="IMultiValueConverter"/> to a string,
-        /// and returns that string if not null/empty,
-        /// otherwise returns DefaultValue.
-        /// </summary>
+        
         /// <param name="values">
         /// Must contain exactly one value, of any type.
         /// </param>
@@ -78,9 +63,7 @@ namespace Microsoft.Management.UI.Internal
             return this.DefaultValue;
         }
 
-        /// <summary>
-        /// Skip ConvertBack binding.
-        /// </summary>
+        
         /// <param name="value">The parameter is not used.</param>
         /// <param name="targetTypes">The parameter is not used.</param>
         /// <param name="parameter">The parameter is not used.</param>

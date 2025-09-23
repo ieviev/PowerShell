@@ -11,17 +11,12 @@ using Dbg = System.Management.Automation;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Takes as input a collection of strings and builds an expression tree from the input.
-    /// At the evaluation stage, it walks down the tree and evaluates the result.
-    /// </summary>
+    
     public sealed class FlagsExpression<T> where T : struct, IConvertible
     {
         #region Constructors
 
-        /// <summary>
-        /// Construct the expression from a single string.
-        /// </summary>
+        
         /// <param name="expression">
         /// The specified flag attribute expression string.
         /// </param>
@@ -50,10 +45,7 @@ namespace System.Management.Automation
             Root = ConstructExpressionTree(tokenList);
         }
 
-        /// <summary>
-        /// Construct the tree from an object collection when arguments are comma separated.
-        /// If valid, all elements are OR separated.
-        /// </summary>
+        
         /// <param name="expression">
         /// The array of specified flag attribute subexpression strings.
         /// </param>
@@ -147,9 +139,7 @@ namespace System.Management.Automation
 
         #region tree nodes
 
-        /// <summary>
-        /// Abstract base type for other types of nodes in the tree.
-        /// </summary>
+        
         internal abstract class Node
         {
             // Only used in internal nodes holding operators.
@@ -161,9 +151,7 @@ namespace System.Management.Automation
             internal abstract bool ExistEnum(object enumVal);
         }
 
-        /// <summary>
-        /// OR node for attributes separated by a comma.
-        /// </summary>
+        
         internal class OrNode : Node
         {
             public Node Operand2 { get; set; }
@@ -187,9 +175,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// AND node for attributes separated by a plus(+) operator.
-        /// </summary>
+        
         internal class AndNode : Node
         {
             public Node Operand2 { get; set; }
@@ -213,9 +199,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// NOT node for attribute preceded by an exclamation(!) operator.
-        /// </summary>
+        
         internal class NotNode : Node
         {
             internal override bool Eval(object val)
@@ -232,9 +216,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Leaf nodes of the expression tree.
-        /// </summary>
+        
         internal class OperandNode : Node
         {
             internal object _operandValue;
@@ -252,11 +234,7 @@ namespace System.Management.Automation
                 }
             }
 
-            /// <summary>
-            /// Takes a string value and converts to corresponding enum value.
-            /// The string value should be checked at parsing stage prior to
-            /// tree construction to ensure it is valid.
-            /// </summary>
+            
             internal OperandNode(string enumString)
             {
                 Type enumType = typeof(T);
@@ -331,9 +309,7 @@ namespace System.Management.Automation
 
         #region public methods
 
-        /// <summary>
-        /// Evaluate a given flag enum value against the expression.
-        /// </summary>
+        
         /// <param name="value">
         /// The flag enum value to be evaluated.
         /// </param>
@@ -350,10 +326,7 @@ namespace System.Management.Automation
 
         #region internal methods
 
-        /// <summary>
-        /// Given an enum element, check if the element is present in the expression tree,
-        /// which is also present in the input expression.
-        /// </summary>
+        
         /// <param name="flagName">
         /// The enum element to be examined.
         /// </param>
@@ -376,9 +349,7 @@ namespace System.Management.Automation
 
         #region parser methods
 
-        /// <summary>
-        /// Takes a string of input tokenize into a list of ordered tokens.
-        /// </summary>
+        
         /// <param name="input">
         /// The input argument string,
         /// could be partial input (one element from the argument collection).
@@ -403,9 +374,7 @@ namespace System.Management.Automation
             return tokenList;
         }
 
-        /// <summary>
-        /// Find the start of the next token, skipping white spaces.
-        /// </summary>
+        
         /// <param name="input">
         /// Input string
         /// </param>
@@ -425,11 +394,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Given the start (offset) of the next token, traverse through
-        /// the string to find the next token, stripping correctly
-        /// enclosed quotes.
-        /// </summary>
+        
         /// <param name="input">
         /// Input string
         /// </param>
@@ -515,10 +480,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Checks syntax errors on input expression,
-        /// as well as performing disambiguation for identifiers.
-        /// </summary>
+        
         /// <param name="tokenList">
         /// A list of tokenized input.
         /// </param>
@@ -571,9 +533,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Takes a list of tokenized input and create the corresponding expression tree.
-        /// </summary>
+        
         /// <param name="tokenList">
         /// Tokenized list of the input string.
         /// </param>

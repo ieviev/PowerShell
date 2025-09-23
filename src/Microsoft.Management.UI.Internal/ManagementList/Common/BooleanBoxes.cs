@@ -3,9 +3,7 @@
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <summary>
-    /// A class which returns the same boxed bool values.
-    /// </summary>
+    
     internal static class BooleanBoxes
     {
         private static object trueBox = true;

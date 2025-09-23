@@ -18,25 +18,20 @@ using System.Reflection;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Class CommandHelpProvider implement the help provider for commands.
-    /// </summary>
+    
     /// <remarks>
     /// Command Help information are stored in 'help.xml' files. Location of these files
     /// can be found from through the engine execution context.
     /// </remarks>
     internal class CommandHelpProvider : HelpProviderWithCache
     {
-        /// <summary>
-        /// Constructor for CommandHelpProvider.
-        /// </summary>
+        
         internal CommandHelpProvider(HelpSystem helpSystem) : base(helpSystem)
         {
             _context = helpSystem.ExecutionContext;
         }
 
-        /// <summary>
-        /// </summary>
+        
         static CommandHelpProvider()
         {
             s_engineModuleHelpFileCache.Add("Microsoft.PowerShell.Diagnostics", "Microsoft.PowerShell.Commands.Diagnostics.dll-Help.xml");
@@ -54,9 +49,7 @@ namespace System.Management.Automation
 
         #region Common Properties
 
-        /// <summary>
-        /// Name of this provider.
-        /// </summary>
+        
         /// <value>Name of this provider</value>
         internal override string Name
         {
@@ -66,9 +59,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Help category for this provider, which is a constant: HelpCategory.Command.
-        /// </summary>
+        
         /// <value>Help category for this provider</value>
         internal override HelpCategory HelpCategory
         {
@@ -409,9 +400,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// ExactMatchHelp implementation for this help provider.
-        /// </summary>
+        
         /// <remarks>
         /// ExactMatchHelp is overridden instead of DoExactMatchHelp to make sure
         /// all help item retrieval will go through command discovery. Because each
@@ -482,13 +471,7 @@ namespace System.Management.Automation
             return Path.GetDirectoryName(cmdletInfo.ImplementingType.Assembly.Location);
         }
 
-        /// <summary>
-        /// This is a hashtable to track which help files are loaded already.
-        ///
-        /// This will avoid one help file getting loaded again and again.
-        /// (Which should not happen unless some commandlet is pointing
-        /// to a help file that actually doesn't contain the help for it).
-        /// </summary>
+        
         private readonly Hashtable _helpFiles = new Hashtable();
 
         private string GetHelpFile(string helpFile, CmdletInfo cmdletInfo)
@@ -550,9 +533,7 @@ namespace System.Management.Automation
             return location;
         }
 
-        /// <summary>
-        /// Finds a help file associated with the given cmdlet.
-        /// </summary>
+        
         /// <param name="cmdletInfo"></param>
         /// <returns></returns>
         private string FindHelpFile(CmdletInfo cmdletInfo)
@@ -669,10 +650,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Load help file for HelpInfo objects. The HelpInfo objects will be
-        /// put into help cache.
-        /// </summary>
+        
         /// <remarks>
         /// 1. Needs to pay special attention about error handling in this function.
         /// Common errors include: file not found and invalid xml. None of these error
@@ -746,10 +724,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Process user defined help data by finding the corresponding helpInfo and inserting
-        /// necessary helpdata info to command help.
-        /// </summary>
+        
         /// <param name="mshSnapInId">PSSnapIn Name for the current help file.</param>
         /// <param name="userDefinedHelpData"></param>
         private void ProcessUserDefinedHelpData(string mshSnapInId, UserDefinedHelpData userDefinedHelpData)
@@ -773,9 +748,7 @@ namespace System.Management.Automation
             return;
         }
 
-        /// <summary>
-        /// Gets the HelpInfo object corresponding to the command.
-        /// </summary>
+        
         /// <param name="helpFileIdentifier">Help file identifier (either name of PSSnapIn or simply full path to help file).</param>
         /// <param name="commandName">Name of the command.</param>
         /// <param name="helpCategory"></param>
@@ -802,9 +775,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Gets the HelpInfo object corresponding to the CommandInfo.
-        /// </summary>
+        
         /// <param name="helpFileIdentifier">Help file identifier (simply full path to help file).</param>
         /// <param name="commandInfo"></param>
         /// <returns>HelpInfo object.</returns>
@@ -831,9 +802,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Tries to get the help for the Cmdlet from cache.
-        /// </summary>
+        
         /// <param name="cmdletInfo"></param>
         /// <returns>
         /// HelpInfo object representing help for the command.
@@ -876,15 +845,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Used to retrieve helpinfo by removing the prefix from the noun portion of a command name.
-        /// Import-Module and Import-PSSession supports changing the name of a command
-        /// by supplying a custom prefix. In those cases, the help content is stored by using the
-        /// original command name (without prefix) as the key.
-        ///
-        /// This method retrieves the help content by suppressing the prefix and then making a copy
-        /// of the help content + change the name and then returns the copied help content.
-        /// </summary>
+        
         /// <param name="helpIdentifier"></param>
         /// <param name="cmdInfo"></param>
         /// <returns>
@@ -936,9 +897,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Prepends mshsnapin id to the cmdlet name and adds the result to help cache.
-        /// </summary>
+        
         /// <param name="mshSnapInId">PSSnapIn name that this cmdlet belongs to.</param>
         /// <param name="cmdletName">Name of the cmdlet.</param>
         /// <param name="helpInfo">Help object for the cmdlet.</param>
@@ -970,16 +929,7 @@ namespace System.Management.Automation
             AddCache(key, helpInfo);
         }
 
-        /// <summary>
-        /// Check whether a HelpItems node indicates that the help content is
-        /// authored using maml schema.
-        ///
-        /// This covers two cases:
-        ///     a. If the help file has an extension .maml.
-        ///     b. If HelpItems node (which should be the top node of any command help file)
-        ///        has an attribute "schema" with value "maml", its content is in maml
-        ///        schema.
-        /// </summary>
+        
         /// <param name="helpFile"></param>
         /// <param name="helpItemsNode"></param>
         /// <returns></returns>
@@ -1003,9 +953,7 @@ namespace System.Management.Automation
             return false;
         }
 
-        /// <summary>
-        /// Search help for a specific target.
-        /// </summary>
+        
         /// <param name="helpRequest">Help request object.</param>
         /// <param name="searchOnlyContent">
         /// If true, searches for pattern in the help content of all cmdlets.
@@ -1161,10 +1109,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Check if a helpInfo object matches the component/role/functionality
-        /// criteria from helpRequest.
-        /// </summary>
+        
         /// <param name="helpInfo"></param>
         /// <param name="helpRequest"></param>
         /// <param name="commandInfo"></param>
@@ -1213,10 +1158,7 @@ namespace System.Management.Automation
             return matcher.IsMatch(target);
         }
 
-        /// <summary>
-        /// Checks whether <paramref name="target"/> matches any of the patterns
-        /// present in <paramref name="patterns"/>
-        /// </summary>
+        
         /// <param name="target">Content to search in.</param>
         /// <param name="patterns">String patterns to look for.</param>
         /// <returns>
@@ -1244,10 +1186,7 @@ namespace System.Management.Automation
             return false;
         }
 
-        /// <summary>
-        /// Process helpInfo forwarded over from other providers, specificly AliasHelpProvider.
-        /// This can return more than 1 helpinfo object.
-        /// </summary>
+        
         /// <param name="helpInfo">HelpInfo that is forwarded over.</param>
         /// <param name="helpRequest">Help request object.</param>
         /// <returns>The result helpInfo objects after processing.</returns>
@@ -1295,10 +1234,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// This will reset the help cache. Normally this corresponds to a
-        /// help culture change.
-        /// </summary>
+        
         internal override void Reset()
         {
             base.Reset();
@@ -1310,9 +1246,7 @@ namespace System.Management.Automation
 
         #region Extensions
 
-        /// <summary>
-        /// Gets a command searcher used for ExactMatch help lookup.
-        /// </summary>
+        
         /// <param name="commandName"></param>
         /// <param name="context"></param>
         /// <returns></returns>
@@ -1327,9 +1261,7 @@ namespace System.Management.Automation
             return searcher;
         }
 
-        /// <summary>
-        /// Gets a command searcher used for searching help.
-        /// </summary>
+        
         /// <param name="pattern"></param>
         /// <param name="context"></param>
         /// <returns></returns>
@@ -1355,13 +1287,7 @@ namespace System.Management.Automation
         #endregion tracer
     }
 
-    /// <summary>
-    /// This is the class to track the user-defined Help Data which is separate from the
-    /// commandHelp itself.
-    ///
-    /// Legally, user-defined Help Data should be within the same file as the corresponding
-    /// commandHelp and it should appear after the commandHelp.
-    /// </summary>
+    
     internal sealed class UserDefinedHelpData
     {
         private UserDefinedHelpData()

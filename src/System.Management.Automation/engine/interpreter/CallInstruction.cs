@@ -10,9 +10,7 @@ namespace System.Management.Automation.Interpreter
     {
         public abstract MethodInfo Info { get; }
 
-        /// <summary>
-        /// The number of arguments including "this" for instance methods.
-        /// </summary>
+        
         public abstract int ArgumentCount { get; }
 
         #region Construction
@@ -26,9 +24,7 @@ namespace System.Management.Automation.Interpreter
             return Create(info, info.GetParameters());
         }
 
-        /// <summary>
-        /// Creates a new ReflectedCaller which can be used to quickly invoke the provided MethodInfo.
-        /// </summary>
+        
         public static CallInstruction Create(MethodInfo info, ParameterInfo[] parameters)
         {
             int argumentCount = parameters.Length;
@@ -168,9 +164,7 @@ namespace System.Management.Automation.Interpreter
             return info is not DynamicMethod;
         }
 
-        /// <summary>
-        /// Gets the next type or null if no more types are available.
-        /// </summary>
+        
         private static Type TryGetParameterOrReturnType(MethodInfo target, ParameterInfo[] pi, int index)
         {
             if (!target.IsStatic)
@@ -203,9 +197,7 @@ namespace System.Management.Automation.Interpreter
             return pi.Length != index || !target.IsStatic;
         }
 
-        /// <summary>
-        /// Uses reflection to create new instance of the appropriate ReflectedCaller.
-        /// </summary>
+        
         private static CallInstruction SlowCreate(MethodInfo info, ParameterInfo[] pis)
         {
             List<Type> types = new List<Type>();

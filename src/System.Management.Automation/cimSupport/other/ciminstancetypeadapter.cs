@@ -14,9 +14,7 @@ using Dbg = System.Management.Automation.Diagnostics;
 
 namespace Microsoft.PowerShell.Cim
 {
-    /// <summary>
-    /// Adapter that deals with CimInstance objects.
-    /// </summary>
+    
     /// <remarks>
     /// Implementing the PropertyOnlyAdapter for the time being as CimInstanceTypeAdapter currently
     /// supports only properties. If method support is needed in future, this should derive from
@@ -54,8 +52,7 @@ namespace Microsoft.PowerShell.Cim
             return psComputerNameProperty;
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="baseObject"></param>
         /// <returns></returns>
         public override System.Collections.ObjectModel.Collection<PSAdaptedProperty> GetProperties(object baseObject)
@@ -93,8 +90,7 @@ namespace Microsoft.PowerShell.Cim
             return result;
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="baseObject"></param>
         /// <param name="propertyName"></param>
         /// <returns></returns>
@@ -186,8 +182,7 @@ namespace Microsoft.PowerShell.Cim
             }
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="adaptedProperty"></param>
         /// <returns></returns>
         public override string GetPropertyTypeName(PSAdaptedProperty adaptedProperty)
@@ -207,8 +202,7 @@ namespace Microsoft.PowerShell.Cim
             throw new ArgumentNullException(nameof(adaptedProperty));
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="adaptedProperty"></param>
         /// <returns></returns>
         public override object GetPropertyValue(PSAdaptedProperty adaptedProperty)
@@ -261,8 +255,7 @@ namespace Microsoft.PowerShell.Cim
             return inheritanceChain;
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="baseObject"></param>
         /// <returns></returns>
         public override Collection<string> GetTypeNameHierarchy(object baseObject)
@@ -312,8 +305,7 @@ namespace Microsoft.PowerShell.Cim
             return new Collection<string>(result);
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="adaptedProperty"></param>
         /// <returns></returns>
         public override bool IsGettable(PSAdaptedProperty adaptedProperty)
@@ -322,8 +314,7 @@ namespace Microsoft.PowerShell.Cim
             return true;
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="adaptedProperty"></param>
         /// <returns></returns>
         public override bool IsSettable(PSAdaptedProperty adaptedProperty)
@@ -345,8 +336,7 @@ namespace Microsoft.PowerShell.Cim
             return isSettable;
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="adaptedProperty"></param>
         /// <param name="value"></param>
         public override void SetPropertyValue(PSAdaptedProperty adaptedProperty, object value)

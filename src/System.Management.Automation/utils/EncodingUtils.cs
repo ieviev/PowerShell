@@ -50,10 +50,7 @@ namespace System.Management.Automation
             { Utf32, Encoding.UTF32 },
         };
 
-        /// <summary>
-        /// Retrieve the encoding parameter from the command line
-        /// it throws if the encoding does not match the known ones.
-        /// </summary>
+        
         /// <returns>A System.Text.Encoding object (null if no encoding specified).</returns>
         internal static Encoding Convert(Cmdlet cmdlet, string encoding)
         {
@@ -90,9 +87,7 @@ namespace System.Management.Automation
             return null;
         }
 
-        /// <summary>
-        /// Warn if the encoding has been designated as obsolete.
-        /// </summary>
+        
         /// <param name="cmdlet">A cmdlet instance which is used to emit the warning.</param>
         /// <param name="encoding">The encoding to check for obsolescence.</param>
         internal static void WarnIfObsolete(Cmdlet cmdlet, Encoding encoding)
@@ -106,11 +101,7 @@ namespace System.Management.Automation
         }
     }
 
-    /// <summary>
-    /// To make it easier to specify -Encoding parameter, we add an ArgumentTransformationAttribute here.
-    /// When the input data is of type string and is valid to be converted to System.Text.Encoding, we do
-    /// the conversion and return the converted value. Otherwise, we just return the input data.
-    /// </summary>
+    
     internal sealed class ArgumentToEncodingTransformationAttribute : ArgumentTransformationAttribute
     {
         public override object Transform(EngineIntrinsics engineIntrinsics, object inputData)
@@ -136,9 +127,7 @@ namespace System.Management.Automation
         }
     }
 
-    /// <summary>
-    /// Provides the set of Encoding values for tab completion of an Encoding parameter.
-    /// </summary>
+    
     internal sealed class ArgumentEncodingCompletionsAttribute : ArgumentCompletionsAttribute
     {
         public ArgumentEncodingCompletionsAttribute() : base(

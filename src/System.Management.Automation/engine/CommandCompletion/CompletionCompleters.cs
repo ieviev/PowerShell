@@ -30,8 +30,7 @@ using Microsoft.PowerShell.Commands.Internal.Format;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// </summary>
+    
     public static class CompletionCompleters
     {
         static CompletionCompleters()
@@ -49,8 +48,7 @@ namespace System.Management.Automation
 
         #region Command Names
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="commandName"></param>
         /// <returns></returns>
         public static IEnumerable<CompletionResult> CompleteCommand(string commandName)
@@ -58,8 +56,7 @@ namespace System.Management.Automation
             return CompleteCommand(commandName, null);
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="commandName"></param>
         /// <param name="moduleName"></param>
         /// <param name="commandTypes"></param>
@@ -657,9 +654,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Get the parameter completion results when the pseudo binding was successful.
-        /// </summary>
+        
         /// <param name="parameterName"></param>
         /// <param name="bindingInfo"></param>
         /// <param name="parameterAst"></param>
@@ -835,9 +830,7 @@ namespace System.Management.Automation
         }
 
 #nullable enable
-        /// <summary>
-        /// Try and get the help message text for the parameter attribute.
-        /// </summary>
+        
         /// <param name="attr">The attribute to check for the help message.</param>
         /// <param name="assembly">The assembly to lookup resources messages, this should be the assembly the cmdlet is defined in.</param>
         /// <param name="message">The help message if it was found otherwise null.</param>
@@ -872,9 +865,7 @@ namespace System.Management.Automation
         }
 #nullable disable
 
-        /// <summary>
-        /// Get the parameter completion results by using the given valid parameter sets and available parameters.
-        /// </summary>
+        
         /// <param name="parameterName"></param>
         /// <param name="validParameterSetFlags"></param>
         /// <param name="parameters"></param>
@@ -969,9 +960,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Get completion results for operators that start with <paramref name="wordToComplete"/>
-        /// </summary>
+        
         /// <param name="wordToComplete">The starting text of the operator to complete.</param>
         /// <returns>A list of completion results.</returns>
         public static List<CompletionResult> CompleteOperator(string wordToComplete)
@@ -1546,9 +1535,7 @@ namespace System.Management.Automation
             return null;
         }
 
-        /// <summary>
-        /// Get the argument completion results when the pseudo binding was not successful.
-        /// </summary>
+        
         private static List<CompletionResult> GetArgumentCompletionResultsWithFailedPseudoBinding(
             CompletionContext context,
             ArgumentLocation argLocation,
@@ -1600,9 +1587,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Get the argument completion results when the pseudo binding was successful.
-        /// </summary>
+        
         private static List<CompletionResult> GetArgumentCompletionResultsWithSuccessfulPseudoBinding(
             CompletionContext context,
             ArgumentLocation argLocation,
@@ -1724,9 +1709,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Get the positional argument completion results based on the position it's in the command line.
-        /// </summary>
+        
         private static void CompletePositionalArgument(
             string commandName,
             CommandAst commandAst,
@@ -1837,9 +1820,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Process a parameter to get the argument completion results.
-        /// </summary>
+        
         /// <remarks>
         /// If the argument completion falls into these pre-defined cases:
         ///   1. The matching parameter is declared with ValidateSetAttribute
@@ -3885,9 +3866,7 @@ namespace System.Management.Automation
             result.Add(CompletionResult.Null);
         }
 
-        /// <summary>
-        /// Provides completion results for NewItemCommand.
-        /// </summary>
+        
         /// <param name="context">Completion context.</param>
         /// <param name="paramName">Name of the parameter whose value needs completion.</param>
         /// <param name="result">List of completion suggestions.</param>
@@ -4118,9 +4097,7 @@ namespace System.Management.Automation
             result.Add(CompletionResult.Null);
         }
 
-        /// <summary>
-        /// Returns all string values bound to a parameter except the one the cursor is currently at.
-        /// </summary>
+        
         private static HashSet<string>GetParameterValues(AstPair parameter, int cursorOffset)
         {
             var result = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
@@ -4223,9 +4200,7 @@ namespace System.Management.Automation
 
         #endregion Native Command Argument Completion
 
-        /// <summary>
-        /// Find the positional argument at the specific position from the parsed argument list.
-        /// </summary>
+        
         /// <param name="parsedArguments"></param>
         /// <param name="position"></param>
         /// <param name="lastPositionalArgument"></param>
@@ -4252,9 +4227,7 @@ namespace System.Management.Automation
             return null;
         }
 
-        /// <summary>
-        /// Find the location where 'tab' is typed based on the line and column.
-        /// </summary>
+        
         private static ArgumentLocation FindTargetArgumentLocation(Collection<AstParameterArgumentPair> parsedArguments, Token token)
         {
             int position = 0;
@@ -4322,8 +4295,7 @@ namespace System.Management.Automation
             return GenerateArgumentLocation(prevArg, position);
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="prev">The argument that is right before the 'tab' location.</param>
         /// <param name="position">The number of positional arguments before the 'tab' location.</param>
         /// <returns></returns>
@@ -4354,9 +4326,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Find the location where 'tab' is typed based on the expressionAst.
-        /// </summary>
+        
         /// <param name="parsedArguments"></param>
         /// <param name="expAst"></param>
         /// <returns></returns>
@@ -4421,8 +4391,7 @@ namespace System.Management.Automation
 
         #region Filenames
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="fileName"></param>
         /// <returns></returns>
         [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
@@ -4656,9 +4625,7 @@ namespace System.Management.Automation
             return results.OrderBy(x => x.ToolTip);
         }
 
-        /// <summary>
-        /// Helper method for generating path completion results for the file system provider.
-        /// </summary>
+        
         /// <param name="context"></param>
         /// <param name="provider"></param>
         /// <param name="resolvedPaths"></param>
@@ -4788,9 +4755,7 @@ namespace System.Management.Automation
             return results;
         }
 
-        /// <summary>
-        /// Helper method for generating path completion results standard providers that don't need any special treatment.
-        /// </summary>
+        
         /// <param name="context"></param>
         /// <param name="provider"></param>
         /// <param name="resolvedPaths"></param>
@@ -4975,10 +4940,7 @@ namespace System.Management.Automation
             return childName.Substring(indexOfName + 1);
         }
 
-        /// <summary>
-        /// Takes a path and rebuilds it with the specified variable replacements.
-        /// Also escapes special characters as needed.
-        /// </summary>
+        
         private static string RebuildPathWithVars(
             string path,
             string homePath,
@@ -5252,8 +5214,7 @@ namespace System.Management.Automation
 
         #region Variable
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="variableName"></param>
         /// <returns></returns>
         public static IEnumerable<CompletionResult> CompleteVariable(string variableName)
@@ -6865,18 +6826,14 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Complete members against extension methods 'Where' and 'ForEach'
-        /// </summary>
+        
         private static void CompleteExtensionMethods(string memberName, List<CompletionResult> results, bool addMethodParenthesis = true)
         {
             var pattern = WildcardPattern.Get(memberName, WildcardOptions.IgnoreCase);
             CompleteExtensionMethods(pattern, results, addMethodParenthesis);
         }
 
-        /// <summary>
-        /// Complete members against extension methods 'Where' and 'ForEach' based on the given pattern.
-        /// </summary>
+        
         private static void CompleteExtensionMethods(WildcardPattern pattern, List<CompletionResult> results, bool addMethodParenthesis)
         {
             foreach (var member in s_extensionMethods)
@@ -6889,9 +6846,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Verify if an expression Ast is representing the $ConfigurationData variable.
-        /// </summary>
+        
         private static bool IsConfigurationDataVariable(ExpressionAst targetExpr)
         {
             var variableExpr = targetExpr as VariableExpressionAst;
@@ -6908,9 +6863,7 @@ namespace System.Management.Automation
             return false;
         }
 
-        /// <summary>
-        /// Verify if an expression Ast is within a configuration definition.
-        /// </summary>
+        
         private static bool IsInDscContext(ExpressionAst expression)
         {
             return Ast.GetAncestorAst<ConfigurationDefinitionAst>(expression) != null;
@@ -7274,23 +7227,13 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// In OneCore PS, there is no way to retrieve all loaded assemblies. But we have the type catalog dictionary
-        /// which contains the full type names of all available CoreCLR .NET types. We can extract the necessary info
-        /// from the full type names to make type name auto-completion work.
-        /// This type represents a non-generic type for type name completion. It only contains information that can be
-        /// inferred from the full type name.
-        /// </summary>
+        
         private class TypeCompletionInStringFormat : TypeCompletionBase
         {
-            /// <summary>
-            /// Get the full type name of the type represented by this instance.
-            /// </summary>
+            
             internal string FullTypeName;
 
-            /// <summary>
-            /// Get the short type name of the type represented by this instance.
-            /// </summary>
+            
             internal string ShortTypeName
             {
                 get
@@ -7310,9 +7253,7 @@ namespace System.Management.Automation
 
             private string _shortTypeName;
 
-            /// <summary>
-            /// Get the namespace of the type represented by this instance.
-            /// </summary>
+            
             internal string Namespace
             {
                 get
@@ -7329,17 +7270,13 @@ namespace System.Management.Automation
 
             private string _namespace;
 
-            /// <summary>
-            /// Construct the CompletionResult based on the information of this instance.
-            /// </summary>
+            
             internal override CompletionResult GetCompletionResult(string keyMatched, string prefix, string suffix)
             {
                 return GetCompletionResult(keyMatched, prefix, suffix, null);
             }
 
-            /// <summary>
-            /// Construct the CompletionResult based on the information of this instance.
-            /// </summary>
+            
             internal override CompletionResult GetCompletionResult(string keyMatched, string prefix, string suffix, string namespaceToRemove)
             {
                 string completion = string.IsNullOrEmpty(namespaceToRemove)
@@ -7353,18 +7290,10 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// In OneCore PS, there is no way to retrieve all loaded assemblies. But we have the type catalog dictionary
-        /// which contains the full type names of all available CoreCLR .NET types. We can extract the necessary info
-        /// from the full type names to make type name auto-completion work.
-        /// This type represents a generic type for type name completion. It only contains information that can be
-        /// inferred from the full type name.
-        /// </summary>
+        
         private sealed class GenericTypeCompletionInStringFormat : TypeCompletionInStringFormat
         {
-            /// <summary>
-            /// Get the number of generic type arguments required by the type represented by this instance.
-            /// </summary>
+            
             private int GenericArgumentCount
             {
                 get
@@ -7382,17 +7311,13 @@ namespace System.Management.Automation
 
             private int _genericArgumentCount = 0;
 
-            /// <summary>
-            /// Construct the CompletionResult based on the information of this instance.
-            /// </summary>
+            
             internal override CompletionResult GetCompletionResult(string keyMatched, string prefix, string suffix)
             {
                 return GetCompletionResult(keyMatched, prefix, suffix, null);
             }
 
-            /// <summary>
-            /// Construct the CompletionResult based on the information of this instance.
-            /// </summary>
+            
             internal override CompletionResult GetCompletionResult(string keyMatched, string prefix, string suffix, string namespaceToRemove)
             {
                 string fullNameWithoutBacktip = RemoveBackTick(FullTypeName);
@@ -7421,9 +7346,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// This type represents a non-generic type for type name completion. It contains the actual type instance.
-        /// </summary>
+        
         private class TypeCompletion : TypeCompletionBase
         {
             internal Type Type;
@@ -7474,9 +7397,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// This type represents a generic type for type name completion. It contains the actual type instance.
-        /// </summary>
+        
         private sealed class GenericTypeCompletion : TypeCompletion
         {
             internal override CompletionResult GetCompletionResult(string keyMatched, string prefix, string suffix)
@@ -7511,9 +7432,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// This type represents a namespace for namespace completion.
-        /// </summary>
+        
         private sealed class NamespaceCompletion : TypeCompletionBase
         {
             internal string Namespace;
@@ -7656,9 +7575,7 @@ namespace System.Management.Automation
             return localTypeCache;
         }
 
-        /// <summary>
-        /// Handle namespace when initializing the type cache.
-        /// </summary>
+        
         /// <param name="entryCache">The TypeCompletionMapping dictionary.</param>
         /// <param name="namespace">The namespace.</param>
         private static void HandleNamespace(Dictionary<string, TypeCompletionMapping> entryCache, string @namespace)
@@ -7693,9 +7610,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Handle a type when initializing the type cache.
-        /// </summary>
+        
         /// <param name="entryCache">The TypeCompletionMapping dictionary.</param>
         /// <param name="fullTypeName">The full type name.</param>
         /// <param name="shortTypeName">The short type name.</param>
@@ -7782,9 +7697,7 @@ namespace System.Management.Automation
             return results;
         }
 
-        /// <summary>
-        /// Complete a typename.
-        /// </summary>
+        
         /// <param name="typeName"></param>
         /// <returns></returns>
         public static IEnumerable<CompletionResult> CompleteType(string typeName)
@@ -7985,19 +7898,7 @@ namespace System.Management.Automation
 
         #region Hashtable Keys
 
-        /// <summary>
-        /// Generate auto complete results for hashtable key within a Dynamickeyword.
-        /// Results are generated based on properties of a DynamicKeyword matches given identifier.
-        /// For example, following "D" matches "DestinationPath"
-        ///
-        ///     Configuration
-        ///     {
-        ///         File
-        ///         {
-        ///             D^
-        ///         }
-        ///     }
-        /// </summary>
+        
         /// <param name="completionContext"></param>
         /// <param name="ast"></param>
         /// <param name="hashtableAst"></param>
@@ -8611,9 +8512,7 @@ namespace System.Management.Automation
             return null;
         }
 
-        /// <summary>
-        /// Calls Get-Command to get command info objects.
-        /// </summary>
+        
         /// <param name="fakeBoundParameters">The fake bound parameters.</param>
         /// <param name="parametersToAdd">The parameters to add.</param>
         /// <returns>Collection of command info objects.</returns>
@@ -8769,9 +8668,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Check if a value is treated as Enumerable in powershell.
-        /// </summary>
+        
         private static bool IsValueEnumerable(object value)
         {
             object baseValue = PSObject.Base(value);
@@ -8790,9 +8687,7 @@ namespace System.Management.Automation
             return false;
         }
 
-        /// <summary>
-        /// Check if a strong type is treated as Enumerable in powershell.
-        /// </summary>
+        
         private static bool IsStaticTypeEnumerable(Type type)
         {
             if (type.Equals(typeof(string)) || typeof(IDictionary).IsAssignableFrom(type) || typeof(System.Xml.XmlNode).IsAssignableFrom(type))
@@ -8820,9 +8715,7 @@ namespace System.Management.Automation
             return underlying ?? type;
         }
 
-        /// <summary>
-        /// Turn on the "LiteralPaths" option.
-        /// </summary>
+        
         /// <param name="completionContext"></param>
         /// <returns>
         /// Indicate whether the "LiteralPaths" option needs to be removed after operation
@@ -8846,9 +8739,7 @@ namespace System.Management.Automation
             return clearLiteralPathsKey;
         }
 
-        /// <summary>
-        /// Return whether we need to add ampersand when it's necessary.
-        /// </summary>
+        
         /// <param name="context"></param>
         /// <param name="defaultChoice"></param>
         /// <returns></returns>
@@ -8935,12 +8826,7 @@ namespace System.Management.Automation
         #endregion Helpers
     }
 
-    /// <summary>
-    /// This class is very similar to the restricted language checker, but it is meant to allow more things, yet still
-    /// be considered "safe", at least in the sense that tab completion can rely on it to not do bad things.  The primary
-    /// use is for intellisense where you don't want to run arbitrary code, but you do want to know the values
-    /// of various expressions so you can get the members.
-    /// </summary>
+    
     internal class SafeExprEvaluator : ICustomAstVisitor2
     {
         internal static bool TrySafeEval(ExpressionAst ast, ExecutionContext executionContext, out object value)
@@ -9174,24 +9060,18 @@ namespace System.Management.Automation
         }
     }
 
-    /// <summary>
-    /// Completes with the property names of the InputObject.
-    /// </summary>
+    
     internal class PropertyNameCompleter : IArgumentCompleter
     {
         private readonly string _parameterNameOfInput;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PropertyNameCompleter"/> class.
-        /// </summary>
+        
         public PropertyNameCompleter()
         {
             _parameterNameOfInput = "InputObject";
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PropertyNameCompleter"/> class.
-        /// </summary>
+        
         /// <param name="parameterNameOfInput">The name of the property of the input object for which to complete with property names.</param>
         public PropertyNameCompleter(string parameterNameOfInput)
         {

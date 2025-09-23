@@ -425,9 +425,7 @@ namespace System.Management.Automation.SecurityAccountsManager.Native
         #endregion Constants
 
         #region Public Methods
-        /// <summary>
-        /// Determine if an NTSTATUS value indicates Success.
-        /// </summary>
+        
         /// <param name="ntstatus">The NTSTATUS value returned from native functions.</param>
         /// <returns>
         /// True if the NTSTATUS value indicates success, false otherwise.
@@ -437,9 +435,7 @@ namespace System.Management.Automation.SecurityAccountsManager.Native
             return Severity(ntstatus) == STATUS_SEVERITY_SUCCESS;
         }
 
-        /// <summary>
-        /// Determine if an NTSTATUS value indicates an Error.
-        /// </summary>
+        
         /// <param name="ntstatus">The NTSTATUS value returned from native functions.</param>
         /// <returns>
         /// True if the NTSTATUS value indicates an error, false otherwise.
@@ -449,9 +445,7 @@ namespace System.Management.Automation.SecurityAccountsManager.Native
             return Severity(ntstatus) == STATUS_SEVERITY_ERROR;
         }
 
-        /// <summary>
-        /// Determine if an NTSTATUS value indicates a Warning.
-        /// </summary>
+        
         /// <param name="ntstatus">The NTSTATUS value returned from native functions.</param>
         /// <returns>
         /// True if the NTSTATUS value indicates a warning, false otherwise.
@@ -462,9 +456,7 @@ namespace System.Management.Automation.SecurityAccountsManager.Native
             return Severity(ntstatus) == STATUS_SEVERITY_WARNING;
         }
 
-        /// <summary>
-        /// Determine if an NTSTATUS value indicates that the value is Informational.
-        /// </summary>
+        
         /// <param name="ntstatus">The NTSTATUS value returned from native functions.</param>
         /// <returns>
         /// True if the NTSTATUS value indicates that it is informational, false otherwise.
@@ -475,9 +467,7 @@ namespace System.Management.Automation.SecurityAccountsManager.Native
             return Severity(ntstatus) == STATUS_SEVERITY_INFORMATIONAL;
         }
 
-        /// <summary>
-        /// Return the Severity part of an NTSTATUS value.
-        /// </summary>
+        
         /// <param name="ntstatus">The NTSTATUS value returned from native functions.</param>
         /// <returns>
         /// One of the STATUS_SEVERITY_* values
@@ -487,9 +477,7 @@ namespace System.Management.Automation.SecurityAccountsManager.Native
             return ntstatus >> 30;
         }
 
-        /// <summary>
-        /// Return the Facility part of an NSTATUS value.
-        /// </summary>
+        
         /// <param name="ntstatus">The NTSTATUS value returned from native functions.</param>
         /// <returns>
         /// The value of the Facility portion of an NTSTATUS value.
@@ -501,9 +489,7 @@ namespace System.Management.Automation.SecurityAccountsManager.Native
             return (ntstatus >> 16) & 0x0FFF;
         }
 
-        /// <summary>
-        /// Return the Code part of an NTSTATUS value.
-        /// </summary>
+        
         /// <param name="ntstatus">The NTSTATUS value returned from native functions.</param>
         /// <returns>
         /// The value of the Code portion of an NTSTATUS value.

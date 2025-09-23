@@ -10,28 +10,17 @@ using System.Management.Automation.Internal;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Class HelpFileHelpProvider implement the help provider for help.txt kinds of
-    /// help contents.
-    ///
-    /// Help File help information are stored in '.help.txt' files. These files are
-    /// located in the Monad / CustomShell Path as well as in the Application Base
-    /// of PSSnapIns.
-    /// </summary>
+    
     internal class HelpFileHelpProvider : HelpProviderWithCache
     {
-        /// <summary>
-        /// Constructor for HelpProvider.
-        /// </summary>
+        
         internal HelpFileHelpProvider(HelpSystem helpSystem) : base(helpSystem)
         {
         }
 
         #region Common Properties
 
-        /// <summary>
-        /// Name of the provider.
-        /// </summary>
+        
         /// <value>Name of the provider</value>
         internal override string Name
         {
@@ -41,9 +30,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Help category of the provider.
-        /// </summary>
+        
         /// <value>Help category of the provider</value>
         internal override HelpCategory HelpCategory
         {
@@ -283,9 +270,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Load help file based on the file path.
-        /// </summary>
+        
         /// <param name="path">File path to load help from.</param>
         /// <returns>Help info object loaded from the file.</returns>
         private HelpInfo LoadHelpFile(string path)
@@ -327,10 +312,7 @@ namespace System.Management.Automation
             return helpInfo;
         }
 
-        /// <summary>
-        /// Gets the extended search paths for about_topics help. To be able to get about_topics help from unloaded modules,
-        /// we will add $pshome and the folders under PS module paths to the collection of paths to search.
-        /// </summary>
+        
         /// <returns>A collection of string representing locations.</returns>
         internal Collection<string> GetExtendedSearchPaths()
         {
@@ -390,10 +372,7 @@ namespace System.Management.Automation
             return searchPaths;
         }
 
-        /// <summary>
-        /// This will reset the help cache. Normally this corresponds to a
-        /// help culture change.
-        /// </summary>
+        
         internal override void Reset()
         {
             base.Reset();
@@ -405,11 +384,7 @@ namespace System.Management.Automation
 
         #region Private Data
 
-        /// <summary>
-        /// This is a hashtable to track which help files are loaded already.
-        ///
-        /// This will avoid one help file getting loaded again and again.
-        /// </summary>
+        
         private readonly Hashtable _helpFiles = new Hashtable();
 
         #endregion

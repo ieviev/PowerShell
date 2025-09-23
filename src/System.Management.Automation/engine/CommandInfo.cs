@@ -16,76 +16,44 @@ using Microsoft.PowerShell.Commands;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Defines the types of commands that PowerShell can execute.
-    /// </summary>
+    
     [Flags]
     public enum CommandTypes
     {
-        /// <summary>
-        /// Aliases create a name that refers to other command types.
-        /// Aliases are only persisted within the execution of a single engine.
-        /// </summary>
+        
         Alias = 0x0001,
 
-        /// <summary>
-        /// Script functions that are defined by a script block.
-        /// Functions are only persisted within the execution of a single engine.
-        /// </summary>
+        
         Function = 0x0002,
 
-        /// <summary>
-        /// Script filters that are defined by a script block.
-        /// Filters are only persisted within the execution of a single engine.
-        /// </summary>
+        
         Filter = 0x0004,
 
-        /// <summary>
-        /// A cmdlet.
-        /// </summary>
+        
         Cmdlet = 0x0008,
 
-        /// <summary>
-        /// An PowerShell script (*.ps1 file)
-        /// </summary>
+        
         ExternalScript = 0x0010,
 
-        /// <summary>
-        /// Any existing application (can be console or GUI).
-        /// An application can have any extension that can be executed either directly through CreateProcess
-        /// or indirectly through ShellExecute.
-        /// </summary>
+        
         Application = 0x0020,
 
-        /// <summary>
-        /// A script that is built into the runspace configuration.
-        /// </summary>
+        
         Script = 0x0040,
 
-        /// <summary>
-        /// A Configuration.
-        /// </summary>
+        
         Configuration = 0x0100,
 
-        /// <summary>
-        /// All possible command types.
-        /// NOTE: a CommandInfo instance will never specify All as its CommandType
-        /// but All can be used when filtering the CommandTypes.
-        /// </summary>
+        
         All = Alias | Function | Filter | Cmdlet | Script | ExternalScript | Application | Configuration,
     }
 
-    /// <summary>
-    /// The base class for the information about commands. Contains the basic information about
-    /// the command, like name and type.
-    /// </summary>
+    
     public abstract class CommandInfo : IHasSessionStateEntryVisibility
     {
         #region ctor
 
-        /// <summary>
-        /// Creates an instance of the CommandInfo class with the specified name and type.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the command.
         /// </param>
@@ -106,9 +74,7 @@ namespace System.Management.Automation
             CommandType = type;
         }
 
-        /// <summary>
-        /// Creates an instance of the CommandInfo class with the specified name and type.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the command.
         /// </param>
@@ -127,9 +93,7 @@ namespace System.Management.Automation
             this.Context = context;
         }
 
-        /// <summary>
-        /// This is a copy constructor, used primarily for get-command.
-        /// </summary>
+        
         internal CommandInfo(CommandInfo other)
         {
             // Computed fields not copied:
@@ -146,9 +110,7 @@ namespace System.Management.Automation
             this.DefiningLanguageMode = other.DefiningLanguageMode;
         }
 
-        /// <summary>
-        /// This is a copy constructor, used primarily for get-command.
-        /// </summary>
+        
         internal CommandInfo(string name, CommandInfo other)
             : this(other)
         {
@@ -157,28 +119,20 @@ namespace System.Management.Automation
 
         #endregion ctor
 
-        /// <summary>
-        /// Gets the name of the command.
-        /// </summary>
+        
         public string Name { get; private set; } = string.Empty;
 
         // Name
 
-        /// <summary>
-        /// Gets the type of the command.
-        /// </summary>
+        
         public CommandTypes CommandType { get; private set; } = CommandTypes.Application;
 
         // CommandType
 
-        /// <summary>
-        /// Gets the source of the command (shown by default in Get-Command)
-        /// </summary>
+        
         public virtual string Source { get { return this.ModuleName; } }
 
-        /// <summary>
-        /// Gets the source version (shown by default in Get-Command)
-        /// </summary>
+        
         public virtual Version Version
         {
             get
@@ -212,9 +166,7 @@ namespace System.Management.Automation
 
         private Version _version;
 
-        /// <summary>
-        /// The execution context this command will run in.
-        /// </summary>
+        
         internal ExecutionContext Context
         {
             get
@@ -234,9 +186,7 @@ namespace System.Management.Automation
 
         private ExecutionContext _context;
 
-        /// <summary>
-        /// The language mode that was in effect when this alias was defined.
-        /// </summary>
+        
         internal PSLanguageMode? DefiningLanguageMode { get; set; }
 
         internal virtual HelpCategory HelpCategory
@@ -246,27 +196,21 @@ namespace System.Management.Automation
 
         internal CommandInfo CopiedCommand { get; set; }
 
-        /// <summary>
-        /// Internal interface to change the type of a CommandInfo object.
-        /// </summary>
+        
         /// <param name="newType"></param>
         internal void SetCommandType(CommandTypes newType)
         {
             CommandType = newType;
         }
 
-        /// <summary>
-        /// A string representing the definition of the command.
-        /// </summary>
+        
         /// <remarks>
         /// This is overridden by derived classes to return specific
         /// information for the command type.
         /// </remarks>
         public abstract string Definition { get; }
 
-        /// <summary>
-        /// This is required for renaming aliases, functions, and filters.
-        /// </summary>
+        
         /// <param name="newName">
         /// The new name for the command.
         /// </param>
@@ -280,19 +224,14 @@ namespace System.Management.Automation
             Name = newName;
         }
 
-        /// <summary>
-        /// For diagnostic purposes.
-        /// </summary>
+        
         /// <returns></returns>
         public override string ToString()
         {
             return ModuleCmdletBase.AddPrefixToCommandName(Name, Prefix);
         }
 
-        /// <summary>
-        /// Indicates if the command is to be allowed to be executed by a request
-        /// external to the runspace.
-        /// </summary>
+        
         public virtual SessionStateEntryVisibility Visibility
         {
             get
@@ -320,9 +259,7 @@ namespace System.Management.Automation
 
         private SessionStateEntryVisibility _visibility = SessionStateEntryVisibility.Public;
 
-        /// <summary>
-        /// Return a CommandMetadata instance that is never exposed publicly.
-        /// </summary>
+        
         internal virtual CommandMetadata CommandMetadata
         {
             get
@@ -331,18 +268,13 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Returns the syntax of a command.
-        /// </summary>
+        
         internal virtual string Syntax
         {
             get { return Definition; }
         }
 
-        /// <summary>
-        /// The module name of this command. It will be empty for commands
-        /// not imported from either a module or snapin.
-        /// </summary>
+        
         public string ModuleName
         {
             get
@@ -369,16 +301,10 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// The module that defines this cmdlet. This will be null for commands
-        /// that are not defined in the context of a module.
-        /// </summary>
+        
         public PSModuleInfo Module { get; internal set; }
 
-        /// <summary>
-        /// The remoting capabilities of this cmdlet, when exposed in a context
-        /// with ambient remoting.
-        /// </summary>
+        
         public RemotingCapability RemotingCapability
         {
             get
@@ -396,18 +322,13 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// True if the command has dynamic parameters, false otherwise.
-        /// </summary>
+        
         internal virtual bool ImplementsDynamicParameters
         {
             get { return false; }
         }
 
-        /// <summary>
-        /// Constructs the MergedCommandParameterMetadata, using any arguments that
-        /// may have been specified so that dynamic parameters can be determined, if any.
-        /// </summary>
+        
         /// <returns></returns>
         private MergedCommandParameterMetadata GetMergedCommandParameterMetadataSafely()
         {
@@ -539,9 +460,7 @@ namespace System.Management.Automation
             result = processor.CmdletParameterBinderController.BindableParameters;
         }
 
-        /// <summary>
-        /// Return the parameters for this command.
-        /// </summary>
+        
         public virtual Dictionary<string, ParameterMetadata> Parameters
         {
             get
@@ -574,11 +493,7 @@ namespace System.Management.Automation
 
         private CommandMetadata _externalCommandMetadata;
 
-        /// <summary>
-        /// Resolves a full, shortened, or aliased parameter name to the actual
-        /// cmdlet parameter name, using PowerShell's standard parameter resolution
-        /// algorithm.
-        /// </summary>
+        
         /// <param name="name">The name of the parameter to resolve.</param>
         /// <returns>The parameter that matches this name.</returns>
         public ParameterMetadata ResolveParameter(string name)
@@ -588,10 +503,7 @@ namespace System.Management.Automation
             return this.Parameters[result.Parameter.Name];
         }
 
-        /// <summary>
-        /// Gets the information about the parameters and parameter sets for
-        /// this command.
-        /// </summary>
+        
         public ReadOnlyCollection<CommandParameterSetInfo> ParameterSets
         {
             get
@@ -610,35 +522,23 @@ namespace System.Management.Automation
 
         internal ReadOnlyCollection<CommandParameterSetInfo> _parameterSets;
 
-        /// <summary>
-        /// A possibly incomplete or even incorrect list of types the command could return.
-        /// </summary>
+        
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
         public abstract ReadOnlyCollection<PSTypeName> OutputType { get; }
 
-        /// <summary>
-        /// Specifies whether this command was imported from a module or not.
-        /// This is used in Get-Command to figure out which of the commands in module session state were imported.
-        /// </summary>
+        
         internal bool IsImported { get; set; } = false;
 
-        /// <summary>
-        /// The prefix that was used when importing this command.
-        /// </summary>
+        
         internal string Prefix { get; set; } = string.Empty;
 
-        /// <summary>
-        /// Create a copy of commandInfo for GetCommandCommand so that we can generate parameter
-        /// sets based on an argument list (so we can get the dynamic parameters.)
-        /// </summary>
+        
         internal virtual CommandInfo CreateGetCommandCopy(object[] argumentList)
         {
             throw new InvalidOperationException();
         }
 
-        /// <summary>
-        /// Generates the parameter and parameter set info from the cmdlet metadata.
-        /// </summary>
+        
         /// <returns>
         /// A collection of CommandParameterSetInfo representing the cmdlet metadata.
         /// </returns>
@@ -673,18 +573,10 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Gets or sets whether this CmdletInfo instance is a copy used for get-command.
-        /// If true, and the cmdlet supports dynamic parameters, it means that the dynamic
-        /// parameter metadata will be merged into the parameter set information.
-        /// </summary>
+        
         internal bool IsGetCommandCopy { get; set; }
 
-        /// <summary>
-        /// Gets or sets the command line arguments/parameters that were specified
-        /// which will allow for the dynamic parameters to be retrieved and their
-        /// metadata merged into the parameter set information.
-        /// </summary>
+        
         internal object[] Arguments { get; set; }
 
         internal static Collection<CommandParameterSetInfo> GetCacheableMetadata(CommandMetadata metadata)
@@ -736,15 +628,10 @@ namespace System.Management.Automation
         }
     }
 
-    /// <summary>
-    /// Represents <see cref="System.Type"/>, but can be used where a real type
-    /// might not be available, in which case the name of the type can be used.
-    /// </summary>
+    
     public class PSTypeName
     {
-        /// <summary>
-        /// This constructor is used when the type exists and is currently loaded.
-        /// </summary>
+        
         /// <param name="type">The type.</param>
         public PSTypeName(Type type)
         {
@@ -755,9 +642,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// This constructor is used when the type may not exist, or is not loaded.
-        /// </summary>
+        
         /// <param name="name">The name of the type.</param>
         public PSTypeName(string name)
         {
@@ -765,9 +650,7 @@ namespace System.Management.Automation
             _type = null;
         }
 
-        /// <summary>
-        /// This constructor is used when the creating a PSObject with a custom typename.
-        /// </summary>
+        
         /// <param name="name">The name of the type.</param>
         /// <param name="type">The real type.</param>
         public PSTypeName(string name, Type type)
@@ -776,9 +659,7 @@ namespace System.Management.Automation
             _type = type;
         }
 
-        /// <summary>
-        /// This constructor is used when the type is defined in PowerShell.
-        /// </summary>
+        
         /// <param name="typeDefinitionAst">The type definition from the ast.</param>
         public PSTypeName(TypeDefinitionAst typeDefinitionAst)
         {
@@ -791,9 +672,7 @@ namespace System.Management.Automation
             Name = typeDefinitionAst.Name;
         }
 
-        /// <summary>
-        /// This constructor creates a type from a ITypeName.
-        /// </summary>
+        
         public PSTypeName(ITypeName typeName)
         {
             if (typeName == null)
@@ -822,14 +701,10 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Return the name of the type.
-        /// </summary>
+        
         public string Name { get; }
 
-        /// <summary>
-        /// Return the type with metadata, or null if the type is not loaded.
-        /// </summary>
+        
         [SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods")]
         public Type Type
         {
@@ -870,16 +745,12 @@ namespace System.Management.Automation
 
         private Type _type;
 
-        /// <summary>
-        /// When a type is defined by PowerShell, the ast for that type.
-        /// </summary>
+        
         public TypeDefinitionAst TypeDefinitionAst { get; }
 
         private bool _typeWasCalculated;
 
-        /// <summary>
-        /// Returns a String that represents the current PSTypeName.
-        /// </summary>
+        
         /// <returns>String that represents the current PSTypeName.</returns>
         public override string ToString()
         {
@@ -904,11 +775,7 @@ namespace System.Management.Automation
         }
     }
 
-    /// <summary>
-    /// Represents dynamic types such as <see cref="System.Management.Automation.PSObject"/>,
-    /// but can be used where a real type might not be available, in which case the name of the type can be used.
-    /// The type encodes the members of dynamic objects in the type name.
-    /// </summary>
+    
     internal sealed class PSSyntheticTypeName : PSTypeName
     {
         internal static PSSyntheticTypeName Create(string typename, IList<PSMemberNameAndType> membersTypes) => Create(new PSTypeName(typename), membersTypes);

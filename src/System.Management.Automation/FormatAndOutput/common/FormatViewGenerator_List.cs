@@ -35,10 +35,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             SetUpActiveProperties(so);
         }
 
-        /// <summary>
-        /// Let the view prepare itself for RemoteObjects. This will add "ComputerName" to the
-        /// table columns.
-        /// </summary>
+        
         /// <param name="so"></param>
         internal override void PrepareForRemoteObjects(PSObject so)
         {

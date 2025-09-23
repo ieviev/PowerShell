@@ -11,36 +11,18 @@ using Microsoft.PowerShell.Commands;
 
 namespace Microsoft.Management.Infrastructure.CimCmdlets
 {
-    /// <summary>
-    /// Enables the user to subscribe to indications using Filter Expression or
-    /// Query Expression.
-    /// -SourceIdentifier is a name given to the subscription
-    /// The Cmdlet should return a PS EventSubscription object that can be used to
-    /// cancel the subscription
-    /// Should we have the second parameter set with a -Query?
-    /// </summary>
+    
     [Alias("rcie")]
     [Cmdlet(VerbsLifecycle.Register, "CimIndicationEvent", DefaultParameterSetName = CimBaseCommand.ClassNameComputerSet, HelpUri = "https://go.microsoft.com/fwlink/?LinkId=227960")]
     public class RegisterCimIndicationCommand : ObjectEventRegistrationBase
     {
         #region parameters
 
-        /// <summary>
-        /// <para>
-        /// The following is the definition of the input parameter "Namespace".
-        /// Specifies the NameSpace under which to look for the specified class name.
-        /// </para>
-        /// <para>
-        /// Default value is root\cimv2
-        /// </para>
-        /// </summary>
+        
         [Parameter]
         public string Namespace { get; set; }
 
-        /// <summary>
-        /// The following is the definition of the input parameter "ClassName".
-        /// Specifies the Class Name to register the indication on.
-        /// </summary>
+        
         [Parameter(
             Mandatory = true,
             Position = 0,
@@ -64,10 +46,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         private string className;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "Query".
-        /// The Query Expression to pass.
-        /// </summary>
+        
         [Parameter(
             Mandatory = true,
             Position = 0,
@@ -92,13 +71,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         private string query;
 
-        /// <summary>
-        /// <para>
-        /// The following is the definition of the input parameter "QueryDialect".
-        /// Specifies the dialect used by the query Engine that interprets the Query
-        /// string.
-        /// </para>
-        /// </summary>
+        
         [Parameter(ParameterSetName = CimBaseCommand.QueryExpressionComputerSet)]
         [Parameter(ParameterSetName = CimBaseCommand.QueryExpressionSessionSet)]
         public string QueryDialect
@@ -117,19 +90,12 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         private string queryDialect;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "OperationTimeoutSec".
-        /// Enables the user to specify the operation timeout in Seconds. This value
-        /// overwrites the value specified by the CimSession Operation timeout.
-        /// </summary>
+        
         [Alias(CimBaseCommand.AliasOT)]
         [Parameter]
         public uint OperationTimeoutSec { get; set; }
 
-        /// <summary>
-        /// The following is the definition of the input parameter "Session".
-        /// Uses a CimSession context.
-        /// </summary>
+        
         [Parameter(
             Mandatory = true,
             ParameterSetName = CimBaseCommand.QueryExpressionSessionSet)]
@@ -152,11 +118,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         private CimSession cimSession;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "ComputerName".
-        /// Specifies the computer on which the commands associated with this session
-        /// will run. The default value is LocalHost.
-        /// </summary>
+        
         [Alias(CimBaseCommand.AliasCN, CimBaseCommand.AliasServerName)]
         [Parameter(ParameterSetName = CimBaseCommand.QueryExpressionComputerSet)]
         [Parameter(ParameterSetName = CimBaseCommand.ClassNameComputerSet)]
@@ -178,9 +140,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         #endregion
 
-        /// <summary>
-        /// Returns the object that generates events to be monitored.
-        /// </summary>
+        
         protected override object GetSourceObject()
         {
             CimIndicationWatcher watcher = null;
@@ -232,17 +192,13 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             return watcher;
         }
 
-        /// <summary>
-        /// Returns the event name to be monitored on the input object.
-        /// </summary>
+        
         protected override string GetSourceObjectEventName()
         {
             return "CimIndicationArrived";
         }
 
-        /// <summary>
-        /// EndProcessing method.
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             DebugHelper.WriteLogEx();
@@ -259,11 +215,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             }
         }
 
-        /// <summary>
-        /// <para>
-        /// Handler to handle unsubscribe event
-        /// </para>
-        /// </summary>
+        
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private static void newSubscriber_Unsubscribed(
@@ -276,23 +228,17 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         #region private members
-        /// <summary>
-        /// Check argument value.
-        /// </summary>
+        
         private void CheckArgument()
         {
             this.className = ValidationHelper.ValidateArgumentIsValidName(nameClassName, this.className);
         }
 
-        /// <summary>
-        /// Parameter binder used to resolve parameter set name.
-        /// </summary>
+        
         private readonly ParameterBinder parameterBinder = new(
             parameters, parameterSets);
 
-        /// <summary>
-        /// Set the parameter.
-        /// </summary>
+        
         /// <param name="parameterName"></param>
         private void SetParameter(object value, string parameterName)
         {
@@ -312,9 +258,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         internal const string nameComputerName = "ComputerName";
         #endregion
 
-        /// <summary>
-        /// Static parameter definition entries.
-        /// </summary>
+        
         private static readonly Dictionary<string, HashSet<ParameterDefinitionEntry>> parameters = new()
         {
             {
@@ -349,9 +293,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             },
         };
 
-        /// <summary>
-        /// Static parameter set entries.
-        /// </summary>
+        
         private static readonly Dictionary<string, ParameterSetEntry> parameterSets = new()
         {
             {   CimBaseCommand.QueryExpressionSessionSet, new ParameterSetEntry(2)     },

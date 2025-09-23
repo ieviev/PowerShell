@@ -7,28 +7,12 @@ using Dbg = System.Management.Automation;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// The context of the core command that is being run. This
-    /// includes data like the user name and password, as well
-    /// as callbacks for streaming output, prompting, and progress.
-    ///
-    /// This allows the providers to be called in a variety of situations.
-    /// The most common will be from the core cmdlets themselves but they
-    /// can also be called programmatically either by having the results
-    /// accumulated or by providing delegates for the various streams.
-    ///
-    /// NOTE:  USER Feedback mechanism are only enabled for the CoreCmdlet
-    /// case.  This is because we have not seen a use-case for them in the
-    /// other scenarios.
-    /// </summary>
+    
     internal sealed class CmdletProviderContext
     {
         #region Trace object
 
-        /// <summary>
-        /// An instance of the PSTraceSource class used for trace output
-        /// using "CmdletProviderContext" as the category.
-        /// </summary>
+        
         [Dbg.TraceSource(
              "CmdletProviderContext",
              "The context under which a core command is being run.")]
@@ -40,10 +24,7 @@ namespace System.Management.Automation
 
         #region Constructor
 
-        /// <summary>
-        /// Constructs the context under which the core command providers
-        /// operate.
-        /// </summary>
+        
         /// <param name="executionContext">
         /// The context of the engine.
         /// </param>
@@ -67,10 +48,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Constructs the context under which the core command providers
-        /// operate.
-        /// </summary>
+        
         /// <param name="executionContext">
         /// The context of the engine.
         /// </param>
@@ -91,10 +69,7 @@ namespace System.Management.Automation
             Origin = origin;
         }
 
-        /// <summary>
-        /// Constructs the context under which the core command providers
-        /// operate.
-        /// </summary>
+        
         /// <param name="command">
         /// The command object that is running.
         /// </param>
@@ -149,10 +124,7 @@ namespace System.Management.Automation
             _streamErrors = true;
         }
 
-        /// <summary>
-        /// Constructs the context under which the core command providers
-        /// operate.
-        /// </summary>
+        
         /// <param name="command">
         /// The command object that is running.
         /// </param>
@@ -201,10 +173,7 @@ namespace System.Management.Automation
             _streamErrors = true;
         }
 
-        /// <summary>
-        /// Constructs the context under which the core command providers
-        /// operate.
-        /// </summary>
+        
         /// <param name="command">
         /// The command object that is running.
         /// </param>
@@ -239,10 +208,7 @@ namespace System.Management.Automation
             _streamErrors = true;
         }
 
-        /// <summary>
-        /// Constructs the context under which the core command providers
-        /// operate using an existing context.
-        /// </summary>
+        
         /// <param name="contextToCopyFrom">
         /// A CmdletProviderContext instance to copy the filters, ExecutionContext,
         /// Credentials, Drive, and Force options from.
@@ -290,75 +256,41 @@ namespace System.Management.Automation
 
         #region private properties
 
-        /// <summary>
-        /// If the constructor that takes a context to copy is
-        /// called, this will be set to the context being copied.
-        /// </summary>
+        
         private readonly CmdletProviderContext _copiedContext;
 
-        /// <summary>
-        /// The credentials under which the operation should run.
-        /// </summary>
+        
         private readonly PSCredential _credentials = PSCredential.Empty;
 
-        /// <summary>
-        /// The force parameter gives guidance to providers on how vigorously they
-        /// should try to perform an operation.
-        /// </summary>
+        
         private bool _force;
 
-        /// <summary>
-        /// The command which defines the context. This should not be
-        /// made visible to anyone and should only be set through the
-        /// constructor.
-        /// </summary>
+        
         private readonly Cmdlet _command;
 
-        /// <summary>
-        /// This makes the origin of the provider request visible to the internals.
-        /// </summary>
+        
         internal CommandOrigin Origin { get; } = CommandOrigin.Internal;
 
-        /// <summary>
-        /// This defines the default behavior for the WriteError method.
-        /// If it is true, a call to this method will result in an immediate call
-        /// to the command WriteError method, or to the writeErrorDelegate if
-        /// one has been supplied.
-        /// If it is false, the objects will be accumulated until the
-        /// GetErrorObjects method is called.
-        /// </summary>
+        
         private readonly bool _streamErrors;
 
-        /// <summary>
-        /// A collection in which objects that are written using the WriteObject(s)
-        /// methods are accumulated if <see cref="PassThru"/> is false.
-        /// </summary>
+        
         private Collection<PSObject> _accumulatedObjects = new Collection<PSObject>();
 
-        /// <summary>
-        /// A collection in which objects that are written using the WriteError
-        /// method are accumulated if <see cref="PassThru"/> is false.
-        /// </summary>
+        
         private Collection<ErrorRecord> _accumulatedErrorObjects = new Collection<ErrorRecord>();
 
-        /// <summary>
-        /// The instance of the provider that is currently executing in this context.
-        /// </summary>
+        
         private System.Management.Automation.Provider.CmdletProvider _providerInstance;
 
         #endregion private properties
 
         #region Internal properties
 
-        /// <summary>
-        /// Gets the execution context of the engine.
-        /// </summary>
+        
         internal ExecutionContext ExecutionContext { get; }
 
-        /// <summary>
-        /// Gets or sets the provider instance for the current
-        /// execution context.
-        /// </summary>
+        
         internal System.Management.Automation.Provider.CmdletProvider ProviderInstance
         {
             get
@@ -372,10 +304,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Copies the include, exclude, and provider filters from
-        /// the specified context to this context.
-        /// </summary>
+        
         /// <param name="context">
         /// The context to copy the filters from.
         /// </param>
@@ -396,14 +325,10 @@ namespace System.Management.Automation
 
         #region Public properties
 
-        /// <summary>
-        /// Gets or sets the dynamic parameters for the context.
-        /// </summary>
+        
         internal object DynamicParameters { get; set; }
 
-        /// <summary>
-        /// Returns MyInvocation from the underlying cmdlet.
-        /// </summary>
+        
         internal InvocationInfo MyInvocation
         {
             get
@@ -419,23 +344,16 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Determines if the Write* calls should be passed through to the command
-        /// instance if there is one.  The default value is true.
-        /// </summary>
+        
         internal bool PassThru { get; set; }
 
-        /// <summary>
-        /// The drive associated with this context.
-        /// </summary>
+        
         /// <exception cref="ArgumentNullException">
         /// If <paramref name="value"/> is null on set.
         /// </exception>
         internal PSDriveInfo Drive { get; set; }
 
-        /// <summary>
-        /// Gets the user name under which the operation should run.
-        /// </summary>
+        
         internal PSCredential Credential
         {
             get
@@ -455,9 +373,7 @@ namespace System.Management.Automation
 
         #region Transaction Support
 
-        /// <summary>
-        /// Gets the flag that determines if the command requested a transaction.
-        /// </summary>
+        
         internal bool UseTransaction
         {
             get
@@ -476,9 +392,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Returns true if a transaction is available and active.
-        /// </summary>
+        
         public bool TransactionAvailable()
         {
             if (_command != null)
@@ -489,10 +403,7 @@ namespace System.Management.Automation
             return false;
         }
 
-        /// <summary>
-        /// Gets an object that surfaces the current PowerShell transaction.
-        /// When this object is disposed, PowerShell resets the active transaction.
-        /// </summary>
+        
         public PSTransactionContext CurrentPSTransaction
         {
             get
@@ -507,9 +418,7 @@ namespace System.Management.Automation
         }
         #endregion Transaction Support
 
-        /// <summary>
-        /// Gets or sets the Force property that is passed to providers.
-        /// </summary>
+        
         internal SwitchParameter Force
         {
             get { return _force; }
@@ -517,37 +426,21 @@ namespace System.Management.Automation
             set { _force = value; }
         }
 
-        /// <summary>
-        /// The provider specific filter that should be used when determining
-        /// which items an action should take place on.
-        /// </summary>
+        
         internal string Filter { get; set; }
 
-        /// <summary>
-        /// A glob string that signifies which items should be included when determining
-        /// which items the action should occur on.
-        /// </summary>
+        
         internal Collection<string> Include { get; private set; }
 
-        /// <summary>
-        /// A glob string that signifies which items should be excluded when determining
-        /// which items the action should occur on.
-        /// </summary>
+        
         internal Collection<string> Exclude { get; private set; }
 
-        /// <summary>
-        /// Gets or sets the property that tells providers (that
-        /// declare their own wildcard support) to suppress wildcard
-        /// expansion. This is set when the user specifies the
-        /// -LiteralPath parameter to one of the core commands.
-        /// </summary>
+        
         public bool SuppressWildcardExpansion { get; internal set; }
 
         #region User feedback mechanisms
 
-        /// <summary>
-        /// Confirm the operation with the user.
-        /// </summary>
+        
         /// <param name="target">
         /// Name of the target resource being acted upon
         /// </param>
@@ -570,9 +463,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Confirm the operation with the user.
-        /// </summary>
+        
         /// <param name="target">
         /// Name of the target resource being acted upon
         /// </param>
@@ -597,9 +488,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Confirm the operation with the user.
-        /// </summary>
+        
         /// <param name="verboseDescription">
         /// This should contain a textual description of the action to be
         /// performed.  This is what will be displayed to the user for
@@ -640,9 +529,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Confirm the operation with the user.
-        /// </summary>
+        
         /// <param name="verboseDescription">
         /// This should contain a textual description of the action to be
         /// performed.  This is what will be displayed to the user for
@@ -695,9 +582,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Ask the user whether to continue/stop or break to a subshell.
-        /// </summary>
+        
         /// <param name="query">
         /// Message to display to the user. This routine will append
         /// the text "Continue" to ensure that people know what question
@@ -722,9 +607,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Ask the user whether to continue/stop or break to a subshell.
-        /// </summary>
+        
         /// <param name="query">
         /// Message to display to the user. This routine will append
         /// the text "Continue" to ensure that people know what question
@@ -763,17 +646,13 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Writes the object to the Verbose pipe.
-        /// </summary>
+        
         /// <param name="text">
         /// The string that needs to be written.
         /// </param>
         internal void WriteVerbose(string text) => _command?.WriteVerbose(text);
 
-        /// <summary>
-        /// Writes the object to the Warning pipe.
-        /// </summary>
+        
         /// <param name="text">
         /// The string that needs to be written.
         /// </param>
@@ -781,9 +660,7 @@ namespace System.Management.Automation
 
         internal void WriteProgress(ProgressRecord record) => _command?.WriteProgress(record);
 
-        /// <summary>
-        /// Writes a debug string.
-        /// </summary>
+        
         /// <param name="text">
         /// The String that needs to be written.
         /// </param>
@@ -799,9 +676,7 @@ namespace System.Management.Automation
 
         #region Public methods
 
-        /// <summary>
-        /// Sets the filters that are used within this context.
-        /// </summary>
+        
         /// <param name="include">
         /// The include filters which determines which items are included in
         /// operations within this context.
@@ -820,10 +695,7 @@ namespace System.Management.Automation
             Filter = filter;
         }
 
-        /// <summary>
-        /// Gets an array of the objects that have been accumulated
-        /// and the clears the collection.
-        /// </summary>
+        
         /// <returns>
         /// An object array of the objects that have been accumulated
         /// through the WriteObject method.
@@ -840,10 +712,7 @@ namespace System.Management.Automation
             return results;
         }
 
-        /// <summary>
-        /// Gets an array of the error objects that have been accumulated
-        /// and the clears the collection.
-        /// </summary>
+        
         /// <returns>
         /// An object array of the objects that have been accumulated
         /// through the WriteError method.
@@ -860,9 +729,7 @@ namespace System.Management.Automation
             return results;
         }
 
-        /// <summary>
-        /// If there are any errors accumulated, the first error is thrown.
-        /// </summary>
+        
         /// <exception cref="ProviderInvocationException">
         /// If a CmdletProvider wrote any exceptions to the error pipeline, it is
         /// wrapped and then thrown.
@@ -872,9 +739,7 @@ namespace System.Management.Automation
             ThrowFirstErrorOrDoNothing(true);
         }
 
-        /// <summary>
-        /// If there are any errors accumulated, the first error is thrown.
-        /// </summary>
+        
         /// <param name="wrapExceptionInProviderException">
         /// If true, the error will be wrapped in a ProviderInvocationException before
         /// being thrown. If false, the error will be thrown as is.
@@ -930,9 +795,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Writes all the accumulated errors to the specified context using WriteError.
-        /// </summary>
+        
         /// <param name="errorContext">
         /// The context to write the errors to.
         /// </param>
@@ -955,9 +818,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Writes an object to the output.
-        /// </summary>
+        
         /// <param name="obj">
         /// The object to be written.
         /// </param>
@@ -1028,10 +889,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Writes the error to the pipeline or accumulates the error in an internal
-        /// buffer.
-        /// </summary>
+        
         /// <param name="errorRecord">
         /// The error record to write to the pipeline or the internal buffer.
         /// </param>
@@ -1092,10 +950,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// If the error pipeline hasn't been supplied a delegate or a command then this method
-        /// will determine if any errors have accumulated.
-        /// </summary>
+        
         /// <returns>
         /// True if the errors are being accumulated and some errors have been accumulated.  False otherwise.
         /// </returns>
@@ -1104,11 +959,7 @@ namespace System.Management.Automation
             return _accumulatedErrorObjects != null && _accumulatedErrorObjects.Count > 0;
         }
 
-        /// <summary>
-        /// Call this on a separate thread when a provider is using
-        /// this context to do work. This method will call the StopProcessing
-        /// method of the provider.
-        /// </summary>
+        
         internal void StopProcessing()
         {
             Stopping = true;
@@ -1128,10 +979,7 @@ namespace System.Management.Automation
 
         internal bool Stopping { get; private set; }
 
-        /// <summary>
-        /// The list of contexts to which the StopProcessing calls
-        /// should be referred.
-        /// </summary>
+        
         internal Collection<CmdletProviderContext> StopReferrals { get; } = new Collection<CmdletProviderContext>();
 
         internal bool HasIncludeOrExclude

@@ -12,9 +12,7 @@ using System.Threading;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// This cmdlet suspends the jobs that are Job2. Errors are added for each Job that is not Job2.
-    /// </summary>
+    
 #if !CORECLR
     [SuppressMessage("Microsoft.PowerShell", "PS1012:CallShouldProcessOnlyIfDeclaringSupport")]
     [Cmdlet(VerbsLifecycle.Suspend, "Job", SupportsShouldProcess = true, DefaultParameterSetName = JobCmdletBase.SessionIdParameterSet,
@@ -24,10 +22,7 @@ namespace Microsoft.PowerShell.Commands
     public class SuspendJobCommand : JobCmdletBase, IDisposable
     {
         #region Parameters
-        /// <summary>
-        /// Specifies the Jobs objects which need to be
-        /// suspended.
-        /// </summary>
+        
         [Parameter(Mandatory = true,
                    Position = 0,
                    ValueFromPipeline = true,
@@ -50,8 +45,7 @@ namespace Microsoft.PowerShell.Commands
 
         private Job[] _jobs;
 
-        /// <summary>
-        /// </summary>
+        
         public override string[] Command
         {
             get
@@ -60,9 +54,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// If state of the job is running , this will forcefully suspend it.
-        /// </summary>
+        
         [Parameter(ParameterSetName = RemoveJobCommand.InstanceIdParameterSet)]
         [Parameter(ParameterSetName = RemoveJobCommand.JobParameterSet)]
         [Parameter(ParameterSetName = RemoveJobCommand.NameParameterSet)]
@@ -85,8 +77,7 @@ namespace Microsoft.PowerShell.Commands
 
         private bool _force = false;
 
-        /// <summary>
-        /// </summary>
+        
         [Parameter()]
         public SwitchParameter Wait
         {
@@ -107,9 +98,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Overrides
 
-        /// <summary>
-        /// Suspend the Job.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             // List of jobs to suspend
@@ -315,9 +304,7 @@ namespace Microsoft.PowerShell.Commands
                 _waitForJobs.Set();
         }
 
-        /// <summary>
-        /// End Processing.
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             bool haveToWait = false;
@@ -353,8 +340,7 @@ namespace Microsoft.PowerShell.Commands
             base.EndProcessing();
         }
 
-        /// <summary>
-        /// </summary>
+        
         protected override void StopProcessing()
         {
             _waitForJobs.Set();
@@ -364,16 +350,14 @@ namespace Microsoft.PowerShell.Commands
 
         #region Dispose
 
-        /// <summary>
-        /// </summary>
+        
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="disposing"></param>
         protected void Dispose(bool disposing)
         {

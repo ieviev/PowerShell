@@ -15,14 +15,10 @@ using System.Threading;
 
 namespace Microsoft.PowerShell
 {
-    /// <summary>
-    /// Defines an entry point from unmanaged code to PowerShell.
-    /// </summary>
+    
     public sealed class UnmanagedPSEntry
     {
-        /// <summary>
-        /// Starts PowerShell.
-        /// </summary>
+        
         /// <param name="args">
         /// Command line arguments to PowerShell
         /// </param>

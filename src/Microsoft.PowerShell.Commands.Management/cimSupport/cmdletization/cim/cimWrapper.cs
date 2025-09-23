@@ -15,9 +15,7 @@ using Dbg = System.Management.Automation.Diagnostics;
 
 namespace Microsoft.PowerShell.Cmdletization.Cim
 {
-    /// <summary>
-    /// CIM-specific ObjectModelWrapper.
-    /// </summary>
+    
     public sealed class CimCmdletAdapter :
         SessionBasedCmdletAdapter<CimInstance, CimSession>,
         IDynamicParameters
@@ -32,9 +30,7 @@ namespace Microsoft.PowerShell.Cmdletization.Cim
 
         #region Changing Session parameter to CimSession
 
-        /// <summary>
-        /// CimSession to operate on.
-        /// </summary>
+        
         [Parameter]
         [ValidateNotNullOrEmpty]
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
@@ -52,9 +48,7 @@ namespace Microsoft.PowerShell.Cmdletization.Cim
             }
         }
 
-        /// <summary>
-        /// Maximum number of remote connections that can remain active at any given time.
-        /// </summary>
+        
         [Parameter]
         public override int ThrottleLimit
         {
@@ -81,9 +75,7 @@ namespace Microsoft.PowerShell.Cmdletization.Cim
 
         #region ObjectModelWrapper overrides
 
-        /// <summary>
-        /// Creates a query builder for CIM OM.
-        /// </summary>
+        
         /// <returns>Query builder for CIM OM.</returns>
         public override QueryBuilder GetQueryBuilder()
         {
@@ -131,18 +123,14 @@ namespace Microsoft.PowerShell.Cmdletization.Cim
 
         private static long s_jobNumber;
 
-        /// <summary>
-        /// Returns a new job name to use for the parent job that handles throttling of the child jobs that actually perform querying and method invocation.
-        /// </summary>
+        
         /// <returns>Job name.</returns>
         protected override string GenerateParentJobName()
         {
             return "CimJob" + Interlocked.Increment(ref CimCmdletAdapter.s_jobNumber).ToString(CultureInfo.InvariantCulture);
         }
 
-        /// <summary>
-        /// Returns default sessions to use when the user doesn't specify the -Session cmdlet parameter.
-        /// </summary>
+        
         /// <returns>Default sessions to use when the user doesn't specify the -Session cmdlet parameter.</returns>
         protected override CimSession DefaultSession
         {
@@ -160,9 +148,7 @@ namespace Microsoft.PowerShell.Cmdletization.Cim
                 targetObject);
         }
 
-        /// <summary>
-        /// Creates a <see cref="System.Management.Automation.Job"/> object that performs a query against the wrapped object model.
-        /// </summary>
+        
         /// <param name="session">Remote session to query.</param>
         /// <param name="baseQuery">Query parameters.</param>
         /// <returns><see cref="System.Management.Automation.Job"/> object that performs a query against the wrapped object model.</returns>
@@ -190,9 +176,7 @@ namespace Microsoft.PowerShell.Cmdletization.Cim
             return queryJob;
         }
 
-        /// <summary>
-        /// Creates a <see cref="System.Management.Automation.Job"/> object that invokes an instance method in the wrapped object model.
-        /// </summary>
+        
         /// <param name="session">Remote session to invoke the method in.</param>
         /// <param name="objectInstance">The object on which to invoke the method.</param>
         /// <param name="methodInvocationInfo">Method invocation details.</param>
@@ -292,11 +276,7 @@ namespace Microsoft.PowerShell.Cmdletization.Cim
             return true;
         }
 
-        /// <summary>
-        /// Creates a <see cref="System.Management.Automation.Job"/> object that invokes a static method
-        /// (of the class named by <see cref="Microsoft.PowerShell.Cmdletization.CmdletAdapter&lt;TObjectInstance&gt;.ClassName"/>)
-        /// in the wrapped object model.
-        /// </summary>
+        
         /// <param name="session">Remote session to invoke the method in.</param>
         /// <param name="methodInvocationInfo">Method invocation details.</param>
         internal override StartableJob CreateStaticMethodInvocationJob(CimSession session, MethodInvocationInfo methodInvocationInfo)

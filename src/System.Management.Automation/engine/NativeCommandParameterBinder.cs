@@ -15,16 +15,12 @@ namespace System.Management.Automation
 {
     using Language;
 
-    /// <summary>
-    /// The parameter binder for native commands.
-    /// </summary>
+    
     internal class NativeCommandParameterBinder : ParameterBinderBase
     {
         #region ctor
 
-        /// <summary>
-        /// Constructs a NativeCommandParameterBinder.
-        /// </summary>
+        
         /// <param name="command">
         /// The NativeCommand to bind to.
         /// </param>
@@ -42,9 +38,7 @@ namespace System.Management.Automation
 
         #region Parameter binding
 
-        /// <summary>
-        /// Binds a parameter for a native command (application).
-        /// </summary>
+        
         /// <param name="name">
         ///     The name of the parameter to bind the value to. For applications
         ///     this just becomes another parameter...
@@ -131,9 +125,7 @@ namespace System.Management.Automation
 
         #endregion Parameter binding
 
-        /// <summary>
-        /// Gets the command arguments in string form.
-        /// </summary>
+        
         internal string Arguments
         {
             get
@@ -152,11 +144,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Add an argument to the ArgumentList.
-        /// We may need to construct the argument out of the parameter text and the argument
-        /// in the case that we have a parameter that appears as "-switch:value".
-        /// </summary>
+        
         /// <param name="parameter">The parameter associated with the operation.</param>
         /// <param name="argument">The value used with parameter.</param>
         internal void AddToArgumentList(CommandParameterInternal parameter, string argument)
@@ -186,9 +174,7 @@ namespace System.Management.Automation
 
         private readonly List<string> _argumentList = new List<string>();
 
-        /// <summary>
-        /// Gets a value indicating whether to use an ArgumentList or string for arguments when invoking a native executable.
-        /// </summary>
+        
         internal NativeArgumentPassingStyle ArgumentPassingStyle
         {
             get
@@ -211,11 +197,7 @@ namespace System.Management.Automation
 
         #region private members
 
-        /// <summary>
-        /// Stringize a non-IEnum argument to a native command, adding quotes
-        /// and trailing spaces as appropriate. An array gets added as multiple arguments
-        /// each of which will be stringized.
-        /// </summary>
+        
         /// <param name="context">Execution context instance.</param>
         /// <param name="parameter">The parameter associated with the operation.</param>
         /// <param name="obj">The object to append.</param>
@@ -327,10 +309,7 @@ namespace System.Management.Automation
             while (list != null);
         }
 
-        /// <summary>
-        /// On Windows, do tilde expansion, otherwise just append <paramref name="arg"/>.
-        /// On Unix, do globbing as appropriate, otherwise just append <paramref name="arg"/>.
-        /// </summary>
+        
         /// <param name="arg">The argument that possibly needs expansion.</param>
         /// <param name="parameter">The parameter associated with the operation.</param>
         /// <param name="usedQuotes">True if the argument was a quoted string (single or double).</param>
@@ -422,9 +401,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Replace tilde for unquoted arguments in the form ~ and ~/. For windows, ~\ is also expanded.
-        /// </summary>
+        
         /// <param name="arg">The argument that possibly needs expansion.</param>
         /// <param name="parameter">The parameter associated with the operation.</param>
         /// <returns>True if tilde expansion occurred.</returns>
@@ -449,9 +426,7 @@ namespace System.Management.Automation
             return false;
         }
 
-        /// <summary>
-        /// Check to see if the string contains spaces and therefore must be quoted.
-        /// </summary>
+        
         /// <param name="stringToCheck">The string to check for spaces.</param>
         internal static bool NeedQuotes(string stringToCheck)
         {
@@ -513,9 +488,7 @@ namespace System.Management.Automation
             return " , ";
         }
 
-        /// <summary>
-        /// The native command to bind to.
-        /// </summary>
+        
         private readonly NativeCommand _nativeCommand;
 
         #endregion private members

@@ -8,31 +8,23 @@ using System.Text;
 
 namespace System.Management.Automation.Runspaces
 {
-    /// <summary>
-    /// Defines exception thrown when a PSSnapin was not able to load into current runspace.
-    /// </summary>
+    
     /// 
     public class PSConsoleLoadException : SystemException, IContainsErrorRecord
     {
-        /// <summary>
-        /// Initiate an instance of PSConsoleLoadException.
-        /// </summary>
+        
         public PSConsoleLoadException() : base()
         {
         }
 
-        /// <summary>
-        /// Initiate an instance of PSConsoleLoadException.
-        /// </summary>
+        
         /// <param name="message">Error message.</param>
         public PSConsoleLoadException(string message)
             : base(message)
         {
         }
 
-        /// <summary>
-        /// Initiate an instance of PSConsoleLoadException.
-        /// </summary>
+        
         /// <param name="message">Error message.</param>
         /// <param name="innerException">Inner exception.</param>
         public PSConsoleLoadException(string message, Exception innerException)
@@ -42,9 +34,7 @@ namespace System.Management.Automation.Runspaces
 
         private ErrorRecord _errorRecord;
 
-        /// <summary>
-        /// Gets error record embedded in this exception.
-        /// </summary>
+        
         /// 
         public ErrorRecord ErrorRecord
         {
@@ -54,10 +44,7 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// Create the internal error record.
-        /// The ErrorRecord created will be stored in the _errorRecord member.
-        /// </summary>
+        
         private void CreateErrorRecord()
         {
             StringBuilder sb = new StringBuilder();
@@ -84,9 +71,7 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// Gets message for this exception.
-        /// </summary>
+        
         public override string Message
         {
             get

@@ -17,9 +17,7 @@ namespace System.Management.Automation.PSTasks
 {
     #region PSTask
 
-    /// <summary>
-    /// Class to encapsulate synchronous running scripts in parallel.
-    /// </summary>
+    
     internal sealed class PSTask : PSTaskBase
     {
         #region Members
@@ -30,9 +28,7 @@ namespace System.Management.Automation.PSTasks
 
         #region Constructor
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PSTask"/> class.
-        /// </summary>
+        
         /// <param name="scriptBlock">Script block to run in task.</param>
         /// <param name="usingValuesMap">Using values passed into script block.</param>
         /// <param name="dollarUnderbar">Dollar underbar variable value.</param>
@@ -57,9 +53,7 @@ namespace System.Management.Automation.PSTasks
 
         #region Overrides
 
-        /// <summary>
-        /// Initialize PowerShell object.
-        /// </summary>
+        
         protected override void InitializePowershell()
         {
             // Writer data stream handlers
@@ -171,9 +165,7 @@ namespace System.Management.Automation.PSTasks
         #endregion
     }
 
-    /// <summary>
-    /// Class to encapsulate asynchronous running scripts in parallel as jobs.
-    /// </summary>
+    
     internal sealed class PSJobTask : PSTaskBase
     {
         #region Members
@@ -184,9 +176,7 @@ namespace System.Management.Automation.PSTasks
 
         #region Constructor
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PSJobTask"/> class.
-        /// </summary>
+        
         /// <param name="scriptBlock">Script block to run.</param>
         /// <param name="usingValuesMap">Using variable values passed to script block.</param>
         /// <param name="dollarUnderbar">Dollar underbar variable value for script block.</param>
@@ -210,9 +200,7 @@ namespace System.Management.Automation.PSTasks
 
         #region Overrides
 
-        /// <summary>
-        /// Initialize PowerShell object.
-        /// </summary>
+        
         protected override void InitializePowershell()
         {
             // Job data stream handlers
@@ -304,9 +292,7 @@ namespace System.Management.Automation.PSTasks
 
         #region Properties
 
-        /// <summary>
-        /// Gets Debugger.
-        /// </summary>
+        
         public Debugger Debugger
         {
             get => _powershell.Runspace.Debugger;
@@ -315,9 +301,7 @@ namespace System.Management.Automation.PSTasks
         #endregion
     }
 
-    /// <summary>
-    /// Base class to encapsulate running a PowerShell script concurrently in a cmdlet or job context.
-    /// </summary>
+    
     internal abstract class PSTaskBase : IDisposable
     {
         #region Members
@@ -339,9 +323,7 @@ namespace System.Management.Automation.PSTasks
 
         #region Events
 
-        /// <summary>
-        /// Event that fires when the task running state changes.
-        /// </summary>
+        
         public event EventHandler<PSInvocationStateChangedEventArgs> StateChanged;
 
         internal void RaiseStateChangedEvent(PSInvocationStateChangedEventArgs args)
@@ -353,9 +335,7 @@ namespace System.Management.Automation.PSTasks
 
         #region Properties
 
-        /// <summary>
-        /// Gets current running state of the task.
-        /// </summary>
+        
         public PSInvocationState State
         {
             get
@@ -370,14 +350,10 @@ namespace System.Management.Automation.PSTasks
             }
         }
 
-        /// <summary>
-        /// Gets Task Id.
-        /// </summary>
+        
         public int Id { get => _id; }
 
-        /// <summary>
-        /// Gets Task Runspace.
-        /// </summary>
+        
         public Runspace Runspace { get => _runspace; }
 
         #endregion
@@ -389,9 +365,7 @@ namespace System.Management.Automation.PSTasks
             _id = Interlocked.Increment(ref s_taskId);
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PSTaskBase"/> class.
-        /// </summary>
+        
         /// <param name="scriptBlock">Script block to run.</param>
         /// <param name="usingValuesMap">Using variable values passed to script block.</param>
         /// <param name="dollarUnderbar">Dollar underbar variable value.</param>
@@ -412,18 +386,14 @@ namespace System.Management.Automation.PSTasks
 
         #region Abstract Methods
 
-        /// <summary>
-        /// Initialize PowerShell object.
-        /// </summary>
+        
         protected abstract void InitializePowershell();
 
         #endregion
 
         #region IDisposable
 
-        /// <summary>
-        /// Dispose PSTaskBase instance.
-        /// </summary>
+        
         public void Dispose()
         {
             _powershell.Dispose();
@@ -434,9 +404,7 @@ namespace System.Management.Automation.PSTasks
 
         #region Public Methods
 
-        /// <summary>
-        /// Start task.
-        /// </summary>
+        
         /// <param name="runspace">Runspace used to run task.</param>
         public void Start(Runspace runspace)
         {
@@ -493,9 +461,7 @@ namespace System.Management.Automation.PSTasks
             _powershell.BeginInvoke<object, PSObject>(input: null, output: _output);
         }
 
-        /// <summary>
-        /// Signals the running task to stop.
-        /// </summary>
+        
         public void SignalStop() => _powershell?.BeginStop(null, null);
 
         #endregion
@@ -505,9 +471,7 @@ namespace System.Management.Automation.PSTasks
 
     #region PSTaskDataStreamWriter
 
-    /// <summary>
-    /// Class that handles writing task data stream objects to a cmdlet.
-    /// </summary>
+    
     internal sealed class PSTaskDataStreamWriter : IDisposable
     {
         #region Members
@@ -520,10 +484,7 @@ namespace System.Management.Automation.PSTasks
 
         #region Properties
 
-        /// <summary>
-        /// Gets wait-able handle that signals when new data has been added to
-        /// the data stream collection.
-        /// </summary>
+        
         /// <returns>Data added wait handle.</returns>
         internal WaitHandle DataAddedWaitHandle
         {
@@ -536,9 +497,7 @@ namespace System.Management.Automation.PSTasks
 
         private PSTaskDataStreamWriter() { }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PSTaskDataStreamWriter"/> class.
-        /// </summary>
+        
         /// <param name="psCmdlet">Parent cmdlet.</param>
         public PSTaskDataStreamWriter(PSCmdlet psCmdlet)
         {
@@ -551,18 +510,14 @@ namespace System.Management.Automation.PSTasks
 
         #region Public Methods
 
-        /// <summary>
-        /// Add data stream object to the writer.
-        /// </summary>
+        
         /// <param name="streamObject">Data stream object to write.</param>
         public void Add(PSStreamObject streamObject)
         {
             _dataStream.Add(streamObject);
         }
 
-        /// <summary>
-        /// Write all objects in data stream collection to the cmdlet data stream.
-        /// </summary>
+        
         public void WriteImmediate()
         {
             CheckCmdletThread();
@@ -573,11 +528,7 @@ namespace System.Management.Automation.PSTasks
             }
         }
 
-        /// <summary>
-        /// Waits for data stream objects to be added to the collection, and writes them
-        /// to the cmdlet data stream.
-        /// This method returns only after the writer has been closed.
-        /// </summary>
+        
         public void WaitAndWrite()
         {
             CheckCmdletThread();
@@ -595,9 +546,7 @@ namespace System.Management.Automation.PSTasks
             }
         }
 
-        /// <summary>
-        /// Closes the stream writer.
-        /// </summary>
+        
         public void Close()
         {
             _dataStream.Complete();
@@ -619,9 +568,7 @@ namespace System.Management.Automation.PSTasks
 
         #region IDisposable
 
-        /// <summary>
-        /// Dispose the stream writer.
-        /// </summary>
+        
         public void Dispose()
         {
             _dataStream.Dispose();
@@ -634,9 +581,7 @@ namespace System.Management.Automation.PSTasks
 
     #region PSTaskPool
 
-    /// <summary>
-    /// Pool for running PSTasks, with limit of total number of running tasks at a time.
-    /// </summary>
+    
     internal sealed class PSTaskPool : IDisposable
     {
         #region Members
@@ -663,9 +608,7 @@ namespace System.Management.Automation.PSTasks
 
         private PSTaskPool() { }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PSTaskPool"/> class.
-        /// </summary>
+        
         /// <param name="size">Total number of allowed running objects in pool at one time.</param>
         /// <param name="useNewRunspace">When true, a new runspace object is created for the task instead of reusing one from the pool.</param>
         public PSTaskPool(
@@ -695,26 +638,20 @@ namespace System.Management.Automation.PSTasks
 
         #region Events
 
-        /// <summary>
-        /// Event that fires when pool is closed and drained of all tasks.
-        /// </summary>
+        
         public event EventHandler<EventArgs> PoolComplete;
 
         #endregion
 
         #region Properties
 
-        /// <summary>
-        /// Gets a value indicating whether a pool is currently open for accepting tasks.
-        /// </summary>
+        
         public bool IsOpen
         {
             get => _isOpen;
         }
 
-        /// <summary>
-        /// Gets a value of the count of total runspaces allocated.
-        /// </summary>
+        
         public int AllocatedRunspaceCount
         {
             get => _createdRunspaceCount;
@@ -724,9 +661,7 @@ namespace System.Management.Automation.PSTasks
 
         #region IDisposable
 
-        /// <summary>
-        /// Dispose task pool.
-        /// </summary>
+        
         public void Dispose()
         {
             _addAvailable.Dispose();
@@ -735,9 +670,7 @@ namespace System.Management.Automation.PSTasks
             DisposeRunspaces();
         }
 
-        /// <summary>
-        /// Dispose runspaces.
-        /// </summary>
+        
         internal void DisposeRunspaces()
         {
             foreach (var item in _activeRunspaces)
@@ -752,11 +685,7 @@ namespace System.Management.Automation.PSTasks
 
         #region Public Methods
 
-        /// <summary>
-        /// Method to add a task to the pool.
-        /// If the pool is full, then this method blocks until space is available.
-        /// This method is not multi-thread safe and assumes only one thread waits and adds tasks.
-        /// </summary>
+        
         /// <param name="task">Task to be added to pool.</param>
         /// <returns>True when task is successfully added.</returns>
         public bool Add(PSTaskBase task)
@@ -800,9 +729,7 @@ namespace System.Management.Automation.PSTasks
             }
         }
 
-        /// <summary>
-        /// Add child job task to task pool.
-        /// </summary>
+        
         /// <param name="childJob">Child job to be added to pool.</param>
         /// <returns>True when child job is successfully added.</returns>
         public bool Add(PSTaskChildJob childJob)
@@ -810,9 +737,7 @@ namespace System.Management.Automation.PSTasks
             return Add(childJob.Task);
         }
 
-        /// <summary>
-        /// Signals all running tasks to stop and closes pool for any new tasks.
-        /// </summary>
+        
         public void StopAll()
         {
             _stopping = true;
@@ -839,9 +764,7 @@ namespace System.Management.Automation.PSTasks
             _stopping = false;
         }
 
-        /// <summary>
-        /// Closes the pool and prevents any new tasks from being added.
-        /// </summary>
+        
         public void Close()
         {
             _isOpen = false;
@@ -990,9 +913,7 @@ namespace System.Management.Automation.PSTasks
 
     #region PSTaskJobs
 
-    /// <summary>
-    /// Job for running ForEach-Object parallel task child jobs asynchronously.
-    /// </summary>
+    
     public sealed class PSTaskJob : Job
     {
         #region Members
@@ -1005,9 +926,7 @@ namespace System.Management.Automation.PSTasks
 
         #region Properties
 
-        /// <summary>
-        /// Gets a value of the count of total runspaces allocated.
-        /// </summary>
+        
         public int AllocatedRunspaceCount
         {
             get => _taskPool.AllocatedRunspaceCount;
@@ -1019,9 +938,7 @@ namespace System.Management.Automation.PSTasks
 
         private PSTaskJob() { }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PSTaskJob"/> class.
-        /// </summary>
+        
         /// <param name="command">Job command text.</param>
         /// <param name="throttleLimit">Pool size limit for task job.</param>
         /// <param name="useNewRunspace">When true, a new runspace object is created for the task instead of reusing one from the pool.</param>
@@ -1041,17 +958,13 @@ namespace System.Management.Automation.PSTasks
 
         #region Overrides
 
-        /// <summary>
-        /// Gets Location.
-        /// </summary>
+        
         public override string Location
         {
             get => "PowerShell";
         }
 
-        /// <summary>
-        /// Gets HasMoreData.
-        /// </summary>
+        
         public override bool HasMoreData
         {
             get
@@ -1068,17 +981,13 @@ namespace System.Management.Automation.PSTasks
             }
         }
 
-        /// <summary>
-        /// Gets StatusMessage.
-        /// </summary>
+        
         public override string StatusMessage
         {
             get => string.Empty;
         }
 
-        /// <summary>
-        /// Stops running job.
-        /// </summary>
+        
         public override void StopJob()
         {
             _stopSignaled = true;
@@ -1088,9 +997,7 @@ namespace System.Management.Automation.PSTasks
             SetJobState(JobState.Stopped);
         }
 
-        /// <summary>
-        /// Disposes task job.
-        /// </summary>
+        
         /// <param name="disposing">Indicates disposing action.</param>
         protected override void Dispose(bool disposing)
         {
@@ -1106,9 +1013,7 @@ namespace System.Management.Automation.PSTasks
 
         #region Internal Methods
 
-        /// <summary>
-        /// Add a child job to the collection.
-        /// </summary>
+        
         /// <param name="childJob">Child job to add.</param>
         /// <returns>True when child job is successfully added.</returns>
         internal bool AddJob(PSTaskChildJob childJob)
@@ -1122,10 +1027,7 @@ namespace System.Management.Automation.PSTasks
             return true;
         }
 
-        /// <summary>
-        /// Closes this parent job to adding more child jobs and starts
-        /// the child jobs running with the provided throttle limit.
-        /// </summary>
+        
         internal void Start()
         {
             _isOpen = false;
@@ -1183,9 +1085,7 @@ namespace System.Management.Automation.PSTasks
         #endregion
     }
 
-    /// <summary>
-    /// PSTaskChildJob debugger wrapper.
-    /// </summary>
+    
     internal sealed class PSTaskChildDebugger : Debugger
     {
         #region Members
@@ -1199,9 +1099,7 @@ namespace System.Management.Automation.PSTasks
 
         private PSTaskChildDebugger() { }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PSTaskChildDebugger"/> class.
-        /// </summary>
+        
         /// <param name="debugger">Script debugger associated with task.</param>
         /// <param name="jobName">Job name for associated task.</param>
         public PSTaskChildDebugger(
@@ -1225,10 +1123,7 @@ namespace System.Management.Automation.PSTasks
 
         #region Debugger overrides
 
-        /// <summary>
-        /// Evaluates provided command either as a debugger specific command
-        /// or a PowerShell command.
-        /// </summary>
+        
         /// <param name="command">PowerShell command.</param>
         /// <param name="output">PowerShell output.</param>
         /// <returns>Debugger command results.</returns>
@@ -1245,43 +1140,33 @@ namespace System.Management.Automation.PSTasks
             return _wrappedDebugger.ProcessCommand(command, output);
         }
 
-        /// <summary>
-        /// Adds the provided set of breakpoints to the debugger.
-        /// </summary>
+        
         /// <param name="breakpoints">List of breakpoints.</param>
         /// <param name="runspaceId">The runspace id of the runspace you want to interact with. A null value will use the current runspace.</param>
         public override void SetBreakpoints(IEnumerable<Breakpoint> breakpoints, int? runspaceId) =>
             _wrappedDebugger.SetBreakpoints(breakpoints, runspaceId);
 
-        /// <summary>
-        /// Sets the debugger resume action.
-        /// </summary>
+        
         /// <param name="resumeAction">Debugger resume action.</param>
         public override void SetDebuggerAction(DebuggerResumeAction resumeAction)
         {
             _wrappedDebugger.SetDebuggerAction(resumeAction);
         }
 
-        /// <summary>
-        /// Get a breakpoint by id, primarily for Enable/Disable/Remove-PSBreakpoint cmdlets.
-        /// </summary>
+        
         /// <param name="id">Id of the breakpoint you want.</param>
         /// <param name="runspaceId">The runspace id of the runspace you want to interact with. A null value will use the current runspace.</param>
         /// <returns>The breakpoint with the specified id.</returns>
         public override Breakpoint GetBreakpoint(int id, int? runspaceId) =>
             _wrappedDebugger.GetBreakpoint(id, runspaceId);
 
-        /// <summary>
-        /// Returns breakpoints on a runspace.
-        /// </summary>
+        
         /// <param name="runspaceId">The runspace id of the runspace you want to interact with. A null value will use the current runspace.</param>
         /// <returns>A list of breakpoints in a runspace.</returns>
         public override List<Breakpoint> GetBreakpoints(int? runspaceId) =>
             _wrappedDebugger.GetBreakpoints(runspaceId);
 
-        /// <summary>
-        /// Sets a command breakpoint in the debugger.
-        /// </summary>
+        
         /// <param name="command">The name of the command that will trigger the breakpoint. This value may not be null.</param>
         /// <param name="action">The action to take when the breakpoint is hit. If null, PowerShell will break into the debugger when the breakpoint is hit.</param>
         /// <param name="path">The path to the script file where the breakpoint may be hit. If null, the breakpoint may be hit anywhere the command is invoked.</param>
@@ -1290,9 +1175,7 @@ namespace System.Management.Automation.PSTasks
         public override CommandBreakpoint SetCommandBreakpoint(string command, ScriptBlock action, string path, int? runspaceId) =>
             _wrappedDebugger.SetCommandBreakpoint(command, action, path, runspaceId);
 
-        /// <summary>
-        /// Sets a variable breakpoint in the debugger.
-        /// </summary>
+        
         /// <param name="variableName">The name of the variable that will trigger the breakpoint. This value may not be null.</param>
         /// <param name="accessMode">The variable access mode that will trigger the breakpoint.</param>
         /// <param name="action">The action to take when the breakpoint is hit. If null, PowerShell will break into the debugger when the breakpoint is hit.</param>
@@ -1302,9 +1185,7 @@ namespace System.Management.Automation.PSTasks
         public override VariableBreakpoint SetVariableBreakpoint(string variableName, VariableAccessMode accessMode, ScriptBlock action, string path, int? runspaceId) =>
             _wrappedDebugger.SetVariableBreakpoint(variableName, accessMode, action, path, runspaceId);
 
-        /// <summary>
-        /// Sets a line breakpoint in the debugger.
-        /// </summary>
+        
         /// <param name="path">The path to the script file where the breakpoint may be hit. This value may not be null.</param>
         /// <param name="line">The line in the script file where the breakpoint may be hit. This value must be greater than or equal to 1.</param>
         /// <param name="column">The column in the script file where the breakpoint may be hit. If 0, the breakpoint will trigger on any statement on the line.</param>
@@ -1314,54 +1195,41 @@ namespace System.Management.Automation.PSTasks
         public override LineBreakpoint SetLineBreakpoint(string path, int line, int column, ScriptBlock action, int? runspaceId) =>
             _wrappedDebugger.SetLineBreakpoint(path, line, column, action, runspaceId);
 
-        /// <summary>
-        /// Enables a breakpoint in the debugger.
-        /// </summary>
+        
         /// <param name="breakpoint">The breakpoint to enable in the debugger. This value may not be null.</param>
         /// <param name="runspaceId">The runspace id of the runspace you want to interact with. A null value will use the current runspace.</param>
         /// <returns>The updated breakpoint if it was found; null if the breakpoint was not found in the debugger.</returns>
         public override Breakpoint EnableBreakpoint(Breakpoint breakpoint, int? runspaceId) =>
             _wrappedDebugger.EnableBreakpoint(breakpoint, runspaceId);
 
-        /// <summary>
-        /// Disables a breakpoint in the debugger.
-        /// </summary>
+        
         /// <param name="breakpoint">The breakpoint to enable in the debugger. This value may not be null.</param>
         /// <param name="runspaceId">The runspace id of the runspace you want to interact with. A null value will use the current runspace.</param>
         /// <returns>The updated breakpoint if it was found; null if the breakpoint was not found in the debugger.</returns>
         public override Breakpoint DisableBreakpoint(Breakpoint breakpoint, int? runspaceId) =>
             _wrappedDebugger.DisableBreakpoint(breakpoint, runspaceId);
 
-        /// <summary>
-        /// Removes a breakpoint from the debugger.
-        /// </summary>
+        
         /// <param name="breakpoint">The breakpoint to remove from the debugger. This value may not be null.</param>
         /// <param name="runspaceId">The runspace id of the runspace you want to interact with. A null value will use the current runspace.</param>
         /// <returns>True if the breakpoint was removed from the debugger; false otherwise.</returns>
         public override bool RemoveBreakpoint(Breakpoint breakpoint, int? runspaceId) =>
             _wrappedDebugger.RemoveBreakpoint(breakpoint, runspaceId);
 
-        /// <summary>
-        /// Stops a running command.
-        /// </summary>
+        
         public override void StopProcessCommand()
         {
             _wrappedDebugger.StopProcessCommand();
         }
 
-        /// <summary>
-        /// Returns current debugger stop event arguments if debugger is in
-        /// debug stop state.  Otherwise returns null.
-        /// </summary>
+        
         /// <returns>Debugger stop eventArgs.</returns>
         public override DebuggerStopEventArgs GetDebuggerStopArgs()
         {
             return _wrappedDebugger.GetDebuggerStopArgs();
         }
 
-        /// <summary>
-        /// Sets the parent debugger, breakpoints, and other debugging context information.
-        /// </summary>
+        
         /// <param name="parent">Parent debugger.</param>
         /// <param name="breakPoints">List of breakpoints.</param>
         /// <param name="startAction">Debugger mode.</param>
@@ -1378,9 +1246,7 @@ namespace System.Management.Automation.PSTasks
             SetDebuggerStepMode(true);
         }
 
-        /// <summary>
-        /// Sets the debugger mode.
-        /// </summary>
+        
         /// <param name="mode">Debugger mode to set.</param>
         public override void SetDebugMode(DebugModes mode)
         {
@@ -1389,27 +1255,21 @@ namespace System.Management.Automation.PSTasks
             base.SetDebugMode(mode);
         }
 
-        /// <summary>
-        /// Returns IEnumerable of CallStackFrame objects.
-        /// </summary>
+        
         /// <returns>Enumerable call stack.</returns>
         public override IEnumerable<CallStackFrame> GetCallStack()
         {
             return _wrappedDebugger.GetCallStack();
         }
 
-        /// <summary>
-        /// Sets debugger stepping mode.
-        /// </summary>
+        
         /// <param name="enabled">True to enable debugger step mode.</param>
         public override void SetDebuggerStepMode(bool enabled)
         {
             _wrappedDebugger.SetDebuggerStepMode(enabled);
         }
 
-        /// <summary>
-        /// Gets boolean indicating when debugger is stopped at a breakpoint.
-        /// </summary>
+        
         public override bool InBreakpoint
         {
             get => _wrappedDebugger.InBreakpoint;
@@ -1444,9 +1304,7 @@ namespace System.Management.Automation.PSTasks
         #endregion
     }
 
-    /// <summary>
-    /// Task child job that wraps asynchronously running tasks.
-    /// </summary>
+    
     internal sealed class PSTaskChildJob : Job, IJobDebugger
     {
         #region Members
@@ -1460,9 +1318,7 @@ namespace System.Management.Automation.PSTasks
 
         private PSTaskChildJob() { }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PSTaskChildJob"/> class.
-        /// </summary>
+        
         /// <param name="scriptBlock">Script block to run.</param>
         /// <param name="usingValuesMap">Using variable values passed to script block.</param>
         /// <param name="dollarUnderbar">Dollar underbar variable value.</param>
@@ -1484,9 +1340,7 @@ namespace System.Management.Automation.PSTasks
 
         #region Properties
 
-        /// <summary>
-        /// Gets child job task.
-        /// </summary>
+        
         internal PSTaskBase Task
         {
             get => _task;
@@ -1496,17 +1350,13 @@ namespace System.Management.Automation.PSTasks
 
         #region Overrides
 
-        /// <summary>
-        /// Gets Location.
-        /// </summary>
+        
         public override string Location
         {
             get => "PowerShell";
         }
 
-        /// <summary>
-        /// Gets HasMoreData.
-        /// </summary>
+        
         public override bool HasMoreData
         {
             get => this.Output.Count > 0 ||
@@ -1518,17 +1368,13 @@ namespace System.Management.Automation.PSTasks
                    this.Information.Count > 0;
         }
 
-        /// <summary>
-        /// Gets StatusMessage.
-        /// </summary>
+        
         public override string StatusMessage
         {
             get => string.Empty;
         }
 
-        /// <summary>
-        /// Stops running job.
-        /// </summary>
+        
         public override void StopJob()
         {
             _task.SignalStop();
@@ -1538,9 +1384,7 @@ namespace System.Management.Automation.PSTasks
 
         #region IJobDebugger
 
-        /// <summary>
-        /// Gets Job Debugger.
-        /// </summary>
+        
         public Debugger Debugger
         {
             get
@@ -1553,9 +1397,7 @@ namespace System.Management.Automation.PSTasks
             }
         }
 
-        /// <summary>
-        /// Gets or sets a value indicating whether IAsync.
-        /// </summary>
+        
         public bool IsAsync { get; set; }
 
         #endregion

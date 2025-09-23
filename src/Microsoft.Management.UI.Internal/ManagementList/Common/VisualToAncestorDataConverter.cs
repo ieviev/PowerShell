@@ -9,15 +9,11 @@ using System.Windows.Data;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <summary>
-    /// Provides a way to get the <see cref="FrameworkElement.DataContext"/> of a visual ancestor.
-    /// </summary>
+    
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public class VisualToAncestorDataConverter : IValueConverter
     {
-        /// <summary>
-        /// Searches ancestors for data of the specified class type.
-        /// </summary>
+        
         /// <param name="value">The visual whose ancestors are searched.</param>
         /// <param name="targetType">The parameter is not used.</param>
         /// <param name="parameter">The type of the data to find. The type must be a class.</param>
@@ -45,9 +41,7 @@ namespace Microsoft.Management.UI.Internal
             return genericFindVisualAncestorDataMethod.Invoke(null, new object[] { obj });
         }
 
-        /// <summary>
-        /// This method is not used.
-        /// </summary>
+        
         /// <param name="value">The parameter is not used.</param>
         /// <param name="targetType">The parameter is not used.</param>
         /// <param name="parameter">The parameter is not used.</param>

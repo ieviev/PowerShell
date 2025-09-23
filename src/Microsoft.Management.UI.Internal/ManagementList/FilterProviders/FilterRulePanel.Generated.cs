@@ -17,9 +17,7 @@ namespace Microsoft.Management.UI.Internal
         //
         // AddRules routed command
         //
-        /// <summary>
-        /// Adds a collection of FilterRules to the panel.
-        /// </summary>
+        
         public static readonly RoutedCommand AddRulesCommand = new RoutedCommand("AddRules",typeof(FilterRulePanel));
 
         static private void AddRulesCommand_CommandExecuted(object sender, ExecutedRoutedEventArgs e)
@@ -28,9 +26,7 @@ namespace Microsoft.Management.UI.Internal
             obj.OnAddRulesExecuted( e );
         }
 
-        /// <summary>
-        /// Called when AddRules executes.
-        /// </summary>
+        
         /// <remarks>
         /// Adds a collection of FilterRules to the panel.
         /// </remarks>
@@ -44,9 +40,7 @@ namespace Microsoft.Management.UI.Internal
         //
         // RemoveRule routed command
         //
-        /// <summary>
-        /// Removes a FilterRulePanelItem from the panel.
-        /// </summary>
+        
         public static readonly RoutedCommand RemoveRuleCommand = new RoutedCommand("RemoveRule",typeof(FilterRulePanel));
 
         static private void RemoveRuleCommand_CommandExecuted(object sender, ExecutedRoutedEventArgs e)
@@ -55,9 +49,7 @@ namespace Microsoft.Management.UI.Internal
             obj.OnRemoveRuleExecuted( e );
         }
 
-        /// <summary>
-        /// Called when RemoveRule executes.
-        /// </summary>
+        
         /// <remarks>
         /// Removes a FilterRulePanelItem from the panel.
         /// </remarks>
@@ -72,9 +64,7 @@ namespace Microsoft.Management.UI.Internal
         // Static constructor
         //
 
-        /// <summary>
-        /// Called when the type is initialized.
-        /// </summary>
+        
         static FilterRulePanel()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(FilterRulePanel), new FrameworkPropertyMetadata(typeof(FilterRulePanel)));
@@ -88,9 +78,7 @@ namespace Microsoft.Management.UI.Internal
         //
         // CreateAutomationPeer
         //
-        /// <summary>
-        /// Create an instance of the AutomationPeer.
-        /// </summary>
+        
         /// <returns>
         /// An instance of the AutomationPeer.
         /// </returns>

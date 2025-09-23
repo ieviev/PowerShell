@@ -7,15 +7,11 @@ using Microsoft.CodeAnalysis;
 
 namespace SMA
 {
-    /// <summary>
-    /// Source Code Generator to create partial PSVersionInfo class.
-    /// </summary>
+    
     [Generator]
     public class PSVersionInfoGenerator : IIncrementalGenerator
     {
-        /// <summary>
-        /// Not used.
-        /// </summary>
+        
         /// <param name="context">Generator initialization context.</param>
         public void Initialize(IncrementalGeneratorInitializationContext context)
         {

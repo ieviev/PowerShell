@@ -1590,10 +1590,7 @@ namespace System.Management.Automation.Runspaces
     }
     // ReSharper restore RedundantCast
 
-    /// <summary>
-    /// Internal class to provide a Hashtable key out of a Collection of strings
-    /// preserving the evaluation of the key.
-    /// </summary>
+    
     internal class ConsolidatedString : Collection<string>
     {
         protected override void SetItem(int index, string item)
@@ -1639,9 +1636,7 @@ namespace System.Management.Automation.Runspaces
             Key = string.Join("@@@", this);
         }
 
-        /// <summary>
-        /// Copy constructor (deep copy)
-        /// </summary>
+        
         /// <param name="other"></param>
         public ConsolidatedString(ConsolidatedString other)
             : base(new List<string>(other))
@@ -1649,9 +1644,7 @@ namespace System.Management.Automation.Runspaces
             this.Key = other.Key;
         }
 
-        /// <summary>
-        /// Construct an optionally readonly list of strings.
-        /// </summary>
+        
         internal ConsolidatedString(IEnumerable<string> strings, bool interned)
             : base(interned ? (IList<string>)new ReadOnlyCollection<string>(strings.ToList()) : strings.ToList())
         {
@@ -1739,27 +1732,20 @@ namespace System.Management.Automation.Runspaces
         }
     }
 
-    /// <summary>
-    /// This exception is used by TypeTable constructor to indicate errors
-    /// occurred during construction time.
-    /// </summary>
+    
     public class TypeTableLoadException : RuntimeException
     {
         private readonly Collection<string> _errors;
 
         #region Constructors
 
-        /// <summary>
-        /// This is the default constructor.
-        /// </summary>
+        
         public TypeTableLoadException()
         {
             SetDefaultErrorRecord();
         }
 
-        /// <summary>
-        /// This constructor takes a localized error message.
-        /// </summary>
+        
         /// <param name="message">
         /// A localized error message.
         /// </param>
@@ -1769,9 +1755,7 @@ namespace System.Management.Automation.Runspaces
             SetDefaultErrorRecord();
         }
 
-        /// <summary>
-        /// This constructor takes a localized message and an inner exception.
-        /// </summary>
+        
         /// <param name="message">
         /// Localized error message.
         /// </param>
@@ -1784,10 +1768,7 @@ namespace System.Management.Automation.Runspaces
             SetDefaultErrorRecord();
         }
 
-        /// <summary>
-        /// This constructor takes a collection of errors occurred during construction
-        /// time.
-        /// </summary>
+        
         /// <param name="loadErrors">
         /// The errors that occurred
         /// </param>
@@ -1799,9 +1780,7 @@ namespace System.Management.Automation.Runspaces
             SetDefaultErrorRecord();
         }
 
-        /// <summary>
-        /// This constructor is required by serialization.
-        /// </summary>
+        
         /// <param name="info"></param>
         /// <param name="context"></param>
         [Obsolete("Legacy serialization support is deprecated since .NET 8", DiagnosticId = "SYSLIB0051")]
@@ -1812,18 +1791,14 @@ namespace System.Management.Automation.Runspaces
 
         #endregion Constructors
 
-        /// <summary>
-        /// Set the default ErrorRecord.
-        /// </summary>
+        
         protected void SetDefaultErrorRecord()
         {
             SetErrorCategory(ErrorCategory.InvalidData);
             SetErrorId(typeof(TypeTableLoadException).FullName);
         }
 
-        /// <summary>
-        /// The specific TypeTable load errors.
-        /// </summary>
+        
         public Collection<string> Errors
         {
             get
@@ -1835,9 +1810,7 @@ namespace System.Management.Automation.Runspaces
 
     #region TypeData
 
-    /// <summary>
-    /// TypeData represent a Type Definition.
-    /// </summary>
+    
     public sealed class TypeData
     {
         internal const string NoteProperty = "NoteProperty";
@@ -1855,9 +1828,7 @@ namespace System.Management.Automation.Runspaces
             Members = new Dictionary<string, TypeMemberData>(StringComparer.OrdinalIgnoreCase);
         }
 
-        /// <summary>
-        /// Initialize a TypeData instance by providing the typeName.
-        /// </summary>
+        
         /// <param name="typeName"></param>
         public TypeData(string typeName) : this()
         {
@@ -1872,9 +1843,7 @@ namespace System.Management.Automation.Runspaces
             this.TypeName = typeName;
         }
 
-        /// <summary>
-        /// Initialize a TypeData instance by providing a Type.
-        /// </summary>
+        
         /// <param name="type"></param>
         public TypeData(Type type) : this()
         {
@@ -1888,39 +1857,26 @@ namespace System.Management.Automation.Runspaces
 
         internal bool fromTypesXmlFile { get; }
 
-        /// <summary>
-        /// Get the TypeName.
-        /// </summary>
+        
         public string TypeName { get; }
 
-        /// <summary>
-        /// Get the members of this TypeData instance.
-        /// The Key of the dictionary is the member's name, and the Value is a TypeMemberData instance.
-        /// </summary>
+        
         public Dictionary<string, TypeMemberData> Members { get; }
 
-        /// <summary>
-        /// The type converter.
-        /// </summary>
+        
         public Type TypeConverter { get; set; }
 
-        /// <summary>
-        /// The type adapter.
-        /// </summary>
+        
         public Type TypeAdapter { get; set; }
 
-        /// <summary>
-        /// Set to true if override the existing definition.
-        /// </summary>
+        
         public bool IsOverride { get; set; }
 
         #region StandardMember
 
         internal Dictionary<string, TypeMemberData> StandardMembers { get; }
 
-        /// <summary>
-        /// The serializationMethod.
-        /// </summary>
+        
         public string SerializationMethod
         {
             get
@@ -1950,9 +1906,7 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// The targetTypeForDeserialization.
-        /// </summary>
+        
         public Type TargetTypeForDeserialization
         {
             get
@@ -1982,9 +1936,7 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// The serializationDepth.
-        /// </summary>
+        
         public uint SerializationDepth
         {
             get
@@ -2009,9 +1961,7 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// The defaultDisplayProperty.
-        /// </summary>
+        
         public string DefaultDisplayProperty
         {
             get
@@ -2041,9 +1991,7 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// The InheritPropertySerializationSet.
-        /// </summary>
+        
         public bool InheritPropertySerializationSet
         {
             get
@@ -2067,9 +2015,7 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// The stringSerializationSource.
-        /// </summary>
+        
         public string StringSerializationSource
         {
             get
@@ -2114,10 +2060,7 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// The StringSerializationSource when the property is not an AliasProperty.
-        /// If the property is an AliasProperty, prefer <see cref="StringSerializationSource"/>.
-        /// </summary>
+        
         public TypeMemberData StringSerializationSourceProperty
         {
             get
@@ -2156,9 +2099,7 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// The defaultDisplayPropertySet.
-        /// </summary>
+        
         public PropertySetData DefaultDisplayPropertySet
         {
             get
@@ -2176,9 +2117,7 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// The defaultKeyPropertySet.
-        /// </summary>
+        
         public PropertySetData DefaultKeyPropertySet
         {
             get
@@ -2196,9 +2135,7 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// The PropertySerializationSet.
-        /// </summary>
+        
         public PropertySetData PropertySerializationSet
         {
             get
@@ -2238,9 +2175,7 @@ namespace System.Management.Automation.Runspaces
 
         #endregion StandardMember
 
-        /// <summary>
-        /// Return a TypeData that is a copy of this one.
-        /// </summary>
+        
         /// <returns></returns>
         public TypeData Copy()
         {
@@ -2297,21 +2232,10 @@ namespace System.Management.Automation.Runspaces
         }
     }
 
-    /// <summary>
-    /// TypeMemberData is the base class for type members.
-    /// The type members derived from this class are:
-    ///     NotePropertyData,
-    ///     AliasPropertyData,
-    ///     ScriptPropertyData,
-    ///     CodePropertyData,
-    ///     ScriptMethodData,
-    ///     CodeMethodData.
-    /// </summary>
+    
     public abstract class TypeMemberData
     {
-        /// <summary>
-        /// TypeMemberData constructor.
-        /// </summary>
+        
         /// <param name="name"></param>
         internal TypeMemberData(string name)
         {
@@ -2327,29 +2251,21 @@ namespace System.Management.Automation.Runspaces
         {
         }
 
-        /// <summary>
-        /// The name of the member.
-        /// </summary>
+        
         public string Name { get; protected set; }
 
-        /// <summary>
-        /// Return a TypeMemberData that is a copy of this one.
-        /// </summary>
+        
         /// <returns></returns>
         internal abstract TypeMemberData Copy();
 
         internal abstract void Process(ConcurrentBag<string> errors, string typeName, PSMemberInfoInternalCollection<PSMemberInfo> membersCollection, bool isOverride);
     }
 
-    /// <summary>
-    /// NotePropertyData represents a NoteProperty definition.
-    /// </summary>
+    
     [DebuggerDisplay("NoteProperty: {Name,nq} = {Value,nq}")]
     public sealed class NotePropertyData : TypeMemberData
     {
-        /// <summary>
-        /// NotePropertyData constructor.
-        /// </summary>
+        
         /// <param name="name"></param>
         /// <param name="value"></param>
         public NotePropertyData(string name, object value)
@@ -2358,19 +2274,13 @@ namespace System.Management.Automation.Runspaces
             Value = value;
         }
 
-        /// <summary>
-        /// The value of this NoteProperty.
-        /// </summary>
+        
         public object Value { get; set; }
 
-        /// <summary>
-        /// Set true if the member is supposed to be hidden.
-        /// </summary>
+        
         public bool IsHidden { get; set; }
 
-        /// <summary>
-        /// Return a new NotePropertyData that is a copy of this one.
-        /// </summary>
+        
         /// <returns></returns>
         internal override TypeMemberData Copy()
         {
@@ -2384,15 +2294,11 @@ namespace System.Management.Automation.Runspaces
         }
     }
 
-    /// <summary>
-    /// AliasPropertyData represents a AliasProperty definition.
-    /// </summary>
+    
     [DebuggerDisplay("AliasProperty: {Name,nq} = {ReferencedMemberName,nq}")]
     public sealed class AliasPropertyData : TypeMemberData
     {
-        /// <summary>
-        /// AliasPropertyData constructor.
-        /// </summary>
+        
         /// <param name="name"></param>
         /// <param name="referencedMemberName"></param>
         public AliasPropertyData(string name, string referencedMemberName)
@@ -2401,9 +2307,7 @@ namespace System.Management.Automation.Runspaces
             ReferencedMemberName = referencedMemberName;
         }
 
-        /// <summary>
-        /// AliasPropertyData constructor.
-        /// </summary>
+        
         /// <param name="name"></param>
         /// <param name="referencedMemberName"></param>
         /// <param name="type"></param>
@@ -2414,25 +2318,16 @@ namespace System.Management.Automation.Runspaces
             MemberType = type;
         }
 
-        /// <summary>
-        /// The name of the referenced member.
-        /// </summary>
+        
         public string ReferencedMemberName { get; set; }
 
-        /// <summary>
-        /// Specify the Type to which the referenced member value will be
-        /// converted to.
-        /// </summary>
+        
         public Type MemberType { get; set; }
 
-        /// <summary>
-        /// Set true if the member is supposed to be hidden.
-        /// </summary>
+        
         public bool IsHidden { get; set; }
 
-        /// <summary>
-        /// Return a new AliasPropertyData that is a copy of this one.
-        /// </summary>
+        
         /// <returns></returns>
         internal override TypeMemberData Copy()
         {
@@ -2449,15 +2344,11 @@ namespace System.Management.Automation.Runspaces
         }
     }
 
-    /// <summary>
-    /// ScriptPropertyData represents a ScriptProperty definition.
-    /// </summary>
+    
     [DebuggerDisplay("ScriptProperty: {Name,nq}")]
     public sealed class ScriptPropertyData : TypeMemberData
     {
-        /// <summary>
-        /// Initialize the ScriptPropertyData as a read only property.
-        /// </summary>
+        
         /// <param name="name"></param>
         /// <param name="getScriptBlock"></param>
         public ScriptPropertyData(string name, ScriptBlock getScriptBlock)
@@ -2466,9 +2357,7 @@ namespace System.Management.Automation.Runspaces
             GetScriptBlock = getScriptBlock;
         }
 
-        /// <summary>
-        /// ScriptPropertyData constructor.
-        /// </summary>
+        
         /// <param name="name"></param>
         /// <param name="getScriptBlock"></param>
         /// <param name="setScriptBlock"></param>
@@ -2479,24 +2368,16 @@ namespace System.Management.Automation.Runspaces
             SetScriptBlock = setScriptBlock;
         }
 
-        /// <summary>
-        /// The getter ScriptBlock.
-        /// </summary>
+        
         public ScriptBlock GetScriptBlock { get; set; }
 
-        /// <summary>
-        /// The setter ScriptBlock.
-        /// </summary>
+        
         public ScriptBlock SetScriptBlock { get; set; }
 
-        /// <summary>
-        /// Set true if the member is supposed to be hidden.
-        /// </summary>
+        
         public bool IsHidden { get; set; }
 
-        /// <summary>
-        /// Return a new ScriptPropertyData that is a copy of this one.
-        /// </summary>
+        
         /// <returns></returns>
         internal override TypeMemberData Copy()
         {
@@ -2513,14 +2394,10 @@ namespace System.Management.Automation.Runspaces
         }
     }
 
-    /// <summary>
-    /// CodePropertyData represents a CodeProperty definition.
-    /// </summary>
+    
     public sealed class CodePropertyData : TypeMemberData
     {
-        /// <summary>
-        /// Initialize the CodePropertyData as a read only property.
-        /// </summary>
+        
         /// <param name="name"></param>
         /// <param name="getMethod"></param>
         public CodePropertyData(string name, MethodInfo getMethod)
@@ -2529,9 +2406,7 @@ namespace System.Management.Automation.Runspaces
             GetCodeReference = getMethod;
         }
 
-        /// <summary>
-        /// CodePropertyData constructor.
-        /// </summary>
+        
         /// <param name="name"></param>
         /// <param name="getMethod"></param>
         /// <param name="setMethod"></param>
@@ -2542,24 +2417,16 @@ namespace System.Management.Automation.Runspaces
             SetCodeReference = setMethod;
         }
 
-        /// <summary>
-        /// The getter code reference.
-        /// </summary>
+        
         public MethodInfo GetCodeReference { get; set; }
 
-        /// <summary>
-        /// The setter code reference.
-        /// </summary>
+        
         public MethodInfo SetCodeReference { get; set; }
 
-        /// <summary>
-        /// Set true if the member is supposed to be hidden.
-        /// </summary>
+        
         public bool IsHidden { get; set; }
 
-        /// <summary>
-        /// Return a CodePropertyData that is a copy of this one.
-        /// </summary>
+        
         /// <returns></returns>
         internal override TypeMemberData Copy()
         {
@@ -2576,15 +2443,11 @@ namespace System.Management.Automation.Runspaces
         }
     }
 
-    /// <summary>
-    /// ScriptMethodData represents a ScriptMethod definition.
-    /// </summary>
+    
     [DebuggerDisplay(@"ScriptMethod: {Name,nq}")]
     public sealed class ScriptMethodData : TypeMemberData
     {
-        /// <summary>
-        /// ScriptMethodData constructor.
-        /// </summary>
+        
         /// <param name="name"></param>
         /// <param name="scriptToInvoke"></param>
         public ScriptMethodData(string name, ScriptBlock scriptToInvoke)
@@ -2593,14 +2456,10 @@ namespace System.Management.Automation.Runspaces
             Script = scriptToInvoke;
         }
 
-        /// <summary>
-        /// The script method.
-        /// </summary>
+        
         public ScriptBlock Script { get; set; }
 
-        /// <summary>
-        /// Return a ScriptMethodData that is a copy of this one.
-        /// </summary>
+        
         /// <returns></returns>
         internal override TypeMemberData Copy()
         {
@@ -2614,15 +2473,11 @@ namespace System.Management.Automation.Runspaces
         }
     }
 
-    /// <summary>
-    /// CodeMethodData represents a CodeMethodData definition.
-    /// </summary>
+    
     [DebuggerDisplay("CodeMethod: {Name,nq}")]
     public sealed class CodeMethodData : TypeMemberData
     {
-        /// <summary>
-        /// CodeMethodData constructor.
-        /// </summary>
+        
         /// <param name="name"></param>
         /// <param name="methodToCall"></param>
         public CodeMethodData(string name, MethodInfo methodToCall)
@@ -2631,14 +2486,10 @@ namespace System.Management.Automation.Runspaces
             CodeReference = methodToCall;
         }
 
-        /// <summary>
-        /// The code reference.
-        /// </summary>
+        
         public MethodInfo CodeReference { get; set; }
 
-        /// <summary>
-        /// Return a CodeMethodData that is a copy of this one.
-        /// </summary>
+        
         /// <returns></returns>
         internal override TypeMemberData Copy()
         {
@@ -2652,15 +2503,11 @@ namespace System.Management.Automation.Runspaces
         }
     }
 
-    /// <summary>
-    /// PropertySetData represent a PropertySet definition.
-    /// </summary>
+    
     [DebuggerDisplay("PropertySet: {Name,nq}")]
     public sealed class PropertySetData : TypeMemberData
     {
-        /// <summary>
-        /// PropertySetData constructor.
-        /// </summary>
+        
         /// <param name="referencedProperties"></param>
         public PropertySetData(IEnumerable<string> referencedProperties)
         {
@@ -2672,24 +2519,16 @@ namespace System.Management.Automation.Runspaces
             ReferencedProperties = new Collection<string>(new List<string>(referencedProperties));
         }
 
-        /// <summary>
-        /// The referenced properties.
-        /// </summary>
+        
         public Collection<string> ReferencedProperties { get; }
 
-        /// <summary>
-        /// The PropertySet name.
-        /// </summary>
+        
         internal new string Name { get { return base.Name; } set { base.Name = value; } }
 
-        /// <summary>
-        /// Set true if the member is supposed to be hidden.
-        /// </summary>
+        
         public bool IsHidden { get; set; }
 
-        /// <summary>
-        /// Return a new PropertySetData that is a copy of this one.
-        /// </summary>
+        
         /// <returns></returns>
         internal override TypeMemberData Copy()
         {
@@ -2707,14 +2546,10 @@ namespace System.Management.Automation.Runspaces
         }
     }
 
-    /// <summary>
-    /// MemberSetData represents a MemberSet definition.
-    /// </summary>
+    
     public class MemberSetData : TypeMemberData
     {
-        /// <summary>
-        /// MemberSetData constructor.
-        /// </summary>
+        
         /// <param name="name">The name of the MemberSet.</param>
         /// <param name="members">The members of the MemberSet.</param>
         public MemberSetData(string name, Collection<TypeMemberData> members)
@@ -2724,20 +2559,13 @@ namespace System.Management.Automation.Runspaces
             InheritMembers = true;
         }
 
-        /// <summary>
-        /// The members of the MemberSet.
-        /// </summary>
+        
         public Collection<TypeMemberData> Members { get; }
 
-        /// <summary>
-        /// Set true if the member is supposed to be hidden.
-        /// </summary>
+        
         public bool IsHidden { get; set; }
 
-        /// <summary>
-        /// Indicating if the MemberSet will inherit members of the MemberSet
-        /// of the same name in the "parent" class.
-        /// </summary>
+        
         public bool InheritMembers { get; set; }
 
         internal override TypeMemberData Copy()
@@ -2758,9 +2586,7 @@ namespace System.Management.Automation.Runspaces
 
     #endregion TypeData
 
-    /// <summary>
-    /// A class that keeps the information from types.ps1xml files in a cache table.
-    /// </summary>
+    
     public sealed partial class TypeTable
     {
         #region private
@@ -2787,37 +2613,27 @@ namespace System.Management.Automation.Runspaces
 
         #region fields
 
-        /// <summary>
-        /// Table from type name list into PSMemberInfoInternalCollection.
-        /// </summary>
+        
         private readonly ConcurrentDictionary<string, PSMemberInfoInternalCollection<PSMemberInfo>> _consolidatedMembers =
             new ConcurrentDictionary<string, PSMemberInfoInternalCollection<PSMemberInfo>>(
                 concurrencyLevel: 1, capacity: 256, StringComparer.OrdinalIgnoreCase);
 
-        /// <summary>
-        /// Table from type name list into Collection of strings.
-        /// </summary>
+        
         private readonly ConcurrentDictionary<string, Collection<string>> _consolidatedSpecificProperties =
             new ConcurrentDictionary<string, Collection<string>>(
                 concurrencyLevel: 1, capacity: 10, StringComparer.OrdinalIgnoreCase);
 
-        /// <summary>
-        /// Table from type name into PSMemberInfoInternalCollection.
-        /// </summary>
+        
         private readonly ConcurrentDictionary<string, PSMemberInfoInternalCollection<PSMemberInfo>> _extendedMembers =
             new ConcurrentDictionary<string, PSMemberInfoInternalCollection<PSMemberInfo>>(
                 concurrencyLevel: 3, capacity: 300, StringComparer.OrdinalIgnoreCase);
 
-        /// <summary>
-        /// Points to a Hashtable from type name to type converter.
-        /// </summary>
+        
         private readonly ConcurrentDictionary<string, object> _typeConverters
             = new ConcurrentDictionary<string, object>(
                 concurrencyLevel: 1, capacity: 5, StringComparer.OrdinalIgnoreCase);
 
-        /// <summary>
-        /// Points to a Hashtable from type name to type adapter.
-        /// </summary>
+        
         private readonly ConcurrentDictionary<string, PSObject.AdapterSet> _typeAdapters =
             new ConcurrentDictionary<string, PSObject.AdapterSet>(
                 concurrencyLevel: 1, capacity: 5, StringComparer.OrdinalIgnoreCase);
@@ -2990,21 +2806,7 @@ namespace System.Management.Automation.Runspaces
             return false;
         }
 
-        /// <summary>
-        /// Issue appropriate errors and remove members as necessary if:
-        ///     - The serialization settings do not fall into one of the combinations of the table below
-        ///     - If the serialization settings notes' values cannot be converted to the proper type
-        ///     - If serialization settings members are of the wrong member type
-        ///     - DefaultDisplayPropertySet is not an PSPropertySet
-        ///     - DefaultDisplayProperty is not an PSPropertyInfo
-        ///     - DefaultKeyPropertySet is not an PSPropertySet
-        ///
-        /// SerializationMethod       InheritPropertySerializationSet   PropertySerializationSet   SerializationDepth     StringSerializationSource
-        /// ---------------------     -------------------------------   ------------------------   -------------------    ---------------------------
-        /// String                    must NOT be present               must NOT be present        must NOT be present    optional
-        /// SpecificProperties        optional                          must be present            optional               optional
-        /// AllPublicProperties       must NOT be present               must NOT be present        optional               optional.
-        /// </summary>
+        
         private static bool CheckStandardMembers(ConcurrentBag<string> errors, string typeName, PSMemberInfoInternalCollection<PSMemberInfo> members)
         {
             #region Remove all non standard members
@@ -3189,9 +2991,7 @@ namespace System.Management.Automation.Runspaces
         }
         #endregion CheckStandardMembers
 
-        /// <summary>
-        /// Helper for ProcessTypeConverter/ProcessTypeAdapter from TypeData.
-        /// </summary>
+        
         /// <param name="errors"></param>
         /// <param name="typeName"></param>
         /// <param name="type"></param>
@@ -3800,8 +3600,7 @@ namespace System.Management.Automation.Runspaces
             GetEventTypesFilePath = Path.Combine(psHome, "GetEvent.types.ps1xml");
         }
 
-        /// <summary>
-        /// </summary>
+        
         internal TypeTable() : this(isShared: false)
         {
         }
@@ -3813,9 +3612,7 @@ namespace System.Management.Automation.Runspaces
             _memberFactoryFunc = MemberFactory;
         }
 
-        /// <summary>
-        /// Constructor that creates a TypeTable from a set of type files.
-        /// </summary>
+        
         /// <param name="typeFiles">
         /// Type files to load for type information.
         /// </param>
@@ -3830,9 +3627,7 @@ namespace System.Management.Automation.Runspaces
         {
         }
 
-        /// <summary>
-        /// Load types.ps1xml, typesv3.ps1xml into the typetable.
-        /// </summary>
+        
         /// <exception cref="System.Security.SecurityException">
         /// If caller doesn't have permission to read the PowerShell registry key.
         /// </exception>
@@ -3842,18 +3637,14 @@ namespace System.Management.Automation.Runspaces
             return new TypeTable(GetDefaultTypeFiles());
         }
 
-        /// <summary>
-        /// Gets the default types files available in PowerShell.
-        /// </summary>
+        
         /// <returns>List of type files.</returns>
         public static List<string> GetDefaultTypeFiles()
         {
             return new List<string>() { TypesFilePath, TypesV3FilePath };
         }
 
-        /// <summary>
-        /// Constructor that creates a TypeTable from a set of type files.
-        /// </summary>
+        
         /// <param name="typeFiles">
         /// Type files to load for type information.
         /// </param>
@@ -3899,9 +3690,7 @@ namespace System.Management.Automation.Runspaces
 
         #region internal methods
 
-        /// <summary>
-        /// The first type in the type hierarchy is guaranteed to have SpecificProperties.
-        /// </summary>
+        
         /// <param name="types"></param>
         /// <returns>Null if this should not be serialized with SpecificProperties.</returns>
         internal Collection<string> GetSpecificProperties(ConsolidatedString types)
@@ -3956,10 +3745,7 @@ namespace System.Management.Automation.Runspaces
             return result;
         }
 
-        /// <summary>
-        /// Gets the MemberInfoCollection for types. This method will cache its
-        /// return value for future reference to the same types.
-        /// </summary>
+        
         /// <param name="types">List of types to get the member from.</param>
         /// <returns></returns>
         internal PSMemberInfoInternalCollection<T> GetMembers<T>(ConsolidatedString types) where T : PSMemberInfo
@@ -4040,9 +3826,7 @@ namespace System.Management.Automation.Runspaces
             return retValue;
         }
 
-        /// <summary>
-        /// Gets the type converter for the typeName.
-        /// </summary>
+        
         /// <param name="typeName">Type name with the converter.</param>
         /// <returns>The type converter for the typeName or null, if there is no type converter.</returns>
         internal object GetTypeConverter(string typeName)
@@ -4057,9 +3841,7 @@ namespace System.Management.Automation.Runspaces
             return result;
         }
 
-        /// <summary>
-        /// Gets the type adapter for the given type.
-        /// </summary>
+        
         /// <returns>The type adapter or null, if there is no adapter.</returns>
         internal PSObject.AdapterSet GetTypeAdapter(Type type)
         {
@@ -4150,9 +3932,7 @@ namespace System.Management.Automation.Runspaces
             return null;
         }
 
-        /// <summary>
-        /// Load a PSMemberInfo instance to the passed-in TypeData.
-        /// </summary>
+        
         /// <param name="member"></param>
         /// <param name="typeData"></param>
         private static void LoadMembersToTypeData(PSMemberInfo member, TypeData typeData)
@@ -4177,9 +3957,7 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// Helper function to convert an object to a specific type.
-        /// </summary>
+        
         /// <typeparam name="T"></typeparam>
         /// <param name="sourceValue"></param>
         /// <returns></returns>
@@ -4188,9 +3966,7 @@ namespace System.Management.Automation.Runspaces
             return (T)LanguagePrimitives.ConvertTo(sourceValue, typeof(T), CultureInfo.InvariantCulture);
         }
 
-        /// <summary>
-        /// Load the standard members into the passed-in TypeData.
-        /// </summary>
+        
         private static void LoadStandardMembersToTypeData(PSMemberSet memberSet, TypeData typeData)
         {
             foreach (PSMemberInfo member in memberSet.InternalMembers)
@@ -4251,9 +4027,7 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// Get all Type configurations, return a Dictionary with typeName as the key, TypeData as the value.
-        /// </summary>
+        
         /// <returns></returns>
         internal Dictionary<string, TypeData> GetAllTypeData()
         {
@@ -4368,9 +4142,7 @@ namespace System.Management.Automation.Runspaces
             return false;
         }
 
-        /// <summary>
-        /// Clone the TypeTable by doing a shallow copy of all the members.
-        /// </summary>
+        
         /// <param name="unshared">
         /// Indicate that the clone of this TypeTable instance should not be marked as "Shared", even if
         /// this TypeTable instance itself is a shared TypeTable.
@@ -4415,9 +4187,7 @@ namespace System.Management.Automation.Runspaces
             return result;
         }
 
-        /// <summary>
-        /// Clear the TypeTable.
-        /// </summary>
+        
         internal void Clear()
         {
             foreach (var conv in _typeConverters.Keys)
@@ -4461,9 +4231,7 @@ namespace System.Management.Automation.Runspaces
             PSGetMemberBinder.TypeTableMemberPossiblyUpdated(PSStandardMembers);
         }
 
-        /// <summary>
-        /// Load the specified file and report the errors in <paramref name="errors."/>
-        /// </summary>
+        
         /// <param name="snapinName"></param>
         /// <param name="fileToLoad">
         /// Type file to load. File should be a fully-qualified path.
@@ -4501,9 +4269,7 @@ namespace System.Management.Automation.Runspaces
             UpdateWithModuleContents(fileContents, snapinName, fileToLoad, isFullyTrusted, isProductCode, errors);
         }
 
-        /// <summary>
-        /// Helper method to load content for a module.
-        /// </summary>
+        
         private static string GetModuleContents(
             string moduleName,
             string fileToLoad,
@@ -4567,9 +4333,7 @@ namespace System.Management.Automation.Runspaces
             return fileContents;
         }
 
-        /// <summary>
-        /// Helper method to update with module file contents.
-        /// </summary>
+        
         /// <param name="fileContents">Module contents.</param>
         /// <param name="moduleName">Module name.</param>
         /// <param name="fileToLoad">Module file path.</param>
@@ -4599,9 +4363,7 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// Update the TypeTable by adding a TypeData instance.
-        /// </summary>
+        
         /// <exception cref="PSArgumentNullException">Throw when the argument is null.</exception>
         /// <exception cref="RuntimeException">Throw when there were failures during the update.</exception>
         /// <param name="typeData">A TypeData instance to update the TypeTable.</param>
@@ -4625,9 +4387,7 @@ namespace System.Management.Automation.Runspaces
             FormatAndTypeDataHelper.ThrowExceptionOnError("ErrorsUpdatingTypes", errors, FormatAndTypeDataHelper.Category.Types);
         }
 
-        /// <summary>
-        /// Remove all type information related to the type name.
-        /// </summary>
+        
         /// <exception cref="PSArgumentNullException">Throw when the argument is null or empty.</exception>
         /// <exception cref="RuntimeException">Throw if there were failures when remove the type.</exception>
         /// <param name="typeName">The name of the type to remove from TypeTable.</param>
@@ -4654,9 +4414,7 @@ namespace System.Management.Automation.Runspaces
             FormatAndTypeDataHelper.ThrowExceptionOnError("ErrorsUpdatingTypes", errors, FormatAndTypeDataHelper.Category.Types);
         }
 
-        /// <summary>
-        /// Update type data from a specific file...
-        /// </summary>
+        
         /// <param name="moduleName">The name of the module or snapin that this file is associated with.</param>
         /// <param name="filePath">The path to the file to load.</param>
         /// <param name="errors">A place to put the errors...</param>
@@ -4740,9 +4498,7 @@ namespace System.Management.Automation.Runspaces
             return result;
         }
 
-        /// <summary>
-        /// Update typetable from a specific strong type data.
-        /// </summary>
+        
         /// <param name="type"></param>
         /// <param name="errors"></param>
         /// <param name="isRemove"></param>

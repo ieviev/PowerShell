@@ -6,17 +6,13 @@ using System.Management.Automation;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// Removes an event from the event queue.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Remove, "Event", SupportsShouldProcess = true, DefaultParameterSetName = "BySource", HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096715")]
     public class RemoveEventCommand : PSCmdlet
     {
         #region parameters
 
-        /// <summary>
-        /// A source identifier for this event subscription.
-        /// </summary>
+        
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = "BySource")]
         public string SourceIdentifier
         {
@@ -38,9 +34,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string _sourceIdentifier = null;
 
-        /// <summary>
-        /// An identifier for this event subscription.
-        /// </summary>
+        
         [Parameter(Mandatory = true, Position = 0, ValueFromPipelineByPropertyName = true, ParameterSetName = "ByIdentifier")]
         public int EventIdentifier
         {
@@ -61,9 +55,7 @@ namespace Microsoft.PowerShell.Commands
 
         private WildcardPattern _matchPattern;
 
-        /// <summary>
-        /// Remove the event from the queue.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             // Go through all the received events and write them to the output

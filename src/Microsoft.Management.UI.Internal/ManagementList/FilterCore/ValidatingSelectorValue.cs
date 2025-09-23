@@ -8,26 +8,19 @@ using System.Windows.Data;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <summary>
-    /// The ValidatingSelectorValue class provides support for selecting
-    /// a value from a collection of available values.
-    /// </summary>
+    
     /// <typeparam name="T">
     /// The generic parameter.
     /// </typeparam>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public class ValidatingSelectorValue<T> : ValidatingValueBase
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ValidatingSelectorValue{T}"/> class.
-        /// </summary>
+        
         public ValidatingSelectorValue()
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ValidatingSelectorValue{T}"/> class.
-        /// </summary>
+        
         /// <param name="source">The source to initialize from.</param>
         public ValidatingSelectorValue(ValidatingSelectorValue<T> source)
             : base(source)
@@ -61,9 +54,7 @@ namespace Microsoft.Management.UI.Internal
 
         private List<T> availableValues = new List<T>();
 
-        /// <summary>
-        /// Gets the collection of values available for selection.
-        /// </summary>
+        
         public IList<T> AvailableValues
         {
             get
@@ -80,10 +71,7 @@ namespace Microsoft.Management.UI.Internal
 
         private int selectedIndex;
 
-        /// <summary>
-        /// Gets or sets the index of the currently selected item or
-        /// returns negative one (-1) if the selection is empty.
-        /// </summary>
+        
         /// <remarks>
         /// If you set SelectedIndex to a value less that -1, an
         /// ArgumentException is thrown. If you set SelectedIndex to a
@@ -124,10 +112,7 @@ namespace Microsoft.Management.UI.Internal
 
         private const string SelectedValuePropertyName = "SelectedValue";
 
-        /// <summary>
-        /// Gets the item within AvailableValues at the offset indicated
-        /// by SelectedIndex or returns default(T) if the selection is empty.
-        /// </summary>
+        
         public T SelectedValue
         {
             get
@@ -147,10 +132,7 @@ namespace Microsoft.Management.UI.Internal
 
         private IValueConverter displayNameConverter;
 
-        /// <summary>
-        /// Gets or sets the converter used to display a friendly
-        /// value to the user.
-        /// </summary>
+        
         public IValueConverter DisplayNameConverter
         {
             get
@@ -170,9 +152,7 @@ namespace Microsoft.Management.UI.Internal
 
         #region Events
 
-        /// <summary>
-        /// Notifies listeners that the selected value has changed.
-        /// </summary>
+        
         public event EventHandler<PropertyChangedEventArgs<T>> SelectedValueChanged;
 
         #endregion Events
@@ -187,9 +167,7 @@ namespace Microsoft.Management.UI.Internal
 
         #region Validate
 
-        /// <summary>
-        /// Called to validate the entire object.
-        /// </summary>
+        
         /// <returns>
         /// Returns a DataErrorInfoValidationResult which indicates the validation state
         /// of the object.
@@ -199,9 +177,7 @@ namespace Microsoft.Management.UI.Internal
             return this.Validate(SelectedIndexPropertyName);
         }
 
-        /// <summary>
-        /// Called to validate the property with the given name.
-        /// </summary>
+        
         /// <param name="columnName">
         /// The name of the property whose error message will be checked.
         /// </param>
@@ -232,10 +208,7 @@ namespace Microsoft.Management.UI.Internal
 
         #region NotifySelectedValueChanged
 
-        /// <summary>
-        /// Notifies listeners that the selected value with the available
-        /// values has changed.
-        /// </summary>
+        
         /// <param name="oldValue">
         /// The previous selected value.
         /// </param>

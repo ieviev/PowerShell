@@ -12,42 +12,28 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
 {
     #region Complex View Definitions
 
-    /// <summary>
-    /// In line definition of a complex control.
-    /// </summary>
+    
     internal sealed class ComplexControlBody : ControlBody
     {
-        /// <summary>
-        /// Default list entry definition
-        /// It's mandatory.
-        /// </summary>
+        
         internal ComplexControlEntryDefinition defaultEntry;
 
-        /// <summary>
-        /// Optional list of list entry definition overrides. It can be empty if there are no overrides.
-        /// </summary>
+        
         internal List<ComplexControlEntryDefinition> optionalEntryList = new List<ComplexControlEntryDefinition>();
     }
 
     internal sealed class ComplexControlEntryDefinition
     {
-        /// <summary>
-        /// Applicability clause
-        /// Only valid if not the default definition.
-        /// </summary>
+        
         internal AppliesTo appliesTo = null;
 
-        /// <summary>
-        /// Item associated with this entry definition.
-        /// </summary>
+        
         internal ComplexControlItemDefinition itemDefinition = new ComplexControlItemDefinition();
     }
 
     internal sealed class ComplexControlItemDefinition
     {
-        /// <summary>
-        /// List of tokens the item can contain.
-        /// </summary>
+        
         internal List<FormatToken> formatTokenList = new List<FormatToken>();
     }
 
@@ -468,7 +454,7 @@ namespace System.Management.Automation
             _control = control;
         }
 
-        /// <summary>Group instances by the property name with an optional label.</summary>
+        
         public CustomControlBuilder GroupByProperty(string property, CustomControl customControl = null, string label = null)
         {
             _control.GroupBy = new PSControlGroupBy
@@ -480,7 +466,7 @@ namespace System.Management.Automation
             return this;
         }
 
-        /// <summary>Group instances by the script block expression with an optional label.</summary>
+        
         public CustomControlBuilder GroupByScriptBlock(string scriptBlock, CustomControl customControl = null, string label = null)
         {
             _control.GroupBy = new PSControlGroupBy

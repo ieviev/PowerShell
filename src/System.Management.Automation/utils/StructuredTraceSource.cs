@@ -15,113 +15,72 @@ using System.Threading;
 namespace System.Management.Automation
 {
     #region PSTraceSourceOptions
-    /// <summary>
-    /// These flags enable tracing based on the types of
-    /// a tracing supplied. Each type of tracing will allow
-    /// for one or more methods in the StructuredTraceSource class to become
-    /// "enabled".
-    /// </summary>
+    
     [Flags]
     public enum PSTraceSourceOptions
     {
-        /// <summary>
-        /// All tracing off.
-        /// </summary>
+        
         /// 
         None = 0x00000000,
 
-        /// <summary>
-        /// Constructors will be traced.
-        /// </summary>
+        
         /// 
         Constructor = 0x00000001,
 
-        /// <summary>
-        /// Dispose will be traced.
-        /// </summary>
+        
         /// 
         Dispose = 0x00000002,
 
-        /// <summary>
-        /// Finalize will be traced.
-        /// </summary>
+        
         /// 
         Finalizer = 0x00000004,
 
-        /// <summary>
-        /// Methods will be traced.
-        /// </summary>
+        
         /// 
         Method = 0x00000008,
 
-        /// <summary>
-        /// Properties will be traced.
-        /// </summary>
+        
         /// 
         Property = 0x00000010,
 
-        /// <summary>
-        /// Delegates will be traced.
-        /// </summary>
+        
         /// 
         Delegates = 0x00000020,
 
-        /// <summary>
-        /// Events will be traced.
-        /// </summary>
+        
         /// 
         Events = 0x00000040,
 
-        /// <summary>
-        /// Exceptions will be traced.
-        /// </summary>
+        
         /// 
         Exception = 0x00000080,
 
-        /// <summary>
-        /// Locks will be traced.
-        /// </summary>
+        
         /// 
         Lock = 0x00000100,
 
-        /// <summary>
-        /// Errors will be traced.
-        /// </summary>
+        
         /// 
         Error = 0x00000200,
 
-        /// <summary>
-        /// Warnings will be traced.
-        /// </summary>
+        
         /// 
         Warning = 0x00000400,
 
-        /// <summary>
-        /// Verbose messages will be traced.
-        /// </summary>
+        
         Verbose = 0x00000800,
 
-        /// <summary>
-        /// WriteLines will be traced.
-        /// </summary>
+        
         /// 
         WriteLine = 0x00001000,
 
-        /// <summary>
-        /// TraceScope calls will be traced.
-        /// </summary>
+        
         Scope = 0x00002000,
 
-        /// <summary>
-        /// Assertions will be traced.
-        /// </summary>
+        
         Assert = 0x00004000,
 
-        /// <summary>
-        /// A combination of flags that trace the execution flow.
-        /// The methods associated with the flags; Constructor, Dispose,
-        /// Finalizer, Method, Delegates, and Events will be enabled.
-        /// </summary>
+        
         ExecutionFlow =
             Constructor |
             Dispose |
@@ -131,11 +90,7 @@ namespace System.Management.Automation
             Events |
             Scope,
 
-        /// <summary>
-        /// A combination of flags that trace the data.
-        /// The methods associated with the flags; Constructor, Dispose,
-        /// Finalizer, Property, and WriteLine will be enabled.
-        /// </summary>
+        
         Data =
             Constructor |
             Dispose |
@@ -144,19 +99,12 @@ namespace System.Management.Automation
             Verbose |
             WriteLine,
 
-        /// <summary>
-        /// A combination of flags that trace the errors.
-        /// The methods associated with the flags; Error,
-        /// and Exception will be enabled.
-        /// </summary>
+        
         Errors =
             Error |
             Exception,
 
-        /// <summary>
-        /// All combination of trace flags will be set.
-        /// All methods for tracing will be enabled.
-        /// </summary>
+        
         All =
             Constructor |
             Dispose |
@@ -177,19 +125,13 @@ namespace System.Management.Automation
 
     #endregion PSTraceSourceOptions
 
-    /// <summary>
-    /// An PSTraceSource is a representation of a System.Diagnostics.TraceSource instance
-    /// that is used in the PowerShell components to produce trace output.
-    /// </summary>
+    
     /// 
     public partial class PSTraceSource
     {
         #region PSTraceSource construction methods
 
-        /// <summary>
-        /// Constructor that determines the name of the trace
-        /// flag in the config file.
-        /// </summary>
+        
         /// <param name="fullName">
         /// The full name for the trace category. This is different from the name parameter as
         /// it is not limited to 16 characters.
@@ -253,10 +195,7 @@ namespace System.Management.Automation
 
         private static bool globalTraceInitialized;
 
-        /// <summary>
-        /// Traces the app domain header with information about the execution
-        /// time, the platform, etc.
-        /// </summary>
+        
         internal void TraceGlobalAppDomainHeader()
         {
             // Only trace the global header if it hasn't
@@ -300,9 +239,7 @@ namespace System.Management.Automation
             globalTraceInitialized = true;
         }
 
-        /// <summary>
-        /// Outputs a header when a new StructuredTraceSource object is created.
-        /// </summary>
+        
         /// <param name="callingAssembly">
         /// The assembly that created the instance of the StructuredTraceSource.
         /// </param>
@@ -424,9 +361,7 @@ namespace System.Management.Automation
         #endregion PSTraceSourceOptions.Scope
 
         #region PSTraceSourceOptions.Method methods/helpers
-        /// <summary>
-        /// Traces the method name and indents the trace output.
-        /// </summary>
+        
         /// <param name="format">
         /// The format string for additional arguments to be traced
         /// </param>
@@ -501,9 +436,7 @@ namespace System.Management.Automation
 
         #region PSTraceSourceOptions.Events methods/helpers
 
-        /// <summary>
-        /// Traces the entrance and exit from event handlers.
-        /// </summary>
+        
         /// <returns>
         /// An object that supports IDisposable. The caller
         /// should dispose of the object when it goes out of
@@ -543,9 +476,7 @@ namespace System.Management.Automation
             return null;
         }
 
-        /// <summary>
-        /// Traces the entrance and exit from event handlers.
-        /// </summary>
+        
         /// <param name="format">
         /// The format string for additional arguments to be traced
         /// </param>
@@ -597,9 +528,7 @@ namespace System.Management.Automation
 
         #region PSTraceSourceOptions.Lock methods/helpers
 
-        /// <summary>
-        /// Traces the user specified lock name and indents the trace output.
-        /// </summary>
+        
         /// <returns>
         /// An object that supports IDisposable. The caller
         /// should dispose of the object when it goes out of
@@ -654,9 +583,7 @@ namespace System.Management.Automation
             return null;
         }
 
-        /// <summary>
-        /// Call this before acquiring a lock.
-        /// </summary>
+        
         /// <param name="lockName">
         /// User defined name given to the lock
         /// </param>
@@ -670,9 +597,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Call this after acquiring a lock.
-        /// </summary>
+        
         /// <param name="lockName">
         /// User defined name given to the lock
         /// </param>
@@ -692,11 +617,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Call this after releasing the lock, but only
-        /// if you called TraceLockAcquired when you acquired
-        /// the lock.
-        /// </summary>
+        
         /// <param name="lockName">
         /// User defined name given to the lock
         /// </param>
@@ -710,9 +631,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// A helper to simplify tracing of the lock flags.
-        /// </summary>
+        
         /// <param name="formatter">
         /// A format string for the output.
         /// </param>
@@ -742,10 +661,7 @@ namespace System.Management.Automation
         #endregion PSTraceSourceOptions.Lock methods/helpers
 
         #region PSTraceSourceOptions.Error,Warning,Normal methods/helpers
-        /// <summary>
-        /// Traces the specified formatted output when PSTraceSourceOptions.Error
-        /// is enabled.
-        /// </summary>
+        
         /// <param name="errorMessageFormat">
         /// The format string containing the error message
         /// </param>
@@ -766,10 +682,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Traces the specified formatted output when PSTraceSourceOptions.Warning
-        /// is enabled.
-        /// </summary>
+        
         /// <param name="warningMessageFormat">
         /// The format string containing the error message
         /// </param>
@@ -790,10 +703,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Traces the specified formatted output when PSTraceSourceOptions.Verbose
-        /// is enabled.
-        /// </summary>
+        
         /// <param name="verboseMessageFormat">
         /// The format string containing the error message
         /// </param>
@@ -814,9 +724,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Traces the formatted output when PSTraceSourceOptions.WriteLine is enabled.
-        /// </summary>
+        
         /// <param name="format">
         /// The format string
         /// </param>
@@ -832,9 +740,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Traces the formatted output when PSTraceSourceOptions.WriteLine is enabled.
-        /// </summary>
+        
         /// <param name="format">The format string.</param>
         /// <param name="arg1"></param>
         internal void WriteLine(string format, object arg1)
@@ -899,9 +805,7 @@ namespace System.Management.Automation
             WriteLine(format, (object)arg1.ToString());
         }
 
-        /// <summary>
-        /// Traces the formatted output when PSTraceSourceOptions.WriteLine is enabled.
-        /// </summary>
+        
         /// <param name="format">The format string.</param>
         /// <param name="arg1"></param>
         /// <param name="arg2"></param>
@@ -917,9 +821,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Traces the formatted output when PSTraceSourceOptions.WriteLine is enabled.
-        /// </summary>
+        
         /// <param name="format">The format string.</param>
         /// <param name="arg1"></param>
         /// <param name="arg2"></param>
@@ -936,9 +838,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Traces the formatted output when PSTraceSourceOptions.WriteLine is enabled.
-        /// </summary>
+        
         /// <param name="format">The format string.</param>
         /// <param name="arg1"></param>
         /// <param name="arg2"></param>
@@ -956,9 +856,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Traces the formatted output when PSTraceSourceOptions.WriteLine is enabled.
-        /// </summary>
+        
         /// <param name="format">The format string.</param>
         /// <param name="arg1"></param>
         /// <param name="arg2"></param>
@@ -977,9 +875,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Traces the formatted output when PSTraceSourceOptions.WriteLine is enabled.
-        /// </summary>
+        
         /// <param name="format">The format string.</param>
         /// <param name="arg1"></param>
         /// <param name="arg2"></param>
@@ -999,9 +895,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Traces the formatted output when PSTraceSourceOptions.WriteLine is enabled.
-        /// </summary>
+        
         /// <param name="arg">
         /// The object to be output
         /// </param>
@@ -1013,9 +907,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Formats the specified text and then traces it.
-        /// </summary>
+        
         /// <param name="flag">
         /// The flag that met the criteria to have this line traced.
         /// </param>
@@ -1071,10 +963,7 @@ namespace System.Management.Automation
 
         #region Class helper methods and properties
 
-        /// <summary>
-        /// Gets the method name of the method that called this one
-        /// plus the skipFrames.
-        /// </summary>
+        
         /// <remarks>
         /// For instance, GetCallingMethodNameAndParameters(1)
         /// will return the method that called the method that is calling
@@ -1238,9 +1127,7 @@ namespace System.Management.Automation
         // used to find and blocks cyclic-loops in tracing.
 
         private bool _alreadyTracing = false;
-        /// <summary>
-        /// Composes a line of trace output and then writes it.
-        /// </summary>
+        
         /// <param name="flag">
         /// The flag that caused the line to be traced.
         /// </param>
@@ -1309,9 +1196,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Property to access the indent level in thread local storage.
-        /// </summary>
+        
         internal static int ThreadIndentLevel
         {
             get
@@ -1335,37 +1220,25 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Allocates some thread local storage to hold the indent level.
-        /// </summary>
+        
         private static readonly ThreadLocal<int> s_localIndentLevel = new ThreadLocal<int>();
 
-        /// <summary>
-        /// Local storage for the trace switch flags.
-        /// </summary>
+        
         private PSTraceSourceOptions _flags = PSTraceSourceOptions.None;
 
-        /// <summary>
-        /// Gets or sets the description for this trace sources.
-        /// </summary>
+        
         public string Description { get; set; } = string.Empty;
 
-        /// <summary>
-        /// Determines if the line and switch headers should be shown.
-        /// </summary>
+        
         /// <value></value>
         internal bool ShowHeaders { get; set; } = true;
 
-        /// <summary>
-        /// Gets the full name of the trace source category.
-        /// </summary>
+        
         internal string FullName { get; } = string.Empty;
 
         private readonly string _name;
 
-        /// <summary>
-        /// Creates an instance of the TraceSource on demand.
-        /// </summary>
+        
         internal TraceSource TraceSource
         {
             get { return _traceSource ??= new MonadTraceSource(_name); }
@@ -1377,9 +1250,7 @@ namespace System.Management.Automation
 
         #region Public members
 
-        /// <summary>
-        /// Gets or sets the options for what will be traced.
-        /// </summary>
+        
         public PSTraceSourceOptions Options
         {
             get
@@ -1399,9 +1270,7 @@ namespace System.Management.Automation
             get { return _flags != PSTraceSourceOptions.None; }
         }
 
-        /// <summary>
-        /// Gets the attributes of the TraceSource.
-        /// </summary>
+        
         public StringDictionary Attributes
         {
             get
@@ -1410,9 +1279,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the listeners for the TraceSource.
-        /// </summary>
+        
         public TraceListenerCollection Listeners
         {
             get
@@ -1421,9 +1288,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the TraceSource name (also known as category).
-        /// </summary>
+        
         /// <remarks>
         /// Note, this name is truncated to 16 characters due to limitations
         /// in the TraceSource class.
@@ -1436,9 +1301,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets or sets the TraceSource's Switch.
-        /// </summary>
+        
         public SourceSwitch Switch
         {
             get
@@ -1455,29 +1318,18 @@ namespace System.Management.Automation
 
         #region TraceCatalog
 
-        /// <summary>
-        /// Storage for all the PSTraceSource instances.
-        /// </summary>
+        
         /// <value></value>
         internal static Dictionary<string, PSTraceSource> TraceCatalog { get; } = new Dictionary<string, PSTraceSource>(StringComparer.OrdinalIgnoreCase);
 
-        /// <summary>
-        /// Storage for trace source instances which have not been instantiated but for which
-        /// the user has specified Options.
-        ///
-        /// If the PSTraceSource cannot be found in the TraceCatalog, the same name is used
-        /// to look in this dictionary to see if the PSTraceSource has been pre-configured.
-        /// </summary>
+        
         internal static Dictionary<string, PSTraceSource> PreConfiguredTraceSource { get; } = new Dictionary<string, PSTraceSource>(StringComparer.OrdinalIgnoreCase);
 
         #endregion TraceCatalog
     }
 
     #region ScopeTracer object/helpers
-    /// <summary>
-    /// A light-weight object to manage the indention of
-    /// trace output for each thread.
-    /// </summary>
+    
     /// <remarks>
     /// An instance of this object is returned when any scoping
     /// Trace method (like TraceMethod, TraceProperty, etc.)
@@ -1487,11 +1339,7 @@ namespace System.Management.Automation
     /// </remarks>
     internal class ScopeTracer : IDisposable
     {
-        /// <summary>
-        /// Constructor that traces the scope name
-        /// and raises the indent level in thread
-        /// local storage.
-        /// </summary>
+        
         /// <param name="tracer">
         /// The trace object that is to be used for output
         /// </param>
@@ -1532,11 +1380,7 @@ namespace System.Management.Automation
                 string.Empty);
         }
 
-        /// <summary>
-        /// Constructor that traces the scope name
-        /// and raises the indent level in thread
-        /// local storage.
-        /// </summary>
+        
         /// <param name="tracer">
         /// The trace object that is to be used for output
         /// </param>
@@ -1599,9 +1443,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Helper for the ScopeTracer constructor.
-        /// </summary>
+        
         /// <param name="flag">
         /// The flag that caused this line of tracing to be traced.
         /// </param>
@@ -1670,10 +1512,7 @@ namespace System.Management.Automation
             PSTraceSource.ThreadIndentLevel++;
         }
 
-        /// <summary>
-        /// Decrements the indent level in thread local
-        /// storage and then traces the scope name.
-        /// </summary>
+        
         public void Dispose()
         {
             // Decrement the indent level in thread local storage
@@ -1690,36 +1529,22 @@ namespace System.Management.Automation
             GC.SuppressFinalize(this);
         }
 
-        /// <summary>
-        /// The trace object that is used for any output.
-        /// </summary>
+        
         private readonly PSTraceSource _tracer;
 
-        /// <summary>
-        /// The flag which caused this scope object to be created.
-        /// </summary>
+        
         private PSTraceSourceOptions _flag;
 
-        /// <summary>
-        /// Stores the scope name that is passed to the constructor.
-        /// </summary>
+        
         private string _scopeName;
 
-        /// <summary>
-        /// Stores the format string used when formatting output when
-        /// leaving the scope.
-        /// </summary>
+        
         private string _leavingScopeFormatter;
     }
     #endregion ScopeTracer object/helpers
 
     #region PSTraceSourceAttribute
-    /// <summary>
-    /// This attribute is placed on the field of the PSTraceSource class
-    /// in the class that is consuming the tracing methods defined in
-    /// this file. It defines the trace category and description
-    /// for that instance of PSTraceSource.
-    /// </summary>
+    
     /// <remarks>
     /// This attribute is only allowed on fields and there can only
     /// be one for each instance. Only one instance of this attribute
@@ -1738,9 +1563,7 @@ namespace System.Management.Automation
          AllowMultiple = false)]
     internal class TraceSourceAttribute : Attribute
     {
-        /// <summary>
-        /// Constructor for the TraceSourceAttribute class.
-        /// </summary>
+        
         /// <param name="category">
         /// The name of the category for which the TraceSource instance
         /// will be used.
@@ -1756,25 +1579,17 @@ namespace System.Management.Automation
             Description = description;
         }
 
-        /// <summary>
-        /// The category to be used for the TraceSource.
-        /// </summary>
+        
         internal string Category { get; }
 
-        /// <summary>
-        /// The description for the category to be used for the TraceSource.
-        /// </summary>
+        
         internal string Description { get; set; }
     }
     #endregion TraceSourceAttribute
 
     #region MonadTraceSource
 
-    /// <summary>
-    /// This derived class of TraceSource is required so that we can tell
-    /// the configuration infrastructure which attributes are supported in
-    /// the XML app-config file for our trace source.
-    /// </summary>
+    
     internal class MonadTraceSource : TraceSource
     {
         internal MonadTraceSource(string name)
@@ -1782,10 +1597,7 @@ namespace System.Management.Automation
         {
         }
 
-        /// <summary>
-        /// Tells the config infrastructure which attributes are supported
-        /// for our TraceSource.
-        /// </summary>
+        
         /// <returns>
         /// A string array with the names of the attributes supported by our
         /// trace source.

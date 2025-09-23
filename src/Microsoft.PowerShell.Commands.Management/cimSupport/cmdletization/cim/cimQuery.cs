@@ -15,9 +15,7 @@ using Dbg = System.Management.Automation.Diagnostics;
 
 namespace Microsoft.PowerShell.Cmdletization.Cim
 {
-    /// <summary>
-    /// CimQuery supports building of queries against CIM object model.
-    /// </summary>
+    
     internal sealed class CimQuery : QueryBuilder, ISessionBoundQueryBuilder<CimSession>
     {
         private readonly StringBuilder _wqlCondition;
@@ -190,9 +188,7 @@ namespace Microsoft.PowerShell.Cmdletization.Cim
 
         #region Public inputs from cmdletization
 
-        /// <summary>
-        /// Modifies the query, so that it only returns objects with a given property value.
-        /// </summary>
+        
         /// <param name="propertyName">Property name to query on.</param>
         /// <param name="allowedPropertyValues">Property values to accept in the query.</param>
         /// <param name="wildcardsEnabled">
@@ -213,9 +209,7 @@ namespace Microsoft.PowerShell.Cmdletization.Cim
             }
         }
 
-        /// <summary>
-        /// Modifies the query, so that it does not return objects with a given property value.
-        /// </summary>
+        
         /// <param name="propertyName">Property name to query on.</param>
         /// <param name="excludedPropertyValues">Property values to reject in the query.</param>
         /// <param name="wildcardsEnabled">
@@ -240,9 +234,7 @@ namespace Microsoft.PowerShell.Cmdletization.Cim
             }
         }
 
-        /// <summary>
-        /// Modifies the query, so that it returns only objects that have a property value greater than or equal to a <paramref name="minPropertyValue"/> threshold.
-        /// </summary>
+        
         /// <param name="propertyName">Property name to query on.</param>
         /// <param name="minPropertyValue">Minimum property value.</param>
         /// <param name="behaviorOnNoMatch">
@@ -264,9 +256,7 @@ namespace Microsoft.PowerShell.Cmdletization.Cim
             }
         }
 
-        /// <summary>
-        /// Modifies the query, so that it returns only objects that have a property value less than or equal to a <paramref name="maxPropertyValue"/> threshold.
-        /// </summary>
+        
         /// <param name="propertyName">Property name to query on.</param>
         /// <param name="maxPropertyValue">Maximum property value.</param>
         /// <param name="behaviorOnNoMatch">
@@ -288,9 +278,7 @@ namespace Microsoft.PowerShell.Cmdletization.Cim
             }
         }
 
-        /// <summary>
-        /// Modifies the query, so that it returns only objects associated with <paramref name="associatedInstance"/>
-        /// </summary>
+        
         /// <param name="associatedInstance">Object that query results have to be associated with.</param>
         /// <param name="associationName">Name of the association.</param>
         /// <param name="resultRole">Name of the role that <paramref name="associatedInstance"/> has in the association.</param>
@@ -307,9 +295,7 @@ namespace Microsoft.PowerShell.Cmdletization.Cim
             _sourceRole = sourceRole;
         }
 
-        /// <summary>
-        /// Sets a query option.
-        /// </summary>
+        
         /// <param name="optionName"></param>
         /// <param name="optionValue"></param>
         public override void AddQueryOption(string optionName, object optionValue)
@@ -359,9 +345,7 @@ namespace Microsoft.PowerShell.Cmdletization.Cim
             return null;
         }
 
-        /// <summary>
-        /// Returns a string that represents the current CIM query.
-        /// </summary>
+        
         /// <returns>A string that represents the current CIM query.</returns>
         public override string ToString()
         {

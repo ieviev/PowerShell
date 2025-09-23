@@ -8,22 +8,16 @@ using System.Xml;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// WriteHost cmdlet.
-    /// </summary>
+    
     [Cmdlet(VerbsCommunications.Write, "Host", HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097137", RemotingCapability = RemotingCapability.None)]
     public sealed class WriteHostCommand : ConsoleColorCmdlet
     {
-        /// <summary>
-        /// Object to be output.
-        /// </summary>
+        
         [Parameter(Position = 0, ValueFromRemainingArguments = true, ValueFromPipeline = true)]
         [Alias("Msg", "Message")]
         public object Object { get; set; }
 
-        /// <summary>
-        /// False to add a newline to the end of the output string, true if not.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter NoNewline
         {
@@ -38,9 +32,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets and sets the separator to print between objects.
-        /// </summary>
+        
         /// <value></value>
         [Parameter]
         public object Separator { get; set; } = " ";
@@ -98,9 +90,7 @@ namespace Microsoft.PowerShell.Commands
             return null;
         }
 
-        /// <summary>
-        /// Outputs the object to the host console, with optional newline.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             string result = ProcessObject(Object) ?? string.Empty;

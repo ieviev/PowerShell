@@ -3,58 +3,35 @@
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Defines the names of the internal providers.
-    /// Derived classes exist for custom and single shells. In the single
-    /// shell the provider name includes the PSSnapin name. In custom
-    /// shells it does not.
-    /// </summary>
+    
     internal abstract class ProviderNames
     {
-        /// <summary>
-        /// Gets the name of the EnvironmentProvider.
-        /// </summary>
+        
         internal abstract string Environment { get; }
 
-        /// <summary>
-        /// Gets the name of the Certificate.
-        /// </summary>
+        
         internal abstract string Certificate { get; }
 
-        /// <summary>
-        /// Gets the name of the VariableProvider.
-        /// </summary>
+        
         internal abstract string Variable { get; }
 
-        /// <summary>
-        /// Gets the name of the AliasProvider.
-        /// </summary>
+        
         internal abstract string Alias { get; }
 
-        /// <summary>
-        /// Gets the name of the FunctionProvider.
-        /// </summary>
+        
         internal abstract string Function { get; }
 
-        /// <summary>
-        /// Gets the name of the FileSystemProvider.
-        /// </summary>
+        
         internal abstract string FileSystem { get; }
 
-        /// <summary>
-        /// Gets the name of the RegistryProvider.
-        /// </summary>
+        
         internal abstract string Registry { get; }
     }
 
-    /// <summary>
-    /// The provider names for the single shell.
-    /// </summary>
+    
     internal class SingleShellProviderNames : ProviderNames
     {
-        /// <summary>
-        /// Gets the name of the EnvironmentProvider.
-        /// </summary>
+        
         internal override string Environment
         {
             get
@@ -63,9 +40,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the name of the Certificate.
-        /// </summary>
+        
         internal override string Certificate
         {
             get
@@ -74,9 +49,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the name of the VariableProvider.
-        /// </summary>
+        
         internal override string Variable
         {
             get
@@ -85,9 +58,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the name of the AliasProvider.
-        /// </summary>
+        
         internal override string Alias
         {
             get
@@ -96,9 +67,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the name of the FunctionProvider.
-        /// </summary>
+        
         internal override string Function
         {
             get
@@ -107,9 +76,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the name of the FileSystemProvider.
-        /// </summary>
+        
         internal override string FileSystem
         {
             get
@@ -118,9 +85,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the name of the RegistryProvider.
-        /// </summary>
+        
         internal override string Registry
         {
             get

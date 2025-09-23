@@ -22,9 +22,7 @@ namespace BenchmarkDotNet.Extensions
                 return ArrayOfUniqueValues<T>(2).First(value => !value.Equals(default));
         }
 
-        /// <summary>
-        /// does not support byte because there are only 256 unique byte values
-        /// </summary>
+        
         public static T[] ArrayOfUniqueValues<T>(int count)
         {
             // allocate the array first to try to take advantage of memory randomization

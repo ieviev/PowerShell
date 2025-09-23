@@ -7,17 +7,13 @@ using System.Management.Automation;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// A command to Remove WMI Object.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Remove, "WmiObject", DefaultParameterSetName = "class", SupportsShouldProcess = true,
         HelpUri = "https://go.microsoft.com/fwlink/?LinkID=113381", RemotingCapability = RemotingCapability.OwnedByCommand)]
     public class RemoveWmiObject : WmiBaseCmdlet
     {
         #region Parameters
-        /// <summary>
-        /// The WMI Object to use.
-        /// </summary>
+        
         [Parameter(ValueFromPipeline = true, Mandatory = true, ParameterSetName = "object")]
         public ManagementObject InputObject
         {
@@ -25,9 +21,7 @@ namespace Microsoft.PowerShell.Commands
 
             set { _inputObject = value; }
         }
-        /// <summary>
-        /// The WMI Path to use.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ParameterSetName = "path")]
         public string Path
         {
@@ -35,9 +29,7 @@ namespace Microsoft.PowerShell.Commands
 
             set { _path = value; }
         }
-        /// <summary>
-        /// The WMI class to use.
-        /// </summary>
+        
         [Parameter(Position = 0, Mandatory = true, ParameterSetName = "class")]
         public string Class
         {
@@ -55,9 +47,7 @@ namespace Microsoft.PowerShell.Commands
 
         #endregion parameter data
         #region Command code
-        /// <summary>
-        /// Remove an object given either path,class name or pipeline input.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             if (this.AsJob)

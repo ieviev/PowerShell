@@ -5,26 +5,19 @@ using System;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <summary>
-    /// The ComparableValueFilterRule provides support for derived classes
-    /// that evaluate against IComparable values.
-    /// </summary>
+    
     /// <typeparam name="T">
     /// The generic parameter.
     /// </typeparam>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public abstract class ComparableValueFilterRule<T> : FilterRule where T : IComparable
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ComparableValueFilterRule{T}"/> class.
-        /// </summary>
+        
         protected ComparableValueFilterRule()
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ComparableValueFilterRule{T}"/> class.
-        /// </summary>
+        
         /// <param name="source">The source to initialize from.</param>
         protected ComparableValueFilterRule(ComparableValueFilterRule<T> source)
             : base(source)
@@ -34,10 +27,7 @@ namespace Microsoft.Management.UI.Internal
 
         #region Properties
 
-        /// <summary>
-        /// Gets or sets a value indicating whether null objects passed to Evaluate will
-        /// evaluate to true or false.
-        /// </summary>
+        
         protected bool DefaultNullValueEvaluation
         {
             get;
@@ -48,9 +38,7 @@ namespace Microsoft.Management.UI.Internal
 
         #region Public Methods
 
-        /// <summary>
-        /// Determines if item matches a derived classes criteria.
-        /// </summary>
+        
         /// <param name="item">
         /// The item to match evaluate.
         /// </param>
@@ -78,9 +66,7 @@ namespace Microsoft.Management.UI.Internal
             return this.Evaluate(castItem);
         }
 
-        /// <summary>
-        /// Determines if item matches a derived classes criteria.
-        /// </summary>
+        
         /// <param name="data">
         /// The item to match evaluate.
         /// </param>

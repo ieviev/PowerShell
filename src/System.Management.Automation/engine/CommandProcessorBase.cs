@@ -9,24 +9,17 @@ using System.Runtime.InteropServices;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// The base class for all command processor classes. It provides
-    /// abstract methods to execute a command.
-    /// </summary>
+    
     internal abstract class CommandProcessorBase : IDisposable
     {
         #region ctor
 
-        /// <summary>
-        /// Default constructor.
-        /// </summary>
+        
         internal CommandProcessorBase()
         {
         }
 
-        /// <summary>
-        /// Initializes the base command processor class with the command metadata.
-        /// </summary>
+        
         /// <param name="commandInfo">
         /// The metadata about the command to run.
         /// </param>
@@ -83,21 +76,14 @@ namespace System.Management.Automation
 
         internal bool _addedToPipelineAlready;
 
-        /// <summary>
-        /// Gets the CommandInfo for the command this command processor represents.
-        /// </summary>
+        
         /// <value></value>
         internal CommandInfo CommandInfo { get; set; }
 
-        /// <summary>
-        /// Gets whether the command has a 'Clean' block defined.
-        /// </summary>
+        
         internal bool HasCleanBlock { get; }
 
-        /// <summary>
-        /// This indicates whether this command processor is created from
-        /// a script file.
-        /// </summary>
+        
         /// <remarks>
         /// Script command processor created from a script file is special
         /// in following two perspectives,
@@ -115,17 +101,10 @@ namespace System.Management.Automation
 
         protected bool _fromScriptFile = false;
 
-        /// <summary>
-        /// If this flag is true, the commands in this Pipeline will redirect
-        /// the global error output pipe to the command's error output pipe.
-        /// (See the comment in Pipeline.RedirectShellErrorOutputPipe for an
-        /// explanation of why this flag is needed).
-        /// </summary>
+        
         internal bool RedirectShellErrorOutputPipe { get; set; } = false;
 
-        /// <summary>
-        /// Gets or sets the command object.
-        /// </summary>
+        
         internal InternalCommand Command
         {
             get
@@ -152,9 +131,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Get the ObsoleteAttribute of the current command.
-        /// </summary>
+        
         internal virtual ObsoleteAttribute ObsoleteAttribute
         {
             get { return null; }
@@ -163,9 +140,7 @@ namespace System.Management.Automation
         // Full Qualified ID for the obsolete command warning
         private const string FQIDCommandObsolete = "CommandObsolete";
 
-        /// <summary>
-        /// The command runtime used for this instance of a command processor.
-        /// </summary>
+        
         protected MshCommandRuntime commandRuntime;
 
         internal MshCommandRuntime CommandRuntime
@@ -175,10 +150,7 @@ namespace System.Management.Automation
             set { commandRuntime = value; }
         }
 
-        /// <summary>
-        /// For commands that use the scope stack, if this flag is
-        /// true, don't create a new scope when running this command.
-        /// </summary>
+        
         /// <value></value>
         internal bool UseLocalScope
         {
@@ -189,10 +161,7 @@ namespace System.Management.Automation
 
         protected bool _useLocalScope;
 
-        /// <summary>
-        /// Ensures that the provided script block is compatible with the current language mode - to
-        /// be used when a script block is being dotted.
-        /// </summary>
+        
         /// <param name="scriptBlock">The script block being dotted.</param>
         /// <param name="context">The current execution context.</param>
         /// <param name="invocationInfo">The invocation info about the command.</param>
@@ -249,9 +218,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// The execution context used by the system.
-        /// </summary>
+        
         protected ExecutionContext _context;
 
         internal ExecutionContext Context
@@ -261,9 +228,7 @@ namespace System.Management.Automation
             set { _context = value; }
         }
 
-        /// <summary>
-        /// Etw activity for this pipeline.
-        /// </summary>
+        
         internal Guid PipelineActivityId { get; set; } = Guid.Empty;
 
         #endregion properties
@@ -272,10 +237,7 @@ namespace System.Management.Automation
 
         #region handling of -? parameter
 
-        /// <summary>
-        /// Checks if user has requested help (for example passing "-?" parameter for a cmdlet)
-        /// and if yes, then returns the help target to display.
-        /// </summary>
+        
         /// <param name="helpTarget">Help target to request.</param>
         /// <param name="helpCategory">Help category to request.</param>
         /// <returns><see langword="true"/> if user requested help; <see langword="false"/> otherwise.</returns>
@@ -288,9 +250,7 @@ namespace System.Management.Automation
             return false;
         }
 
-        /// <summary>
-        /// Creates a command processor for "get-help [helpTarget]".
-        /// </summary>
+        
         /// <param name="context">Context for the command processor.</param>
         /// <param name="helpTarget">Help target.</param>
         /// <param name="helpCategory">Help category.</param>
@@ -326,24 +286,17 @@ namespace System.Management.Automation
 
         #endregion
 
-        /// <summary>
-        /// Tells whether pipeline input is expected or not.
-        /// </summary>
+        
         /// <returns>A bool indicating whether pipeline input is expected.</returns>
         internal bool IsPipelineInputExpected()
         {
             return commandRuntime.IsPipelineInputExpected;
         }
 
-        /// <summary>
-        /// If you want this command to execute in other than the default session
-        /// state, use this API to get and set that session state instance...
-        /// </summary>
+        
         internal SessionStateInternal CommandSessionState { get; set; }
 
-        /// <summary>
-        /// Gets or sets the session state scope for this command processor object.
-        /// </summary>
+        
         protected internal SessionStateScope CommandScope { get; protected set; }
 
         protected virtual void OnSetCurrentScope()
@@ -354,10 +307,7 @@ namespace System.Management.Automation
         {
         }
 
-        /// <summary>
-        /// This method sets the current session state scope to the execution scope for the pipeline
-        /// that was stored in the pipeline manager when it was first invoked.
-        /// </summary>
+        
         internal void SetCurrentScopeToExecutionScope()
         {
             // Make sure we have a session state instance for this command.
@@ -376,10 +326,7 @@ namespace System.Management.Automation
             OnSetCurrentScope();
         }
 
-        /// <summary>
-        /// Restores the current session state scope to the scope which was active when SetCurrentScopeToExecutionScope
-        /// was called.
-        /// </summary>
+        
         internal void RestorePreviousScope()
         {
             OnRestorePreviousScope();
@@ -395,16 +342,10 @@ namespace System.Management.Automation
         private SessionStateScope _previousScope;
         private SessionStateInternal _previousCommandSessionState;
 
-        /// <summary>
-        /// A collection of arguments that have been added by the parser or
-        /// host interfaces. These will be sent to the parameter binder controller
-        /// for processing.
-        /// </summary>
+        
         internal Collection<CommandParameterInternal> arguments = new Collection<CommandParameterInternal>();
 
-        /// <summary>
-        /// Adds an unbound parameter.
-        /// </summary>
+        
         /// <param name="parameter">
         /// The parameter to add to the unbound arguments list
         /// </param>
@@ -414,15 +355,10 @@ namespace System.Management.Automation
             arguments.Add(parameter);
         }
 
-        /// <summary>
-        /// Prepares the command for execution.
-        /// This should be called once before ProcessRecord().
-        /// </summary>
+        
         internal abstract void Prepare(IDictionary psDefaultParameterValues);
 
-        /// <summary>
-        /// Write warning message for an obsolete command.
-        /// </summary>
+        
         /// <param name="obsoleteAttr"></param>
         private void HandleObsoleteCommand(ObsoleteAttribute obsoleteAttr)
         {
@@ -444,10 +380,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Sets the execution scope for the pipeline and then calls the Prepare
-        /// abstract method which gets overridden by derived classes.
-        /// </summary>
+        
         internal void DoPrepare(IDictionary psDefaultParameterValues)
         {
             CommandProcessorBase oldCurrentCommandProcessor = _context.CurrentCommandProcessor;
@@ -480,10 +413,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Called once before ProcessRecord(). Internally it calls
-        /// BeginProcessing() of the InternalCommand.
-        /// </summary>
+        
         /// <exception cref="PipelineStoppedException">
         /// a terminating error occurred, or the pipeline was otherwise stopped
         /// </exception>
@@ -552,17 +482,10 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// This calls the command.  It assumes that DoPrepare() has already been called.
-        /// </summary>
+        
         internal abstract void ProcessRecord();
 
-        /// <summary>
-        /// This method sets the execution scope to the
-        /// appropriate scope for the pipeline and then calls
-        /// the ProcessRecord abstract method that derived command processors
-        /// override.
-        /// </summary>
+        
         internal void DoExecute()
         {
             ExecutionContext.CheckStackDepth();
@@ -581,10 +504,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Called once after ProcessRecord().
-        /// Internally it calls EndProcessing() of the InternalCommand.
-        /// </summary>
+        
         /// <exception cref="PipelineStoppedException">
         /// A terminating error occurred, or the pipeline was otherwise stopped.
         /// </exception>
@@ -608,9 +528,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Calls the virtual Complete method after setting the appropriate session state scope.
-        /// </summary>
+        
         internal void DoComplete()
         {
             Pipe oldErrorOutputPipe = _context.ShellFunctionErrorOutputPipe;
@@ -747,9 +665,7 @@ namespace System.Management.Automation
             _context.QuestionMarkVariableValue = false;
         }
 
-        /// <summary>
-        /// For diagnostic purposes.
-        /// </summary>
+        
         public override string ToString()
         {
             if (CommandInfo != null)
@@ -757,19 +673,10 @@ namespace System.Management.Automation
             return "<NullCommandInfo>"; // does not require localization
         }
 
-        /// <summary>
-        /// True if Read() has not be called, false otherwise.
-        /// </summary>
+        
         private bool _firstCallToRead = true;
 
-        /// <summary>
-        /// Entry point used by the engine to reads the input pipeline object
-        /// and binds the parameters.
-        ///
-        /// This default implementation reads the next pipeline object and sets
-        /// it as the CurrentPipelineObject in the InternalCommand.
-        /// Does not throw.
-        /// </summary>
+        
         /// <returns>
         /// True if read succeeds.
         /// </returns>
@@ -800,12 +707,7 @@ namespace System.Management.Automation
             return true;
         }
 
-        /// <summary>
-        /// Wraps the exception which occurred during cmdlet invocation,
-        /// stores that as the exception to be returned from
-        /// PipelineProcessor.SynchronousExecute, and writes it to
-        /// the error variable.
-        /// </summary>
+        
         /// <param name="e">
         /// The exception to wrap in a CmdletInvocationException or
         /// CmdletProviderInvocationException.
@@ -946,11 +848,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Stores the exception to be returned from
-        /// PipelineProcessor.SynchronousExecute, and writes it to
-        /// the error variable.
-        /// </summary>
+        
         /// <param name="e">
         /// The exception which occurred during script execution
         /// </param>
@@ -974,10 +872,7 @@ namespace System.Management.Automation
             throw new PipelineStoppedException();
         }
 
-        /// <summary>
-        /// Sometimes we shouldn't be rethrow the exception we previously caught,
-        /// such as when the exception is handled by a trap.
-        /// </summary>
+        
         internal void ForgetScriptException()
         {
             if (Command != null && commandRuntime.PipelineProcessor != null)
@@ -994,12 +889,7 @@ namespace System.Management.Automation
         // removed.
         private bool _disposed;
 
-        /// <summary>
-        /// IDisposable implementation
-        /// When the command is complete, the CommandProcessorBase should be disposed.
-        /// This enables cmdlets to reliably release file handles etc.
-        /// without waiting for garbage collection.
-        /// </summary>
+        
         /// <remarks>We use the standard IDispose pattern</remarks>
         public void Dispose()
         {

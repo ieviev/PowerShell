@@ -7,18 +7,10 @@ using System.Xml;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Class MamlCommandHelpInfo keeps track of help information to be returned by
-    /// command help provider.
-    /// </summary>
+    
     internal class MamlCommandHelpInfo : BaseCommandHelpInfo
     {
-        /// <summary>
-        /// Constructor for custom HelpInfo object construction
-        ///
-        /// This is used by the CommandHelpProvider class to generate the
-        /// default help UX when no help content is present.
-        /// </summary>
+        
         /// <param name="helpObject"></param>
         /// <param name="helpCategory"></param>
         internal MamlCommandHelpInfo(PSObject helpObject, HelpCategory helpCategory)
@@ -46,10 +38,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Constructor for MamlCommandHelpInfo. This constructor will call the corresponding
-        /// constructor in CommandHelpInfo so that xmlNode will be converted a mamlNode.
-        /// </summary>
+        
         /// <remarks>
         /// This constructor is intentionally made private so that the only way to create
         /// MamlCommandHelpInfo is through static function
@@ -81,9 +70,7 @@ namespace System.Management.Automation
             this.ForwardHelpCategory = HelpCategory.Provider;
         }
 
-        /// <summary>
-        /// Override the FullHelp PSObject of this provider-specific HelpInfo with generic help.
-        /// </summary>
+        
         internal void OverrideProviderSpecificHelpWithGenericHelp(HelpInfo genericHelpInfo)
         {
             PSObject genericHelpMaml = genericHelpInfo.FullHelp;
@@ -100,9 +87,7 @@ namespace System.Management.Automation
 
         private readonly PSObject _fullHelpObject;
 
-        /// <summary>
-        /// Full help object for this help item.
-        /// </summary>
+        
         /// <value>Full help object for this help item.</value>
         internal override PSObject FullHelp
         {
@@ -112,9 +97,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Examples string of this cmdlet help info.
-        /// </summary>
+        
         private string Examples
         {
             get
@@ -123,9 +106,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Parameters string of this cmdlet help info.
-        /// </summary>
+        
         private string Parameters
         {
             get
@@ -134,9 +115,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Notes string of this cmdlet help info.
-        /// </summary>
+        
         private string Notes
         {
             get
@@ -165,9 +144,7 @@ namespace System.Management.Automation
         //
 
         private string _component = null;
-        /// <summary>
-        /// Component for this command.
-        /// </summary>
+        
         /// <value></value>
         internal override string Component
         {
@@ -178,9 +155,7 @@ namespace System.Management.Automation
         }
 
         private string _role = null;
-        /// <summary>
-        /// Role for this command.
-        /// </summary>
+        
         /// <value></value>
         internal override string Role
         {
@@ -191,9 +166,7 @@ namespace System.Management.Automation
         }
 
         private string _functionality = null;
-        /// <summary>
-        /// Functionality for this command.
-        /// </summary>
+        
         /// <value></value>
         internal override string Functionality
         {
@@ -214,9 +187,7 @@ namespace System.Management.Automation
             this.UpdateUserDefinedDataProperties();
         }
 
-        /// <summary>
-        /// Add user-defined command help data to command help.
-        /// </summary>
+        
         /// <param name="userDefinedData">User defined data object.</param>
         internal void AddUserDefinedData(UserDefinedHelpData userDefinedData)
         {
@@ -248,9 +219,7 @@ namespace System.Management.Automation
 
         #region Load
 
-        /// <summary>
-        /// Create a MamlCommandHelpInfo object from an XmlNode.
-        /// </summary>
+        
         /// <param name="xmlNode">XmlNode that contains help info.</param>
         /// <param name="helpCategory">Help category this maml object fits into.</param>
         /// <returns>MamlCommandHelpInfo object created.</returns>
@@ -271,11 +240,7 @@ namespace System.Management.Automation
         #region Provider specific help
 
 #if V2
-        /// <summary>
-        /// Merge the provider specific help with current command help.
-        ///
-        /// The cmdletHelp and dynamicParameterHelp is normally retrieved from ProviderHelpProvider.
-        /// </summary>
+        
         /// <remarks>
         /// A new MamlCommandHelpInfo is created to avoid polluting the provider help cache.
         /// </remarks>
@@ -307,9 +272,7 @@ namespace System.Management.Automation
 
         #region Helper Methods and Overloads
 
-        /// <summary>
-        /// Extracts text for a given property from the full help object.
-        /// </summary>
+        
         /// <param name="psObject">FullHelp object.</param>
         /// <param name="propertyName">
         /// Name of the property for which text needs to be extracted.
@@ -329,11 +292,7 @@ namespace System.Management.Automation
             return ExtractText(PSObject.AsPSObject(psObject.Properties[propertyName].Value));
         }
 
-        /// <summary>
-        /// Given a PSObject, this method will traverse through the objects properties,
-        /// extracts content from properties that are of type System.String, appends them
-        /// together and returns.
-        /// </summary>
+        
         /// <param name="psObject"></param>
         /// <returns></returns>
         private static string ExtractText(PSObject psObject)
@@ -385,14 +344,7 @@ namespace System.Management.Automation
             return result.ToString();
         }
 
-        /// <summary>
-        /// Returns true if help content in help info matches the
-        /// pattern contained in <paramref name="pattern"/>.
-        /// The underlying code will usually run pattern.IsMatch() on
-        /// content it wants to search.
-        /// Cmdlet help info looks for pattern in Synopsis and
-        /// DetailedDescription.
-        /// </summary>
+        
         /// <param name="pattern"></param>
         /// <returns></returns>
         internal override bool MatchPatternInContent(WildcardPattern pattern)

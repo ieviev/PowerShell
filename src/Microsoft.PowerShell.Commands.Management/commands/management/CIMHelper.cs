@@ -36,10 +36,7 @@ namespace Microsoft.PowerShell.Commands
         internal const string MicrosoftNetworkAdapterNamespace = "root/StandardCimv2";
         internal const string DefaultQueryDialect = "WQL";
 
-        /// <summary>
-        /// Create a WQL query string to retrieve all properties from
-        /// the specified WMI class.
-        /// </summary>
+        
         /// <param name="from">A string containing the WMI class name.</param>
         /// <returns>
         /// A string containing the WQL query string
@@ -49,12 +46,7 @@ namespace Microsoft.PowerShell.Commands
             return "SELECT * from " + from;
         }
 
-        /// <summary>
-        /// Retrieve a new object of type T, whose properties and fields are
-        /// populated from an instance of the named WMI class. If the CIM
-        /// query results in multiple instances, only the first instance is
-        /// returned.
-        /// </summary>
+        
         /// <typeparam name="T">
         /// The type of the object to be created. Must be a default-constructable
         /// reference type.
@@ -102,11 +94,7 @@ namespace Microsoft.PowerShell.Commands
             return null;
         }
 
-        /// <summary>
-        /// Retrieve an array of new objects of type T, whose properties and fields are
-        /// populated from an instance of the specified WMI class on the specified CIM
-        /// session.
-        /// </summary>
+        
         /// <typeparam name="T">
         /// The type of the object to be created. Must be a default-constructable
         /// reference type.
@@ -165,11 +153,7 @@ namespace Microsoft.PowerShell.Commands
             return rv.ToArray();
         }
 
-        /// <summary>
-        /// Retrieve an array of new objects of type T, whose properties and fields are
-        /// populated from an instance of the specified WMI class on the specified CIM
-        /// session.
-        /// </summary>
+        
         /// <typeparam name="T">
         /// The type of the object to be created. Must be a default-constructable
         /// reference type.
@@ -221,10 +205,7 @@ namespace Microsoft.PowerShell.Commands
                 SetObjectDataMember(obj, binding, wmiProp);
         }
 
-        /// <summary>
-        /// Escape any backslash (\) characters in a path with an additional
-        /// backslash, allowing the path to be used within a WMI query.
-        /// </summary>
+        
         /// <param name="path">
         /// A string that may contain backslash characters.
         /// </param>
@@ -245,11 +226,7 @@ namespace Extensions
 
     internal static class CIMExtensions
     {
-        /// <summary>
-        /// An "overload" of the
-        /// <see cref="Microsoft.Management.Infrastructure.CimSession"/>.QueryInstances
-        /// method that takes only the namespace and query string as a parameters.
-        /// </summary>
+        
         /// <param name="session">The CimSession to be queried.</param>
         /// <param name="nameSpace">A string containing the namespace to run the query against.</param>
         /// <param name="query">A string containing the query to be run.</param>
@@ -261,9 +238,7 @@ namespace Extensions
             return session.QueryInstances(nameSpace, CIMHelper.DefaultQueryDialect, query);
         }
 
-        /// <summary>
-        /// Execute a CIM query and return only the first instance in the result.
-        /// </summary>
+        
         /// <param name="session">The CimSession to be queried.</param>
         /// <param name="nameSpace">A string containing the namespace to run the query against.</param>
         /// <param name="query">A string containing the query to be run.</param>
@@ -290,9 +265,7 @@ namespace Extensions
             return null;
         }
 
-        /// <summary>
-        /// Execute a CIM query and return only the first instance in the result.
-        /// </summary>
+        
         /// <param name="session">The CimSession to be queried.</param>
         /// <param name="query">A string containing the query to be run.</param>
         /// <returns>

@@ -12,17 +12,13 @@ using System.Management.Automation.Security;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// The implementation of the "import-localizeddata" cmdlet.
-    /// </summary>
+    
     [Cmdlet(VerbsData.Import, "LocalizedData", HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096710")]
     public sealed class ImportLocalizedData : PSCmdlet
     {
         #region Parameters
 
-        /// <summary>
-        /// The path from which to import the aliases.
-        /// </summary>
+        
         [Parameter(Position = 0)]
         [Alias("Variable")]
         [ValidateNotNullOrEmpty]
@@ -41,9 +37,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string _bindingVariable;
 
-        /// <summary>
-        /// The scope to import the aliases to.
-        /// </summary>
+        
         [Parameter(Position = 1)]
         public string UICulture
         {
@@ -60,9 +54,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string _uiculture;
 
-        /// <summary>
-        /// The scope to import the aliases to.
-        /// </summary>
+        
         [Parameter]
         public string BaseDirectory
         {
@@ -79,9 +71,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string _baseDirectory;
 
-        /// <summary>
-        /// The scope to import the aliases to.
-        /// </summary>
+        
         [Parameter]
         public string FileName
         {
@@ -98,9 +88,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string _fileName;
 
-        /// <summary>
-        /// The command allowed in the data file.  If unspecified, then ConvertFrom-StringData is allowed.
-        /// </summary>
+        
         [Parameter]
         [ValidateTrustedData]
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays", Justification = "Cmdlets use arrays for parameters.")]
@@ -125,9 +113,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Command code
 
-        /// <summary>
-        /// The main processing loop of the command.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             string path = GetFilePath();

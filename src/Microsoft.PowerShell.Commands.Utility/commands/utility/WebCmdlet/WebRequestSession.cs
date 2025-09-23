@@ -14,9 +14,7 @@ using System.Threading;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// WebRequestSession for holding session infos.
-    /// </summary>
+    
     public class WebRequestSession : IDisposable
     {
         #region Fields
@@ -36,57 +34,39 @@ namespace Microsoft.PowerShell.Commands
         private TimeSpan _connectionTimeout;
         private UnixDomainSocketEndPoint? _unixSocket;
 
-        /// <summary>
-        /// Contains true if an existing HttpClient had to be disposed and recreated since the WebSession was last used.
-        /// </summary>
+        
         private bool _disposedClient;
 
         #endregion Fields
 
-        /// <summary>
-        /// Gets or sets the Header property.
-        /// </summary>
+        
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public Dictionary<string, string> Headers { get; set; }
 
-        /// <summary>
-        /// Gets or sets the content Headers when using HttpClient.
-        /// </summary>
+        
         internal Dictionary<string, string> ContentHeaders { get; set; }
 
-        /// <summary>
-        /// Gets or sets the Cookies property.
-        /// </summary>
+        
         public CookieContainer Cookies { get => _cookies; set => SetClassVar(ref _cookies, value); }
 
         #region Credentials
 
-        /// <summary>
-        /// Gets or sets the UseDefaultCredentials property.
-        /// </summary>
+        
         public bool UseDefaultCredentials { get => _useDefaultCredentials; set => SetStructVar(ref _useDefaultCredentials, value); }
 
-        /// <summary>
-        /// Gets or sets the Credentials property.
-        /// </summary>
+        
         public ICredentials? Credentials { get => _credentials; set => SetClassVar(ref _credentials, value); }
 
-        /// <summary>
-        /// Gets or sets the Certificates property.
-        /// </summary>
+        
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public X509CertificateCollection? Certificates { get => _certificates; set => SetClassVar(ref _certificates, value); }
 
         #endregion Credentials
 
-        /// <summary>
-        /// Gets or sets the UserAgent property.
-        /// </summary>
+        
         public string UserAgent { get; set; }
 
-        /// <summary>
-        /// Gets or sets the Proxy property.
-        /// </summary>
+        
         public IWebProxy? Proxy
         {
             get => _proxy;
@@ -100,24 +80,16 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets or sets the MaximumRedirection property.
-        /// </summary>
+        
         public int MaximumRedirection { get => _maximumRedirection; set => SetStructVar(ref _maximumRedirection, value); }
 
-        /// <summary>
-        /// Gets or sets the count of retries for request failures.
-        /// </summary>
+        
         public int MaximumRetryCount { get; set; }
 
-        /// <summary>
-        /// Gets or sets the interval in seconds between retries.
-        /// </summary>
+        
         public int RetryIntervalInSeconds { get; set; }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="WebRequestSession"/> class.
-        /// </summary>
+        
         public WebRequestSession()
         {
             // Build the headers collection
@@ -160,9 +132,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Add a X509Certificate to the Certificates collection.
-        /// </summary>
+        
         /// <param name="certificate">The certificate to be added.</param>
         internal void AddCertificate(X509Certificate certificate)
         {
@@ -174,10 +144,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets an existing or creates a new HttpClient for this WebRequest session if none currently exists (either because it was never
-        /// created, or because changes to the WebSession properties required the existing HttpClient to be disposed).
-        /// </summary>
+        
         /// <param name="suppressHttpClientRedirects">True if the caller does not want the HttpClient to ever handle redirections automatically.</param>
         /// <param name="clientWasReset">Contains true if an existing HttpClient had to be disposed and recreated since the WebSession was last used.</param>
         /// <returns>The HttpClient cached in the WebSession, based on all current settings.</returns>
@@ -286,9 +253,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Dispose the WebRequestSession.
-        /// </summary>
+        
         /// <param name="disposing">True when called from Dispose() and false when called from finalizer.</param>
         protected virtual void Dispose(bool disposing)
         {
@@ -303,9 +268,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Dispose the WebRequestSession.
-        /// </summary>
+        
         public void Dispose()
         {
             Dispose(disposing: true);

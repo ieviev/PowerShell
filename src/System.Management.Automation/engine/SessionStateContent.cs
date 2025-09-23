@@ -11,18 +11,14 @@ using Dbg = System.Management.Automation;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Holds the state of a Monad Shell session.
-    /// </summary>
+    
     internal sealed partial class SessionStateInternal
     {
         #region IContentCmdletProvider accessors
 
         #region GetContentReader
 
-        /// <summary>
-        /// Gets the content reader for the specified item.
-        /// </summary>
+        
         /// <param name="paths">
         /// The path(s) to the item(s) to get the content reader for.
         /// </param>
@@ -69,9 +65,7 @@ namespace System.Management.Automation
             return results;
         }
 
-        /// <summary>
-        /// Gets the content reader for the specified item.
-        /// </summary>
+        
         /// <param name="paths">
         /// The path(s) to the item(s) to get the content reader from.
         /// </param>
@@ -146,9 +140,7 @@ namespace System.Management.Automation
             return results;
         }
 
-        /// <summary>
-        /// Gets the content reader for the item at the specified path.
-        /// </summary>
+        
         /// <param name="providerInstance">
         /// The provider instance to use.
         /// </param>
@@ -220,9 +212,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the get-content cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -280,9 +270,7 @@ namespace System.Management.Automation
             return GetContentReaderDynamicParameters(providerInstance, path, newContext);
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the get-content cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -361,9 +349,7 @@ namespace System.Management.Automation
 
         #region GetContentWriter
 
-        /// <summary>
-        /// Gets the content writer for the specified item.
-        /// </summary>
+        
         /// <param name="paths">
         /// The path(s) to the item(s) to get the content writer for.
         /// </param>
@@ -410,9 +396,7 @@ namespace System.Management.Automation
             return results;
         }
 
-        /// <summary>
-        /// Gets the content writer for the specified item.
-        /// </summary>
+        
         /// <param name="paths">
         /// The path(s) to the item(s) to get the content writer from.
         /// </param>
@@ -485,9 +469,7 @@ namespace System.Management.Automation
             return results;
         }
 
-        /// <summary>
-        /// Gets the content writer for the item at the specified path.
-        /// </summary>
+        
         /// <param name="providerInstance">
         /// The provider instance to use.
         /// </param>
@@ -558,9 +540,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the set-content and add-content cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -625,9 +605,7 @@ namespace System.Management.Automation
             return null;
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the set-content and add-content cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -706,9 +684,7 @@ namespace System.Management.Automation
 
         #region ClearContent
 
-        /// <summary>
-        /// Clears all the content from the specified item.
-        /// </summary>
+        
         /// <param name="paths">
         /// The path(s) to the item(s) to clear the content from.
         /// </param>
@@ -750,9 +726,7 @@ namespace System.Management.Automation
             context.ThrowFirstErrorOrDoNothing();
         }
 
-        /// <summary>
-        /// Clears all of the content from the specified item.
-        /// </summary>
+        
         /// <param name="paths">
         /// The path to the item to clear the content from.
         /// </param>
@@ -813,9 +787,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Clears the content from the item at the specified path.
-        /// </summary>
+        
         /// <param name="providerInstance">
         /// The provider instance to use.
         /// </param>
@@ -883,9 +855,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the clear-content cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -950,9 +920,7 @@ namespace System.Management.Automation
             return null;
         }
 
-        /// <summary>
-        /// Calls the provider to get the clear-content dynamic parameters.
-        /// </summary>
+        
         /// <param name="providerInstance">
         /// The instance of the provider to call
         /// </param>

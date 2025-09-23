@@ -12,15 +12,10 @@ using System.Security.Permissions;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// The exception that is thrown when there is no help category matching
-    /// a specific input string.
-    /// </summary>
+    
     public class HelpCategoryInvalidException : ArgumentException, IContainsErrorRecord
     {
-        /// <summary>
-        /// Initializes a new instance of the HelpCategoryInvalidException class.
-        /// </summary>
+        
         /// <param name="helpCategory">The name of help category that is invalid.</param>
         public HelpCategoryInvalidException(string helpCategory)
             : base()
@@ -29,18 +24,14 @@ namespace Microsoft.PowerShell.Commands
             CreateErrorRecord();
         }
 
-        /// <summary>
-        /// Initializes a new instance of the HelpCategoryInvalidException class.
-        /// </summary>
+        
         public HelpCategoryInvalidException()
             : base()
         {
             CreateErrorRecord();
         }
 
-        /// <summary>
-        /// Initializes a new instance of the HelpCategoryInvalidException class.
-        /// </summary>
+        
         /// <param name="helpCategory">The name of help category that is invalid.</param>
         /// <param name="innerException">The inner exception of this exception.</param>
         public HelpCategoryInvalidException(string helpCategory, Exception innerException)
@@ -52,9 +43,7 @@ namespace Microsoft.PowerShell.Commands
             CreateErrorRecord();
         }
 
-        /// <summary>
-        /// Creates an internal error record based on helpCategory.
-        /// </summary>
+        
         private void CreateErrorRecord()
         {
             _errorRecord = new ErrorRecord(new ParentContainsErrorRecordException(this), "HelpCategoryInvalid", ErrorCategory.InvalidArgument, null);
@@ -63,9 +52,7 @@ namespace Microsoft.PowerShell.Commands
 
         private ErrorRecord _errorRecord;
 
-        /// <summary>
-        /// Gets ErrorRecord embedded in this exception.
-        /// </summary>
+        
         /// <value>ErrorRecord instance</value>
         public ErrorRecord ErrorRecord
         {
@@ -77,9 +64,7 @@ namespace Microsoft.PowerShell.Commands
 
         private readonly string _helpCategory = System.Management.Automation.HelpCategory.None.ToString();
 
-        /// <summary>
-        /// Gets name of the help category that is invalid.
-        /// </summary>
+        
         /// <value>Name of the help category.</value>
         public string HelpCategory
         {
@@ -89,9 +74,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets exception message for this exception.
-        /// </summary>
+        
         /// <value>Error message.</value>
         public override string Message
         {
@@ -107,9 +90,7 @@ namespace Microsoft.PowerShell.Commands
         }
 
         #region Serialization
-        /// <summary>
-        /// Initializes a new instance of the HelpCategoryInvalidException class.
-        /// </summary>
+        
         /// <param name="info">Serialization information.</param>
         /// <param name="context">Streaming context.</param>
         [Obsolete("Legacy serialization support is deprecated since .NET 8", DiagnosticId = "SYSLIB0051")] 

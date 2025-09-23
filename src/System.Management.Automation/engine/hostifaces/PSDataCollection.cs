@@ -15,9 +15,7 @@ namespace System.Management.Automation
 {
     #region DataAddedEventArgs
 
-    /// <summary>
-    /// Event arguments passed to PSDataCollection DataAdded handlers.
-    /// </summary>
+    
     public sealed class DataAddedEventArgs : EventArgs
     {
         #region Private Data
@@ -26,9 +24,7 @@ namespace System.Management.Automation
 
         #region Constructor
 
-        /// <summary>
-        /// Constructor.
-        /// </summary>
+        
         /// <param name="psInstanceId">
         /// PowerShell InstanceId which added this data.
         /// Guid.Empty, if the data is not added by a PowerShell
@@ -47,16 +43,10 @@ namespace System.Management.Automation
 
         #region Properties
 
-        /// <summary>
-        /// Index at which the data is added.
-        /// </summary>
+        
         public int Index { get; }
 
-        /// <summary>
-        /// PowerShell InstanceId which added this data.
-        /// Guid.Empty, if the data is not added by a PowerShell
-        /// instance.
-        /// </summary>
+        
         public Guid PowerShellInstanceId { get; }
 
         #endregion
@@ -64,9 +54,7 @@ namespace System.Management.Automation
 
     #endregion
 
-    /// <summary>
-    /// Event arguments passed to PSDataCollection DataAdding handlers.
-    /// </summary>
+    
     public sealed class DataAddingEventArgs : EventArgs
     {
         #region Private Data
@@ -75,9 +63,7 @@ namespace System.Management.Automation
 
         #region Constructor
 
-        /// <summary>
-        /// Constructor.
-        /// </summary>
+        
         /// <param name="psInstanceId">
         /// PowerShell InstanceId which added this data.
         /// Guid.Empty, if the data is not added by a PowerShell
@@ -96,16 +82,10 @@ namespace System.Management.Automation
 
         #region Properties
 
-        /// <summary>
-        /// The item about to be added.
-        /// </summary>
+        
         public object ItemAdded { get; }
 
-        /// <summary>
-        /// PowerShell InstanceId which added this data.
-        /// Guid.Empty, if the data is not added by a PowerShell
-        /// instance.
-        /// </summary>
+        
         public Guid PowerShellInstanceId { get; }
 
         #endregion
@@ -113,9 +93,7 @@ namespace System.Management.Automation
 
     #region PSDataCollection
 
-    /// <summary>build
-    /// Thread Safe buffer used with PowerShell Hosting interfaces.
-    /// </summary>
+    
     public class PSDataCollection<T> : IList<T>, ICollection<T>, IEnumerable<T>, IList, ICollection, IEnumerable, IDisposable, ISerializable
     {
         #region Private Data
@@ -131,16 +109,10 @@ namespace System.Management.Automation
 
         private bool _isDisposed = false;
 
-        /// <summary>
-        /// Whether the enumerator needs to be blocking
-        /// by default.
-        /// </summary>
+        
         private bool _blockingEnumerator = false;
 
-        /// <summary>
-        /// Whether the ref count was incremented when
-        /// BlockingEnumerator was updated.
-        /// </summary>
+        
         private bool _refCountIncrementedForBlockingEnumerator = false;
 
         private int _countNewData = 0;
@@ -151,16 +123,12 @@ namespace System.Management.Automation
 
         #region Public Constructors
 
-        /// <summary>
-        /// Default Constructor.
-        /// </summary>
+        
         public PSDataCollection() : this(new List<T>())
         {
         }
 
-        /// <summary>
-        /// Creates a PSDataCollection that includes all the items in the IEnumerable and invokes Complete().
-        /// </summary>
+        
         /// <param name="items">
         /// Items used to initialize the collection
         /// </param>
@@ -174,10 +142,7 @@ namespace System.Management.Automation
             this.Complete();
         }
 
-        /// <summary>
-        /// Initializes a new instance with the specified capacity
-        /// <paramref name="capacity"/>
-        /// </summary>
+        
         /// <param name="capacity">
         /// The number of elements that the new buffer can initially
         /// store.
@@ -194,9 +159,7 @@ namespace System.Management.Automation
 
         #region type converters
 
-        /// <summary>
-        /// Wrap the argument in a PSDataCollection.
-        /// </summary>
+        
         /// <param name="valueToConvert">The value to convert.</param>
         /// <returns>New collection of value, marked as Complete.</returns>
         [SuppressMessage("Microsoft.Usage", "CA2225:OperatorOverloadsHaveNamedAlternates",
@@ -206,9 +169,7 @@ namespace System.Management.Automation
             return CreateAndInitializeFromExplicitValue(valueToConvert);
         }
 
-        /// <summary>
-        /// Wrap the argument in a PSDataCollection.
-        /// </summary>
+        
         /// <param name="valueToConvert">The value to convert.</param>
         /// <returns>New collection of value, marked as Complete.</returns>
         [SuppressMessage("Microsoft.Usage", "CA2225:OperatorOverloadsHaveNamedAlternates",
@@ -218,9 +179,7 @@ namespace System.Management.Automation
             return CreateAndInitializeFromExplicitValue(valueToConvert);
         }
 
-        /// <summary>
-        /// Wrap the argument in a PSDataCollection.
-        /// </summary>
+        
         /// <param name="valueToConvert">The value to convert.</param>
         /// <returns>New collection of value, marked as Complete.</returns>
         [SuppressMessage("Microsoft.Usage", "CA2225:OperatorOverloadsHaveNamedAlternates",
@@ -230,9 +189,7 @@ namespace System.Management.Automation
             return CreateAndInitializeFromExplicitValue(valueToConvert);
         }
 
-        /// <summary>
-        /// Wrap the argument in a PSDataCollection.
-        /// </summary>
+        
         /// <param name="valueToConvert">The value to convert.</param>
         /// <returns>New collection of value, marked as Complete.</returns>
         [SuppressMessage("Microsoft.Usage", "CA2225:OperatorOverloadsHaveNamedAlternates",
@@ -250,9 +207,7 @@ namespace System.Management.Automation
             return psdc;
         }
 
-        /// <summary>
-        /// Wrap the argument in a PSDataCollection.
-        /// </summary>
+        
         /// <param name="valueToConvert">The value to convert.</param>
         /// <returns>New collection of value, marked as Complete.</returns>
         [SuppressMessage("Microsoft.Usage", "CA2225:OperatorOverloadsHaveNamedAlternates",
@@ -265,9 +220,7 @@ namespace System.Management.Automation
             return psdc;
         }
 
-        /// <summary>
-        /// Wrap the argument in a PSDataCollection.
-        /// </summary>
+        
         /// <param name="valueToConvert">The value to convert.</param>
         /// <returns>New collection of value, marked as Complete.</returns>
         [SuppressMessage("Microsoft.Usage", "CA2225:OperatorOverloadsHaveNamedAlternates",
@@ -280,9 +233,7 @@ namespace System.Management.Automation
             return psdc;
         }
 
-        /// <summary>
-        /// Wrap the argument in a PSDataCollection.
-        /// </summary>
+        
         /// <param name="arrayToConvert">The value to convert.</param>
         /// <returns>New collection of value, marked as Complete.</returns>
         [SuppressMessage("Microsoft.Usage", "CA2225:OperatorOverloadsHaveNamedAlternates",
@@ -306,10 +257,7 @@ namespace System.Management.Automation
 
         #region Internal Constructor
 
-        /// <summary>
-        /// Construct the DataBuffer using the supplied <paramref name="listToUse"/>
-        /// as the data buffer.
-        /// </summary>
+        
         /// <param name="listToUse">
         /// buffer where the elements are stored
         /// </param>
@@ -323,9 +271,7 @@ namespace System.Management.Automation
             _data = listToUse;
         }
 
-        /// <summary>
-        /// Creates a PSDataCollection from an ISerializable context.
-        /// </summary>
+        
         /// <param name="info">Serialization information for this instance.</param>
         /// <param name="context">The streaming context for this instance.</param>
         protected PSDataCollection(SerializationInfo info, StreamingContext context)
@@ -352,24 +298,16 @@ namespace System.Management.Automation
 
         #region PSDataCollection Specific Public Methods / Properties
 
-        /// <summary>
-        /// Event fired when objects are being added to the underlying buffer.
-        /// </summary>
+        
         public event EventHandler<DataAddingEventArgs> DataAdding;
 
-        /// <summary>
-        /// Event fired when objects are done being added to the underlying buffer.
-        /// </summary>
+        
         public event EventHandler<DataAddedEventArgs> DataAdded;
 
-        /// <summary>
-        /// Event fired when the buffer is completed.
-        /// </summary>
+        
         public event EventHandler Completed;
 
-        /// <summary>
-        /// A boolean which determines if the buffer is open.
-        /// </summary>
+        
         public bool IsOpen
         {
             get
@@ -381,12 +319,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// An int that tells the frequency of Data Added events fired.
-        /// Raises the DataAdded event only when data has been added a multiple of this many times,
-        /// or when collection can receive no more data, if further data is added past the last event
-        /// prior to completion.
-        /// </summary>
+        
         public int DataAddedCount
         {
             get
@@ -416,10 +349,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Serializes all input by default.
-        /// This is supported only for PSDataCollections of PSObject.
-        /// </summary>
+        
         public bool SerializeInput
         {
             get
@@ -441,19 +371,13 @@ namespace System.Management.Automation
 
         private bool _serializeInput = false;
 
-        /// <summary>
-        /// Determines whether this PSDataCollection was created implicitly in support of
-        /// data collection (for example, a workflow that wants to capture output but hasn't
-        /// provided an instance of the PSDataCollection to capture it with.)
-        /// </summary>
+        
         public bool IsAutoGenerated
         {
             get; set;
         }
 
-        /// <summary>
-        /// Internal tag for indicating a source object identifier for this collection.
-        /// </summary>
+        
         internal Guid SourceId
         {
             get
@@ -473,10 +397,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// If this flag is set to true, the items in the collection will be set to null when it is
-        /// traversed using a PSDataCollectionEnumerator.
-        /// </summary>
+        
         internal bool ReleaseOnEnumeration
         {
             get
@@ -496,9 +417,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// This flag is true when the collection has been enumerated at least once by a PSDataCollectionEnumerator.
-        /// </summary>
+        
         internal bool IsEnumerated
         {
             get
@@ -518,10 +437,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Completes insertions to the buffer.
-        /// Subsequent Inserts to the buffer will result in an InvalidOperationException.
-        /// </summary>
+        
         public void Complete()
         {
             bool raiseEvents = false;
@@ -567,15 +483,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Indicates whether the data collection should
-        /// have a blocking enumerator by default. Currently
-        /// only when a PowerShell object is associated with
-        /// the data collection, a reference count is added
-        /// which causes the enumerator to be blocking. This
-        /// prevents the use of PSDataCollection without a
-        /// PowerShell object. This property fixes the same.
-        /// </summary>
+        
         public bool BlockingEnumerator
         {
             get
@@ -615,19 +523,14 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// If this is set to true, then the enumerator returned from
-        /// GetEnumerator() will never block.
-        /// </summary>
+        
         public bool EnumeratorNeverBlocks { get; set; }
 
         #endregion
 
         #region IList Generic Overrides
 
-        /// <summary>
-        /// Gets or sets the element at the specified index.
-        /// </summary>
+        
         /// <param name="index">
         /// The zero-based index of the element to get or set.
         /// </param>
@@ -671,9 +574,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Determines the index of a specific item in the buffer.
-        /// </summary>
+        
         /// <param name="item">
         /// The object to locate in the buffer.
         /// </param>
@@ -688,9 +589,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Inserts an item to the buffer at the specified index.
-        /// </summary>
+        
         /// <param name="index">
         /// The zero-based index at which item should be inserted.
         /// </param>
@@ -716,9 +615,7 @@ namespace System.Management.Automation
             RaiseEvents(Guid.Empty, index);
         }
 
-        /// <summary>
-        /// Removes the item at the specified index.
-        /// </summary>
+        
         /// <param name="index">
         /// The zero-based index of the item to remove.
         /// </param>
@@ -743,9 +640,7 @@ namespace System.Management.Automation
 
         #region ICollection Generic Overrides
 
-        /// <summary>
-        /// Gets the number of elements contained in the buffer.
-        /// </summary>
+        
         public int Count
         {
             get
@@ -760,9 +655,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets a value indicating whether the buffer is read-only.
-        /// </summary>
+        
         public bool IsReadOnly
         {
             get
@@ -771,9 +664,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Adds an item to the thread-safe buffer.
-        /// </summary>
+        
         /// <param name="item">
         /// item to add
         /// </param>
@@ -787,9 +678,7 @@ namespace System.Management.Automation
             InternalAdd(Guid.Empty, item);
         }
 
-        /// <summary>
-        /// Removes all items from the buffer.
-        /// </summary>
+        
         public void Clear()
         {
             lock (SyncObject)
@@ -798,9 +687,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Determines whether the buffer contains an element with a specific value.
-        /// </summary>
+        
         /// <param name="item">
         /// The object to locate in the buffer.
         /// </param>
@@ -820,9 +707,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Copies the elements of the buffer to a specified array, starting at a particular index.
-        /// </summary>
+        
         /// <param name="array">
         /// The destination Array for the elements of type T copied from the buffer.
         /// </param>
@@ -853,9 +738,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Removes the first occurrence of a specified item from the buffer.
-        /// </summary>
+        
         /// <param name="item">
         /// The object to remove from the buffer.
         /// </param>
@@ -881,10 +764,7 @@ namespace System.Management.Automation
 
         #region IEnumerable Generic Overrides
 
-        /// <summary>
-        /// Returns an enumerator that iterates through the
-        /// elements of the buffer.
-        /// </summary>
+        
         /// <returns>
         /// An IEnumerator for objects of the type stored in the buffer.
         /// </returns>
@@ -897,9 +777,7 @@ namespace System.Management.Automation
 
         #region IList Overrides
 
-        /// <summary>
-        /// Adds an element to the buffer.
-        /// </summary>
+        
         /// <param name="value">
         /// The object to add to the buffer.
         /// </param>
@@ -926,10 +804,7 @@ namespace System.Management.Automation
             return index;
         }
 
-        /// <summary>
-        /// Determines whether the collection contains an
-        /// element with a specific value.
-        /// </summary>
+        
         /// <param name="value">
         /// The object to locate in the collection
         /// </param>
@@ -948,9 +823,7 @@ namespace System.Management.Automation
             return Contains((T)value);
         }
 
-        /// <summary>
-        /// Determines the zero-based index of an element in the buffer.
-        /// </summary>
+        
         /// <param name="value">
         /// The element in the buffer whose index is being determined.
         /// </param>
@@ -968,9 +841,7 @@ namespace System.Management.Automation
             return IndexOf((T)value);
         }
 
-        /// <summary>
-        /// Inserts an object into the buffer at a specified index.
-        /// </summary>
+        
         /// <param name="index">
         /// The zero-based index at which value is to be inserted.
         /// </param>
@@ -991,10 +862,7 @@ namespace System.Management.Automation
             Insert(index, (T)value);
         }
 
-        /// <summary>
-        /// Removes the first occurrence of a specified object
-        /// as an element from the buffer.
-        /// </summary>
+        
         /// <param name="value">
         /// The object to be removed from the buffer.
         /// </param>
@@ -1009,9 +877,7 @@ namespace System.Management.Automation
             Remove((T)value);
         }
 
-        /// <summary>
-        /// Gets a value that indicates whether the buffer is fixed in size.
-        /// </summary>
+        
         bool IList.IsFixedSize
         {
             get
@@ -1020,9 +886,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets a value that indicates whether the buffer is read-only.
-        /// </summary>
+        
         bool IList.IsReadOnly
         {
             get
@@ -1031,9 +895,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets or sets the element at the specified index.
-        /// </summary>
+        
         /// <param name="index">
         /// The zero-based index of the element to get or set.
         /// </param>
@@ -1065,9 +927,7 @@ namespace System.Management.Automation
 
         #region ICollection Overrides
 
-        /// <summary>
-        /// Gets a value that indicates whether the buffer is synchronized.
-        /// </summary>
+        
         bool ICollection.IsSynchronized
         {
             get
@@ -1076,9 +936,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the object used to synchronize access to the thread-safe buffer.
-        /// </summary>
+        
         object ICollection.SyncRoot
         {
             get
@@ -1087,10 +945,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Copies the elements of the collection to a specified array,
-        /// starting at a particular index.
-        /// </summary>
+        
         /// <param name="array">
         /// The destination Array for the elements of type T copied
         /// from the buffer.
@@ -1124,9 +979,7 @@ namespace System.Management.Automation
 
         #region IEnumerable Overrides
 
-        /// <summary>
-        /// Returns an enumerator that iterates through the buffer.
-        /// </summary>
+        
         /// <returns>
         /// An IEnumerator for objects of the type stored in the buffer.
         /// </returns>
@@ -1139,13 +992,7 @@ namespace System.Management.Automation
 
         #region Streaming Behavior
 
-        /// <summary>
-        /// Makes a shallow copy of all the elements currently in this collection
-        /// and clears them from this collection. This will not result in a blocking call.
-        ///
-        /// Calling this method might have side effects on the enumerator. When this
-        /// method is called, the behavior of the enumerator is not defined.
-        /// </summary>
+        
         /// <returns>
         /// A new collection with a copy of all the elements in the current collection.
         /// </returns>
@@ -1154,13 +1001,7 @@ namespace System.Management.Automation
             return ReadAndRemove(0);
         }
 
-        /// <summary>
-        /// Makes a shallow copy of all the elements currently in this collection
-        /// and clears them from this collection. This will not result in a blocking call.
-        ///
-        /// Calling this method might have side effects on the enumerator. When this
-        /// method is called, the behavior of the enumerator is not defined.
-        /// </summary>
+        
         /// <returns>
         /// A new collection with a copy of all the elements in the current collection.
         /// </returns>
@@ -1231,9 +1072,7 @@ namespace System.Management.Automation
 
         #region Protected Virtual Methods
 
-        /// <summary>
-        /// Inserts an item into the buffer at a specified index.
-        /// </summary>
+        
         /// <param name="psInstanceId">
         /// InstanceId of PowerShell instance adding this data.
         /// Guid.Empty if not initiated by a PowerShell instance.
@@ -1261,9 +1100,7 @@ namespace System.Management.Automation
             _data.Insert(index, item);
         }
 
-        /// <summary>
-        /// Removes the item at a specified index.
-        /// </summary>
+        
         /// <param name="index">
         /// The zero-based index of the buffer where the object is to be removed.
         /// </param>
@@ -1280,9 +1117,7 @@ namespace System.Management.Automation
 
         #region Serializable
 
-        /// <summary>
-        /// Implements the ISerializable contract for serializing a PSDataCollection.
-        /// </summary>
+        
         /// <param name="info">Serialization information for this instance.</param>
         /// <param name="context">The streaming context for this instance.</param>
         public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
@@ -1303,10 +1138,7 @@ namespace System.Management.Automation
 
         #region Internal/Private Methods and Properties
 
-        /// <summary>
-        /// Waitable handle for caller's to block until new data
-        /// is added to the underlying buffer.
-        /// </summary>
+        
         internal WaitHandle WaitHandle
         {
             get
@@ -1325,10 +1157,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Utility method to signal handles and raise events
-        /// in the consistent order.
-        /// </summary>
+        
         /// <param name="psInstanceId">
         /// PowerShell InstanceId which added this data.
         /// Guid.Empty, if the data is not added by a PowerShell
@@ -1402,11 +1231,7 @@ namespace System.Management.Automation
             DataAdded?.Invoke(this, new DataAddedEventArgs(psInstanceId, index));
         }
 
-        /// <summary>
-        /// Inserts an item into the buffer at a specified index.
-        /// The caller should make sure the method call is
-        /// synchronized.
-        /// </summary>
+        
         /// <param name="psInstanceId">
         /// InstanceId of PowerShell instance adding this data.
         /// Guid.Empty if this is not initiated by a PowerShell instance.
@@ -1437,9 +1262,7 @@ namespace System.Management.Automation
             InsertItem(psInstanceId, index, item);
         }
 
-        /// <summary>
-        /// Adds an item to the thread-safe buffer.
-        /// </summary>
+        
         /// <param name="psInstanceId">
         /// InstanceId of PowerShell instance adding this data.
         /// Guid.Empty if this is not initiated by a PowerShell instance.
@@ -1473,9 +1296,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Adds the elements of an ICollection to the end of the buffer.
-        /// </summary>
+        
         /// <param name="psInstanceId">
         /// InstanceId of PowerShell instance adding this data.
         /// </param>
@@ -1524,10 +1345,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Increment counter to keep track of active PowerShell instances
-        /// using this buffer. This is used only internally.
-        /// </summary>
+        
         internal void AddRef()
         {
             lock (SyncObject)
@@ -1536,10 +1354,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Decrement counter to keep track of active PowerShell instances
-        /// using this buffer. This is used only internally.
-        /// </summary>
+        
         internal void DecrementRef()
         {
             lock (SyncObject)
@@ -1562,11 +1377,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Returns the index of first occurrence of <paramref name="item"/>
-        /// in the buffer.
-        /// This method is not thread safe.
-        /// </summary>
+        
         /// <param name="item">
         /// The object to locate in the buffer.
         /// </param>
@@ -1593,9 +1404,7 @@ namespace System.Management.Automation
             return -1;
         }
 
-        /// <summary>
-        /// Checks if the <paramref name="value"/> is of type T.
-        /// </summary>
+        
         /// <param name="value">
         /// Value to verify.
         /// </param>
@@ -1681,14 +1490,10 @@ namespace System.Management.Automation
             return false;
         }
 
-        /// <summary>
-        /// Sync object for this collection.
-        /// </summary>
+        
         internal object SyncObject { get; } = new object();
 
-        /// <summary>
-        /// Reference count variable.
-        /// </summary>
+        
         internal int RefCount
         {
             get
@@ -1709,9 +1514,7 @@ namespace System.Management.Automation
 
         #region Idle event
 
-        /// <summary>
-        /// Indicates whether or not the collection should pulse idle events.
-        /// </summary>
+        
         internal bool PulseIdleEvent
         {
             get { return (IdleEvent != null); }
@@ -1719,17 +1522,13 @@ namespace System.Management.Automation
 
         internal event EventHandler<EventArgs> IdleEvent;
 
-        /// <summary>
-        /// Fires an idle event.
-        /// </summary>
+        
         internal void FireIdleEvent()
         {
             IdleEvent.SafeInvoke(this, null);
         }
 
-        /// <summary>
-        /// Pulses the collection.
-        /// </summary>
+        
         internal void Pulse()
         {
             lock (SyncObject)
@@ -1742,9 +1541,7 @@ namespace System.Management.Automation
 
         #region IDisposable Overrides
 
-        /// <summary>
-        /// Public dispose method.
-        /// </summary>
+        
         public void Dispose()
         {
             Dispose(true);
@@ -1752,9 +1549,7 @@ namespace System.Management.Automation
             GC.SuppressFinalize(this);
         }
 
-        /// <summary>
-        /// Release all the resources.
-        /// </summary>
+        
         /// <param name="disposing">If true, release all managed resources.</param>
         protected void Dispose(bool disposing)
         {
@@ -1794,11 +1589,7 @@ namespace System.Management.Automation
 
     #endregion
 
-    /// <summary>
-    /// Interface to support PSDataCollectionEnumerator.
-    /// Needed to provide a way to get to the non-blocking
-    /// MoveNext implementation.
-    /// </summary>
+    
     /// <typeparam name="T"></typeparam>
     internal interface IBlockingEnumerator<out T> : IEnumerator<T>
     {
@@ -1807,11 +1598,7 @@ namespace System.Management.Automation
 
     #region PSDataCollectionEnumerator
 
-    /// <summary>
-    /// Enumerator for PSDataCollection. This enumerator blocks until
-    /// either all the PowerShell operations are completed or the
-    /// PSDataCollection is closed.
-    /// </summary>
+    
     /// <typeparam name="T"></typeparam>
     internal sealed class PSDataCollectionEnumerator<T> : IBlockingEnumerator<T>
     {
@@ -1826,9 +1613,7 @@ namespace System.Management.Automation
 
         #region Constructor
 
-        /// <summary>
-        /// Constructor.
-        /// </summary>
+        
         /// <param name="collection">
         /// PSDataCollection to enumerate.
         /// </param>
@@ -1853,10 +1638,7 @@ namespace System.Management.Automation
 
         #region IEnumerator Overrides
 
-        /// <summary>
-        /// Gets the element in the collection at the current position
-        /// of the enumerator.
-        /// </summary>
+        
         /// <remarks>
         /// For better performance, this property does not throw an exception
         /// if the enumerator is positioned before the first element or after
@@ -1870,10 +1652,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the element in the collection at the current position
-        /// of the enumerator.
-        /// </summary>
+        
         /// <remarks>
         /// For better performance, this property does not throw an exception
         /// if the enumerator is positioned before the first element or after
@@ -1887,9 +1666,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Advances the enumerator to the next element in the collection.
-        /// </summary>
+        
         /// <returns>
         /// true if the enumerator successfully advanced to the next element;
         /// otherwise, false.
@@ -1904,9 +1681,7 @@ namespace System.Management.Automation
             return MoveNext(!_neverBlock);
         }
 
-        /// <summary>
-        /// Advances the enumerator to the next element in the collection.
-        /// </summary>
+        
         /// <returns>
         /// true if the enumerator successfully advanced to the next element;
         /// otherwise, false.
@@ -1959,18 +1734,14 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Resets the enumerator to its initial position,
-        /// which is before the first element in the collection.
-        /// </summary>
+        
         public void Reset()
         {
             _currentElement = default(T);
             _index = 0;
         }
 
-        /// <summary>
-        /// </summary>
+        
         void IDisposable.Dispose()
         {
         }
@@ -1980,17 +1751,12 @@ namespace System.Management.Automation
 
     #endregion
 
-    /// <summary>
-    /// Class that represents various informational buffers like
-    /// verbose, debug, warning, progress, information used with command invocation.
-    /// </summary>
+    
     internal sealed class PSInformationalBuffers
     {
         private readonly Guid _psInstanceId;
 
-        /// <summary>
-        /// Default constructor.
-        /// </summary>
+        
         /// <param name="psInstanceId">
         /// Guid of Powershell instance creating this buffers.
         /// Whenever an item is added to one of the buffers, this id is
@@ -2012,10 +1778,7 @@ namespace System.Management.Automation
 
         #region Internal Methods / Properties
 
-        /// <summary>
-        /// A buffer representing Progress record objects of a PowerShell command invocation.
-        /// Can be null.
-        /// </summary>
+        
         internal PSDataCollection<ProgressRecord> Progress
         {
             get
@@ -2031,10 +1794,7 @@ namespace System.Management.Automation
 
         internal PSDataCollection<ProgressRecord> progress;
 
-        /// <summary>
-        /// A buffer representing Verbose objects of a PowerShell command invocation.
-        /// Can be null.
-        /// </summary>
+        
         internal PSDataCollection<VerboseRecord> Verbose
         {
             get
@@ -2050,10 +1810,7 @@ namespace System.Management.Automation
 
         internal PSDataCollection<VerboseRecord> verbose;
 
-        /// <summary>
-        /// A buffer representing Debug objects of a PowerShell command invocation.
-        /// Can be null.
-        /// </summary>
+        
         internal PSDataCollection<DebugRecord> Debug
         {
             get
@@ -2069,50 +1826,29 @@ namespace System.Management.Automation
 
         internal PSDataCollection<DebugRecord> debug;
 
-        /// <summary>
-        /// A buffer representing Warning objects of a PowerShell command invocation.
-        /// Can be null.
-        /// </summary>
+        
         internal PSDataCollection<WarningRecord> Warning { get; set; }
 
-        /// <summary>
-        /// A buffer representing Information objects of a PowerShell command invocation.
-        /// Can be null.
-        /// </summary>
+        
         internal PSDataCollection<InformationRecord> Information { get; set; }
 
-        /// <summary>
-        /// Adds item to the progress buffer.
-        /// The item is added to the buffer along with PowerShell InstanceId.
-        /// </summary>
+        
         /// <param name="item"></param>
         internal void AddProgress(ProgressRecord item) => progress?.InternalAdd(_psInstanceId, item);
 
-        /// <summary>
-        /// Adds item to the verbose buffer.
-        /// The item is added to the buffer along with PowerShell InstanceId.
-        /// </summary>
+        
         /// <param name="item"></param>
         internal void AddVerbose(VerboseRecord item) => verbose?.InternalAdd(_psInstanceId, item);
 
-        /// <summary>
-        /// Adds item to the debug buffer.
-        /// The item is added to the buffer along with PowerShell InstanceId.
-        /// </summary>
+        
         /// <param name="item"></param>
         internal void AddDebug(DebugRecord item) => debug?.InternalAdd(_psInstanceId, item);
 
-        /// <summary>
-        /// Adds item to the warning buffer.
-        /// The item is added to the buffer along with PowerShell InstanceId.
-        /// </summary>
+        
         /// <param name="item"></param>
         internal void AddWarning(WarningRecord item) => Warning?.InternalAdd(_psInstanceId, item);
 
-        /// <summary>
-        /// Adds item to the information buffer.
-        /// The item is added to the buffer along with PowerShell InstanceId.
-        /// </summary>
+        
         /// <param name="item"></param>
         internal void AddInformation(InformationRecord item) => Information?.InternalAdd(_psInstanceId, item);
 

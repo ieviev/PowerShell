@@ -17,16 +17,12 @@ using System.Management.Automation.Internal;
 namespace Microsoft.PowerShell.Commands
 {
     #region Test-ModuleManifest
-    /// <summary>
-    /// This cmdlet takes a module manifest and validates the contents...
-    /// </summary>
+    
     [Cmdlet(VerbsDiagnostic.Test, "ModuleManifest", HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096900")]
     [OutputType(typeof(PSModuleInfo))]
     public sealed class TestModuleManifestCommand : ModuleCmdletBase
     {
-        /// <summary>
-        /// Creates an instance of the Test-ModuleManifest command.
-        /// </summary>
+        
         public TestModuleManifestCommand()
         {
             // Test-ModuleManifest reads a manifest with ModuleCmdletBase.LoadModuleManifest().
@@ -37,9 +33,7 @@ namespace Microsoft.PowerShell.Commands
             BaseSkipEditionCheck = true;
         }
 
-        /// <summary>
-        /// The output path for the generated file...
-        /// </summary>
+        
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, ValueFromPipelineByPropertyName = true)]
         public string Path
         {
@@ -50,9 +44,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string _path;
 
-        /// <summary>
-        /// Implements the record processing for this cmdlet.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             ProviderInfo provider = null;
@@ -297,13 +289,7 @@ namespace Microsoft.PowerShell.Commands
             .Where(static ext => !string.Equals(ext, StringLiterals.PowerShellDataFileExtension, StringComparison.OrdinalIgnoreCase))
             .ToArray();
 
-        /// <summary>
-        /// Checks whether the RootModule field of a module is valid or not.
-        /// Valid root modules are:
-        ///  - null
-        ///  - Empty string
-        ///  - A valid non-psd1 module file (psm1, cdxml, xaml, dll), as name with extension, name without extension, or path.
-        /// </summary>
+        
         /// <param name="module">The module for which we want to check the validity of the root module.</param>
         /// <returns>True if the root module is valid, false otherwise.</returns>
         private bool HasValidRootModule(PSModuleInfo module)
@@ -346,9 +332,7 @@ namespace Microsoft.PowerShell.Commands
             return false;
         }
 
-        /// <summary>
-        /// Check if the given path is valid.
-        /// </summary>
+        
         /// <param name="path"></param>
         /// <param name="module"></param>
         /// <param name="verifyPathScope"></param>
@@ -401,9 +385,7 @@ namespace Microsoft.PowerShell.Commands
             return true;
         }
 
-        /// <summary>
-        /// Check if the given string is a valid gac assembly.
-        /// </summary>
+        
         /// <param name="assemblyName"></param>
         /// <returns></returns>
         private static bool IsValidGacAssembly(string assemblyName)

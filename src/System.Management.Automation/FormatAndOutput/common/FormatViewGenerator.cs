@@ -8,9 +8,7 @@ using System.Management.Automation.Internal;
 
 namespace Microsoft.PowerShell.Commands.Internal.Format
 {
-    /// <summary>
-    /// Base class for the various types of formatting shapes.
-    /// </summary>
+    
     internal abstract class ViewGenerator
     {
         internal virtual void Initialize(TerminatingErrorContext terminatingErrorContext,
@@ -48,11 +46,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             InitializeHelper();
         }
 
-        /// <summary>
-        /// Let the view prepare itself for RemoteObjects. Specific view generators can
-        /// use this call to customize display for remote objects like showing/hiding
-        /// computername property etc.
-        /// </summary>
+        
         /// <param name="so"></param>
         internal virtual void PrepareForRemoteObjects(PSObject so)
         {
@@ -268,9 +262,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             return startGroup;
         }
 
-        /// <summary>
-        /// Update the current value of the grouping key.
-        /// </summary>
+        
         /// <param name="so">Object to use for the update.</param>
         /// <returns>True if the value of the key changed.</returns>
         internal bool UpdateGroupingKeyValue(PSObject so)

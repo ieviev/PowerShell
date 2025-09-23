@@ -11,91 +11,59 @@ using System.Text;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// Don't use! The API is obsolete!.
-    /// </summary>
+    
     [Obsolete("This class is included in this SDK for completeness only. The members of this class cannot be used directly, nor should this class be used to derive other classes.", true)]
     public enum TextEncodingType
     {
-        /// <summary>
-        /// No encoding.
-        /// </summary>
+        
         Unknown,
 
-        /// <summary>
-        /// Unicode encoding.
-        /// </summary>
+        
         String,
 
-        /// <summary>
-        /// Unicode encoding.
-        /// </summary>
+        
         Unicode,
 
-        /// <summary>
-        /// Byte encoding.
-        /// </summary>
+        
         Byte,
 
-        /// <summary>
-        /// Big Endian Unicode encoding.
-        /// </summary>
+        
         BigEndianUnicode,
 
-        /// <summary>
-        /// Big Endian UTF32 encoding.
-        /// </summary>
+        
         BigEndianUTF32,
 
-        /// <summary>
-        /// UTF8 encoding.
-        /// </summary>
+        
         Utf8,
 
-        /// <summary>
-        /// UTF7 encoding.
-        /// </summary>
+        
         Utf7,
 
-        /// <summary>
-        /// ASCII encoding.
-        /// </summary>
+        
         Ascii,
     }
 
-    /// <summary>
-    /// Utility class to contain resources for the Microsoft.PowerShell.Utility module.
-    /// </summary>
+    
     [Obsolete("This class is obsolete", true)]
     public static class UtilityResources
     {
-        /// <summary>
-        /// </summary>
+        
         public static string PathDoesNotExist { get { return UtilityCommonStrings.PathDoesNotExist; } }
 
-        /// <summary>
-        /// </summary>
+        
         public static string FileReadError { get { return UtilityCommonStrings.FileReadError; } }
 
-        /// <summary>
-        /// The resource string used to indicate 'PATH:' in the formatting header.
-        /// </summary>
+        
         public static string FormatHexPathPrefix { get { return UtilityCommonStrings.FormatHexPathPrefix; } }
 
-        /// <summary>
-        /// The file '{0}' could not be parsed as a PowerShell Data File.
-        /// </summary>
+        
         public static string CouldNotParseAsPowerShellDataFile { get { return UtilityCommonStrings.CouldNotParseAsPowerShellDataFile; } }
     }
 
-    /// <summary>
-    /// ByteCollection is used as a wrapper class for the collection of bytes.
-    /// </summary>
+    
     public class ByteCollection
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ByteCollection"/> class.
-        /// </summary>
+        
         /// <param name="offset">The Offset address to be used while displaying the bytes in the collection.</param>
         /// <param name="value">Underlying bytes stored in the collection.</param>
         /// <param name="path">Indicates the path of the file whose contents are wrapped in the ByteCollection.</param>
@@ -105,9 +73,7 @@ namespace Microsoft.PowerShell.Commands
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ByteCollection"/> class.
-        /// </summary>
+        
         /// <param name="offset">The Offset address to be used while displaying the bytes in the collection.</param>
         /// <param name="value">Underlying bytes stored in the collection.</param>
         /// <param name="path">Indicates the path of the file whose contents are wrapped in the ByteCollection.</param>
@@ -124,9 +90,7 @@ namespace Microsoft.PowerShell.Commands
             Label = path;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ByteCollection"/> class.
-        /// </summary>
+        
         /// <param name="offset">The Offset address to be used while displaying the bytes in the collection.</param>
         /// <param name="value">Underlying bytes stored in the collection.</param>
         [Obsolete("The constructor is deprecated.", true)]
@@ -135,9 +99,7 @@ namespace Microsoft.PowerShell.Commands
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ByteCollection"/> class.
-        /// </summary>
+        
         /// <param name="offset">The Offset address to be used while displaying the bytes in the collection.</param>
         /// <param name="value">Underlying bytes stored in the collection.</param>
         public ByteCollection(ulong offset, byte[] value)
@@ -151,9 +113,7 @@ namespace Microsoft.PowerShell.Commands
             Bytes = value;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ByteCollection"/> class.
-        /// </summary>
+        
         /// <param name="offset">The Offset address to be used while displaying the bytes in the collection.</param>
         /// <param name="label">
         /// The label for the byte group. This may be a file path or a formatted identifying string for the group.
@@ -165,9 +125,7 @@ namespace Microsoft.PowerShell.Commands
             Label = label;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ByteCollection"/> class.
-        /// </summary>
+        
         /// <param name="value">Underlying bytes stored in the collection.</param>
         public ByteCollection(byte[] value)
         {
@@ -179,9 +137,7 @@ namespace Microsoft.PowerShell.Commands
             Bytes = value;
         }
 
-        /// <summary>
-        /// Gets the Offset address to be used while displaying the bytes in the collection.
-        /// </summary>
+        
         [Obsolete("The property is deprecated, please use Offset64 instead.", true)]
         public uint Offset
         {
@@ -196,40 +152,27 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets the Offset address to be used while displaying the bytes in the collection.
-        /// </summary>
+        
         public ulong Offset64 { get; private set; }
 
-        /// <summary>
-        /// Gets underlying bytes stored in the collection.
-        /// </summary>
+        
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
         public byte[] Bytes { get; }
 
-        /// <summary>
-        /// Gets the path of the file whose contents are wrapped in the ByteCollection.
-        /// </summary>
+        
         public string Path { get; }
 
-        /// <summary>
-        /// Gets the hexadecimal representation of the <see cref="Offset64"/> value.
-        /// </summary>
+        
         public string HexOffset => string.Create(CultureInfo.CurrentCulture, $"{Offset64:X16}");
 
-        /// <summary>
-        /// Gets the type of the input objects used to create the <see cref="ByteCollection"/>.
-        /// </summary>
+        
         public string Label { get; }
 
         private const int BytesPerLine = 16;
 
         private string _hexBytes = string.Empty;
 
-        /// <summary>
-        /// Gets a space-delimited string of the <see cref="Bytes"/> in this <see cref="ByteCollection"/>
-        /// in hexadecimal format.
-        /// </summary>
+        
         public string HexBytes
         {
             get
@@ -252,9 +195,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string _ascii = string.Empty;
 
-        /// <summary>
-        /// Gets the ASCII string representation of the <see cref="Bytes"/> in this <see cref="ByteCollection"/>.
-        /// </summary>
+        
         /// <value></value>
         public string Ascii
         {
@@ -288,9 +229,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Displays the hexadecimal format of the bytes stored in the collection.
-        /// </summary>
+        
         /// <returns></returns>
         public override string ToString()
         {

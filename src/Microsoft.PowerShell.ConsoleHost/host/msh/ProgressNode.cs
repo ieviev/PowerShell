@@ -14,17 +14,12 @@ using Dbg = System.Management.Automation.Diagnostics;
 
 namespace Microsoft.PowerShell
 {
-    /// <summary>
-    /// ProgressNode is an augmentation of the ProgressRecord type that adds extra fields for the purposes of tracking
-    /// outstanding activities received by the host, and rendering them in the console.
-    /// </summary>
+    
     internal
     class
     ProgressNode : ProgressRecord
     {
-        /// <summary>
-        /// Indicates the various layouts for rendering a particular node.
-        /// </summary>
+        
         internal
         enum
         RenderStyle
@@ -33,26 +28,17 @@ namespace Microsoft.PowerShell
             Minimal = 1,
             Compact = 2,
 
-            /// <summary>
-            /// Allocate only one line for displaying the StatusDescription or the CurrentOperation,
-            /// truncate the rest if the StatusDescription or CurrentOperation doesn't fit in one line.
-            /// </summary>
+            
             Full = 3,
 
-            /// <summary>
-            /// The node will be displayed the same as Full, plus, the whole StatusDescription and CurrentOperation will be displayed (in multiple lines if needed).
-            /// </summary>
+            
             FullPlus = 4,
 
-            /// <summary>
-            /// The node will be displayed using ANSI escape sequences.
-            /// </summary>
+            
             Ansi = 5,
         }
 
-        /// <summary>
-        /// Constructs an instance from a ProgressRecord.
-        /// </summary>
+        
         internal
         ProgressNode(long sourceId, ProgressRecord record)
             : base(record.ActivityId, record.Activity, record.StatusDescription)
@@ -72,10 +58,7 @@ namespace Microsoft.PowerShell
             this.SourceId = sourceId;
         }
 
-        /// <summary>
-        /// Renders a single progress node as strings of text according to that node's style. The text is appended to the
-        /// supplied list of strings.
-        /// </summary>
+        
         /// <param name="strCollection">
         /// List of strings to which the node's rendering will be appended.
         /// </param>
@@ -122,9 +105,7 @@ namespace Microsoft.PowerShell
             }
         }
 
-        /// <summary>
-        /// Renders a node in the "Full" style.
-        /// </summary>
+        
         /// <param name="strCollection">
         /// List of strings to which the node's rendering will be appended.
         /// </param>
@@ -234,9 +215,7 @@ namespace Microsoft.PowerShell
             } while (isFullPlus);
         }
 
-        /// <summary>
-        /// Renders a node in the "Compact" style.
-        /// </summary>
+        
         /// <param name="strCollection">
         /// List of strings to which the node's rendering will be appended.
         /// </param>
@@ -302,9 +281,7 @@ namespace Microsoft.PowerShell
             }
         }
 
-        /// <summary>
-        /// Renders a node in the "Minimal" style.
-        /// </summary>
+        
         /// <param name="strCollection">
         /// List of strings to which the node's rendering will be appended.
         /// </param>
@@ -356,9 +333,7 @@ namespace Microsoft.PowerShell
             return PSStyle.Instance.Progress.View == ProgressView.Minimal;
         }
 
-        /// <summary>
-        /// Renders a node in the "ANSI" style.
-        /// </summary>
+        
         /// <param name="strCollection">
         /// List of strings to which the node's rendering will be appended.
         /// </param>
@@ -453,44 +428,27 @@ namespace Microsoft.PowerShell
                 .PadRight(padding));
         }
 
-        /// <summary>
-        /// The nodes that have this node as their parent.
-        /// </summary>
+        
         internal
         ArrayList
         Children;
 
-        /// <summary>
-        /// The "age" of the node.  A node's age is incremented by PendingProgress.Update each time a new ProgressRecord is
-        /// received by the host. A node's age is reset when a corresponding ProgressRecord is received.  Thus, the age of
-        /// a node reflects the number of ProgressRecord that have been received since the node was last updated.
-        ///
-        /// The age is used by PendingProgress.Render to determine which nodes should be rendered on the display, and how. As the
-        /// display has finite size, it may be possible to have many more outstanding progress activities than will fit in that
-        /// space. The rendering of nodes can be progressively "compressed" into a more terse format, or not rendered at all in
-        /// order to fit as many nodes as possible in the available space. The oldest nodes are compressed or skipped first.
-        /// </summary>
+        
         internal
         int
         Age;
 
-        /// <summary>
-        /// The style in which this node should be rendered.
-        /// </summary>
+        
         internal
         RenderStyle
         Style = RenderStyle.FullPlus;
 
-        /// <summary>
-        /// Identifies the source of the progress record.
-        /// </summary>
+        
         internal
         long
         SourceId;
 
-        /// <summary>
-        /// The number of vertical BufferCells that are required to render the node in its current style.
-        /// </summary>
+        
         /// <value></value>
         internal int LinesRequiredMethod(PSHostRawUserInterface rawUi, int maxWidth)
         {
@@ -524,9 +482,7 @@ namespace Microsoft.PowerShell
             return 0;
         }
 
-        /// <summary>
-        /// The number of vertical BufferCells that are required to render the node in the Full style.
-        /// </summary>
+        
         /// <value></value>
         private int LinesRequiredInFullStyleMethod(PSHostRawUserInterface rawUi, int maxWidth, bool isFullPlus)
         {
@@ -581,9 +537,7 @@ namespace Microsoft.PowerShell
             return lines;
         }
 
-        /// <summary>
-        /// The number of vertical BufferCells that are required to render the node in the Compact style.
-        /// </summary>
+        
         /// <value></value>
         private
         int

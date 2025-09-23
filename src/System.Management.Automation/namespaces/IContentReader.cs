@@ -9,17 +9,10 @@ namespace System.Management.Automation.Provider
 {
     #region IContentReader
 
-    /// <summary>
-    /// A Cmdlet provider that implements the IContentCmdletProvider interface must provide an
-    /// object that implements this interface when GetContentReader() is called.
-    ///
-    /// The interface allows for reading content from an item.
-    /// </summary>
+    
     public interface IContentReader : IDisposable
     {
-        /// <summary>
-        /// Reads the content from the item.
-        /// </summary>
+        
         /// <param name="readCount">
         /// The number of "blocks" of data to be read from the item.
         /// </param>
@@ -36,10 +29,7 @@ namespace System.Management.Automation.Provider
         /// </remarks>
         IList Read(long readCount);
 
-        /// <summary>
-        /// Moves the current "block" to be read to a position relative to a place
-        /// in the reader.
-        /// </summary>
+        
         /// <param name="offset">
         /// An offset of the number of blocks to seek from the origin.
         /// </param>
@@ -53,10 +43,7 @@ namespace System.Management.Automation.Provider
         /// </remarks>
         void Seek(long offset, SeekOrigin origin);
 
-        /// <summary>
-        /// Closes the reader. Further reads should fail if the reader
-        /// has been closed.
-        /// </summary>
+        
         /// <remarks>
         /// The implementation of this method should close any resources held open by the
         /// reader.

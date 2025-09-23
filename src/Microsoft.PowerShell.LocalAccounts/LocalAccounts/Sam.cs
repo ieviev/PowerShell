@@ -20,21 +20,14 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace System.Management.Automation.SecurityAccountsManager
 {
-    /// <summary>
-    /// Defines enumeration constants for enabling and disabling something.
-    /// </summary>
+    
     internal enum Enabling
     {
         Disable = 0,
         Enable
     }
 
-    /// <summary>
-    /// Managed version of the SAM_RID_ENUMERATION native structure,
-    /// to be returned from the EnumerateLocalUsers method of Sam.
-    /// Contains the original structure's members along with additional
-    /// members of use.
-    /// </summary>
+    
     internal class SamRidEnumeration
     {
 #region Original struct members
@@ -47,9 +40,7 @@ namespace System.Management.Automation.SecurityAccountsManager
 #endregion Additional members
     }
 
-    /// <summary>
-    /// Provides methods for manipulating local Users and Groups.
-    /// </summary>
+    
     internal class Sam : IDisposable
     {
 #region Enums
@@ -63,10 +54,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             AllReadable = AllSetable | Name
         }
 
-        /// <summary>
-        /// Defines a set of flags, each corresponding to a member of LocalUser,
-        /// which indicate fields to be updated.
-        /// </summary>
+        
         /// <remarks>
         /// Although password can be set through Create-LocalUser and Set-LocalUser,
         /// it is not a member of LocalUser so does not appear in this enumeration.
@@ -178,9 +166,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             Max         = Win32.MAXIMUM_ALLOWED
         }
 
-        /// <summary>
-        /// The operation under way. Used in the <see cref="Context"/> class.
-        /// </summary>
+        
         private enum ContextOperation
         {
             New = 1,
@@ -195,10 +181,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             RemoveMember
         }
 
-        /// <summary>
-        /// The type of object currently operating with.
-        /// used in the <see cref="Context"/> class.
-        /// </summary>
+        
         private enum ContextObjectType
         {
             User = 1,
@@ -207,9 +190,7 @@ namespace System.Management.Automation.SecurityAccountsManager
 #endregion Enums
 
 #region Internal Classes
-        /// <summary>
-        /// Holds information about the underway operation.
-        /// </summary>
+        
         /// <remarks>
         /// Used primarily by the private ThrowOnFailure method when building
         /// Exception objects to throw.
@@ -222,9 +203,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             public string objectId;
             public string memberId;
 
-            /// <summary>
-            /// Initialize a new Context object.
-            /// </summary>
+            
             /// <param name="operation">
             /// One of the <see cref="ContextOperation"/> enumerations indicating
             /// the type of operation under way.
@@ -257,53 +236,38 @@ namespace System.Management.Automation.SecurityAccountsManager
                 this.memberId = memberIdentifier;
             }
 
-            /// <summary>
-            /// Default constructor.
-            /// </summary>
+            
             public Context()
             {
             }
-            /// <summary>
-            /// Gets a string containing the type of operation under way.
-            /// </summary>
+            
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
             public string OperationName
             {
                 get { return operation.ToString(); }
             }
 
-            /// <summary>
-            /// Gets a string containing the type of object ("User" or "Group")
-            /// being used.
-            /// </summary>
+            
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
             public string TypeNamne
             {
                 get { return type.ToString(); }
             }
 
-            /// <summary>
-            /// Gets a string containing the name of the object being used.
-            /// </summary>
+            
             public string ObjectName
             {
                 get { return objectId; }
             }
 
-            /// <summary>
-            /// Gets a string containing the name of the member being added to
-            /// or removed from a group. Returns null if the operation does not
-            /// involve group members.
-            /// </summary>
+            
             public string MemberName
             {
                 get { return memberId; }
             }
         }
 
-        /// <summary>
-        /// Contains basic information about an Account.
-        /// </summary>
+        
         /// <remarks>
         /// AccountInfo is the return type from the private
         /// LookupAccountInfo method.
@@ -394,9 +358,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             return name;
         }
 #region Local Groups
-        /// <summary>
-        /// Retrieve a named local group.
-        /// </summary>
+        
         /// <param name="groupName">Name of the desired local group.</param>
         /// <returns>
         /// A <see cref="LocalGroup"/> object containing information about
@@ -416,9 +378,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             throw new GroupNotFoundException(groupName, context.target);
         }
 
-        /// <summary>
-        /// Retrieve a local group by SID.
-        /// </summary>
+        
         /// <param name="sid">
         /// A <see cref="SecurityIdentifier"/> object identifying the desired group.
         /// </param>
@@ -440,9 +400,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             throw new GroupNotFoundException(sid.ToString(), context.target);
         }
 
-        /// <summary>
-        /// Create a local group.
-        /// </summary>
+        
         /// <param name="group">A <see cref="LocalGroup"/> object containing
         /// information about the local group to be created.
         /// </param>
@@ -461,9 +419,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             return CreateGroup(group, localDomainHandle);
         }
 
-        /// <summary>
-        /// Update a local group with new property values.
-        /// </summary>
+        
         /// <param name="group">
         /// A <see cref="LocalGroup"/> object representing the group to be updated.
         /// </param>
@@ -480,9 +436,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             UpdateGroup(group, changed);
         }
 
-        /// <summary>
-        /// Remove a local group.
-        /// </summary>
+        
         /// <param name="sid">
         /// A <see cref="SecurityIdentifier"/> object identifying the
         /// local group to be removed.
@@ -497,9 +451,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             RemoveGroup(sid);
         }
 
-        /// <summary>
-        /// Remove a local group.
-        /// </summary>
+        
         /// <param name="group">
         /// A <see cref="LocalGroup"/> object containing
         /// information about the local group to be removed.
@@ -517,9 +469,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             RemoveGroup(group.SID);
         }
 
-        /// <summary>
-        /// Rename a local group.
-        /// </summary>
+        
         /// <param name="sid">
         /// A <see cref="SecurityIdentifier"/> object identifying
         /// the local group to be renamed.
@@ -537,9 +487,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             RenameGroup(sid, newName);
         }
 
-        /// <summary>
-        /// Rename a local group.
-        /// </summary>
+        
         /// <param name="group">
         /// A <see cref="LocalGroup"/> object containing
         /// information about the local group to be renamed.
@@ -560,9 +508,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             RenameGroup(group.SID, newName);
         }
 
-        /// <summary>
-        /// Get all local groups whose names satisfy the specified predicate.
-        /// </summary>
+        
         /// <param name="pred">
         /// Predicate that determines whether a group satisfies the conditions.
         /// </param>
@@ -585,9 +531,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             }
         }
 
-        /// <summary>
-        /// Get all local groups.
-        /// </summary>
+        
         /// <returns>
         /// An <see cref="IEnumerable{LocalGroup}"/> object containing a
         /// LocalGroup object for each local group.
@@ -603,9 +547,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             }
         }
 
-        /// <summary>
-        /// Add members to a local group.
-        /// </summary>
+        
         /// <param name="group">
         /// A <see cref="LocalGroup"/> object identifying the group to
         /// which to add members.
@@ -629,9 +571,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             return AddGroupMember(group.SID, member);
         }
 
-        /// <summary>
-        /// Add members to a local group.
-        /// </summary>
+        
         /// <param name="groupSid">
         /// A <see cref="SecurityIdentifier"/> object identifying the group to
         /// which to add members.
@@ -653,9 +593,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             return AddGroupMember(groupSid, member);
         }
 
-        /// <summary>
-        /// Retrieve members of a Local group.
-        /// </summary>
+        
         /// <param name="group">
         /// A <see cref="LocalGroup"/> object identifying the group whose members
         /// are requested.
@@ -674,9 +612,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             return GetGroupMembers(group.SID);
         }
 
-        /// <summary>
-        /// Retrieve members of a Local group.
-        /// </summary>
+        
         /// <param name="groupSid">
         /// A <see cref="SecurityIdentifier"/> object identifying the group whose members
         /// are requested.
@@ -692,9 +628,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             return GetGroupMembers(groupSid);
         }
 
-        /// <summary>
-        /// Remove members from a local group.
-        /// </summary>
+        
         /// <param name="group">
         /// A <see cref="LocalGroup"/> object identifying the group from
         /// which to remove members
@@ -719,9 +653,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             return RemoveGroupMember(group.SID, member);
         }
 
-        /// <summary>
-        /// Remove members from a local group.
-        /// </summary>
+        
         /// <param name="groupSid">
         /// A <see cref="SecurityIdentifier"/> object identifying the group from
         /// which to remove members
@@ -745,9 +677,7 @@ namespace System.Management.Automation.SecurityAccountsManager
 #endregion Local Groups
 
 #region Local Users
-        /// <summary>
-        /// Retrieve a named local user.
-        /// </summary>
+        
         /// <param name="userName">Name of the desired local user.</param>
         /// <returns>
         /// A <see cref="LocalUser"/> object containing information about
@@ -767,9 +697,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             throw new UserNotFoundException(userName, userName);
         }
 
-        /// <summary>
-        /// Retrieve a local user by SID.
-        /// </summary>
+        
         /// <param name="sid">
         /// A <see cref="SecurityIdentifier"/> object identifying the desired user.
         /// </param>
@@ -791,9 +719,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             throw new UserNotFoundException(sid.ToString(), sid);
         }
 
-        /// <summary>
-        /// Create a local user.
-        /// </summary>
+        
         /// <param name="user">A <see cref="LocalUser"/> object containing
         /// information about the local user to be created.
         /// </param>
@@ -819,9 +745,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             return CreateUser(user, password, localDomainHandle, setPasswordNeverExpires);
         }
 
-        /// <summary>
-        /// Remove a local user.
-        /// </summary>
+        
         /// <param name="sid">
         /// A <see cref="SecurityIdentifier"/> object identifying
         /// the local user to be removed.
@@ -836,9 +760,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             RemoveUser(sid);
         }
 
-        /// <summary>
-        /// Remove a local user.
-        /// </summary>
+        
         /// <param name="user">
         /// A <see cref="LocalUser"/> object containing
         /// information about the local user to be removed.
@@ -856,9 +778,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             RemoveUser(user.SID);
         }
 
-        /// <summary>
-        /// Rename a local user.
-        /// </summary>
+        
         /// <param name="sid">
         /// A <see cref="SecurityIdentifier"/> objects identifying
         /// the local user to be renamed.
@@ -876,9 +796,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             RenameUser(sid, newName);
         }
 
-        /// <summary>
-        /// Rename a local user.
-        /// </summary>
+        
         /// <param name="user">
         /// A <see cref="LocalUser"/> objects containing
         /// information about the local user to be renamed.
@@ -899,9 +817,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             RenameUser(user.SID, newName);
         }
 
-        /// <summary>
-        /// Enable or disable a Local User.
-        /// </summary>
+        
         /// <param name="sid">
         /// A <see cref="SecurityIdentifier"/> object identifying the user to enable or disable.
         /// </param>
@@ -919,9 +835,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             EnableUser(sid, enable);
         }
 
-        /// <summary>
-        /// Enable or disable a Local User.
-        /// </summary>
+        
         /// <param name="user">
         /// A <see cref="LocalUser"/> object representing the user to enable or disable.
         /// </param>
@@ -942,9 +856,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             EnableUser(user.SID, enable);
         }
 
-        /// <summary>
-        /// Update a local user with new properties.
-        /// </summary>
+        
         /// <param name="user">
         /// A <see cref="LocalUser"/> object representing the user to be updated.
         /// </param>
@@ -971,9 +883,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             UpdateUser(user, changed, password, PasswordExpiredState.Unchanged, setPasswordNeverExpires);
         }
 
-        /// <summary>
-        /// Get all local users whose names satisfy the specified predicate.
-        /// </summary>
+        
         /// <param name="pred">
         /// Predicate that determines whether a user satisfies the conditions.
         /// </param>
@@ -995,9 +905,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             }
         }
 
-        /// <summary>
-        /// Get all local users.
-        /// </summary>
+        
         /// <returns>
         /// An <see cref="IEnumerable{LocalUser}"/> object containing a
         /// LocalUser object for each local user.
@@ -1025,9 +933,7 @@ namespace System.Management.Automation.SecurityAccountsManager
 #endregion Public (Internal) Methods
 
 #region Private Methods
-        /// <summary>
-        /// Open the handles stored by Sam instances.
-        /// </summary>
+        
         private void OpenHandles()
         {
             var systemName = new UNICODE_STRING();
@@ -1088,10 +994,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             }
         }
 
-        /// <summary>
-        /// Find a group by SID and return a <see cref="SamRidEnumeration"/> object
-        /// representing the group.
-        /// </summary>
+        
         /// <param name="sid">A <see cref="SecurityIdentifier"/> object identifying
         /// the group to search for.</param>
         /// <returns>
@@ -1114,10 +1017,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             throw new GroupNotFoundException(sid.ToString(), sid);
         }
 
-        /// <summary>
-        /// Find a user by SID and return a <see cref="SamRidEnumeration"/> object
-        /// representing the user.
-        /// </summary>
+        
         /// <param name="sid">A <see cref="SecurityIdentifier"/> object identifying
         /// the user to search for.</param>
         /// <returns>
@@ -1140,9 +1040,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             throw new UserNotFoundException(sid.ToString(), sid);
         }
 
-        /// <summary>
-        /// Enumerate local users with native SAM functions.
-        /// </summary>
+        
         /// <param name="domainHandle">Handle to the domain to enumerate over.</param>
         /// <returns>
         /// An IEnumerable of SamRidEnumeration objects, one for each local user.
@@ -1190,9 +1088,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             } while (Succeeded(status) && status != 0 && countReturned != 0);
         }
 
-        /// <summary>
-        /// Enumerate user objects in both the local and builtin domains.
-        /// </summary>
+        
         /// <returns>
         /// An IEnumerable of SamRidEnumeration objects, one for each local user.
         /// </returns>
@@ -1209,9 +1105,7 @@ namespace System.Management.Automation.SecurityAccountsManager
                 yield return sre;
         }
 
-        /// <summary>
-        /// Create a new user in the specified domain.
-        /// </summary>
+        
         /// <param name="userInfo">
         /// A <see cref="LocalUser"/> object containing information about the new user.
         /// </param>
@@ -1289,9 +1183,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             }
         }
 
-        /// <summary>
-        /// Remove a group identified by SID.
-        /// </summary>
+        
         /// <param name="sid">
         /// A <see cref="SecurityIdentifier"/> object identifying the
         /// group to be removed.
@@ -1322,9 +1214,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             }
         }
 
-        /// <summary>
-        /// Rename a group identified by SID.
-        /// </summary>
+        
         /// <param name="sid">
         /// A <see cref="SecurityIdentifier"/> object identifying
         /// the local group to be renamed.
@@ -1381,9 +1271,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             }
         }
 
-        /// <summary>
-        /// Add members to a group.
-        /// </summary>
+        
         /// <param name="groupSid">
         /// A <see cref="SecurityIdentifier"/> object identifying the group to
         /// which to add members.
@@ -1437,9 +1325,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             return ex;
         }
 
-        /// <summary>
-        /// Retrieve members of a group.
-        /// </summary>
+        
         /// <param name="groupSid">
         /// A <see cref="SecurityIdentifier"/> object representing the group whose members
         /// are requested.
@@ -1490,9 +1376,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             }
         }
 
-        /// <summary>
-        /// Remove members from a group.
-        /// </summary>
+        
         /// <param name="groupSid">
         /// A <see cref="SecurityIdentifier"/> object identifying the group from
         /// which to remove members
@@ -1549,9 +1433,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             return ex;
         }
 
-        /// <summary>
-        /// Create a populated LocalUser object from a SamRidEnumeration object.
-        /// </summary>
+        
         /// <param name="sre">
         /// A <see cref="SamRidEnumeration"/> object containing minimal information
         /// about a local user.
@@ -1580,10 +1462,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             }
         }
 
-        /// <summary>
-        /// Create a populated LocalUser object from a SamRidEnumeration object,
-        /// using an already-opened SAM user handle.
-        /// </summary>
+        
         /// <param name="sre">
         /// A <see cref="SamRidEnumeration"/> object containing minimal information
         /// about a local user.
@@ -1645,9 +1524,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             }
         }
 
-        /// <summary>
-        /// Enable or disable a user.
-        /// </summary>
+        
         /// <param name="sid">
         /// A <see cref="SecurityIdentifier"/> object identifying the user to be
         /// enabled or disabled.
@@ -1717,9 +1594,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             }
         }
 
-        /// <summary>
-        /// Rename a user.
-        /// </summary>
+        
         /// <param name="sid">
         /// A <see cref="SecurityIdentifier"/> object identifying the user to be
         /// renamed.
@@ -1771,9 +1646,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             }
         }
 
-        /// <summary>
-        /// Delete a user.
-        /// </summary>
+        
         /// <param name="sid">
         /// A <see cref="SecurityIdentifier"/> object identifying the user to be
         /// removed.
@@ -1805,9 +1678,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             }
         }
 
-        /// <summary>
-        /// Enumerate local users with native SAM functions.
-        /// </summary>
+        
         /// <param name="domainHandle">Handle to the domain to enumerate over.</param>
         /// <returns>
         /// An IEnumerable of SamRidEnumeration objects, one for each local user.
@@ -1856,9 +1727,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             } while (Succeeded(status) && status != 0 && countReturned != 0);
         }
 
-        /// <summary>
-        /// Enumerate group objects in both the local and builtin domains.
-        /// </summary>
+        
         /// <returns>
         /// An IEnumerable of SamRidEnumeration objects, one for each local group.
         /// </returns>
@@ -1875,9 +1744,7 @@ namespace System.Management.Automation.SecurityAccountsManager
                 yield return sre;
         }
 
-        /// <summary>
-        /// Create a new group in the specified domain.
-        /// </summary>
+        
         /// <param name="groupInfo">
         /// A <see cref="LocalGroup"/> object containing information about the new group.
         /// </param>
@@ -1946,10 +1813,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             }
         }
 
-        /// <summary>
-        /// Update a local group with new property values. This method provides
-        /// the actual implementation.
-        /// </summary>
+        
         /// <param name="group">
         /// A <see cref="LocalGroup"/> object representing the group to be updated.
         /// </param>
@@ -2007,9 +1871,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             }
         }
 
-        /// <summary>
-        /// Create a populated LocalGroup object from a SamRidEnumeration object.
-        /// </summary>
+        
         /// <param name="sre">
         /// A <see cref="SamRidEnumeration"/> object containing minimal information
         /// about a local group.
@@ -2038,10 +1900,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             }
         }
 
-        /// <summary>
-        /// Create a populated LocalGroup object from a SamRidEnumeration object,
-        /// using an already-opened SAM alias handle.
-        /// </summary>
+        
         /// <param name="sre">
         /// A <see cref="SamRidEnumeration"/> object containing minimal information
         /// about a local group.
@@ -2085,9 +1944,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             }
         }
 
-        /// <summary>
-        /// Update a local user with new properties.
-        /// </summary>
+        
         /// <param name="user">
         /// A <see cref="LocalUser"/> object representing the user to be updated.
         /// </param>
@@ -2159,9 +2016,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             }
         }
 
-        /// <summary>
-        /// Set selected properties of a user.
-        /// </summary>
+        
         /// <param name="userHandle">Handle to an open SAM user.</param>
         /// <param name="sourceUser">
         /// A <see cref="LocalUser"/> object containing the data to set into the user.
@@ -2281,9 +2136,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             }
         }
 
-        /// <summary>
-        /// Retrieve the User's User Account Control flags.
-        /// </summary>
+        
         /// <param name="userHandle">
         /// Handle to an open user.
         /// </param>
@@ -2316,9 +2169,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             }
         }
 
-        /// <summary>
-        /// Retrieve the DACL from a SAM object.
-        /// </summary>
+        
         /// <param name="objectHandle">
         /// A handle to the SAM object whose DACL is to be retrieved.
         /// </param>
@@ -2376,9 +2227,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             return rv;
         }
 
-        /// <summary>
-        /// Set the DACL of a SAM object.
-        /// </summary>
+        
         /// <param name="objectHandle">
         /// A handle to the SAM object whose DACL is to be retrieved.
         /// </param>
@@ -2435,9 +2284,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             }
         }
 
-        /// <summary>
-        /// Determine if a user account password may be changed by the user.
-        /// </summary>
+        
         /// <param name="userHandle">
         /// Handle to a SAM user object.
         /// </param>
@@ -2480,9 +2327,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             return false;
         }
 
-        /// <summary>
-        /// Set whether a user account password may be changed by the user.
-        /// </summary>
+        
         /// <param name="userHandle">
         /// Handle to a SAM user object.
         /// </param>
@@ -2531,9 +2376,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             }
         }
 
-        /// <summary>
-        /// Determine if a user's password has expired.
-        /// </summary>
+        
         /// <param name="userHandle">
         /// Handle to an open User.
         /// </param>
@@ -2565,9 +2408,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             }
         }
 
-        /// <summary>
-        /// Set a user's password.
-        /// </summary>
+        
         /// <param name="userHandle">Handle to an open User.</param>
         /// <param name="password">A <see cref="System.Security.SecureString"/>
         /// object containing the new password.
@@ -2628,10 +2469,7 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
 #region Utility Methods
-        /// <summary>
-        /// Create a <see cref="System.Security.Principal.SecurityIdentifier"/>
-        /// object from a relative ID.
-        /// </summary>
+        
         /// <param name="domainHandle">
         /// Handle to the domain from which the ID was acquired.
         /// </param>
@@ -2669,9 +2507,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             return sid;
         }
 
-        /// <summary>
-        /// Lookup the account identified by the specified SID.
-        /// </summary>
+        
         /// <param name="sid">
         /// A <see cref="SecurityIdentifier"/> object identifying the account
         /// to look up.
@@ -2728,9 +2564,7 @@ namespace System.Management.Automation.SecurityAccountsManager
                 throw new Win32InternalException(error, context.target);
         }
 
-        /// <summary>
-        /// Lookup the account identified by specified account name.
-        /// </summary>
+        
         /// <param name="accountName">
         /// A string containing the name of the account to look up.
         /// </param>
@@ -2804,10 +2638,7 @@ namespace System.Management.Automation.SecurityAccountsManager
                 throw new Win32InternalException(error, context.target);
         }
 
-        /// <summary>
-        /// Create a <see cref="LocalPrincipal"/> object from information in
-        /// an AccountInfo object.
-        /// </summary>
+        
         /// <param name="info">
         /// An AccountInfo object containing information about the account
         /// for which the LocalPrincipal object is being created. This parameter
@@ -2846,9 +2677,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             return rv;
         }
 
-        /// <summary>
-        /// Indicate whether a Status code is a successful value.
-        /// </summary>
+        
         /// <param name="ntStatus">
         /// One of the NTSTATUS code values indicating the error, if any.
         /// </param>
@@ -2860,10 +2689,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             return NtStatus.IsSuccess(ntStatus);
         }
 
-        /// <summary>
-        /// Helper to throw an exception if the provided Status code
-        /// represents a failure.
-        /// </summary>
+        
         /// <param name="ntStatus">
         /// One of the NTSTATUS code values indicating the error, if any.
         /// </param>
@@ -2883,9 +2709,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             }
         }
 
-        /// <summary>
-        /// Create an appropriate exception from the specified status code.
-        /// </summary>
+        
         /// <param name="ntStatus">
         /// One of the NTSTATUS code values indicating the error, if any.
         /// </param>
@@ -2993,10 +2817,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             }
         }
 
-        /// <summary>
-        /// Create a DateTime object from a 64-bit value from one of the SAM
-        /// structures.
-        /// </summary>
+        
         /// <param name="samValue">
         /// A signed 64-bit value representing a date and time.
         /// </param>
@@ -3012,10 +2833,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             return DateTime.FromFileTime(samValue);
         }
 
-        /// <summary>
-        /// Determine the source of a user or group. Either local, Active Directory,
-        /// or Azure AD.
-        /// </summary>
+        
         /// <param name="sid">
         /// A <see cref="SecurityIdentifier"/> object identifying the user or group.
         /// </param>
@@ -3077,10 +2895,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             }
         }
 
-        /// <summary>
-        /// Determine the source of a user or group. Either local, Active Directory,
-        /// or Azure AD.
-        /// </summary>
+        
         /// <param name="info">
         /// An <see cref="AccountInfo"/> object containing information about the
         /// user or group.
@@ -3094,10 +2909,7 @@ namespace System.Management.Automation.SecurityAccountsManager
             return GetPrincipalSource(info.Sid);
         }
 
-        /// <summary>
-        /// Determine the source of a user or group. Either local, Active Directory,
-        /// or Azure AD.
-        /// </summary>
+        
         /// <param name="sre">
         /// A <see cref="SamRidEnumeration"/> object identifying the user or group.
         /// </param>
@@ -3134,9 +2946,7 @@ namespace System.Management.Automation.SecurityAccountsManager
 
         private static volatile OperatingSystem localOs;
 
-        /// <summary>
-        /// It only contains the properties that get used in powershell.
-        /// </summary>
+        
         internal sealed class OperatingSystem
         {
             private Version _version;
@@ -3151,17 +2961,13 @@ namespace System.Management.Automation.SecurityAccountsManager
                 _servicePack = servicePack;
             }
 
-            /// <summary>
-            /// OS version.
-            /// </summary>
+            
             public Version Version
             {
                 get { return _version; }
             }
 
-            /// <summary>
-            /// VersionString.
-            /// </summary>
+            
             public string VersionString
             {
                 get

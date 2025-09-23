@@ -7,16 +7,12 @@ using System.Management.Automation.Language;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Provides argument completion for Scope parameter.
-    /// </summary>
+    
     public class ScopeArgumentCompleter : IArgumentCompleter
     {
         private static readonly string[] s_Scopes = new string[] { "Global", "Local", "Script" };
 
-        /// <summary>
-        /// Returns completion results for scope parameter.
-        /// </summary>
+        
         /// <param name="commandName">The command name.</param>
         /// <param name="parameterName">The parameter name.</param>
         /// <param name="wordToComplete">The word to complete.</param>

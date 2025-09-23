@@ -114,9 +114,7 @@ namespace System.Management.Automation.Language {
             return GetId(target, ref _labelIds);
         }
 
-        /// <summary>
-        /// Write out the given AST.
-        /// </summary>
+        
         internal static void WriteTo(Expression node, TextWriter writer) {
             Debug.Assert(node != null);
             Debug.Assert(writer != null);
@@ -1173,10 +1171,7 @@ namespace System.Management.Automation.Language {
             return GetDisplayName(lambda.Name);
         }
 
-        /// <summary>
-        /// Return true if the input string contains any whitespace character.
-        /// Otherwise false.
-        /// </summary>
+        
         private static bool ContainsWhiteSpace(string name) {
             foreach (char c in name) {
                 if (char.IsWhiteSpace(c)) {

@@ -15,21 +15,15 @@ using Dbg = System.Management.Automation;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Holds the state of a Monad Shell session.
-    /// </summary>
+    
     internal sealed partial class SessionStateInternal
     {
-        /// <summary>
-        /// The currently active drive. It determines the current working directory.
-        /// </summary>
+        
         private PSDriveInfo _currentDrive;
 
         #region NewDrive
 
-        /// <summary>
-        /// Adds the specified drive to the current scope.
-        /// </summary>
+        
         /// <param name="drive">
         /// The drive to be added to the current scope.
         /// </param>
@@ -98,9 +92,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Adds a drive to the PowerShell namespace.
-        /// </summary>
+        
         /// <param name="drive">
         /// The new drive to be added.
         /// </param>
@@ -237,11 +229,7 @@ namespace System.Management.Automation
                 && name.AsSpan().IndexOfAny(CharactersInvalidInDriveName) < 0;
         }
 
-        /// <summary>
-        /// Tries to resolve the drive root as an MSH path. If it successfully resolves
-        /// to a single path then the resolved provider internal path is returned. If it
-        /// does not resolve to a single MSH path the root is returned as it was passed.
-        /// </summary>
+        
         /// <param name="root">
         /// The root path of the drive to be resolved.
         /// </param>
@@ -338,10 +326,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Gets an object that defines the additional parameters for the NewDrive implementation
-        /// for a provider.
-        /// </summary>
+        
         /// <param name="providerId">
         /// The provider ID for the drive that is being created.
         /// </param>
@@ -392,9 +377,7 @@ namespace System.Management.Automation
 
         #region GetDrive
 
-        /// <summary>
-        /// Searches through the session state scopes to find a drive.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of a drive to find.
         /// </param>
@@ -476,10 +459,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Searches through the session state scopes looking
-        /// for a drive of the specified name.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the drive to return.
         /// </param>
@@ -721,9 +701,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Auto-mounts a built-in drive.
-        /// </summary>
+        
         /// <remarks>
         /// Calls GetDrive(name, false) internally.
         /// </remarks>
@@ -737,9 +715,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Automatically mount the specified drive.
-        /// </summary>
+        
         /// <remarks>
         /// Neither 'WSMan' nor 'Certificate' provider works in UNIX PS today.
         /// So this method currently does nothing on UNIX.
@@ -786,10 +762,7 @@ namespace System.Management.Automation
 #endif
         }
 
-        /// <summary>
-        /// Determines if the specified automounted drive still exists. If not,
-        /// the drive is removed.
-        /// </summary>
+        
         /// <param name="drive">
         /// The drive to validate or remove.
         /// </param>
@@ -868,11 +841,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// If a VHD is mounted to a drive prior to the PowerShell session being launched,
-        /// then such a drive has to be validated for its existence before performing
-        /// any operations on that drive to make sure that the drive is not unmounted.
-        /// </summary>
+        
         /// <param name="drive"></param>
         /// <returns>Absence of mounted drive for FileSystem provider or False for other provider types.</returns>
         private bool IsAStaleVhdMountedDrive(PSDriveInfo drive)
@@ -922,9 +891,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Gets all the drives for a specific provider.
-        /// </summary>
+        
         /// <param name="providerId">
         /// The identifier for the provider to retrieve the drives for.
         /// </param>
@@ -958,9 +925,7 @@ namespace System.Management.Automation
         #endregion GetDrive
 
         #region RemoveDrive
-        /// <summary>
-        /// Removes the drive with the specified name.
-        /// </summary>
+        
         /// <param name="driveName">
         /// The name of the drive to remove.
         /// </param>
@@ -994,9 +959,7 @@ namespace System.Management.Automation
             RemoveDrive(drive, force, scopeID);
         }
 
-        /// <summary>
-        /// Removes the drive with the specified name.
-        /// </summary>
+        
         /// <param name="driveName">
         /// The name of the drive to remove.
         /// </param>
@@ -1043,9 +1006,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Removes the specified drive.
-        /// </summary>
+        
         /// <param name="drive">
         /// The drive to be removed.
         /// </param>
@@ -1075,9 +1036,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Removes the specified drive.
-        /// </summary>
+        
         /// <param name="drive">
         /// The drive to be removed.
         /// </param>
@@ -1200,10 +1159,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Determines if the drive can be removed by calling the provider
-        /// for the drive.
-        /// </summary>
+        
         /// <param name="drive">
         /// The drive to test for removal.
         /// </param>
@@ -1290,10 +1246,7 @@ namespace System.Management.Automation
 
         #region Drives
 
-        /// <summary>
-        /// Gets an enumerable list of the drives that are mounted in
-        /// the specified scope.
-        /// </summary>
+        
         /// <param name="scope">
         /// The scope to retrieve the drives from. If null or empty,
         /// all drives from all scopes will be retrieved.
@@ -1409,9 +1362,7 @@ namespace System.Management.Automation
 
         #endregion Drives
 
-        /// <summary>
-        /// Gets or sets the current working drive.
-        /// </summary>
+        
         internal PSDriveInfo CurrentDrive
         {
             get

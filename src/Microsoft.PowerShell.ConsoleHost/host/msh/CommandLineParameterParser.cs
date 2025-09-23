@@ -21,21 +21,14 @@ using Dbg = System.Management.Automation.Diagnostics;
 
 namespace Microsoft.PowerShell
 {
-    /// <summary>
-    /// Null class implementation of PSHostUserInterface used when no console is available and when PowerShell
-    /// is run in servmode where no console is needed.
-    /// </summary>
+    
     internal class NullHostUserInterface : PSHostUserInterface
     {
-        /// <summary>
-        /// RawUI.
-        /// </summary>
+        
         public override PSHostRawUserInterface? RawUI
             => null;
 
-        /// <summary>
-        /// Prompt.
-        /// </summary>
+        
         /// <param name="caption"></param>
         /// <param name="message"></param>
         /// <param name="descriptions"></param>
@@ -43,9 +36,7 @@ namespace Microsoft.PowerShell
         public override Dictionary<string, PSObject> Prompt(string caption, string message, Collection<FieldDescription> descriptions)
             => throw new PSNotImplementedException();
 
-        /// <summary>
-        /// PromptForChoice.
-        /// </summary>
+        
         /// <param name="caption"></param>
         /// <param name="message"></param>
         /// <param name="choices"></param>
@@ -54,9 +45,7 @@ namespace Microsoft.PowerShell
         public override int PromptForChoice(string caption, string message, Collection<ChoiceDescription> choices, int defaultChoice)
             => throw new PSNotImplementedException();
 
-        /// <summary>
-        /// PromptForCredential.
-        /// </summary>
+        
         /// <param name="caption"></param>
         /// <param name="message"></param>
         /// <param name="userName"></param>
@@ -65,9 +54,7 @@ namespace Microsoft.PowerShell
         public override PSCredential PromptForCredential(string caption, string message, string userName, string targetName)
             => throw new PSNotImplementedException();
 
-        /// <summary>
-        /// PromptForCredential.
-        /// </summary>
+        
         /// <param name="caption"></param>
         /// <param name="message"></param>
         /// <param name="userName"></param>
@@ -78,75 +65,55 @@ namespace Microsoft.PowerShell
         public override PSCredential PromptForCredential(string caption, string message, string userName, string targetName, PSCredentialTypes allowedCredentialTypes, PSCredentialUIOptions options)
             => throw new PSNotImplementedException();
 
-        /// <summary>
-        /// ReadLine.
-        /// </summary>
+        
         /// <returns></returns>
         public override string ReadLine()
             => throw new PSNotImplementedException();
 
-        /// <summary>
-        /// ReadLineAsSecureString.
-        /// </summary>
+        
         /// <returns></returns>
         public override SecureString ReadLineAsSecureString()
             => throw new PSNotImplementedException();
 
-        /// <summary>
-        /// Write.
-        /// </summary>
+        
         /// <param name="value"></param>
         public override void Write(string value)
         { }
 
-        /// <summary>
-        /// Write.
-        /// </summary>
+        
         /// <param name="foregroundColor"></param>
         /// <param name="backgroundColor"></param>
         /// <param name="value"></param>
         public override void Write(ConsoleColor foregroundColor, ConsoleColor backgroundColor, string value)
         { }
 
-        /// <summary>
-        /// WriteDebugLine.
-        /// </summary>
+        
         /// <param name="message"></param>
         public override void WriteDebugLine(string message)
         { }
 
-        /// <summary>
-        /// WriteErrorLine.
-        /// </summary>
+        
         /// <param name="value"></param>
         public override void WriteErrorLine(string value)
             => Console.Out.WriteLine(value);
 
-        /// <summary>
-        /// WriteLine.
-        /// </summary>
+        
         /// <param name="value"></param>
         public override void WriteLine(string value)
         { }
 
-        /// <summary>
-        /// WriteProgress.
-        /// </summary>
+        
         /// <param name="sourceId"></param>
         /// <param name="record"></param>
         public override void WriteProgress(long sourceId, ProgressRecord record)
         { }
 
-        /// <summary>
-        /// WriteVerboseLine.
-        /// </summary>
+        
         /// <param name="message"></param>
         public override void WriteVerboseLine(string message)
         { }
 
-        /// <summary>
-        /// WriteWarningLine.
-        /// </summary>
+        
         /// <param name="message"></param>
         public override void WriteWarningLine(string message)
         { }
@@ -197,10 +164,7 @@ namespace Microsoft.PowerShell
         };
 
 #pragma warning disable SA1025 // CodeMustNotContainMultipleWhitespaceInARow
-        /// <summary>
-        /// These represent the parameters that are used when starting pwsh.
-        /// We can query in our telemetry to determine how pwsh was invoked.
-        /// </summary>
+        
         [Flags]
         internal enum ParameterBitmap : long
         {
@@ -635,9 +599,7 @@ namespace Microsoft.PowerShell
         #endregion Internal properties
 
         #region static methods
-        /// <summary>
-        /// Processes the -SettingFile Argument.
-        /// </summary>
+        
         /// <param name="args">
         /// The command line parameters to be processed.
         /// </param>
@@ -684,10 +646,7 @@ namespace Microsoft.PowerShell
             return string.Empty;
         }
 
-        /// <summary>
-        /// Gets the word in a switch from the current argument or parses a file.
-        /// For example -foo, /foo, or --foo would return 'foo'.
-        /// </summary>
+        
         /// <param name="args">
         /// The command line parameters to be processed.
         /// </param>
@@ -743,10 +702,7 @@ namespace Microsoft.PowerShell
             return Path.GetFullPath(path);
         }
 
-        /// <summary>
-        /// Determine the execution policy based on the supplied string.
-        /// If the string doesn't match to any known execution policy, set it to incorrect.
-        /// </summary>
+        
         /// <param name="_executionPolicy">The value provided on the command line.</param>
         /// <returns>The execution policy.</returns>
         private static ParameterBitmap GetExecutionPolicy(string? _executionPolicy)
@@ -848,10 +804,7 @@ namespace Microsoft.PowerShell
             }
         }
 
-        /// <summary>
-        /// Processes all the command line parameters to ConsoleHost.  Returns the exit code to be used to terminate the process, or
-        /// Success to indicate that the program should continue running.
-        /// </summary>
+        
         /// <param name="args">
         /// The command line parameters to be processed.
         /// </param>

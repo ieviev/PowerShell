@@ -263,10 +263,7 @@ namespace System.Management.Automation.SecurityAccountsManager.Native.NtSam
     }
     #endregion Structures
 
-    /// <summary>
-    /// Provides methods for invoking functions in the Windows
-    /// Security Accounts Manager (SAM) API.
-    /// </summary>
+    
     internal static class SamApi
     {
         #region Constants

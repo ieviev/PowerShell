@@ -29,10 +29,7 @@ namespace System.Management.Automation.Language
         ModuleAnalysis = 1
     }
 
-    /// <summary>
-    /// The parser that parses PowerShell script and returns a <see cref="ScriptBlockAst"/>, tokens, and error messages
-    /// if the script cannot be parsed successfully.
-    /// </summary>
+    
     public sealed class Parser
     {
         private readonly Tokenizer _tokenizer;
@@ -56,9 +53,7 @@ namespace System.Management.Automation.Language
             _fileName = null;
         }
 
-        /// <summary>
-        /// Parse input from the specified file.
-        /// </summary>
+        
         /// <param name="fileName">The name of the file to parse.</param>
         /// <param name="tokens">Returns the tokens from parsing the script.</param>
         /// <param name="errors">Returns errors, if any, discovered while parsing the script.</param>
@@ -121,9 +116,7 @@ namespace System.Management.Automation.Language
 
         private string _keywordModuleName;
 
-        /// <summary>
-        /// Parse input that does not come from a file.
-        /// </summary>
+        
         /// <param name="input">The input to parse.</param>
         /// <param name="tokens">Returns the tokens from parsing the script.</param>
         /// <param name="errors">Returns errors, if any, discovered while parsing the script.</param>
@@ -133,9 +126,7 @@ namespace System.Management.Automation.Language
             return ParseInput(input, null , out tokens, out errors);
         }
 
-        /// <summary>
-        /// Parse input that does not come from a file.
-        /// </summary>
+        
         /// <param name="input">The input to parse.</param>
         /// <param name="fileName">The fileName if present or null.</param>
         /// <param name="tokens">Returns the tokens from parsing the script.</param>
@@ -701,9 +692,7 @@ namespace System.Management.Automation.Language
             }
         }
 
-        /// <summary>
-        /// Parses the specified constant hashtable string into a Hashtable object.
-        /// </summary>
+        
         /// <param name="input">The Hashtable string.</param>
         /// <param name="result">The Hashtable object.</param>
         /// <returns></returns>
@@ -1943,9 +1932,7 @@ namespace System.Management.Automation.Language
             return (firstStatement == null) ? null : ExtentOf(firstStatement, lastStatement);
         }
 
-        /// <summary>
-        /// Parse a single statement.
-        /// </summary>
+        
         /// <returns>A statement ast.  Never returns null, always returns PipelineAst.EmptyPipeline if there was no statement.</returns>
         private StatementAst StatementRule()
         {
@@ -2358,9 +2345,7 @@ namespace System.Management.Automation.Language
             return new BlockStatementAst(ExtentOf(kindToken, body), kindToken, body);
         }
 
-        /// <summary>
-        /// Handle the InlineScript syntax in the script workflow.
-        /// </summary>
+        
         /// <param name="inlineScriptToken"></param>
         /// <param name="elements"></param>
         /// <returns>
@@ -3323,10 +3308,7 @@ namespace System.Management.Automation.Language
 
         private Dictionary<string, DynamicKeyword> _configurationKeywordsDefinedInThisFile;
 
-        /// <summary>
-        /// Reads an argument expression for a keyword or keyword parameter.
-        /// This can be either a bare word or an expression.
-        /// </summary>
+        
         /// <param name="keywordToken">The token of the associated keyword.</param>
         private ExpressionAst GetWordOrExpression(Token keywordToken)
         {
@@ -3707,17 +3689,7 @@ namespace System.Management.Automation.Language
                 labelToken?.LabelText, condition, body);
         }
 
-        /// <summary>
-        /// Parse a dynamic keyword statement which will be either of the form
-        ///     keyword [parameters] [name] { a=1; b=2; } # constructor with properties
-        /// or
-        ///     keyword [parameters] [name] { ... }  # constructor with a simple body.
-        /// or keywordcommand parameters
-        /// This custom keyword does not introduce a new AST node type. Instead it generates a
-        /// CommandAst that calls a PowerShell command to implement the keyword's logic.
-        /// This command has one of two signatures:
-        ///     keywordImplCommand.
-        /// </summary>
+        
         /// <param name="functionName">The name of the function to invoke.</param>
         /// <param name="keywordData">The data for this keyword definition.</param>
         /// <returns></returns>
@@ -5480,9 +5452,7 @@ namespace System.Management.Automation.Language
             return new TrapStatementAst(ExtentOf(trapToken, body), typeConstraintAst, body);
         }
 
-        /// <summary>
-        /// Parse a catch block.
-        /// </summary>
+        
         /// <param name="endErrorStatement">
         /// Set to the last thing scanned that is definitely part of the catch, but only set after issuing an error.
         /// </param>
@@ -6687,7 +6657,7 @@ namespace System.Management.Automation.Language
 
         #region Expressions
 
-        /// <summary>Parse an expression.</summary>
+        
         /// <param name="endNumberOnTernaryOpChars">
         /// When it's known for sure that we are expecting an expression, allowing a generic token like '12?' or '12:' is
         /// not useful. In those cases, we force to start a new token upon seeing '?' and ':' when scanning for a number
@@ -6789,7 +6759,7 @@ namespace System.Management.Automation.Language
             }
         }
 
-        /// <summary>Parse a binary expression.</summary>
+        
         /// <param name="endNumberOnTernaryOpChars">
         /// When it's known for sure that we are expecting an expression, allowing a generic token like '12?' or '12:' is
         /// not useful. In those cases, we force to start a new token upon seeing '?' and ':' when scanning for a number
@@ -6966,7 +6936,7 @@ namespace System.Management.Automation.Language
                     new CommandParameterAst(paramToken.Extent, paramToken.ParameterName, null, paramToken.Extent)});
         }
 
-        /// <summary>Parse an array literal expression.</summary>
+        
         /// <param name="endNumberOnTernaryOpChars">
         /// When it's known for sure that we are expecting an expression, allowing a generic token like '12?' or '12:' is
         /// not useful. In those cases, we force to start a new token upon seeing '?' and ':' when scanning for a number
@@ -7020,7 +6990,7 @@ namespace System.Management.Automation.Language
             return new ArrayLiteralAst(ExtentOf(firstExpr, lastExpr), arrayValues);
         }
 
-        /// <summary>Parse an unary expression.</summary>
+        
         /// <param name="endNumberOnTernaryOpChars">
         /// When it's known for sure that we are expecting an expression, allowing a generic token like '12?' or '12:' is
         /// not useful. In those cases, we force to start a new token upon seeing '?' and ':' when scanning for a number
@@ -8056,10 +8026,7 @@ namespace System.Management.Automation.Language
             SaveError(errorToSave);
         }
 
-        /// <summary>
-        /// Debug assertion to ensure that all errors saved by the parser come
-        /// from resource (.resx) files.
-        /// </summary>
+        
         /// <param name="errorId">The error ID string (.resx key).</param>
         /// <param name="errorMsg">The error message, which may be a template string (.resx value).</param>
         [System.Diagnostics.Conditional("DEBUG")]
@@ -8188,13 +8155,10 @@ namespace System.Management.Automation.Language
 
     #region Error related classes
 
-    /// <summary>
-    /// </summary>
+    
     public class ParseError
     {
-        /// <summary>
-        /// Creates a new parse error.
-        /// </summary>
+        
         /// <param name="extent">The IScriptExtent that represents the location of the error.</param>
         /// <param name="errorId">The error ID to associate with the error.</param>
         /// <param name="message">The message of the error.</param>
@@ -8215,28 +8179,23 @@ namespace System.Management.Automation.Language
             IncompleteInput = incompleteInput;
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <returns></returns>
         public override string ToString()
         {
             return PositionUtilities.VerboseMessage(Extent) + Environment.NewLine + Message;
         }
 
-        /// <summary>
-        /// </summary>
+        
         public IScriptExtent Extent { get; }
 
-        /// <summary>
-        /// </summary>
+        
         public string ErrorId { get; }
 
-        /// <summary>
-        /// </summary>
+        
         public string Message { get; }
 
-        /// <summary>
-        /// </summary>
+        
         public bool IncompleteInput { get; }
     }
 

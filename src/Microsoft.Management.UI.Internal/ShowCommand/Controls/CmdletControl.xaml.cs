@@ -6,20 +6,14 @@ using System.Windows.Controls;
 
 namespace Microsoft.PowerShell.Commands.ShowCommandInternal
 {
-    /// <summary>
-    /// Interaction logic for CmdletControl.xaml.
-    /// </summary>
+    
     public partial class CmdletControl : UserControl
     {
-        /// <summary>
-        /// Field used for the CurrentCommandViewModel parameter.
-        /// </summary>
+        
         private CommandViewModel currentCommandViewModel;
 
         #region Construction and Destructor
-        /// <summary>
-        /// Initializes a new instance of the CmdletControl class.
-        /// </summary>
+        
         public CmdletControl()
         {
             InitializeComponent();
@@ -31,9 +25,7 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
         #endregion
 
         #region Properties
-        /// <summary>
-        /// Gets the owner of the ViewModel.
-        /// </summary>
+        
         private CommandViewModel CurrentCommandViewModel
         {
             get { return this.currentCommandViewModel; }
@@ -42,9 +34,7 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
 
         #region Private Events
 
-        /// <summary>
-        /// DataContextChanged event.
-        /// </summary>
+        
         /// <param name="sender">Event sender.</param>
         /// <param name="e">Event args.</param>
         private void ParameterSetTabControl_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -65,9 +55,7 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
             this.ParameterSetTabControl.SelectedItem = viewModel.ParameterSets[0];
         }
 
-        /// <summary>
-        /// Key down event for user press F1 button.
-        /// </summary>
+        
         /// <param name="sender">Event sender.</param>
         /// <param name="e">Event args.</param>
         private void CmdletControl_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
@@ -78,9 +66,7 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
             }
         }
 
-        /// <summary>
-        /// Help button event.
-        /// </summary>
+        
         /// <param name="sender">Event sender.</param>
         /// <param name="e">Event args.</param>
         private void HelpButton_Click(object sender, RoutedEventArgs e)
@@ -88,9 +74,7 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
             this.CurrentCommandViewModel.OpenHelpWindow();
         }
 
-        /// <summary>
-        /// Import Module Button event.
-        /// </summary>
+        
         /// <param name="sender">Event sender.</param>
         /// <param name="e">Event args.</param>
         private void ImportModuleButton_Click(object sender, RoutedEventArgs e)

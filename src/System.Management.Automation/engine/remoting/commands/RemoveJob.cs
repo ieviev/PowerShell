@@ -14,9 +14,7 @@ using Dbg = System.Management.Automation.Diagnostics;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// This is the base class for job cmdlet and contains some helper functions.
-    /// </summary>
+    
     public class JobCmdletBase : PSRemotingCmdlet
     {
         #region Strings
@@ -43,9 +41,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Job Matches
 
-        /// <summary>
-        /// Find the jobs in repository which match matching the specified names.
-        /// </summary>
+        
         /// <param name="writeobject">if true, method writes the object instead of returning it
         /// in list (an empty list is returned).</param>
         /// <param name="writeErrorOnNoMatch">Write error if no match is found.</param>
@@ -184,9 +180,7 @@ namespace Microsoft.PowerShell.Commands
             return jobFound;
         }
 
-        /// <summary>
-        /// Find the jobs in repository which match the specified instanceid.
-        /// </summary>
+        
         /// <param name="writeobject">if true, method writes the object instead of returning it
         /// in list (an empty list is returned).</param>
         /// <param name="writeErrorOnNoMatch">Write error if no match is found.</param>
@@ -307,9 +301,7 @@ namespace Microsoft.PowerShell.Commands
             return jobFound;
         }
 
-        /// <summary>
-        /// Find the jobs in repository which match the specified session ids.
-        /// </summary>
+        
         /// <param name="writeobject">if true, method writes the object instead of returning it
         /// in list (an empty list is returned).</param>
         /// <param name="writeErrorOnNoMatch">Write error if no match is found.</param>
@@ -417,9 +409,7 @@ namespace Microsoft.PowerShell.Commands
             return jobFound;
         }
 
-        /// <summary>
-        /// Find the jobs in repository which match the specified command.
-        /// </summary>
+        
         /// <param name="writeobject">if true, method writes the object instead of returning it
         /// in list (an empty list is returned).</param>
         /// <returns>List of matching jobs.</returns>
@@ -473,9 +463,7 @@ namespace Microsoft.PowerShell.Commands
             return matches;
         }
 
-        /// <summary>
-        /// Find the jobs in repository which match the specified state.
-        /// </summary>
+        
         /// <param name="writeobject">if true, method writes the object instead of returning it
         /// in list (an empty list is returned).</param>
         /// <returns>List of matching jobs.</returns>
@@ -517,9 +505,7 @@ namespace Microsoft.PowerShell.Commands
             return matches;
         }
 
-        /// <summary>
-        /// Find the jobs which match the specified filter.
-        /// </summary>
+        
         /// <param name="writeobject"></param>
         /// <returns></returns>
         internal List<Job> FindJobsMatchingByFilter(bool writeobject)
@@ -560,9 +546,7 @@ namespace Microsoft.PowerShell.Commands
             return matches;
         }
 
-        /// <summary>
-        /// Used to find the v2 jobs that match a given filter.
-        /// </summary>
+        
         /// <param name="matches"></param>
         /// <param name="jobsToSearch"></param>
         /// <returns></returns>
@@ -573,9 +557,7 @@ namespace Microsoft.PowerShell.Commands
             return false;
         }
 
-        /// <summary>
-        /// Copies the jobs to list.
-        /// </summary>
+        
         /// <param name="jobs"></param>
         /// <param name="writeobject">if true, method writes the object instead of returning it
         /// in list (an empty list is returned).</param>
@@ -607,9 +589,7 @@ namespace Microsoft.PowerShell.Commands
             return matches;
         }
 
-        /// <summary>
-        /// Checks that this job object can be removed. If not, writes an error record.
-        /// </summary>
+        
         /// <param name="job">Job object to be removed.</param>
         /// <param name="parameterName">Name of the parameter which is associated with this job object.
         /// </param>
@@ -630,9 +610,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Parameters
 
-        /// <summary>
-        /// Name of the jobs to retrieve.
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true, Position = 0,
                   Mandatory = true,
                   ParameterSetName = JobCmdletBase.NameParameterSet)]
@@ -650,14 +628,10 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// </summary>
+        
         private string[] _names;
 
-        /// <summary>
-        /// InstanceIds for which job
-        /// need to be obtained.
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true, Position = 0,
                    Mandatory = true,
                    ParameterSetName = JobCmdletBase.InstanceIdParameterSet)]
@@ -675,14 +649,10 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// </summary>
+        
         private Guid[] _instanceIds;
 
-        /// <summary>
-        /// SessionId for which job
-        /// need to be obtained.
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true, Position = 0,
                   Mandatory = true,
                   ParameterSetName = JobCmdletBase.SessionIdParameterSet)]
@@ -701,13 +671,10 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// </summary>
+        
         private int[] _sessionIds;
 
-        /// <summary>
-        /// All the job objects having this state.
-        /// </summary>
+        
         [Parameter(Mandatory = true,
                    Position = 0, ValueFromPipelineByPropertyName = true,
             ParameterSetName = RemoveJobCommand.StateParameterSet)]
@@ -724,13 +691,10 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// </summary>
+        
         private JobState _jobstate;
 
-        /// <summary>
-        /// All the job objects having this command.
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true,
             ParameterSetName = RemoveJobCommand.CommandParameterSet)]
         [ValidateNotNullOrEmpty]
@@ -747,13 +711,10 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// </summary>
+        
         private string[] _commands;
 
-        /// <summary>
-        /// All the job objects matching the values in filter.
-        /// </summary>
+        
         [Parameter(Mandatory = true,
                    Position = 0, ValueFromPipelineByPropertyName = true,
             ParameterSetName = RemoveJobCommand.FilterParameterSet)]
@@ -772,14 +733,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Overrides
 
-        /// <summary>
-        /// All remoting cmdlets other than Start-PSJob should
-        /// continue to work even if PowerShell remoting is not
-        /// enabled. This is because jobs are based out of APIs
-        /// and there can be other job implementations like
-        /// eventing or WMI which are not based on PowerShell
-        /// remoting.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             CommandDiscovery.AutoloadModulesWithJobSourceAdapters(this.Context, this.CommandOrigin);
@@ -789,13 +743,7 @@ namespace Microsoft.PowerShell.Commands
         #endregion Overrides
     }
 
-    /// <summary>
-    /// This cmdlet removes the Job object from the runspace
-    /// wide Job repository.
-    ///
-    /// Once the Job object is removed, it will not be available
-    /// through get-psjob command.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Remove, "Job", SupportsShouldProcess = true, DefaultParameterSetName = JobCmdletBase.SessionIdParameterSet,
         HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096868")]
     [OutputType(typeof(Job), ParameterSetName = new string[] { JobCmdletBase.JobParameterSet })]
@@ -803,10 +751,7 @@ namespace Microsoft.PowerShell.Commands
     {
         #region Parameters
 
-        /// <summary>
-        /// Specifies the Jobs objects which need to be
-        /// removed.
-        /// </summary>
+        
         [Parameter(Mandatory = true,
                    Position = 0,
                    ValueFromPipeline = true,
@@ -829,9 +774,7 @@ namespace Microsoft.PowerShell.Commands
 
         private Job[] _jobs;
 
-        /// <summary>
-        /// If state of the job is running or notstarted, this will forcefully stop it.
-        /// </summary>
+        
         [Parameter(ParameterSetName = RemoveJobCommand.InstanceIdParameterSet)]
         [Parameter(ParameterSetName = RemoveJobCommand.JobParameterSet)]
         [Parameter(ParameterSetName = RemoveJobCommand.NameParameterSet)]
@@ -857,9 +800,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Overrides
 
-        /// <summary>
-        /// Gets the job object as per the parameter and removes it.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             List<Job> listOfJobsToRemove = null;
@@ -960,9 +901,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Wait for all the stop jobs to be completed.
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             bool haveToWait = false;
@@ -977,9 +916,7 @@ namespace Microsoft.PowerShell.Commands
                 _waitForJobs.WaitOne();
         }
 
-        /// <summary>
-        /// Release waiting for jobs.
-        /// </summary>
+        
         protected override void StopProcessing()
         {
             _waitForJobs.Set();
@@ -1055,16 +992,14 @@ namespace Microsoft.PowerShell.Commands
 
         #region Dispose
 
-        /// <summary>
-        /// </summary>
+        
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="disposing"></param>
         protected void Dispose(bool disposing)
         {

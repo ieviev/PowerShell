@@ -10,9 +10,7 @@ using System.Text;
 
 namespace System.Management.Automation.Runspaces
 {
-    /// <summary>
-    /// This class represents a PowerShell process that is used for an out-of-process remote Runspace.
-    /// </summary>
+    
     public sealed class PowerShellProcessInstance : IDisposable
     {
         #region Fields
@@ -42,9 +40,7 @@ namespace System.Management.Automation.Runspaces
 #endif
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PowerShellProcessInstance"/> class. Initializes the underlying dotnet process class.
-        /// </summary>
+        
         /// <param name="powerShellVersion">Specifies the version of powershell.</param>
         /// <param name="credential">Specifies a user account credentials.</param>
         /// <param name="initializationScript">Specifies a script that will be executed when the powershell process is initialized.</param>
@@ -141,9 +137,7 @@ namespace System.Management.Automation.Runspaces
             Process = new Process { StartInfo = _startInfo, EnableRaisingEvents = true };
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PowerShellProcessInstance"/> class. Initializes the underlying dotnet process class.
-        /// </summary>
+        
         /// <param name="powerShellVersion">Specifies the version of powershell.</param>
         /// <param name="credential">Specifies a user account credentials.</param>
         /// <param name="initializationScript">Specifies a script that will be executed when the powershell process is initialized.</param>
@@ -152,17 +146,12 @@ namespace System.Management.Automation.Runspaces
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PowerShellProcessInstance"/> class. Default initializes the underlying dotnet process class.
-        /// </summary>
+        
         public PowerShellProcessInstance() : this(powerShellVersion: null, credential: null, initializationScript: null, useWow64: false, workingDirectory: null)
         {
         }
 
-        /// <summary>
-        /// Gets a value indicating whether the associated process has been terminated.
-        /// true if the operating system process referenced by the Process component has terminated; otherwise, false.
-        /// </summary>
+        
         public bool HasExited
         {
             get
@@ -178,9 +167,7 @@ namespace System.Management.Automation.Runspaces
 
         #region Dispose
 
-        /// <summary>
-        /// Implementing the <see cref="IDisposable"/> interface.
-        /// </summary>
+        
         public void Dispose()
         {
             Dispose(true);
@@ -227,9 +214,7 @@ namespace System.Management.Automation.Runspaces
 
         #region Public Properties
 
-        /// <summary>
-        /// Gets the process object of the remote target.
-        /// </summary>
+        
         public Process Process { get; }
 
         #endregion Public Properties

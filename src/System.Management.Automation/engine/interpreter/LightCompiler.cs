@@ -113,27 +113,21 @@ namespace System.Management.Automation.Interpreter
             get { return (_handlers != null); }
         }
 
-        /// <summary>
-        /// No finally block.
-        /// </summary>
+        
         internal TryCatchFinallyHandler(int tryStart, int tryEnd, int gotoEndTargetIndex, ExceptionHandler[] handlers)
             : this(tryStart, tryEnd, gotoEndTargetIndex, Instruction.UnknownInstrIndex, Instruction.UnknownInstrIndex, handlers)
         {
             Debug.Assert(handlers != null, "catch blocks should exist");
         }
 
-        /// <summary>
-        /// No catch blocks.
-        /// </summary>
+        
         internal TryCatchFinallyHandler(int tryStart, int tryEnd, int gotoEndTargetIndex, int finallyStart, int finallyEnd)
             : this(tryStart, tryEnd, gotoEndTargetIndex, finallyStart, finallyEnd, null)
         {
             Debug.Assert(finallyStart != Instruction.UnknownInstrIndex && finallyEnd != Instruction.UnknownInstrIndex, "finally block should exist");
         }
 
-        /// <summary>
-        /// Generic constructor.
-        /// </summary>
+        
         internal TryCatchFinallyHandler(int tryStart, int tryEnd, int gotoEndLabelIndex, int finallyStart, int finallyEnd, ExceptionHandler[] handlers)
         {
             TryStartIndex = tryStart;
@@ -154,9 +148,7 @@ namespace System.Management.Automation.Interpreter
             }
         }
 
-        /// <summary>
-        /// Goto the index of the first instruction of the suitable catch block.
-        /// </summary>
+        
         internal int GotoHandler(InterpretedFrame frame, object exception, out ExceptionHandler handler)
         {
             Debug.Assert(_handlers != null, "we should have at least one handler if the method gets called");
@@ -167,9 +159,7 @@ namespace System.Management.Automation.Interpreter
         }
     }
 
-    /// <summary>
-    /// The re-throw instruction will throw this exception.
-    /// </summary>
+    
     internal sealed class RethrowException : SystemException
     {
     }

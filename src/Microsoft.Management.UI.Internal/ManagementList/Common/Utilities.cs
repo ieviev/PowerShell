@@ -16,25 +16,17 @@ namespace Microsoft.Management.UI.Internal
 {
     #region UserActionState enum
 
-    /// <summary>
-    /// Represents the availability of an action to a user.
-    /// </summary>
+    
     [SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public enum UserActionState
     {
-        /// <summary>
-        /// Indicates that the action is enabled and allowed.
-        /// </summary>
+        
         Enabled = 0,
 
-        /// <summary>
-        /// Indicates that the action is disabled.
-        /// </summary>
+        
         Disabled = 1,
 
-        /// <summary>
-        /// Indicates that the action is not visible.
-        /// </summary>
+        
         Hidden = 2,
     }
 
@@ -42,25 +34,17 @@ namespace Microsoft.Management.UI.Internal
 
     #region ControlState enum
 
-    /// <summary>
-    /// Represents the ready-state of a control.
-    /// </summary>
+    
     [SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public enum ControlState
     {
-        /// <summary>
-        /// Indicates that the control is ready.
-        /// </summary>
+        
         Ready = 0,
 
-        /// <summary>
-        /// Indicates that the control has an error.
-        /// </summary>
+        
         Error = 1,
 
-        /// <summary>
-        /// Indicates that the control is refreshing its data.
-        /// </summary>
+        
         Refreshing = 2,
     }
 
@@ -68,15 +52,11 @@ namespace Microsoft.Management.UI.Internal
 
     #region Utilities class
 
-    /// <summary>
-    /// Provides common methods for use in the library.
-    /// </summary>
+    
     [SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public static class Utilities
     {
-        /// <summary>
-        /// Gets whether all of the items in <paramref name="items"/> are of type T.
-        /// </summary>
+        
         /// <typeparam name="T">The type to verify.</typeparam>
         /// <param name="items">The items to check.</param>
         /// <returns>Whether all of the items in <paramref name="items"/> are of type T.</returns>
@@ -96,9 +76,7 @@ namespace Microsoft.Management.UI.Internal
             return true;
         }
 
-        /// <summary>
-        /// Searches for an element that matches the specified type, and returns the first occurrence in the entire <see cref="IEnumerable"/>.
-        /// </summary>
+        
         /// <typeparam name="T">The type of the item to find.</typeparam>
         /// <param name="items">The <see cref="IEnumerable"/> to search.</param>
         /// <returns>The first element that matches the specified type, if found; otherwise, the default value for type <typeparamref name="T"/>.</returns>
@@ -118,9 +96,7 @@ namespace Microsoft.Management.UI.Internal
             return default(T);
         }
 
-        /// <summary>
-        /// Method to trim the non null strings.
-        /// </summary>
+        
         /// <param name="value">String to Trim.</param>
         /// <returns>Trimmed string.</returns>
         public static string NullCheckTrim(string value)
@@ -135,10 +111,7 @@ namespace Microsoft.Management.UI.Internal
 
         // A separate copy of ResortObservableCollection is in ADMUX Utility.cs
 
-        /// <summary>
-        /// Restore the original order as far as possible.
-        /// Columns not in the original set will appear at the end.
-        /// </summary>
+        
         /// <typeparam name="T">
         /// Type of <paramref name="modify"/>.
         /// </typeparam>

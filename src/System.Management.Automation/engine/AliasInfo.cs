@@ -6,16 +6,12 @@ using System.Collections.ObjectModel;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Provides information about a mapping between a command name and a real command.
-    /// </summary>
+    
     public class AliasInfo : CommandInfo
     {
         #region ctor
 
-        /// <summary>
-        /// Creates an instance of the AliasInfo class with the specified name and referenced command.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the command.
         /// </param>
@@ -42,9 +38,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Creates an instance of the AliasInfo class with the specified name and referenced command.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the command.
         /// </param>
@@ -86,9 +80,7 @@ namespace System.Management.Automation
             get { return HelpCategory.Alias; }
         }
 
-        /// <summary>
-        /// Gets the command information for the command that is immediately referenced by this alias.
-        /// </summary>
+        
         public CommandInfo ReferencedCommand
         {
             get
@@ -119,10 +111,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the command information for the command that
-        /// the alias eventually resolves to.
-        /// </summary>
+        
         /// <remarks>
         /// An alias may reference another alias. This property follows the reference
         /// chain of aliases to its end.
@@ -179,9 +168,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the name of the command to which the alias refers.
-        /// </summary>
+        
         public override string Definition
         {
             get
@@ -192,9 +179,7 @@ namespace System.Management.Automation
 
         private string _definition = string.Empty;
 
-        /// <summary>
-        /// Sets the new definition for the alias.
-        /// </summary>
+        
         /// <param name="definition">
         /// The new definition for the alias.
         /// </param>
@@ -224,9 +209,7 @@ namespace System.Management.Automation
             _definition = definition;
         }
 
-        /// <summary>
-        /// Gets or sets the scope options for the alias.
-        /// </summary>
+        
         /// <exception cref="System.Management.Automation.SessionStateUnauthorizedAccessException">
         /// If the trying to set an alias that is constant or
         ///     if the value trying to be set is ScopedItemOptions.Constant
@@ -244,9 +227,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Sets the options for the alias and allows changes ReadOnly options only if force is specified.
-        /// </summary>
+        
         /// <param name="newOptions">
         /// The new options value.
         /// </param>
@@ -325,23 +306,13 @@ namespace System.Management.Automation
 
         private ScopedItemOptions _options = ScopedItemOptions.None;
 
-        /// <summary>
-        /// Gets or sets the description for the alias.
-        /// </summary>
+        
         public string Description { get; set; } = string.Empty;
 
-        /// <summary>
-        /// If ResolvedCommand returns null, this property will
-        /// return the name of the command that could not be resolved.
-        /// If ResolvedCommand has not yet been called or was able
-        /// to resolve the command, this property will return null.
-        /// </summary>
+        
         internal string UnresolvedCommandName { get; private set; }
 
-        /// <summary>
-        /// The objects output from an alias are the objects output from the resolved
-        /// command.  If we can't resolve the command, assume nothing is output - so use void.
-        /// </summary>
+        
         public override ReadOnlyCollection<PSTypeName> OutputType
         {
             get

@@ -10,24 +10,18 @@ using System.Management.Automation.Internal;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// Implements Get-ExperimentalFeature cmdlet.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Get, "ExperimentalFeature", HelpUri = "https://go.microsoft.com/fwlink/?linkid=2096786")]
     [OutputType(typeof(ExperimentalFeature))]
     public class GetExperimentalFeatureCommand : PSCmdlet
     {
-        /// <summary>
-        /// Get and set the feature names.
-        /// </summary>
+        
         [Parameter(ValueFromPipeline = true, Position = 0)]
         [ArgumentCompleter(typeof(ExperimentalFeatureNameCompleter))]
         [ValidateNotNullOrEmpty]
         public string[] Name { get; set; }
 
-        /// <summary>
-        /// ProcessRecord method of this cmdlet.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             const WildcardOptions wildcardOptions = WildcardOptions.IgnoreCase | WildcardOptions.CultureInvariant;
@@ -39,9 +33,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Construct the string for sorting experimental feature records.
-        /// </summary>
+        
         /// <remarks>
         /// Engine features come before module features.
         /// Within engine features and module features, features are ordered by name.
@@ -53,9 +45,7 @@ namespace Microsoft.PowerShell.Commands
                         : (1, feature.Name);
         }
 
-        /// <summary>
-        /// Get available experimental features based on the specified name patterns.
-        /// </summary>
+        
         internal IEnumerable<ExperimentalFeature> GetAvailableExperimentalFeatures(IEnumerable<WildcardPattern> namePatterns)
         {
             foreach (ExperimentalFeature feature in ExperimentalFeature.EngineExperimentalFeatures)
@@ -79,9 +69,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Get valid module files from module paths.
-        /// </summary>
+        
         private IEnumerable<string> GetValidModuleFiles(HashSet<string> moduleNamesToFind)
         {
             var modulePaths = new HashSet<string>(StringComparer.OrdinalIgnoreCase);

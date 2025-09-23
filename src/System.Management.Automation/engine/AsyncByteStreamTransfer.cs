@@ -10,10 +10,7 @@ using System.Threading.Tasks;
 
 namespace System.Management.Automation;
 
-/// <summary>
-/// Represents the transfer of bytes from one <see cref="Stream" /> to another
-/// asynchronously.
-/// </summary>
+
 internal sealed class AsyncByteStreamTransfer : IDisposable
 {
     private const int DefaultBufferSize = 1024;

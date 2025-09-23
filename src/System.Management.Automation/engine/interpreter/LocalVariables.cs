@@ -244,9 +244,7 @@ namespace System.Management.Automation.Interpreter
             return false;
         }
 
-        /// <summary>
-        /// Gets a copy of the local variables which are defined in the current scope.
-        /// </summary>
+        
         /// <returns></returns>
         internal Dictionary<ParameterExpression, LocalVariable> CopyLocals()
         {
@@ -259,17 +257,13 @@ namespace System.Management.Automation.Interpreter
             return res;
         }
 
-        /// <summary>
-        /// Checks to see if the given variable is defined within the current local scope.
-        /// </summary>
+        
         internal bool ContainsVariable(ParameterExpression variable)
         {
             return _variables.ContainsKey(variable);
         }
 
-        /// <summary>
-        /// Gets the variables which are defined in an outer scope and available within the current scope.
-        /// </summary>
+        
         internal Dictionary<ParameterExpression, LocalVariable> ClosureVariables
         {
             get
@@ -287,9 +281,7 @@ namespace System.Management.Automation.Interpreter
             return result;
         }
 
-        /// <summary>
-        /// Tracks where a variable is defined and what range of instructions it's used in.
-        /// </summary>
+        
         private sealed class VariableScope
         {
             public readonly int Start;

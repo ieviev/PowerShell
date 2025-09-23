@@ -16,20 +16,12 @@ using System.Threading.Tasks;
 
 namespace System.Management.Automation.Host
 {
-    /// <summary>
-    /// Defines the properties and facilities providing by an hosting application deriving from
-    /// <see cref="System.Management.Automation.Host.PSHost"/> that offers dialog-oriented and
-    /// line-oriented interactive features.
-    /// </summary>
+    
     /// <seealso cref="System.Management.Automation.Host.PSHost"/>
     /// <seealso cref="System.Management.Automation.Host.PSHostRawUserInterface"/>
     public abstract class PSHostUserInterface
     {
-        /// <summary>
-        /// Gets hosting application's implementation of the
-        /// <see cref="System.Management.Automation.Host.PSHostRawUserInterface"/> abstract base class
-        /// that implements that class.
-        /// </summary>
+        
         /// <value>
         /// A reference to an instance of the hosting application's implementation of a class derived from
         /// <see cref="System.Management.Automation.Host.PSHostUserInterface"/>, or null to indicate that
@@ -40,15 +32,11 @@ namespace System.Management.Automation.Host
             get;
         }
 
-        /// <summary>
-        /// Returns true for hosts that support VT100 like virtual terminals.
-        /// </summary>
+        
         public virtual bool SupportsVirtualTerminal { get { return false; } }
 
         #region Line-oriented interaction
-        /// <summary>
-        /// Reads characters from the console until a newline (a carriage return) is encountered.
-        /// </summary>
+        
         /// <returns>
         /// The characters typed by the user.
         /// </returns>
@@ -59,10 +47,7 @@ namespace System.Management.Automation.Host
         /// <seealso cref="System.Management.Automation.Host.PSHostUserInterface.Prompt"/>
         public abstract string ReadLine();
 
-        /// <summary>
-        /// Same as ReadLine, except that the result is a SecureString, and that the input is not echoed to the user while it is
-        /// collected (or is echoed in some obfuscated way, such as showing a dot for each character).
-        /// </summary>
+        
         /// <returns>
         /// The characters typed by the user in an encrypted form.
         /// </returns>
@@ -78,10 +63,7 @@ namespace System.Management.Automation.Host
         /// <seealso cref="System.Management.Automation.Host.PSHostUserInterface.Prompt"/>
         public abstract SecureString ReadLineAsSecureString();
 
-        /// <summary>
-        /// Writes characters to the screen buffer.  Does not append a carriage return.
-        /// 
-        /// </summary>
+        
         /// <param name="value">
         /// The characters to be written.  null is not allowed.
         /// </param>
@@ -91,10 +73,7 @@ namespace System.Management.Automation.Host
         /// <seealso cref="System.Management.Automation.Host.PSHostUserInterface.WriteLine(System.ConsoleColor, System.ConsoleColor, string)"/>
         public abstract void Write(string value);
 
-        /// <summary>
-        /// Same as <see cref="System.Management.Automation.Host.PSHostUserInterface.Write(string)"/>,
-        /// except that colors can be specified.
-        /// </summary>
+        
         /// <param name="foregroundColor">
         /// The foreground color to display the text with.
         /// </param>
@@ -110,21 +89,13 @@ namespace System.Management.Automation.Host
         /// <seealso cref="System.Management.Automation.Host.PSHostUserInterface.WriteLine(System.ConsoleColor, System.ConsoleColor, string)"/>
         public abstract void Write(ConsoleColor foregroundColor, ConsoleColor backgroundColor, string value);
 
-        /// <summary>
-        /// The default implementation writes a carriage return to the screen buffer.
-        /// <see cref="System.Management.Automation.Host.PSHostUserInterface.Write(string)"/>
-        /// <see cref="System.Management.Automation.Host.PSHostUserInterface.Write(System.ConsoleColor, System.ConsoleColor, string)"/>
-        /// <see cref="System.Management.Automation.Host.PSHostUserInterface.WriteLine(string)"/>
-        /// <see cref="System.Management.Automation.Host.PSHostUserInterface.WriteLine(System.ConsoleColor, System.ConsoleColor, string)"/>
-        /// </summary>
+        
         public virtual void WriteLine()
         {
             WriteLine(string.Empty);
         }
 
-        /// <summary>
-        /// Writes characters to the screen buffer, and appends a carriage return.
-        /// </summary>
+        
         /// <param name="value">
         /// The characters to be written.  null is not allowed.
         /// </param>
@@ -134,10 +105,7 @@ namespace System.Management.Automation.Host
         /// <seealso cref="System.Management.Automation.Host.PSHostUserInterface.WriteLine(System.ConsoleColor, System.ConsoleColor, string)"/>
         public abstract void WriteLine(string value);
 
-        /// <summary>
-        /// Same as <see cref="System.Management.Automation.Host.PSHostUserInterface.WriteLine(string)"/>,
-        /// except that colors can be specified.
-        /// </summary>
+        
         /// <param name="foregroundColor">
         /// The foreground color to display the text with.
         /// </param>
@@ -167,14 +135,7 @@ namespace System.Management.Automation.Host
             // #pragma warning restore 56506
         }
 
-        /// <summary>
-        /// Writes a line to the "error display" of the host, as opposed to the "output display," which is
-        /// written to by the variants of
-        /// <see cref="System.Management.Automation.Host.PSHostUserInterface.Write(string)"/>
-        /// <see cref="System.Management.Automation.Host.PSHostUserInterface.Write(System.ConsoleColor, System.ConsoleColor, string)"/>
-        /// <see cref="System.Management.Automation.Host.PSHostUserInterface.WriteLine()"/> and
-        /// <see cref="System.Management.Automation.Host.PSHostUserInterface.WriteLine(string)"/>
-        /// </summary>
+        
         /// <param name="value">
         /// The characters to be written.
         /// </param>
@@ -184,18 +145,13 @@ namespace System.Management.Automation.Host
         /// <seealso cref="System.Management.Automation.Host.PSHostUserInterface.WriteLine(string)"/>
         public abstract void WriteErrorLine(string value);
 
-        /// <summary>
-        /// Invoked by <see cref="System.Management.Automation.Cmdlet.WriteDebug"/> to display a debugging message
-        /// to the user.
-        /// </summary>
+        
         /// <seealso cref="System.Management.Automation.Host.PSHostUserInterface.WriteProgress"/>
         /// <seealso cref="System.Management.Automation.Host.PSHostUserInterface.WriteVerboseLine"/>
         /// <seealso cref="System.Management.Automation.Host.PSHostUserInterface.WriteWarningLine"/>
         public abstract void WriteDebugLine(string message);
 
-        /// <summary>
-        /// Invoked by <see cref="System.Management.Automation.Cmdlet.WriteProgress(Int64, System.Management.Automation.ProgressRecord)"/> to display a progress record.
-        /// </summary>
+        
         /// <param name="sourceId">
         /// Unique identifier of the source of the record.  An int64 is used because typically, the 'this' pointer of
         /// the command from whence the record is originating is used, and that may be from a remote Runspace on a 64-bit
@@ -209,27 +165,19 @@ namespace System.Management.Automation.Host
         /// <seealso cref="System.Management.Automation.Host.PSHostUserInterface.WriteWarningLine"/>
         public abstract void WriteProgress(Int64 sourceId, ProgressRecord record);
 
-        /// <summary>
-        /// Invoked by <see cref="System.Management.Automation.Cmdlet.WriteVerbose"/> to display a verbose processing message to the user.
-        /// </summary>
+        
         /// <seealso cref="System.Management.Automation.Host.PSHostUserInterface.WriteDebugLine"/>
         /// <seealso cref="System.Management.Automation.Host.PSHostUserInterface.WriteProgress"/>
         /// <seealso cref="System.Management.Automation.Host.PSHostUserInterface.WriteWarningLine"/>
         public abstract void WriteVerboseLine(string message);
 
-        /// <summary>
-        /// Invoked by <see cref="System.Management.Automation.Cmdlet.WriteWarning"/> to display a warning processing message to the user.
-        /// </summary>
+        
         /// <seealso cref="System.Management.Automation.Host.PSHostUserInterface.WriteDebugLine"/>
         /// <seealso cref="System.Management.Automation.Host.PSHostUserInterface.WriteProgress"/>
         /// <seealso cref="System.Management.Automation.Host.PSHostUserInterface.WriteVerboseLine"/>
         public abstract void WriteWarningLine(string message);
 
-        /// <summary>
-        /// Invoked by <see cref="System.Management.Automation.Cmdlet.WriteInformation(InformationRecord)"/> to give the host a chance to intercept
-        /// informational messages. These should not be displayed to the user by default, but may be useful to display in
-        /// a separate area of the user interface.
-        /// </summary>
+        
         public virtual void WriteInformation(InformationRecord record) { }
 
         private static bool ShouldOutputPlainText(bool isHost, bool? supportsVirtualTerminal)
@@ -252,55 +200,35 @@ namespace System.Management.Automation.Host
             return outputRendering == OutputRendering.PlainText;
         }
 
-        /// <summary>
-        /// The format styles that are supported by the host.
-        /// </summary>
+        
         public enum FormatStyle
         {
-            /// <summary>
-            /// Reset the formatting to the default.
-            /// </summary>
+            
             Reset,
 
-            /// <summary>
-            /// Highlight text used in output formatting.
-            /// </summary>
+            
             FormatAccent,
 
-            /// <summary>
-            /// Highlight for table headers.
-            /// </summary>
+            
             TableHeader,
 
-            /// <summary>
-            /// Highlight for detailed error view.
-            /// </summary>
+            
             ErrorAccent,
 
-            /// <summary>
-            /// Style for error messages.
-            /// </summary>
+            
             Error,
 
-            /// <summary>
-            /// Style for warning messages.
-            /// </summary>
+            
             Warning,
 
-            /// <summary>
-            /// Style for verbose messages.
-            /// </summary>
+            
             Verbose,
 
-            /// <summary>
-            /// Style for debug messages.
-            /// </summary>
+            
             Debug,
         }
 
-        /// <summary>
-        /// Get the ANSI escape sequence for the given format style.
-        /// </summary>
+        
         /// <param name="formatStyle">
         /// The format style to get the escape sequence for.
         /// </param>
@@ -338,9 +266,7 @@ namespace System.Management.Automation.Host
             }
         }
 
-        /// <summary>
-        /// Get the appropriate output string based on different criteria.
-        /// </summary>
+        
         /// <param name="text">
         /// The text to format.
         /// </param>
@@ -410,9 +336,7 @@ namespace System.Management.Automation.Host
 
         private TranscriptionData _volatileTranscriptionData;
 
-        /// <summary>
-        /// Transcribes a command being invoked.
-        /// </summary>
+        
         /// <param name="commandText">The text of the command being invoked.</param>
         /// <param name="invocation">The invocation info of the command being transcribed.</param>
         internal void TranscribeCommand(string commandText, InvocationInfo invocation)
@@ -505,9 +429,7 @@ namespace System.Management.Automation.Host
             return false;
         }
 
-        /// <summary>
-        /// Signals that a command being invoked (and its output) should be ignored.
-        /// </summary>
+        
         /// <param name="commandText">The text of the command being invoked.</param>
         /// <param name="invocation">The invocation info of the command being transcribed.</param>
         internal void IgnoreCommand(string commandText, InvocationInfo invocation)
@@ -526,11 +448,7 @@ namespace System.Management.Automation.Host
             }
         }
 
-        /// <summary>
-        /// Flag to determine whether the host is in "Transcribe Only" mode,
-        /// so that when content is sent through Out-Default it doesn't
-        /// make it to the actual host.
-        /// </summary>
+        
         internal bool TranscribeOnly => Interlocked.CompareExchange(ref _transcribeOnlyCount, 0, 0) != 0;
 
         private int _transcribeOnlyCount = 0;
@@ -561,9 +479,7 @@ namespace System.Management.Automation.Host
             ~TranscribeOnlyCookie() => Dispose();
         }
 
-        /// <summary>
-        /// Flag to determine whether the host is transcribing.
-        /// </summary>
+        
         internal bool IsTranscribing
         {
             get
@@ -727,9 +643,7 @@ namespace System.Management.Automation.Host
             }
         }
 
-        /// <summary>
-        /// Transcribes the supplied result text to the transcription buffer.
-        /// </summary>
+        
         /// <param name="sourceRunspace">The runspace that was used to generate this result, if it is not the current runspace.</param>
         /// <param name="resultText">The text to be transcribed.</param>
         internal void TranscribeResult(Runspace sourceRunspace, string resultText)
@@ -788,18 +702,14 @@ namespace System.Management.Automation.Host
             }
         }
 
-        /// <summary>
-        /// Transcribes the supplied result text to the transcription buffer.
-        /// </summary>
+        
         /// <param name="resultText">The text to be transcribed.</param>
         internal void TranscribeResult(string resultText)
         {
             TranscribeResult(null, resultText);
         }
 
-        /// <summary>
-        /// Transcribes / records the completion of a command.
-        /// </summary>
+        
         /// <param name="invocation"></param>
         internal void TranscribeCommandComplete(InvocationInfo invocation)
         {
@@ -928,9 +838,7 @@ namespace System.Management.Automation.Host
 
         #region Dialog-oriented Interaction
 
-        /// <summary>
-        /// Constructs a 'dialog' where the user is presented with a number of fields for which to supply values.
-        /// </summary>
+        
         /// <param name="caption">
         /// Caption to precede or title the prompt.  E.g. "Parameters for get-foo (instance 1 of 2)"
         /// </param>
@@ -953,13 +861,8 @@ namespace System.Management.Automation.Host
         /// <seealso cref="System.Management.Automation.Host.PSHostUserInterface.PromptForCredential(string, string, string, string, System.Management.Automation.PSCredentialTypes, System.Management.Automation.PSCredentialUIOptions)"/>
         public abstract Dictionary<string, PSObject> Prompt(string caption, string message, Collection<FieldDescription> descriptions);
 
-        /// <summary>
-        /// Prompt for credentials.
-        /// 
-        /// </summary>
-        /// <summary>
-        /// Prompt for credential.
-        /// </summary>
+        
+        
         /// <param name="caption">
         /// Caption for the message.
         /// </param>
@@ -985,9 +888,7 @@ namespace System.Management.Automation.Host
             string userName, string targetName
         );
 
-        /// <summary>
-        /// Prompt for credential.
-        /// </summary>
+        
         /// <param name="caption">
         /// Caption for the message.
         /// </param>
@@ -1020,9 +921,7 @@ namespace System.Management.Automation.Host
             PSCredentialUIOptions options
         );
 
-        /// <summary>
-        /// Presents a dialog allowing the user to choose an option from a set of options.
-        /// </summary>
+        
         /// <param name="caption">
         /// Caption to precede or title the prompt.  E.g. "Parameters for get-foo (instance 1 of 2)"
         /// </param>
@@ -1048,17 +947,13 @@ namespace System.Management.Automation.Host
 
         #endregion Dialog-oriented interaction
 
-        /// <summary>
-        /// Creates a new instance of the PSHostUserInterface class.
-        /// </summary>
+        
         protected PSHostUserInterface()
         {
             CheckSystemTranscript();
         }
 
-        /// <summary>
-        /// Helper to transcribe an error through formatting and output.
-        /// </summary>
+        
         /// <param name="context">The Execution Context.</param>
         /// <param name="invocation">The invocation info associated with the record.</param>
         /// <param name="errorWrap">The error record.</param>
@@ -1071,9 +966,7 @@ namespace System.Management.Automation.Host
             TranscribeResult(results[0].ToString());
         }
 
-        /// <summary>
-        /// Get Module Logging information from the registry.
-        /// </summary>
+        
         internal static TranscriptionOption GetSystemTranscriptOption(TranscriptionOption currentTranscript)
         {
             return systemTranscript;
@@ -1195,32 +1088,19 @@ namespace System.Management.Automation.Host
             OutputBeingLogged = new List<string>();
         }
 
-        /// <summary>
-        /// The path that this transcript is being logged to.
-        /// </summary>
+        
         internal string Path { get; set; }
 
-        /// <summary>
-        /// Any output to log for this transcript.
-        /// </summary>
+        
         internal List<string> OutputToLog { get; }
 
-        /// <summary>
-        /// Any output currently being logged for this transcript.
-        /// </summary>
+        
         internal List<string> OutputBeingLogged { get; }
 
-        /// <summary>
-        /// Whether to include time stamp / command separators in
-        /// transcript output.
-        /// </summary>
+        
         internal bool IncludeInvocationHeader { get; set; }
 
-        /// <summary>
-        /// Logs buffered content to disk. We use this instead of File.AppendAllLines
-        /// so that we don't need to pay seek penalties all the time, and so that we
-        /// don't need append permission to our own files.
-        /// </summary>
+        
         internal void FlushContentToDisk()
         {
             static Encoding GetPathEncoding(string path)
@@ -1271,9 +1151,7 @@ namespace System.Management.Automation.Host
 
         private StreamWriter _contentWriter = null;
 
-        /// <summary>
-        /// Disposes this runspace instance. Dispose will close the runspace if not closed already.
-        /// </summary>
+        
         public void Dispose()
         {
             if (_disposed)
@@ -1317,17 +1195,11 @@ namespace System.Management.Automation.Host
         private bool _disposed = false;
     }
 
-    /// <summary>
-    /// This interface needs to be implemented by PSHost objects that want to support PromptForChoice
-    /// by giving the user ability to select more than one choice. The PromptForChoice method available
-    /// in PSHostUserInterface class supports only one choice selection.
-    /// </summary>
+    
 #nullable enable
     public interface IHostUISupportsMultipleChoiceSelection
     {
-        /// <summary>
-        /// Presents a dialog allowing the user to choose options from a set of options.
-        /// </summary>
+        
         /// <param name="caption">
         /// Caption to precede or title the prompt.  E.g. "Parameters for get-foo (instance 1 of 2)"
         /// </param>
@@ -1352,15 +1224,10 @@ namespace System.Management.Automation.Host
     }
 #nullable restore
 
-    /// <summary>
-    /// Helper methods used by PowerShell's Hosts: ConsoleHost and InternalHost to process
-    /// PromptForChoice.
-    /// </summary>
+    
     internal static class HostUIHelperMethods
     {
-        /// <summary>
-        /// Constructs a string of the choices and their hotkeys.
-        /// </summary>
+        
         /// <param name="choices"></param>
         /// <param name="hotkeysAndPlainLabels"></param>
         /// <exception cref="ArgumentException">
@@ -1405,11 +1272,7 @@ namespace System.Management.Automation.Host
             }
         }
 
-        /// <summary>
-        /// Searches for a corresponding match between the response string and the choices.  A match is either the response
-        /// string is the full text of the label (sans hotkey marker), or is a hotkey.  Full labels are checked first, and take
-        /// precedence over hotkey matches.
-        /// </summary>
+        
         /// <param name="response"></param>
         /// <param name="choices"></param>
         /// <param name="hotkeysAndPlainLabels"></param>

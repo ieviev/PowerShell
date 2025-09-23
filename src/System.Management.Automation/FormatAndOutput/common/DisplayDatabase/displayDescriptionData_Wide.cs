@@ -12,46 +12,26 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
 {
     #region Wide View Definitions
 
-    /// <summary>
-    /// In line definition of a wide control.
-    /// </summary>
+    
     internal sealed class WideControlBody : ControlBody
     {
-        /// <summary>
-        /// Number of columns to use for wide display.
-        /// </summary>
+        
         internal int columns = 0;
 
-        /// <summary>
-        /// Default wide entry definition
-        /// It's mandatory.
-        /// </summary>
+        
         internal WideControlEntryDefinition defaultEntryDefinition = null;
 
-        /// <summary>
-        /// Optional list of list entry definition overrides. It can be empty if there are no overrides.
-        /// </summary>
+        
         internal List<WideControlEntryDefinition> optionalEntryList = new List<WideControlEntryDefinition>();
     }
 
-    /// <summary>
-    /// Definition of the data to be displayed in a list entry.
-    /// </summary>
+    
     internal sealed class WideControlEntryDefinition
     {
-        /// <summary>
-        /// Applicability clause
-        /// Only valid if not the default definition.
-        /// </summary>
+        
         internal AppliesTo appliesTo = null;
 
-        /// <summary>
-        /// Format directive body telling how to format the cell
-        /// RULE: the body can only contain
-        ///     * TextToken
-        ///     * PropertyToken
-        ///     * NOTHING (provide an empty cell)
-        /// </summary>
+        
         internal List<FormatToken> formatTokenList = new List<FormatToken>();
     }
 
@@ -60,21 +40,19 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Defines a list control.
-    /// </summary>
+    
     public sealed class WideControl : PSControl
     {
-        /// <summary>Entries in this wide control</summary>
+        
         public List<WideControlEntryItem> Entries { get; internal set; }
 
-        /// <summary>When true, widths are calculated based on more than the first object.</summary>
+        
         public bool AutoSize { get; set; }
 
-        /// <summary>Number of columns in the control</summary>
+        
         public uint Columns { get; internal set; }
 
-        /// <summary>Create a default WideControl</summary>
+        
         public static WideControlBuilder Create(bool outOfBand = false, bool autoSize = false, uint columns = 0)
         {
             var control = new WideControl { OutOfBand = false, AutoSize = autoSize, Columns = columns };
@@ -86,10 +64,7 @@ namespace System.Management.Automation
             writer.WriteWideControl(this);
         }
 
-        /// <summary>
-        /// Indicates if this control does not have
-        /// any script blocks and is safe to export.
-        /// </summary>
+        
         /// <returns>True if exportable, false otherwise.</returns>
         internal override bool SafeForExport()
         {
@@ -119,7 +94,7 @@ namespace System.Management.Automation
             return true;
         }
 
-        /// <summary>Default constructor for WideControl</summary>
+        
         public WideControl()
         {
             Entries = new List<WideControlEntryItem>();
@@ -141,7 +116,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>Public constructor for WideControl</summary>
+        
         public WideControl(IEnumerable<WideControlEntryItem> wideEntries) : this()
         {
             if (wideEntries == null)
@@ -153,7 +128,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>Public constructor for WideControl</summary>
+        
         public WideControl(IEnumerable<WideControlEntryItem> wideEntries, uint columns) : this()
         {
             if (wideEntries == null)
@@ -167,22 +142,20 @@ namespace System.Management.Automation
             this.Columns = columns;
         }
 
-        /// <summary>Construct an instance with columns</summary>
+        
         public WideControl(uint columns) : this()
         {
             this.Columns = columns;
         }
     }
 
-    /// <summary>
-    /// Defines one item in a wide control entry.
-    /// </summary>
+    
     public sealed class WideControlEntryItem
     {
-        /// <summary>Display entry</summary>
+        
         public DisplayEntry DisplayEntry { get; internal set; }
 
-        /// <summary>List of typenames which select this entry, deprecated, use EntrySelectedBy</summary>
+        
         public List<string> SelectedBy
         {
             get
@@ -192,10 +165,10 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>List of typenames and/or a script block which select this entry.</summary>
+        
         public EntrySelectedBy EntrySelectedBy { get; internal set; }
 
-        /// <summary>Format string to apply</summary>
+        
         public string FormatString { get; internal set; }
 
         internal WideControlEntryItem()
@@ -216,9 +189,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Public constructor for WideControlEntryItem.
-        /// </summary>
+        
         public WideControlEntryItem(DisplayEntry entry) : this()
         {
             if (entry == null)
@@ -226,9 +197,7 @@ namespace System.Management.Automation
             this.DisplayEntry = entry;
         }
 
-        /// <summary>
-        /// Public constructor for WideControlEntryItem.
-        /// </summary>
+        
         public WideControlEntryItem(DisplayEntry entry, IEnumerable<string> selectedBy) : this()
         {
             if (entry == null)
@@ -263,7 +232,7 @@ namespace System.Management.Automation
             _control = control;
         }
 
-        /// <summary>Group instances by the property name with an optional label.</summary>
+        
         public WideControlBuilder GroupByProperty(string property, CustomControl customControl = null, string label = null)
         {
             _control.GroupBy = new PSControlGroupBy
@@ -275,7 +244,7 @@ namespace System.Management.Automation
             return this;
         }
 
-        /// <summary>Group instances by the script block expression with an optional label.</summary>
+        
         public WideControlBuilder GroupByScriptBlock(string scriptBlock, CustomControl customControl = null, string label = null)
         {
             _control.GroupBy = new PSControlGroupBy

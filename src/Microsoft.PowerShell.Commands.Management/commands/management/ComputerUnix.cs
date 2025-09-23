@@ -16,9 +16,7 @@ namespace Microsoft.PowerShell.Commands
 {
 #region Restart-Computer
 
-    /// <summary>
-    /// Cmdlet to restart computer.
-    /// </summary>
+    
     [Cmdlet(VerbsLifecycle.Restart, "Computer", SupportsShouldProcess = true,
         HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097060", RemotingCapability = RemotingCapability.SupportedByCommand)]
     public sealed class RestartComputerCommand : CommandLineCmdletBase
@@ -27,9 +25,7 @@ namespace Microsoft.PowerShell.Commands
 
 #region "Overrides"
 
-        /// <summary>
-        /// BeginProcessing.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             if (InternalTestHooks.TestStopComputer)
@@ -53,9 +49,7 @@ namespace Microsoft.PowerShell.Commands
 
 #region Stop-Computer
 
-    /// <summary>
-    /// Cmdlet to stop computer.
-    /// </summary>
+    
     [Cmdlet(VerbsLifecycle.Stop, "Computer", SupportsShouldProcess = true,
         HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097151", RemotingCapability = RemotingCapability.SupportedByCommand)]
     public sealed class StopComputerCommand : CommandLineCmdletBase
@@ -64,9 +58,7 @@ namespace Microsoft.PowerShell.Commands
 
 #region "Overrides"
 
-        /// <summary>
-        /// BeginProcessing.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             var args = "-P now";
@@ -92,9 +84,7 @@ namespace Microsoft.PowerShell.Commands
 #endregion "Overrides"
     }
 
-    /// <summary>
-    /// A base class for cmdlets that can run shell commands.
-    /// </summary>
+    
     public class CommandLineCmdletBase : PSCmdlet, IDisposable
     {
 #region Private Members
@@ -103,19 +93,14 @@ namespace Microsoft.PowerShell.Commands
 
 #region "IDisposable Members"
 
-        /// <summary>
-        /// Releases all resources used by the <see cref="CommandLineCmdletBase"/>.
-        /// </summary>
+        
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
 
-        /// <summary>
-        /// Releases the unmanaged resources used by the <see cref="CommandLineCmdletBase"/>
-        /// and optionally releases the managed resources.
-        /// </summary>
+        
         /// <param name="disposing">
         /// <see langword="true"/> to release both managed and unmanaged resources;
         /// <see langword="false"/> to release only unmanaged resources.
@@ -131,9 +116,7 @@ namespace Microsoft.PowerShell.Commands
 #endregion "IDisposable Members"
 
 #region "Overrides"
-        /// <summary>
-        /// To implement ^C.
-        /// </summary>
+        
         protected override void StopProcessing()
         {
             if (_process == null) {
@@ -155,9 +138,7 @@ namespace Microsoft.PowerShell.Commands
 
         private static string? shutdownPath;
 
-        /// <summary>
-        /// Run shutdown command.
-        /// </summary>
+        
         protected void RunShutdown(String args)
         {
             if (shutdownPath is null)

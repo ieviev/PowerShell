@@ -1301,10 +1301,7 @@ namespace System.Management.Automation
             return new Pipe(context, PipelineProcessor);
         }
 
-        /// <summary>
-        /// After file redirection is done, we need to call 'DoComplete' on the pipeline processor,
-        /// so that 'EndProcessing' of Out-File can be called to wrap up the file write operation.
-        /// </summary>
+        
         /// <remarks>
         /// 'StartStepping' is called after creating the pipeline processor.
         /// 'Step' is called when an object is added to the pipe created with the pipeline processor.
@@ -1395,9 +1392,7 @@ namespace System.Management.Automation
 
     internal static class ByRefOps
     {
-        /// <summary>
-        /// There is no way to directly work with ByRef type in the expression tree, so we turn to reflection in this case.
-        /// </summary>
+        
         internal static object GetByRefPropertyValue(object target, PropertyInfo property)
         {
             return property.GetValue(target);
@@ -1466,9 +1461,7 @@ namespace System.Management.Automation
     {
         internal class CatchAll { }
 
-        /// <summary>
-        /// Represent a handler search result.
-        /// </summary>
+        
         private sealed class HandlerSearchResult
         {
             internal HandlerSearchResult()
@@ -1485,10 +1478,7 @@ namespace System.Management.Automation
             internal ErrorRecord ErrorRecordToPass;
         }
 
-        /// <summary>
-        /// Rank the exception types based on how specific they are.
-        /// Smaller ranking number indicates more specific exception type.
-        /// </summary>
+        
         /// <remarks>
         /// The ranking number for each type represent how many other
         /// types from the array derive from it.
@@ -1525,9 +1515,7 @@ namespace System.Management.Automation
             return ranks;
         }
 
-        /// <summary>
-        /// Search for handler by the exception type and process the found result.
-        /// </summary>
+        
         private static void FindAndProcessHandler(Type[] types, int[] ranks,
                                                   HandlerSearchResult current,
                                                   Exception exception,
@@ -1563,9 +1551,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Find the matching handler for the caught exception.
-        /// </summary>
+        
         internal static int FindMatchingHandler(MutableTuple tuple, RuntimeException rte, Type[] types, ExecutionContext context)
         {
             bool continueToSearch = false;
@@ -1635,9 +1621,7 @@ namespace System.Management.Automation
             return current.Handler;
         }
 
-        /// <summary>
-        /// Find the matching handler by the exception type.
-        /// </summary>
+        
         private static int FindMatchingHandlerByType(Type exceptionType, Type[] types)
         {
             int i;
@@ -1902,9 +1886,7 @@ namespace System.Management.Automation
             return ActionPreference.Stop;
         }
 
-        /// <summary>
-        /// Gets the current error action preference value.
-        /// </summary>
+        
         /// <param name="context">The execution context.</param>
         /// <returns>The preference the user selected.</returns>
         /// <remarks>
@@ -1919,9 +1901,7 @@ namespace System.Management.Automation
                 out _);
         }
 
-        /// <summary>
-        /// Determine if we should continue or not after an error or exception.
-        /// </summary>
+        
         /// <param name="rte">The RuntimeException which was reported.</param>
         /// <param name="message">The message to display.</param>
         /// <param name="context">The execution context.</param>
@@ -1945,9 +1925,7 @@ namespace System.Management.Automation
             return InquireForActionPreference(message, context);
         }
 
-        /// <summary>
-        /// This is a helper function for prompting for user preference.
-        /// </summary>
+        
         /// <param name="message"></param>
         /// <param name="context">The execution context.</param>
         /// <returns></returns>
@@ -1995,9 +1973,7 @@ namespace System.Management.Automation
             return ActionPreference.Stop;
         }
 
-        /// <summary>
-        /// Set error variables like $error and $stacktrace.
-        /// </summary>
+        
         /// <param name="extent"></param>
         /// <param name="rte"></param>
         /// <param name="context">The execution context.</param>
@@ -2041,9 +2017,7 @@ namespace System.Management.Automation
                    || rte is PipelineStoppedException;
         }
 
-        /// <summary>
-        /// Report error into error pipe.
-        /// </summary>
+        
         /// <param name="extent"></param>
         /// <param name="rte">The runtime error to report.</param>
         /// <param name="context">The execution context.</param>
@@ -2358,23 +2332,7 @@ namespace System.Management.Automation
             return namespaces.ToArray();
         }
 
-        /// <summary>
-        /// Add types to the current scope.
-        /// This method called at runtime after types are created at compile time.
-        /// This method should be called for every ScriptBlockAst that defines types.
-        ///
-        /// I.e.
-        ///
-        /// class C1 {}
-        /// function foo { class C2 {} }
-        /// 1..10 | ForEach-Object { foo }
-        ///
-        /// DefinePowerShellTypes() would be called for two TypeDefinitionAsts at the same time and Types for C1 and C2 would be created at the same assembly.
-        /// AddPowerShellTypesToTheScope() would be called for root script first and then for foo\C2, once we call function foo.
-        /// Note that AddPowerShellTypesToTheScope() would be call on every foo call, 10 times.
-        ///
-        /// This method also should be called for 'using module' statements. Then added types would have a different name.
-        /// </summary>
+        
         /// <param name="types"></param>
         /// <param name="context"></param>
         internal static void AddPowerShellTypesToTheScope(Dictionary<string, TypeDefinitionAst> types, ExecutionContext context)
@@ -2390,9 +2348,7 @@ namespace System.Management.Automation
             context.EngineSessionState.CurrentScope.TypeResolutionState = trs.CloneWithAddTypesDefined(types.Keys);
         }
 
-        /// <summary>
-        /// Capture session state for methods defined in PowerShell types, so they know what context to use.
-        /// </summary>
+        
         /// <param name="types"></param>
         internal static void InitPowerShellTypesAtRuntime(TypeDefinitionAst[] types)
         {
@@ -2594,42 +2550,26 @@ namespace System.Management.Automation
         }
     }
 
-    /// <summary>
-    /// Controls the matching behaviour of the Where() operator.
-    /// </summary>
+    
     public enum WhereOperatorSelectionMode
     {
-        /// <summary>
-        /// Return all matches.
-        /// </summary>
+        
         Default = 0,
-        /// <summary>
-        /// Stop processing after the first match.
-        /// </summary>
+        
         First = 1,
-        /// <summary>
-        /// Return the last matching element.
-        /// </summary>
+        
         Last = 2,       // return last match
-        /// <summary>
-        /// Skip until the condition is true, then return the rest.
-        /// </summary>
+        
         SkipUntil = 3,
-        /// <summary>
-        /// Return elements until the condition is true then skip the rest.
-        /// </summary>
+        
         Until = 4,
-        /// <summary>
-        /// Return an array of two elements, first index is matched elements, second index is the remaining elements.
-        /// </summary>
+        
         Split = 5,
     }
 
     internal static class EnumerableOps
     {
-        /// <summary>
-        /// Implements the Where(expression) operation on collections.
-        /// </summary>
+        
         /// <param name="enumerator">The enumerator over the collection to search.</param>
         /// <param name="expressionSB">
         /// A ScriptBlock where its result is treated as a boolean, or null to
@@ -2866,9 +2806,7 @@ namespace System.Management.Automation
             return matches;
         }
 
-        /// <summary>
-        /// Implements the ForEach() operator.
-        /// </summary>
+        
         /// <param name="enumerator">The collection to operate over.</param>
         /// <param name="expression"></param>
         /// <param name="arguments">
@@ -3460,10 +3398,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// A routine used to advance an enumerator and catch errors that might occur
-        /// performing the operation.
-        /// </summary>
+        
         /// <param name="context">The execution context used to see if the pipeline is stopping.</param>
         /// <param name="enumerator">THe enumerator to advance.</param>
         /// <exception cref="RuntimeException">An error occurred moving to the next element in the enumeration.</exception>
@@ -3497,9 +3432,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Wrapper caller for enumerator.Current - handles and republishes errors...
-        /// </summary>
+        
         /// <param name="enumerator">The enumerator to read from.</param>
         /// <returns></returns>
         internal static object Current(IEnumerator enumerator)

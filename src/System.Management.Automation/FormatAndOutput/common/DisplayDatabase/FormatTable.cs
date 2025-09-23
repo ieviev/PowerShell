@@ -17,10 +17,7 @@ using Microsoft.PowerShell.Commands.Internal.Format;
 
 namespace System.Management.Automation.Runspaces
 {
-    /// <summary>
-    /// This exception is used by Formattable constructor to indicate errors
-    /// occurred during construction time.
-    /// </summary>    
+    
     [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "FormatTable")]
     public class FormatTableLoadException : RuntimeException
     {
@@ -28,18 +25,14 @@ namespace System.Management.Automation.Runspaces
 
         #region Constructors
 
-        /// <summary>
-        /// This is the default constructor.
-        /// </summary>
+        
         public FormatTableLoadException()
             : base()
         {
             SetDefaultErrorRecord();
         }
 
-        /// <summary>
-        /// This constructor takes a localized error message.
-        /// </summary>
+        
         /// <param name="message">
         /// A localized error message.
         /// </param>
@@ -49,9 +42,7 @@ namespace System.Management.Automation.Runspaces
             SetDefaultErrorRecord();
         }
 
-        /// <summary>
-        /// This constructor takes a localized message and an inner exception.
-        /// </summary>
+        
         /// <param name="message">
         /// Localized error message.
         /// </param>
@@ -64,10 +55,7 @@ namespace System.Management.Automation.Runspaces
             SetDefaultErrorRecord();
         }
 
-        /// <summary>
-        /// This constructor takes a collection of errors occurred during construction
-        /// time.
-        /// </summary>
+        
         /// <param name="loadErrors">
         /// The errors that occurred.
         /// </param>
@@ -78,9 +66,7 @@ namespace System.Management.Automation.Runspaces
             SetDefaultErrorRecord();
         }
 
-        /// <summary>
-        /// This constructor is required by serialization.
-        /// </summary>
+        
         /// <param name="info"></param>
         /// <param name="context"></param>
         [Obsolete("Legacy serialization support is deprecated since .NET 8", DiagnosticId = "SYSLIB0051")]
@@ -91,18 +77,14 @@ namespace System.Management.Automation.Runspaces
 
         #endregion Constructors
 
-        /// <summary>
-        /// Set the default ErrorRecord.
-        /// </summary>
+        
         protected void SetDefaultErrorRecord()
         {
             SetErrorCategory(ErrorCategory.InvalidData);
             SetErrorId(typeof(FormatTableLoadException).FullName);
         }
 
-        /// <summary>
-        /// The specific Formattable load errors.
-        /// </summary>
+        
         public Collection<string> Errors
         {
             get
@@ -112,9 +94,7 @@ namespace System.Management.Automation.Runspaces
         }
     }
 
-    /// <summary>
-    /// A class that keeps the information from format.ps1xml files in a cache table.
-    /// </summary>
+    
     [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "FormatTable")]
     public sealed class FormatTable
     {
@@ -126,17 +106,13 @@ namespace System.Management.Automation.Runspaces
 
         #region Constructor
 
-        /// <summary>
-        /// Default Constructor.
-        /// </summary>
+        
         internal FormatTable()
         {
             _formatDBMgr = new TypeInfoDataBaseManager();
         }
 
-        /// <summary>
-        /// Constructor that creates a FormatTable from a set of format files.
-        /// </summary>
+        
         /// <param name="formatFiles">
         /// Format files to load for format information.
         /// </param>
@@ -151,10 +127,7 @@ namespace System.Management.Automation.Runspaces
         {
         }
 
-        /// <summary>
-        /// Append the formatData to the list of formatting configurations, and update the
-        /// entire formatting database.
-        /// </summary>
+        
         /// <param name="formatData">
         /// The formatData is of type 'ExtendedTypeDefinition'. It defines the View configuration
         /// including TableControl, ListControl, and WideControl.
@@ -170,10 +143,7 @@ namespace System.Management.Automation.Runspaces
             _formatDBMgr.AddFormatData(formatData, false);
         }
 
-        /// <summary>
-        /// Prepend the formatData to the list of formatting configurations, and update the
-        /// entire formatting database.
-        /// </summary>
+        
         /// <param name="formatData">
         /// The formatData is of type 'ExtendedTypeDefinition'. It defines the View configuration
         /// including TableControl, ListControl, and WideControl.
@@ -189,9 +159,7 @@ namespace System.Management.Automation.Runspaces
             _formatDBMgr.AddFormatData(formatData, true);
         }
 
-        /// <summary>
-        /// Constructor that creates a FormatTable from a set of format files.
-        /// </summary>
+        
         /// <param name="formatFiles">
         /// Format files to load for format information.
         /// </param>
@@ -227,10 +195,7 @@ namespace System.Management.Automation.Runspaces
             get { return _formatDBMgr; }
         }
 
-        /// <summary>
-        /// Adds the <paramref name="formatFile"/> to the current FormatTable's file list.
-        /// The FormatTable will not reflect the change until Update is called.
-        /// </summary>
+        
         /// <param name="formatFile"></param>
         /// <param name="shouldPrepend">
         /// if true, <paramref name="formatFile"/> is prepended to the current FormatTable's file list.
@@ -241,10 +206,7 @@ namespace System.Management.Automation.Runspaces
             _formatDBMgr.Add(formatFile, shouldPrepend);
         }
 
-        /// <summary>
-        /// Removes the <paramref name="formatFile"/> from the current FormatTable's file list.
-        /// The FormatTable will not reflect the change until Update is called.
-        /// </summary>
+        
         /// <param name="formatFile"></param>
         internal void Remove(string formatFile)
         {
@@ -255,10 +217,7 @@ namespace System.Management.Automation.Runspaces
 
         #region static methods
 
-        /// <summary>
-        /// Returns a format table instance with all default
-        /// format files loaded.
-        /// </summary>
+        
         /// <returns></returns>
         public static FormatTable LoadDefaultFormatFiles()
         {

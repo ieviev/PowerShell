@@ -15,18 +15,13 @@ using System.Threading.Tasks;
 
 namespace Microsoft.PowerShell.Telemetry.Internal
 {
-    /// <summary>
-    /// </summary>
+    
     [SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public static class TelemetryAPI
     {
 #region Public API
 
-        /// <summary>
-        /// Public API to expose Telemetry in PowerShell
-        /// Provide meaningful message. Ex: PSCONSOLE_START, PSRUNSPACE_START
-        /// arguments are of anonymous type. Ex: new { PSVersion = "5.0", PSRemotingProtocolVersion = "2.2"}
-        /// </summary>
+        
         public static void TraceMessage<T>(string message, T arguments)
         {
             TelemetryWrapper.TraceMessage(message, arguments);
@@ -44,9 +39,7 @@ namespace Microsoft.PowerShell.Telemetry.Internal
             NonInteractive
         }
 
-        /// <summary>
-        /// Called either after opening a runspace (the default), or by the host application.
-        /// </summary>
+        
         public static void ReportStartupTelemetry(IHostProvidesTelemetryData ihptd)
         {
             // Avoid reporting startup more than once, except if we report "exited" and
@@ -85,10 +78,7 @@ namespace Microsoft.PowerShell.Telemetry.Internal
             s_sessionStartTime = DateTime.Now;
         }
 
-        /// <summary>
-        /// Called after there are no more open runspaces. In some host applications, this could
-        /// report multiple exits.
-        /// </summary>
+        
         public static void ReportExitTelemetry(IHostProvidesTelemetryData ihptd)
         {
             TelemetryWrapper.TraceMessage("PSHostStop", new
@@ -105,9 +95,7 @@ namespace Microsoft.PowerShell.Telemetry.Internal
             s_anyPowerShellSessionOpen = 0;
         }
 
-        /// <summary>
-        /// Report Get-Help requests, how many results are returned, and how long it took.
-        /// </summary>
+        
         internal static void ReportGetHelpTelemetry(string name, int topicsFound, long timeInMS, bool updatedHelp)
         {
             TelemetryWrapper.TraceMessage("PSHelpRequest", new
@@ -119,9 +107,7 @@ namespace Microsoft.PowerShell.Telemetry.Internal
             });
         }
 
-        /// <summary>
-        /// Report when Get-Command fails to find something.
-        /// </summary>
+        
         internal static void ReportGetCommandFailed(string[] name, long timeInMS)
         {
             TelemetryWrapper.TraceMessage("PSGetCommandFailed", new { TimeInMS = timeInMS, CommandNames = name });
@@ -153,11 +139,7 @@ namespace Microsoft.PowerShell.Telemetry.Internal
             }
         }
 
-        /// <summary>
-        /// Report that a module was loaded, but only do so for modules that *might* be authored by Microsoft. We can't
-        /// be 100% certain, but we'll ignore non-Microsoft module names when looking at any data, so it's best to
-        /// at least attempt avoiding collecting data we'll ignore.
-        /// </summary>
+        
         internal static void ReportModuleLoad(PSModuleInfo foundModule)
         {
             var modulePath = foundModule.Path;
@@ -179,9 +161,7 @@ namespace Microsoft.PowerShell.Telemetry.Internal
             }
         }
 
-        /// <summary>
-        /// Report that a new local session (runspace) is created.
-        /// </summary>
+        
         internal static void ReportLocalSessionCreated(
             System.Management.Automation.Runspaces.InitialSessionState iss,
             System.Management.Automation.Host.TranscriptionData transcriptionData)
@@ -214,9 +194,7 @@ namespace Microsoft.PowerShell.Telemetry.Internal
             Custom
         }
 
-        /// <summary>
-        /// Report that a new remote session (runspace) is created.
-        /// </summary>
+        
         internal static void ReportRemoteSessionCreated(
             System.Management.Automation.Runspaces.RunspaceConnectionInfo connectionInfo)
         {
@@ -312,9 +290,7 @@ namespace Microsoft.PowerShell.Telemetry.Internal
 
         private static readonly int s_promptHashCode = "prompt".GetHashCode();
 
-        /// <summary>
-        /// Report some telemetry about the scripts that are run.
-        /// </summary>
+        
         internal static void ReportScriptTelemetry(Ast ast, bool dotSourced, long compileTimeInMS)
         {
             if (ast.Parent != null || !TelemetryWrapper.IsEnabled)
@@ -512,22 +488,19 @@ namespace Microsoft.PowerShell.Telemetry.Internal
         }
     }
 
-    /// <summary>
-    /// If implemented by the host, the host should call <see cref="TelemetryAPI.ReportStartupTelemetry"/> and <see cref="TelemetryAPI.ReportExitTelemetry"/>
-    /// and track the data defined by this interface.
-    /// </summary>
+    
     public interface IHostProvidesTelemetryData
     {
-        /// <summary>A host sets this property as appropriate - used when reporting telemetry.</summary>
+        
         bool HostIsInteractive { get; }
 
-        /// <summary>A host sets this property as appropriate - used when reporting telemetry.</summary>
+        
         double ProfileLoadTimeInMS { get; }
 
-        /// <summary>A host sets this property as appropriate - used when reporting telemetry.</summary>
+        
         double ReadyForInputTimeInMS { get; }
 
-        /// <summary>A host sets this property as appropriate - used when reporting telemetry.</summary>
+        
         int InteractiveCommandCount { get; }
     }
 }

@@ -6,16 +6,11 @@
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Defines the attribute used to designate a cmdlet parameter as one that
-    /// should accept credentials.
-    /// </summary>
+    
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property, AllowMultiple = false)]
     public sealed class CredentialAttribute : ArgumentTransformationAttribute
     {
-        /// <summary>
-        /// Transforms the input data to an PSCredential.
-        /// </summary>
+        
         /// <param name="engineIntrinsics">
         /// The engine APIs for the context under which the transformation is being
         /// made.

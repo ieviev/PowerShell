@@ -49,9 +49,7 @@ namespace System.Management.Automation.Language
             return null;
         }
 
-        /// <summary>
-        /// Inherited from InvalidCastException, because it happens in [string] -> [Type] conversion.
-        /// </summary>
+        
         internal class AmbiguousTypeException : InvalidCastException
         {
             public string[] Candidates { get; }
@@ -139,9 +137,7 @@ namespace System.Management.Automation.Language
             return foundType;
         }
 
-        /// <summary>
-        /// A type IsPublic if IsPublic or (IsNestedPublic and is nested in public type(s))
-        /// </summary>
+        
         internal static bool IsPublic(Type type)
         {
             if (type.IsPublic)
@@ -214,22 +210,14 @@ namespace System.Management.Automation.Language
             return result;
         }
 
-        /// <summary>
-        /// A set of assemblies that we have searched from but found no matching type. By checking this set, we can
-        /// avoid searching from some assemblies multiple times.
-        /// This set is made thread static, so that type resolution happens on the same thread can reuse the HashSet
-        /// without having to create a new HashSet instance every time. This will reduce GC given that type resolution
-        /// is a frequent operation in powershell script.
-        /// </summary>
+        
         /// <remarks>
         /// This set should be used directly only in the method CallResolveTypeNameWorkerHelper.
         /// </remarks>
         [ThreadStatic]
         private static HashSet<Assembly> t_searchedAssemblies = null;
 
-        /// <summary>
-        /// A helper method to call ResolveTypeNameWorker in steps.
-        /// </summary>
+        
         private static Type CallResolveTypeNameWorkerHelper(TypeName typeName,
                                                             ExecutionContext context,
                                                             IEnumerable<Assembly> assemblies,
@@ -481,9 +469,7 @@ namespace System.Management.Automation.Language
             return ResolveTypeName(typeName, out exception);
         }
 
-        /// <summary>
-        /// This routine converts a string into a Type object using the msh rules.
-        /// </summary>
+        
         /// <param name="strTypeName">A string representing the name of the type to convert.</param>
         /// <param name="exception">The exception, if one happened, trying to find the type.</param>
         /// <returns>A type if the conversion was successful, null otherwise.</returns>
@@ -505,18 +491,7 @@ namespace System.Management.Automation.Language
         }
     }
 
-    /// <summary>
-    /// The idea behind this class is: I should be able to re-use expensive
-    /// type resolution operation result in the same context.
-    /// Hence, this class is a key for TypeCache dictionary.
-    ///
-    /// Every SessionStateScope has TypeResolutionState.
-    /// typesDefined contains PowerShell types names defined in the current scope and all scopes above.
-    /// Same for namespaces.
-    ///
-    /// If TypeResolutionState doesn't add anything new compare to it's parent, we represent it as null.
-    /// So, when we do lookup, we need to find first non-null TypeResolutionState.
-    /// </summary>
+    
     internal class TypeResolutionState
     {
         internal static readonly string[] systemNamespace = { "System" };
@@ -534,10 +509,7 @@ namespace System.Management.Automation.Language
         {
         }
 
-        /// <summary>
-        /// TypeResolutionState can be shared and that's why it should be represented as an immutable object.
-        /// So, we use this API to alternate TypeResolutionState, but instead of mutating existing one, we clone it.
-        /// </summary>
+        
         /// <param name="types"></param>
         /// <returns></returns>
         internal TypeResolutionState CloneWithAddTypesDefined(IEnumerable<string> types)
@@ -703,9 +675,7 @@ namespace System.Management.Automation.Language
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// A class to the core types in PowerShell.
-    /// </summary>
+    
     internal static class CoreTypes
     {
         // A list of the core PowerShell types, and their accelerator.
@@ -837,10 +807,7 @@ namespace System.Management.Automation
         }
     }
 
-    /// <summary>
-    /// A class to view and modify the type accelerators used by the PowerShell engine.  Builtin
-    /// type accelerators are read only, but user defined type accelerators may be added.
-    /// </summary>
+    
     internal static class TypeAccelerators
     {
         // builtins are not exposed publicly in a direct manner so they can't be changed at all
@@ -912,9 +879,7 @@ namespace System.Management.Automation
 
             return null;
         }
-        /// <summary>
-        /// Add a type accelerator.
-        /// </summary>
+        
         /// <param name="typeName">The type accelerator name.</param>
         /// <param name="type">The type of the type accelerator.</param>
         public static void Add(string typeName, Type type)
@@ -926,9 +891,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Remove a type accelerator.
-        /// </summary>
+        
         /// <returns>True if the accelerator was removed, false otherwise.</returns>
         /// <param name="typeName">The accelerator to remove.</param>
         public static bool Remove(string typeName)
@@ -939,10 +902,7 @@ namespace System.Management.Automation
             return true;
         }
 
-        /// <summary>
-        /// This property is useful to tools that need to know what
-        /// type accelerators are available (e.g. to allow for autocompletion.)
-        /// </summary>
+        
         /// <remarks>
         /// The returned dictionary should be treated as read only.  Changes made
         /// to the dictionary will not affect PowerShell scripts in any way.  Use

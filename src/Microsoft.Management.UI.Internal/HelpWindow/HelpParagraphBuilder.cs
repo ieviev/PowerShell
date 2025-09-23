@@ -10,29 +10,19 @@ using System.Windows.Documents;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <summary>
-    /// Builds a help paragraph for a cmdlet.
-    /// </summary>
+    
     internal class HelpParagraphBuilder : ParagraphBuilder
     {
-        /// <summary>
-        /// Indentation size.
-        /// </summary>
+        
         internal const int IndentSize = 4;
 
-        /// <summary>
-        /// new line separators.
-        /// </summary>
+        
         private static readonly string[] Separators = new[] { "\r\n", "\n" };
 
-        /// <summary>
-        /// Object with the cmdelt.
-        /// </summary>
+        
         private readonly PSObject psObj;
 
-        /// <summary>
-        /// Initializes a new instance of the HelpParagraphBuilder class.
-        /// </summary>
+        
         /// <param name="paragraph">Paragraph being built.</param>
         /// <param name="psObj">Object with help information.</param>
         internal HelpParagraphBuilder(Paragraph paragraph, PSObject psObj)
@@ -42,9 +32,7 @@ namespace Microsoft.Management.UI.Internal
             this.AddTextToParagraphBuilder();
         }
 
-        /// <summary>
-        /// Enum for category of Help.
-        /// </summary>
+        
         private enum HelpCategory
         {
             Default,
@@ -52,9 +40,7 @@ namespace Microsoft.Management.UI.Internal
             Class
         }
 
-        /// <summary>
-        /// Gets the string value of a property or null if it could not be retrieved.
-        /// </summary>
+        
         /// <param name="psObj">Object with the property.</param>
         /// <param name="propertyName">Property name.</param>
         /// <returns>The string value of a property or null if it could not be retrieved.</returns>
@@ -71,9 +57,7 @@ namespace Microsoft.Management.UI.Internal
             return value.ToString();
         }
 
-        /// <summary>
-        /// Adds the help text to the paragraph.
-        /// </summary>
+        
         internal void AddTextToParagraphBuilder()
         {
             this.ResetAllText();
@@ -130,9 +114,7 @@ namespace Microsoft.Management.UI.Internal
             this.AddStringSection(HelpWindowSettings.Default.HelpRemarksDisplayed, "Remarks", HelpWindowResources.RemarksTitle);
         }
 
-        /// <summary>
-        /// Gets the object property or null if it could not be retrieved.
-        /// </summary>
+        
         /// <param name="psObj">Object with the property.</param>
         /// <param name="propertyName">Property name.</param>
         /// <returns>The object property or null if it could not be retrieved.</returns>
@@ -142,9 +124,7 @@ namespace Microsoft.Management.UI.Internal
             return psObj.Properties[propertyName];
         }
 
-        /// <summary>
-        /// Gets a PSObject and then a value from it or null if the value could not be retrieved.
-        /// </summary>
+        
         /// <param name="psObj">PSObject that contains another PSObject as a property.</param>
         /// <param name="psObjectName">Property name that contains the PSObject.</param>
         /// <param name="propertyName">Property name in the inner PSObject.</param>
@@ -169,9 +149,7 @@ namespace Microsoft.Management.UI.Internal
             return value.ToString();
         }
 
-        /// <summary>
-        /// Gets the value of a property or null if the value could not be retrieved.
-        /// </summary>
+        
         /// <param name="psObj">Object with the property.</param>
         /// <param name="propertyName">Property name.</param>
         /// <returns>The value of a property or null if the value could not be retrieved.</returns>
@@ -197,9 +175,7 @@ namespace Microsoft.Management.UI.Internal
             return value;
         }
 
-        /// <summary>
-        /// Gets the text from a property of type PSObject[] where the first object has a text property.
-        /// </summary>
+        
         /// <param name="psObj">Objhect to get text from.</param>
         /// <param name="propertyText">Property with PSObject[] containing text.</param>
         /// <returns>The text from a property of type PSObject[] where the first object has a text property.</returns>
@@ -214,9 +190,7 @@ namespace Microsoft.Management.UI.Internal
             return null;
         }
 
-        /// <summary>
-        /// Returns the largest size of a group of strings.
-        /// </summary>
+        
         /// <param name="strs">Strings to evaluate the largest size from.</param>
         /// <returns>The largest size of a group of strings.</returns>
         private static int LargestSize(params string[] strs)
@@ -234,9 +208,7 @@ namespace Microsoft.Management.UI.Internal
             return returnValue;
         }
 
-        /// <summary>
-        /// Splits the string adding indentation before each line.
-        /// </summary>
+        
         /// <param name="str">String to add indentation to.</param>
         /// <returns>The string indented.</returns>
         private static string AddIndent(string str)
@@ -244,9 +216,7 @@ namespace Microsoft.Management.UI.Internal
             return HelpParagraphBuilder.AddIndent(str, 1);
         }
 
-        /// <summary>
-        /// Splits the string adding indentation before each line.
-        /// </summary>
+        
         /// <param name="str">String to add indentation to.</param>
         /// <param name="numberOfIdents">Number of indentations.</param>
         /// <returns>The string indented.</returns>
@@ -257,9 +227,7 @@ namespace Microsoft.Management.UI.Internal
             return HelpParagraphBuilder.AddIndent(str, indent.ToString());
         }
 
-        /// <summary>
-        /// Splits the string adding indentation before each line.
-        /// </summary>
+        
         /// <param name="str">String to add indentation to.</param>
         /// <param name="indentString">Indentation string.</param>
         /// <returns>The string indented.</returns>
@@ -288,9 +256,7 @@ namespace Microsoft.Management.UI.Internal
             return returnValue.ToString();
         }
 
-        /// <summary>
-        /// Get the object array value of a property.
-        /// </summary>
+        
         /// <param name="obj">Object containing the property.</param>
         /// <param name="propertyName">Property with the array value.</param>
         /// <returns>The object array value of a property.</returns>
@@ -311,9 +277,7 @@ namespace Microsoft.Management.UI.Internal
             return innerObjectArray;
         }
 
-        /// <summary>
-        /// Adds a section that contains only a string.
-        /// </summary>
+        
         /// <param name="setting">True if it should add the segment.</param>
         /// <param name="sectionName">Name of the section to add.</param>
         /// <param name="sectionTitle">Title of the section.</param>
@@ -331,9 +295,7 @@ namespace Microsoft.Management.UI.Internal
             this.AddText("\r\n\r\n", false);
         }
 
-        /// <summary>
-        /// Adds the help syntax segment.
-        /// </summary>
+        
         /// <param name="setting">True if it should add the segment.</param>
         /// <param name="sectionTitle">Title of the section.</param>
         private void AddSyntax(bool setting, string sectionTitle)
@@ -445,9 +407,7 @@ namespace Microsoft.Management.UI.Internal
             this.AddText("\r\n", false);
         }
 
-        /// <summary>
-        /// Adds the help description segment.
-        /// </summary>
+        
         /// <param name="setting">True if it should add the segment.</param>
         /// <param name="sectionTitle">Title of the section.</param>
         /// <param name="propertyName">PropertyName that has description.</param>
@@ -474,9 +434,7 @@ namespace Microsoft.Management.UI.Internal
             this.AddText("\r\n\r\n", false);
         }
 
-        /// <summary>
-        /// Adds the help examples segment.
-        /// </summary>
+        
         /// <param name="setting">True if it should add the segment.</param>
         /// <param name="sectionTitle">Title of the section.</param>
         private void AddExamples(bool setting, string sectionTitle)
@@ -712,9 +670,7 @@ namespace Microsoft.Management.UI.Internal
             memberText = string.Create(CultureInfo.CurrentCulture, $" [{returnType}] {name}({parameterText})\r\n");
         }
 
-        /// <summary>
-        /// Adds the help parameters segment.
-        /// </summary>
+        
         /// <param name="setting">True if it should add the segment.</param>
         /// <param name="sectionTitle">Title of the section.</param>
         /// <param name="paramPropertyName">Name of the property which has properties.</param>
@@ -859,9 +815,7 @@ namespace Microsoft.Management.UI.Internal
             this.AddText("\r\n\r\n", false);
         }
 
-        /// <summary>
-        /// Adds the help navigation links segment.
-        /// </summary>
+        
         /// <param name="setting">True if it should add the segment.</param>
         /// <param name="sectionTitle">Title of the section.</param>
         private void AddNavigationLink(bool setting, string sectionTitle)
@@ -906,9 +860,7 @@ namespace Microsoft.Management.UI.Internal
             this.AddText("\r\n\r\n", false);
         }
 
-        /// <summary>
-        /// Adds the help input or output segment.
-        /// </summary>
+        
         /// <param name="setting">True if it should add the segment.</param>
         /// <param name="sectionTitle">Title of the section.</param>
         /// <param name="inputOrOutputProperty">Property with the outter object.</param>
@@ -960,9 +912,7 @@ namespace Microsoft.Management.UI.Internal
             this.AddText("\r\n", false);
         }
 
-        /// <summary>
-        /// Adds the help notes segment.
-        /// </summary>
+        
         /// <param name="setting">True if it should add the segment.</param>
         /// <param name="sectionTitle">Title of the section.</param>
         private void AddNotes(bool setting, string sectionTitle)

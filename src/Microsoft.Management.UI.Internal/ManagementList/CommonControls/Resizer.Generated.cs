@@ -11,9 +11,7 @@ using System.Windows.Media;
 namespace Microsoft.Management.UI.Internal
 {
 
-    /// <summary>
-    /// Resizer adds a resizing grip and behavior to any control.
-    /// </summary>
+    
     /// <remarks>
     ///
     ///
@@ -37,14 +35,10 @@ namespace Microsoft.Management.UI.Internal
         //
         // DraggingTemplate dependency property
         //
-        /// <summary>
-        /// Identifies the DraggingTemplate dependency property.
-        /// </summary>
+        
         public static readonly DependencyProperty DraggingTemplateProperty = DependencyProperty.Register( "DraggingTemplate", typeof(DataTemplate), typeof(Resizer), new PropertyMetadata( null, DraggingTemplateProperty_PropertyChanged) );
 
-        /// <summary>
-        /// Gets or sets the template used for the dragging indicator when ResizeWhileDragging is false.
-        /// </summary>
+        
         [Bindable(true)]
         [Category("Common Properties")]
         [Description("Gets or sets the template used for the dragging indicator when ResizeWhileDragging is false.")]
@@ -67,14 +61,10 @@ namespace Microsoft.Management.UI.Internal
             obj.OnDraggingTemplateChanged( new PropertyChangedEventArgs<DataTemplate>((DataTemplate)e.OldValue, (DataTemplate)e.NewValue) );
         }
 
-        /// <summary>
-        /// Occurs when DraggingTemplate property changes.
-        /// </summary>
+        
         public event EventHandler<PropertyChangedEventArgs<DataTemplate>> DraggingTemplateChanged;
 
-        /// <summary>
-        /// Called when DraggingTemplate property changes.
-        /// </summary>
+        
         protected virtual void OnDraggingTemplateChanged(PropertyChangedEventArgs<DataTemplate> e)
         {
             OnDraggingTemplateChangedImplementation(e);
@@ -86,14 +76,10 @@ namespace Microsoft.Management.UI.Internal
         //
         // GripBrush dependency property
         //
-        /// <summary>
-        /// Identifies the GripBrush dependency property.
-        /// </summary>
+        
         public static readonly DependencyProperty GripBrushProperty = DependencyProperty.Register( "GripBrush", typeof(Brush), typeof(Resizer), new PropertyMetadata( new SolidColorBrush(Colors.Black), GripBrushProperty_PropertyChanged) );
 
-        /// <summary>
-        /// Gets or sets the color of the resize grips.
-        /// </summary>
+        
         [Bindable(true)]
         [Category("Common Properties")]
         [Description("Gets or sets the color of the resize grips.")]
@@ -116,14 +102,10 @@ namespace Microsoft.Management.UI.Internal
             obj.OnGripBrushChanged( new PropertyChangedEventArgs<Brush>((Brush)e.OldValue, (Brush)e.NewValue) );
         }
 
-        /// <summary>
-        /// Occurs when GripBrush property changes.
-        /// </summary>
+        
         public event EventHandler<PropertyChangedEventArgs<Brush>> GripBrushChanged;
 
-        /// <summary>
-        /// Called when GripBrush property changes.
-        /// </summary>
+        
         protected virtual void OnGripBrushChanged(PropertyChangedEventArgs<Brush> e)
         {
             OnGripBrushChangedImplementation(e);
@@ -135,14 +117,10 @@ namespace Microsoft.Management.UI.Internal
         //
         // GripLocation dependency property
         //
-        /// <summary>
-        /// Identifies the GripLocation dependency property.
-        /// </summary>
+        
         public static readonly DependencyProperty GripLocationProperty = DependencyProperty.Register( "GripLocation", typeof(ResizeGripLocation), typeof(Resizer), new PropertyMetadata( ResizeGripLocation.Right, GripLocationProperty_PropertyChanged) );
 
-        /// <summary>
-        /// Gets or sets a value of what grips.
-        /// </summary>
+        
         [Bindable(true)]
         [Category("Common Properties")]
         [Description("Gets or sets a value of what grips.")]
@@ -165,14 +143,10 @@ namespace Microsoft.Management.UI.Internal
             obj.OnGripLocationChanged( new PropertyChangedEventArgs<ResizeGripLocation>((ResizeGripLocation)e.OldValue, (ResizeGripLocation)e.NewValue) );
         }
 
-        /// <summary>
-        /// Occurs when GripLocation property changes.
-        /// </summary>
+        
         public event EventHandler<PropertyChangedEventArgs<ResizeGripLocation>> GripLocationChanged;
 
-        /// <summary>
-        /// Called when GripLocation property changes.
-        /// </summary>
+        
         protected virtual void OnGripLocationChanged(PropertyChangedEventArgs<ResizeGripLocation> e)
         {
             OnGripLocationChangedImplementation(e);
@@ -184,14 +158,10 @@ namespace Microsoft.Management.UI.Internal
         //
         // GripWidth dependency property
         //
-        /// <summary>
-        /// Identifies the GripWidth dependency property.
-        /// </summary>
+        
         public static readonly DependencyProperty GripWidthProperty = DependencyProperty.Register( "GripWidth", typeof(double), typeof(Resizer), new PropertyMetadata( 4.0, GripWidthProperty_PropertyChanged) );
 
-        /// <summary>
-        /// Gets or sets the width of the grips.
-        /// </summary>
+        
         [Bindable(true)]
         [Category("Common Properties")]
         [Description("Gets or sets the width of the grips.")]
@@ -214,14 +184,10 @@ namespace Microsoft.Management.UI.Internal
             obj.OnGripWidthChanged( new PropertyChangedEventArgs<double>((double)e.OldValue, (double)e.NewValue) );
         }
 
-        /// <summary>
-        /// Occurs when GripWidth property changes.
-        /// </summary>
+        
         public event EventHandler<PropertyChangedEventArgs<double>> GripWidthChanged;
 
-        /// <summary>
-        /// Called when GripWidth property changes.
-        /// </summary>
+        
         protected virtual void OnGripWidthChanged(PropertyChangedEventArgs<double> e)
         {
             OnGripWidthChangedImplementation(e);
@@ -233,14 +199,10 @@ namespace Microsoft.Management.UI.Internal
         //
         // ResizeWhileDragging dependency property
         //
-        /// <summary>
-        /// Identifies the ResizeWhileDragging dependency property.
-        /// </summary>
+        
         public static readonly DependencyProperty ResizeWhileDraggingProperty = DependencyProperty.Register( "ResizeWhileDragging", typeof(bool), typeof(Resizer), new PropertyMetadata( BooleanBoxes.TrueBox, ResizeWhileDraggingProperty_PropertyChanged) );
 
-        /// <summary>
-        /// Gets or sets a value indicating if resizing occurs while dragging.
-        /// </summary>
+        
         [Bindable(true)]
         [Category("Common Properties")]
         [Description("Gets or sets a value indicating if resizing occurs while dragging.")]
@@ -263,14 +225,10 @@ namespace Microsoft.Management.UI.Internal
             obj.OnResizeWhileDraggingChanged( new PropertyChangedEventArgs<bool>((bool)e.OldValue, (bool)e.NewValue) );
         }
 
-        /// <summary>
-        /// Occurs when ResizeWhileDragging property changes.
-        /// </summary>
+        
         public event EventHandler<PropertyChangedEventArgs<bool>> ResizeWhileDraggingChanged;
 
-        /// <summary>
-        /// Called when ResizeWhileDragging property changes.
-        /// </summary>
+        
         protected virtual void OnResizeWhileDraggingChanged(PropertyChangedEventArgs<bool> e)
         {
             OnResizeWhileDraggingChangedImplementation(e);
@@ -282,14 +240,10 @@ namespace Microsoft.Management.UI.Internal
         //
         // ThumbGripLocation dependency property
         //
-        /// <summary>
-        /// Identifies the ThumbGripLocation dependency property.
-        /// </summary>
+        
         public static readonly DependencyProperty ThumbGripLocationProperty = DependencyProperty.RegisterAttached( "ThumbGripLocation", typeof(ResizeGripLocation), typeof(Resizer), new PropertyMetadata( ResizeGripLocation.Right, ThumbGripLocationProperty_PropertyChanged) );
 
-        /// <summary>
-        /// Gets the location for a grip.
-        /// </summary>
+        
         /// <param name="element">The dependency object that the property is attached to.</param>
         /// <returns>
         /// The value of ThumbGripLocation that is attached to element.
@@ -299,9 +253,7 @@ namespace Microsoft.Management.UI.Internal
             return (ResizeGripLocation) element.GetValue(ThumbGripLocationProperty);
         }
 
-        /// <summary>
-        /// Sets the location for a grip.
-        /// </summary>
+        
         /// <param name="element">The dependency object that the property will be attached to.</param>
         /// <param name="value">The new value.</param>
         static public void SetThumbGripLocation(DependencyObject element, ResizeGripLocation value)
@@ -319,14 +271,10 @@ namespace Microsoft.Management.UI.Internal
         //
         // VisibleGripWidth dependency property
         //
-        /// <summary>
-        /// Identifies the VisibleGripWidth dependency property.
-        /// </summary>
+        
         public static readonly DependencyProperty VisibleGripWidthProperty = DependencyProperty.Register( "VisibleGripWidth", typeof(double ), typeof(Resizer), new PropertyMetadata( 1.0, VisibleGripWidthProperty_PropertyChanged) );
 
-        /// <summary>
-        /// Gets or sets the visible width of the grips.
-        /// </summary>
+        
         [Bindable(true)]
         [Category("Common Properties")]
         [Description("Gets or sets the visible width of the grips.")]
@@ -349,14 +297,10 @@ namespace Microsoft.Management.UI.Internal
             obj.OnVisibleGripWidthChanged( new PropertyChangedEventArgs<double >((double )e.OldValue, (double )e.NewValue) );
         }
 
-        /// <summary>
-        /// Occurs when VisibleGripWidth property changes.
-        /// </summary>
+        
         public event EventHandler<PropertyChangedEventArgs<double >> VisibleGripWidthChanged;
 
-        /// <summary>
-        /// Called when VisibleGripWidth property changes.
-        /// </summary>
+        
         protected virtual void OnVisibleGripWidthChanged(PropertyChangedEventArgs<double > e)
         {
             OnVisibleGripWidthChangedImplementation(e);
@@ -365,9 +309,7 @@ namespace Microsoft.Management.UI.Internal
 
         partial void OnVisibleGripWidthChangedImplementation(PropertyChangedEventArgs<double > e);
 
-        /// <summary>
-        /// Called when a property changes.
-        /// </summary>
+        
         private void RaisePropertyChangedEvent<T>(EventHandler<PropertyChangedEventArgs<T>> eh, PropertyChangedEventArgs<T> e)
         {
             if (eh != null)
@@ -380,9 +322,7 @@ namespace Microsoft.Management.UI.Internal
         // OnApplyTemplate
         //
 
-        /// <summary>
-        /// Called when ApplyTemplate is called.
-        /// </summary>
+        
         public override void OnApplyTemplate()
         {
             PreOnApplyTemplate();
@@ -400,9 +340,7 @@ namespace Microsoft.Management.UI.Internal
         // Static constructor
         //
 
-        /// <summary>
-        /// Called when the type is initialized.
-        /// </summary>
+        
         static Resizer()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(Resizer), new FrameworkPropertyMetadata(typeof(Resizer)));

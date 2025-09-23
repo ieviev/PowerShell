@@ -13,9 +13,7 @@ using Dbg = System.Management.Automation.Diagnostics;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// A common base class for code shared between an interpreted (old) script block and a compiled (new) script block.
-    /// </summary>
+    
     internal abstract class ScriptCommandProcessorBase : CommandProcessorBase
     {
         protected ScriptCommandProcessorBase(ScriptBlock scriptBlock, ExecutionContext context, bool useLocalScope, CommandOrigin origin, SessionStateInternal sessionState)
@@ -39,23 +37,13 @@ namespace System.Management.Automation
             CommonInitialization(commandInfo.ScriptBlock, context, useLocalScope, CommandOrigin.Internal, sessionState);
         }
 
-        /// <summary>
-        /// When executing a scriptblock, the command origin needs to be set for the current scope.
-        /// If this true, then the scope origin will be set to the command origin. If it's false,
-        /// then the scope origin will be set to Internal. This allows public functions to call
-        /// private functions but still see $MyInvocation.CommandOrigin as $true.
-        /// </summary>
+        
         protected bool _dontUseScopeCommandOrigin;
 
-        /// <summary>
-        /// If true, then an exit exception will be rethrown instead of caught and processed...
-        /// </summary>
+        
         protected bool _rethrowExitException;
 
-        /// <summary>
-        /// This indicates whether exit is called during the execution of
-        /// script block.
-        /// </summary>
+        
         /// <remarks>
         /// Exit command can be executed in any of begin/process/end blocks.
         ///
@@ -86,10 +74,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Helper function for setting up command object and commandRuntime object
-        /// for script command processor.
-        /// </summary>
+        
         protected void CommonInitialization(ScriptBlock scriptBlock, ExecutionContext context, bool useLocalScope, CommandOrigin origin, SessionStateInternal sessionState)
         {
             Diagnostics.Assert(context != null, "execution context cannot be null");
@@ -126,10 +111,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Checks if user has requested help (for example passing "-?" parameter for a cmdlet)
-        /// and if yes, then returns the help target to display.
-        /// </summary>
+        
         /// <param name="helpTarget">Help target to request.</param>
         /// <param name="helpCategory">Help category to request.</param>
         /// <returns><see langword="true"/> if user requested help; <see langword="false"/> otherwise.</returns>
@@ -161,9 +143,7 @@ namespace System.Management.Automation
         }
     }
 
-    /// <summary>
-    /// This class implements a command processor for script related commands.
-    /// </summary>
+    
     /// <remarks>
     /// 1. Usage scenarios
     ///
@@ -285,9 +265,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Get the ObsoleteAttribute of the current command.
-        /// </summary>
+        
         internal override ObsoleteAttribute ObsoleteAttribute
         {
             get { return _obsoleteAttribute; }
@@ -312,11 +290,7 @@ namespace System.Management.Automation
             };
         }
 
-        /// <summary>
-        /// Execute BeginProcessing part of command. It sets up the overall scope
-        /// object for this command and runs the begin clause of the script block if
-        /// it isn't empty.
-        /// </summary>
+        
         /// <exception cref="PipelineStoppedException">
         /// a terminating error occurred, or the pipeline was otherwise stopped
         /// </exception>

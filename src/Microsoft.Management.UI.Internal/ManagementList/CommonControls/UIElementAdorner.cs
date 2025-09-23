@@ -18,9 +18,7 @@ namespace Microsoft.Management.UI.Internal
     {
         private VisualCollection children;
 
-        /// <summary>
-        /// Constructs an instance of UIElementAdorner.
-        /// </summary>
+        
         /// <param name="adornedElement">The adorned element.</param>
         public UIElementAdorner(UIElement adornedElement)
             : base(adornedElement)
@@ -28,9 +26,7 @@ namespace Microsoft.Management.UI.Internal
             this.children = new VisualCollection(this);
         }
 
-        /// <summary>
-        /// Overrides Visual.GetVisualChild, and returns a child at the specified index from a collection of child elements.
-        /// </summary>
+        
         /// <param name="index">The zero-based index of the requested child element in the collection..</param>
         /// <returns>The requested child element. This should not return null; if the provided index is out of range, an exception is thrown.</returns>
         protected override Visual GetVisualChild(int index)
@@ -38,9 +34,7 @@ namespace Microsoft.Management.UI.Internal
             return this.children[index];
         }
 
-        /// <summary>
-        /// Gets the number of visual child elements within this element.
-        /// </summary>
+        
         protected override int VisualChildrenCount
         {
             get
@@ -49,9 +43,7 @@ namespace Microsoft.Management.UI.Internal
             }
         }
 
-        /// <summary>
-        /// Implements any custom measuring behavior for the popupAdorner.
-        /// </summary>
+        
         /// <param name="constraint">A size to constrain the popupAdorner to..</param>
         /// <returns>A Size object representing the amount of layout space needed by the popupAdorner.</returns>
         protected override Size MeasureOverride(Size constraint)
@@ -67,9 +59,7 @@ namespace Microsoft.Management.UI.Internal
             }
         }
 
-        /// <summary>
-        /// When overridden in a derived class, positions child elements and determines a size for a FrameworkElement derived class.
-        /// </summary>
+        
         /// <param name="finalSize">The final area within the parent that this element should use to arrange itself and its children.</param>
         /// <returns>The actual size used.</returns>
         protected override Size ArrangeOverride(Size finalSize)

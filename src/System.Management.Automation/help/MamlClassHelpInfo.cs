@@ -5,15 +5,10 @@ using System.Xml;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Class MamlClassHelpInfo keeps track of help information to be returned by
-    /// class help provider.
-    /// </summary>
+    
     internal class MamlClassHelpInfo : HelpInfo
     {
-        /// <summary>
-        /// Constructor for custom HelpInfo object creation.
-        /// </summary>
+        
         /// <param name="helpObject"></param>
         /// <param name="helpCategory"></param>
         internal MamlClassHelpInfo(PSObject helpObject, HelpCategory helpCategory)
@@ -22,9 +17,7 @@ namespace System.Management.Automation
             _fullHelpObject = helpObject;
         }
 
-        /// <summary>
-        /// Convert a XMLNode to HelpInfo object.
-        /// </summary>
+        
         /// <param name="xmlNode"></param>
         /// <param name="helpCategory"></param>
         private MamlClassHelpInfo(XmlNode xmlNode, HelpCategory helpCategory)
@@ -39,16 +32,12 @@ namespace System.Management.Automation
             _fullHelpObject.TypeNames.Add("PSClassHelpInfo");
         }
 
-        /// <summary>
-        /// PSObject representation on help.
-        /// </summary>
+        
         private readonly PSObject _fullHelpObject;
 
         #region Load
 
-        /// <summary>
-        /// Create a MamlClassHelpInfo object from an XmlNode.
-        /// </summary>
+        
         /// <param name="xmlNode">XmlNode that contains help info.</param>
         /// <param name="helpCategory">Help category this maml object fits into.</param>
         /// <returns>MamlCommandHelpInfo object created.</returns>
@@ -68,9 +57,7 @@ namespace System.Management.Automation
 
         #region Helper Methods and Overloads
 
-        /// <summary>
-        /// Clone the help info object.
-        /// </summary>
+        
         /// <returns>MamlClassHelpInfo object.</returns>
         internal MamlClassHelpInfo Copy()
         {
@@ -78,9 +65,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Clone the help object with a new category.
-        /// </summary>
+        
         /// <param name="newCategoryToUse"></param>
         /// <returns>MamlClassHelpInfo.</returns>
         internal MamlClassHelpInfo Copy(HelpCategory newCategoryToUse)

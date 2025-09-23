@@ -12,54 +12,12 @@ using System.Threading;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Monad Logging in general is a two layer architecture. At the upper layer are the
-    /// Msh Log Engine and Logging Api. At the lower layer is the Provider Interface
-    /// and Log Providers. This architecture is adopted to achieve independency between
-    /// Monad logging and logging details of different logging technology.
-    ///
-    /// This file implements the upper layer of the Monad Logging architecture.
-    /// Lower layer of Msh Log architecture is implemented in LogProvider.cs file.
-    ///
-    /// Logging Api is made up of following five sets
-    ///   1. Engine Health Event
-    ///   2. Engine Lifecycle Event
-    ///   3. Command Lifecycle Event
-    ///   4. Provider Lifecycle Event
-    ///   5. Settings Event
-    ///
-    /// Msh Log Engine provides features in following areas,
-    ///   1. Loading and managing logging providers. Based on some "Provider Catalog", engine will try to
-    ///      load providers. First provider that is successfully loaded will be used for low level logging.
-    ///      If no providers can be loaded, a dummy provider will be used, which will essentially do nothing.
-    ///   2. Implementation of logging api functions. These api functions is implemented by calling corresponding
-    ///      functions in provider interface.
-    ///   3. Sequence Id Generation. Unique id are generated in this class. These id's will be attached to events.
-    ///   4. Monad engine state management. Engine state is stored in ExecutionContext class but managed here.
-    ///      Later on, this feature may be moved to engine itself (where it should belongs to) when sophisticated
-    ///      engine state model is established.
-    ///   5. Logging policy support. Events are logged or not logged based on logging policy settings (which is stored
-    ///      in session state of the engine.
-    ///
-    /// MshLog class is defined as a static class. This essentially make the logging api to be a static api.
-    ///
-    /// We want to provide sufficient synchronization for static functions calls.
-    /// This is not needed for now because of following two reasons,
-    ///     a. Currently, only one monad engine can be running in one process. So logically only one
-    ///        event will be log at a time.
-    ///     b. Even in the case of multiple events are logged, underlining logging media should
-    ///        provide synchronization.
-    /// </summary>
+    
     internal static class MshLog
     {
         #region Initialization
 
-        /// <summary>
-        /// A static dictionary to keep track of log providers for different shellId's.
-        ///
-        /// The value of this dictionary is never empty. A value of type DummyProvider means
-        /// no logging.
-        /// </summary>
+        
         private static readonly ConcurrentDictionary<string, Collection<LogProvider>> s_logProviders =
             new ConcurrentDictionary<string, Collection<LogProvider>>();
 
@@ -68,23 +26,14 @@ namespace System.Management.Automation
 
         private static readonly Collection<string> s_ignoredCommands = new Collection<string>();
 
-        /// <summary>
-        /// Static constructor.
-        /// </summary>
+        
         static MshLog()
         {
             s_ignoredCommands.Add("Out-Lineoutput");
             s_ignoredCommands.Add("Format-Default");
         }
 
-        /// <summary>
-        /// Currently initialization is done in following sequence
-        ///    a. Try to load CrimsonLogProvider (in the case of Longhorn)
-        ///    b. If a fails, use the DummyLogProvider instead. (in low-level OS)
-        ///
-        /// In the longer turn, we may need to use a "Provider Catalog" for
-        /// log provider loading.
-        /// </summary>
+        
         /// <param name="shellId"></param>
         /// <returns></returns>
         private static IEnumerable<LogProvider> GetLogProvider(string shellId)
@@ -92,9 +41,7 @@ namespace System.Management.Automation
             return s_logProviders.GetOrAdd(shellId, CreateLogProvider);
         }
 
-        /// <summary>
-        /// Get Log Provider based on Execution Context.
-        /// </summary>
+        
         /// <param name="executionContext"></param>
         /// <returns></returns>
         private static IEnumerable<LogProvider> GetLogProvider(ExecutionContext executionContext)
@@ -109,9 +56,7 @@ namespace System.Management.Automation
             return GetLogProvider(shellId);
         }
 
-        /// <summary>
-        /// Get Log Provider based on Log Context.
-        /// </summary>
+        
         /// <param name="logContext"></param>
         /// <returns></returns>
         private static IEnumerable<LogProvider> GetLogProvider(LogContext logContext)
@@ -122,9 +67,7 @@ namespace System.Management.Automation
             return GetLogProvider(logContext.ShellId);
         }
 
-        /// <summary>
-        /// Create a log provider based on a shell Id.
-        /// </summary>
+        
         /// <param name="shellId"></param>
         /// <returns></returns>
         private static Collection<LogProvider> CreateLogProvider(string shellId)
@@ -162,9 +105,7 @@ namespace System.Management.Automation
             return providers;
         }
 
-        /// <summary>
-        /// This will set the current log provider to be dummy log.
-        /// </summary>
+        
         /// <param name="shellId"></param>
         internal static void SetDummyLog(string shellId)
         {
@@ -176,15 +117,7 @@ namespace System.Management.Automation
 
         #region Engine Health Event Logging Api
 
-        /// <summary>
-        /// LogEngineHealthEvent: Log an engine health event. If engine state is changed, a engine
-        /// lifecycle event will be logged also.
-        ///
-        /// This is the basic form of EngineHealthEvent logging api, in which all parameters are provided.
-        ///
-        /// Variant form of this function is defined below, which will make parameters additionalInfo
-        /// and newEngineState optional.
-        /// </summary>
+        
         /// <param name="executionContext">Execution context for the engine that is running.</param>
         /// <param name="eventId">EventId for the event to be logged.</param>
         /// <param name="exception">Exception associated with this event.</param>
@@ -230,10 +163,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// This is a variation of LogEngineHealthEvent api to make additionalInfo and newEngineState
-        /// optional.
-        /// </summary>
+        
         /// <param name="executionContext"></param>
         /// <param name="eventId"></param>
         /// <param name="exception"></param>
@@ -246,12 +176,7 @@ namespace System.Management.Automation
             LogEngineHealthEvent(executionContext, eventId, exception, severity, null);
         }
 
-        /// <summary>
-        /// This is a variation of LogEngineHealthEvent api to make eventid, additionalInfo and newEngineState
-        /// optional.
-        ///
-        /// A default event id for engine health event will be used.
-        /// </summary>
+        
         /// <param name="executionContext"></param>
         /// <param name="exception"></param>
         /// <param name="severity"></param>
@@ -262,10 +187,7 @@ namespace System.Management.Automation
             LogEngineHealthEvent(executionContext, 100, exception, severity, null);
         }
 
-        /// <summary>
-        /// This is a variation of LogEngineHealthEvent api to make newEngineState
-        /// optional.
-        /// </summary>
+        
         /// <param name="executionContext"></param>
         /// <param name="eventId"></param>
         /// <param name="exception"></param>
@@ -280,10 +202,7 @@ namespace System.Management.Automation
             LogEngineHealthEvent(executionContext, eventId, exception, severity, additionalInfo, EngineState.None);
         }
 
-        /// <summary>
-        /// This is a variation of LogEngineHealthEvent api to make additionalInfo
-        /// optional.
-        /// </summary>
+        
         /// <param name="executionContext"></param>
         /// <param name="eventId"></param>
         /// <param name="exception"></param>
@@ -298,13 +217,7 @@ namespace System.Management.Automation
             LogEngineHealthEvent(executionContext, eventId, exception, severity, null, newEngineState);
         }
 
-        /// <summary>
-        /// LogEngineHealthEvent: This is an API for logging engine health event while execution context
-        /// is not available. In this case, caller of this API will directly construct LogContext
-        /// instance.
-        ///
-        /// This API is currently used only by runspace before engine start.
-        /// </summary>
+        
         /// <param name="logContext">LogContext to be.</param>
         /// <param name="eventId">EventId for the event to be logged.</param>
         /// <param name="exception">Exception associated with this event.</param>
@@ -339,14 +252,7 @@ namespace System.Management.Automation
 
         #region Engine Lifecycle Event Logging Api
 
-        /// <summary>
-        /// LogEngineLifecycleEvent: Log an engine lifecycle event.
-        ///
-        /// This is the basic form of EngineLifecycleEvent logging api, in which all parameters are provided.
-        ///
-        /// Variant form of this function is defined below, which will make parameter additionalInfo
-        /// optional.
-        /// </summary>
+        
         /// <param name="executionContext">Execution context for current engine instance.</param>
         /// <param name="engineState">New engine state.</param>
         /// <param name="invocationInfo">InvocationInfo for current command that is running.</param>
@@ -375,10 +281,7 @@ namespace System.Management.Automation
             SetEngineState(executionContext, engineState);
         }
 
-        /// <summary>
-        /// This is a variation of basic LogEngineLifeCycleEvent api which makes invocationInfo
-        /// optional.
-        /// </summary>
+        
         /// <param name="executionContext"></param>
         /// <param name="engineState"></param>
         internal static void LogEngineLifecycleEvent(ExecutionContext executionContext,
@@ -391,9 +294,7 @@ namespace System.Management.Automation
 
         #region Command Health Event Logging Api
 
-        /// <summary>
-        /// LogProviderHealthEvent: Log a command health event.
-        /// </summary>
+        
         /// <param name="executionContext">Execution context for the engine that is running.</param>
         /// <param name="exception">Exception associated with this event.</param>
         /// <param name="severity">Severity of this event.</param>
@@ -433,11 +334,7 @@ namespace System.Management.Automation
 
         #region Command Lifecycle Event Logging Api
 
-        /// <summary>
-        /// LogCommandLifecycleEvent: Log a command lifecycle event.
-        ///
-        /// This is the only form of CommandLifecycleEvent logging api.
-        /// </summary>
+        
         /// <param name="executionContext">Execution Context for the current running engine.</param>
         /// <param name="commandState">New command state.</param>
         /// <param name="invocationInfo">Invocation data for current command that is running.</param>
@@ -474,13 +371,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// LogCommandLifecycleEvent: Log a command lifecycle event.
-        ///
-        /// This is a form of CommandLifecycleEvent which takes a commandName instead
-        /// of invocationInfo. It is likely that invocationInfo is not available if
-        /// the command failed security check.
-        /// </summary>
+        
         /// <param name="executionContext">Execution Context for the current running engine.</param>
         /// <param name="commandState">New command state.</param>
         /// <param name="commandName">Current command that is running.</param>
@@ -518,9 +409,7 @@ namespace System.Management.Automation
 
         #region Pipeline Execution Detail Event Logging Api
 
-        /// <summary>
-        /// LogPipelineExecutionDetailEvent: Log a pipeline execution detail event.
-        /// </summary>
+        
         /// <param name="executionContext">Execution Context for the current running engine.</param>
         /// <param name="detail">Detail to be logged for this pipeline execution detail.</param>
         /// <param name="invocationInfo">Invocation data for current command that is running.</param>
@@ -544,13 +433,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// LogPipelineExecutionDetailEvent: Log a pipeline execution detail event.
-        ///
-        /// This is a form of PipelineExecutionDetailEvent which takes a scriptName and commandLine
-        /// instead of invocationInfo. This will save the need to fill in the commandName for
-        /// this event.
-        /// </summary>
+        
         /// <param name="executionContext">Execution Context for the current running engine.</param>
         /// <param name="detail">Detail to be logged for this pipeline execution detail.</param>
         /// <param name="scriptName">Script that is currently running.</param>
@@ -583,9 +466,7 @@ namespace System.Management.Automation
 
         #region Provider Health Event Logging Api
 
-        /// <summary>
-        /// LogProviderHealthEvent: Log a Provider health event.
-        /// </summary>
+        
         /// <param name="executionContext">Execution context for the engine that is running.</param>
         /// <param name="providerName">Name of the provider.</param>
         /// <param name="exception">Exception associated with this event.</param>
@@ -627,11 +508,7 @@ namespace System.Management.Automation
 
         #region Provider Lifecycle Event Logging Api
 
-        /// <summary>
-        /// LogProviderLifecycleEvent: Log a provider lifecycle event.
-        ///
-        /// This is the only form of ProviderLifecycleEvent logging api.
-        /// </summary>
+        
         /// <param name="executionContext">Execution Context for current engine that is running.</param>
         /// <param name="providerName">Provider name.</param>
         /// <param name="providerState">New provider state.</param>
@@ -658,12 +535,7 @@ namespace System.Management.Automation
 
         #region Settings Event Logging Api
 
-        /// <summary>
-        /// LogSettingsEvent: Log a settings event
-        ///
-        /// This is the basic form of LoggingSettingsEvent API. Variation of this function defined
-        /// below will make parameter invocationInfo optional.
-        /// </summary>
+        
         /// <param name="executionContext">Execution context for current running engine.</param>
         /// <param name="variableName">Variable name.</param>
         /// <param name="newValue">New value for the variable.</param>
@@ -690,9 +562,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// This is a variation of basic LogSettingsEvent to make "invocationInfo" optional.
-        /// </summary>
+        
         /// <param name="executionContext"></param>
         /// <param name="variableName"></param>
         /// <param name="newValue"></param>
@@ -709,12 +579,7 @@ namespace System.Management.Automation
 
         #region Helper Functions
 
-        /// <summary>
-        /// Get current engine state for the engine instance corresponding to executionContext
-        /// passed in.
-        ///
-        /// Engine state is stored in ExecutionContext.
-        /// </summary>
+        
         /// <param name="executionContext"></param>
         /// <returns></returns>
         private static EngineState GetEngineState(ExecutionContext executionContext)
@@ -722,12 +587,7 @@ namespace System.Management.Automation
             return executionContext.EngineState;
         }
 
-        /// <summary>
-        /// Set current engine state for the engine instance corresponding to executionContext
-        /// passed in.
-        ///
-        /// Engine state is stored in ExecutionContext.
-        /// </summary>
+        
         /// <param name="executionContext"></param>
         /// <param name="engineState"></param>
         private static void SetEngineState(ExecutionContext executionContext, EngineState engineState)
@@ -735,11 +595,7 @@ namespace System.Management.Automation
             executionContext.EngineState = engineState;
         }
 
-        /// <summary>
-        /// Generate LogContext structure based on executionContext and invocationInfo passed in.
-        ///
-        /// LogContext structure is used in log provider interface.
-        /// </summary>
+        
         /// <param name="executionContext"></param>
         /// <param name="invocationInfo"></param>
         /// <returns></returns>
@@ -748,11 +604,7 @@ namespace System.Management.Automation
             return GetLogContext(executionContext, invocationInfo, Severity.Informational);
         }
 
-        /// <summary>
-        /// Generate LogContext structure based on executionContext and invocationInfo passed in.
-        ///
-        /// LogContext structure is used in log provider interface.
-        /// </summary>
+        
         /// <param name="executionContext"></param>
         /// <param name="invocationInfo"></param>
         /// <param name="severity"></param>
@@ -846,18 +698,7 @@ namespace System.Management.Automation
 
         #region Logging Policy
 
-        /// <summary>
-        /// NeedToLogEngineHealthEvent: check whether logging engine health event is necessary.
-        ///     Whether to log engine event is controled by session variable "LogEngineHealthEvent"
-        ///     The default value for this is true (?).
-        /// Reading a session variable from execution context for
-        /// every single logging call may be expensive. We may need to use a different
-        /// approach for this:
-        ///     a. ExecutionContext will cache the value for variable "LogEngineHealthEvent"
-        ///     b. If this variable is changed, a notification function will change the cached
-        ///        value in engine correspondently.
-        /// This applies to other logging preference variable also.
-        /// </summary>
+        
         /// <param name="logProvider"></param>
         /// <param name="executionContext"></param>
         /// <returns></returns>
@@ -871,11 +712,7 @@ namespace System.Management.Automation
             return LanguagePrimitives.IsTrue(executionContext.GetVariableValue(SpecialVariables.LogEngineHealthEventVarPath, true));
         }
 
-        /// <summary>
-        /// NeedToLogEngineLifecycleEvent: check whether logging engine lifecycle event is necessary.
-        ///     Whether to log engine lifecycle event is controled by session variable "LogEngineLifecycleEvent"
-        ///     The default value for this is false (?).
-        /// </summary>
+        
         /// <param name="logProvider"></param>
         /// <param name="executionContext"></param>
         /// <returns></returns>
@@ -889,11 +726,7 @@ namespace System.Management.Automation
             return LanguagePrimitives.IsTrue(executionContext.GetVariableValue(SpecialVariables.LogEngineLifecycleEventVarPath, true));
         }
 
-        /// <summary>
-        /// NeedToLogCommandHealthEvent: check whether logging command health event is necessary.
-        ///     Whether to log command health event is controled by session variable "LogCommandHealthEvent"
-        ///     The default value for this is false (?).
-        /// </summary>
+        
         /// <param name="logProvider"></param>
         /// <param name="executionContext"></param>
         /// <returns></returns>
@@ -907,11 +740,7 @@ namespace System.Management.Automation
             return LanguagePrimitives.IsTrue(executionContext.GetVariableValue(SpecialVariables.LogCommandHealthEventVarPath, false));
         }
 
-        /// <summary>
-        /// NeedToLogCommandLifecycleEvent: check whether logging command event is necessary.
-        ///     Whether to log command lifecycle event is controled by session variable "LogCommandLifecycleEvent"
-        ///     The default value for this is false (?).
-        /// </summary>
+        
         /// <param name="logProvider"></param>
         /// <param name="executionContext"></param>
         /// <returns></returns>
@@ -925,16 +754,7 @@ namespace System.Management.Automation
             return LanguagePrimitives.IsTrue(executionContext.GetVariableValue(SpecialVariables.LogCommandLifecycleEventVarPath, false));
         }
 
-        /// <summary>
-        /// NeedToLogPipelineExecutionDetailEvent: check whether logging pipeline execution detail event is necessary.
-        ///
-        /// Whether to log command lifecycle event is controled by PSSnapin set up.
-        ///
-        /// Should we use session variable "LogPipelineExecutionEvent" to control this also?
-        ///
-        /// Currently we return true always since pipeline processor already check for whether to log
-        /// logic from PSSnapin already. This may need to be changed.
-        /// </summary>
+        
         /// <param name="logProvider"></param>
         /// <param name="executionContext"></param>
         /// <returns></returns>
@@ -949,11 +769,7 @@ namespace System.Management.Automation
             // return LanguagePrimitives.IsTrue(executionContext.GetVariable("LogPipelineExecutionDetailEvent", false));
         }
 
-        /// <summary>
-        /// NeedToLogProviderHealthEvent: check whether logging Provider health event is necessary.
-        ///     Whether to log Provider health event is controled by session variable "LogProviderHealthEvent"
-        ///     The default value for this is true.
-        /// </summary>
+        
         /// <param name="logProvider"></param>
         /// <param name="executionContext"></param>
         /// <returns></returns>
@@ -967,11 +783,7 @@ namespace System.Management.Automation
             return LanguagePrimitives.IsTrue(executionContext.GetVariableValue(SpecialVariables.LogProviderHealthEventVarPath, true));
         }
 
-        /// <summary>
-        /// NeedToLogProviderLifecycleEvent: check whether logging Provider lifecycle event is necessary.
-        ///     Whether to log Provider lifecycle event is controled by session variable "LogProviderLifecycleEvent"
-        ///     The default value for this is true.
-        /// </summary>
+        
         /// <param name="logProvider"></param>
         /// <param name="executionContext"></param>
         /// <returns></returns>
@@ -985,11 +797,7 @@ namespace System.Management.Automation
             return LanguagePrimitives.IsTrue(executionContext.GetVariableValue(SpecialVariables.LogProviderLifecycleEventVarPath, true));
         }
 
-        /// <summary>
-        /// NeedToLogSettingsEvent: check whether logging settings event is necessary.
-        ///     Whether to log settings event is controled by session variable "LogSettingsEvent"
-        ///     The default value for this is false (?).
-        /// </summary>
+        
         /// <param name="logProvider"></param>
         /// <param name="executionContext"></param>
         /// <returns></returns>
@@ -1009,9 +817,7 @@ namespace System.Management.Automation
 
         private static int s_nextSequenceNumber = 0;
 
-        /// <summary>
-        /// Generate next sequence id to be attached to current event.
-        /// </summary>
+        
         /// <value></value>
         private static string NextSequenceNumber
         {
@@ -1047,9 +853,7 @@ namespace System.Management.Automation
         #endregion EventId Constants
     }
 
-    /// <summary>
-    /// Log context cache.
-    /// </summary>
+    
     internal class LogContextCache
     {
         internal string User { get; set; } = null;
@@ -1057,65 +861,44 @@ namespace System.Management.Automation
 
     #region Command State and Provider State
 
-    /// <summary>
-    /// Severity of the event.
-    /// </summary>
+    
     internal enum Severity
     {
-        /// <summary>
-        /// Undefined severity.
-        /// </summary>
+        
         None,
-        /// <summary>
-        /// Critical event causing engine not to work.
-        /// </summary>
+        
         Critical,
 
-        /// <summary>
-        /// Error causing engine partially work.
-        /// </summary>
+        
         Error,
 
-        /// <summary>
-        /// Problem that may not cause an immediate problem.
-        /// </summary>
+        
         Warning,
 
-        /// <summary>
-        /// Informational.
-        /// </summary>
+        
         Informational
     }
 
-    /// <summary>
-    /// Enum for command states.
-    /// </summary>
+    
     internal enum CommandState
     {
-        /// <summary>
-        /// </summary>
+        
         Started = 0,
 
-        /// <summary>
-        /// </summary>
+        
         Stopped = 1,
 
-        /// <summary>
-        /// </summary>
+        
         Terminated = 2
     }
 
-    /// <summary>
-    /// Enum for provider states.
-    /// </summary>
+    
     internal enum ProviderState
     {
-        /// <summary>
-        /// </summary>
+        
         Started = 0,
 
-        /// <summary>
-        /// </summary>
+        
         Stopped = 1,
     }
 

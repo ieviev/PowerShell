@@ -7,18 +7,14 @@ using System.Threading;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// Waits for a given event to arrive.
-    /// </summary>
+    
     [Cmdlet(VerbsLifecycle.Wait, "Event", HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097042")]
     [OutputType(typeof(PSEventArgs))]
     public class WaitEventCommand : PSCmdlet
     {
         #region parameters
 
-        /// <summary>
-        /// An identifier for this event subscription.
-        /// </summary>
+        
         [Parameter(Position = 0, ValueFromPipelineByPropertyName = true)]
         public string SourceIdentifier
         {
@@ -36,10 +32,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string _sourceIdentifier = null;
 
-        /// <summary>
-        /// If timeout is specified, the cmdlet will only wait for this number of seconds.
-        /// Value of -1 means never timeout.
-        /// </summary>
+        
         [Parameter]
         [Alias("TimeoutSec")]
         [ValidateRange(-1, int.MaxValue)]
@@ -65,9 +58,7 @@ namespace Microsoft.PowerShell.Commands
         private readonly object _receivedEventLock = new();
         private WildcardPattern _matchPattern;
 
-        /// <summary>
-        /// Wait for the event to arrive.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             DateTime startTime = DateTime.UtcNow;
@@ -104,9 +95,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Handle Control-C.
-        /// </summary>
+        
         protected override void StopProcessing()
         {
             _eventArrived.Set();

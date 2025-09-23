@@ -3,16 +3,12 @@
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Provides information about a filter that is stored in session state.
-    /// </summary>
+    
     public class FilterInfo : FunctionInfo
     {
         #region ctor
 
-        /// <summary>
-        /// Creates an instance of the FilterInfo class with the specified name and ScriptBlock.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the filter.
         /// </param>
@@ -29,9 +25,7 @@ namespace System.Management.Automation
         {
         }
 
-        /// <summary>
-        /// Creates an instance of the FilterInfo class with the specified name and ScriptBlock.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the filter.
         /// </param>
@@ -53,9 +47,7 @@ namespace System.Management.Automation
             SetCommandType(CommandTypes.Filter);
         }
 
-        /// <summary>
-        /// Creates an instance of the FilterInfo class with the specified name and ScriptBlock.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the filter.
         /// </param>
@@ -75,9 +67,7 @@ namespace System.Management.Automation
         {
         }
 
-        /// <summary>
-        /// Creates an instance of the FilterInfo class with the specified name and ScriptBlock.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the filter.
         /// </param>
@@ -102,26 +92,19 @@ namespace System.Management.Automation
             SetCommandType(CommandTypes.Filter);
         }
 
-        /// <summary>
-        /// This is a copy constructor, used primarily for get-command.
-        /// </summary>
+        
         internal FilterInfo(FilterInfo other)
             : base(other)
         {
         }
 
-        /// <summary>
-        /// This is a copy constructor, used primarily for get-command.
-        /// </summary>
+        
         internal FilterInfo(string name, FilterInfo other)
             : base(name, other)
         {
         }
 
-        /// <summary>
-        /// Create a copy of commandInfo for GetCommandCommand so that we can generate parameter
-        /// sets based on an argument list (so we can get the dynamic parameters.)
-        /// </summary>
+        
         internal override CommandInfo CreateGetCommandCopy(object[] arguments)
         {
             FilterInfo copy = new FilterInfo(this);

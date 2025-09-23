@@ -9,9 +9,7 @@ using Dbg = System.Management.Automation.Diagnostics;
 
 namespace Microsoft.PowerShell.Cmdletization.Cim
 {
-    /// <summary>
-    /// Job wrapping invocation of a DeleteInstance intrinsic CIM method.
-    /// </summary>
+    
     internal sealed class DeleteInstanceJob : MethodInvocationJobBase<object>
     {
         private readonly CimInstance _objectToDelete;

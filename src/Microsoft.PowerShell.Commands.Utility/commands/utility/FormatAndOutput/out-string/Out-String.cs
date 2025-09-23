@@ -8,19 +8,13 @@ using Microsoft.PowerShell.Commands.Internal.Format;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// Implementation for the out-string command.
-    /// </summary>
+    
     [Cmdlet(VerbsData.Out, "String", DefaultParameterSetName = "NoNewLineFormatting", HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097024", RemotingCapability = RemotingCapability.None)]
     [OutputType(typeof(string))]
     public class OutStringCommand : FrontEndCommandBase
     {
         #region Command Line Parameters
-        /// <summary>
-        /// Optional, non positional parameter to specify the streaming behavior.
-        /// FALSE: accumulate all the data, then write a single string.
-        /// TRUE: write one line at the time.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "StreamFormatting")]
         public SwitchParameter Stream
         {
@@ -31,9 +25,7 @@ namespace Microsoft.PowerShell.Commands
 
         private bool _stream;
 
-        /// <summary>
-        /// Optional, number of columns to use when writing to device.
-        /// </summary>
+        
         [ValidateRange(2, int.MaxValue)]
         [Parameter]
         public int Width
@@ -45,9 +37,7 @@ namespace Microsoft.PowerShell.Commands
 
         private int? _width = null;
 
-        /// <summary>
-        /// False to add a newline to the end of the output string, true if not.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "NoNewLineFormatting")]
         public SwitchParameter NoNewline
         {
@@ -60,18 +50,13 @@ namespace Microsoft.PowerShell.Commands
 
         #endregion
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="OutStringCommand"/> class
-        /// and sets the inner command.
-        /// </summary>
+        
         public OutStringCommand()
         {
             this.implementation = new OutputManagerInner();
         }
 
-        /// <summary>
-        /// Read command line parameters.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             // set up the LineOutput interface
@@ -83,10 +68,7 @@ namespace Microsoft.PowerShell.Commands
             base.BeginProcessing();
         }
 
-        /// <summary>
-        /// One-time initialization: acquire a screen host interface
-        /// by creating one on top of a stream.
-        /// </summary>
+        
         private LineOutput InstantiateLineOutputInterface()
         {
             // set up the streaming text writer
@@ -110,9 +92,7 @@ namespace Microsoft.PowerShell.Commands
             return (LineOutput)twlo;
         }
 
-        /// <summary>
-        /// Callback to add lines to the buffer or to write them to the output stream.
-        /// </summary>
+        
         /// <param name="s"></param>
         private void OnWriteLine(string s)
         {
@@ -133,18 +113,14 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Execution entry point.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             base.ProcessRecord();
             _writer.Flush();
         }
 
-        /// <summary>
-        /// Execution entry point.
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             base.EndProcessing();
@@ -157,14 +133,10 @@ namespace Microsoft.PowerShell.Commands
                 this.WriteObject(_buffer.ToString());
         }
 
-        /// <summary>
-        /// Writer used by the LineOutput.
-        /// </summary>
+        
         private StreamingTextWriter _writer = null;
 
-        /// <summary>
-        /// Buffer used when buffering until the end.
-        /// </summary>
+        
         private readonly StringBuilder _buffer = new();
     }
 }

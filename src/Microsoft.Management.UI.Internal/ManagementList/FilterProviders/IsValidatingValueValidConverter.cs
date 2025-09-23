@@ -7,17 +7,11 @@ using System.Windows.Data;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <summary>
-    /// The IsValidatingValueValidConverter is responsible for determining if
-    /// a ValidatingValueBase object is valid.
-    /// </summary>
+    
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public class IsValidatingValueValidConverter : IValueConverter
     {
-        /// <summary>
-        /// Determines if ValidatingValueBase.Error indicates
-        /// if the object is valid.
-        /// </summary>
+        
         /// <param name="value">
         /// The Error string to check.
         /// </param>
@@ -39,9 +33,7 @@ namespace Microsoft.Management.UI.Internal
             return string.IsNullOrEmpty(error);
         }
 
-        /// <summary>
-        /// This method is not used.
-        /// </summary>
+        
         /// <param name="value">The parameter is not used.</param>
         /// <param name="targetType">The parameter is not used.</param>
         /// <param name="parameter">The parameter is not used.</param>

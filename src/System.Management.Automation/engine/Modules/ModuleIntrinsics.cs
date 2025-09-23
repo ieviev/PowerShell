@@ -23,14 +23,10 @@ namespace System.Management.Automation
         public const string PSModulePathEnvVar = "PSModulePath";
     }
 
-    /// <summary>
-    /// Encapsulates the basic module operations for a PowerShell engine instance...
-    /// </summary>
+    
     public class ModuleIntrinsics
     {
-        /// <summary>
-        /// Tracer for module analysis.
-        /// </summary>
+        
         [TraceSource("Modules", "Module loading and analysis")]
         internal static readonly PSTraceSource Tracer = PSTraceSource.GetTracer("Modules", "Module loading and analysis");
 
@@ -74,9 +70,7 @@ namespace System.Management.Automation
 
         internal int ModuleNestingDepth { get; private set; }
 
-        /// <summary>
-        /// Create a new module object from a scriptblock specifying the path to set for the module.
-        /// </summary>
+        
         /// <param name="name">The name of the module.</param>
         /// <param name="path">The path where the module is rooted.</param>
         /// <param name="scriptBlock">
@@ -93,9 +87,7 @@ namespace System.Management.Automation
             return CreateModuleImplementation(name, path, scriptBlock, null, ss, null, out results, arguments);
         }
 
-        /// <summary>
-        /// Create a new module object from a ScriptInfo object.
-        /// </summary>
+        
         /// <param name="path">The path where the module is rooted.</param>
         /// <param name="scriptInfo">The script info to use to create the module.</param>
         /// <param name="scriptPosition">The position for the command that loaded this module.</param>
@@ -109,9 +101,7 @@ namespace System.Management.Automation
             return CreateModuleImplementation(ModuleIntrinsics.GetModuleName(path), path, scriptInfo, scriptPosition, ss, privateData, out result, arguments);
         }
 
-        /// <summary>
-        /// Create a new module object from code specifying the path to set for the module.
-        /// </summary>
+        
         /// <param name="name">The name of the module.</param>
         /// <param name="path">The path to use for the module root.</param>
         /// <param name="moduleCode">
@@ -246,10 +236,7 @@ namespace System.Management.Automation
             return module;
         }
 
-        /// <summary>
-        /// Allocate a new dynamic module then return a new scriptblock
-        /// bound to the module instance.
-        /// </summary>
+        
         /// <param name="context">Context to use to create bounded script.</param>
         /// <param name="sb">The scriptblock to bind.</param>
         /// <param name="linkToGlobal">Whether it should be linked to the global session state or not.</param>
@@ -405,9 +392,7 @@ namespace System.Management.Automation
             return modulesMatched.OrderBy(static m => m.Name).ToList();
         }
 
-        /// <summary>
-        /// Check if a given module info object matches a given module specification.
-        /// </summary>
+        
         /// <param name="moduleInfo">The module info object to check.</param>
         /// <param name="moduleSpec">The module specification to match the module info object against.</param>
         /// <param name="skipNameCheck">True if we should skip the name check on the module specification.</param>
@@ -420,9 +405,7 @@ namespace System.Management.Automation
             return IsModuleMatchingModuleSpec(out ModuleMatchFailure matchFailureReason, moduleInfo, moduleSpec, skipNameCheck);
         }
 
-        /// <summary>
-        /// Check if a given module info object matches a given module specification.
-        /// </summary>
+        
         /// <param name="matchFailureReason">The constraint that caused the match failure, if any.</param>
         /// <param name="moduleInfo">The module info object to check.</param>
         /// <param name="moduleSpec">The module specification to match the module info object against.</param>
@@ -450,10 +433,7 @@ namespace System.Management.Automation
                 moduleSpec.MaximumVersion == null ? null : ModuleCmdletBase.GetMaximumVersion(moduleSpec.MaximumVersion));
         }
 
-        /// <summary>
-        /// Check if a given module info object matches the given constraints.
-        /// Constraints given as null are ignored.
-        /// </summary>
+        
         /// <param name="moduleInfo">The module info object to check.</param>
         /// <param name="name">The name or normalized absolute path of the expected module.</param>
         /// <param name="guid">The guid of the expected module.</param>
@@ -479,10 +459,7 @@ namespace System.Management.Automation
                 maximumVersion);
         }
 
-        /// <summary>
-        /// Check if a given module info object matches the given constraints.
-        /// Constraints given as null are ignored.
-        /// </summary>
+        
         /// <param name="matchFailureReason">The reason for the module constraint match failing.</param>
         /// <param name="moduleInfo">The module info object to check.</param>
         /// <param name="name">The name or normalized absolute path of the expected module.</param>
@@ -521,9 +498,7 @@ namespace System.Management.Automation
             );
         }
 
-        /// <summary>
-        /// Check that given module fields meet any given constraints.
-        /// </summary>
+        
         /// <param name="moduleName">The name of the module to check.</param>
         /// <param name="modulePath">The path of the module to check.</param>
         /// <param name="moduleGuid">The GUID of the module to check.</param>
@@ -558,9 +533,7 @@ namespace System.Management.Automation
                 maximumRequiredVersion);
         }
 
-        /// <summary>
-        /// Check that given module fields meet any given constraints.
-        /// </summary>
+        
         /// <param name="matchFailureReason">The reason the match failed, if any.</param>
         /// <param name="moduleName">The name of the module to check.</param>
         /// <param name="modulePath">The path of the module to check.</param>
@@ -605,10 +578,7 @@ namespace System.Management.Automation
             return IsVersionMatchingConstraints(out matchFailureReason, moduleVersion, requiredVersion, minimumRequiredVersion, maximumRequiredVersion);
         }
 
-        /// <summary>
-        /// Check that a given module version matches the required or minimum/maximum version constraints.
-        /// Null constraints are not checked.
-        /// </summary>
+        
         /// <param name="version">The module version to check. Must not be null.</param>
         /// <param name="requiredVersion">The version that the given version must be, if not null.</param>
         /// <param name="minimumVersion">The minimum version that the given version must be greater than or equal to, if not null.</param>
@@ -625,10 +595,7 @@ namespace System.Management.Automation
             return IsVersionMatchingConstraints(out ModuleMatchFailure matchFailureReason, version, requiredVersion, minimumVersion, maximumVersion);
         }
 
-        /// <summary>
-        /// Check that a given module version matches the required or minimum/maximum version constraints.
-        /// Null constraints are not checked.
-        /// </summary>
+        
         /// <param name="matchFailureReason">The reason why the match failed.</param>
         /// <param name="version">The module version to check. Must not be null.</param>
         /// <param name="requiredVersion">The version that the given version must be, if not null.</param>
@@ -671,10 +638,7 @@ namespace System.Management.Automation
             return true;
         }
 
-        /// <summary>
-        /// Checks whether a given module path is the same as
-        /// a required path.
-        /// </summary>
+        
         /// <param name="modulePath">The path of the module whose path to check. This must be the path to the module file (.psd1, .psm1, .dll, etc).</param>
         /// <param name="requiredPath">The path of the required module. This may be the module directory path or the file path. Only normalized absolute paths will work for this.</param>
         /// <returns>True if the module path matches the required path, false otherwise.</returns>
@@ -723,11 +687,7 @@ namespace System.Management.Automation
             return moduleDirPath.Equals(requiredPath, strcmp);
         }
 
-        /// <summary>
-        /// Takes the name of a module as used in a module specification
-        /// and either returns it as a simple name (if it was a simple name)
-        /// or a fully qualified, PowerShell-resolved path.
-        /// </summary>
+        
         /// <param name="moduleName">The name or path of the module from the specification.</param>
         /// <param name="basePath">The path to base relative paths off.</param>
         /// <param name="executionContext">The current execution context.</param>
@@ -776,9 +736,7 @@ namespace System.Management.Automation
             return normalizedPath ?? Path.GetFullPath(moduleName);
         }
 
-        /// <summary>
-        /// Check if a given module name is a path to a module rather than a simple name.
-        /// </summary>
+        
         /// <param name="moduleName">The module name to check.</param>
         /// <returns>True if the module name is a path, false otherwise.</returns>
         internal static bool IsModuleNamePath(string moduleName)
@@ -912,9 +870,7 @@ namespace System.Management.Automation
             StringLiterals.PowerShellILExecutableExtension
         };
 
-        /// <summary>
-        /// Returns true if the extension is one of the module extensions...
-        /// </summary>
+        
         /// <param name="extension">The extension to check.</param>
         /// <returns>True if it was a module extension...</returns>
         internal static bool IsPowerShellModuleExtension(string extension)
@@ -930,9 +886,7 @@ namespace System.Management.Automation
             return false;
         }
 
-        /// <summary>
-        /// Gets the module name from module path.
-        /// </summary>
+        
         /// <param name="path">The path to the module.</param>
         /// <returns>The module name.</returns>
         internal static string GetModuleName(string path)
@@ -958,9 +912,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the personal module path.
-        /// </summary>
+        
         /// <returns>Personal module path.</returns>
         internal static string GetPersonalModulePath()
         {
@@ -972,9 +924,7 @@ namespace System.Management.Automation
 #endif
         }
 
-        /// <summary>
-        /// Gets the PSHome module path, as known as the "system wide module path" in windows powershell.
-        /// </summary>
+        
         /// <returns>The PSHome module path.</returns>
         internal static string GetPSHomeModulePath()
         {
@@ -1007,10 +957,7 @@ namespace System.Management.Automation
 
         private static string s_psHomeModulePath;
 
-        /// <summary>
-        /// Get the module path that is shared among different users.
-        /// It's known as "Program Files" module path in windows powershell.
-        /// </summary>
+        
         /// <returns></returns>
         internal static string GetSharedModulePath()
         {
@@ -1029,10 +976,7 @@ namespace System.Management.Automation
         }
 
 #if !UNIX
-        /// <summary>
-        /// Get the path to the Windows PowerShell module directory under the
-        /// System32 directory on Windows (the Windows PowerShell $PSHOME).
-        /// </summary>
+        
         /// <returns>The path of the Windows PowerShell system module directory.</returns>
         internal static string GetWindowsPowerShellPSHomeModulePath()
         {
@@ -1045,10 +989,7 @@ namespace System.Management.Automation
         }
 #endif
 
-        /// <summary>
-        /// Combine the PS system-wide module path and the DSC module path
-        /// to get the system module paths.
-        /// </summary>
+        
         /// <returns></returns>
         private static string CombineSystemModulePaths()
         {
@@ -1082,9 +1023,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Checks if a particular string (path) is a member of 'combined path' string (like %Path% or %PSModulePath%)
-        /// </summary>
+        
         /// <param name="pathToScan">'Combined path' string to analyze; can not be null.</param>
         /// <param name="pathToLookFor">Path to search for; can not be another 'combined path' (semicolon-separated); can not be null.</param>
         /// <returns>Index of pathToLookFor in pathToScan; -1 if not found.</returns>
@@ -1117,9 +1056,7 @@ namespace System.Management.Automation
             return -1;
         }
 
-        /// <summary>
-        /// Adds paths to a 'combined path' string (like %Path% or %PSModulePath%) if they are not already there.
-        /// </summary>
+        
         /// <param name="basePath">Path string (like %Path% or %PSModulePath%).</param>
         /// <param name="pathToAdd">Collection of individual paths to add.</param>
         /// <param name="insertPosition">-1 to append to the end; 0 to insert in the beginning of the string; etc...</param>
@@ -1172,24 +1109,20 @@ namespace System.Management.Automation
             return result.ToString();
         }
 
-        /// <summary>
-        /// The available module path scopes.
-        /// </summary>
+        
         public enum PSModulePathScope
         {
-            /// <summary>The users module path.</summary>
+            
             User,
 
-            /// <summary>The Builtin module path. This is where PowerShell is installed (PSHOME).</summary>
+            
             Builtin,
 
-            /// <summary>The machine module path. This is the shared location for all users of the system.</summary>
+            
             Machine
         }
 
-        /// <summary>
-        /// Retrieve the current PSModulePath for the specified scope.
-        /// </summary>
+        
         /// <param name="scope">The scope of module path to retrieve. This can be User, Builtin, or Machine.</param>
         /// <returns>The string representing the requested module path type.</returns>
         public static string GetPSModulePath(PSModulePathScope scope)
@@ -1208,9 +1141,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Checks the various PSModulePath environment string and returns PSModulePath string as appropriate.
-        /// </summary>
+        
         public static string GetModulePath(string currentProcessModulePath, string hklmMachineModulePath, string hkcuUserModulePath)
         {
             string personalModulePath = GetPersonalModulePath();
@@ -1285,11 +1216,7 @@ namespace System.Management.Automation
             return path;
         }
 
-        /// <summary>
-        /// Checks if $env:PSModulePath is not set and sets it as appropriate. Note - because these
-        /// strings go through the provider, we need to escape any wildcards before passing them
-        /// along.
-        /// </summary>
+        
         internal static string GetModulePath()
         {
             string currentModulePath = GetExpandedEnvironmentVariable(Constants.PSModulePathEnvVar, EnvironmentVariableTarget.Process);
@@ -1297,10 +1224,7 @@ namespace System.Management.Automation
         }
 
 #if !UNIX
-        /// <summary>
-        /// Returns a PSModulePath suitable for Windows PowerShell by removing PowerShell's specific
-        /// paths from current PSModulePath.
-        /// </summary>
+        
         /// <returns>
         /// Returns appropriate PSModulePath for Windows PowerShell.
         /// </returns>
@@ -1349,11 +1273,7 @@ namespace System.Management.Automation
         }
 #endif
 
-        /// <summary>
-        /// Checks if $env:PSModulePath is not set and sets it as appropriate. Note - because these
-        /// strings go through the provider, we need to escape any wildcards before passing them
-        /// along.
-        /// </summary>
+        
         private static string SetModulePath()
         {
             string currentModulePath = GetExpandedEnvironmentVariable(Constants.PSModulePathEnvVar, EnvironmentVariableTarget.Process);
@@ -1377,9 +1297,7 @@ namespace System.Management.Automation
             return newModulePathString;
         }
 
-        /// <summary>
-        /// Get the current module path setting.
-        /// </summary>
+        
         /// <param name="includeSystemModulePath">
         /// Include The system wide module path ($PSHOME\Modules) even if it's not in PSModulePath.
         /// In V3-V5, we prepended this path during module auto-discovery which incorrectly preferred
@@ -1514,9 +1432,7 @@ namespace System.Management.Automation
         }
 #nullable restore
 
-        /// <summary>
-        /// Mark stuff to be exported from the current environment using the various patterns.
-        /// </summary>
+        
         /// <param name="cmdlet">The cmdlet calling this method.</param>
         /// <param name="sessionState">The session state instance to do the exports on.</param>
         /// <param name="functionPatterns">Patterns describing the functions to export.</param>
@@ -1686,9 +1602,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Checks pattern list for wildcard characters.
-        /// </summary>
+        
         /// <param name="list">Pattern list.</param>
         /// <returns>True if pattern contains '*'.</returns>
         internal static bool PatternContainsWildcard(List<WildcardPattern> list)
@@ -1722,59 +1636,47 @@ namespace System.Management.Automation
         }
     }
 
-    /// <summary>
-    /// Enumeration of reasons for a failure to match a module by constraints.
-    /// </summary>
+    
     internal enum ModuleMatchFailure
     {
-        /// <summary>Match did not fail.</summary>
+        
         None,
 
-        /// <summary>Match failed because the module was null.</summary>
+        
         NullModule,
 
-        /// <summary>Module name did not match.</summary>
+        
         Name,
 
-        /// <summary>Module GUID did not match.</summary>
+        
         Guid,
 
-        /// <summary>Module version did not match the required version.</summary>
+        
         RequiredVersion,
 
-        /// <summary>Module version was lower than the minimum version.</summary>
+        
         MinimumVersion,
 
-        /// <summary>Module version was greater than the maximum version.</summary>
+        
         MaximumVersion,
 
-        /// <summary>The module specification passed in was null.</summary>
+        
         NullModuleSpecification,
     }
 
 #nullable enable
-    /// <summary>
-    /// Used by Modules/Snapins to provide a hook to the engine for startup initialization
-    /// w.r.t compiled assembly loading.
-    /// </summary>
+    
 #nullable enable
     public interface IModuleAssemblyInitializer
     {
-        /// <summary>
-        /// Gets called when assembly is loaded.
-        /// </summary>
+        
         void OnImport();
     }
 
-    /// <summary>
-    /// Used by modules to provide a hook to the engine for cleanup on removal
-    /// w.r.t. compiled assembly being removed.
-    /// </summary>
+    
     public interface IModuleAssemblyCleanup
     {
-        /// <summary>
-        /// Gets called when the binary module is unloaded.
-        /// </summary>
+        
         void OnRemove(PSModuleInfo psModuleInfo);
     }
 }

@@ -9,18 +9,12 @@ using System.Management.Automation.Internal;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// Implements the start-transcript cmdlet.
-    /// </summary>
+    
     [Cmdlet(VerbsLifecycle.Start, "Transcript", SupportsShouldProcess = true, DefaultParameterSetName = "ByPath", HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096485")]
     [OutputType(typeof(string))]
     public sealed class StartTranscriptCommand : PSCmdlet
     {
-        /// <summary>
-        /// The name of the file in which to write the transcript. If not provided, the file indicated by the variable
-        /// $TRANSCRIPT is used.  If neither the filename is supplied or $TRANSCRIPT is not set, the filename shall be $HOME/My
-        /// Documents/PowerShell_transcript.YYYYMMDDmmss.txt.
-        /// </summary>
+        
         /// <value></value>
         [Parameter(Position = 0, ParameterSetName = "ByPath")]
         [ValidateNotNullOrEmpty]
@@ -38,9 +32,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// The literal name of the file in which to write the transcript.
-        /// </summary>
+        
         [Parameter(Position = 0, ParameterSetName = "ByLiteralPath")]
         [Alias("PSPath", "LP")]
         [ValidateNotNullOrEmpty]
@@ -61,9 +53,7 @@ namespace Microsoft.PowerShell.Commands
 
         private bool _isLiteralPath = false;
 
-        /// <summary>
-        /// The literal name of the file in which to write the transcript.
-        /// </summary>
+        
         [Parameter(Position = 0, ParameterSetName = "ByOutputDirectory")]
         [ValidateNotNullOrEmpty]
         public string OutputDirectory
@@ -71,9 +61,7 @@ namespace Microsoft.PowerShell.Commands
             get; set;
         }
 
-        /// <summary>
-        /// Describes the current state of the activity.
-        /// </summary>
+        
         /// <value></value>
         [Parameter]
         public SwitchParameter Append
@@ -89,10 +77,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Property that sets force parameter.  This will reset the read-only
-        /// attribute on an existing file.
-        /// </summary>
+        
         /// <remarks>
         /// The read-only attribute will not be replaced when the transcript is done.
         /// </remarks>
@@ -112,9 +97,7 @@ namespace Microsoft.PowerShell.Commands
 
         private bool _force;
 
-        /// <summary>
-        /// Property that prevents file overwrite.
-        /// </summary>
+        
         [Parameter]
         [Alias("NoOverwrite")]
         public SwitchParameter NoClobber
@@ -132,27 +115,21 @@ namespace Microsoft.PowerShell.Commands
 
         private bool _noclobber;
 
-        /// <summary>
-        /// Whether to include command invocation time headers between commands.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter IncludeInvocationHeader
         {
             get; set;
         }
 
-        /// <summary>
-        /// Gets or sets whether to use minimal transcript header.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter UseMinimalHeader
         {
             get; set;
         }
 
-        /// <summary>
-        /// Starts the transcription.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             // If they haven't specified a path, figure out the correct output path.

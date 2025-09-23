@@ -11,18 +11,14 @@ using Dbg = System.Management.Automation;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Holds the state of a Monad Shell session.
-    /// </summary>
+    
     internal sealed partial class SessionStateInternal
     {
         #region IDynamicPropertyCmdletProvider accessors
 
         #region NewProperty
 
-        /// <summary>
-        /// Creates a new property on the specified item.
-        /// </summary>
+        
         /// <param name="paths">
         /// The path(s) to the item(s) on which the new property should be created.
         /// </param>
@@ -91,9 +87,7 @@ namespace System.Management.Automation
             return results;
         }
 
-        /// <summary>
-        /// Creates a new property on the specified item.
-        /// </summary>
+        
         /// <param name="paths">
         /// The path(s) to the item(s) on which the new property should be created.
         /// </param>
@@ -174,9 +168,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Creates a new property on the item at the specified path.
-        /// </summary>
+        
         /// <param name="providerInstance">
         /// The provider instance to use.
         /// </param>
@@ -260,9 +252,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the new-itemproperty cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -339,9 +329,7 @@ namespace System.Management.Automation
             return null;
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the new-itemproperty cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -432,9 +420,7 @@ namespace System.Management.Automation
 
         #region RemoveProperty
 
-        /// <summary>
-        /// Removes the specified property from the specified item.
-        /// </summary>
+        
         /// <param name="paths">
         /// The path(s) to the item(s) to remove the property from.
         /// </param>
@@ -484,9 +470,7 @@ namespace System.Management.Automation
             context.ThrowFirstErrorOrDoNothing();
         }
 
-        /// <summary>
-        /// Removes the specified properties from the specified item.
-        /// </summary>
+        
         /// <param name="paths">
         /// The path(s) to the item(s) to remove the properties from.
         /// </param>
@@ -556,9 +540,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Removes the property from the item at the specified path.
-        /// </summary>
+        
         /// <param name="providerInstance">
         /// The provider instance to use.
         /// </param>
@@ -634,9 +616,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the remove-itemproperty cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -705,9 +685,7 @@ namespace System.Management.Automation
             return null;
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the remove-itemproperty cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -790,10 +768,7 @@ namespace System.Management.Automation
 
         #region CopyProperty
 
-        /// <summary>
-        /// Copies the specified property on the specified item to the specified property
-        /// on the destination item.  The source and destination items can be the same item.
-        /// </summary>
+        
         /// <param name="sourcePaths">
         /// The path(s) to the item(s) to copy the property from.
         /// </param>
@@ -871,10 +846,7 @@ namespace System.Management.Automation
             return results;
         }
 
-        /// <summary>
-        /// Copies the specified property on the specified item to the specified property
-        /// on the destination item.  The source and destination items can be the same item.
-        /// </summary>
+        
         /// <param name="sourcePaths">
         /// The path(s) to the item(s) to copy the property from.
         /// </param>
@@ -997,9 +969,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Copies the property.
-        /// </summary>
+        
         /// <param name="providerInstance">
         /// The instance of the provider to use.
         /// </param>
@@ -1091,9 +1061,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the copy-itemproperty cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -1176,9 +1144,7 @@ namespace System.Management.Automation
             return null;
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the copy-itemproperty cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -1274,10 +1240,7 @@ namespace System.Management.Automation
 
         #region MoveProperty
 
-        /// <summary>
-        /// Moves the specified property on the specified item to the specified property
-        /// on the destination item.  The source and destination items can be the same item.
-        /// </summary>
+        
         /// <param name="sourcePaths">
         /// The path(s) to the item(s) to move the property from.
         /// </param>
@@ -1358,10 +1321,7 @@ namespace System.Management.Automation
             return results;
         }
 
-        /// <summary>
-        /// Moves the specified property on the specified item to the specified property
-        /// on the destination item.  The source and destination items can be the same item.
-        /// </summary>
+        
         /// <param name="sourcePaths">
         /// The path(s) to the item(s) to move the property from.
         /// </param>
@@ -1483,9 +1443,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Moves the property from one item to another.
-        /// </summary>
+        
         /// <param name="providerInstance">
         /// The provider instance to use.
         /// </param>
@@ -1577,9 +1535,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the move-itemproperty cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -1662,9 +1618,7 @@ namespace System.Management.Automation
             return null;
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the move-itemproperty cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -1761,9 +1715,7 @@ namespace System.Management.Automation
 
         #region RenameProperty
 
-        /// <summary>
-        /// Renames the specified property on the specified item to the specified property.
-        /// </summary>
+        
         /// <param name="sourcePaths">
         /// The path(s) to the item(s) to rename the property on.
         /// </param>
@@ -1830,9 +1782,7 @@ namespace System.Management.Automation
             return results;
         }
 
-        /// <summary>
-        /// Renames the specified property on the specified item to the specified property.
-        /// </summary>
+        
         /// <param name="paths">
         /// The path(s) to the item(s) to rename the property on.
         /// </param>
@@ -1912,9 +1862,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Renames the property of the item at the specified path.
-        /// </summary>
+        
         /// <param name="providerInstance">
         /// The provider instance to use.
         /// </param>
@@ -1998,9 +1946,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the rename-itemproperty cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -2078,9 +2024,7 @@ namespace System.Management.Automation
             return null;
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the rename-itemproperty cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>

@@ -5,19 +5,13 @@ using Dbg = System.Management.Automation.Diagnostics;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// The ProviderCommandHelpInfo class.
-    /// </summary>
+    
     internal class ProviderCommandHelpInfo : HelpInfo
     {
-        /// <summary>
-        /// Help info.
-        /// </summary>
+        
         private readonly HelpInfo _helpInfo;
 
-        /// <summary>
-        /// Constructor for ProviderCommandHelpInfo.
-        /// </summary>
+        
         internal ProviderCommandHelpInfo(HelpInfo genericHelpInfo, ProviderContext providerContext)
         {
             Dbg.Assert(genericHelpInfo != null, "Expected genericHelpInfo != null");
@@ -40,19 +34,13 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Get parameter.
-        /// </summary>
+        
         internal override PSObject[] GetParameter(string pattern)
         {
             return _helpInfo.GetParameter(pattern);
         }
 
-        /// <summary>
-        /// Returns the Uri used by get-help cmdlet to show help
-        /// online. Returns only the first uri found under
-        /// RelatedLinks.
-        /// </summary>
+        
         /// <returns>
         /// Null if no Uri is specified by the helpinfo or a
         /// valid Uri.
@@ -62,9 +50,7 @@ namespace System.Management.Automation
             return _helpInfo.GetUriForOnlineHelp();
         }
 
-        /// <summary>
-        /// The Name property.
-        /// </summary>
+        
         internal override string Name
         {
             get
@@ -73,9 +59,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// The Synopsis property.
-        /// </summary>
+        
         internal override string Synopsis
         {
             get
@@ -84,9 +68,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// The HelpCategory property.
-        /// </summary>
+        
         internal override HelpCategory HelpCategory
         {
             get
@@ -95,9 +77,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// The FullHelp property.
-        /// </summary>
+        
         internal override PSObject FullHelp
         {
             get
@@ -106,9 +86,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// The Component property.
-        /// </summary>
+        
         internal override string Component
         {
             get
@@ -117,9 +95,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// The Role property.
-        /// </summary>
+        
         internal override string Role
         {
             get
@@ -128,9 +104,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// The Functionality property.
-        /// </summary>
+        
         internal override string Functionality
         {
             get

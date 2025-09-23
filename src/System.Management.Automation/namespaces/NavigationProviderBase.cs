@@ -8,9 +8,7 @@ namespace System.Management.Automation.Provider
 {
     #region NavigationCmdletProvider
 
-    /// <summary>
-    /// The base class for a Cmdlet provider that expose a hierarchy of items and containers.
-    /// </summary>
+    
     /// <remarks>
     /// The NavigationCmdletProvider class is a base class that provider can derive from
     /// to implement a set of methods that allow
@@ -22,11 +20,7 @@ namespace System.Management.Automation.Provider
     {
         #region Internal methods
 
-        /// <summary>
-        /// Internal wrapper for the MakePath protected method. It is called instead
-        /// of the protected method that is overridden by derived classes so that the
-        /// context of the command can be set.
-        /// </summary>
+        
         /// <param name="parent">
         /// The parent segment of a path to be joined with the child.
         /// </param>
@@ -67,11 +61,7 @@ namespace System.Management.Automation.Provider
             return MakePath(parent, child);
         }
 
-        /// <summary>
-        /// Internal wrapper for the GetParentPath protected method. It is called instead
-        /// of the protected method that is overridden by derived classes so that the
-        /// context of the command can be set.
-        /// </summary>
+        
         /// <param name="path">
         /// A fully qualified provider specific path to an item. The item may or
         /// may not exist.
@@ -105,11 +95,7 @@ namespace System.Management.Automation.Provider
             return GetParentPath(path, root);
         }
 
-        /// <summary>
-        /// Internal wrapper for the NormalizeRelativePath method. It is called instead
-        /// of the protected method that is overridden by derived classes so that the
-        /// context of the command can be set.
-        /// </summary>
+        
         /// <param name="path">
         /// A fully qualified provider specific path to an item. The item should exist
         /// or the provider should write out an error.
@@ -142,11 +128,7 @@ namespace System.Management.Automation.Provider
             return NormalizeRelativePath(path, basePath);
         }
 
-        /// <summary>
-        /// Internal wrapper for the GetChildName protected method. It is called instead
-        /// of the protected method that is overridden by derived classes so that the
-        /// context of the command can be set.
-        /// </summary>
+        
         /// <param name="path">
         /// The fully qualified path to the item
         /// </param>
@@ -173,11 +155,7 @@ namespace System.Management.Automation.Provider
             return GetChildName(path);
         }
 
-        /// <summary>
-        /// Internal wrapper for the IsItemContainer protected method. It is called instead
-        /// of the protected method that is overridden by derived classes so that the
-        /// context of the command can be set.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to determine if it is a container.
         /// </param>
@@ -198,11 +176,7 @@ namespace System.Management.Automation.Provider
             return IsItemContainer(path);
         }
 
-        /// <summary>
-        /// Internal wrapper for the MoveItem protected method. It is called instead
-        /// of the protected method that is overridden by derived classes so that the
-        /// context of the command can be set.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to be moved.
         /// </param>
@@ -227,10 +201,7 @@ namespace System.Management.Automation.Provider
             MoveItem(path, destination);
         }
 
-        /// <summary>
-        /// Gives the provider to attach additional parameters to
-        /// the move-item cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// If the path was specified on the command line, this is the path
         /// to the item to get the dynamic parameters for.
@@ -258,9 +229,7 @@ namespace System.Management.Automation.Provider
 
         #region protected methods
 
-        /// <summary>
-        /// Joins two strings with a path a provider specific path separator.
-        /// </summary>
+        
         /// <param name="parent">
         /// The parent segment of a path to be joined with the child.
         /// </param>
@@ -291,9 +260,7 @@ namespace System.Management.Automation.Provider
             return MakePath(parent, child, childIsLeaf: false);
         }
 
-        /// <summary>
-        /// Joins two strings with a path a provider specific path separator.
-        /// </summary>
+        
         /// <param name="parent">
         /// The parent segment of a path to be joined with the child.
         /// </param>
@@ -374,10 +341,7 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <summary>
-        /// Removes the child segment of a path and returns the remaining parent
-        /// portion.
-        /// </summary>
+        
         /// <param name="path">
         /// A fully qualified provider specific path to an item. The item may or
         /// may not exist.
@@ -462,10 +426,7 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <summary>
-        /// Normalizes the path that was passed in and returns the normalized path
-        /// as a relative path to the basePath that was passed.
-        /// </summary>
+        
         /// <param name="path">
         /// A fully qualified provider specific path to an item. The item should exist
         /// or the provider should write out an error.
@@ -653,9 +614,7 @@ namespace System.Management.Automation.Provider
             return result;
         }
 
-        /// <summary>
-        /// Get the common base path of two paths.
-        /// </summary>
+        
         /// <param name="path1">One path.</param>
         /// <param name="path2">Another path.</param>
         private string GetCommonBase(string path1, string path2)
@@ -679,9 +638,7 @@ namespace System.Management.Automation.Provider
             return path1;
         }
 
-        /// <summary>
-        /// Gets the name of the leaf element in the specified path.
-        /// </summary>
+        
         /// <param name="path">
         /// The fully qualified path to the item
         /// </param>
@@ -749,9 +706,7 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <summary>
-        /// Determines if the item specified by the path is a container.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to determine if it is a container.
         /// </param>
@@ -778,9 +733,7 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <summary>
-        /// Moves the item specified by path to the specified destination.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to be moved.
         /// </param>
@@ -819,10 +772,7 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <summary>
-        /// Gives the provider an opportunity to attach additional parameters to
-        /// the move-item cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// If the path was specified on the command line, this is the path
         /// to the item to get the dynamic parameters for.
@@ -851,11 +801,7 @@ namespace System.Management.Automation.Provider
 
         #region private members
 
-        /// <summary>
-        /// When a path contains both forward slash and backslash, we may introduce some errors by
-        /// normalizing the path. This method does some smart checks to reduce the chances of making
-        /// those errors.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to normalize.
         /// </param>
@@ -906,9 +852,7 @@ namespace System.Management.Automation.Provider
             return normalizedPath;
         }
 
-        /// <summary>
-        /// Test if the path is an absolute path.
-        /// </summary>
+        
         /// <param name="path"></param>
         /// <returns></returns>
         private bool IsAbsolutePath(string path)
@@ -928,9 +872,7 @@ namespace System.Management.Automation.Provider
             return result;
         }
 
-        /// <summary>
-        /// Tokenizes the specified path onto a stack.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to tokenize.
         /// </param>
@@ -978,9 +920,7 @@ namespace System.Management.Automation.Provider
             return tokenizedPathStack;
         }
 
-        /// <summary>
-        /// Given the tokenized path, the relative path elements are removed.
-        /// </summary>
+        
         /// <param name="tokenizedPathStack">
         /// A stack containing path elements where the leaf most element is at
         /// the bottom of the stack and the most ancestral parent is on the top.
@@ -1050,9 +990,7 @@ namespace System.Management.Automation.Provider
             return normalizedPathStack;
         }
 
-        /// <summary>
-        /// Pops each leaf element of the stack and uses MakePath to generate the relative path.
-        /// </summary>
+        
         /// <param name="normalizedPathStack">
         /// The stack containing the leaf elements of the path.
         /// </param>

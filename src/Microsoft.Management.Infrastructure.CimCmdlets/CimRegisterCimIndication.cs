@@ -12,18 +12,10 @@ using System.Threading;
 
 namespace Microsoft.Management.Infrastructure.CimCmdlets
 {
-    /// <summary>
-    /// <para>
-    /// Subscription result event args
-    /// </para>
-    /// </summary>
+    
     internal abstract class CimSubscriptionEventArgs : EventArgs
     {
-        /// <summary>
-        /// <para>
-        /// Returns an Object value for an operation context
-        /// </para>
-        /// </summary>
+        
         public object Context
         {
             get
@@ -35,23 +27,13 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         protected object context;
     }
 
-    /// <summary>
-    /// <para>
-    /// Subscription result event args
-    /// </para>
-    /// </summary>
+    
     internal class CimSubscriptionResultEventArgs : CimSubscriptionEventArgs
     {
-        /// <summary>
-        /// <para>
-        /// subscription result
-        /// </para>
-        /// </summary>
+        
         public CimSubscriptionResult Result { get; }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CimSubscriptionResultEventArgs"/> class.
-        /// </summary>
+        
         /// <param name="theResult"></param>
         public CimSubscriptionResultEventArgs(
             CimSubscriptionResult theResult)
@@ -61,23 +43,13 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
     }
 
-    /// <summary>
-    /// <para>
-    /// Subscription result event args
-    /// </para>
-    /// </summary>
+    
     internal class CimSubscriptionExceptionEventArgs : CimSubscriptionEventArgs
     {
-        /// <summary>
-        /// <para>
-        /// subscription result
-        /// </para>
-        /// </summary>
+        
         public Exception Exception { get; }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CimSubscriptionExceptionEventArgs"/> class.
-        /// </summary>
+        
         /// <param name="theResult"></param>
         public CimSubscriptionExceptionEventArgs(
             Exception theException)
@@ -87,32 +59,20 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
     }
 
-    /// <summary>
-    /// <para>
-    /// Implements operations of register-cimindication cmdlet.
-    /// </para>
-    /// </summary>
+    
     internal sealed class CimRegisterCimIndication : CimAsyncOperation
     {
-        /// <summary>
-        /// <para>
-        /// New subscription result event
-        /// </para>
-        /// </summary>
+        
         public event EventHandler<CimSubscriptionEventArgs> OnNewSubscriptionResult;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CimRegisterCimIndication"/> class.
-        /// </summary>
+        
         public CimRegisterCimIndication()
             : base()
         {
             this.ackedEvent = new ManualResetEventSlim(false);
         }
 
-        /// <summary>
-        /// Start an indication subscription target to the given computer.
-        /// </summary>
+        
         /// <param name="computerName">Null stands for localhost.</param>
         /// <param name="nameSpace"></param>
         /// <param name="queryDialect"></param>
@@ -132,9 +92,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             WaitForAckMessage();
         }
 
-        /// <summary>
-        /// Start an indication subscription through a given <see cref="CimSession"/>.
-        /// </summary>
+        
         /// <param name="cimSession">Cannot be null.</param>
         /// <param name="nameSpace"></param>
         /// <param name="queryDialect"></param>
@@ -160,11 +118,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         #region override methods
 
-        /// <summary>
-        /// <para>
-        /// Subscribe to the events issued by <see cref="CimSessionProxy"/>.
-        /// </para>
-        /// </summary>
+        
         /// <param name="proxy"></param>
         protected override void SubscribeToCimSessionProxyEvent(CimSessionProxy proxy)
         {
@@ -176,12 +130,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             proxy.EnableMethodResultStreaming = false;
         }
 
-        /// <summary>
-        /// <para>
-        /// Handler used to handle new action event from
-        /// <seealso cref="CimSessionProxy"/> object.
-        /// </para>
-        /// </summary>
+        
         /// <param name="cimSession">
         /// <seealso cref="CimSession"/> object raised the event
         /// </param>
@@ -246,9 +195,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             }
         }
 
-        /// <summary>
-        /// Block the ps thread until ACK message or Error happened.
-        /// </summary>
+        
         private void WaitForAckMessage()
         {
             DebugHelper.WriteLogEx();
@@ -278,11 +225,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         #endregion
 
         #region internal property
-        /// <summary>
-        /// The cmdlet object who issue this subscription,
-        /// to throw ThrowTerminatingError
-        /// in case there is a subscription failure.
-        /// </summary>
+        
         /// <param name="cmdlet"></param>
         internal Cmdlet Cmdlet
         {
@@ -290,9 +233,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             set;
         }
 
-        /// <summary>
-        /// Target computername.
-        /// </summary>
+        
         internal string TargetComputerName
         {
             get;
@@ -302,11 +243,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         #endregion
 
         #region private methods
-        /// <summary>
-        /// <para>
-        /// Create <see cref="CimSessionProxy"/> and set properties
-        /// </para>
-        /// </summary>
+        
         /// <param name="computerName"></param>
         /// <param name="timeout"></param>
         /// <returns></returns>
@@ -319,9 +256,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             return proxy;
         }
 
-        /// <summary>
-        /// Create <see cref="CimSessionProxy"/> and set properties.
-        /// </summary>
+        
         /// <param name="session"></param>
         /// <param name="timeout"></param>
         /// <returns></returns>
@@ -337,9 +272,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         #region private members
 
-        /// <summary>
-        /// Exception occurred while start the subscription.
-        /// </summary>
+        
         internal Exception Exception { get; private set; }
 
         #endregion

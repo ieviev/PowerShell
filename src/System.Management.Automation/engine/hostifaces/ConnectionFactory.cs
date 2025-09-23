@@ -11,14 +11,10 @@ using Microsoft.PowerShell.Commands;
 
 namespace System.Management.Automation.Runspaces
 {
-    /// <summary>
-    /// Defines a factory class for creating Runspace objects.
-    /// </summary>
+    
     public static class RunspaceFactory
     {
-        /// <summary>
-        /// Static constructor.
-        /// </summary>
+        
         static RunspaceFactory()
         {
             // Set ETW activity Id
@@ -32,9 +28,7 @@ namespace System.Management.Automation.Runspaces
 
         #region Runspace Factory
 
-        /// <summary>
-        /// Creates a runspace using host of type <see cref="DefaultHost"/>.
-        /// </summary>
+        
         /// <returns>
         /// A runspace object.
         /// </returns>
@@ -45,10 +39,7 @@ namespace System.Management.Automation.Runspaces
             return CreateRunspace(host);
         }
 
-        /// <summary>
-        /// Creates a runspace using specified host. This runspace is created using the
-        /// configuration information from EntryAssembly.
-        /// </summary>
+        
         /// <param name="host">
         /// The explicit PSHost implementation.
         /// </param>
@@ -68,9 +59,7 @@ namespace System.Management.Automation.Runspaces
             return new LocalRunspace(host, InitialSessionState.CreateDefault());
         }
 
-        /// <summary>
-        /// Creates a runspace using <see cref="DefaultHost"/>
-        /// </summary>
+        
         /// <param name="initialSessionState">
         /// InitialSessionState information for the runspace.
         /// </param>
@@ -93,9 +82,7 @@ namespace System.Management.Automation.Runspaces
             return CreateRunspace(host, initialSessionState);
         }
 
-        /// <summary>
-        /// Creates a runspace using specified PSHost and InitialSessionState.
-        /// </summary>
+        
         /// <param name="host">
         /// Host implementation for runspace.
         /// </param>
@@ -127,9 +114,7 @@ namespace System.Management.Automation.Runspaces
             return new LocalRunspace(host, initialSessionState);
         }
 
-        /// <summary>
-        /// Creates a runspace using specified PSHost and InitialSessionState.
-        /// </summary>
+        
         /// <param name="host">
         /// Host implementation for runspace.
         /// </param>
@@ -165,20 +150,13 @@ namespace System.Management.Automation.Runspaces
 
         #region RunspacePool Factory
 
-        /// <summary>
-        /// Creates a RunspacePool with MaxRunspaces 1 and MinRunspaces 1.
-        /// </summary>
+        
         public static RunspacePool CreateRunspacePool()
         {
             return CreateRunspacePool(1, 1);
         }
 
-        /// <summary>
-        /// Creates a RunspacePool
-        /// <paramref name="maxRunspaces"/>
-        /// limits the number of Runspaces that can exist in this
-        /// pool. The minimum pool size is set to <paramref name="minPoolSoze"/>.
-        /// </summary>
+        
         /// <param name="minRunspaces">
         /// The minimum number of Runspaces that exist in this
         /// pool. Should be greater than or equal to 1.
@@ -201,11 +179,7 @@ namespace System.Management.Automation.Runspaces
                 ));
         }
 
-        /// <summary>
-        /// Creates a RunspacePool using the supplied <paramref name="initialSessionState"/>.
-        /// The minimum runspaces size is set to 1. The maximum runspaces size is
-        /// set to 1.
-        /// </summary>
+        
         /// <param name="initialSessionState">
         /// initialSessionState to use when creating a new
         /// Runspace in the pool.
@@ -224,10 +198,7 @@ namespace System.Management.Automation.Runspaces
                 ));
         }
 
-        /// <summary>
-        /// Creates a RunspacePool using the supplied <paramref name="host"/>,
-        /// <paramref name="minRunspaces"/> and <paramref name="maxRunspaces"/>
-        /// </summary>
+        
         /// <param name="minRunspaces">
         /// The minimum number of Runspaces that can exist in this pool.
         /// Should be greater than or equal to 1.
@@ -251,10 +222,7 @@ namespace System.Management.Automation.Runspaces
             return new RunspacePool(minRunspaces, maxRunspaces, host);
         }
 
-        /// <summary>
-        /// Creates a RunspacePool using the supplied <paramref name="initialSessionState"/>,
-        /// <paramref name="minRunspaces"/> and <paramref name="maxRunspaces"/>
-        /// </summary>
+        
         /// <param name="minRunspaces">
         /// The minimum number of Runspaces that can exist in this pool.
         /// Should be greater than or equal to 1.
@@ -294,14 +262,7 @@ namespace System.Management.Automation.Runspaces
 
         #region RunspacePool - remote Factory
 
-        /// <summary>
-        /// Creates a RunspacePool
-        /// on the specified remote computer.
-        /// <paramref name="maxRunspaces"/>
-        /// limits the number of Runspaces that can exist in this
-        /// pool. The minimum pool size is set to
-        /// <paramref name="minPoolSoze"/>.
-        /// </summary>
+        
         /// <param name="minRunspaces">
         /// The minimum number of Runspace that should exist in this
         /// pool. Should be greater than 1.
@@ -326,14 +287,7 @@ namespace System.Management.Automation.Runspaces
             return CreateRunspacePool(minRunspaces, maxRunspaces, connectionInfo, null);
         }
 
-        /// <summary>
-        /// Creates a RunspacePool
-        /// on the specified remote runspace computer.
-        /// <paramref name="maxRunspaces"/>
-        /// limits the number of Runspaces that can exist in this
-        /// pool. The minimum pool size is set to
-        /// <paramref name="minPoolSoze"/>.
-        /// </summary>
+        
         /// <param name="minRunspaces">
         /// The minimum number of Runspace that should exist in this
         /// pool. Should be greater than 1.
@@ -360,14 +314,7 @@ namespace System.Management.Automation.Runspaces
             return CreateRunspacePool(minRunspaces, maxRunspaces, connectionInfo, host, null);
         }
 
-        /// <summary>
-        /// Creates a RunspacePool
-        /// on the specified remote runspace computer.
-        /// <paramref name="maxRunspaces"/>
-        /// limits the number of Runspaces that can exist in this
-        /// pool. The minimum pool size is set to
-        /// <paramref name="minPoolSoze"/>.
-        /// </summary>
+        
         /// <param name="minRunspaces">
         /// The minimum number of Runspace that should exist in this
         /// pool. Should be greater than 1.
@@ -407,14 +354,7 @@ namespace System.Management.Automation.Runspaces
             return CreateRunspacePool(minRunspaces, maxRunspaces, connectionInfo, host, typeTable, null);
         }
 
-        /// <summary>
-        /// Creates a RunspacePool
-        /// on the specified remote runspace computer.
-        /// <paramref name="maxRunspaces"/>
-        /// limits the number of Runspaces that can exist in this
-        /// pool. The minimum pool size is set to
-        /// <paramref name="minPoolSoze"/>.
-        /// </summary>
+        
         /// <param name="minRunspaces">
         /// The minimum number of Runspace that should exist in this
         /// pool. Should be greater than 1.
@@ -475,9 +415,7 @@ namespace System.Management.Automation.Runspaces
 
         #region Runspace - Remote Factory
 
-        /// <summary>
-        /// Creates a remote Runspace.
-        /// </summary>
+        
         /// <param name="connectionInfo">It defines connection path to a remote runspace that needs to be created.</param>
         /// <param name="host">The explicit PSHost implementation.</param>
         /// <param name="typeTable">
@@ -497,9 +435,7 @@ namespace System.Management.Automation.Runspaces
             return CreateRunspace(connectionInfo, host, typeTable, null, null);
         }
 
-        /// <summary>
-        /// Creates a remote Runspace.
-        /// </summary>
+        
         /// <param name="connectionInfo">It defines connection path to a remote runspace that needs to be created.</param>
         /// <param name="host">The explicit PSHost implementation.</param>
         /// <param name="typeTable">
@@ -522,9 +458,7 @@ namespace System.Management.Automation.Runspaces
             return CreateRunspace(connectionInfo, host, typeTable, applicationArguments, null);
         }
 
-        /// <summary>
-        /// Creates a remote Runspace.
-        /// </summary>
+        
         /// <param name="connectionInfo">It defines connection path to a remote runspace that needs to be created.</param>
         /// <param name="host">The explicit PSHost implementation.</param>
         /// <param name="typeTable">
@@ -553,9 +487,7 @@ namespace System.Management.Automation.Runspaces
             return new RemoteRunspace(typeTable, connectionInfo, host, applicationArguments, name);
         }
 
-        /// <summary>
-        /// Creates a remote Runspace.
-        /// </summary>
+        
         /// <param name="host">The explicit PSHost implementation.</param>
         /// <param name="connectionInfo">It defines connection path to a remote runspace that needs to be created.</param>
         /// <returns>A remote Runspace.</returns>
@@ -564,9 +496,7 @@ namespace System.Management.Automation.Runspaces
             return CreateRunspace(connectionInfo, host, null);
         }
 
-        /// <summary>
-        /// Creates a remote Runspace.
-        /// </summary>
+        
         /// <param name="connectionInfo">It defines connection path to a remote runspace that needs to be created.</param>
         /// <returns>A remote Runspace.</returns>
         public static Runspace CreateRunspace(RunspaceConnectionInfo connectionInfo)
@@ -578,9 +508,7 @@ namespace System.Management.Automation.Runspaces
 
         #region V3 Extensions
 
-        /// <summary>
-        /// Creates an out-of-process remote Runspace.
-        /// </summary>
+        
         /// <param name="typeTable">
         /// The TypeTable to use while deserializing/serializing remote objects.
         /// TypeTable has the following information used by serializer:
@@ -600,9 +528,7 @@ namespace System.Management.Automation.Runspaces
             return CreateRunspace(connectionInfo, null, typeTable);
         }
 
-        /// <summary>
-        /// Creates an out-of-process remote Runspace.
-        /// </summary>
+        
         /// <param name="typeTable">
         /// The TypeTable to use while deserializing/serializing remote objects.
         /// TypeTable has the following information used by serializer:

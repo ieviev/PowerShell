@@ -29,11 +29,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
     }
 
-    /// <summary>
-    /// Helper object holding a generic object and the related
-    /// "applies to" object.
-    /// It is used in by the inheritance based type match algorithm.
-    /// </summary>
+    
     internal sealed class TypeMatchItem
     {
         internal TypeMatchItem(object obj, AppliesTo a)
@@ -56,10 +52,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         internal PSObject CurrentObject { get; }
     }
 
-    /// <summary>
-    /// Algorithm to execute a type match on a list of entities
-    /// having an "applies to" associated object.
-    /// </summary>
+    
     internal sealed class TypeMatch
     {
         #region tracer
@@ -585,10 +578,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             return (vd.mainControl is ComplexControlBody || vd.mainControl is ListControlBody) && vd.outOfBand;
         }
 
-        /// <summary>
-        /// Given an appliesTo list, it finds all the types that are contained (following type
-        /// group references)
-        /// </summary>
+        
         /// <param name="db">Database to use.</param>
         /// <param name="appliesTo">Object to lookup.</param>
         /// <returns></returns>

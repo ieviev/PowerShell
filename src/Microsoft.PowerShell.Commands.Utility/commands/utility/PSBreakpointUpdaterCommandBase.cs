@@ -10,9 +10,7 @@ using System.Management.Automation.Runspaces;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// Base class for Enable/Disable/Remove-PSBreakpoint.
-    /// </summary>
+    
     public abstract class PSBreakpointUpdaterCommandBase : PSBreakpointCommandBase
     {
         #region strings
@@ -24,23 +22,17 @@ namespace Microsoft.PowerShell.Commands
 
         #region parameters
 
-        /// <summary>
-        /// Gets or sets the breakpoint to enable.
-        /// </summary>
+        
         [Parameter(ParameterSetName = BreakpointParameterSetName, ValueFromPipeline = true, Position = 0, Mandatory = true)]
         [ValidateNotNull]
         public Breakpoint[] Breakpoint { get; set; }
 
-        /// <summary>
-        /// Gets or sets the Id of the breakpoint to enable.
-        /// </summary>
+        
         [Parameter(ParameterSetName = IdParameterSetName, ValueFromPipelineByPropertyName = true, Position = 0, Mandatory = true)]
         [ValidateNotNull]
         public int[] Id { get; set; }
 
-        /// <summary>
-        /// Gets or sets the runspace where the breakpoints will be used.
-        /// </summary>
+        
         [Parameter(ParameterSetName = IdParameterSetName, ValueFromPipelineByPropertyName = true)]
         [Alias("RunspaceId")]
         [Runspace]
@@ -50,9 +42,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region overrides
 
-        /// <summary>
-        /// Gathers the list of breakpoints to process and calls ProcessBreakpoints.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             if (ParameterSetName.Equals(BreakpointParameterSetName, StringComparison.OrdinalIgnoreCase))

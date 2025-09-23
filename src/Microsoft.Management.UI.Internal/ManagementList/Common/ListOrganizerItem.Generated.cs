@@ -20,9 +20,7 @@ using System.Windows.Data;
 namespace Microsoft.Management.UI.Internal
 {
 
-    /// <summary>
-    /// This control is the row in the ListOrganizer and offers editing functionality.
-    /// </summary>
+    
     /// <remarks>
     ///
     ///
@@ -52,14 +50,10 @@ namespace Microsoft.Management.UI.Internal
         //
         // TextContentPropertyName dependency property
         //
-        /// <summary>
-        /// Identifies the TextContentPropertyName dependency property.
-        /// </summary>
+        
         public static readonly DependencyProperty TextContentPropertyNameProperty = DependencyProperty.Register( "TextContentPropertyName", typeof(string), typeof(ListOrganizerItem), new PropertyMetadata( string.Empty, TextContentPropertyNameProperty_PropertyChanged) );
 
-        /// <summary>
-        /// Gets or sets a value which dictates what binding is used to provide content for the items in the list.
-        /// </summary>
+        
         [Bindable(true)]
         [Category("Common Properties")]
         [Description("Gets or sets a value which dictates what binding is used to provide content for the items in the list.")]
@@ -82,14 +76,10 @@ namespace Microsoft.Management.UI.Internal
             obj.OnTextContentPropertyNameChanged( new PropertyChangedEventArgs<string>((string)e.OldValue, (string)e.NewValue) );
         }
 
-        /// <summary>
-        /// Occurs when TextContentPropertyName property changes.
-        /// </summary>
+        
         public event EventHandler<PropertyChangedEventArgs<string>> TextContentPropertyNameChanged;
 
-        /// <summary>
-        /// Called when TextContentPropertyName property changes.
-        /// </summary>
+        
         protected virtual void OnTextContentPropertyNameChanged(PropertyChangedEventArgs<string> e)
         {
             OnTextContentPropertyNameChangedImplementation(e);
@@ -98,9 +88,7 @@ namespace Microsoft.Management.UI.Internal
 
         partial void OnTextContentPropertyNameChangedImplementation(PropertyChangedEventArgs<string> e);
 
-        /// <summary>
-        /// Called when a property changes.
-        /// </summary>
+        
         private void RaisePropertyChangedEvent<T>(EventHandler<PropertyChangedEventArgs<T>> eh, PropertyChangedEventArgs<T> e)
         {
             if (eh != null)
@@ -113,9 +101,7 @@ namespace Microsoft.Management.UI.Internal
         // OnApplyTemplate
         //
 
-        /// <summary>
-        /// Called when ApplyTemplate is called.
-        /// </summary>
+        
         public override void OnApplyTemplate()
         {
             PreOnApplyTemplate();
@@ -135,9 +121,7 @@ namespace Microsoft.Management.UI.Internal
         // Static constructor
         //
 
-        /// <summary>
-        /// Called when the type is initialized.
-        /// </summary>
+        
         static ListOrganizerItem()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ListOrganizerItem), new FrameworkPropertyMetadata(typeof(ListOrganizerItem)));

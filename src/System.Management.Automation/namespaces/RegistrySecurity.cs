@@ -10,14 +10,7 @@ using Microsoft.PowerShell.Commands.Internal;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// Provider that provides access to Registry through cmdlets. This provider
-    /// implements <see cref="System.Management.Automation.Provider.NavigationCmdletProvider"/>,
-    /// <see cref="System.Management.Automation.Provider.IPropertyCmdletProvider"/>,
-    /// <see cref="System.Management.Automation.Provider.IDynamicPropertyCmdletProvider"/>,
-    /// <see cref="System.Management.Automation.Provider.ISecurityDescriptorCmdletProvider"/>
-    /// interfaces.
-    /// </summary>
+    
     public sealed partial class RegistryProvider :
         NavigationCmdletProvider,
         IPropertyCmdletProvider,
@@ -26,9 +19,7 @@ namespace Microsoft.PowerShell.Commands
     {
         #region ISecurityDescriptorCmdletProvider members
 
-        /// <summary>
-        /// Gets the security descriptor for the item specified by <paramref name="path"/>.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item.
         /// </param>
@@ -76,9 +67,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Sets the security descriptor for the item specified by <paramref name="path"/>
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to set the security descriptor on.
         /// </param>
@@ -153,9 +142,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Creates a new empty security descriptor.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item whose type is to be used when
         /// creating a new descriptor.
@@ -181,9 +168,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Creates a new empty security descriptor.
-        /// </summary>
+        
         /// <param name="type">
         /// The type of item associated with this security descriptor
         /// </param>

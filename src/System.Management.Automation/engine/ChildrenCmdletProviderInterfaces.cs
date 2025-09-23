@@ -7,17 +7,12 @@ using Dbg = System.Management.Automation;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Exposes the Children noun of the Cmdlet Providers to the Cmdlet base class. The methods of this class
-    /// use the providers to perform operations.
-    /// </summary>
+    
     public sealed class ChildItemCmdletProviderIntrinsics
     {
         #region Constructors
 
-        /// <summary>
-        /// Hide the default constructor since we always require an instance of SessionState.
-        /// </summary>
+        
         private ChildItemCmdletProviderIntrinsics()
         {
             Dbg.Diagnostics.Assert(
@@ -25,9 +20,7 @@ namespace System.Management.Automation
                 "This constructor should never be called. Only the constructor that takes an instance of SessionState should be called.");
         }
 
-        /// <summary>
-        /// Constructs a facade over the "real" session state API.
-        /// </summary>
+        
         /// <param name="cmdlet">
         /// An instance of the cmdlet that this class is acting as a facade for.
         /// </param>
@@ -42,9 +35,7 @@ namespace System.Management.Automation
             _sessionState = cmdlet.Context.EngineSessionState;
         }
 
-        /// <summary>
-        /// Constructs a facade over the "real" session state API.
-        /// </summary>
+        
         /// <param name="sessionState">
         /// An instance of the "real" session state.
         /// </param>
@@ -66,9 +57,7 @@ namespace System.Management.Automation
 
         #region GetChildItems
 
-        /// <summary>
-        /// Gets the child items of the container at the given path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to retrieve. It may be a drive or provider-qualified path and may include
         /// glob characters.
@@ -113,9 +102,7 @@ namespace System.Management.Automation
             return _sessionState.GetChildItems(new string[] { path }, recurse, uint.MaxValue, false, false);
         }
 
-        /// <summary>
-        /// Gets the child items of the container at the given path(s).
-        /// </summary>
+        
         /// <param name="path">
         /// The path(s) to the item(s) to retrieve. They may be drive or provider-qualified paths and may include
         /// glob characters.
@@ -169,9 +156,7 @@ namespace System.Management.Automation
             return _sessionState.GetChildItems(path, recurse, depth, force, literalPath);
         }
 
-        /// <summary>
-        /// Gets the child items of the container at the given path(s).
-        /// </summary>
+        
         /// <param name="path">
         /// The path(s) to the item(s) to retrieve. They may be drive or provider-qualified paths and may include
         /// glob characters.
@@ -222,9 +207,7 @@ namespace System.Management.Automation
             return this.Get(path, recurse, uint.MaxValue, force, literalPath);
         }
 
-        /// <summary>
-        /// Gets the child items of the container at the given path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to retrieve. It may be a drive or provider-qualified path and may include
         /// glob characters.
@@ -278,9 +261,7 @@ namespace System.Management.Automation
             _sessionState.GetChildItems(path, recurse, depth, context);
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the get-childitem cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -331,9 +312,7 @@ namespace System.Management.Automation
 
         #region GetChildNames
 
-        /// <summary>
-        /// Gets the child names of the container at the given path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to retrieve. It may be a drive or provider-qualified path and may include
         /// glob characters.
@@ -386,9 +365,7 @@ namespace System.Management.Automation
             return _sessionState.GetChildNames(new string[] { path }, returnContainers, recurse, uint.MaxValue, false, false);
         }
 
-        /// <summary>
-        /// Gets the child names of the container at the given path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path(s) to the item(s) to retrieve. They may be drive or provider-qualified paths and may include
         /// glob characters.
@@ -447,9 +424,7 @@ namespace System.Management.Automation
             return _sessionState.GetChildNames(path, returnContainers, recurse, uint.MaxValue, force, literalPath);
         }
 
-        /// <summary>
-        /// Gets the child names of the container at the given path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path(s) to the item(s) to retrieve. They may be drive or provider-qualified paths and may include
         /// glob characters.
@@ -512,9 +487,7 @@ namespace System.Management.Automation
             return _sessionState.GetChildNames(path, returnContainers, recurse, depth, force, literalPath);
         }
 
-        /// <summary>
-        /// Gets the child names of the container at the given path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to retrieve. It may be a drive or provider-qualified path and may include
         /// glob characters.
@@ -574,9 +547,7 @@ namespace System.Management.Automation
             _sessionState.GetChildNames(path, returnContainers, recurse, depth, context);
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the get-childitem -name cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -621,9 +592,7 @@ namespace System.Management.Automation
 
         #region HasChildItems
 
-        /// <summary>
-        /// Determines if an item at the given path has children.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to determine if it has children. It may be a drive or provider-qualified path and may include
         /// glob characters.
@@ -662,9 +631,7 @@ namespace System.Management.Automation
             return _sessionState.HasChildItems(path, false, false);
         }
 
-        /// <summary>
-        /// Determines if an item at the given path has children.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to determine if it has children. It may be a drive or provider-qualified path and may include
         /// glob characters.
@@ -709,9 +676,7 @@ namespace System.Management.Automation
             return _sessionState.HasChildItems(path, force, literalPath);
         }
 
-        /// <summary>
-        /// Determines if an item at the given path has children.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to determine if it has children. It may be a drive or provider-qualified path and may include
         /// glob characters.
@@ -767,20 +732,13 @@ namespace System.Management.Automation
         #endregion private data
     }
 
-    /// <summary>
-    /// This enum determines which types of containers are returned from some of
-    /// the provider methods.
-    /// </summary>
+    
     public enum ReturnContainers
     {
-        /// <summary>
-        /// Only containers that match the filter(s) are returned.
-        /// </summary>
+        
         ReturnMatchingContainers,
 
-        /// <summary>
-        /// All containers are returned even if they don't match the filter(s).
-        /// </summary>
+        
         ReturnAllContainers
     }
 }

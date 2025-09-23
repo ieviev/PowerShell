@@ -8,18 +8,14 @@ using System.Management.Automation;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// Cmdlet to get available list of results.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Get, "Job", DefaultParameterSetName = JobCmdletBase.SessionIdParameterSet, HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096582")]
     [OutputType(typeof(Job))]
     public class GetJobCommand : JobCmdletBase
     {
         #region Parameters
 
-        /// <summary>
-        /// IncludeChildJob parameter.
-        /// </summary>
+        
         [Parameter(ParameterSetName = JobCmdletBase.SessionIdParameterSet)]
         [Parameter(ParameterSetName = JobCmdletBase.InstanceIdParameterSet)]
         [Parameter(ParameterSetName = JobCmdletBase.NameParameterSet)]
@@ -27,9 +23,7 @@ namespace Microsoft.PowerShell.Commands
         [Parameter(ParameterSetName = JobCmdletBase.CommandParameterSet)]
         public SwitchParameter IncludeChildJob { get; set; }
 
-        /// <summary>
-        /// ChildJobState parameter.
-        /// </summary>
+        
         [Parameter(ParameterSetName = JobCmdletBase.SessionIdParameterSet)]
         [Parameter(ParameterSetName = JobCmdletBase.InstanceIdParameterSet)]
         [Parameter(ParameterSetName = JobCmdletBase.NameParameterSet)]
@@ -37,9 +31,7 @@ namespace Microsoft.PowerShell.Commands
         [Parameter(ParameterSetName = JobCmdletBase.CommandParameterSet)]
         public JobState ChildJobState { get; set; }
 
-        /// <summary>
-        /// HasMoreData parameter.
-        /// </summary>
+        
         [Parameter(ParameterSetName = JobCmdletBase.SessionIdParameterSet)]
         [Parameter(ParameterSetName = JobCmdletBase.InstanceIdParameterSet)]
         [Parameter(ParameterSetName = JobCmdletBase.NameParameterSet)]
@@ -47,9 +39,7 @@ namespace Microsoft.PowerShell.Commands
         [Parameter(ParameterSetName = JobCmdletBase.CommandParameterSet)]
         public bool HasMoreData { get; set; }
 
-        /// <summary>
-        /// Before time filter.
-        /// </summary>
+        
         [Parameter(ParameterSetName = JobCmdletBase.SessionIdParameterSet)]
         [Parameter(ParameterSetName = JobCmdletBase.InstanceIdParameterSet)]
         [Parameter(ParameterSetName = JobCmdletBase.NameParameterSet)]
@@ -57,9 +47,7 @@ namespace Microsoft.PowerShell.Commands
         [Parameter(ParameterSetName = JobCmdletBase.CommandParameterSet)]
         public DateTime Before { get; set; }
 
-        /// <summary>
-        /// After time filter.
-        /// </summary>
+        
         [Parameter(ParameterSetName = JobCmdletBase.SessionIdParameterSet)]
         [Parameter(ParameterSetName = JobCmdletBase.InstanceIdParameterSet)]
         [Parameter(ParameterSetName = JobCmdletBase.NameParameterSet)]
@@ -67,9 +55,7 @@ namespace Microsoft.PowerShell.Commands
         [Parameter(ParameterSetName = JobCmdletBase.CommandParameterSet)]
         public DateTime After { get; set; }
 
-        /// <summary>
-        /// Newest returned count.
-        /// </summary>
+        
         [Parameter(ParameterSetName = JobCmdletBase.SessionIdParameterSet)]
         [Parameter(ParameterSetName = JobCmdletBase.InstanceIdParameterSet)]
         [Parameter(ParameterSetName = JobCmdletBase.NameParameterSet)]
@@ -77,10 +63,7 @@ namespace Microsoft.PowerShell.Commands
         [Parameter(ParameterSetName = JobCmdletBase.CommandParameterSet)]
         public int Newest { get; set; }
 
-        /// <summary>
-        /// SessionId for which job
-        /// need to be obtained.
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true, Position = 0,
                   ParameterSetName = JobCmdletBase.SessionIdParameterSet)]
         [ValidateNotNullOrEmpty]
@@ -102,10 +85,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Overrides
 
-        /// <summary>
-        /// Extract result objects corresponding to the specified
-        /// names or expressions.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             List<Job> jobList = FindJobs();
@@ -118,9 +98,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Protected Members
 
-        /// <summary>
-        /// Helper method to find jobs based on parameter set.
-        /// </summary>
+        
         /// <returns>Matching jobs.</returns>
         protected List<Job> FindJobs()
         {
@@ -194,9 +172,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Private Members
 
-        /// <summary>
-        /// Filter jobs based on HasMoreData.
-        /// </summary>
+        
         /// <param name="jobList"></param>
         /// <returns>Return the list of jobs after applying HasMoreData filter.</returns>
         private List<Job> ApplyHasMoreDataFiltering(List<Job> jobList)
@@ -221,9 +197,7 @@ namespace Microsoft.PowerShell.Commands
             return matches;
         }
 
-        /// <summary>
-        /// Find the all child jobs with specified ChildJobState in the job list.
-        /// </summary>
+        
         /// <param name="jobList"></param>
         /// <returns>Returns job list including all child jobs with ChildJobState or all if IncludeChildJob is specified.</returns>
         private List<Job> FindChildJobs(List<Job> jobList)
@@ -269,10 +243,7 @@ namespace Microsoft.PowerShell.Commands
             return matches;
         }
 
-        /// <summary>
-        /// Applys the appropriate time filter to each job in the job list.
-        /// Only Job2 type jobs can be time filtered so older Job types are skipped.
-        /// </summary>
+        
         /// <param name="jobList"></param>
         /// <returns></returns>
         private List<Job> ApplyTimeFiltering(List<Job> jobList)

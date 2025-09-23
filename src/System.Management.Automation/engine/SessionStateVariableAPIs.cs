@@ -15,16 +15,12 @@ using Dbg = System.Management.Automation;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Holds the state of a Monad Shell session.
-    /// </summary>
+    
     internal sealed partial class SessionStateInternal
     {
         #region variables
 
-        /// <summary>
-        /// Add an new SessionStateVariable entry to this session state object...
-        /// </summary>
+        
         /// <param name="entry">The entry to add.</param>
         internal void AddSessionStateEntry(SessionStateVariableEntry entry)
         {
@@ -34,10 +30,7 @@ namespace System.Management.Automation
             this.SetVariableAtScope(v, "global", true, CommandOrigin.Internal);
         }
 
-        /// <summary>
-        /// Get a variable out of session state. This interface supports
-        /// the scope specifiers like "global:example"
-        /// </summary>
+        
         /// <param name="name">
         /// name of variable to look up
         /// </param>
@@ -65,10 +58,7 @@ namespace System.Management.Automation
             return resultItem;
         }
 
-        /// <summary>
-        /// Get a variable out of session state. This interface supports
-        /// the scope specifiers like "global:example"
-        /// </summary>
+        
         /// <param name="name">
         /// name of variable to look up
         /// </param>
@@ -83,11 +73,7 @@ namespace System.Management.Automation
             return GetVariable(name, CommandOrigin.Internal);
         }
 
-        /// <summary>
-        /// Get a variable out of session state. This interface supports
-        /// the "namespace:name" syntax so you can do things like
-        /// "env:PATH" or "global:example"
-        /// </summary>
+        
         /// <param name="name">
         /// name of variable to look up
         /// </param>
@@ -126,11 +112,7 @@ namespace System.Management.Automation
             return resultItem;
         }
 
-        /// <summary>
-        /// Get a variable out of session state. This interface supports
-        /// the "namespace:name" syntax so you can do things like
-        /// "env:PATH" or "global:example"
-        /// </summary>
+        
         /// <param name="name">
         /// name of variable to look up
         /// </param>
@@ -162,10 +144,7 @@ namespace System.Management.Automation
             return returnObject;
         }
 
-        /// <summary>
-        /// Looks up the specified variable and returns the context under which
-        /// the variable was found as well as the variable itself.
-        /// </summary>
+        
         /// <param name="variablePath">
         /// The VariablePath helper for the variable.
         /// </param>
@@ -230,10 +209,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Looks up the specified variable and returns the context under which
-        /// the variable was found as well as the variable itself.
-        /// </summary>
+        
         /// <param name="variablePath">
         /// The VariablePath helper for the variable.
         /// </param>
@@ -502,10 +478,7 @@ namespace System.Management.Automation
         }
 #pragma warning restore 0162
 
-        /// <summary>
-        /// Looks up the specified variable and returns the context under which
-        /// the variable was found as well as the variable itself.
-        /// </summary>
+        
         /// <param name="variablePath">
         /// The VariablePath helper for the variable.
         /// </param>
@@ -557,10 +530,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Looks up the specified variable and returns the context under which
-        /// the variable was found as well as the variable itself.
-        /// </summary>
+        
         /// <param name="variablePath">
         /// The VariablePath helper for the variable.
         /// </param>
@@ -588,11 +558,7 @@ namespace System.Management.Automation
             return GetVariableItem(variablePath, out scope, CommandOrigin.Internal);
         }
 
-        /// <summary>
-        /// Get a variable out of session state. This interface supports
-        /// the "namespace:name" syntax so you can do things like
-        /// "env:PATH" or "global:example"
-        /// </summary>
+        
         /// <param name="name">
         /// name of variable to look up
         /// </param>
@@ -639,11 +605,7 @@ namespace System.Management.Automation
             return resultItem;
         }
 
-        /// <summary>
-        /// Get a variable out of session state. This interface supports
-        /// the "namespace:name" syntax so you can do things like
-        /// "env:PATH" or "global:example"
-        /// </summary>
+        
         /// <param name="name">
         /// name of variable to look up
         /// </param>
@@ -911,11 +873,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Set a variable in session state. This interface supports
-        /// the "namespace:name" syntax so you can do things like
-        /// "$env:PATH = 'c:\windows'" or "$global:example = 13"
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the item to set.
         /// </param>
@@ -956,15 +914,7 @@ namespace System.Management.Automation
             SetVariable(variablePath, newValue, true, origin);
         }
 
-        /// <summary>
-        /// Set a variable in session state. This interface supports
-        /// the "namespace:name" syntax so you can do things like
-        /// "$env:PATH = 'c:\windows'" or "$global:example = 13"
-        ///
-        /// BUGBUG: this overload exists because a lot of tests in the
-        /// testsuite use it. Those tests should eventually be fixed and this overload
-        /// should be removed.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the item to set.
         /// </param>
@@ -995,10 +945,7 @@ namespace System.Management.Automation
             SetVariableValue(name, newValue, CommandOrigin.Internal);
         }
 
-        /// <summary>
-        /// Set a variable in session state. This interface supports
-        /// the scope specifiers like "$global:example = 13"
-        /// </summary>
+        
         /// <param name="variable">
         /// The variable to be set.
         /// </param>
@@ -1030,9 +977,7 @@ namespace System.Management.Automation
             return SetVariable(variablePath, variable, false, force, origin);
         }
 
-        /// <summary>
-        /// Set a variable using a pre-parsed variablePath object instead of a string.
-        /// </summary>
+        
         /// <param name="variablePath">
         /// A pre-parsed variable path object for the variable in question.
         /// </param>
@@ -1078,9 +1023,7 @@ namespace System.Management.Automation
             return SetVariable(variablePath, newValue, asValue, false, origin);
         }
 
-        /// <summary>
-        /// Set a variable using a pre-parsed variablePath object instead of a string.
-        /// </summary>
+        
         /// <param name="variablePath">
         /// A pre-parsed variable path object for the variable in question.
         /// </param>
@@ -1355,9 +1298,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Set a variable in session state.
-        /// </summary>
+        
         /// <param name="variable">
         /// The variable to set
         /// </param>
@@ -1410,9 +1351,7 @@ namespace System.Management.Automation
 
         #region NewVariable
 
-        /// <summary>
-        /// Creates a new variable.
-        /// </summary>
+        
         /// <param name="variable">
         /// The variable to create
         /// </param>
@@ -1439,9 +1378,7 @@ namespace System.Management.Automation
                     this);
         }
 
-        /// <summary>
-        /// Creates a new variable in the specified scope.
-        /// </summary>
+        
         /// <param name="variable">
         /// The variable to create
         /// </param>
@@ -1490,9 +1427,7 @@ namespace System.Management.Automation
 
         #endregion NewVariable
 
-        /// <summary>
-        /// Removes a variable from the variable table.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the variable to remove.
         /// </param>
@@ -1520,9 +1455,7 @@ namespace System.Management.Automation
             RemoveVariable(name, false);
         }
 
-        /// <summary>
-        /// Removes a variable from the variable table.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the variable to remove.
         /// </param>
@@ -1575,9 +1508,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Removes a variable from the variable table.
-        /// </summary>
+        
         /// <param name="variable">
         /// The variable to remove.
         /// </param>
@@ -1592,9 +1523,7 @@ namespace System.Management.Automation
             RemoveVariable(variable, false);
         }
 
-        /// <summary>
-        /// Removes a variable from the variable table.
-        /// </summary>
+        
         /// <param name="variable">
         /// The variable to remove.
         /// </param>
@@ -1624,11 +1553,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Remove a variable from session state. This interface supports
-        /// the "namespace:name" syntax so you can do things like
-        /// "env:PATH" or "global:example"
-        /// </summary>
+        
         /// <param name="name">
         /// name of variable to remove
         /// </param>
@@ -1654,11 +1579,7 @@ namespace System.Management.Automation
             RemoveVariableAtScope(name, scopeID, false);
         }
 
-        /// <summary>
-        /// Remove a variable from session state. This interface supports
-        /// the "namespace:name" syntax so you can do things like
-        /// "env:PATH" or "global:example"
-        /// </summary>
+        
         /// <param name="name">
         /// name of variable to remove
         /// </param>
@@ -1718,9 +1639,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Remove a variable from session state.
-        /// </summary>
+        
         /// <param name="variable">
         /// The variable to remove
         /// </param>
@@ -1742,9 +1661,7 @@ namespace System.Management.Automation
             RemoveVariableAtScope(variable, scopeID, false);
         }
 
-        /// <summary>
-        /// Remove a variable from session state.
-        /// </summary>
+        
         /// <param name="variable">
         /// The variable to remove
         /// </param>
@@ -1780,11 +1697,7 @@ namespace System.Management.Automation
             lookupScope.RemoveVariable(variablePath.QualifiedName, force);
         }
 
-        /// <summary>
-        /// Gets a flattened view of the variables that are visible using
-        /// the current scope as a reference and filtering the variables in
-        /// the other scopes based on the scoping rules.
-        /// </summary>
+        
         /// <returns>
         /// An IDictionary representing the visible variables.
         /// </returns>
@@ -1830,11 +1743,7 @@ namespace System.Management.Automation
             scope.LocalsTuple?.GetVariableTable(result, includePrivate);
         }
 
-        /// <summary>
-        /// Gets a flattened view of the variables that are visible using
-        /// the current scope as a reference and filtering the variables in
-        /// the other scopes based on the scoping rules.
-        /// </summary>
+        
         /// <returns>
         /// An IDictionary representing the visible variables.
         /// </returns>
@@ -1853,9 +1762,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// List of variables to export from this session state object...
-        /// </summary>
+        
         internal List<PSVariable> ExportedVariables { get; } = new List<PSVariable>();
 
         #endregion variables

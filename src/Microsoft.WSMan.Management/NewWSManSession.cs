@@ -17,20 +17,12 @@ using System.Xml;
 
 namespace Microsoft.WSMan.Management
 {
-    /// <summary>
-    /// Creates a WSMan Session option hashtable which can be passed into WSMan
-    /// cmdlets:
-    /// Get-WSManInstance
-    /// Set-WSManInstance
-    /// Invoke-WSManAction
-    /// Connect-WSMan.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.New, "WSManSessionOption", HelpUri = "https://go.microsoft.com/fwlink/?LinkId=2096845")]
     [OutputType(typeof(SessionOption))]
     public class NewWSManSessionOptionCommand : PSCmdlet
     {
-        /// <summary>
-        /// </summary>
+        
         [Parameter]
         [ValidateNotNullOrEmpty]
         public ProxyAccessType ProxyAccessType
@@ -48,15 +40,7 @@ namespace Microsoft.WSMan.Management
 
         private ProxyAccessType _proxyaccesstype;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "ProxyAuthentication".
-        /// This parameter takes a set of authentication methods the user can select
-        /// from.  The available options should be as follows:
-        /// - Negotiate: Use the default authentication (ad defined by the underlying
-        /// protocol) for establishing a remote connection.
-        /// - Basic:  Use basic authentication for establishing a remote connection
-        /// - Digest: Use Digest authentication for establishing a remote connection.
-        /// </summary>
+        
         [Parameter]
         [ValidateNotNullOrEmpty]
         public ProxyAuthentication ProxyAuthentication
@@ -74,9 +58,7 @@ namespace Microsoft.WSMan.Management
 
         private ProxyAuthentication proxyauthentication;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "ProxyCredential".
-        /// </summary>
+        
         [Parameter]
         [ValidateNotNullOrEmpty]
         [Credential]
@@ -95,14 +77,7 @@ namespace Microsoft.WSMan.Management
 
         private PSCredential _proxycredential;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "SkipCACheck".
-        /// When connecting over HTTPS, the client does not validate that the server
-        /// certificate is signed by a trusted certificate authority (CA). Use only when
-        /// the remote computer is trusted by other means, for example, if the remote
-        /// computer is part of a network that is physically secure and isolated or the
-        /// remote computer is listed as a trusted host in WinRM configuration.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter SkipCACheck
         {
@@ -119,12 +94,7 @@ namespace Microsoft.WSMan.Management
 
         private bool skipcacheck;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "SkipCNCheck".
-        /// Indicates that certificate common name (CN) of the server need not match the
-        /// hostname of the server. Used only in remote operations using https. This
-        /// option should only be used for trusted machines.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter SkipCNCheck
         {
@@ -141,12 +111,7 @@ namespace Microsoft.WSMan.Management
 
         private bool skipcncheck;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "SkipRevocation".
-        /// Indicates that certificate common name (CN) of the server need not match the
-        /// hostname of the server. Used only in remote operations using https. This
-        /// option should only be used for trusted machines.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter SkipRevocationCheck
         {
@@ -163,12 +128,7 @@ namespace Microsoft.WSMan.Management
 
         private bool skiprevocationcheck;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "SPNPort".
-        /// Appends port number to the connection Service Principal Name SPN of the
-        /// remote server.
-        /// SPN is used when authentication mechanism is Kerberos or Negotiate.
-        /// </summary>
+        
         [Parameter]
         [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "SPN")]
         [ValidateRange(0, int.MaxValue)]
@@ -187,10 +147,7 @@ namespace Microsoft.WSMan.Management
 
         private int spnport;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "Timeout".
-        /// Defines the timeout in ms for the wsman operation.
-        /// </summary>
+        
         [Parameter]
         [Alias("OperationTimeoutMSec")]
         [ValidateRange(0, int.MaxValue)]
@@ -209,12 +166,7 @@ namespace Microsoft.WSMan.Management
 
         private int operationtimeout;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "UnEncrypted".
-        /// Specifies that no encryption will be used when doing remote operations over
-        /// http. Unencrypted traffic is not allowed by default and must be enabled in
-        /// the local configuration.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter NoEncryption
         {
@@ -231,11 +183,7 @@ namespace Microsoft.WSMan.Management
 
         private bool noencryption;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "UTF16".
-        /// Indicates the request is encoded in UTF16 format rather than UTF8 format;
-        /// UTF8 is the default.
-        /// </summary>
+        
         [Parameter]
         [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "UTF")]
         public SwitchParameter UseUTF16
@@ -253,9 +201,7 @@ namespace Microsoft.WSMan.Management
 
         private bool useutf16;
 
-        /// <summary>
-        /// BeginProcessing method.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             WSManHelper helper = new WSManHelper(this);

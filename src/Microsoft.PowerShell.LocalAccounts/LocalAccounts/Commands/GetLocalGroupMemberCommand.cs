@@ -13,9 +13,7 @@ using System.Management.Automation.SecurityAccountsManager.Extensions;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// The Get-LocalGroupMember cmdlet gets the members of a local group.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Get, "LocalGroupMember",
             DefaultParameterSetName = "Default",
             HelpUri = "https://go.microsoft.com/fwlink/?LinkId=717988")]
@@ -27,10 +25,7 @@ namespace Microsoft.PowerShell.Commands
         #endregion Instance Data
 
         #region Parameter Properties
-        /// <summary>
-        /// The following is the definition of the input parameter "Group".
-        /// The security group from the local Security Accounts Manager.
-        /// </summary>
+        
         [Parameter(Mandatory = true,
                    Position = 0,
                    ValueFromPipeline = true,
@@ -46,12 +41,7 @@ namespace Microsoft.PowerShell.Commands
 
         private Microsoft.PowerShell.Commands.LocalGroup group;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "Member".
-        /// Specifies the name of the user or group that is a member of this group. If
-        /// this parameter is not specified, all members of the specified group are
-        /// returned. This accepts a name, SID, or wildcard string.
-        /// </summary>
+        
         [Parameter(Position = 1)]
         [ValidateNotNullOrEmpty]
         public string Member
@@ -63,10 +53,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string member;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "Name".
-        /// The security group from the local Security Accounts Manager.
-        /// </summary>
+        
         [Parameter(Mandatory = true,
                    Position = 0,
                    ValueFromPipeline = true,
@@ -82,10 +69,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string name;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "SID".
-        /// The security group from the local Security Accounts Manager.
-        /// </summary>
+        
         [Parameter(Mandatory = true,
                    Position = 0,
                    ValueFromPipeline = true,
@@ -103,17 +87,13 @@ namespace Microsoft.PowerShell.Commands
         #endregion Parameter Properties
 
         #region Cmdlet Overrides
-        /// <summary>
-        /// BeginProcessing method.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             sam = new Sam();
         }
 
-        /// <summary>
-        /// ProcessRecord method.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             try
@@ -136,9 +116,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// EndProcessing method.
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             if (sam != null)

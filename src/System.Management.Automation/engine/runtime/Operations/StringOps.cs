@@ -81,24 +81,14 @@ namespace System.Management.Automation
 
         // The following methods are used for the compatibility purpose between regular PowerShell and PowerShell on CSS
 
-        /// <summary>
-        /// StringComparison.InvariantCulture is not in CoreCLR, so we need to use
-        ///    CultureInfo.InvariantCulture.CompareInfo.Compare(string, string, CompareOptions)
-        /// to substitute
-        ///    string.Compare(string, string, StringComparison)
-        /// </summary>
+        
         internal static int Compare(string strA, string strB, CultureInfo culture, CompareOptions option)
         {
             Diagnostics.Assert(culture != null, "Caller makes sure that 'culture' is not null.");
             return culture.CompareInfo.Compare(strA, strB, option);
         }
 
-        /// <summary>
-        /// StringComparison.InvariantCulture is not in CoreCLR, so we need to use
-        ///    CultureInfo.InvariantCulture.CompareInfo.Compare(string, string, CompareOptions) == 0
-        /// to substitute
-        ///    string.Equals(string, string, StringComparison)
-        /// </summary>
+        
         internal static bool Equals(string strA, string strB, CultureInfo culture, CompareOptions option)
         {
             Diagnostics.Assert(culture != null, "Caller makes sure that 'culture' is not null.");

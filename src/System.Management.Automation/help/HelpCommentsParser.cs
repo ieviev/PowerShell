@@ -17,9 +17,7 @@ using System.Xml;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Parses help comments and turns them into HelpInfo objects.
-    /// </summary>
+    
     internal sealed class HelpCommentsParser
     {
         private HelpCommentsParser()
@@ -200,9 +198,7 @@ namespace System.Management.Automation
             return command_parameter;
         }
 
-        /// <summary>
-        /// Create the maml xml after a successful analysis of the comments.
-        /// </summary>
+        
         /// <returns>The xml node for the command constructed.</returns>
         internal XmlDocument BuildXmlFromComments()
         {
@@ -518,9 +514,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Split the text in the comment token into multiple lines, appending commentLines.
-        /// </summary>
+        
         /// <param name="comment">A single line or multiline comment token.</param>
         /// <param name="commentLines"></param>
         private static void CollectCommentText(Token comment, List<string> commentLines)
@@ -576,10 +570,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Collect the text of a section.  Stop collecting the section
-        /// when a new directive is found (even if it is an unknown directive).
-        /// </summary>
+        
         /// <param name="commentLines">The comment block, as a list of lines.</param>
         /// <param name="i"></param>
         /// <returns>The text of the help section, with 'i' left on the last line collected.</returns>
@@ -687,10 +678,7 @@ namespace System.Management.Automation
                 commandInfo.HelpCategory);
         }
 
-        /// <summary>
-        /// Look for special comments indicating the comment block is meant
-        /// to be used for help.
-        /// </summary>
+        
         /// <param name="comments">The list of comments to process.</param>
         /// <returns>True if any special comments are found, false otherwise.</returns>
         internal bool AnalyzeCommentBlock(List<Token> comments)
@@ -807,12 +795,7 @@ namespace System.Management.Automation
             return directiveFound;
         }
 
-        /// <summary>
-        /// The analysis of the comments finds the component, functionality, and role fields, but
-        /// those fields aren't added to the xml because they aren't children of the command xml
-        /// node, they are under a sibling of the command xml node and apply to all command nodes
-        /// in a maml file.
-        /// </summary>
+        
         /// <param name="helpInfo">The helpInfo object to set the fields on.</param>
         internal void SetAdditionalData(MamlCommandHelpInfo helpInfo)
         {
@@ -930,9 +913,7 @@ namespace System.Management.Automation
             return localHelpInfo;
         }
 
-        /// <summary>
-        /// Analyze a block of comments to determine if it is a special help block.
-        /// </summary>
+        
         /// <param name="commentBlock">The block of comments to analyze.</param>
         /// <returns>True if the block is our special comment block for help, false otherwise.</returns>
         internal static bool IsCommentHelpText(List<Token> commentBlock)

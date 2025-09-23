@@ -11,12 +11,7 @@ using System.Management.Automation;
 
 namespace Microsoft.Management.Infrastructure.CimCmdlets
 {
-    /// <summary>
-    /// <para>
-    /// Enables the user to Set properties and keys on a specific <see cref="CimInstance"/>
-    /// CimInstance must have values of all [KEY] properties.
-    /// </para>
-    /// </summary>
+    
     [Alias("scim")]
     [Cmdlet(
         VerbsCommon.Set,
@@ -28,9 +23,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
     {
         #region constructor
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SetCimInstanceCommand"/> class.
-        /// </summary>
+        
         public SetCimInstanceCommand()
             : base(parameters, parameterSets)
         {
@@ -39,10 +32,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         #endregion
 
         #region parameters
-        /// <summary>
-        /// The following is the definition of the input parameter "Session".
-        /// CIM session used to set the CIM Instance.
-        /// </summary>
+        
         [Parameter(
             Mandatory = true,
             ValueFromPipeline = true,
@@ -68,9 +58,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         private CimSession[] cimSession;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "ComputerName".
-        /// </summary>
+        
         [Alias(AliasCN, AliasServerName)]
         [Parameter(
             ValueFromPipelineByPropertyName = true,
@@ -94,12 +82,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         private string[] computername;
 
-        /// <summary>
-        /// <para>
-        /// The following is the definition of the input parameter "ResourceUri".
-        /// Define the Resource Uri for which the instances are retrieved.
-        /// </para>
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true,
                    ParameterSetName = CimBaseCommand.CimInstanceComputerSet)]
         [Parameter(ValueFromPipelineByPropertyName = true,
@@ -120,10 +103,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         private Uri resourceUri;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "Namespace".
-        /// The Namespace used to look for the Class instances under.
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true,
             ParameterSetName = CimBaseCommand.QuerySessionSet)]
         [Parameter(ValueFromPipelineByPropertyName = true,
@@ -144,19 +124,12 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         private string nameSpace;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "OperationTimeoutSec".
-        /// Used to set the invocation operation time out. This value overrides the
-        /// CimSession operation timeout.
-        /// </summary>
+        
         [Alias(AliasOT)]
         [Parameter]
         public uint OperationTimeoutSec { get; set; }
 
-        /// <summary>
-        /// The following is the definition of the input parameter "InputObject".
-        /// Used to get a CimInstance using Get-CimInstance | Set-CimInstance.
-        /// </summary>
+        
         [Parameter(
             Mandatory = true,
             Position = 0,
@@ -182,14 +155,10 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             }
         }
 
-        /// <summary>
-        /// Property for internal usage purpose.
-        /// </summary>
+        
         internal CimInstance CimInstance { get; private set; }
 
-        /// <summary>
-        /// The following is the definition of the input parameter "Query".
-        /// </summary>
+        
         [Parameter(
             Mandatory = true,
             Position = 0,
@@ -216,11 +185,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         private string query;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "QueryDialect".
-        /// Specifies the dialect used by the query Engine that interprets the Query
-        /// string.
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true,
                    ParameterSetName = CimBaseCommand.QuerySessionSet)]
         [Parameter(ValueFromPipelineByPropertyName = true,
@@ -241,16 +206,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         private string querydialect;
 
-        /// <summary>
-        /// <para>
-        /// The following is the definition of the input parameter "Property",
-        /// defines the value to be changed.
-        /// </para>
-        /// <para>
-        /// The key properties will be ignored. Any invalid property will cause
-        /// termination of the cmdlet execution.
-        /// </para>
-        /// </summary>
+        
         [Parameter(Mandatory = true,
             ValueFromPipelineByPropertyName = true,
             ParameterSetName = CimBaseCommand.QuerySessionSet)]
@@ -279,16 +235,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         private IDictionary property;
 
-        /// <summary>
-        /// <para>
-        /// The following is the definition of the input parameter "PassThru",
-        /// indicate whether Set-CimInstance should output modified result instance or not.
-        /// </para>
-        /// <para>
-        /// True indicates output the result instance, otherwise output nothing as by default
-        /// behavior.
-        /// </para>
-        /// </summary>
+        
         [Parameter]
         [ValidateNotNull]
         public SwitchParameter PassThru { get; set; }
@@ -297,9 +244,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         #region cmdlet methods
 
-        /// <summary>
-        /// BeginProcessing method.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             CimSetCimInstance cimSetCimInstance = this.GetOperationAgent() ?? CreateOperationAgent();
@@ -308,9 +253,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             this.AtBeginProcess = false;
         }
 
-        /// <summary>
-        /// ProcessRecord method.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             base.CheckParameterSet();
@@ -319,9 +262,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             cimSetCimInstance.ProcessActions(this.CmdletOperation);
         }
 
-        /// <summary>
-        /// EndProcessing method.
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             CimSetCimInstance cimSetCimInstance = this.GetOperationAgent();
@@ -332,23 +273,13 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         #region helper methods
 
-        /// <summary>
-        /// <para>
-        /// Get <see cref="CimSetCimInstance"/> object, which is
-        /// used to delegate all Set-CimInstance operations.
-        /// </para>
-        /// </summary>
+        
         private CimSetCimInstance GetOperationAgent()
         {
             return this.AsyncOperation as CimSetCimInstance;
         }
 
-        /// <summary>
-        /// <para>
-        /// Create <see cref="CimSetCimInstance"/> object, which is
-        /// used to delegate all Set-CimInstance operations.
-        /// </para>
-        /// </summary>
+        
         /// <returns></returns>
         private CimSetCimInstance CreateOperationAgent()
         {
@@ -372,9 +303,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         internal const string nameProperty = "Property";
         #endregion
 
-        /// <summary>
-        /// Static parameter definition entries.
-        /// </summary>
+        
         private static readonly Dictionary<string, HashSet<ParameterDefinitionEntry>> parameters = new()
         {
             {
@@ -429,9 +358,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             },
         };
 
-        /// <summary>
-        /// Static parameter set entries.
-        /// </summary>
+        
         private static readonly Dictionary<string, ParameterSetEntry> parameterSets = new()
         {
             {   CimBaseCommand.QuerySessionSet, new ParameterSetEntry(3)     },

@@ -14,9 +14,7 @@ using Json.Schema;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// This class implements Test-Json command.
-    /// </summary>
+    
     [Cmdlet(VerbsDiagnostic.Test, "Json", DefaultParameterSetName = JsonStringParameterSet, HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096609")]
     [OutputType(typeof(bool))]
     public class TestJsonCommand : PSCmdlet
@@ -44,25 +42,19 @@ namespace Microsoft.PowerShell.Commands
 
         #region Parameters
 
-        /// <summary>
-        /// Gets or sets JSON string to be validated.
-        /// </summary>
+        
         [Parameter(Position = 0, Mandatory = true, ValueFromPipeline = true, ParameterSetName = JsonStringParameterSet)]
         [Parameter(Position = 0, Mandatory = true, ValueFromPipeline = true, ParameterSetName = JsonStringWithSchemaStringParameterSet)]
         [Parameter(Position = 0, Mandatory = true, ValueFromPipeline = true, ParameterSetName = JsonStringWithSchemaFileParameterSet)]
         public string Json { get; set; }
 
-        /// <summary>
-        /// Gets or sets JSON file path to be validated.
-        /// </summary>
+        
         [Parameter(Position = 0, Mandatory = true, ValueFromPipelineByPropertyName = true, ParameterSetName = JsonPathParameterSet)]
         [Parameter(Position = 0, Mandatory = true, ValueFromPipelineByPropertyName = true, ParameterSetName = JsonPathWithSchemaStringParameterSet)]
         [Parameter(Position = 0, Mandatory = true, ValueFromPipelineByPropertyName = true, ParameterSetName = JsonPathWithSchemaFileParameterSet)]
         public string Path { get; set; }
 
-        /// <summary>
-        /// Gets or sets JSON literal file path to be validated.
-        /// </summary>
+        
         [Parameter(Position = 0, Mandatory = true, ValueFromPipelineByPropertyName = true, ParameterSetName = JsonLiteralPathParameterSet)]
         [Parameter(Position = 0, Mandatory = true, ValueFromPipelineByPropertyName = true, ParameterSetName = JsonLiteralPathWithSchemaStringParameterSet)]
         [Parameter(Position = 0, Mandatory = true, ValueFromPipelineByPropertyName = true, ParameterSetName = JsonLiteralPathWithSchemaFileParameterSet)]
@@ -81,33 +73,21 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets or sets schema to validate the JSON against.
-        /// This is optional parameter.
-        /// If the parameter is absent the cmdlet only attempts to parse the JSON string.
-        /// If the parameter present the cmdlet attempts to parse the JSON string and
-        /// then validates the JSON against the schema. Before testing the JSON string,
-        /// the cmdlet parses the schema doing implicitly check the schema too.
-        /// </summary>
+        
         [Parameter(Position = 1, Mandatory = true, ParameterSetName = JsonStringWithSchemaStringParameterSet)]
         [Parameter(Position = 1, Mandatory = true, ParameterSetName = JsonPathWithSchemaStringParameterSet)]
         [Parameter(Position = 1, Mandatory = true, ParameterSetName = JsonLiteralPathWithSchemaStringParameterSet)]
         [ValidateNotNullOrEmpty]
         public string Schema { get; set; }
 
-        /// <summary>
-        /// Gets or sets path to the file containing schema to validate the JSON string against.
-        /// This is optional parameter.
-        /// </summary>
+        
         [Parameter(Position = 1, Mandatory = true, ParameterSetName = JsonStringWithSchemaFileParameterSet)]
         [Parameter(Position = 1, Mandatory = true, ParameterSetName = JsonPathWithSchemaFileParameterSet)]
         [Parameter(Position = 1, Mandatory = true, ParameterSetName = JsonLiteralPathWithSchemaFileParameterSet)]
         [ValidateNotNullOrEmpty]
         public string SchemaFile { get; set; }
 
-        /// <summary>
-        /// Gets or sets JSON document options.
-        /// </summary>
+        
         [Parameter]
         [ValidateNotNullOrEmpty]
         [ValidateSet(IgnoreCommentsOption, AllowTrailingCommasOption)]
@@ -123,9 +103,7 @@ namespace Microsoft.PowerShell.Commands
 
         #endregion
 
-        /// <summary>
-        /// Prepare a JSON schema.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             // By default, a JSON Schema implementation isn't supposed to automatically fetch content.
@@ -227,9 +205,7 @@ namespace Microsoft.PowerShell.Commands
             };
         }
 
-        /// <summary>
-        /// Validate a JSON.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             bool result = true;

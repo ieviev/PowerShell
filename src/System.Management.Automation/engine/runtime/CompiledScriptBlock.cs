@@ -569,9 +569,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Protected constructor to support ISerializable.
-        /// </summary>
+        
         [Obsolete("Legacy serialization support is deprecated since .NET 8", DiagnosticId = "SYSLIB0051")]
         protected ScriptBlock(SerializationInfo info, StreamingContext context)
         {
@@ -636,9 +634,7 @@ namespace System.Management.Automation
             s_cachedScripts.TryAdd(key, scriptBlock);
         }
 
-        /// <summary>
-        /// Clears the cached scriptblocks.
-        /// </summary>
+        
         internal static void ClearScriptBlockCache()
         {
             s_cachedScripts.Clear();
@@ -672,14 +668,10 @@ namespace System.Management.Automation
 
         internal ScriptBlock Clone() => new ScriptBlock(_scriptBlockData);
 
-        /// <summary>
-        /// Returns the text of the script block.  The return value might not match the original text exactly.
-        /// </summary>
+        
         public override string ToString() => _scriptBlockData.ToString();
 
-        /// <summary>
-        /// Returns the text of the script block with the handling of $using expressions.
-        /// </summary>
+        
         internal string ToStringWithDollarUsingHandling(
             Tuple<List<VariableExpressionAst>, string> usingVariablesTuple)
         {
@@ -799,18 +791,14 @@ namespace System.Management.Automation
 
         internal bool HasDynamicParameters { get => AstInternal.Body.DynamicParamBlock != null; }
 
-        /// <summary>
-        /// DebuggerHidden.
-        /// </summary>
+        
         public bool DebuggerHidden
         {
             get => _scriptBlockData.DebuggerHidden;
             set => _scriptBlockData.DebuggerHidden = value;
         }
 
-        /// <summary>
-        /// The unique ID of this script block.
-        /// </summary>
+        
         public Guid Id { get => _scriptBlockData.Id; }
 
         internal bool DebuggerStepThrough
@@ -867,9 +855,7 @@ namespace System.Management.Automation
             return null;
         }
 
-        /// <summary>
-        /// Check the script block to see if it uses any language constructs not allowed in restricted language mode.
-        /// </summary>
+        
         /// <param name="allowedCommands">The commands that are allowed.</param>
         /// <param name="allowedVariables">
         /// The variables allowed in this scriptblock. If this is null, then the default variable set
@@ -1692,14 +1678,7 @@ namespace System.Management.Automation
             // for our simple needs.
             private const uint LCG = 31;
 
-            /// <summary>
-            /// Check if a hash code matches a small set of pre-computed hashes
-            /// for suspicious strings in a PowerShell script.
-            ///
-            /// If you need to add a new string, use the commented out
-            /// method HashNewPattern (commented out because it's dead
-            /// code - needed only to generate this switch statement below.)
-            /// </summary>
+            
             /// <returns>The string matching the hash, or null.</returns>
             private static string LookupHash(uint h)
             {
@@ -1848,15 +1827,7 @@ namespace System.Management.Automation
                 }
             }
 
-            /// <summary>
-            /// Check the list of running hashes for any matches, but
-            /// only up to the limit of <paramref name="upTo"/>.
-            ///
-            /// If a hash matches, we ignore the possibility of a
-            /// collision. If the hash is acceptable, collisions will
-            /// be infrequent and we'll just log an occasional script
-            /// that isn't really suspicious.
-            /// </summary>
+            
             /// <returns>The string matching the hash, or null.</returns>
             private static string CheckForMatches(uint[] runningHash, int upTo)
             {
@@ -1878,23 +1849,7 @@ namespace System.Management.Automation
                 return null;
             }
 
-            /// <summary>
-            /// Scan a string for suspicious content.
-            ///
-            /// This is based on the Rubin-Karp algorithm, but heavily
-            /// modified to support searching for multiple patterns at
-            /// the same time.
-            ///
-            /// The key difference from Rubin-Karp is that we don't undo
-            /// the hash of the first character as we shift along in the
-            /// input.
-            ///
-            /// Instead, we can rely on knowing we need the hashes for
-            /// shorter strings anyway, so we reuse their values in
-            /// computing the hash for the longer patterns. This lets us
-            /// use a much simpler hash as well - we can avoid the use of
-            /// mod.
-            /// </summary>
+            
             /// <returns>The string matching the hash, or null.</returns>
             public static string Match(string text)
             {
@@ -2010,9 +1965,7 @@ namespace System.Management.Automation
 
         internal CompiledScriptBlockData ScriptBlockData { get => _scriptBlockData; }
 
-        /// <summary>
-        /// Returns the AST corresponding to the script block.
-        /// </summary>
+        
         public Ast Ast { get => (Ast)_scriptBlockData.Ast; }
 
         internal IParameterMetadataProvider AstInternal { get => _scriptBlockData.Ast; }
@@ -2302,23 +2255,17 @@ namespace System.Management.Automation
             return null;
         }
 
-        /// <summary>
-        /// If the script cmdlet will run in a new local scope, this method is used to set the locals to the newly created scope.
-        /// </summary>
+        
         internal void SetLocalsTupleForNewScope(SessionStateScope scope)
         {
             Diagnostics.Assert(scope.LocalsTuple == null, "a newly created scope shouldn't have it's tuple set.");
             scope.LocalsTuple = _localsTuple;
         }
 
-        /// <summary>
-        /// If the script cmdlet is dotted, this method is used to push the locals to the 'DottedScopes' of the current scope.
-        /// </summary>
+        
         internal void PushDottedScope(SessionStateScope scope) => scope.DottedScopes.Push(_localsTuple);
 
-        /// <summary>
-        /// If the script cmdlet is dotted, this method is used to pop the locals from the 'DottedScopes' of the current scope.
-        /// </summary>
+        
         internal void PopDottedScope(SessionStateScope scope) => scope.DottedScopes.Pop();
 
         internal void PrepareForBinding(CommandLineParameters commandLineParameters)
@@ -2397,11 +2344,7 @@ namespace System.Management.Automation
 
         internal event EventHandler DisposingEvent;
 
-        /// <summary>
-        /// IDisposable implementation
-        /// When the command is complete, release the associated scope
-        /// and other members.
-        /// </summary>
+        
         public void Dispose()
         {
             if (_disposed)

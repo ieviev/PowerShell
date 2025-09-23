@@ -22,17 +22,13 @@ namespace System.Management.Automation
 {
     #region Flow Control Exceptions
 
-    /// <summary>
-    /// FlowControlException, base class for flow control exceptions.
-    /// </summary>
+    
     public abstract class FlowControlException : SystemException
     {
         internal FlowControlException() { }
     }
 
-    /// <summary>
-    /// LoopFlowException, base class for loop control exceptions.
-    /// </summary>
+    
     public abstract class LoopFlowException : FlowControlException
     {
         internal LoopFlowException(string label)
@@ -42,10 +38,7 @@ namespace System.Management.Automation
 
         internal LoopFlowException() { }
 
-        /// <summary>
-        /// Label, indicates nested loop level affected by exception.
-        /// No label means most nested loop is affected.
-        /// </summary>
+        
         public string Label
         {
             get;
@@ -66,9 +59,7 @@ namespace System.Management.Automation
         }
     }
 
-    /// <summary>
-    /// Flow control BreakException.
-    /// </summary>
+    
     public sealed class BreakException : LoopFlowException
     {
         [SuppressMessage("Microsoft.Design", "CA1032:ImplementStandardExceptionConstructors", Justification = "This exception should only be thrown from SMA.dll")]
@@ -87,9 +78,7 @@ namespace System.Management.Automation
         }
     }
 
-    /// <summary>
-    /// Flow control ContinueException.
-    /// </summary>
+    
     public sealed class ContinueException : LoopFlowException
     {
         [SuppressMessage("Microsoft.Design", "CA1032:ImplementStandardExceptionConstructors", Justification = "This exception should only be thrown from SMA.dll")]
@@ -118,9 +107,7 @@ namespace System.Management.Automation
         internal object Argument { get; set; }
     }
 
-    /// <summary>
-    /// Implements the exit keyword.
-    /// </summary>
+    
     public class ExitException : FlowControlException
     {
         [SuppressMessage("Microsoft.Design", "CA1032:ImplementStandardExceptionConstructors", Justification = "This exception should only be thrown from SMA.dll")]
@@ -129,34 +116,24 @@ namespace System.Management.Automation
             this.Argument = argument;
         }
 
-        /// <summary>
-        /// Argument.
-        /// </summary>
+        
         public object Argument { get; internal set; }
 
         [SuppressMessage("Microsoft.Design", "CA1032:ImplementStandardExceptionConstructors", Justification = "This exception should only be thrown from SMA.dll")]
         internal ExitException() { }
     }
 
-    /// <summary>
-    /// Used by InternalHost.ExitNestedPrompt() to pop out of an interpreter level...
-    /// </summary>
+    
     internal class ExitNestedPromptException : FlowControlException
     {
     }
 
-    /// <summary>
-    /// Used by the debugger to terminate the execution of the current command.
-    /// </summary>
+    
     public sealed class TerminateException : FlowControlException
     {
     }
 
-    /// <summary>
-    /// Used by Select-Object cmdlet to stop all the upstream cmdlets, but continue
-    /// executing downstream cmdlets.  The semantics of stopping is intended to mimic
-    /// a user pressing Ctrl-C [but which only affects upstream cmdlets].
-    /// </summary>
+    
     internal class StopUpstreamCommandsException : FlowControlException
     {
         public StopUpstreamCommandsException(InternalCommand requestingCommand)
@@ -169,54 +146,26 @@ namespace System.Management.Automation
 
     #endregion Flow Control Exceptions
 
-    /// <summary>
-    /// A enum corresponding to the options on the -split operator.
-    /// </summary>
+    
     [Flags]
     public enum SplitOptions
     {
-        /// <summary>
-        /// Use simple string comparison when evaluating the delimiter.
-        /// Cannot be used with RegexMatch.
-        /// </summary>
+        
         SimpleMatch = 0x01,
-        /// <summary>
-        /// Use regular expression matching to evaluate the delimiter.
-        /// This is the default behavior. Cannot be used with SimpleMatch.
-        /// </summary>
+        
         RegexMatch = 0x02,
-        /// <summary>
-        /// CultureInvariant: Ignores cultural differences in language when evaluating the delimiter.
-        /// Valid only with RegexMatch.
-        /// </summary>
+        
         CultureInvariant = 0x04,
-        /// <summary>
-        /// Ignores unescaped whitespace and comments marked with #.
-        /// Valid only with RegexMatch.
-        /// </summary>
+        
         [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "Whitespace")]
         IgnorePatternWhitespace = 0x08,
-        /// <summary>
-        /// Regex multiline mode, which recognizes the start and end of lines,
-        /// as well as the start and end of strings.
-        /// Valid only with RegexMatch.
-        /// Singleline is the default.
-        /// </summary>
+        
         Multiline = 0x10,
-        /// <summary>
-        /// Regex Singleline mode, which recognizes only the start and end of strings.
-        /// Valid only with RegexMatch.
-        /// Singleline is the default.
-        /// </summary>
+        
         Singleline = 0x20,
-        /// <summary>
-        /// Forces case-insensitive matching, even if -cSplit is specified.
-        /// </summary>
+        
         IgnoreCase = 0x40,
-        /// <summary>
-        /// Ignores non-named match groups, so that only explicit capture groups
-        /// are returned in the result list.
-        /// </summary>
+        
         ExplicitCapture = 0x80,
     }
 
@@ -224,18 +173,12 @@ namespace System.Management.Automation
 
     internal delegate object PowerShellBinaryOperator(ExecutionContext context, IScriptExtent errorPosition, object lval, object rval);
 
-    /// <summary>
-    /// A static class holding various operations specific to the PowerShell interpreter such as
-    /// various math operations, ToString() and a routine to extract the base object from an
-    /// PSObject in a canonical fashion.
-    /// </summary>
+    
     internal static class ParserOps
     {
         internal const string MethodNotFoundErrorId = "MethodNotFound";
 
-        /// <summary>
-        /// Construct the various caching structures used by the runtime routines...
-        /// </summary>
+        
         static ParserOps()
         {
             // Cache for ints and chars to avoid overhead of boxing every time...
@@ -269,9 +212,7 @@ namespace System.Management.Automation
             return value ? _TrueObject : _FalseObject;
         }
 
-        /// <summary>
-        /// Convert an object into an int, avoiding boxing small integers...
-        /// </summary>
+        
         /// <param name="value">The int to convert.</param>
         /// <returns>The reference equivalent.</returns>
         internal static object IntToObject(int value)
@@ -291,10 +232,7 @@ namespace System.Management.Automation
             return wrapped;
         }
 
-        /// <summary>
-        /// A helper routine that turns the argument object into an
-        /// integer. It handles PSObject and conversions.
-        /// </summary>
+        
         /// <param name="obj"></param>
         /// <param name="errorPosition">The position to use for error reporting.</param>
         /// <returns></returns>
@@ -311,11 +249,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// This is a helper function for converting an object to a particular type.
-        ///
-        /// It will throw exception with information about token representing the object.
-        /// </summary>
+        
         internal static T ConvertTo<T>(object obj, IScriptExtent errorPosition)
         {
             T result;
@@ -334,9 +268,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Private method used to call the op_* operations for the math operators.
-        /// </summary>
+        
         /// <param name="lval">Left operand.</param>
         /// <param name="rval">Right operand.</param>
         /// <param name="op">Name of the operation method to perform.</param>
@@ -757,9 +689,7 @@ namespace System.Management.Automation
             return results.ToArray();
         }
 
-        /// <summary>
-        /// Implementation of the PowerShell unary -join operator...
-        /// </summary>
+        
         /// <param name="context">The execution context to use.</param>
         /// <param name="errorPosition">The position to use for error reporting.</param>
         /// <param name="lval">Left operand.</param>
@@ -769,9 +699,7 @@ namespace System.Management.Automation
             return JoinOperator(context, errorPosition, lval, string.Empty);
         }
 
-        /// <summary>
-        /// Implementation of the PowerShell binary -join operator.
-        /// </summary>
+        
         /// <param name="context">The execution context to use.</param>
         /// <param name="errorPosition">The position to use for error reporting.</param>
         /// <param name="lval">Left operand.</param>
@@ -794,9 +722,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// The implementation of the PowerShell range operator.
-        /// </summary>
+        
         /// <param name="lval">The object on which to start.</param>
         /// <param name="rval">The object on which to stop.</param>
         /// <returns>The array of objects.</returns>
@@ -823,9 +749,7 @@ namespace System.Management.Automation
             return IntOps.Range(l, r);
         }
 
-        /// <summary>
-        /// The implementation of an enumerator for the PowerShell range operator.
-        /// </summary>
+        
         /// <param name="lval">The object on which to start.</param>
         /// <param name="rval">The object on which to stop.</param>
         /// <returns>The enumerator.</returns>
@@ -879,9 +803,7 @@ namespace System.Management.Automation
             return null;
         }
 
-        /// <summary>
-        /// The implementation of the PowerShell -replace operator....
-        /// </summary>
+        
         /// <param name="context">The execution context in which to evaluate the expression.</param>
         /// <param name="errorPosition">The position to use for error reporting.</param>
         /// <param name="lval">The object on which to replace the values.</param>
@@ -1017,11 +939,7 @@ namespace System.Management.Automation
                 };
             }
 
-            /// <summary>
-            /// ReplaceOperator implementation.
-            /// Abstracts away conversion of the optional substitute parameter to either a string or a MatchEvaluator delegate
-            /// and finally returns the result of the final Regex.Replace operation.
-            /// </summary>
+            
             public object Replace(string input)
             {
                 if (_cachedReplacementString is not null)
@@ -1034,9 +952,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Implementation of the PowerShell type operators...
-        /// </summary>
+        
         /// <param name="context">The execution context to use.</param>
         /// <param name="errorPosition">The position to use for error reporting.</param>
         /// <param name="left">Left operand.</param>
@@ -1075,9 +991,7 @@ namespace System.Management.Automation
             return BoolToObject(rType.IsInstanceOfType(lval));
         }
 
-        /// <summary>
-        /// Implementation of the PowerShell type operators...
-        /// </summary>
+        
         /// <param name="context">The execution context to use.</param>
         /// <param name="errorPosition">The position to use for error reporting.</param>
         /// <param name="left">Left operand.</param>
@@ -1116,9 +1030,7 @@ namespace System.Management.Automation
             return BoolToObject(!rType.IsInstanceOfType(lval));
         }
 
-        /// <summary>
-        /// Implementation of the PowerShell -like operator.
-        /// </summary>
+        
         /// <param name="context">The execution context to use.</param>
         /// <param name="errorPosition">The position to use for error reporting.</param>
         /// <param name="lval">Left operand.</param>
@@ -1161,9 +1073,7 @@ namespace System.Management.Automation
             return resultList.ToArray();
         }
 
-        /// <summary>
-        /// Implementation of the PowerShell -match operator.
-        /// </summary>
+        
         /// <param name="context">The execution context to use.</param>
         /// <param name="errorPosition">The position to use for error reporting.</param>
         /// <param name="lval">Left operand.</param>
@@ -1294,9 +1204,7 @@ namespace System.Management.Automation
             return false;
         }
 
-        /// <summary>
-        /// Implementation of the PowerShell -contains/-notcontains operators (and case sensitive variants)
-        /// </summary>
+        
         /// <param name="context">The execution context to use.</param>
         /// <param name="errorPosition">The position to use for error reporting.</param>
         /// <param name="left">Left operand.</param>
@@ -1351,9 +1259,7 @@ namespace System.Management.Automation
             return resultList.ToArray();
         }
 
-        /// <summary>
-        /// Cache regular expressions.
-        /// </summary>
+        
         /// <param name="patternString">The string to find the pattern for.</param>
         /// <param name="options">The options used to create the regex.</param>
         /// <returns>New or cached Regex.</returns>
@@ -1385,10 +1291,7 @@ namespace System.Management.Automation
 
         private const int MaxRegexCache = 1000;
 
-        /// <summary>
-        /// A routine used to advance an enumerator and catch errors that might occur
-        /// performing the operation.
-        /// </summary>
+        
         /// <param name="context">The execution context used to see if the pipeline is stopping.</param>
         /// <param name="errorPosition">The position to use for error reporting.</param>
         /// <param name="enumerator">THe enumerator to advance.</param>
@@ -1423,9 +1326,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Wrapper caller for enumerator.MoveNext - handles and republishes errors...
-        /// </summary>
+        
         /// <param name="errorPosition">The position to use for error reporting.</param>
         /// <param name="enumerator">The enumerator to read from.</param>
         /// <returns></returns>
@@ -1454,9 +1355,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Retrieves the obj's type full name.
-        /// </summary>
+        
         /// <param name="obj">The object we want to retrieve the type's full name from.</param>
         /// <returns>The obj's type full name.</returns>
         internal static string GetTypeFullName(object obj)
@@ -1479,10 +1378,7 @@ namespace System.Management.Automation
             return mshObj.InternalTypeNames[0];
         }
 
-        /// <summary>
-        /// Launch a method on an object. This will handle .NET native methods, COM
-        /// methods and ScriptBlock notes. Native methods currently take precedence over notes...
-        /// </summary>
+        
         /// <param name="errorPosition">The position to use for error reporting.</param>
         /// <param name="target">The object to call the method on. It shouldn't be a PSObject.</param>
         /// <param name="methodName">The name of the method to call.</param>
@@ -1626,10 +1522,7 @@ namespace System.Management.Automation
     #endregion ParserOps
 
     #region RangeEnumerator
-    /// <summary>
-    /// This is a simple enumerator class that just enumerates of a range of numbers. It's used in enumerating
-    /// elements when the range operator .. is used.
-    /// </summary>
+    
     internal class RangeEnumerator : IEnumerator
     {
         private readonly int _lowerBound;
@@ -1698,10 +1591,7 @@ namespace System.Management.Automation
         }
     }
 
-    /// <summary>
-    /// The simple enumerator class is used for the range operator '..'
-    /// in expressions like 'A'..'B' | ForEach-Object { $_ }
-    /// </summary>
+    
     internal class CharRangeEnumerator : IEnumerator
     {
         private readonly int _increment = 1;
@@ -1760,9 +1650,7 @@ namespace System.Management.Automation
     #region InterpreterError
     internal static class InterpreterError
     {
-        /// <summary>
-        /// Create a new instance of an interpreter exception.
-        /// </summary>
+        
         /// <param name="targetObject">The target object for this exception.</param>
         /// <param name="exceptionType">Type of exception to build.</param>
         /// <param name="errorPosition">The position to use for error reporting.</param>
@@ -1780,9 +1668,7 @@ namespace System.Management.Automation
             return NewInterpreterExceptionWithInnerException(targetObject, exceptionType, errorPosition, resourceIdAndErrorId, resourceString, null, args);
         }
 
-        /// <summary>
-        /// Create a new instance of an interpreter exception.
-        /// </summary>
+        
         /// <param name="targetObject">The object associated with the problem.</param>
         /// <param name="exceptionType">Type of exception to build.</param>
         /// <param name="errorPosition">The position to use for error reporting.</param>
@@ -1861,9 +1747,7 @@ namespace System.Management.Automation
             return rte;
         }
 
-        /// <summary>
-        /// Create a new instance of an interpreter exception.
-        /// </summary>
+        
         /// <param name="exceptionType">Type of exception to build.</param>
         /// <param name="errorPosition">The position to use for error reporting.</param>
         /// <param name="message">Message.</param>

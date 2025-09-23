@@ -18,38 +18,28 @@ using Dbg = System.Management.Automation.Diagnostics;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Manager for JobSourceAdapters for invocation and management of specific Job types.
-    /// </summary>
+    
     public sealed class JobManager
     {
         private readonly PowerShellTraceSource _tracer = PowerShellTraceSourceFactory.GetTraceSource();
 
-        /// <summary>
-        /// Collection of registered JobSourceAdapters.
-        /// </summary>
+        
         private readonly Dictionary<string, JobSourceAdapter> _sourceAdapters =
             new Dictionary<string, JobSourceAdapter>();
 
         private readonly object _syncObject = new object();
 
-        /// <summary>
-        /// Collection of job IDs that are valid for reuse.
-        /// </summary>
+        
         private static readonly Dictionary<Guid, KeyValuePair<int, string>> s_jobIdsForReuse = new Dictionary<Guid, KeyValuePair<int, string>>();
 
         private static readonly object s_syncObject = new object();
 
-        /// <summary>
-        /// Creates a JobManager instance.
-        /// </summary>
+        
         internal JobManager()
         {
         }
 
-        /// <summary>
-        /// Returns true if the type is already registered.
-        /// </summary>
+        
         /// <param name="typeName">Type to check.</param>
         /// <returns>Whether the type is registered already.</returns>
         public bool IsRegistered(string typeName)
@@ -65,11 +55,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Adds a new JobSourceAdapter to the JobManager instance.
-        /// After addition, creating a NewJob with a JobDefinition
-        /// indicating the JobSourceAdapter derivative type will function.
-        /// </summary>
+        
         /// <param name="jobSourceAdapterType">The derivative JobSourceAdapter type to
         /// register.</param>
         /// <exception cref="InvalidOperationException">Throws when there is no public
@@ -129,10 +115,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Returns a token that allows a job to be constructed with a specific id and instanceId.
-        /// The original job must have been saved using "SaveJobIdForReconstruction" in the JobSourceAdapter.
-        /// </summary>
+        
         /// <param name="instanceId">The instance id desired.</param>
         /// <param name="typeName">The requesting type name for JobSourceAdapter implementation.</param>
         /// <returns>Token for job creation.</returns>
@@ -147,10 +130,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Saves the Id information for a job so that it can be constructed at a later time by a JobSourceAdapter
-        /// with the same type.
-        /// </summary>
+        
         /// <param name="instanceId">The instance id to save.</param>
         /// <param name="id">The session specific id to save.</param>
         /// <param name="typeName">The type name for the JobSourceAdapter implementation doing the save.</param>
@@ -169,9 +149,7 @@ namespace System.Management.Automation
 
         #region NewJob
 
-        /// <summary>
-        /// Creates a new job of the appropriate type given by JobDefinition passed in.
-        /// </summary>
+        
         /// <param name="definition">JobDefinition defining the command.</param>
         /// <returns>Job2 object of the appropriate type specified by the definition.</returns>
         /// <exception cref="InvalidOperationException">If JobSourceAdapter type specified
@@ -206,9 +184,7 @@ namespace System.Management.Automation
             return newJob;
         }
 
-        /// <summary>
-        /// Creates a new job of the appropriate type given by JobDefinition passed in.
-        /// </summary>
+        
         /// <param name="specification">JobInvocationInfo defining the command.</param>
         /// <returns>Job2 object of the appropriate type specified by the definition.</returns>
         /// <exception cref="InvalidOperationException">If JobSourceAdapter type specified
@@ -252,9 +228,7 @@ namespace System.Management.Automation
 
         #region Persist Job
 
-        /// <summary>
-        /// Saves the job to a persisted store.
-        /// </summary>
+        
         /// <param name="job">Job2 type job to persist.</param>
         /// <param name="definition">Job definition containing source adapter information.</param>
         public void PersistJob(Job2 job, JobDefinition definition)
@@ -290,10 +264,7 @@ namespace System.Management.Automation
 
         #endregion
 
-        /// <summary>
-        /// Helper method, finds source adapter if registered, otherwise throws
-        /// an InvalidOperationException.
-        /// </summary>
+        
         /// <param name="adapterTypeName">The name of the JobSourceAdapter derivative desired.</param>
         /// <returns>The JobSourceAdapter instance.</returns>
         /// <exception cref="InvalidOperationException">If JobSourceAdapter type specified
@@ -312,10 +283,7 @@ namespace System.Management.Automation
             return adapter;
         }
 
-        /// <summary>
-        /// Helper method to find and return the job source adapter if currently loaded or
-        /// otherwise load the associated module and the requested source adapter.
-        /// </summary>
+        
         /// <param name="definition">JobDefinition supplies the JobSourceAdapter information.</param>
         /// <returns>JobSourceAdapter.</returns>
         private JobSourceAdapter GetJobSourceAdapter(JobDefinition definition)
@@ -401,9 +369,7 @@ namespace System.Management.Automation
 
         #region GetJobs
 
-        /// <summary>
-        /// Get list of all jobs.
-        /// </summary>
+        
         /// <param name="cmdlet">Cmdlet requesting this, for error processing.</param>
         /// <param name="writeErrorOnException"></param>
         /// <param name="writeObject"></param>
@@ -420,9 +386,7 @@ namespace System.Management.Automation
             return GetFilteredJobs(null, FilterType.None, cmdlet, writeErrorOnException, writeObject, false, jobSourceAdapterTypes);
         }
 
-        /// <summary>
-        /// Get list of jobs that matches the specified names.
-        /// </summary>
+        
         /// <param name="name">Names to match, can support
         ///   wildcard if the store supports.</param>
         /// <param name="cmdlet">Cmdlet requesting this, for error processing.</param>
@@ -445,9 +409,7 @@ namespace System.Management.Automation
             return GetFilteredJobs(name, FilterType.Name, cmdlet, writeErrorOnException, writeObject, recurse, jobSourceAdapterTypes);
         }
 
-        /// <summary>
-        /// Get list of jobs that run the specified command.
-        /// </summary>
+        
         /// <param name="command">Command to match.</param>
         /// <param name="cmdlet">Cmdlet requesting this, for error processing.</param>
         /// <param name="writeErrorOnException"></param>
@@ -469,9 +431,7 @@ namespace System.Management.Automation
             return GetFilteredJobs(command, FilterType.Command, cmdlet, writeErrorOnException, writeObject, recurse, jobSourceAdapterTypes);
         }
 
-        /// <summary>
-        /// Get list of jobs that are in the specified state.
-        /// </summary>
+        
         /// <param name="state">State to match.</param>
         /// <param name="cmdlet">Cmdlet requesting this, for error processing.</param>
         /// <param name="writeErrorOnException"></param>
@@ -493,10 +453,7 @@ namespace System.Management.Automation
             return GetFilteredJobs(state, FilterType.State, cmdlet, writeErrorOnException, writeObject, recurse, jobSourceAdapterTypes);
         }
 
-        /// <summary>
-        /// Get list of jobs based on the adapter specific
-        /// filter parameters.
-        /// </summary>
+        
         /// <param name="filter">Dictionary containing name value
         ///   pairs for adapter specific filters.</param>
         /// <param name="cmdlet">Cmdlet requesting this, for error processing.</param>
@@ -512,9 +469,7 @@ namespace System.Management.Automation
             return GetFilteredJobs(filter, FilterType.Filter, cmdlet, writeErrorOnException, writeObject, recurse, null);
         }
 
-        /// <summary>
-        /// Get a filtered list of jobs based on adapter name.
-        /// </summary>
+        
         /// <param name="id">Job id.</param>
         /// <param name="name">Adapter name.</param>
         /// <returns></returns>
@@ -534,9 +489,7 @@ namespace System.Management.Automation
             return false;
         }
 
-        /// <summary>
-        /// Get a filtered list of jobs based on filter type.
-        /// </summary>
+        
         /// <param name="filter">Object to use for filtering.</param>
         /// <param name="filterType">Type of filter, specifies which "get" from
         ///   JobSourceAdapter to call, and dictates the type for filter.</param>
@@ -611,10 +564,7 @@ namespace System.Management.Automation
             return allJobs;
         }
 
-        /// <summary>
-        /// Compare sourceAdapter name with the provided source adapter type
-        /// name list.
-        /// </summary>
+        
         /// <param name="sourceAdapter"></param>
         /// <param name="jobSourceAdapterTypes"></param>
         /// <returns></returns>
@@ -650,9 +600,7 @@ namespace System.Management.Automation
                 sourceAdapter.GetType().ToString());
         }
 
-        /// <summary>
-        /// Gets a filtered list of jobs from the given JobSourceAdapter.
-        /// </summary>
+        
         /// <param name="sourceAdapter">JobSourceAdapter to query.</param>
         /// <param name="filter">Filter object.</param>
         /// <param name="filterType">Filter type.</param>
@@ -694,9 +642,7 @@ namespace System.Management.Automation
             return jobs;
         }
 
-        /// <summary>
-        /// Get job specified by the session specific id provided.
-        /// </summary>
+        
         /// <param name="id">Session specific job id.</param>
         /// <param name="cmdlet">Cmdlet requesting this, for error processing.</param>
         /// <param name="writeErrorOnException"></param>
@@ -710,9 +656,7 @@ namespace System.Management.Automation
             return GetJobThroughId<int>(Guid.Empty, id, cmdlet, writeErrorOnException, writeObject, recurse);
         }
 
-        /// <summary>
-        /// Get job that has the specified id.
-        /// </summary>
+        
         /// <param name="instanceId">Guid to match.</param>
         /// <param name="cmdlet">Cmdlet requesting this, for error processing.</param>
         /// <param name="writeErrorOnException"></param>
@@ -777,11 +721,7 @@ namespace System.Management.Automation
             return null;
         }
 
-        /// <summary>
-        /// Gets or creates a Job2 object with the given definition name, path
-        /// and definition type if specified, that can be run via the StartJob()
-        /// method.
-        /// </summary>
+        
         /// <param name="definitionName">Job definition name.</param>
         /// <param name="definitionPath">Job definition file path.</param>
         /// <param name="definitionType">JobSourceAdapter type that contains the job definition.</param>
@@ -869,9 +809,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Returns a List of adapter names currently loaded.
-        /// </summary>
+        
         /// <param name="adapterTypeNames">Adapter names to filter on.</param>
         /// <returns>List of names.</returns>
         internal List<string> GetLoadedAdapterNames(string[] adapterTypeNames)
@@ -895,9 +833,7 @@ namespace System.Management.Automation
 
         #region RemoveJob
 
-        /// <summary>
-        /// Remove a job from the appropriate store.
-        /// </summary>
+        
         /// <param name="sessionJobId">Session specific Job ID to remove.</param>
         /// <param name="cmdlet"></param>
         /// <param name="writeErrorOnException"></param>
@@ -907,9 +843,7 @@ namespace System.Management.Automation
             RemoveJob(job, cmdlet, false);
         }
 
-        /// <summary>
-        /// Remove a job from the appropriate store.
-        /// </summary>
+        
         /// <param name="job">Job object to remove.</param>
         /// <param name="cmdlet"></param>
         /// <param name="writeErrorOnException"></param>
@@ -1021,34 +955,22 @@ namespace System.Management.Automation
 
         #endregion RemoveJob
 
-        /// <summary>
-        /// Filters available for GetJob, used internally to centralize Exception handling.
-        /// </summary>
+        
         private enum FilterType
         {
-            /// <summary>
-            /// Use no filter.
-            /// </summary>
+            
             None,
 
-            /// <summary>
-            /// Filter on command (string).
-            /// </summary>
+            
             Command,
 
-            /// <summary>
-            /// Filter on custom dictionary (dictionary(string, object)).
-            /// </summary>
+            
             Filter,
 
-            /// <summary>
-            /// Filter on name (string).
-            /// </summary>
+            
             Name,
 
-            /// <summary>
-            /// Filter on job state (JobState).
-            /// </summary>
+            
             State
         }
     }

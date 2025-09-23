@@ -11,18 +11,14 @@ using System.Windows.Input;
 namespace Microsoft.Management.UI.Internal
 {
 
-    /// <summary>
-    /// Represents a control that parses search text to return a filter expression.
-    /// </summary>
+    
     [Localizability(LocalizationCategory.None)]
     partial class SearchBox
     {
         //
         // ClearText routed command
         //
-        /// <summary>
-        /// Clears the search text.
-        /// </summary>
+        
         public static readonly RoutedCommand ClearTextCommand = new RoutedCommand("ClearText",typeof(SearchBox));
 
         static private void ClearTextCommand_CommandCanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -37,9 +33,7 @@ namespace Microsoft.Management.UI.Internal
             obj.OnClearTextExecuted( e );
         }
 
-        /// <summary>
-        /// Called to determine if ClearText can execute.
-        /// </summary>
+        
         protected virtual void OnClearTextCanExecute(CanExecuteRoutedEventArgs e)
         {
             OnClearTextCanExecuteImplementation(e);
@@ -47,9 +41,7 @@ namespace Microsoft.Management.UI.Internal
 
         partial void OnClearTextCanExecuteImplementation(CanExecuteRoutedEventArgs e);
 
-        /// <summary>
-        /// Called when ClearText executes.
-        /// </summary>
+        
         /// <remarks>
         /// Clears the search text.
         /// </remarks>
@@ -63,14 +55,10 @@ namespace Microsoft.Management.UI.Internal
         //
         // BackgroundText dependency property
         //
-        /// <summary>
-        /// Identifies the BackgroundText dependency property.
-        /// </summary>
+        
         public static readonly DependencyProperty BackgroundTextProperty = DependencyProperty.Register( "BackgroundText", typeof(string), typeof(SearchBox), new PropertyMetadata( UICultureResources.SearchBox_BackgroundText, BackgroundTextProperty_PropertyChanged) );
 
-        /// <summary>
-        /// Gets or sets the background text of the search box.
-        /// </summary>
+        
         [Bindable(true)]
         [Category("Common Properties")]
         [Description("Gets or sets the background text of the search box.")]
@@ -93,14 +81,10 @@ namespace Microsoft.Management.UI.Internal
             obj.OnBackgroundTextChanged( new PropertyChangedEventArgs<string>((string)e.OldValue, (string)e.NewValue) );
         }
 
-        /// <summary>
-        /// Occurs when BackgroundText property changes.
-        /// </summary>
+        
         public event EventHandler<PropertyChangedEventArgs<string>> BackgroundTextChanged;
 
-        /// <summary>
-        /// Called when BackgroundText property changes.
-        /// </summary>
+        
         protected virtual void OnBackgroundTextChanged(PropertyChangedEventArgs<string> e)
         {
             OnBackgroundTextChangedImplementation(e);
@@ -112,14 +96,10 @@ namespace Microsoft.Management.UI.Internal
         //
         // Text dependency property
         //
-        /// <summary>
-        /// Identifies the Text dependency property.
-        /// </summary>
+        
         public static readonly DependencyProperty TextProperty = DependencyProperty.Register( "Text", typeof(string), typeof(SearchBox), new PropertyMetadata( string.Empty, TextProperty_PropertyChanged) );
 
-        /// <summary>
-        /// Gets or sets the text contents of the search box.
-        /// </summary>
+        
         [Bindable(true)]
         [Category("Common Properties")]
         [Description("Gets or sets the text contents of the search box.")]
@@ -142,14 +122,10 @@ namespace Microsoft.Management.UI.Internal
             obj.OnTextChanged( new PropertyChangedEventArgs<string>((string)e.OldValue, (string)e.NewValue) );
         }
 
-        /// <summary>
-        /// Occurs when Text property changes.
-        /// </summary>
+        
         public event EventHandler<PropertyChangedEventArgs<string>> TextChanged;
 
-        /// <summary>
-        /// Called when Text property changes.
-        /// </summary>
+        
         protected virtual void OnTextChanged(PropertyChangedEventArgs<string> e)
         {
             OnTextChangedImplementation(e);
@@ -158,9 +134,7 @@ namespace Microsoft.Management.UI.Internal
 
         partial void OnTextChangedImplementation(PropertyChangedEventArgs<string> e);
 
-        /// <summary>
-        /// Called when a property changes.
-        /// </summary>
+        
         private void RaisePropertyChangedEvent<T>(EventHandler<PropertyChangedEventArgs<T>> eh, PropertyChangedEventArgs<T> e)
         {
             if (eh != null)
@@ -173,9 +147,7 @@ namespace Microsoft.Management.UI.Internal
         // Static constructor
         //
 
-        /// <summary>
-        /// Called when the type is initialized.
-        /// </summary>
+        
         static SearchBox()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(SearchBox), new FrameworkPropertyMetadata(typeof(SearchBox)));

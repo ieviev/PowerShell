@@ -17,21 +17,13 @@ using Newtonsoft.Json.Linq;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// The Invoke-RestMethod command
-    /// This command makes an HTTP or HTTPS request to a web service,
-    /// and returns the response in an appropriate way.
-    /// Intended to work against the wide spectrum of "RESTful" web services
-    /// currently deployed across the web.
-    /// </summary>
+    
     [Cmdlet(VerbsLifecycle.Invoke, "RestMethod", HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096706", DefaultParameterSetName = "StandardMethod")]
     public class InvokeRestMethodCommand : WebRequestPSCmdlet
     {
         #region Parameters
 
-        /// <summary>
-        /// Enable automatic following of rel links.
-        /// </summary>
+        
         [Parameter]
         [Alias("FL")]
         public SwitchParameter FollowRelLink
@@ -41,9 +33,7 @@ namespace Microsoft.PowerShell.Commands
             set => base._followRelLink = value;
         }
 
-        /// <summary>
-        /// Gets or sets the maximum number of rel links to follow.
-        /// </summary>
+        
         [Parameter]
         [Alias("ML")]
         [ValidateRange(1, int.MaxValue)]
@@ -54,16 +44,12 @@ namespace Microsoft.PowerShell.Commands
             set => base._maximumFollowRelLink = value;
         }
 
-        /// <summary>
-        /// Gets or sets the ResponseHeadersVariable property.
-        /// </summary>
+        
         [Parameter]
         [Alias("RHV")]
         public string? ResponseHeadersVariable { get; set; }
 
-        /// <summary>
-        /// Gets or sets the variable name to use for storing the status code from the response.
-        /// </summary>
+        
         [Parameter]
         public string? StatusCodeVariable { get; set; }
 
@@ -71,9 +57,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Virtual Method Overrides
 
-        /// <summary>
-        /// Process the web response and output corresponding objects.
-        /// </summary>
+        
         /// <param name="response"></param>
         internal override void ProcessResponse(HttpResponseMessage response)
         {
@@ -331,26 +315,17 @@ namespace Microsoft.PowerShell.Commands
 
         #endregion Helper Methods
 
-        /// <summary>
-        /// Enum for rest return type.
-        /// </summary>
+        
         public enum RestReturnType
         {
-            /// <summary>
-            /// Return type not defined in response,
-            /// best effort detect.
-            /// </summary>
+            
             Detect,
 
-            /// <summary>
-            /// Json return type.
-            /// </summary>
+            
             [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
             Json,
 
-            /// <summary>
-            /// Xml return type.
-            /// </summary>
+            
             Xml,
         }
 

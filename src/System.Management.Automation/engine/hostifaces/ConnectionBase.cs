@@ -15,9 +15,7 @@ using Dbg = System.Management.Automation.Diagnostics;
 
 namespace System.Management.Automation.Runspaces
 {
-    /// <summary>
-    /// Runspaces is base class for different kind of Runspaces.
-    /// </summary>
+    
     /// <remarks>There should be a class derived from it for each type of
     /// Runspace. Types of Runspace which we support are Local, X-AppDomain,
     /// X-Process and X-Machine.</remarks>
@@ -25,10 +23,7 @@ namespace System.Management.Automation.Runspaces
     {
         #region constructors
 
-        /// <summary>
-        /// Initialize powershell AssemblyLoadContext and register the 'Resolving' event, if it's not done already.
-        /// If powershell is hosted by a native host such as DSC, then PS ALC may be initialized via 'SetPowerShellAssemblyLoadContext' before loading S.M.A.
-        /// </summary>
+        
         /// <remarks>
         /// We do this both here and during the initialization of the 'ClrFacade' type.
         /// This is because we want to make sure the assembly/library resolvers are:
@@ -47,10 +42,7 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// Construct an instance of an Runspace using a custom
-        /// implementation of PSHost.
-        /// </summary>
+        
         /// <param name="host">The explicit PSHost implementation.</param>
         /// <exception cref="System.ArgumentNullException">
         /// Host is null.
@@ -69,10 +61,7 @@ namespace System.Management.Automation.Runspaces
             Host = host;
         }
 
-        /// <summary>
-        /// Construct an instance of an Runspace using a custom
-        /// implementation of PSHost.
-        /// </summary>
+        
         /// <param name="host">The explicit PSHost implementation.</param>
         /// <exception cref="System.ArgumentNullException">
         /// Host is null.
@@ -102,10 +91,7 @@ namespace System.Management.Automation.Runspaces
             this.ApartmentState = initialSessionState.ApartmentState;
         }
 
-        /// <summary>
-        /// Construct an instance of an Runspace using a custom
-        /// implementation of PSHost.
-        /// </summary>
+        
         /// <param name="host">
         /// The explicit PSHost implementation
         /// </param>
@@ -148,30 +134,22 @@ namespace System.Management.Automation.Runspaces
             this.ApartmentState = initialSessionState.ApartmentState;
         }
 
-        /// <summary>
-        /// The host implemented PSHost interface.
-        /// </summary>
+        
         protected PSHost Host { get; }
 
-        /// <summary>
-        /// InitialSessionState information for this runspace.
-        /// </summary>
+        
         public override InitialSessionState InitialSessionState { get; }
 
         #endregion constructors
 
         #region properties
 
-        /// <summary>
-        /// Return version of this runspace.
-        /// </summary>
+        
         public override Version Version { get; } = PSVersionInfo.PSVersion;
 
         private RunspaceStateInfo _runspaceStateInfo = new RunspaceStateInfo(RunspaceState.BeforeOpen);
 
-        /// <summary>
-        /// Retrieve information about current state of the runspace.
-        /// </summary>
+        
         public override RunspaceStateInfo RunspaceStateInfo
         {
             get
@@ -184,9 +162,7 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// Gets the current availability of the Runspace.
-        /// </summary>
+        
         public override RunspaceAvailability RunspaceAvailability
         {
             get { return _runspaceAvailability; }
@@ -196,14 +172,10 @@ namespace System.Management.Automation.Runspaces
 
         private RunspaceAvailability _runspaceAvailability = RunspaceAvailability.None;
 
-        /// <summary>
-        /// Object used for synchronization.
-        /// </summary>
+        
         protected internal object SyncRoot { get; } = new object();
 
-        /// <summary>
-        /// Information about the computer where this runspace is created.
-        /// </summary>
+        
         public override RunspaceConnectionInfo ConnectionInfo
         {
             get
@@ -213,9 +185,7 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// Original Connection Info that the user passed.
-        /// </summary>
+        
         public override RunspaceConnectionInfo OriginalConnectionInfo
         {
             get { return null; }
@@ -225,9 +195,7 @@ namespace System.Management.Automation.Runspaces
 
         #region Open
 
-        /// <summary>
-        /// Open the runspace synchronously.
-        /// </summary>
+        
         /// <exception cref="InvalidRunspaceStateException">
         /// RunspaceState is not BeforeOpen
         /// </exception>
@@ -236,9 +204,7 @@ namespace System.Management.Automation.Runspaces
             CoreOpen(true);
         }
 
-        /// <summary>
-        /// Open the runspace Asynchronously.
-        /// </summary>
+        
         /// <exception cref="InvalidRunspaceStateException">
         /// RunspaceState is not BeforeOpen
         /// </exception>
@@ -247,9 +213,7 @@ namespace System.Management.Automation.Runspaces
             CoreOpen(false);
         }
 
-        /// <summary>
-        /// Opens the runspace.
-        /// </summary>
+        
         /// <param name="syncCall">If true runspace is opened synchronously
         /// else runspaces is opened asynchronously
         /// </param>
@@ -304,17 +268,13 @@ namespace System.Management.Automation.Runspaces
 #endif
         }
 
-        /// <summary>
-        /// Derived class's open implementation.
-        /// </summary>
+        
         protected abstract void OpenHelper(bool syncCall);
 
         #endregion open
 
         #region close
-        /// <summary>
-        /// Close the runspace synchronously.
-        /// </summary>
+        
         /// <remarks>
         /// Attempts to execute pipelines after a call to close will fail.
         /// </remarks>
@@ -326,9 +286,7 @@ namespace System.Management.Automation.Runspaces
             CoreClose(true);
         }
 
-        /// <summary>
-        /// Close the runspace Asynchronously.
-        /// </summary>
+        
         /// <remarks>
         /// Attempts to execute pipelines after a call to
         /// close will fail.
@@ -341,9 +299,7 @@ namespace System.Management.Automation.Runspaces
             CoreClose(false);
         }
 
-        /// <summary>
-        /// Close the runspace.
-        /// </summary>
+        
         /// <param name="syncCall">If true runspace is closed synchronously
         /// else runspaces is closed asynchronously
         /// </param>
@@ -442,9 +398,7 @@ namespace System.Management.Automation.Runspaces
             CloseHelper(syncCall);
         }
 
-        /// <summary>
-        /// Derived class's close implementation.
-        /// </summary>
+        
         /// <param name="syncCall">If true runspace is closed synchronously
         /// else runspaces is closed asynchronously
         /// </param>
@@ -454,9 +408,7 @@ namespace System.Management.Automation.Runspaces
 
         #region Disconnect-Connect
 
-        /// <summary>
-        /// Disconnects the runspace synchronously.
-        /// </summary>
+        
         public override void Disconnect()
         {
             //
@@ -466,9 +418,7 @@ namespace System.Management.Automation.Runspaces
                             RunspaceStrings.DisconnectNotSupported);
         }
 
-        /// <summary>
-        /// Disconnects the runspace asynchronously.
-        /// </summary>
+        
         public override void DisconnectAsync()
         {
             //
@@ -478,9 +428,7 @@ namespace System.Management.Automation.Runspaces
                             RunspaceStrings.DisconnectNotSupported);
         }
 
-        /// <summary>
-        /// Connects a runspace to its remote counterpart synchronously.
-        /// </summary>
+        
         public override void Connect()
         {
             //
@@ -490,9 +438,7 @@ namespace System.Management.Automation.Runspaces
                             RunspaceStrings.ConnectNotSupported);
         }
 
-        /// <summary>
-        /// Connects a runspace to its remote counterpart asynchronously.
-        /// </summary>
+        
         public override void ConnectAsync()
         {
             //
@@ -502,9 +448,7 @@ namespace System.Management.Automation.Runspaces
                             RunspaceStrings.ConnectNotSupported);
         }
 
-        /// <summary>
-        /// Creates a pipeline object in the Disconnected state.
-        /// </summary>
+        
         /// <returns>Pipeline.</returns>
         public override Pipeline CreateDisconnectedPipeline()
         {
@@ -515,9 +459,7 @@ namespace System.Management.Automation.Runspaces
                             RunspaceStrings.DisconnectConnectNotSupported);
         }
 
-        /// <summary>
-        /// Creates a powershell object in the Disconnected state.
-        /// </summary>
+        
         /// <returns>PowerShell.</returns>
         public override PowerShell CreateDisconnectedPowerShell()
         {
@@ -528,9 +470,7 @@ namespace System.Management.Automation.Runspaces
                             RunspaceStrings.DisconnectConnectNotSupported);
         }
 
-        /// <summary>
-        /// Returns Runspace capabilities.
-        /// </summary>
+        
         /// <returns>RunspaceCapability.</returns>
         public override RunspaceCapability GetCapabilities()
         {
@@ -541,18 +481,14 @@ namespace System.Management.Automation.Runspaces
 
         #region CreatePipeline
 
-        /// <summary>
-        /// Create an empty pipeline.
-        /// </summary>
+        
         /// <returns>An empty pipeline.</returns>
         public override Pipeline CreatePipeline()
         {
             return CoreCreatePipeline(null, false, false);
         }
 
-        /// <summary>
-        /// Create a pipeline from a command string.
-        /// </summary>
+        
         /// <param name="command">A valid command string.</param>
         /// <returns>
         /// A pipeline pre-filled with Commands specified in commandString.
@@ -570,9 +506,7 @@ namespace System.Management.Automation.Runspaces
             return CoreCreatePipeline(command, false, false);
         }
 
-        /// <summary>
-        /// Create a pipeline from a command string.
-        /// </summary>
+        
         /// <param name="command">A valid command string.</param>
         /// <param name="addToHistory">If true command is added to history.</param>
         /// <returns>
@@ -591,9 +525,7 @@ namespace System.Management.Automation.Runspaces
             return CoreCreatePipeline(command, addToHistory, false);
         }
 
-        /// <summary>
-        /// Creates a nested pipeline.
-        /// </summary>
+        
         /// <remarks>
         /// Nested pipelines are needed for nested prompt scenario. Nested
         /// prompt requires that we execute new pipelines( child pipelines)
@@ -604,9 +536,7 @@ namespace System.Management.Automation.Runspaces
             return CoreCreatePipeline(null, false, true);
         }
 
-        /// <summary>
-        /// Creates a nested pipeline.
-        /// </summary>
+        
         /// <param name="command">A valid command string.</param>
         /// <param name="addToHistory">If true command is added to history.</param>
         /// <returns>
@@ -625,9 +555,7 @@ namespace System.Management.Automation.Runspaces
             return CoreCreatePipeline(command, addToHistory, true);
         }
 
-        /// <summary>
-        /// Create a pipeline from a command string.
-        /// </summary>
+        
         /// <param name="command">A valid command string or string.Empty.</param>
         /// <param name="addToHistory">If true command is added to history.</param>
         /// <param name="isNested">True for nested pipeline.</param>
@@ -640,27 +568,19 @@ namespace System.Management.Automation.Runspaces
 
         #region state change event
 
-        /// <summary>
-        /// Event raised when RunspaceState changes.
-        /// </summary>
+        
         public override event EventHandler<RunspaceStateEventArgs> StateChanged;
 
-        /// <summary>
-        /// Event raised when the availability of the Runspace changes.
-        /// </summary>
+        
         public override event EventHandler<RunspaceAvailabilityEventArgs> AvailabilityChanged;
 
-        /// <summary>
-        /// Returns true if there are any subscribers to the AvailabilityChanged event.
-        /// </summary>
+        
         internal override bool HasAvailabilityChangedSubscribers
         {
             get { return this.AvailabilityChanged != null; }
         }
 
-        /// <summary>
-        /// Raises the AvailabilityChanged event.
-        /// </summary>
+        
         protected override void OnAvailabilityChanged(RunspaceAvailabilityEventArgs e)
         {
             EventHandler<RunspaceAvailabilityEventArgs> eh = this.AvailabilityChanged;
@@ -677,10 +597,7 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// Retrieve the current state of the runspace.
-        /// <see cref="RunspaceState"/>
-        /// </summary>
+        
         protected RunspaceState RunspaceState
         {
             get
@@ -689,14 +606,7 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// This is queue of all the state change event which have occurred for
-        /// this runspace. RaiseRunspaceStateEvents raises event for each
-        /// item in this queue. We don't raise events from with SetRunspaceState
-        /// because SetRunspaceState is often called from with in the a lock.
-        /// Raising event with in a lock introduces chances of deadlock in GUI
-        /// applications.
-        /// </summary>
+        
         private Queue<RunspaceEventQueueItem> _runspaceEventQueue = new Queue<RunspaceEventQueueItem>();
 
         private sealed class RunspaceEventQueueItem
@@ -716,9 +626,7 @@ namespace System.Management.Automation.Runspaces
         // This is to notify once runspace has been opened (RunspaceState.Opened)
         internal ManualResetEventSlim RunspaceOpening = new ManualResetEventSlim(false);
 
-        /// <summary>
-        /// Set the new runspace state.
-        /// </summary>
+        
         /// <param name="state">The new state.</param>
         /// <param name="reason">An exception indicating the state change is the
         /// result of an error, otherwise; null.
@@ -755,18 +663,14 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// Set the current runspace state - no error.
-        /// </summary>
+        
         /// <param name="state">The new state.</param>
         protected void SetRunspaceState(RunspaceState state)
         {
             this.SetRunspaceState(state, null);
         }
 
-        /// <summary>
-        /// Raises events for changes in runspace state.
-        /// </summary>
+        
         protected void RaiseRunspaceStateEvents()
         {
             Queue<RunspaceEventQueueItem> tempEventQueue = null;
@@ -825,24 +729,15 @@ namespace System.Management.Automation.Runspaces
 
         #region running pipeline management
 
-        /// <summary>
-        /// In RemoteRunspace, it is required to invoke pipeline
-        /// as part of open call (i.e. while state is Opening).
-        /// If this property is true, runspace state check is
-        /// not performed in AddToRunningPipelineList call.
-        /// </summary>
+        
         protected bool ByPassRunspaceStateCheck { get; set; }
 
         private readonly object _pipelineListLock = new object();
 
-        /// <summary>
-        /// List of pipeline which are currently executing in this runspace.
-        /// </summary>
+        
         protected List<Pipeline> RunningPipelines { get; } = new List<Pipeline>();
 
-        /// <summary>
-        /// Add the pipeline to list of pipelines in execution.
-        /// </summary>
+        
         /// <param name="pipeline">Pipeline to add to the
         /// list of pipelines in execution</param>
         /// <exception cref="InvalidRunspaceStateException">
@@ -878,9 +773,7 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// Remove the pipeline from list of pipelines in execution.
-        /// </summary>
+        
         /// <param name="pipeline">Pipeline to remove from the
         /// list of pipelines in execution</param>
         /// <exception cref="ArgumentNullException">
@@ -914,10 +807,7 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// Waits till all the pipelines running in the runspace have
-        /// finished execution.
-        /// </summary>
+        
         internal bool WaitForFinishofPipelines()
         {
             // Take a snapshot of list of active pipelines.
@@ -972,9 +862,7 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// Stops all the running pipelines.
-        /// </summary>
+        
         protected void StopPipelines()
         {
             PipelineBase[] runningPipelines;
@@ -1006,9 +894,7 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// Gets the currently executing pipeline.
-        /// </summary>
+        
         /// <remarks>Internal because it is needed by invoke-history</remarks>
         internal override Pipeline GetCurrentlyRunningPipeline()
         {
@@ -1017,10 +903,7 @@ namespace System.Management.Automation.Runspaces
 
         private Pipeline _currentlyRunningPipeline = null;
 
-        /// <summary>
-        /// This method stops all the pipelines which are nested
-        /// under specified pipeline.
-        /// </summary>
+        
         /// <param name="pipeline"></param>
         /// <returns></returns>
         internal void StopNestedPipelines(Pipeline pipeline)
@@ -1160,11 +1043,7 @@ namespace System.Management.Automation.Runspaces
         // progress, SessionStateProxy calls cannot be made.
         private bool _bSessionStateProxyCallInProgress;
 
-        /// <summary>
-        /// This method ensures that SessionStateProxy call is allowed and if
-        /// allowed it sets a variable to disallow further SessionStateProxy or
-        /// pipeline calls.
-        /// </summary>
+        
         private void DoConcurrentCheckAndMarkSessionStateProxyCallInProgress()
         {
             lock (SyncRoot)
@@ -1222,11 +1101,7 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// SetVariable implementation. This class does the necessary checks to ensure
-        /// that no pipeline or other SessionStateProxy calls are in progress.
-        /// It delegates to derived class worker method for actual operation.
-        /// </summary>
+        
         /// <param name="name"></param>
         /// <param name="value"></param>
         internal void SetVariable(string name, object value)
@@ -1245,11 +1120,7 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// GetVariable implementation. This class does the necessary checks to ensure
-        /// that no pipeline or other SessionStateProxy calls are in progress.
-        /// It delegates to derived class worker method for actual operation.
-        /// </summary>
+        
         /// <param name="name"></param>
         /// <returns></returns>
         internal object GetVariable(string name)
@@ -1268,11 +1139,7 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// Applications implementation. This class does the necessary checks to ensure
-        /// that no pipeline or other SessionStateProxy calls are in progress.
-        /// It delegates to derived class worker method for actual operation.
-        /// </summary>
+        
         /// <returns></returns>
         internal List<string> Applications
         {
@@ -1293,11 +1160,7 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// Scripts implementation. This class does the necessary checks to ensure
-        /// that no pipeline or other SessionStateProxy calls are in progress.
-        /// It delegates to derived class worker method for actual operation.
-        /// </summary>
+        
         /// <returns></returns>
         internal List<string> Scripts
         {
@@ -1318,10 +1181,7 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// Protected methods to be implemented by derived class.
-        /// This does the actual work of getting scripts.
-        /// </summary>
+        
         internal DriveManagementIntrinsics Drive
         {
             get
@@ -1341,10 +1201,7 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// Protected methods to be implemented by derived class.
-        /// This does the actual work of getting scripts.
-        /// </summary>
+        
         public PSLanguageMode LanguageMode
         {
             get
@@ -1382,10 +1239,7 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// Protected methods to be implemented by derived class.
-        /// This does the actual work of getting scripts.
-        /// </summary>
+        
         internal PSModuleInfo Module
         {
             get
@@ -1405,10 +1259,7 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// Protected methods to be implemented by derived class.
-        /// This does the actual work of getting scripts.
-        /// </summary>
+        
         internal PathIntrinsics PathIntrinsics
         {
             get
@@ -1428,10 +1279,7 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// Protected methods to be implemented by derived class.
-        /// This does the actual work of getting scripts.
-        /// </summary>
+        
         internal CmdletProviderManagementIntrinsics Provider
         {
             get
@@ -1451,10 +1299,7 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// Protected methods to be implemented by derived class.
-        /// This does the actual work of getting scripts.
-        /// </summary>
+        
         internal PSVariableIntrinsics PSVariable
         {
             get
@@ -1474,10 +1319,7 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// Protected methods to be implemented by derived class.
-        /// This does the actual work of getting scripts.
-        /// </summary>
+        
         internal CommandInvocationIntrinsics InvokeCommand
         {
             get
@@ -1497,10 +1339,7 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// Protected methods to be implemented by derived class.
-        /// This does the actual work of getting scripts.
-        /// </summary>
+        
         internal ProviderIntrinsics InvokeProvider
         {
             get
@@ -1520,86 +1359,48 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// Protected methods to be implemented by derived class.
-        /// This does the actual work of setting variable.
-        /// </summary>
+        
         /// <param name="name">Name of the variable to set.</param>
         /// <param name="value">The value to set it to.</param>
         protected abstract void DoSetVariable(string name, object value);
 
-        /// <summary>
-        /// Protected methods to be implemented by derived class.
-        /// This does the actual work of getting variable.
-        /// </summary>
+        
         /// <param name="name"></param>
         /// <returns></returns>
         protected abstract object DoGetVariable(string name);
 
-        /// <summary>
-        /// Protected methods to be implemented by derived class.
-        /// This does the actual work of getting applications.
-        /// </summary>
+        
         protected abstract List<string> DoApplications { get; }
 
-        /// <summary>
-        /// Protected methods to be implemented by derived class.
-        /// This does the actual work of getting scripts.
-        /// </summary>
+        
         protected abstract List<string> DoScripts { get; }
 
-        /// <summary>
-        /// Protected methods to be implemented by derived class.
-        /// This does the actual work of getting scripts.
-        /// </summary>
+        
         protected abstract DriveManagementIntrinsics DoDrive { get; }
 
-        /// <summary>
-        /// Protected methods to be implemented by derived class.
-        /// This does the actual work of getting scripts.
-        /// </summary>
+        
         protected abstract PSLanguageMode DoLanguageMode { get; set; }
 
-        /// <summary>
-        /// Protected methods to be implemented by derived class.
-        /// This does the actual work of getting scripts.
-        /// </summary>
+        
         protected abstract PSModuleInfo DoModule { get; }
 
-        /// <summary>
-        /// Protected methods to be implemented by derived class.
-        /// This does the actual work of getting scripts.
-        /// </summary>
+        
         protected abstract PathIntrinsics DoPath { get; }
 
-        /// <summary>
-        /// Protected methods to be implemented by derived class.
-        /// This does the actual work of getting scripts.
-        /// </summary>
+        
         protected abstract CmdletProviderManagementIntrinsics DoProvider { get; }
 
-        /// <summary>
-        /// Protected methods to be implemented by derived class.
-        /// This does the actual work of getting scripts.
-        /// </summary>
+        
         protected abstract PSVariableIntrinsics DoPSVariable { get; }
 
-        /// <summary>
-        /// Protected methods to be implemented by derived class.
-        /// This does the actual work of getting scripts.
-        /// </summary>
+        
         protected abstract CommandInvocationIntrinsics DoInvokeCommand { get; }
 
-        /// <summary>
-        /// Protected methods to be implemented by derived class.
-        /// This does the actual work of getting scripts.
-        /// </summary>
+        
         protected abstract ProviderIntrinsics DoInvokeProvider { get; }
 
         private SessionStateProxy _sessionStateProxy;
-        /// <summary>
-        /// Returns SessionState proxy object.
-        /// </summary>
+        
         /// <returns></returns>
         internal override SessionStateProxy GetSessionStateProxy()
         {

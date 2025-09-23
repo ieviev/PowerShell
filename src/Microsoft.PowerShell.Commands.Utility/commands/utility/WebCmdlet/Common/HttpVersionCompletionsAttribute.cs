@@ -11,9 +11,7 @@ using System.Reflection;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// A completer for HTTP version names.
-    /// </summary>
+    
     internal sealed class HttpVersionCompletionsAttribute : ArgumentCompletionsAttribute
     {
         public static readonly string[] AllowedVersions;

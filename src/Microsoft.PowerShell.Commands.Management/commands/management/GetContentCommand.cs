@@ -13,44 +13,29 @@ using Dbg = System.Management.Automation;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// A command to get the content of an item at a specified path.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Get, "Content", DefaultParameterSetName = "Path", SupportsTransactions = true, HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096490")]
     public class GetContentCommand : ContentCommandBase
     {
         #region Parameters
 
-        /// <summary>
-        /// The number of content items to retrieve per block.
-        /// By default this value is 1 which means read one block
-        /// at a time.  To read all blocks at once, set this value
-        /// to a negative number.
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true)]
         public long ReadCount { get; set; } = 1;
 
-        /// <summary>
-        /// The number of content items to retrieve.
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true)]
         [ValidateRange(0, long.MaxValue)]
         [Alias("First", "Head")]
         public long TotalCount { get; set; } = -1;
 
-        /// <summary>
-        /// The number of content items to retrieve from the back of the file.
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true)]
         [ValidateRange(0, int.MaxValue)]
         [Alias("Last")]
         public int Tail { get; set; } = -1;
 
-        /// <summary>
-        /// A virtual method for retrieving the dynamic parameters for a cmdlet. Derived cmdlets
-        /// that require dynamic parameters should override this method and return the
-        /// dynamic parameter object.
-        /// </summary>
+        
         /// <param name="context">
         /// The context under which the command is running.
         /// </param>
@@ -72,9 +57,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Command code
 
-        /// <summary>
-        /// Gets the content of an item at the specified path.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             // TotalCount and Tail should not be specified at the same time.
@@ -221,9 +204,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Scan forwards to get the tail content.
-        /// </summary>
+        
         /// <param name="holder"></param>
         /// <param name="currentContext"></param>
         /// <returns>
@@ -337,9 +318,7 @@ namespace Microsoft.PowerShell.Commands
             return true;
         }
 
-        /// <summary>
-        /// Seek position to the right place.
-        /// </summary>
+        
         /// <param name="reader">
         /// reader should be able to be casted to FileSystemContentReader
         /// </param>
@@ -365,9 +344,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Be sure to clean up.
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             Dispose(true);

@@ -17,11 +17,7 @@ using Dbg = System.Management.Automation.Diagnostics;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// The get-command cmdlet.  It uses the command discovery APIs to find one or more
-    /// commands of the given name.  It returns an instance of CommandInfo for each
-    /// command that is found.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Get, "Command", DefaultParameterSetName = "CmdletSet", HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096579")]
     [OutputType(typeof(AliasInfo), typeof(ApplicationInfo), typeof(FunctionInfo),
                 typeof(CmdletInfo), typeof(ExternalScriptInfo), typeof(FilterInfo),
@@ -30,9 +26,7 @@ namespace Microsoft.PowerShell.Commands
     {
         #region Definitions of cmdlet parameters
 
-        /// <summary>
-        /// Gets or sets the path(s) or name(s) of the commands to retrieve.
-        /// </summary>
+        
         [Parameter(
             Position = 0,
             ValueFromPipeline = true,
@@ -68,9 +62,7 @@ namespace Microsoft.PowerShell.Commands
         private string[] _names;
         private bool _nameContainsWildcard;
 
-        /// <summary>
-        /// Gets or sets the verb parameter to the cmdlet.
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true, ParameterSetName = "CmdletSet")]
         [ArgumentCompleter(typeof(VerbArgumentCompleter))]
         public string[] Verb
@@ -91,9 +83,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string[] _verbs = Array.Empty<string>();
 
-        /// <summary>
-        /// Gets or sets the noun parameter to the cmdlet.
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true, ParameterSetName = "CmdletSet")]
         [ArgumentCompleter(typeof(NounArgumentCompleter))]
         public string[] Noun
@@ -114,9 +104,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string[] _nouns = Array.Empty<string>();
 
-        /// <summary>
-        /// Gets or sets the PSSnapin/Module parameter to the cmdlet.
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true)]
         [Alias("PSSnapin")]
         public string[] Module
@@ -140,9 +128,7 @@ namespace Microsoft.PowerShell.Commands
         private string[] _modules = Array.Empty<string>();
         private bool _isModuleSpecified = false;
 
-        /// <summary>
-        /// Gets or sets the ExcludeModule parameter to the cmdlet.
-        /// </summary>
+        
         [Parameter()]
         public string[] ExcludeModule
         {
@@ -162,9 +148,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string[] _excludedModules = Array.Empty<string>();
 
-        /// <summary>
-        /// Gets or sets the FullyQualifiedModule parameter to the cmdlet.
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true)]
         public ModuleSpecification[] FullyQualifiedModule
         {
@@ -187,9 +171,7 @@ namespace Microsoft.PowerShell.Commands
         private ModuleSpecification[] _moduleSpecifications = Array.Empty<ModuleSpecification>();
         private bool _isFullyQualifiedModuleSpecified = false;
 
-        /// <summary>
-        /// Gets or sets the type of the command to get.
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true, ParameterSetName = "AllCommandSet")]
         [Alias("Type")]
         public CommandTypes CommandType
@@ -209,18 +191,11 @@ namespace Microsoft.PowerShell.Commands
         private CommandTypes _commandType = CommandTypes.All;
         private bool _isCommandTypeSpecified = false;
 
-        /// <summary>
-        /// The parameter representing the total number of commands that will
-        /// be returned. If negative, all matching commands that are found will
-        /// be returned.
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true)]
         public int TotalCount { get; set; } = -1;
 
-        /// <summary>
-        /// The parameter that determines if the CommandInfo or the string
-        /// definition of the command is output.
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true)]
         public SwitchParameter Syntax
         {
@@ -237,27 +212,18 @@ namespace Microsoft.PowerShell.Commands
 
         private bool _usage;
 
-        /// <summary>
-        /// This parameter causes the output to be packaged into ShowCommandInfo PSObject types
-        /// needed to display GUI command information.
-        /// </summary>
+        
         [Parameter()]
         public SwitchParameter ShowCommandInfo { get; set; }
 
-        /// <summary>
-        /// The parameter that all additional arguments get bound to. These arguments are used
-        /// when retrieving dynamic parameters from cmdlets that support them.
-        /// </summary>
+        
         [Parameter(Position = 1, ValueFromRemainingArguments = true)]
         [AllowNull]
         [AllowEmptyCollection]
         [Alias("Args")]
         public object[] ArgumentList { get; set; }
 
-        /// <summary>
-        /// The parameter that determines if additional matching commands should be returned.
-        /// (Additional matching functions and aliases are returned from module tables)
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true)]
         public SwitchParameter All
         {
@@ -268,10 +234,7 @@ namespace Microsoft.PowerShell.Commands
 
         private bool _all;
 
-        /// <summary>
-        /// The parameter that determines if additional matching commands from available modules should be returned.
-        /// If set to true, only those commands currently in the session are returned.
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true)]
         public SwitchParameter ListImported
         {
@@ -288,9 +251,7 @@ namespace Microsoft.PowerShell.Commands
 
         private bool _listImported;
 
-        /// <summary>
-        /// The parameter that filters commands returned to only include commands that have a parameter with a name that matches one of the ParameterName's arguments.
-        /// </summary>
+        
         [Parameter]
         [ValidateNotNullOrEmpty]
         public string[] ParameterName
@@ -315,9 +276,7 @@ namespace Microsoft.PowerShell.Commands
         private string[] _parameterNames;
         private HashSet<string> _matchedParameterNames;
 
-        /// <summary>
-        /// The parameter that filters commands returned to only include commands that have a parameter of a type that matches one of the ParameterType's arguments.
-        /// </summary>
+        
         [Parameter]
         [ValidateNotNullOrEmpty]
         public PSTypeName[] ParameterType
@@ -356,26 +315,18 @@ namespace Microsoft.PowerShell.Commands
 
         private PSTypeName[] _parameterTypes;
 
-        /// <summary>
-        /// Gets or sets the parameter that enables using fuzzy matching.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "AllCommandSet")]
         public SwitchParameter UseFuzzyMatching { get; set; }
 
-        /// <summary>
-        /// Gets or sets the minimum fuzzy matching distance.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "AllCommandSet")]
         public uint FuzzyMinimumDistance { get; set; } = 5;
 
         private FuzzyMatcher _fuzzyMatcher;
         private List<CommandScore> _commandScores;
 
-        /// <summary>
-        /// Gets or sets the parameter that determines if return cmdlets based on abbreviation expansion.
-        /// This means it matches cmdlets where the uppercase characters for the noun match
-        /// the given characters.  i.e., g-sgc would match Get-SomeGreatCmdlet.
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true, ParameterSetName = "AllCommandSet")]
         public SwitchParameter UseAbbreviationExpansion { get; set; }
 
@@ -383,9 +334,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Overrides
 
-        /// <summary>
-        /// Begin Processing.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
 #if LEGACYTELEMETRY
@@ -408,9 +357,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Method that implements get-command.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             _commandsWritten.Clear();
@@ -446,9 +393,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Writes out the accumulated matching commands.
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             // We do not show the pithy aliases (not of the format Verb-Noun) and applications by default.
@@ -600,9 +545,7 @@ namespace Microsoft.PowerShell.Commands
 #endif
         }
 
-        /// <summary>
-        /// Creates the syntax output based on if the command is an alias, script, application or command.
-        /// </summary>
+        
         /// <param name="command">
         /// CommandInfo object containing the syntax to be output.
         /// </param>
@@ -675,15 +618,10 @@ namespace Microsoft.PowerShell.Commands
             return syntax;
         }
 
-        /// <summary>
-        /// The comparer to sort CommandInfo objects in the result list.
-        /// </summary>
+        
         private sealed class CommandInfoComparer : IComparer<CommandInfo>
         {
-            /// <summary>
-            /// Compare two CommandInfo objects first by their command types, and if they
-            /// are with the same command type, then we compare their names.
-            /// </summary>
+            
             /// <param name="x"></param>
             /// <param name="y"></param>
             /// <returns></returns>
@@ -786,9 +724,7 @@ namespace Microsoft.PowerShell.Commands
             return result;
         }
 
-        /// <summary>
-        /// Writes out the commands for the AllCommandSet using the specified CommandType.
-        /// </summary>
+        
         private void AccumulateMatchingCommands()
         {
             Collection<string> commandNames =
@@ -1118,10 +1054,7 @@ namespace Microsoft.PowerShell.Commands
             return resultFound;
         }
 
-        /// <summary>
-        /// Determines if the specific command information has already been
-        /// written out based on the path or definition.
-        /// </summary>
+        
         /// <param name="info">
         /// The command information to check for duplication.
         /// </param>
@@ -1437,9 +1370,7 @@ namespace Microsoft.PowerShell.Commands
             return isCommandMatch;
         }
 
-        /// <summary>
-        /// Gets matching commands from the module tables.
-        /// </summary>
+        
         /// <param name="commandName">
         /// The commandname to look for
         /// </param>
@@ -1510,10 +1441,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Determines if the specific command information has already been
-        /// added to the result from CommandSearcher.
-        /// </summary>
+        
         /// <param name="command">
         /// The command information to check for duplication.
         /// </param>
@@ -1693,9 +1621,7 @@ namespace Microsoft.PowerShell.Commands
         #endregion
     }
 
-    /// <summary>
-    /// Provides argument completion for Noun parameter. 
-    /// </summary>
+    
     public class NounArgumentCompleter : IArgumentCompleter
     {
         /// </summary>
@@ -1716,9 +1642,7 @@ namespace Microsoft.PowerShell.Commands
                 wordToComplete,
                 possibleCompletionValues: GetCommandNouns(fakeBoundParameters));
 
-        /// <summary>
-        /// Get sorted set of command nouns using Get-Command.
-        /// </summary>
+        
         /// <param name="fakeBoundParameters">The fake bound parameters.</param>
         /// <returns>Sorted set of command nouns.</returns>
         private static SortedSet<string> GetCommandNouns(IDictionary fakeBoundParameters)

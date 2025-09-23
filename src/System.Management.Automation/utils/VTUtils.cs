@@ -6,21 +6,17 @@ using System.Collections.Generic;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Class to help with VT escape sequences.
-    /// </summary>
+    
     [Obsolete("This class is deprecated. Use 'System.Management.Automation.PSStyle' instead.", error: true)]
     public sealed class VTUtility
     {
-        /// <summary>
-        /// Available VT escape codes other than colors.
-        /// </summary>
+        
         public enum VT
         {
-            /// <summary>Reset the text style.</summary>
+            
             Reset,
 
-            /// <summary>Invert the foreground and background colors.</summary>
+            
             Inverse
         }
 
@@ -50,9 +46,7 @@ namespace System.Management.Automation
             { VT.Inverse, "\x1b[7m" }
         };
 
-        /// <summary>
-        /// Return the VT escape sequence for a ConsoleColor.
-        /// </summary>
+        
         /// <param name="color">
         /// The ConsoleColor to return the equivalent VT escape sequence.
         /// </param>
@@ -66,9 +60,7 @@ namespace System.Management.Automation
             return value;
         }
 
-        /// <summary>
-        /// Return the VT escape sequence for a supported VT enum value.
-        /// </summary>
+        
         /// <param name="vt">
         /// The VT code to return the VT escape sequence.
         /// </param>

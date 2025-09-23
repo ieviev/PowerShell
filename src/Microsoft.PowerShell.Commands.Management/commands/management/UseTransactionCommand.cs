@@ -9,16 +9,11 @@ using Dbg = System.Management.Automation;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// A command that commits a transaction.
-    /// </summary>
+    
     [Cmdlet(VerbsOther.Use, "Transaction", SupportsTransactions = true, HelpUri = "https://go.microsoft.com/fwlink/?LinkID=135271")]
     public class UseTransactionCommand : PSCmdlet
     {
-        /// <summary>
-        /// This parameter specifies the script block to run in the current
-        /// PowerShell transaction.
-        /// </summary>
+        
         [Parameter(Position = 0, Mandatory = true)]
         public ScriptBlock TransactedScript
         {
@@ -35,9 +30,7 @@ namespace Microsoft.PowerShell.Commands
 
         private ScriptBlock _transactedScript;
 
-        /// <summary>
-        /// Commits the current transaction.
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             using (CurrentPSTransaction)

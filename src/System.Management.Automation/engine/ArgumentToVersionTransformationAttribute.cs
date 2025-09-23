@@ -8,11 +8,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// To make it easier to specify a version, we add some conversions that wouldn't happen otherwise:
-    ///   * A simple integer, i.e. 2;
-    ///   * A string without a dot, i.e. "2".
-    /// </summary>
+    
     internal class ArgumentToVersionTransformationAttribute : ArgumentTransformationAttribute
     {
         /// <inheritdoc/>

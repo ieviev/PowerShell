@@ -8,39 +8,23 @@ namespace System.Management.Automation
     using System.Management.Automation.Tracing;
     using System.Threading;
 
-    /// <summary>
-    ///     An object that can be used to execute a method on a threadpool thread while correctly
-    ///     managing system state, such as flowing ETW activities from the current thread to the
-    ///     threadpool thread.
-    /// </summary>
+    
     public interface IBackgroundDispatcher
     {
-        /// <summary>
-        ///     Works the same as <see cref="ThreadPool.QueueUserWorkItem(WaitCallback)" />, except that it
-        ///     also manages system state correctly.
-        /// </summary>
+        
         bool QueueUserWorkItem(WaitCallback callback);
 
-        /// <summary>
-        ///     Works the same as <see cref="ThreadPool.QueueUserWorkItem(WaitCallback, object)" />, except that it
-        ///     also manages system state correctly.
-        /// </summary>
+        
         bool QueueUserWorkItem(WaitCallback callback, object state);
 
-        /// <summary>
-        ///     Works the same as BeginInvoke would for any other delegate, except that it also manages system state correctly.
-        /// </summary>
+        
         IAsyncResult BeginInvoke(WaitCallback callback, object state, AsyncCallback completionCallback, object asyncState);
 
-        /// <summary>
-        ///     Works the same as EndInvoke would for any other delegate, except that it also manages system state correctly.
-        /// </summary>
+        
         void EndInvoke(IAsyncResult asyncResult);
     }
 
-    /// <summary>
-    ///     A simple implementation of <see cref="IBackgroundDispatcher" />.
-    /// </summary>
+    
     public class BackgroundDispatcher :
         IBackgroundDispatcher
     {
@@ -53,10 +37,7 @@ namespace System.Management.Automation
 
         #region Creation/Cleanup
 
-        /// <summary>
-        ///     Creates a <see cref="BackgroundDispatcher" /> that uses an <see cref="EtwEventCorrelator" />
-        ///     for activity creation and correlation.
-        /// </summary>
+        
         /// <param name="transferProvider">The <see cref="EventProvider" /> to use when logging transfer events
         ///     during activity correlation.</param>
         /// <param name="transferEvent">The <see cref="EventDescriptor" /> to use when logging transfer events
@@ -90,17 +71,13 @@ namespace System.Management.Automation
 
         #region Instance Access
 
-        /// <summary>
-        ///     Implements <see cref="IBackgroundDispatcher.QueueUserWorkItem(WaitCallback)" />.
-        /// </summary>
+        
         public bool QueueUserWorkItem(WaitCallback callback)
         {
             return QueueUserWorkItem(callback, null);
         }
 
-        /// <summary>
-        ///     Implements <see cref="IBackgroundDispatcher.QueueUserWorkItem(WaitCallback, object)" />.
-        /// </summary>
+        
         public bool QueueUserWorkItem(WaitCallback callback, object state)
         {
             var invokerArgs = _etwActivityMethodInvoker.CreateInvokerArgs(callback, new object[] { state });
@@ -109,9 +86,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        ///     Implements <see cref="IBackgroundDispatcher.BeginInvoke(WaitCallback, object, AsyncCallback, object)" />.
-        /// </summary>
+        
         public IAsyncResult BeginInvoke(WaitCallback callback, object state, AsyncCallback completionCallback, object asyncState)
         {
             var invokerArgs = _etwActivityMethodInvoker.CreateInvokerArgs(callback, new object[] { state });
@@ -120,9 +95,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        ///     Implements <see cref="IBackgroundDispatcher.EndInvoke(IAsyncResult)" />.
-        /// </summary>
+        
         public void EndInvoke(IAsyncResult asyncResult)
         {
             _invokerWaitCallback.EndInvoke(asyncResult);

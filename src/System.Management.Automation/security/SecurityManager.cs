@@ -17,41 +17,7 @@ using Dbg = System.Management.Automation;
 
 namespace Microsoft.PowerShell
 {
-    /// <summary>
-    /// Defines the authorization policy that controls the way scripts
-    /// (and other command types) are handled by PowerShell.  This authorization
-    /// policy enforces one of four levels, as defined by the 'ExecutionPolicy'
-    /// value in one of the following locations:
-    ///
-    /// In priority-order (highest priority first,) these come from:
-    ///
-    ///    - Machine-wide Group Policy
-    ///    HKLM\Software\Policies\Microsoft\Windows\PowerShell
-    ///    - Current-user Group Policy
-    ///    HKCU\Software\Policies\Microsoft\Windows\PowerShell.
-    ///    - Current session preference
-    ///    ENV:PSExecutionPolicyPreference
-    ///    - Current user machine preference
-    ///    HKEY_CURRENT_USER\SOFTWARE\Microsoft\PowerShell\1\ShellIds\Microsoft.PowerShell
-    ///    - Local machine preference
-    ///    HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PowerShell\1\ShellIds\Microsoft.PowerShell
-    ///
-    /// Restricted - All .ps1 files are blocked.  ps1xml files must be digitally
-    ///    signed, and by a trusted publisher.  If you haven't made a trust decision
-    ///    on the publisher yet, prompting is done as in AllSigned mode.
-    /// AllSigned - All .ps1 and .ps1xml files must be digitally signed.  If
-    ///    signed and executed, PowerShell prompts to determine if files from the
-    ///    signing publisher should be run or not.
-    /// RemoteSigned - Only .ps1 and .ps1xml files originating from the internet
-    ///    must be digitally signed.  If remote, signed, and executed, PowerShell
-    ///    prompts to determine if files from the signing publisher should be
-    ///    run or not.  This is the default setting.
-    /// Unrestricted - No files must be signed.  If a file originates from the
-    ///    internet, PowerShell provides a warning prompt to alert the user.  To
-    ///    suppress this warning message, right-click on the file in File Explorer,
-    ///    select "Properties," and then "Unblock."  Requires Shell.
-    /// Bypass - No files must be signed, and internet origin is not verified.
-    /// </summary>
+    
     public sealed class PSAuthorizationManager : AuthorizationManager
     {
         internal enum RunPromptDecision
@@ -71,10 +37,7 @@ namespace Microsoft.PowerShell
         // shellId supplied by runspace configuration
         private readonly string _shellId;
 
-        /// <summary>
-        /// Initializes a new instance of the PSAuthorizationManager
-        /// class, for a given ShellId.
-        /// </summary>
+        
         /// <param name="shellId">
         /// The shell identifier that the authorization manager applies
         /// to.  For example, Microsoft.PowerShell
@@ -476,9 +439,7 @@ namespace Microsoft.PowerShell
             return false;
         }
 
-        /// <summary>
-        /// Trust a publisher by adding it to the "Trusted Publishers" store.
-        /// </summary>
+        
         /// <param name="signature"></param>
         private static void TrustPublisher(Signature signature)
         {
@@ -573,11 +534,7 @@ namespace Microsoft.PowerShell
 
         #endregion signing check
 
-        /// <summary>
-        /// Determines if should run the specified command.  Please see the
-        /// class summary for an overview of the semantics enforced by this
-        /// authorization manager.
-        /// </summary>
+        
         /// <param name="commandInfo">
         /// The command to be run.
         /// </param>

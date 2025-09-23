@@ -15,11 +15,7 @@ namespace System.Management.Automation
 {
     #region Auxiliary
 
-    /// <summary>
-    /// An interface that a
-    /// <see cref="Cmdlet"/> or <see cref="Provider.CmdletProvider"/>
-    /// must implement to indicate that it has dynamic parameters.
-    /// </summary>
+    
     /// <remarks>
     /// Dynamic parameters allow a
     /// <see cref="Cmdlet"/> or <see cref="Provider.CmdletProvider"/>
@@ -35,11 +31,7 @@ namespace System.Management.Automation
 #nullable enable
     public interface IDynamicParameters
     {
-        /// <summary>
-        /// Returns an instance of an object that defines the
-        /// dynamic parameters for this
-        /// <see cref="Cmdlet"/> or <see cref="Provider.CmdletProvider"/>.
-        /// </summary>
+        
         /// <returns>
         /// This method should return an object that has properties and fields
         /// decorated with parameter attributes similar to a
@@ -68,24 +60,17 @@ namespace System.Management.Automation
     }
 #nullable restore
 
-    /// <summary>
-    /// Type used to define a parameter on a cmdlet script of function that
-    /// can only be used as a switch.
-    /// </summary>
+    
     public readonly struct SwitchParameter
     {
         private readonly bool _isPresent;
-        /// <summary>
-        /// Returns true if the parameter was specified on the command line, false otherwise.
-        /// </summary>
+        
         /// <value>True if the parameter was specified, false otherwise</value>
         public bool IsPresent
         {
             get { return _isPresent; }
         }
-        /// <summary>
-        /// Implicit cast operator for casting SwitchParameter to bool.
-        /// </summary>
+        
         /// <param name="switchParameter">The SwitchParameter object to convert to bool.</param>
         /// <returns>The corresponding boolean value.</returns>
         public static implicit operator bool(SwitchParameter switchParameter)
@@ -93,9 +78,7 @@ namespace System.Management.Automation
             return switchParameter.IsPresent;
         }
 
-        /// <summary>
-        /// Implicit cast operator for casting bool to SwitchParameter.
-        /// </summary>
+        
         /// <param name="value">The bool to convert to SwitchParameter.</param>
         /// <returns>The corresponding boolean value.</returns>
         public static implicit operator SwitchParameter(bool value)
@@ -103,18 +86,14 @@ namespace System.Management.Automation
             return new SwitchParameter(value);
         }
 
-        /// <summary>
-        /// Explicit method to convert a SwitchParameter to a boolean value.
-        /// </summary>
+        
         /// <returns>The boolean equivalent of the SwitchParameter.</returns>
         public bool ToBool()
         {
             return _isPresent;
         }
 
-        /// <summary>
-        /// Construct a SwitchParameter instance with a particular value.
-        /// </summary>
+        
         /// <param name="isPresent">
         /// If true, it indicates that the switch is present, false otherwise.
         /// </param>
@@ -123,18 +102,14 @@ namespace System.Management.Automation
             _isPresent = isPresent;
         }
 
-        /// <summary>
-        /// Static method that returns a instance of SwitchParameter that indicates that it is present.
-        /// </summary>
+        
         /// <value>An instance of a switch parameter that will convert to true in a boolean context</value>
         public static SwitchParameter Present
         {
             get { return new SwitchParameter(true); }
         }
 
-        /// <summary>
-        /// Compare this switch parameter to another object.
-        /// </summary>
+        
         /// <param name="obj">An object to compare against.</param>
         /// <returns>True if the objects are the same value.</returns>
         public override bool Equals(object obj)
@@ -152,18 +127,14 @@ namespace System.Management.Automation
                 return false;
             }
         }
-        /// <summary>
-        /// Returns the hash code for this switch parameter.
-        /// </summary>
+        
         /// <returns>The hash code for this cobject.</returns>
         public override int GetHashCode()
         {
             return _isPresent.GetHashCode();
         }
 
-        /// <summary>
-        /// Implement the == operator for switch parameters objects.
-        /// </summary>
+        
         /// <param name="first">First object to compare.</param>
         /// <param name="second">Second object to compare.</param>
         /// <returns>True if they are the same.</returns>
@@ -171,9 +142,7 @@ namespace System.Management.Automation
         {
             return first.Equals(second);
         }
-        /// <summary>
-        /// Implement the != operator for switch parameters.
-        /// </summary>
+        
         /// <param name="first">First object to compare.</param>
         /// <param name="second">Second object to compare.</param>
         /// <returns>True if they are different.</returns>
@@ -181,9 +150,7 @@ namespace System.Management.Automation
         {
             return !first.Equals(second);
         }
-        /// <summary>
-        /// Implement the == operator for switch parameters and booleans.
-        /// </summary>
+        
         /// <param name="first">First object to compare.</param>
         /// <param name="second">Second object to compare.</param>
         /// <returns>True if they are the same.</returns>
@@ -191,9 +158,7 @@ namespace System.Management.Automation
         {
             return first.Equals(second);
         }
-        /// <summary>
-        /// Implement the != operator for switch parameters and booleans.
-        /// </summary>
+        
         /// <param name="first">First object to compare.</param>
         /// <param name="second">Second object to compare.</param>
         /// <returns>True if they are different.</returns>
@@ -201,9 +166,7 @@ namespace System.Management.Automation
         {
             return !first.Equals(second);
         }
-        /// <summary>
-        /// Implement the == operator for bool and switch parameters.
-        /// </summary>
+        
         /// <param name="first">First object to compare.</param>
         /// <param name="second">Second object to compare.</param>
         /// <returns>True if they are the same.</returns>
@@ -211,9 +174,7 @@ namespace System.Management.Automation
         {
             return first.Equals(second);
         }
-        /// <summary>
-        /// Implement the != operator for bool and switch parameters.
-        /// </summary>
+        
         /// <param name="first">First object to compare.</param>
         /// <param name="second">Second object to compare.</param>
         /// <returns>True if they are different.</returns>
@@ -222,9 +183,7 @@ namespace System.Management.Automation
             return !first.Equals(second);
         }
 
-        /// <summary>
-        /// Returns the string representation for this object.
-        /// </summary>
+        
         /// <returns>The string for this object.</returns>
         public override string ToString()
         {
@@ -232,9 +191,7 @@ namespace System.Management.Automation
         }
     }
 
-    /// <summary>
-    /// Interfaces that cmdlets can use to build script blocks and execute scripts.
-    /// </summary>
+    
     public class CommandInvocationIntrinsics
     {
         private readonly ExecutionContext _context;
@@ -256,9 +213,7 @@ namespace System.Management.Automation
         {
         }
 
-        /// <summary>
-        /// If an error occurred while executing the cmdlet, this will be set to true.
-        /// </summary>
+        
         public bool HasErrors
         {
             get
@@ -272,9 +227,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Returns a string with all of the variable and expression substitutions done.
-        /// </summary>
+        
         /// <param name="source">The string to expand.
         /// </param>
         /// <returns>The expanded string.</returns>
@@ -287,8 +240,7 @@ namespace System.Management.Automation
             return _context.Engine.Expand(source);
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="commandName"></param>
         /// <param name="type"></param>
         /// <returns></returns>
@@ -297,10 +249,7 @@ namespace System.Management.Automation
             return GetCommand(commandName, type, null);
         }
 
-        /// <summary>
-        /// Returns a command info for a given command name and type, using the specified arguments
-        /// to resolve dynamic parameters.
-        /// </summary>
+        
         /// <param name="commandName">The command name to search for.</param>
         /// <param name="type">The command type to search for.</param>
         /// <param name="arguments">The command arguments used to resolve dynamic parameters.</param>
@@ -337,38 +286,19 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// This event handler is called when a command is not found.
-        /// If should have a single string parameter that is the name
-        /// of the command and should return a CommandInfo object or null. By default
-        /// it will search the module path looking for a module that exports the
-        /// desired command.
-        /// </summary>
+        
         public System.EventHandler<CommandLookupEventArgs> CommandNotFoundAction { get; set; }
 
-        /// <summary>
-        /// This event handler is called before the command lookup is done.
-        /// If should have a single string parameter that is the name
-        /// of the command and should return a CommandInfo object or null.
-        /// </summary>
+        
         public System.EventHandler<CommandLookupEventArgs> PreCommandLookupAction { get; set; }
 
-        /// <summary>
-        /// This event handler is after the command lookup is done but before the event object is
-        /// returned to the caller. This allows things like interning scripts to work.
-        /// If should have a single string parameter that is the name
-        /// of the command and should return a CommandInfo object or null.
-        /// </summary>
+        
         public System.EventHandler<CommandLookupEventArgs> PostCommandLookupAction { get; set; }
 
-        /// <summary>
-        /// Gets or sets the action that is invoked every time the runspace location (cwd) is changed.
-        /// </summary>
+        
         public System.EventHandler<LocationChangedEventArgs> LocationChangedAction { get; set; }
 
-        /// <summary>
-        /// Returns the CmdletInfo object that corresponds to the name argument.
-        /// </summary>
+        
         /// <param name="commandName">The name of the cmdlet to look for.</param>
         /// <returns>The cmdletInfo object if found, null otherwise.</returns>
         public CmdletInfo GetCmdlet(string commandName)
@@ -376,9 +306,7 @@ namespace System.Management.Automation
             return GetCmdlet(commandName, _context);
         }
 
-        /// <summary>
-        /// Returns the CmdletInfo object that corresponds to the name argument.
-        /// </summary>
+        
         /// <param name="commandName">The name of the cmdlet to look for.</param>
         /// <param name="context">The execution context instance to use for lookup.</param>
         /// <returns>The cmdletInfo object if found, null otherwise.</returns>
@@ -427,11 +355,7 @@ namespace System.Management.Automation
             return current;
         }
 
-        /// <summary>
-        /// Get the cmdlet info using the name of the cmdlet's implementing type. This bypasses
-        /// session state and retrieves the command directly. Note that the help file and snapin/module
-        /// info will both be null on returned object.
-        /// </summary>
+        
         /// <param name="cmdletTypeName">The type name of the class implementing this cmdlet.</param>
         /// <returns>CmdletInfo for the cmdlet if found, null otherwise.</returns>
         public CmdletInfo GetCmdletByTypeName(string cmdletTypeName)
@@ -473,18 +397,14 @@ namespace System.Management.Automation
             return new CmdletInfo(cmdletName, cmdletType, null, null, _context);
         }
 
-        /// <summary>
-        /// Returns a list of all cmdlets...
-        /// </summary>
+        
         /// <returns></returns>
         public List<CmdletInfo> GetCmdlets()
         {
             return GetCmdlets("*");
         }
 
-        /// <summary>
-        /// Returns all cmdlets whose names match the pattern...
-        /// </summary>
+        
         /// <returns>A list of CmdletInfo objects...</returns>
         public List<CmdletInfo> GetCmdlets(string pattern)
         {
@@ -538,11 +458,7 @@ namespace System.Management.Automation
             return cmdlets;
         }
 
-        /// <summary>
-        /// Searches for PowerShell commands, optionally using wildcard patterns
-        /// and optionally return the full path to applications and scripts rather than
-        /// the simple command name.
-        /// </summary>
+        
         /// <param name="name">The name of the command to use.</param>
         /// <param name="nameIsPattern">If true treat the name as a pattern to search for.</param>
         /// <param name="returnFullName">If true, return the full path to scripts and applications.</param>
@@ -600,9 +516,7 @@ namespace System.Management.Automation
             return commands;
         }
 
-        /// <summary>
-        /// Searches for PowerShell commands, optionally using wildcard patterns.
-        /// </summary>
+        
         /// <param name="name">The name of the command to use.</param>
         /// <param name="commandTypes">Type of commands to support.</param>
         /// <param name="nameIsPattern">If true treat the name as a pattern to search for.</param>
@@ -672,10 +586,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Executes a piece of text as a script synchronously in the caller's session state.
-        /// The given text will be executed in a child scope rather than dot-sourced.
-        /// </summary>
+        
         /// <param name="script">The script text to evaluate.</param>
         /// <returns>A collection of PSObjects generated by the script. Never null, but may be empty.</returns>
         /// <exception cref="ParseException">Thrown if there was a parsing error in the script.</exception>
@@ -686,10 +597,7 @@ namespace System.Management.Automation
             return InvokeScript(script, useNewScope: true, PipelineResultTypes.None, input: null);
         }
 
-        /// <summary>
-        /// Executes a piece of text as a script synchronously in the caller's session state.
-        /// The given text will be executed in a child scope rather than dot-sourced.
-        /// </summary>
+        
         /// <param name="script">The script text to evaluate.</param>
         /// <param name="args">The arguments to the script, available as $args.</param>
         /// <returns>A collection of PSObjects generated by the script. Never null, but may be empty.</returns>
@@ -701,10 +609,7 @@ namespace System.Management.Automation
             return InvokeScript(script, useNewScope: true, PipelineResultTypes.None, input: null, args);
         }
 
-        /// <summary>
-        /// Executes a given scriptblock synchronously in the given session state.
-        /// The scriptblock will be executed in the calling scope (dot-sourced) rather than in a new child scope.
-        /// </summary>
+        
         /// <param name="sessionState">The session state in which to execute the scriptblock.</param>
         /// <param name="scriptBlock">The scriptblock to execute.</param>
         /// <param name="args">The arguments to the scriptblock, available as $args.</param>
@@ -741,9 +646,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Invoke a scriptblock in the current runspace, controlling if it gets a new scope.
-        /// </summary>
+        
         /// <param name="useLocalScope">If true, executes the scriptblock in a new child scope, otherwise the scriptblock is dot-sourced into the calling scope.</param>
         /// <param name="scriptBlock">The scriptblock to execute.</param>
         /// <param name="input">Optional input to the command.</param>
@@ -776,9 +679,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Executes a piece of text as a script synchronously using the options provided.
-        /// </summary>
+        
         /// <param name="script">The script to evaluate.</param>
         /// <param name="useNewScope">If true, evaluate the script in its own scope.
         /// If false, the script will be evaluated in the current scope i.e. it will be dot-sourced.</param>
@@ -899,9 +800,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Compile a string into a script block.
-        /// </summary>
+        
         /// <param name="scriptText">The source text to compile.</param>
         /// <returns>The compiled script block.</returns>
         /// <exception cref="ParseException"></exception>
@@ -915,11 +814,7 @@ namespace System.Management.Automation
     }
     #endregion Auxiliary
 
-    /// <summary>
-    /// Defines members used by Cmdlets.
-    /// All Cmdlets must derive from
-    /// <see cref="System.Management.Automation.Cmdlet"/>.
-    /// </summary>
+    
     /// <remarks>
     /// Do not attempt to create instances of
     /// <see cref="System.Management.Automation.Cmdlet"/>
@@ -941,9 +836,7 @@ namespace System.Management.Automation
         #endregion private_members
 
         #region public members
-        /// <summary>
-        /// The name of the parameter set in effect.
-        /// </summary>
+        
         /// <value>the parameter set name</value>
         public string ParameterSetName
         {
@@ -956,10 +849,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Contains information about the identity of this cmdlet
-        /// and how it was invoked.
-        /// </summary>
+        
         /// <value></value>
         public new InvocationInfo MyInvocation
         {
@@ -972,11 +862,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// If the cmdlet declares paging support (via <see cref="CmdletCommonMetadataAttribute.SupportsPaging"/>),
-        /// then <see cref="PagingParameters"/> property contains arguments of the paging parameters.
-        /// Otherwise <see cref="PagingParameters"/> property is <see langword="null"/>.
-        /// </summary>
+        
         public PagingParameters PagingParameters
         {
             get
@@ -1007,10 +893,7 @@ namespace System.Management.Automation
         #region InvokeCommand
         private CommandInvocationIntrinsics _invokeCommand;
 
-        /// <summary>
-        /// Provides access to utility routines for executing scripts
-        /// and creating script blocks.
-        /// </summary>
+        
         /// <value>Returns an object exposing the utility routines.</value>
         public CommandInvocationIntrinsics InvokeCommand
         {

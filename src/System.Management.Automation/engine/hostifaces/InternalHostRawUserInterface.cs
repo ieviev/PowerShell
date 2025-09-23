@@ -35,9 +35,7 @@ namespace System.Management.Automation.Internal.Host
             throw e;
         }
 
-        /// <summary>
-        /// See base class.
-        /// </summary>
+        
         /// <value></value>
         /// <exception cref="HostException">
         /// if the RawUI property of the external host is null, possibly because the PSHostRawUserInterface is not
@@ -70,9 +68,7 @@ namespace System.Management.Automation.Internal.Host
             }
         }
 
-        /// <summary>
-        /// See base class.
-        /// </summary>
+        
         /// <value></value>
         /// <exception cref="HostException">
         /// if the RawUI property of the external host is null, possibly because the PSHostRawUserInterface is not
@@ -105,9 +101,7 @@ namespace System.Management.Automation.Internal.Host
             }
         }
 
-        /// <summary>
-        /// See base class.
-        /// </summary>
+        
         /// <value></value>
         /// <exception cref="HostException">
         /// if the RawUI property of the external host is null, possibly because the PSHostRawUserInterface is not
@@ -140,9 +134,7 @@ namespace System.Management.Automation.Internal.Host
             }
         }
 
-        /// <summary>
-        /// See base class.
-        /// </summary>
+        
         /// <value></value>
         /// <exception cref="HostException">
         /// if the RawUI property of the external host is null, possibly because the PSHostRawUserInterface is not
@@ -175,9 +167,7 @@ namespace System.Management.Automation.Internal.Host
             }
         }
 
-        /// <summary>
-        /// See base class.
-        /// </summary>
+        
         /// <value></value>
         /// <exception cref="HostException">
         /// if the RawUI property of the external host is null, possibly because the PSHostRawUserInterface is not
@@ -210,9 +200,7 @@ namespace System.Management.Automation.Internal.Host
             }
         }
 
-        /// <summary>
-        /// See base class.
-        /// </summary>
+        
         /// <value></value>
         /// <exception cref="HostException">
         /// if the RawUI property of the external host is null, possibly because the PSHostRawUserInterface is not
@@ -245,9 +233,7 @@ namespace System.Management.Automation.Internal.Host
             }
         }
 
-        /// <summary>
-        /// See base class.
-        /// </summary>
+        
         /// <value></value>
         /// <exception cref="HostException">
         /// if the RawUI property of the external host is null, possibly because the PSHostRawUserInterface is not
@@ -280,9 +266,7 @@ namespace System.Management.Automation.Internal.Host
             }
         }
 
-        /// <summary>
-        /// See base class.
-        /// </summary>
+        
         /// <value></value>
         /// <exception cref="HostException">
         /// if the RawUI property of the external host is null, possibly because the PSHostRawUserInterface is not
@@ -305,9 +289,7 @@ namespace System.Management.Automation.Internal.Host
             }
         }
 
-        /// <summary>
-        /// See base class.
-        /// </summary>
+        
         /// <value></value>
         /// <exception cref="HostException">
         /// if the RawUI property of the external host is null, possibly because the PSHostRawUserInterface is not
@@ -330,9 +312,7 @@ namespace System.Management.Automation.Internal.Host
             }
         }
 
-        /// <summary>
-        /// See base class.
-        /// </summary>
+        
         /// <param name="options">
         /// </param>
         /// <returns></returns>
@@ -370,9 +350,7 @@ namespace System.Management.Automation.Internal.Host
             return result;
         }
 
-        /// <summary>
-        /// See base class.
-        /// </summary>
+        
         /// <exception cref="HostException">
         /// if the RawUI property of the external host is null, possibly because the PSHostRawUserInterface is not
         ///  implemented by the external host
@@ -389,9 +367,7 @@ namespace System.Management.Automation.Internal.Host
             _externalRawUI.FlushInputBuffer();
         }
 
-        /// <summary>
-        /// See base class.
-        /// </summary>
+        
         /// <returns></returns>
         /// <exception cref="HostException">
         /// if the RawUI property of the external host is null, possibly because the PSHostRawUserInterface is not
@@ -414,9 +390,7 @@ namespace System.Management.Automation.Internal.Host
             }
         }
 
-        /// <summary>
-        /// See base class.
-        /// </summary>
+        
         /// <value></value>
         /// <exception cref="HostException">
         /// if the RawUI property of the external host is null, possibly because the PSHostRawUserInterface is not
@@ -449,9 +423,7 @@ namespace System.Management.Automation.Internal.Host
             }
         }
 
-        /// <summary>
-        /// See base class.
-        /// </summary>
+        
         /// <param name="origin"></param>
         /// <param name="contents"></param>
         /// <exception cref="HostException">
@@ -470,9 +442,7 @@ namespace System.Management.Automation.Internal.Host
             _externalRawUI.SetBufferContents(origin, contents);
         }
 
-        /// <summary>
-        /// See base class.
-        /// </summary>
+        
         /// <param name="r">
         /// </param>
         /// <param name="fill">
@@ -495,9 +465,7 @@ namespace System.Management.Automation.Internal.Host
             _externalRawUI.SetBufferContents(r, fill);
         }
 
-        /// <summary>
-        /// See base class.
-        /// </summary>
+        
         /// <param name="r"></param>
         /// <returns></returns>
         /// <exception cref="HostException">
@@ -516,9 +484,7 @@ namespace System.Management.Automation.Internal.Host
             return _externalRawUI.GetBufferContents(r);
         }
 
-        /// <summary>
-        /// See base class.
-        /// </summary>
+        
         /// <param name="source">
         /// </param>
         /// <param name="destination">
@@ -549,8 +515,7 @@ namespace System.Management.Automation.Internal.Host
             _externalRawUI.ScrollBufferContents(source, destination, clip, fill);
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="str"></param>
         /// <returns></returns>
         /// <exception cref="HostException">
@@ -567,8 +532,7 @@ namespace System.Management.Automation.Internal.Host
             return _externalRawUI.LengthInBufferCells(str);
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="str"></param>
         /// <param name="offset"></param>
         /// <returns></returns>
@@ -589,8 +553,7 @@ namespace System.Management.Automation.Internal.Host
             return _externalRawUI.LengthInBufferCells(str, offset);
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="character"></param>
         /// <returns></returns>
         /// <exception cref="HostException">

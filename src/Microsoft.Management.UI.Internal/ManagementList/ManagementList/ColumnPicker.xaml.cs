@@ -15,9 +15,7 @@ using System.Windows.Input;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <summary>
-    /// Interaction logic for ColumnPicker.xaml.
-    /// </summary>
+    
     /// <remarks>
     /// The logic for manipulating the column lists is in
     /// <see cref="InnerListGridView.OnColumnPicker"/>.
@@ -29,9 +27,7 @@ namespace Microsoft.Management.UI.Internal
         private ObservableCollection<InnerListColumn> selectedColumns = new ObservableCollection<InnerListColumn>();
 
         #region constructor
-        /// <summary>
-        /// Default Constructor.
-        /// </summary>
+        
         internal ColumnPicker()
         {
             this.InitializeComponent();
@@ -41,9 +37,7 @@ namespace Microsoft.Management.UI.Internal
             this.PART_SelectedList.ItemsSource = this.selectedColumns;
         }
 
-        /// <summary>
-        /// Constructor which initializes lists.
-        /// </summary>
+        
         /// <param name="columns">Initially selected columns.</param>
         /// <param name="availableColumns">
         /// All initial columns, if these include any which are selected
@@ -104,9 +98,7 @@ namespace Microsoft.Management.UI.Internal
         #endregion constructor
 
         #region properties
-        /// <summary>
-        /// Gets the columns in "Selected columns" list.
-        /// </summary>
+        
         internal ObservableCollection<InnerListColumn> SelectedColumns
         {
             get
@@ -115,9 +107,7 @@ namespace Microsoft.Management.UI.Internal
             }
         }
 
-        /// <summary>
-        /// Gets the columns in "Available columns" list.
-        /// </summary>
+        
         internal ObservableCollection<InnerListColumn> NotSelectedColumns
         {
             get
@@ -129,9 +119,7 @@ namespace Microsoft.Management.UI.Internal
 
         #region button clicks
 
-        /// <summary>
-        /// OK button was clicked.
-        /// </summary>
+        
         /// <param name="sender">OK button.</param>
         /// <param name="e">The RoutedEventArgs.</param>
         internal void OkButtonClick(object sender, RoutedEventArgs e)
@@ -149,9 +137,7 @@ namespace Microsoft.Management.UI.Internal
             this.DialogResult = true; // close the dialog
         }
 
-        /// <summary>
-        /// Move Up button was clicked.
-        /// </summary>
+        
         /// <param name="sender">Move Up button.</param>
         /// <param name="e">The RoutedEventArgs.</param>
         /// <remarks>
@@ -170,9 +156,7 @@ namespace Microsoft.Management.UI.Internal
             this.OnSelectionChanged();
         }
 
-        /// <summary>
-        /// Move Down button was clicked.
-        /// </summary>
+        
         /// <param name="sender">Move Down button.</param>
         /// <param name="e">The RoutedEventArgs.</param>
         internal void MoveDownButtonClick(object sender, RoutedEventArgs e)
@@ -187,9 +171,7 @@ namespace Microsoft.Management.UI.Internal
             this.OnSelectionChanged();
         }
 
-        /// <summary>
-        /// Add button was clicked.
-        /// </summary>
+        
         /// <param name="sender">Add button.</param>
         /// <param name="e">The RoutedEventArgs.</param>
         internal void AddButtonClick(object sender, RoutedEventArgs e)
@@ -211,9 +193,7 @@ namespace Microsoft.Management.UI.Internal
             this.OnSelectionChanged();
         }
 
-        /// <summary>
-        /// Remove button was clicked.
-        /// </summary>
+        
         /// <param name="sender">Remove button.</param>
         /// <param name="e">The RoutedEventArgs.</param>
         /// <remarks>
@@ -255,9 +235,7 @@ namespace Microsoft.Management.UI.Internal
         #endregion button clicks
 
         #region Automation
-        /// <summary>
-        /// Creates AutomationPeer (<see cref="UIElement.OnCreateAutomationPeer"/>).
-        /// </summary>
+        
         /// <returns>New AutomationPeer.</returns>
         protected override AutomationPeer OnCreateAutomationPeer()
         {
@@ -266,9 +244,7 @@ namespace Microsoft.Management.UI.Internal
         #endregion Automation
 
         #region enable/disable buttons
-        /// <summary>
-        /// The selection changed in either the Selected or NotSelected list.
-        /// </summary>
+        
         /// <param name="sender">The sender.</param>
         /// <param name="e">The eventargs.</param>
         private void ListSelectionChanged(
@@ -277,11 +253,7 @@ namespace Microsoft.Management.UI.Internal
             this.OnSelectionChanged();
         }
 
-        /// <summary>
-        /// Update which buttons are enabled based on current selection,
-        /// also whether RequiredColumnText or LastColumnText
-        /// should be visible.
-        /// </summary>
+        
         private void OnSelectionChanged()
         {
             Selector selectedList = (Selector)this.FindName(
@@ -306,10 +278,7 @@ namespace Microsoft.Management.UI.Internal
         }
         #endregion enable/disable buttons
 
-        /// <summary>
-        /// Handles mouse double-click of items in
-        /// <see cref="PART_NotSelectedList"/>.
-        /// </summary>
+        
         /// <param name="sender">The sender.</param>
         /// <param name="e">The eventargs.</param>
         private void NotSelectedList_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -332,10 +301,7 @@ namespace Microsoft.Management.UI.Internal
             this.AddButtonClick(sender, e);
         }
 
-        /// <summary>
-        /// Handles mouse double-click of items in
-        /// <see cref="PART_SelectedList"/>.
-        /// </summary>
+        
         /// <param name="sender">The sender.</param>
         /// <param name="e">The eventargs.</param>
         private void SelectedList_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)

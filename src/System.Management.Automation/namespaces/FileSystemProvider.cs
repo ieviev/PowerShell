@@ -31,10 +31,7 @@ namespace Microsoft.PowerShell.Commands
 {
     #region FileSystemProvider
 
-    /// <summary>
-    /// Defines the implementation of a File System Provider.  This provider
-    /// allows for stateless namespace navigation of the file system.
-    /// </summary>
+    
     [CmdletProvider(FileSystemProvider.ProviderName, ProviderCapabilities.Credentials | ProviderCapabilities.Filter | ProviderCapabilities.ShouldProcess)]
     [OutputType(typeof(FileSecurity), ProviderCmdlet = ProviderCmdlet.SetAcl)]
     [OutputType(typeof(string), typeof(PathInfo), ProviderCmdlet = ProviderCmdlet.ResolvePath)]
@@ -67,23 +64,15 @@ namespace Microsoft.PowerShell.Commands
         // to copy an item onto itself.
         private const string SelfCopyDataKey = "SelfCopy";
 
-        /// <summary>
-        /// An instance of the PSTraceSource class used for trace output
-        /// using "FileSystemProvider" as the category.
-        /// </summary>
+        
         [Dbg.TraceSource("FileSystemProvider", "The namespace navigation provider for the file system")]
         private static readonly Dbg.PSTraceSource s_tracer =
             Dbg.PSTraceSource.GetTracer("FileSystemProvider", "The namespace navigation provider for the file system");
 
-        /// <summary>
-        /// Gets the name of the provider.
-        /// </summary>
+        
         public const string ProviderName = "FileSystem";
 
-        /// <summary>
-        /// Initializes a new instance of the FileSystemProvider class. Since this
-        /// object needs to be stateless, the constructor does nothing.
-        /// </summary>
+        
         public FileSystemProvider()
         {
         }
@@ -97,9 +86,7 @@ namespace Microsoft.PowerShell.Commands
             AttributesToSkip = 0 // Default is to skip Hidden and System files, so we clear this to retain existing behavior
         };
 
-        /// <summary>
-        /// Converts all / in the path to \
-        /// </summary>
+        
         /// <param name="path">
         /// The path to normalize.
         /// </param>
@@ -111,10 +98,7 @@ namespace Microsoft.PowerShell.Commands
             return GetCorrectCasedPath(path.Replace(StringLiterals.AlternatePathSeparator, StringLiterals.DefaultPathSeparator));
         }
 
-        /// <summary>
-        /// Get the correct casing for a path.  This method assumes it's being called by NormalizePath()
-        /// so that the path is already normalized.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to retrieve.
         /// </param>
@@ -198,10 +182,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Checks if the item exist at the specified path. if it exists then creates
-        /// appropriate directoryinfo or fileinfo object.
-        /// </summary>
+        
         /// <param name="path">
         /// Refers to the item for which we are checking for existence and creating filesysteminfo object.
         /// </param>
@@ -243,10 +224,7 @@ namespace Microsoft.PowerShell.Commands
             return null;
         }
 
-        /// <summary>
-        /// Overrides the method of CmdletProvider, considering the additional
-        /// dynamic parameters of FileSystemProvider.
-        /// </summary>
+        
         /// <returns>
         /// whether the filter or attribute filter is set.
         /// </returns>
@@ -268,13 +246,7 @@ namespace Microsoft.PowerShell.Commands
             return (attributeFilterSet || base.IsFilterSet());
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for get-childnames on the
-        /// FileSystemProvider.
-        /// We currently only support one dynamic parameter,
-        /// "Attributes" that returns an enum evaluator for the
-        /// given expression.
-        /// </summary>
+        
         /// <param name="path">
         /// If the path was specified on the command line, this is the path
         /// to the item for which to get the dynamic parameters.
@@ -288,13 +260,7 @@ namespace Microsoft.PowerShell.Commands
             return new GetChildDynamicParameters();
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for get-childitems on the
-        /// FileSystemProvider.
-        /// We currently only support one dynamic parameter,
-        /// "Attributes" that returns an enum evaluator for the
-        /// given expression.
-        /// </summary>
+        
         /// <param name="path">
         /// If the path was specified on the command line, this is the path
         /// to the item for which to get the dynamic parameters.
@@ -311,9 +277,7 @@ namespace Microsoft.PowerShell.Commands
             return new GetChildDynamicParameters();
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for Copy-Item on the FileSystemProvider.
-        /// </summary>
+        
         /// <param name="path">Source for the copy operation.</param>
         /// <param name="destination">Destination for the copy operation.</param>
         /// <param name="recurse">Whether to recurse.</param>
@@ -325,10 +289,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region ICmdletProviderSupportsHelp members
 
-        /// <summary>
-        /// Implementation of ICmdletProviderSupportsHelp interface.
-        /// Gets provider-specific help content for the corresponding cmdlet.
-        /// </summary>
+        
         /// <param name="helpItemName">
         /// Name of command that the help is requested for.
         /// </param>
@@ -438,11 +399,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region CmdletProvider members
 
-        /// <summary>
-        /// Starts the File System provider. This method sets the Home for the
-        /// provider to providerInfo.Home if specified, and %USERPROFILE%
-        /// otherwise.
-        /// </summary>
+        
         /// <param name="providerInfo">
         /// The ProviderInfo object that holds the provider's configuration.
         /// </param>
@@ -493,9 +450,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region DriveCmdletProvider members
 
-        /// <summary>
-        /// Determines if the specified drive can be mounted.
-        /// </summary>
+        
         /// <param name="drive">
         /// The drive that is going to be mounted.
         /// </param>
@@ -588,9 +543,7 @@ namespace Microsoft.PowerShell.Commands
             return result;
         }
 
-        /// <summary>
-        /// MapNetworkDrive facilitates to map the newly created PS Drive to a network share.
-        /// </summary>
+        
         /// <param name="drive">The PSDrive info that would be used to create a new PS drive.</param>
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "Can be static on Unix but not on Windows.")]
 
@@ -664,10 +617,7 @@ namespace Microsoft.PowerShell.Commands
 #endif
         }
 
-        /// <summary>
-        /// ShouldMapNetworkDrive is a helper function used to detect if the
-        /// requested PSDrive to be created has to be mapped to a network drive.
-        /// </summary>
+        
         /// <param name="drive"></param>
         /// <returns></returns>
         private static bool IsNetworkMappedDrive(PSDriveInfo drive)
@@ -678,9 +628,7 @@ namespace Microsoft.PowerShell.Commands
             return shouldMapNetworkDrive;
         }
 
-        /// <summary>
-        /// RemoveDrive facilitates to remove network mapped persisted PSDrvie.
-        /// </summary>
+        
         /// <param name="drive">
         /// PSDrive info.
         /// </param>
@@ -722,10 +670,7 @@ namespace Microsoft.PowerShell.Commands
 #endif
         }
 
-        /// <summary>
-        /// IsSupportedDriveForPersistence is a helper method used to
-        /// check if the psdrive can be persisted or not.
-        /// </summary>
+        
         /// <param name="drive">
         /// PS Drive Info.
         /// </param>
@@ -746,10 +691,7 @@ namespace Microsoft.PowerShell.Commands
             return isSupportedDriveForPersistence;
         }
 
-        /// <summary>
-        /// Return the UNC path for a given network drive
-        /// using the Windows API.
-        /// </summary>
+        
         /// <param name="driveName"></param>
         /// <returns></returns>
         internal static string GetUNCForNetworkDrive(string driveName)
@@ -772,15 +714,7 @@ namespace Microsoft.PowerShell.Commands
 #endif
         }
 
-        /// <summary>
-        /// Get the substituted path of a NetWork type MS-DOS device that is created by 'subst' command.
-        /// When a MS-DOS device is of NetWork type, it could be:
-        ///   1. Substitute a path in a drive that maps to a network location. For example:
-        ///         net use z: \\scratch2\scratch\
-        ///         subst y: z:\abc\
-        ///   2. Substitute a network location directly. For example:
-        ///         subst y: \\scratch2\scratch\
-        /// </summary>
+        
         /// <param name="driveName"></param>
         /// <returns></returns>
         internal static string GetSubstitutedPathForNetworkDosDevice(string driveName)
@@ -804,9 +738,7 @@ namespace Microsoft.PowerShell.Commands
         }
 #endif
 
-        /// <summary>
-        /// Get the root path for a network drive or MS-DOS device.
-        /// </summary>
+        
         /// <param name="driveInfo"></param>
         /// <returns></returns>
         internal static string GetRootPathForNetworkDriveOrDosDevice(DriveInfo driveInfo)
@@ -839,9 +771,7 @@ namespace Microsoft.PowerShell.Commands
             return rootPath;
         }
 
-        /// <summary>
-        /// Returns a collection of all logical drives in the system.
-        /// </summary>
+        
         /// <returns>
         /// A collection of PSDriveInfo objects, one for each logical drive returned from
         /// System.Environment.GetLogicalDrives().
@@ -1007,9 +937,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region ItemCmdletProvider methods
 
-        /// <summary>
-        /// Retrieves the dynamic parameters required for the Get-Item cmdlet.
-        /// </summary>
+        
         /// <param name="path">The path of the file to process.</param>
         /// <returns>An instance of the FileSystemProviderGetItemDynamicParameters class that represents the dynamic parameters.</returns>
         protected override object GetItemDynamicParameters(string path)
@@ -1017,11 +945,7 @@ namespace Microsoft.PowerShell.Commands
             return new FileSystemProviderGetItemDynamicParameters();
         }
 
-        /// <summary>
-        /// Determines if the specified path is syntactically and semantically valid.
-        /// An example path looks like this
-        ///     C:\WINNT\Media\chimes.wav.
-        /// </summary>
+        
         /// <param name="path">
         /// The fully qualified path to validate.
         /// </param>
@@ -1098,9 +1022,7 @@ namespace Microsoft.PowerShell.Commands
             return true;
         }
 
-        /// <summary>
-        /// Gets the item at the specified path.
-        /// </summary>
+        
         /// <param name="path">
         /// A fully qualified path representing a file or directory in the
         /// file system.
@@ -1299,9 +1221,7 @@ namespace Microsoft.PowerShell.Commands
             return null;
         }
 
-        /// <summary>
-        /// Invokes the item at the path using ShellExecute semantics.
-        /// </summary>
+        
         /// <param name="path">
         /// The item to invoke.
         /// </param>
@@ -1366,9 +1286,7 @@ namespace Microsoft.PowerShell.Commands
         #region ContainerCmdletProvider members
 
         #region GetChildItems
-        /// <summary>
-        /// Gets the child items of a given directory.
-        /// </summary>
+        
         /// <param name="path">
         /// The full path of the directory to enumerate.
         /// </param>
@@ -1395,10 +1313,7 @@ namespace Microsoft.PowerShell.Commands
         #endregion GetChildItems
 
         #region GetChildNames
-        /// <summary>
-        /// Gets the path names for all children of the specified
-        /// directory that match the given filter.
-        /// </summary>
+        
         /// <param name="path">
         /// The full path of the directory to enumerate.
         /// </param>
@@ -1420,10 +1335,7 @@ namespace Microsoft.PowerShell.Commands
         }
         #endregion GetChildNames
 
-        /// <summary>
-        /// Gets a new provider-specific path and filter (if any) that corresponds to the given
-        /// path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item. Unlike most other provider APIs, this path is likely to
         /// contain PowerShell wildcards.
@@ -1810,10 +1722,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Create an enum expression evaluator for user-specified attribute filtering
-        /// switch parameters.
-        /// </summary>
+        
         /// <returns>
         /// If any attribute filtering switch parameters are set,
         /// returns an evaluator that evaluates these parameters.
@@ -1861,17 +1770,13 @@ namespace Microsoft.PowerShell.Commands
             return switchParamEvaluator;
         }
 
-        /// <summary>
-        /// Provides a mode property for FileSystemInfo.
-        /// </summary>
+        
         /// <param name="instance">Instance of PSObject wrapping a FileSystemInfo.</param>
         /// <returns>A string representation of the FileAttributes, with one letter per attribute.</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods")]
         public static string Mode(PSObject instance) => Mode(instance, excludeHardLink: false);
 
-        /// <summary>
-        /// Provides a ModeWithoutHardLink property for FileSystemInfo, without HardLinks for performance reasons.
-        /// </summary>
+        
         /// <param name="instance">Instance of PSObject wrapping a FileSystemInfo.</param>
         /// <returns>A string representation of the FileAttributes, with one letter per attribute.</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods")]
@@ -1920,9 +1825,7 @@ namespace Microsoft.PowerShell.Commands
                 : string.Empty;
         }
 
-        /// <summary>
-        /// Provides a NameString property for FileSystemInfo.
-        /// </summary>
+        
         /// <param name="instance">Instance of PSObject wrapping a FileSystemInfo.</param>
         /// <returns>Name if a file or directory, Name -> Target if symlink.</returns>
         public static string NameString(PSObject instance)
@@ -1955,9 +1858,7 @@ namespace Microsoft.PowerShell.Commands
             return string.Empty;
         }
 
-        /// <summary>
-        /// Provides a LengthString property for FileSystemInfo.
-        /// </summary>
+        
         /// <param name="instance">Instance of PSObject wrapping a FileSystemInfo.</param>
         /// <returns>Length as a string.</returns>
         public static string LengthString(PSObject instance)
@@ -1969,9 +1870,7 @@ namespace Microsoft.PowerShell.Commands
                 : string.Empty;
         }
 
-        /// <summary>
-        /// Provides a LastWriteTimeString property for FileSystemInfo.
-        /// </summary>
+        
         /// <param name="instance">Instance of PSObject wrapping a FileSystemInfo.</param>
         /// <returns>LastWriteTime formatted as short date + short time.</returns>
         public static string LastWriteTimeString(PSObject instance)
@@ -1983,9 +1882,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region RenameItem
 
-        /// <summary>
-        /// Renames a file or directory.
-        /// </summary>
+        
         /// <param name="path">
         /// The current full path to the file or directory.
         /// </param>
@@ -2116,9 +2013,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region NewItem
 
-        /// <summary>
-        /// Creates a file or directory with the given path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path of the file or directory to create.
         /// </param>
@@ -2651,9 +2546,7 @@ namespace Microsoft.PowerShell.Commands
             return itemType;
         }
 
-        /// <summary>
-        /// Creates a directory at the specified path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path of the directory to create
         /// </param>
@@ -2810,9 +2703,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region RemoveItem
 
-        /// <summary>
-        /// Removes the specified file or directory.
-        /// </summary>
+        
         /// <param name="path">
         /// The full path to the file or directory to be removed.
         /// </param>
@@ -2973,9 +2864,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Retrieves the dynamic parameters required for the Remove-Item cmdlet.
-        /// </summary>
+        
         /// <param name="path">The path of the file to process.</param>
         /// <param name="recurse">Whether to recurse into containers.</param>
         /// <returns>An instance of the FileSystemProviderRemoveItemDynamicParameters class that represents the dynamic parameters.</returns>
@@ -2991,9 +2880,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Removes a directory from the file system.
-        /// </summary>
+        
         /// <param name="directory">
         /// The DirectoryInfo object representing the directory to be removed.
         /// </param>
@@ -3147,9 +3034,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Removes a file from the file system.
-        /// </summary>
+        
         /// <param name="file">
         /// The FileInfo object representing the file to be removed.
         /// </param>
@@ -3171,9 +3056,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Removes the file system object from the file system.
-        /// </summary>
+        
         /// <param name="fileSystemInfo">
         /// The FileSystemInfo object representing the file or directory to be removed.
         /// </param>
@@ -3307,9 +3190,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region ItemExists
 
-        /// <summary>
-        /// Determines if a file or directory exists at the specified path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path of the item to check.
         /// </param>
@@ -3332,11 +3213,7 @@ namespace Microsoft.PowerShell.Commands
             return result;
         }
 
-        /// <summary>
-        /// Implementation of ItemExists for the provider. This implementation
-        /// allows the caller to decide if it wants to WriteError or not based
-        /// on the returned ErrorRecord.
-        /// </summary>
+        
         /// <param name="path">
         /// The path of the object to check
         /// </param>
@@ -3410,9 +3287,7 @@ namespace Microsoft.PowerShell.Commands
             return result;
         }
 
-        /// <summary>
-        /// Adds -OlderThan, -NewerThan dynamic properties.
-        /// </summary>
+        
         /// <param name="path">
         /// If the path was specified on the command line, this is the path
         /// to the item to get the dynamic parameters for.
@@ -3436,9 +3311,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region HasChildItems
 
-        /// <summary>
-        /// Determines if the given path is a directory, and has children.
-        /// </summary>
+        
         /// <param name="path">
         /// The full path to the directory.
         /// </param>
@@ -3532,9 +3405,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region CopyItem
 
-        /// <summary>
-        /// Copies an item at the specified path to the given destination.
-        /// </summary>
+        
         /// <param name="path">
         /// The path of the item to copy.
         /// </param>
@@ -4956,9 +4827,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region NavigationCmdletProvider members
 
-        /// <summary>
-        /// Gets the parent of the given path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path of which to get the parent.
         /// </param>
@@ -5007,12 +4876,7 @@ namespace Microsoft.PowerShell.Commands
             return path.Contains(':');
         }
 
-        /// <summary>
-        /// Determines if the specified path is a root of a UNC share
-        /// by counting the path separators "\" following "\\". If only
-        /// one path separator is found we know the path is in the form
-        /// "\\server\share" and is a valid UNC root.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to check to see if its a UNC root.
         /// </param>
@@ -5062,9 +4926,7 @@ namespace Microsoft.PowerShell.Commands
             return result;
         }
 
-        /// <summary>
-        /// Determines if the specified path is either a drive root or a UNC root.
-        /// </summary>
+        
         /// <param name="path">
         /// The path
         /// </param>
@@ -5085,10 +4947,7 @@ namespace Microsoft.PowerShell.Commands
             return result;
         }
 
-        /// <summary>
-        /// Normalizes the path that was passed in and returns it as a normalized
-        /// path relative to the given basePath.
-        /// </summary>
+        
         /// <param name="path">
         /// A fully qualifiedpath to an item. The item must exist,
         /// or the provider writes out an error.
@@ -5263,10 +5122,7 @@ namespace Microsoft.PowerShell.Commands
             return result;
         }
 
-        /// <summary>
-        /// Normalizes the path that was passed in and returns the normalized path
-        /// as a relative path to the basePath that was passed.
-        /// </summary>
+        
         /// <param name="path">
         /// A fully qualified provider specific path to an item. The item should exist
         /// or the provider should write out an error.
@@ -5477,9 +5333,7 @@ namespace Microsoft.PowerShell.Commands
             return path;
         }
 
-        /// <summary>
-        /// Get the common base path of two paths.
-        /// </summary>
+        
         /// <param name="path1">One path.</param>
         /// <param name="path2">Another path.</param>
         private string GetCommonBase(string path1, string path2)
@@ -5502,9 +5356,7 @@ namespace Microsoft.PowerShell.Commands
             return path1;
         }
 
-        /// <summary>
-        /// Tokenizes the specified path onto a stack.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to tokenize.
         /// </param>
@@ -5564,9 +5416,7 @@ namespace Microsoft.PowerShell.Commands
             return tokenizedPathStack;
         }
 
-        /// <summary>
-        /// Given the tokenized path, the relative path elements are removed.
-        /// </summary>
+        
         /// <param name="basepath">
         ///   String containing basepath for which we are trying to find the relative path.
         /// </param>
@@ -5661,9 +5511,7 @@ namespace Microsoft.PowerShell.Commands
             return normalizedPathStack;
         }
 
-        /// <summary>
-        /// Pops each leaf element of the stack and uses MakePath to generate the relative path.
-        /// </summary>
+        
         /// <param name="normalizedPathStack">
         /// The stack containing the leaf elements of the path.
         /// </param>
@@ -5695,9 +5543,7 @@ namespace Microsoft.PowerShell.Commands
             return leafElement;
         }
 
-        /// <summary>
-        /// Gets the name of the leaf element of the specified path.
-        /// </summary>
+        
         /// <param name="path">
         /// The fully qualified path to the item.
         /// </param>
@@ -5759,9 +5605,7 @@ namespace Microsoft.PowerShell.Commands
             return result;
         }
 
-        /// <summary>
-        /// Determines if the item at the specified path is a directory.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the file or directory to check.
         /// </param>
@@ -5786,9 +5630,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region MoveItem
 
-        /// <summary>
-        /// Moves an item at the specified path to the given destination.
-        /// </summary>
+        
         /// <param name="path">
         /// The path of the item to move.
         /// </param>
@@ -6105,11 +5947,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Implements the file move operation for directories without handling any error scenarios.
-        /// In particular, this attempts to rename or copy+delete the file,
-        /// but passes any exceptional behavior through to the caller.
-        /// </summary>
+        
         /// <param name="directory">The directory to move.</param>
         /// <param name="destinationPath">The destination path to move the directory to.</param>
         /// <param name="force">If true, force move the directory, overwriting anything at the destination.</param>
@@ -6183,9 +6021,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region IPropertyCmdletProvider
 
-        /// <summary>
-        /// Gets a property for the given item.
-        /// </summary>
+        
         /// <param name="path">The fully qualified path to the item.</param>
         /// <param name="providerSpecificPickList">
         /// The list of properties to get.  Examples include "Attributes", "LastAccessTime,"
@@ -6282,10 +6118,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets the dynamic property parameters required by the get-itemproperty cmdlet.
-        /// This feature is not required by the File System provider.
-        /// </summary>
+        
         /// <param name="path">
         /// If the path was specified on the command line, this is the path
         /// to the item for which to get the dynamic parameters.
@@ -6304,9 +6137,7 @@ namespace Microsoft.PowerShell.Commands
             return null;
         }
 
-        /// <summary>
-        /// Sets the specified properties on the item at the given path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path of the item on which to set the properties.
         /// </param>
@@ -6453,10 +6284,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets the dynamic property parameters required by the set-itemproperty cmdlet.
-        /// This feature is not required by the File System provider.
-        /// </summary>
+        
         /// <param name="path">
         /// If the path was specified on the command line, this is the path
         /// to the item for which to set the dynamic parameters.
@@ -6475,10 +6303,7 @@ namespace Microsoft.PowerShell.Commands
             return null;
         }
 
-        /// <summary>
-        /// Clears the specified properties on the item at the given path.
-        /// The File System provider supports only the "Attributes" property.
-        /// </summary>
+        
         /// <param name="path">
         /// The path of the item on which to clear the properties.
         /// </param>
@@ -6573,10 +6398,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets the dynamic property parameters required by the clear-itemproperty cmdlet.
-        /// This feature is not required by the File System provider.
-        /// </summary>
+        
         /// <param name="path">
         /// If the path was specified on the command line, this is the path
         /// to the item for which to set the dynamic parameters.
@@ -6598,11 +6420,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region IContentCmdletProvider
 
-        /// <summary>
-        /// Creates an instance of the FileSystemContentStream class, opens
-        /// the specified file for reading, and returns the IContentReader interface
-        /// to it.
-        /// </summary>
+        
         /// <param name="path">
         /// The path of the file to be opened for reading.
         /// </param>
@@ -6763,9 +6581,7 @@ namespace Microsoft.PowerShell.Commands
             return stream;
         }
 
-        /// <summary>
-        /// Gets the dynamic property parameters required by the get-content cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// If the path was specified on the command line, this is the path
         /// to the item for which to get the dynamic parameters.
@@ -6779,11 +6595,7 @@ namespace Microsoft.PowerShell.Commands
             return new FileSystemContentReaderDynamicParameters(this);
         }
 
-        /// <summary>
-        /// Creates an instance of the FileSystemContentStream class, opens
-        /// the specified file for writing, and returns the IContentReader interface
-        /// to it.
-        /// </summary>
+        
         /// <param name="path">
         /// The path of the file to be opened for writing.
         /// </param>
@@ -6903,10 +6715,7 @@ namespace Microsoft.PowerShell.Commands
             return stream;
         }
 
-        /// <summary>
-        /// Gets the dynamic property parameters required by the set-content and
-        /// add-content cmdlets.
-        /// </summary>
+        
         /// <param name="path">
         /// If the path was specified on the command line, this is the path
         /// to the item for which to get the dynamic parameters.
@@ -6920,9 +6729,7 @@ namespace Microsoft.PowerShell.Commands
             return new FileSystemContentWriterDynamicParameters(this);
         }
 
-        /// <summary>
-        /// Clears the content of the specified file.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the file of which to clear the contents.
         /// </param>
@@ -7092,9 +6899,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets the dynamic property parameters required by the clear-content cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// If the path was specified on the command line, this is the path
         /// to the item for which to get the dynamic parameters.
@@ -7109,10 +6914,7 @@ namespace Microsoft.PowerShell.Commands
 
         #endregion IContentCmdletProvider
 
-        /// <summary>
-        /// -raw is not allowed when -first,-last or -wait is specified
-        /// this call will validate that and throws.
-        /// </summary>
+        
         private void ValidateParameters(bool isRawSpecified)
         {
             if (isRawSpecified)
@@ -7143,10 +6945,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// The API 'PathIsNetworkPath' is not available in CoreSystem.
-        /// This implementation is based on the 'PathIsNetworkPath' API.
-        /// </summary>
+        
         /// <param name="path"></param>
         /// <returns></returns>
         internal static bool PathIsNetworkPath(string path)
@@ -7159,10 +6958,7 @@ namespace Microsoft.PowerShell.Commands
         }
 
 #if !UNIX
-        /// <summary>
-        /// The API 'PathIsNetworkPath' is not available in CoreSystem.
-        /// This implementation is based on the 'PathIsNetworkPath' API.
-        /// </summary>
+        
         /// <param name="path">A file system path.</param>
         /// <returns>True if the path is a network path.</returns>
         internal static bool WinPathIsNetworkPath(string path)
@@ -7197,16 +6993,12 @@ namespace Microsoft.PowerShell.Commands
 #endif
 
         #region InodeTracker
-        /// <summary>
-        /// Tracks visited files/directories by caching their device IDs and inodes.
-        /// </summary>
+        
         private sealed class InodeTracker
         {
             private readonly HashSet<(UInt64, UInt64)> _visitations;
 
-            /// <summary>
-            /// Construct a new InodeTracker with an initial path.
-            /// </summary>
+            
             internal InodeTracker(string path)
             {
                 _visitations = new HashSet<(UInt64, UInt64)>();
@@ -7217,9 +7009,7 @@ namespace Microsoft.PowerShell.Commands
                 }
             }
 
-            /// <summary>
-            /// Attempt to mark a path as having been visited.
-            /// </summary>
+            
             /// <param name="path">
             /// Path to the file system item to be visited.
             /// </param>
@@ -7328,26 +7118,18 @@ namespace Microsoft.PowerShell.Commands
         public PSSession ToSession { get; set; }
     }
 
-    /// <summary>
-    /// Defines the container cmdlet dynamic providers.
-    /// </summary>
+    
     internal sealed class GetChildDynamicParameters
     {
-        /// <summary>
-        /// Gets or sets the attribute filtering enum evaluator.
-        /// </summary>
+        
         [Parameter]
         public FlagsExpression<FileAttributes> Attributes { get; set; }
 
-        /// <summary>
-        /// Gets or sets the flag to follow symbolic links when recursing.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter FollowSymlink { get; set; }
 
-        /// <summary>
-        /// Gets or sets the filter directory flag.
-        /// </summary>
+        
         [Parameter]
         [Alias("ad")]
         public SwitchParameter Directory
@@ -7359,9 +7141,7 @@ namespace Microsoft.PowerShell.Commands
 
         private bool _attributeDirectory;
 
-        /// <summary>
-        /// Gets or sets the filter file flag.
-        /// </summary>
+        
         [Parameter]
         [Alias("af")]
         public SwitchParameter File
@@ -7373,9 +7153,7 @@ namespace Microsoft.PowerShell.Commands
 
         private bool _attributeFile;
 
-        /// <summary>
-        /// Gets or sets the filter hidden flag.
-        /// </summary>
+        
         [Parameter]
         [Alias("ah", "h")]
         public SwitchParameter Hidden
@@ -7387,9 +7165,7 @@ namespace Microsoft.PowerShell.Commands
 
         private bool _attributeHidden;
 
-        /// <summary>
-        /// Gets or sets the filter readonly flag.
-        /// </summary>
+        
         [Parameter]
         [Alias("ar")]
         public SwitchParameter ReadOnly
@@ -7401,9 +7177,7 @@ namespace Microsoft.PowerShell.Commands
 
         private bool _attributeReadOnly;
 
-        /// <summary>
-        /// Gets or sets the filter system flag.
-        /// </summary>
+        
         [Parameter]
         [Alias("as")]
         public SwitchParameter System
@@ -7416,9 +7190,7 @@ namespace Microsoft.PowerShell.Commands
         private bool _attributeSystem;
     }
 
-    /// <summary>
-    /// Defines the dynamic parameters used by both the content reader and writer.
-    /// </summary>
+    
     public class FileSystemContentDynamicParametersBase
     {
         internal FileSystemContentDynamicParametersBase(FileSystemProvider provider)
@@ -7428,10 +7200,7 @@ namespace Microsoft.PowerShell.Commands
 
         private readonly FileSystemProvider _provider;
 
-        /// <summary>
-        /// Gets or sets the encoding method used when
-        /// reading data from the file.
-        /// </summary>
+        
         [Parameter]
         [ArgumentToEncodingTransformation]
         [ArgumentEncodingCompletions]
@@ -7459,52 +7228,36 @@ namespace Microsoft.PowerShell.Commands
 
         private Encoding _encoding = Encoding.Default;
 
-        /// <summary>
-        /// Return file contents as a byte stream or create file from a series of bytes.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter AsByteStream { get; set; }
 
 #if !UNIX
-        /// <summary>
-        /// A parameter to return a stream of an item.
-        /// </summary>
+        
         [Parameter]
         public string Stream { get; set; }
 #endif
 
-        /// <summary>
-        /// Gets the status of the StreamType parameter.  Returns true
-        /// if the stream was opened with a user-specified encoding, false otherwise.
-        /// </summary>
+        
         public bool WasStreamTypeSpecified { get; private set; }
     }
 
-    /// <summary>
-    /// Defines the dynamic parameters used by the Clear-Content cmdlet.
-    /// </summary>
+    
     public class FileSystemClearContentDynamicParameters
     {
 #if !UNIX
-        /// <summary>
-        /// A parameter to return a stream of an item.
-        /// </summary>
+        
         [Parameter]
         public string Stream { get; set; }
 #endif
     }
 
-    /// <summary>
-    /// Defines the dynamic parameters used by the set-content and
-    /// add-content cmdlets.
-    /// </summary>
+    
     public class FileSystemContentWriterDynamicParameters : FileSystemContentDynamicParametersBase
     {
         internal FileSystemContentWriterDynamicParameters(FileSystemProvider provider) : base(provider) { }
 
-        /// <summary>
-        /// False to add a newline to the end of the output string, true if not.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter NoNewline
         {
@@ -7522,17 +7275,12 @@ namespace Microsoft.PowerShell.Commands
         private bool _suppressNewline = false;
     }
 
-    /// <summary>
-    /// Defines the dynamic parameters used by the get-content cmdlet.
-    /// </summary>
+    
     public class FileSystemContentReaderDynamicParameters : FileSystemContentDynamicParametersBase
     {
         internal FileSystemContentReaderDynamicParameters(FileSystemProvider provider) : base(provider) { }
 
-        /// <summary>
-        /// Gets or sets the delimiter to use when reading the file.  Custom delimiters
-        /// may not be used when the file is opened with a "Byte" encoding.
-        /// </summary>
+        
         [Parameter]
         public string Delimiter
         {
@@ -7550,11 +7298,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string _delimiter = "\n";
 
-        /// <summary>
-        /// Gets or sets the Wait flag.  The wait flag determines if we want
-        /// the read-content call to poll (and wait) for changes to the file,
-        /// rather than exit after the content has been read.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter Wait
         {
@@ -7571,10 +7315,7 @@ namespace Microsoft.PowerShell.Commands
 
         private bool _wait;
 
-        /// <summary>
-        /// When the Raw switch is present, we don't do any breaks on newlines,
-        /// and only emit one object to the pipeline: all of the content.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter Raw
         {
@@ -7591,10 +7332,7 @@ namespace Microsoft.PowerShell.Commands
 
         private bool _isRaw;
 
-        /// <summary>
-        /// Gets the status of the delimiter parameter.  Returns true
-        /// if the delimiter was explicitly specified by the user, false otherwise.
-        /// </summary>
+        
         public bool DelimiterSpecified
         {
             get; private set;
@@ -7602,33 +7340,23 @@ namespace Microsoft.PowerShell.Commands
         }
     }
 
-    /// <summary>
-    /// Provides the dynamic parameters for test-path on the file system.
-    /// </summary>
+    
     public class FileSystemItemProviderDynamicParameters
     {
-        /// <summary>
-        /// A parameter to test if a file is older than a certain time or date.
-        /// </summary>
+        
         [Parameter]
         public DateTime? OlderThan { get; set; }
 
-        /// <summary>
-        /// A parameter to test if a file is newer than a certain time or date.
-        /// </summary>
+        
         [Parameter]
         public DateTime? NewerThan { get; set; }
     }
 
-    /// <summary>
-    /// Provides the dynamic parameters for Get-Item on the file system.
-    /// </summary>
+    
     public class FileSystemProviderGetItemDynamicParameters
     {
 #if !UNIX
-        /// <summary>
-        /// A parameter to return the streams of an item.
-        /// </summary>
+        
         [Parameter]
         [ValidateNotNullOrEmpty()]
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
@@ -7636,15 +7364,11 @@ namespace Microsoft.PowerShell.Commands
 #endif
     }
 
-    /// <summary>
-    /// Provides the dynamic parameters for Remove-Item on the file system.
-    /// </summary>
+    
     public class FileSystemProviderRemoveItemDynamicParameters
     {
 #if !UNIX
-        /// <summary>
-        /// A parameter to return the streams of an item.
-        /// </summary>
+        
         [Parameter]
         [ValidateNotNullOrEmpty()]
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
@@ -7656,9 +7380,7 @@ namespace Microsoft.PowerShell.Commands
 
     #region Symbolic Link
 
-    /// <summary>
-    /// Class to find the symbolic link target.
-    /// </summary>
+    
     public static partial class InternalSymbolicLinkLinkCodeMethods
     {
         private const int FSCTL_GET_REPARSE_POINT = 0x000900A8;
@@ -7740,9 +7462,7 @@ namespace Microsoft.PowerShell.Commands
                 IntPtr hFile,
                 out BY_HANDLE_FILE_INFORMATION lpFileInformation);
 
-        /// <summary>
-        /// Gets the target of the specified reparse point.
-        /// </summary>
+        
         /// <param name="instance">The object of FileInfo or DirectoryInfo type.</param>
         /// <returns>The target of the reparse point.</returns>
         [Obsolete("This method is now obsolete. Please use the .NET API 'FileSystemInfo.LinkTarget'", error: true)]
@@ -7762,9 +7482,7 @@ namespace Microsoft.PowerShell.Commands
             return null;
         }
 
-        /// <summary>
-        /// Gets the target for a given file or directory, resolving symbolic links.
-        /// </summary>
+        
         /// <param name="instance">The FileInfo or DirectoryInfo type.</param>
         /// <returns>The file path the instance points to.</returns>
         public static string ResolvedTarget(PSObject instance)
@@ -7778,9 +7496,7 @@ namespace Microsoft.PowerShell.Commands
             return null;
         }
 
-        /// <summary>
-        /// Gets the link type of the specified reparse point.
-        /// </summary>
+        
         /// <param name="instance">The object of FileInfo or DirectoryInfo type.</param>
         /// <returns>The link type of the reparse point. SymbolicLink for symbolic links.</returns>
         public static string GetLinkType(PSObject instance)
@@ -8120,37 +7836,25 @@ namespace System.Management.Automation.Internal
 #if !UNIX
     #region AlternateDataStreamUtilities
 
-    /// <summary>
-    /// Represents alternate stream data retrieved from a file.
-    /// </summary>
+    
     public class AlternateStreamData
     {
-        /// <summary>
-        /// The name of the file that holds this stream.
-        /// </summary>
+        
         public string FileName { get; set; }
 
-        /// <summary>
-        /// The name of this stream.
-        /// </summary>
+        
         public string Stream { get; set; }
 
-        /// <summary>
-        /// The length of this stream.
-        /// </summary>
+        
         public long Length { get; set; }
     }
 
-    /// <summary>
-    /// Provides access to alternate data streams on a file.
-    /// </summary>
+    
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes",
         Justification = "Needed by both the FileSystem provider and Unblock-File cmdlet.")]
     public static partial class AlternateDataStreamUtilities
     {
-        /// <summary>
-        /// List all of the streams on a file.
-        /// </summary>
+        
         /// <param name="path">The fully-qualified path to the file.</param>
         /// <returns>The list of streams (and their size) in the file.</returns>
         internal static List<AlternateStreamData> GetStreams(string path)
@@ -8219,9 +7923,7 @@ namespace System.Management.Automation.Internal
             return alternateStreams;
         }
 
-        /// <summary>
-        /// Creates a file stream on a file.
-        /// </summary>
+        
         /// <param name="path">The fully-qualified path to the file.</param>
         /// <param name="streamName">The name of the alternate data stream to open.</param>
         /// <param name="mode">The FileMode of the file.</param>
@@ -8240,9 +7942,7 @@ namespace System.Management.Automation.Internal
             return stream;
         }
 
-        /// <summary>
-        /// Tries to create a file stream on a file.
-        /// </summary>
+        
         /// <param name="path">The fully-qualified path to the file.</param>
         /// <param name="streamName">The name of the alternate data stream to open.</param>
         /// <param name="mode">The FileMode of the file.</param>
@@ -8274,9 +7974,7 @@ namespace System.Management.Automation.Internal
             return true;
         }
 
-        /// <summary>
-        /// Removes an alternate data stream.
-        /// </summary>
+        
         /// <param name="path">The path to the file.</param>
         /// <param name="streamName">The name of the alternate data stream to delete.</param>
         internal static void DeleteFileStream(string path, string streamName)
@@ -8353,20 +8051,14 @@ namespace System.Management.Automation.Internal
             private static partial bool FindClose(IntPtr handle);
         }
 
-        /// <summary>
-        /// Represents alternate stream data retrieved from a file.
-        /// </summary>
+        
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
         internal class AlternateStreamNativeData
         {
-            /// <summary>
-            /// The length of this stream.
-            /// </summary>
+            
             public long Length;
 
-            /// <summary>
-            /// The name of this stream.
-            /// </summary>
+            
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 296)]
             public string Name;
         }

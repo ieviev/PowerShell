@@ -19,9 +19,7 @@ namespace Microsoft.Management.UI.Internal
     {
         #region Structors
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Microsoft.Management.UI.Internal.ScalableImage" /> class.
-        /// </summary>
+        
         public ScalableImage()
         {
             // This constructor intentionally left blank
@@ -31,10 +29,7 @@ namespace Microsoft.Management.UI.Internal
 
         #region Overrides
 
-        /// <summary>
-        /// Called when the control is asked to render itself in a given area.
-        /// Sets the render size to use all available area when <see cref="Microsoft.Management.UI.Internal.ScalableImageSource.Brush"/> is provided.
-        /// </summary>
+        
         /// <param name="finalSize">The final area within the parent that this element should use to arrange itself and its children.</param>
         /// <returns>The actual size used to render the control.</returns>
         protected override Size ArrangeOverride(Size finalSize)
@@ -48,10 +43,7 @@ namespace Microsoft.Management.UI.Internal
             return base.ArrangeOverride(finalSize);
         }
 
-        /// <summary>
-        /// Called when the control is being rendered.
-        /// Renders the contents of the image as a vector or a bitmap, depending on which is provided.
-        /// </summary>
+        
         /// <param name="drawingContext">An instance of <see cref="System.Windows.Media.DrawingContext"/> used to render the control.</param>
         protected override void OnRender(DrawingContext drawingContext)
         {
@@ -74,10 +66,7 @@ namespace Microsoft.Management.UI.Internal
             }
         }
 
-        /// <summary>
-        /// Override of <see cref="UIElement.GetLayoutClip"/>.
-        /// Make this control to respect the ClipToBounds attribute value.
-        /// </summary>
+        
         /// <param name="layoutSlotSize">An instance of <see cref="System.Windows.Size"/> used for calculating an additional clip.</param>
         /// <returns>Geometry to use as an additional clip in case when element is larger than available space.</returns>
         protected override Geometry GetLayoutClip(Size layoutSlotSize)

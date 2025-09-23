@@ -14,42 +14,26 @@ using System.Text.RegularExpressions;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// Context information about a match.
-    /// </summary>
+    
     public sealed class MatchInfoContext : ICloneable
     {
         internal MatchInfoContext()
         {
         }
 
-        /// <summary>
-        /// Gets or sets the lines found before a match.
-        /// </summary>
+        
         public string[] PreContext { get; set; }
 
-        /// <summary>
-        /// Gets or sets the lines found after a match.
-        /// </summary>
+        
         public string[] PostContext { get; set; }
 
-        /// <summary>
-        /// Gets or sets the lines found before a match. Does not include
-        /// overlapping context and thus can be used to
-        /// display contiguous match regions.
-        /// </summary>
+        
         public string[] DisplayPreContext { get; set; }
 
-        /// <summary>
-        /// Gets or sets the lines found after a match. Does not include
-        /// overlapping context and thus can be used to
-        /// display contiguous match regions.
-        /// </summary>
+        
         public string[] DisplayPostContext { get; set; }
 
-        /// <summary>
-        /// Produce a deep copy of this object.
-        /// </summary>
+        
         /// <returns>A new object that is a copy of this instance.</returns>
         public object Clone()
         {
@@ -63,59 +47,40 @@ namespace Microsoft.PowerShell.Commands
         }
     }
 
-    /// <summary>
-    /// The object returned by select-string representing the result of a match.
-    /// </summary>
+    
     public class MatchInfo
     {
         private static readonly string s_inputStream = "InputStream";
 
-        /// <summary>
-        /// Gets or sets a value indicating whether the match was done ignoring case.
-        /// </summary>
+        
         /// <value>True if case was ignored.</value>
         public bool IgnoreCase { get; set; }
 
-        /// <summary>
-        /// Gets or sets the number of the matching line.
-        /// </summary>
+        
         /// <value>The number of the matching line.</value>
         public ulong LineNumber { get; set; }
 
-        /// <summary>
-        /// Gets or sets the text of the matching line.
-        /// </summary>
+        
         /// <value>The text of the matching line.</value>
         public string Line { get; set; } = string.Empty;
 
-        /// <summary>
-        /// Gets or sets a value indicating whether the matched portion of the string is highlighted.
-        /// </summary>
+        
         /// <value>Whether the matched portion of the string is highlighted with the negative VT sequence.</value>
         private readonly bool _emphasize;
 
-        /// <summary>
-        /// Stores the starting index of each match within the line.
-        /// </summary>
+        
         private readonly IReadOnlyList<int> _matchIndexes;
 
-        /// <summary>
-        /// Stores the length of each match within the line.
-        /// </summary>
+        
         private readonly IReadOnlyList<int> _matchLengths;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MatchInfo"/> class with emphasis disabled.
-        /// </summary>
+        
         public MatchInfo()
         {
             this._emphasize = false;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MatchInfo"/> class with emphasized matched text.
-        /// Used when virtual terminal sequences are supported.
-        /// </summary>
+        
         /// <param name="matchIndexes">Sets the matchIndexes.</param>
         /// <param name="matchLengths">Sets the matchLengths.</param>
         public MatchInfo(IReadOnlyList<int> matchIndexes, IReadOnlyList<int> matchLengths)
@@ -125,9 +90,7 @@ namespace Microsoft.PowerShell.Commands
             this._matchLengths = matchLengths;
         }
 
-        /// <summary>
-        /// Gets the base name of the file containing the matching line.
-        /// </summary>
+        
         /// <remarks>
         /// It will be the string "InputStream" if the object came from the input stream.
         /// This is a readonly property calculated from the path <see cref="Path"/>.
@@ -148,9 +111,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string _filename;
 
-        /// <summary>
-        /// Gets or sets the full path of the file containing the matching line.
-        /// </summary>
+        
         /// <remarks>
         /// It will be "InputStream" if the object came from the input stream.
         /// </remarks>
@@ -169,20 +130,14 @@ namespace Microsoft.PowerShell.Commands
 
         private bool _pathSet;
 
-        /// <summary>
-        /// Gets or sets the pattern that was used in the match.
-        /// </summary>
+        
         /// <value>The pattern string.</value>
         public string Pattern { get; set; }
 
-        /// <summary>
-        /// Gets or sets context for the match, or null if -context was not specified.
-        /// </summary>
+        
         public MatchInfoContext Context { get; set; }
 
-        /// <summary>
-        /// Returns the path of the matching file truncated relative to the <paramref name="directory"/> parameter.
-        /// </summary>
+        
         /// <remarks>
         /// For example, if the matching path was c:\foo\bar\baz.c and the directory argument was c:\foo
         /// the routine would return bar\baz.c .
@@ -229,10 +184,7 @@ namespace Microsoft.PowerShell.Commands
         private const string ContextPrefix = "  ";
         private const string EmptyPrefix = "";
 
-        /// <summary>
-        /// Returns the string representation of this object. The format
-        /// depends on whether a path has been set for this object or not.
-        /// </summary>
+        
         /// <remarks>
         /// If the path component is set, as would be the case when matching
         /// in a file, ToString() would return the path, line number and line text.
@@ -244,10 +196,7 @@ namespace Microsoft.PowerShell.Commands
             return ToString(null);
         }
 
-        /// <summary>
-        /// Returns the string representation of the match object same format as ToString()
-        /// but trims the path to be relative to the <paramref name="directory"/> argument.
-        /// </summary>
+        
         /// <param name="directory">Directory to use as the root when calculating the relative path.</param>
         /// <returns>The string representation of the match object.</returns>
         public string ToString(string directory)
@@ -255,11 +204,7 @@ namespace Microsoft.PowerShell.Commands
             return ToString(directory, Line);
         }
 
-        /// <summary>
-        /// Returns the string representation of the match object with the matched line passed
-        /// in as <paramref name="line"/> and trims the path to be relative to
-        /// the<paramref name="directory"/> argument.
-        /// </summary>
+        
         /// <param name="directory">Directory to use as the root when calculating the relative path.</param>
         /// <param name="line">Line that the match occurs in.</param>
         /// <returns>The string representation of the match object.</returns>
@@ -293,10 +238,7 @@ namespace Microsoft.PowerShell.Commands
             return string.Join(System.Environment.NewLine, lines.ToArray());
         }
 
-        /// <summary>
-        /// Returns the string representation of the match object same format as ToString()
-        /// and inverts the color of the matched text if virtual terminal is supported.
-        /// </summary>
+        
         /// <param name="directory">Directory to use as the root when calculating the relative path.</param>
         /// <returns>The string representation of the match object with matched text inverted.</returns>
         public string ToEmphasizedString(string directory)
@@ -309,9 +251,7 @@ namespace Microsoft.PowerShell.Commands
             return ToString(directory, EmphasizeLine());
         }
 
-        /// <summary>
-        /// Surrounds the matched text with virtual terminal sequences to invert it's color. Used in ToEmphasizedString.
-        /// </summary>
+        
         /// <returns>The matched line with matched text inverted.</returns>
         private string EmphasizeLine()
         {
@@ -348,9 +288,7 @@ namespace Microsoft.PowerShell.Commands
             return new string(chars);
         }
 
-        /// <summary>
-        /// Formats a line for use in ToString.
-        /// </summary>
+        
         /// <param name="lineStr">The line to format.</param>
         /// <param name="displayLineNumber">The line number to display.</param>
         /// <param name="displayPath">The file path, formatted for display.</param>
@@ -363,14 +301,10 @@ namespace Microsoft.PowerShell.Commands
                        : StringUtil.Format(SimpleFormat, prefix, lineStr);
         }
 
-        /// <summary>
-        /// Gets or sets a list of all Regex matches on the matching line.
-        /// </summary>
+        
         public Match[] Matches { get; set; } = Array.Empty<Match>();
 
-        /// <summary>
-        /// Create a deep copy of this MatchInfo instance.
-        /// </summary>
+        
         /// <returns>A new object that is a copy of this instance.</returns>
         internal MatchInfo Clone()
         {
@@ -391,9 +325,7 @@ namespace Microsoft.PowerShell.Commands
         }
     }
 
-    /// <summary>
-    /// A cmdlet to search through strings and files for particular patterns.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Select, "String", DefaultParameterSetName = ParameterSetFile, HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097119")]
     [OutputType(typeof(bool), typeof(MatchInfo), ParameterSetName = new[] { ParameterSetFile, ParameterSetObject, ParameterSetLiteralFile })]
     [OutputType(typeof(string), ParameterSetName = new[] { ParameterSetFileRaw, ParameterSetObjectRaw, ParameterSetLiteralFileRaw })]
@@ -406,9 +338,7 @@ namespace Microsoft.PowerShell.Commands
         private const string ParameterSetLiteralFile = "LiteralFile";
         private const string ParameterSetLiteralFileRaw = "LiteralFileRaw";
 
-        /// <summary>
-        /// A generic circular buffer.
-        /// </summary>
+        
         /// <typeparam name="T">The type of items that are buffered.</typeparam>
         private sealed class CircularBuffer<T> : ICollection<T>
         {
@@ -421,9 +351,7 @@ namespace Microsoft.PowerShell.Commands
             // rotation.
             private int _firstIndex;
 
-            /// <summary>
-            /// Initializes a new instance of the <see cref="CircularBuffer{T}"/> class.
-            /// </summary>
+            
             /// <param name="capacity">The maximum capacity of the buffer.</param>
             /// <exception cref="ArgumentOutOfRangeException">If <paramref name="capacity"/> is negative.</exception>
             public CircularBuffer(int capacity)
@@ -434,23 +362,13 @@ namespace Microsoft.PowerShell.Commands
                 Clear();
             }
 
-            /// <summary>
-            /// Gets the maximum capacity of the buffer. If more items
-            /// are added than the buffer has capacity for, then
-            /// older items will be removed from the buffer with
-            /// a first-in, first-out policy.
-            /// </summary>
+            
             public int Capacity => _items.Length;
 
-            /// <summary>
-            /// Whether or not the buffer is at capacity.
-            /// </summary>
+            
             public bool IsFull => Count == Capacity;
 
-            /// <summary>
-            /// Convert from a 0-based index to a buffer index which
-            /// has been properly offset and wrapped.
-            /// </summary>
+            
             /// <param name="zeroBasedIndex">The index to wrap.</param>
             /// <exception cref="ArgumentOutOfRangeException">If <paramref name="zeroBasedIndex"/> is out of range.</exception>
             /// <returns>
@@ -487,11 +405,7 @@ namespace Microsoft.PowerShell.Commands
 
             public bool IsReadOnly => false;
 
-            /// <summary>
-            /// Adds an item to the buffer. If the buffer is already
-            /// full, the oldest item in the list will be removed,
-            /// and the new item added at the logical end of the list.
-            /// </summary>
+            
             /// <param name="item">The item to add.</param>
             public void Add(T item)
             {
@@ -550,10 +464,7 @@ namespace Microsoft.PowerShell.Commands
             }
             #endregion
 
-            /// <summary>
-            /// Create an array of the items in the buffer. Items
-            /// will be in the same order they were added.
-            /// </summary>
+            
             /// <returns>The new array.</returns>
             public T[] ToArray()
             {
@@ -562,11 +473,7 @@ namespace Microsoft.PowerShell.Commands
                 return result;
             }
 
-            /// <summary>
-            /// Access an item in the buffer. Indexing is based off
-            /// of the order items were added, rather than any
-            /// internal ordering the buffer may be maintaining.
-            /// </summary>
+            
             /// <param name="index">The index of the item to access.</param>
             /// <returns>The buffered item at index <paramref name="index"/>.</returns>
             public T this[int index]
@@ -583,40 +490,25 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// An interface to a context tracking algorithm.
-        /// </summary>
+        
         private interface IContextTracker
         {
-            /// <summary>
-            /// Gets matches with completed context information
-            /// that are ready to be emitted into the pipeline.
-            /// </summary>
+            
             IList<MatchInfo> EmitQueue { get; }
 
-            /// <summary>
-            /// Track a non-matching line for context.
-            /// </summary>
+            
             /// <param name="line">The line to track.</param>
             void TrackLine(string line);
 
-            /// <summary>
-            /// Track a matching line.
-            /// </summary>
+            
             /// <param name="match">The line to track.</param>
             void TrackMatch(MatchInfo match);
 
-            /// <summary>
-            /// Track having reached the end of the file,
-            /// giving the tracker a chance to process matches with
-            /// incomplete context information.
-            /// </summary>
+            
             void TrackEOF();
         }
 
-        /// <summary>
-        /// A state machine to track display context for each match.
-        /// </summary>
+        
         private sealed class DisplayContextTracker : IContextTracker
         {
             private enum ContextState
@@ -641,9 +533,7 @@ namespace Microsoft.PowerShell.Commands
             // in the emitQueue but will be the next to be added.
             private MatchInfo _matchInfo = null;
 
-            /// <summary>
-            /// Initializes a new instance of the <see cref="DisplayContextTracker"/> class.
-            /// </summary>
+            
             /// <param name="preContext">How much preContext to collect at most.</param>
             /// <param name="postContext">How much postContext to collect at most.</param>
             public DisplayContextTracker(int preContext, int postContext)
@@ -727,10 +617,7 @@ namespace Microsoft.PowerShell.Commands
             }
             #endregion
 
-            /// <summary>
-            /// Moves matchInfo, if set, to the emitQueue and
-            /// resets the tracking state.
-            /// </summary>
+            
             private void UpdateQueue()
             {
                 if (_matchInfo != null)
@@ -759,9 +646,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// A class to track logical context for each match.
-        /// </summary>
+        
         /// <remarks>
         /// The difference between logical and display context is
         /// that logical context includes as many context lines
@@ -821,9 +706,7 @@ namespace Microsoft.PowerShell.Commands
             // to the emit queue.
             private readonly CircularBuffer<ContextEntry> _collectedContext;
 
-            /// <summary>
-            /// Initializes a new instance of the <see cref="LogicalContextTracker"/> class.
-            /// </summary>
+            
             /// <param name="preContext">How much preContext to collect at most.</param>
             /// <param name="postContext">How much postContext to collect at most.</param>
             public LogicalContextTracker(int preContext, int postContext)
@@ -870,11 +753,7 @@ namespace Microsoft.PowerShell.Commands
             }
             #endregion
 
-            /// <summary>
-            /// Add all matches found in the specified range
-            /// to the emit queue, collecting as much context
-            /// as possible up to the limits specified in the constructor.
-            /// </summary>
+            
             /// <remarks>
             /// The range is inclusive; the entries at
             /// startIndex and endIndex will both be checked.
@@ -895,11 +774,7 @@ namespace Microsoft.PowerShell.Commands
                 }
             }
 
-            /// <summary>
-            /// Add match(es) found in the match region to the
-            /// emit queue. Should be called every time an entry
-            /// is added to the context buffer.
-            /// </summary>
+            
             private void UpdateQueue()
             {
                 // Are we at capacity and thus have enough postcontext?
@@ -930,11 +805,7 @@ namespace Microsoft.PowerShell.Commands
                 }
             }
 
-            /// <summary>
-            /// Collects context from the specified ranges. Populates
-            /// the specified match with the collected context
-            /// and adds it to the emit queue.
-            /// </summary>
+            
             /// <remarks>
             /// Context ranges must be within the bounds of the context buffer.
             /// </remarks>
@@ -954,9 +825,7 @@ namespace Microsoft.PowerShell.Commands
                 _emitQueue.Add(match);
             }
 
-            /// <summary>
-            /// Collects context from the specified ranges.
-            /// </summary>
+            
             /// <remarks>
             /// The range must be within the bounds of the context buffer.
             /// </remarks>
@@ -976,17 +845,13 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// A class to track both logical and display contexts.
-        /// </summary>
+        
         private sealed class ContextTracker : IContextTracker
         {
             private readonly IContextTracker _displayTracker;
             private readonly IContextTracker _logicalTracker;
 
-            /// <summary>
-            /// Initializes a new instance of the <see cref="ContextTracker"/> class.
-            /// </summary>
+            
             /// <param name="preContext">How much preContext to collect at most.</param>
             /// <param name="postContext">How much postContext to collect at most.</param>
             public ContextTracker(int preContext, int postContext)
@@ -1021,9 +886,7 @@ namespace Microsoft.PowerShell.Commands
             }
             #endregion
 
-            /// <summary>
-            /// Update the emit queue based on the wrapped trackers.
-            /// </summary>
+            
             private void UpdateQueue()
             {
                 // Look for completed matches in the logical
@@ -1045,9 +908,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// ContextTracker that does not work for the case when pre- and post context is 0.
-        /// </summary>
+        
         private sealed class NoContextTracker : IContextTracker
         {
             private readonly IList<MatchInfo> _matches = new List<MatchInfo>(1);
@@ -1065,9 +926,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets or sets a culture name.
-        /// </summary>
+        
         [Parameter]
         [ValidateSet(typeof(ValidateMatchStringCultureNamesGenerator))]
         [ValidateNotNull]
@@ -1163,9 +1022,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets or sets the current pipeline object.
-        /// </summary>
+        
         [Parameter(ValueFromPipeline = true, Mandatory = true, ParameterSetName = ParameterSetObject)]
         [Parameter(ValueFromPipeline = true, Mandatory = true, ParameterSetName = ParameterSetObjectRaw)]
         [AllowNull]
@@ -1178,27 +1035,19 @@ namespace Microsoft.PowerShell.Commands
 
         private PSObject _inputObject = AutomationNull.Value;
 
-        /// <summary>
-        /// Gets or sets the patterns to find.
-        /// </summary>
+        
         [Parameter(Mandatory = true, Position = 0)]
         public string[] Pattern { get; set; }
 
         private Regex[] _regexPattern;
 
-        /// <summary>
-        /// Gets or sets files to read from.
-        /// Globbing is done on these.
-        /// </summary>
+        
         [Parameter(Position = 1, Mandatory = true, ValueFromPipelineByPropertyName = true, ParameterSetName = ParameterSetFile)]
         [Parameter(Position = 1, Mandatory = true, ValueFromPipelineByPropertyName = true, ParameterSetName = ParameterSetFileRaw)]
         [FileinfoToString]
         public string[] Path { get; set; }
 
-        /// <summary>
-        /// Gets or sets literal files to read from.
-        /// Globbing is not done on these.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, ParameterSetName = ParameterSetLiteralFile)]
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, ParameterSetName = ParameterSetLiteralFileRaw)]
         [FileinfoToString]
@@ -1215,56 +1064,35 @@ namespace Microsoft.PowerShell.Commands
 
         private bool _isLiteralPath;
 
-        /// <summary>
-        /// Gets or sets a value indicating if only string values containing matched lines should be returned.
-        /// If not (default) return MatchInfo (or bool objects, when Quiet is passed).
-        /// </summary>
+        
         [Parameter(Mandatory = true, ParameterSetName = ParameterSetObjectRaw)]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSetFileRaw)]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSetLiteralFileRaw)]
         public SwitchParameter Raw { get; set; }
 
-        /// <summary>
-        /// Gets or sets a value indicating if a pattern string should be matched literally.
-        /// If not (default) search using pattern as a Regular Expression.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter SimpleMatch { get; set; }
 
-        /// <summary>
-        /// Gets or sets a value indicating if the search is case sensitive.If true, then do case-sensitive searches.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter CaseSensitive { get; set; }
 
-        /// <summary>
-        /// Gets or sets a value indicating if the cmdlet will stop processing at the first successful match and
-        /// return true.  If both List and Quiet parameters are given, an exception is thrown.
-        /// </summary>
+        
         [Parameter(ParameterSetName = ParameterSetObject)]
         [Parameter(ParameterSetName = ParameterSetFile)]
         [Parameter(ParameterSetName = ParameterSetLiteralFile)]
         public SwitchParameter Quiet { get; set; }
 
-        /// <summary>
-        /// Gets or sets a value indicating if matching files should be listed.
-        /// This is the Unix functionality this switch is intended to mimic;
-        /// the actual action of this option is to stop after the first match
-        /// is found and returned from any particular file.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter List { get; set; }
 
-        /// <summary>
-        /// Gets or sets a value indicating if highlighting should be disabled.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter NoEmphasis { get; set; }
 
-        /// <summary>
-        /// Gets or sets files to include. Files matching
-        /// one of these (if specified) are included.
-        /// </summary>
+        
         /// <exception cref="WildcardPatternException">Invalid wildcard pattern was specified.</exception>
         [Parameter]
         [ValidateNotNullOrEmpty]
@@ -1289,10 +1117,7 @@ namespace Microsoft.PowerShell.Commands
 
         private WildcardPattern[] _include;
 
-        /// <summary>
-        /// Gets or sets files to exclude. Files matching
-        /// one of these (if specified) are excluded.
-        /// </summary>
+        
         [Parameter]
         [ValidateNotNullOrEmpty]
         public string[] Exclude
@@ -1316,25 +1141,15 @@ namespace Microsoft.PowerShell.Commands
 
         private WildcardPattern[] _exclude;
 
-        /// <summary>
-        /// Gets or sets a value indicating whether to only show lines which do not match.
-        /// Equivalent to grep -v/findstr -v.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter NotMatch { get; set; }
 
-        /// <summary>
-        /// Gets or sets a value indicating whether the Matches property of MatchInfo should be set
-        /// to the result of calling System.Text.RegularExpressions.Regex.Matches() on
-        /// the corresponding line.
-        /// Has no effect if -SimpleMatch is also specified.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter AllMatches { get; set; }
 
-        /// <summary>
-        /// Gets or sets the text encoding to process each file as.
-        /// </summary>
+        
         [Parameter]
         [ArgumentToEncodingTransformation]
         [ArgumentEncodingCompletions]
@@ -1355,14 +1170,7 @@ namespace Microsoft.PowerShell.Commands
 
         private Encoding _encoding = Encoding.Default;
 
-        /// <summary>
-        /// Gets or sets the number of context lines to collect. If set to a
-        /// single integer value N, collects N lines each of pre-
-        /// and post- context. If set to a 2-tuple B,A, collects B
-        /// lines of pre- and A lines of post- context.
-        /// If set to a list with more than 2 elements, the
-        /// excess elements are ignored.
-        /// </summary>
+        
         [Parameter]
         [ValidateNotNullOrEmpty]
         [ValidateCount(1, 2)]
@@ -1411,17 +1219,12 @@ namespace Microsoft.PowerShell.Commands
 
         private IContextTracker _noContextTracker;
 
-        /// <summary>
-        /// This is used to handle the case were we're done processing input objects.
-        /// If true, process record will just return.
-        /// </summary>
+        
         private bool _doneProcessing;
 
         private ulong _inputRecordNumber;
 
-        /// <summary>
-        /// Read command line parameters.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             if (this.MyInvocation.BoundParameters.ContainsKey(nameof(Culture)) && !this.MyInvocation.BoundParameters.ContainsKey(nameof(SimpleMatch)))
@@ -1463,9 +1266,7 @@ namespace Microsoft.PowerShell.Commands
 
         private readonly List<string> _inputObjectFileList = new(1) { string.Empty };
 
-        /// <summary>
-        /// Process the input.
-        /// </summary>
+        
         /// <exception cref="ArgumentException">Regular expression parsing error, path error.</exception>
         /// <exception cref="FileNotFoundException">A file cannot be found.</exception>
         /// <exception cref="DirectoryNotFoundException">A file cannot be found.</exception>
@@ -1569,10 +1370,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Process a file which was either specified on the
-        /// command line or passed in as a FileInfo object.
-        /// </summary>
+        
         /// <param name="filename">The file to process.</param>
         /// <returns>True if a match was found; otherwise false.</returns>
         private bool ProcessFile(string filename)
@@ -1665,9 +1463,7 @@ namespace Microsoft.PowerShell.Commands
             return foundMatch;
         }
 
-        /// <summary>
-        /// Emit any objects which have been queued up, and clear the queue.
-        /// </summary>
+        
         /// <param name="contextTracker">The context tracker to operate on.</param>
         /// <returns>Whether or not any objects were emitted.</returns>
         private bool FlushTrackerQueue(IContextTracker contextTracker)
@@ -1705,10 +1501,7 @@ namespace Microsoft.PowerShell.Commands
             return true;
         }
 
-        /// <summary>
-        /// Complete processing. Emits any objects which have been queued up
-        /// due to -context tracking.
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             // Check for a leftover match that was still tracking context.
@@ -1754,10 +1547,7 @@ namespace Microsoft.PowerShell.Commands
             return DoMatchWorker(operandString, matchInfo, out matchResult);
         }
 
-        /// <summary>
-        /// Check the operand and see if it matches, if this.quiet is not set, then
-        /// return a partially populated MatchInfo object with Line, Pattern, IgnoreCase set.
-        /// </summary>
+        
         /// <param name="operandString">The result of converting operand to a string.</param>
         /// <param name="matchInfo">The input object in filter mode.</param>
         /// <param name="matchResult">The match info object - this will be null if this.quiet is set.</param>
@@ -1922,9 +1712,7 @@ namespace Microsoft.PowerShell.Commands
             return false;
         }
 
-        /// <summary>
-        /// Get a list or resolved file paths.
-        /// </summary>
+        
         /// <param name="filePaths">The filePaths to resolve.</param>
         /// <param name="isLiteralPath">True if the wildcard resolution should not be attempted.</param>
         /// <returns>The resolved (absolute) paths.</returns>
@@ -1983,9 +1771,7 @@ namespace Microsoft.PowerShell.Commands
             WriteWarning(msg);
         }
 
-        /// <summary>
-        /// Magic class that works around the limitations on ToString() for FileInfo.
-        /// </summary>
+        
         private sealed class FileinfoToStringAttribute : ArgumentTransformationAttribute
         {
             public override object Transform(EngineIntrinsics engineIntrinsics, object inputData)
@@ -2032,11 +1818,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Check whether the supplied name meets the include/exclude criteria.
-        /// That is - it's on the include list if there is one and not on
-        /// the exclude list if there was one of those.
-        /// </summary>
+        
         /// <param name="filename">The filename to test.</param>
         /// <returns>True if the filename is acceptable.</returns>
         private bool MeetsIncludeExcludeCriteria(string filename)
@@ -2082,9 +1864,7 @@ namespace Microsoft.PowerShell.Commands
         }
     }
 
-    /// <summary>
-    /// Get list of valid culture names for ValidateSet attribute.
-    /// </summary>
+    
     public class ValidateMatchStringCultureNamesGenerator : IValidateSetValuesGenerator
     {
         string[] IValidateSetValuesGenerator.GetValidValues()

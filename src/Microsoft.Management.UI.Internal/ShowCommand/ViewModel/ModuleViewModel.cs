@@ -13,56 +13,35 @@ using Microsoft.PowerShell.Commands.ShowCommandExtension;
 
 namespace Microsoft.PowerShell.Commands.ShowCommandInternal
 {
-    /// <summary>
-    /// ModuleViewModel Contains information about a PowerShell module.
-    /// </summary>
+    
     public class ModuleViewModel : INotifyPropertyChanged
     {
-        /// <summary>
-        /// True if the module is imported.
-        /// </summary>
+        
         private bool isModuleImported;
 
-        /// <summary>
-        /// Field used for the Name parameter.
-        /// </summary>
+        
         private string name;
 
-        /// <summary>
-        ///  Filter commands property of this module.
-        /// </summary>
+        
         private ObservableCollection<CommandViewModel> filteredCommands;
 
-        /// <summary>
-        /// The selected command property of this module.
-        /// </summary>
+        
         private CommandViewModel selectedCommand;
 
-        /// <summary>
-        /// Field used for the Commands parameter.
-        /// </summary>
+        
         private List<CommandViewModel> commands;
 
-        /// <summary>
-        /// value indicating whether there is a selected command which belongs to an imported module,
-        /// with no parameter sets or with a selected parameter set where all mandatory parameters have values
-        /// </summary>
+        
         private bool isThereASelectedImportedCommandWhereAllMandatoryParametersHaveValues;
 
-        /// <summary>
-        /// value indicating whether there is a selected command.
-        /// </summary>
+        
         private bool isThereASelectedCommand;
 
-        /// <summary>
-        /// The AllModulesViewModel containing this, if any.
-        /// </summary>
+        
         private AllModulesViewModel allModules;
 
         #region Construction and Destructor
-        /// <summary>
-        /// Initializes a new instance of the ModuleViewModel class.
-        /// </summary>
+        
         /// <param name="name">Module name.</param>
         /// <param name="importedModules">All loaded modules.</param>
         public ModuleViewModel(string name, Dictionary<string, ShowCommandModuleInfo> importedModules)
@@ -88,39 +67,27 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
 
         #region INotifyPropertyChanged Members
 
-        /// <summary>
-        /// PropertyChanged Event.
-        /// </summary>
+        
         public event PropertyChangedEventHandler PropertyChanged;
         #endregion
 
-        /// <summary>
-        /// Indicates the selected command in needs to display the help for a command.
-        /// </summary>
+        
         public event EventHandler<HelpNeededEventArgs> SelectedCommandNeedsHelp;
 
-        /// <summary>
-        /// Indicates the selected command needs to import a module.
-        /// </summary>
+        
         public event EventHandler<ImportModuleEventArgs> SelectedCommandNeedsImportModule;
 
-        /// <summary>
-        /// Indicates the selected command should be run.
-        /// </summary>
+        
         public event EventHandler<CommandEventArgs> RunSelectedCommand;
 
         #region Public Property
-        /// <summary>
-        /// Gets the name property of this ModuleView.
-        /// </summary>
+        
         public string Name
         {
             get { return this.name; }
         }
 
-        /// <summary>
-        /// Gets the GUI friendly module name.
-        /// </summary>
+        
         public string DisplayName
         {
             get
@@ -134,41 +101,31 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
             }
         }
 
-        /// <summary>
-        /// Gets CommandControl is visibility or not.
-        /// </summary>
+        
         public Visibility CommandControlVisibility
         {
             get { return this.selectedCommand == null ? Visibility.Collapsed : Visibility.Visible; }
         }
 
-        /// <summary>
-        ///  Gets CommandControl Height.
-        /// </summary>
+        
         public GridLength CommandRowHeight
         {
             get { return this.selectedCommand == null ? GridLength.Auto : CommandViewModel.Star; }
         }
 
-        /// <summary>
-        /// Gets the commands under in this module.
-        /// </summary>
+        
         public List<CommandViewModel> Commands
         {
             get { return this.commands; }
         }
 
-        /// <summary>
-        ///  Gets the filter commands of this module.
-        /// </summary>
+        
         public ObservableCollection<CommandViewModel> FilteredCommands
         {
             get { return this.filteredCommands; }
         }
 
-        /// <summary>
-        /// Gets or sets the selected commands of this module.
-        /// </summary>
+        
         public CommandViewModel SelectedCommand
         {
             get
@@ -212,9 +169,7 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
             }
         }
 
-        /// <summary>
-        /// Gets or sets a value indicating whether there is a selected command.
-        /// </summary>
+        
         public bool IsThereASelectedCommand
         {
             get
@@ -234,11 +189,7 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
             }
         }
 
-        /// <summary>
-        /// Gets or sets a value indicating whether there is a selected command which belongs
-        /// to an imported module, with no parameter sets or with a selected parameter set
-        /// where all mandatory parameters have values
-        /// </summary>
+        
         public bool IsThereASelectedImportedCommandWhereAllMandatoryParametersHaveValues
         {
             get
@@ -259,9 +210,7 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
             }
         }
 
-        /// <summary>
-        /// Gets the AllModulesViewModel containing this, if any.
-        /// </summary>
+        
         public AllModulesViewModel AllModules
         {
             get
@@ -271,9 +220,7 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
         }
         #endregion
 
-        /// <summary>
-        /// Gets a value indicating whether the module is imported.
-        /// </summary>
+        
         internal bool IsModuleImported
         {
             get
@@ -282,18 +229,14 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
             }
         }
 
-        /// <summary>
-        /// Sets the AllModulesViewModel containing this.
-        /// </summary>
+        
         /// <param name="parentAllModules">The AllModulesViewModel containing this.</param>
         internal void SetAllModules(AllModulesViewModel parentAllModules)
         {
             this.allModules = parentAllModules;
         }
 
-        /// <summary>
-        /// Sorts commands and optionally sets ModuleQualifyCommandName.
-        /// </summary>
+        
         /// <param name="markRepeatedCmdlets">True to mark repeated commands with a flag that will produce a module qualified name in GetScript.</param>
         internal void SortCommands(bool markRepeatedCmdlets)
         {
@@ -320,9 +263,7 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
             }
         }
 
-        /// <summary>
-        /// According commandNameFilter to filter command,and added the filter commands into filteredCommands property.
-        /// </summary>
+        
         /// <param name="filter">Current filter.</param>
         internal void RefreshFilteredCommands(string filter)
         {
@@ -369,9 +310,7 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
             }
         }
 
-        /// <summary>
-        /// Called in response to a GUI event that requires the command to be run.
-        /// </summary>
+        
         internal void OnRunSelectedCommand()
         {
             EventHandler<CommandEventArgs> handler = this.RunSelectedCommand;
@@ -381,9 +320,7 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
             }
         }
 
-        /// <summary>
-        /// Triggers the SelectedCommandNeedsHelp event.
-        /// </summary>
+        
         /// <param name="e">Event arguments.</param>
         internal void OnSelectedCommandNeedsHelp(HelpNeededEventArgs e)
         {
@@ -394,9 +331,7 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
             }
         }
 
-        /// <summary>
-        /// Triggers the SelectedCommandNeedsImportModule event.
-        /// </summary>
+        
         internal void OnSelectedCommandNeedsImportModule()
         {
             EventHandler<ImportModuleEventArgs> handler = this.SelectedCommandNeedsImportModule;
@@ -407,9 +342,7 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
         }
         #region Private Method
 
-        /// <summary>
-        /// Uses pattern matching if pattern is not null or calls MatchesEvenIfInPlural otherwise.
-        /// </summary>
+        
         /// <param name="filterPattern">Pattern corresponding to filter.</param>
         /// <param name="commandName">Command name string.</param>
         /// <param name="filter">Filter string.</param>
@@ -424,9 +357,7 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
             return ModuleViewModel.MatchesEvenIfInPlural(commandName, filter);
         }
 
-        /// <summary>
-        /// Returns true if filter matches commandName, even when filter is in the plural.
-        /// </summary>
+        
         /// <param name="commandName">Command name string.</param>
         /// <param name="filter">Filter string.</param>
         /// <returns>Return match result.</returns>
@@ -452,9 +383,7 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
             return false;
         }
 
-        /// <summary>
-        /// Handles the HelpNeeded event in the selected command and triggers the SelectedCommandNeedsHelp event.
-        /// </summary>
+        
         /// <param name="sender">HelpNeeded event sender.</param>
         /// <param name="e">HelpNeeded event argument.</param>
         private void SelectedCommand_HelpNeeded(object sender, HelpNeededEventArgs e)
@@ -462,9 +391,7 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
             this.OnSelectedCommandNeedsHelp(e);
         }
 
-        /// <summary>
-        /// Handles the ImportModule event in the selected command and triggers the SelectedCommandNeedsImportModule event.
-        /// </summary>
+        
         /// <param name="sender">HelpNeeded event sender.</param>
         /// <param name="e">HelpNeeded event argument.</param>
         private void SelectedCommand_ImportModule(object sender, EventArgs e)
@@ -472,9 +399,7 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
             this.OnSelectedCommandNeedsImportModule();
         }
 
-        /// <summary>
-        /// Called when the SelectedCommand property changes to update IsThereASelectedImportedCommandWhereAllMandatoryParametersHaveValues.
-        /// </summary>
+        
         /// <param name="sender">Event sender.</param>
         /// <param name="e">Event arguments.</param>
         private void SelectedCommand_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -487,11 +412,7 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
             this.SetIsThereASelectedImportedCommandWhereAllMandatoryParametersHaveValues();
         }
 
-        /// <summary>
-        /// Called to set IsThereASelectedImportedCommandWhereAllMandatoryParametersHaveValues when
-        /// SelectedParameterSetAllMandatoryParametersHaveValues changes in the SelectedCommand or
-        /// when the SelectedCommand changes
-        /// </summary>
+        
         private void SetIsThereASelectedImportedCommandWhereAllMandatoryParametersHaveValues()
         {
             this.IsThereASelectedImportedCommandWhereAllMandatoryParametersHaveValues =
@@ -500,9 +421,7 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
                 this.selectedCommand.SelectedParameterSetAllMandatoryParametersHaveValues;
         }
 
-        /// <summary>
-        /// Compare source commandmodule is equal like target commandmodule.
-        /// </summary>
+        
         /// <param name="source">Source commandmodule.</param>
         /// <param name="target">Target commandmodule.</param>
         /// <returns>Return compare result.</returns>
@@ -512,9 +431,7 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
         }
         #endregion
 
-        /// <summary>
-        /// If property changed will be notify.
-        /// </summary>
+        
         /// <param name="propertyName">The changed property.</param>
         private void OnNotifyPropertyChanged(string propertyName)
         {

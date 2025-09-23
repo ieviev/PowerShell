@@ -15,9 +15,7 @@ using Dbg = System.Management.Automation.Diagnostics;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// This class implements update-typeData command.
-    /// </summary>
+    
     [Cmdlet(VerbsData.Update, "TypeData", SupportsShouldProcess = true, ConfirmImpact = ConfirmImpact.Low,
         DefaultParameterSetName = FileParameterSet, HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097131")]
     public class UpdateTypeDataCommand : UpdateData
@@ -37,9 +35,7 @@ namespace Microsoft.PowerShell.Commands
 
         private PSMemberTypes _memberType;
         private bool _isMemberTypeSet = false;
-        /// <summary>
-        /// The member type of to be added.
-        /// </summary>
+        
         [Parameter(ParameterSetName = DynamicTypeSet)]
         [ValidateNotNullOrEmpty]
         [ValidateSet(System.Management.Automation.Runspaces.TypeData.NoteProperty,
@@ -63,9 +59,7 @@ namespace Microsoft.PowerShell.Commands
         }
 
         private string _memberName;
-        /// <summary>
-        /// The name of the new member.
-        /// </summary>
+        
         [Parameter(ParameterSetName = DynamicTypeSet)]
         [ValidateNotNullOrEmpty]
         public string MemberName
@@ -76,10 +70,7 @@ namespace Microsoft.PowerShell.Commands
         }
 
         private object _value1 = s_notSpecified;
-        /// <summary>
-        /// First value of the new member. The meaning of this value
-        /// changes according to the member type.
-        /// </summary>
+        
         [Parameter(ParameterSetName = DynamicTypeSet)]
         public object Value
         {
@@ -89,10 +80,7 @@ namespace Microsoft.PowerShell.Commands
         }
 
         private object _value2;
-        /// <summary>
-        /// Second value of the new member. The meaning of this value
-        /// changes according to the member type.
-        /// </summary>
+        
         [Parameter(ParameterSetName = DynamicTypeSet)]
         [ValidateNotNull]
         public object SecondValue
@@ -103,9 +91,7 @@ namespace Microsoft.PowerShell.Commands
         }
 
         private Type _typeConverter;
-        /// <summary>
-        /// The type converter to be added.
-        /// </summary>
+        
         [Parameter(ParameterSetName = DynamicTypeSet)]
         [ValidateNotNull]
         public Type TypeConverter
@@ -116,9 +102,7 @@ namespace Microsoft.PowerShell.Commands
         }
 
         private Type _typeAdapter;
-        /// <summary>
-        /// The type adapter to be added.
-        /// </summary>
+        
         [Parameter(ParameterSetName = DynamicTypeSet)]
         [ValidateNotNull]
         public Type TypeAdapter
@@ -128,9 +112,7 @@ namespace Microsoft.PowerShell.Commands
             set { _typeAdapter = value; }
         }
 
-        /// <summary>
-        /// SerializationMethod.
-        /// </summary>
+        
         [Parameter(ParameterSetName = DynamicTypeSet)]
         [ValidateNotNullOrEmpty]
         public string SerializationMethod
@@ -140,9 +122,7 @@ namespace Microsoft.PowerShell.Commands
             set { _serializationMethod = value; }
         }
 
-        /// <summary>
-        /// TargetTypeForDeserialization.
-        /// </summary>
+        
         [Parameter(ParameterSetName = DynamicTypeSet)]
         [ValidateNotNull]
         public Type TargetTypeForDeserialization
@@ -152,9 +132,7 @@ namespace Microsoft.PowerShell.Commands
             set { _targetTypeForDeserialization = value; }
         }
 
-        /// <summary>
-        /// SerializationDepth.
-        /// </summary>
+        
         [Parameter(ParameterSetName = DynamicTypeSet)]
         [ValidateNotNull]
         [ValidateRange(0, int.MaxValue)]
@@ -165,9 +143,7 @@ namespace Microsoft.PowerShell.Commands
             set { _serializationDepth = value; }
         }
 
-        /// <summary>
-        /// DefaultDisplayProperty.
-        /// </summary>
+        
         [Parameter(ParameterSetName = DynamicTypeSet)]
         [ValidateNotNullOrEmpty]
         public string DefaultDisplayProperty
@@ -177,9 +153,7 @@ namespace Microsoft.PowerShell.Commands
             set { _defaultDisplayProperty = value; }
         }
 
-        /// <summary>
-        /// InheritPropertySerializationSet.
-        /// </summary>
+        
         [Parameter(ParameterSetName = DynamicTypeSet)]
         [ValidateNotNull]
         public bool? InheritPropertySerializationSet
@@ -189,9 +163,7 @@ namespace Microsoft.PowerShell.Commands
             set { _inheritPropertySerializationSet = value; }
         }
 
-        /// <summary>
-        /// StringSerializationSource.
-        /// </summary>
+        
         [Parameter(ParameterSetName = DynamicTypeSet)]
         [ValidateNotNullOrEmpty]
         public string StringSerializationSource
@@ -201,9 +173,7 @@ namespace Microsoft.PowerShell.Commands
             set { _stringSerializationSource = value; }
         }
 
-        /// <summary>
-        /// DefaultDisplayPropertySet.
-        /// </summary>
+        
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays", Justification = "Cmdlets use arrays for parameters.")]
         [Parameter(ParameterSetName = DynamicTypeSet)]
         [ValidateNotNullOrEmpty]
@@ -214,9 +184,7 @@ namespace Microsoft.PowerShell.Commands
             set { _defaultDisplayPropertySet = value; }
         }
 
-        /// <summary>
-        /// DefaultKeyPropertySet.
-        /// </summary>
+        
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays", Justification = "Cmdlets use arrays for parameters.")]
         [Parameter(ParameterSetName = DynamicTypeSet)]
         [ValidateNotNullOrEmpty]
@@ -227,9 +195,7 @@ namespace Microsoft.PowerShell.Commands
             set { _defaultKeyPropertySet = value; }
         }
 
-        /// <summary>
-        /// PropertySerializationSet.
-        /// </summary>
+        
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays", Justification = "Cmdlets use arrays for parameters.")]
         [Parameter(ParameterSetName = DynamicTypeSet)]
         [ValidateNotNullOrEmpty]
@@ -256,9 +222,7 @@ namespace Microsoft.PowerShell.Commands
         private string[] _propertySerializationSet;
 
         private string _typeName;
-        /// <summary>
-        /// The type name we want to update on.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = DynamicTypeSet)]
         [ArgumentToTypeNameTransformation]
         [ValidateNotNullOrEmpty]
@@ -270,9 +234,7 @@ namespace Microsoft.PowerShell.Commands
         }
 
         private bool _force = false;
-        /// <summary>
-        /// True if we should overwrite a possibly existing member.
-        /// </summary>
+        
         [Parameter(ParameterSetName = DynamicTypeSet)]
         [Parameter(ParameterSetName = TypeDataSet)]
         public SwitchParameter Force
@@ -287,9 +249,7 @@ namespace Microsoft.PowerShell.Commands
         #region strong type data set
 
         private TypeData[] _typeData;
-        /// <summary>
-        /// The TypeData instances.
-        /// </summary>
+        
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays", Justification = "Cmdlets use arrays for parameters.")]
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true, ParameterSetName = TypeDataSet)]
         public TypeData[] TypeData
@@ -301,9 +261,7 @@ namespace Microsoft.PowerShell.Commands
 
         #endregion strong type data set
 
-        /// <summary>
-        /// This method verify if the Type Table is shared and cannot be updated.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             if (Context.TypeTable.isShared)
@@ -313,9 +271,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// This method implements the ProcessRecord method for update-typeData command.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             switch (ParameterSetName)
@@ -332,9 +288,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// This method implements the EndProcessing method for update-typeData command.
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             this.Context.TypeTable.ClearConsolidatedMembers();
@@ -404,9 +358,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region dynamic type processing
 
-        /// <summary>
-        /// Process the dynamic type update.
-        /// </summary>
+        
         private void ProcessDynamicType()
         {
             if (string.IsNullOrWhiteSpace(_typeName))
@@ -523,9 +475,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Get the members for the TypeData.
-        /// </summary>
+        
         /// <returns></returns>
         private void GetMembers(Dictionary<string, TypeMemberData> members)
         {
@@ -628,9 +578,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Check if the TypeData instance contains no members.
-        /// </summary>
+        
         /// <param name="typeData"></param>
         /// <returns>False if empty, true if not.</returns>
         private bool EnsureTypeDataIsNotEmpty(TypeData typeData)
@@ -741,9 +689,7 @@ namespace Microsoft.PowerShell.Commands
             return codeMethod;
         }
 
-        /// <summary>
-        /// Generate error record.
-        /// </summary>
+        
         /// <param name="errorId"></param>
         /// <param name="template"></param>
         /// <param name="targetObject"></param>
@@ -882,16 +828,12 @@ namespace Microsoft.PowerShell.Commands
         #endregion type files processing
     }
 
-    /// <summary>
-    /// This class implements update-typeData command.
-    /// </summary>
+    
     [Cmdlet(VerbsData.Update, "FormatData", SupportsShouldProcess = true, ConfirmImpact = ConfirmImpact.Low,
         DefaultParameterSetName = FileParameterSet, HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097135")]
     public class UpdateFormatDataCommand : UpdateData
     {
-        /// <summary>
-        /// This method verify if the Format database manager is shared and cannot be updated.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             if (Context.FormatDBManager.isShared)
@@ -901,9 +843,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// This method implements the ProcessRecord method for update-FormatData command.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             Collection<string> prependPathTotal = Glob(this.PrependPath, "FormatPrependPathException", this);
@@ -1034,9 +974,7 @@ namespace Microsoft.PowerShell.Commands
         }
     }
 
-    /// <summary>
-    /// Remove-TypeData cmdlet.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Remove, "TypeData", SupportsShouldProcess = true, DefaultParameterSetName = RemoveTypeDataSet,
         HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096622")]
     public class RemoveTypeDataCommand : PSCmdlet
@@ -1047,9 +985,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string _typeName;
 
-        /// <summary>
-        /// The target type to remove.
-        /// </summary>
+        
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true, ParameterSetName = RemoveTypeSet)]
         [ArgumentToTypeNameTransformation]
         [ValidateNotNullOrEmpty]
@@ -1062,9 +998,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string[] _typeFiles;
 
-        /// <summary>
-        /// The type xml file to remove from the cache.
-        /// </summary>
+        
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays", Justification = "Cmdlets use arrays for parameters.")]
         [Parameter(Mandatory = true, ParameterSetName = RemoveFileSet)]
         [ValidateNotNullOrEmpty]
@@ -1077,9 +1011,7 @@ namespace Microsoft.PowerShell.Commands
 
         private TypeData _typeData;
 
-        /// <summary>
-        /// The TypeData to remove.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = RemoveTypeDataSet)]
         public TypeData TypeData
         {
@@ -1101,9 +1033,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// This method implements the ProcessRecord method for Remove-TypeData command.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             if (ParameterSetName == RemoveFileSet)
@@ -1248,9 +1178,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// This method implements the EndProcessing method for Remove-TypeData command.
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             this.Context.TypeTable.ClearConsolidatedMembers();
@@ -1268,18 +1196,14 @@ namespace Microsoft.PowerShell.Commands
         }
     }
 
-    /// <summary>
-    /// Get-TypeData cmdlet.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Get, "TypeData", HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097018")]
     [OutputType(typeof(System.Management.Automation.PSObject))]
     public class GetTypeDataCommand : PSCmdlet
     {
         private WildcardPattern[] _filter;
 
-        /// <summary>
-        /// Get Formatting information only for the specified typename.
-        /// </summary>
+        
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
         [ValidateNotNullOrEmpty]
         [Parameter(Position = 0, ValueFromPipeline = true)]
@@ -1327,9 +1251,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Takes out the content from the database and writes it out.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             ValidateTypeName();
@@ -1350,12 +1272,7 @@ namespace Microsoft.PowerShell.Commands
         }
     }
 
-    /// <summary>
-    /// To make it easier to specify a TypeName, we add an ArgumentTransformationAttribute here.
-    /// * string: return the string
-    /// * Type: return the Type.ToString()
-    /// * instance: return instance.GetType().ToString() .
-    /// </summary>
+    
     internal sealed class ArgumentToTypeNameTransformationAttribute : ArgumentTransformationAttribute
     {
         public override object Transform(EngineIntrinsics engineIntrinsics, object inputData)

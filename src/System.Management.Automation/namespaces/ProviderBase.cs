@@ -16,16 +16,11 @@ using System.Security.AccessControl;
 namespace System.Management.Automation.Provider
 {
 
-    /// <summary>
-    /// This interface needs to be implemented by providers that want users to see
-    /// provider-specific help.
-    /// </summary>
+    
 #nullable enable
     public interface ICmdletProviderSupportsHelp
     {
-        /// <summary>
-        /// Called by the help system to get provider-specific help from the provider.
-        /// </summary>
+        
         /// <param name="helpItemName">
         /// Name of command that the help is requested for.
         /// </param>
@@ -42,9 +37,7 @@ namespace System.Management.Automation.Provider
 #nullable restore
     #region CmdletProvider
 
-    /// <summary>
-    /// The base class for Cmdlet provider.
-    /// </summary>
+    
     /// <remarks>
     /// Although it is possible to derive from this base class to implement a Cmdlet Provider, in most
     /// cases one should derive from <see cref="System.Management.Automation.Provider.ItemCmdletProvider"/>,
@@ -55,15 +48,10 @@ namespace System.Management.Automation.Provider
     {
         #region private data
 
-        /// <summary>
-        /// The context under which the provider is running. This will change between each
-        /// invocation of a method in this class or derived classes.
-        /// </summary>
+        
         private CmdletProviderContext _contextBase = null;
 
-        /// <summary>
-        /// The information that the Monad engine stores on behalf of the provider.
-        /// </summary>
+        
         private ProviderInfo _providerInformation = null;
 
         #endregion private data
@@ -72,10 +60,7 @@ namespace System.Management.Automation.Provider
 
         #region Trace object
 
-        /// <summary>
-        /// An instance of the PSTraceSource class used for trace output
-        /// using "CmdletProviderClasses" as the category.
-        /// </summary>
+        
         [TraceSource(
              "CmdletProviderClasses",
              "The namespace provider base classes tracer")]
@@ -85,10 +70,7 @@ namespace System.Management.Automation.Provider
 
         #endregion Trace object
 
-        /// <summary>
-        /// Sets the provider information that is stored in the Monad engine into the
-        /// provider base class.
-        /// </summary>
+        
         /// <param name="providerInfoToSet">
         /// The provider information that is stored by the Monad engine.
         /// </param>
@@ -105,10 +87,7 @@ namespace System.Management.Automation.Provider
             _providerInformation = providerInfoToSet;
         }
 
-        /// <summary>
-        /// Checks whether the filter of the provider is set.
-        /// Can be overridden by derived class when additional filters are defined.
-        /// </summary>
+        
         /// <returns>
         /// Whether the filter of the provider is set.
         /// </returns>
@@ -120,9 +99,7 @@ namespace System.Management.Automation.Provider
 
         #region CmdletProvider method wrappers
 
-        /// <summary>
-        /// Gets or sets the context for the running command.
-        /// </summary>
+        
         /// <exception cref="NotSupportedException">
         /// On set, if the context contains credentials and the provider
         /// doesn't support credentials, or if the context contains a filter
@@ -183,10 +160,7 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <summary>
-        /// Called when the provider is first initialized. It sets the context
-        /// of the call and then calls the derived providers Start method.
-        /// </summary>
+        
         /// <param name="providerInfo">
         /// The information about the provider.
         /// </param>
@@ -199,10 +173,7 @@ namespace System.Management.Automation.Provider
             return Start(providerInfo);
         }
 
-        /// <summary>
-        /// Gets an object that defines the additional parameters for the Start implementation
-        /// for a provider.
-        /// </summary>
+        
         /// <param name="cmdletProviderContext">
         /// The context under which this method is being called.
         /// </param>
@@ -217,10 +188,7 @@ namespace System.Management.Automation.Provider
             return StartDynamicParameters();
         }
 
-        /// <summary>
-        /// Called when the provider is being removed. It sets the context
-        /// of the call and then calls the derived providers Stop method.
-        /// </summary>
+        
         /// <param name="cmdletProviderContext">
         /// The context under which this method is being called.
         /// </param>
@@ -239,10 +207,7 @@ namespace System.Management.Automation.Provider
 
         #region IPropertyCmdletProvider method wrappers
 
-        /// <summary>
-        /// Internal wrapper for the GetProperty protected method. This method will
-        /// only be called if the provider implements the IPropertyCmdletProvider interface.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to retrieve properties from.
         /// </param>
@@ -272,10 +237,7 @@ namespace System.Management.Automation.Provider
             propertyProvider.GetProperty(path, providerSpecificPickList);
         }
 
-        /// <summary>
-        /// Gives the provider a chance to attach additional parameters to
-        /// the get-itemproperty cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// If the path was specified on the command line, this is the path
         /// to the item to get the dynamic parameters for.
@@ -306,10 +268,7 @@ namespace System.Management.Automation.Provider
             return propertyProvider.GetPropertyDynamicParameters(path, providerSpecificPickList);
         }
 
-        /// <summary>
-        /// Internal wrapper for the SetProperty protected method. This method will
-        /// only be called if the provider implements the IPropertyCmdletProvider interface.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to set the properties on.
         /// </param>
@@ -339,10 +298,7 @@ namespace System.Management.Automation.Provider
             propertyProvider.SetProperty(path, propertyValue);
         }
 
-        /// <summary>
-        /// Gives the provider a chance to attach additional parameters to
-        /// the set-itemproperty cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// If the path was specified on the command line, this is the path
         /// to the item to get the dynamic parameters for.
@@ -373,10 +329,7 @@ namespace System.Management.Automation.Provider
             return propertyProvider.SetPropertyDynamicParameters(path, propertyValue);
         }
 
-        /// <summary>
-        /// Internal wrapper for the ClearProperty protected method. This method will
-        /// only be called if the provider implements the IPropertyCmdletProvider interface.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item from which the property should be cleared.
         /// </param>
@@ -409,10 +362,7 @@ namespace System.Management.Automation.Provider
             propertyProvider.ClearProperty(path, propertyName);
         }
 
-        /// <summary>
-        /// Gives the provider a chance to attach additional parameters to
-        /// the clear-itemproperty cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// If the path was specified on the command line, this is the path
         /// to the item to get the dynamic parameters for.
@@ -447,10 +397,7 @@ namespace System.Management.Automation.Provider
 
         #region IDynamicPropertyCmdletProvider
 
-        /// <summary>
-        /// Internal wrapper for the NewProperty protected method. This method will
-        /// only be called if the provider implements the IDynamicPropertyCmdletProvider interface.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item on which the new property should be created.
         /// </param>
@@ -491,10 +438,7 @@ namespace System.Management.Automation.Provider
             propertyProvider.NewProperty(path, propertyName, propertyTypeName, value);
         }
 
-        /// <summary>
-        /// Gives the provider a chance to attach additional parameters to
-        /// the new-itemproperty cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// If the path was specified on the command line, this is the path
         /// to the item to get the dynamic parameters for.
@@ -532,10 +476,7 @@ namespace System.Management.Automation.Provider
             return propertyProvider.NewPropertyDynamicParameters(path, propertyName, propertyTypeName, value);
         }
 
-        /// <summary>
-        /// Internal wrapper for the RemoveProperty protected method. This method will
-        /// only be called if the provider implements the IDynamicPropertyCmdletProvider interface.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item on which the property should be removed.
         /// </param>
@@ -568,10 +509,7 @@ namespace System.Management.Automation.Provider
             propertyProvider.RemoveProperty(path, propertyName);
         }
 
-        /// <summary>
-        /// Gives the provider a chance to attach additional parameters to
-        /// the remove-itemproperty cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// If the path was specified on the command line, this is the path
         /// to the item to get the dynamic parameters for.
@@ -601,10 +539,7 @@ namespace System.Management.Automation.Provider
             return propertyProvider.RemovePropertyDynamicParameters(path, propertyName);
         }
 
-        /// <summary>
-        /// Internal wrapper for the RenameProperty protected method. This method will
-        /// only be called if the provider implements the IDynamicPropertyCmdletProvider interface.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item on which the property should be renamed.
         /// </param>
@@ -641,10 +576,7 @@ namespace System.Management.Automation.Provider
             propertyProvider.RenameProperty(path, propertyName, newPropertyName);
         }
 
-        /// <summary>
-        /// Gives the provider a chance to attach additional parameters to
-        /// the rename-itemproperty cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// If the path was specified on the command line, this is the path
         /// to the item to get the dynamic parameters for.
@@ -678,10 +610,7 @@ namespace System.Management.Automation.Provider
             return propertyProvider.RenamePropertyDynamicParameters(path, sourceProperty, destinationProperty);
         }
 
-        /// <summary>
-        /// Internal wrapper for the CopyProperty protected method. This method will
-        /// only be called if the provider implements the IDynamicPropertyCmdletProvider interface.
-        /// </summary>
+        
         /// <param name="sourcePath">
         /// The path to the item from which the property should be copied.
         /// </param>
@@ -722,10 +651,7 @@ namespace System.Management.Automation.Provider
             propertyProvider.CopyProperty(sourcePath, sourceProperty, destinationPath, destinationProperty);
         }
 
-        /// <summary>
-        /// Gives the provider a chance to attach additional parameters to
-        /// the copy-itemproperty cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// If the path was specified on the command line, this is the path
         /// to the item to get the dynamic parameters for.
@@ -763,10 +689,7 @@ namespace System.Management.Automation.Provider
             return propertyProvider.CopyPropertyDynamicParameters(path, sourceProperty, destinationPath, destinationProperty);
         }
 
-        /// <summary>
-        /// Internal wrapper for the MoveProperty protected method. This method will
-        /// only be called if the provider implements the IDynamicPropertyCmdletProvider interface.
-        /// </summary>
+        
         /// <param name="sourcePath">
         /// The path to the item from which the property should be moved.
         /// </param>
@@ -807,10 +730,7 @@ namespace System.Management.Automation.Provider
             propertyProvider.MoveProperty(sourcePath, sourceProperty, destinationPath, destinationProperty);
         }
 
-        /// <summary>
-        /// Gives the provider a chance to attach additional parameters to
-        /// the move-itemproperty cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// If the path was specified on the command line, this is the path
         /// to the item to get the dynamic parameters for.
@@ -852,10 +772,7 @@ namespace System.Management.Automation.Provider
 
         #region IContentCmdletProvider method wrappers
 
-        /// <summary>
-        /// Internal wrapper for the GetContentReader protected method. This method will
-        /// only be called if the provider implements the IContentCmdletProvider interface.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to retrieve content from.
         /// </param>
@@ -883,10 +800,7 @@ namespace System.Management.Automation.Provider
             return contentProvider.GetContentReader(path);
         }
 
-        /// <summary>
-        /// Gives the provider a chance to attach additional parameters to
-        /// the get-content cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// If the path was specified on the command line, this is the path
         /// to the item to get the dynamic parameters for.
@@ -912,10 +826,7 @@ namespace System.Management.Automation.Provider
             return contentProvider.GetContentReaderDynamicParameters(path);
         }
 
-        /// <summary>
-        /// Internal wrapper for the GetContentWriter protected method. This method will
-        /// only be called if the provider implements the IContentCmdletProvider interface.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to set content on.
         /// </param>
@@ -943,10 +854,7 @@ namespace System.Management.Automation.Provider
             return contentProvider.GetContentWriter(path);
         }
 
-        /// <summary>
-        /// Gives the provider a chance to attach additional parameters to
-        /// the add-content and set-content cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// If the path was specified on the command line, this is the path
         /// to the item to get the dynamic parameters for.
@@ -972,10 +880,7 @@ namespace System.Management.Automation.Provider
             return contentProvider.GetContentWriterDynamicParameters(path);
         }
 
-        /// <summary>
-        /// Internal wrapper for the ClearContent protected method. This method will
-        /// only be called if the provider implements the IContentCmdletProvider interface.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to clear the content from.
         /// </param>
@@ -1000,10 +905,7 @@ namespace System.Management.Automation.Provider
             contentProvider.ClearContent(path);
         }
 
-        /// <summary>
-        /// Gives the provider a chance to attach additional parameters to
-        /// the clear-content cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// If the path was specified on the command line, this is the path
         /// to the item to get the dynamic parameters for.
@@ -1035,9 +937,7 @@ namespace System.Management.Automation.Provider
 
         #region protected members
 
-        /// <summary>
-        /// Gives the provider the opportunity to initialize itself.
-        /// </summary>
+        
         /// <param name="providerInfo">
         /// The information about the provider that is being started.
         /// </param>
@@ -1060,10 +960,7 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <summary>
-        /// Gets an object that defines the additional parameters for the Start implementation
-        /// for a provider.
-        /// </summary>
+        
         /// <returns>
         /// Overrides of this method should return an object that has properties and fields decorated with
         /// parsing attributes similar to a cmdlet class or a
@@ -1079,9 +976,7 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <summary>
-        /// Called by session state when the provider is being removed.
-        /// </summary>
+        
         /// <remarks>
         /// A provider should override this method to free up any resources that the provider
         /// was using.
@@ -1095,9 +990,7 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <summary>
-        /// Indicates whether stop has been requested on this provider.
-        /// </summary>
+        
         public bool Stopping
         {
             get
@@ -1113,9 +1006,7 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <summary>
-        /// Gets the instance of session state for the current runspace.
-        /// </summary>
+        
         public SessionState SessionState
         {
             get
@@ -1131,9 +1022,7 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <summary>
-        /// Gets the instance of the provider interface APIs for the current runspace.
-        /// </summary>
+        
         public ProviderIntrinsics InvokeProvider
         {
             get
@@ -1149,9 +1038,7 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <summary>
-        /// Gets the instance of the command invocation APIs for the current runspace.
-        /// </summary>
+        
         public CommandInvocationIntrinsics InvokeCommand
         {
             get
@@ -1167,9 +1054,7 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <summary>
-        /// Gets the credentials under which the operation should run.
-        /// </summary>
+        
         public PSCredential Credential
         {
             get
@@ -1185,10 +1070,7 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <summary>
-        /// The information about the provider that is stored in the runspace
-        /// on behalf of the provider.
-        /// </summary>
+        
         /// <remarks>
         /// If a derived type of ProviderInfo was returned from the Start method, it
         /// will be set here in all subsequent calls to the provider.
@@ -1204,9 +1086,7 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <summary>
-        /// The drive information associated with the context of the current operation.
-        /// </summary>
+        
         protected PSDriveInfo PSDriveInfo
         {
             get
@@ -1222,10 +1102,7 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <summary>
-        /// The dynamic parameters object populated with the values as specified
-        /// by the user.
-        /// </summary>
+        
         protected object DynamicParameters
         {
             get
@@ -1241,9 +1118,7 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <summary>
-        /// Gets the force property.
-        /// </summary>
+        
         /// <remarks>
         /// Gives the provider guidance on how vigorous it should be about performing
         /// the operation. If true, the provider should do everything possible to perform
@@ -1268,9 +1143,7 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <summary>
-        /// Gets the provider specific filter that was supplied by the caller.
-        /// </summary>
+        
         public string Filter
         {
             get
@@ -1286,10 +1159,7 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <summary>
-        /// Gets the include wildcard patterns which is used to determine which items
-        /// will be included when taking an action.
-        /// </summary>
+        
         public Collection<string> Include
         {
             get
@@ -1305,10 +1175,7 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <summary>
-        /// Gets the exclude wildcard patterns which is used to determine which items
-        /// will be excluded when taking an action.
-        /// </summary>
+        
         public Collection<string> Exclude
         {
             get
@@ -1324,9 +1191,7 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <summary>
-        /// Gets the host interaction APIs.
-        /// </summary>
+        
         public PSHost Host
         {
             get
@@ -1342,14 +1207,10 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <summary>
-        /// Gets the default item separator character for this provider.
-        /// </summary>
+        
         public virtual char ItemSeparator => Path.DirectorySeparatorChar;
 
-        /// <summary>
-        /// Gets the alternate item separator character for this provider.
-        /// </summary>
+        
         public virtual char AltItemSeparator =>
 #if UNIX
             '\\';
@@ -1358,11 +1219,7 @@ namespace System.Management.Automation.Provider
 #endif
 
         #region IResourceSupplier
-        /// <summary>
-        /// Gets the resource string corresponding to baseName and
-        /// resourceId from the current assembly. You should override
-        /// this if you require a different behavior.
-        /// </summary>
+        
         /// <param name="baseName">
         /// the base resource name
         /// </param>
@@ -1568,9 +1425,7 @@ namespace System.Management.Automation.Provider
 
         #region Transaction Support
 
-        /// <summary>
-        /// Returns true if a transaction is available and active.
-        /// </summary>
+        
         public bool TransactionAvailable()
         {
             using (PSTransactionManager.GetEngineProtectionScope())
@@ -1582,10 +1437,7 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <summary>
-        /// Gets an object that surfaces the current PowerShell transaction.
-        /// When this object is disposed, PowerShell resets the active transaction.
-        /// </summary>
+        
         public PSTransactionContext CurrentPSTransaction
         {
             get
@@ -1681,10 +1533,7 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <summary>
-        /// Converts the incoming object to a PSObject and then adds extra
-        /// data as notes. Then it writes the shell object to the context.
-        /// </summary>
+        
         /// <param name="item">
         /// The item being written out.
         /// </param>
@@ -1713,10 +1562,7 @@ namespace System.Management.Automation.Provider
             Context.WriteObject(result);
         }
 
-        /// <summary>
-        /// Converts the incoming object to a PSObject and then adds extra
-        /// data as notes. Then it writes the shell object to the context.
-        /// </summary>
+        
         /// <param name="item">
         /// The item being written out.
         /// </param>
@@ -1736,10 +1582,7 @@ namespace System.Management.Automation.Provider
             Context.WriteObject(result);
         }
 
-        /// <summary>
-        /// Wraps the item in a PSObject and attaches some notes to the
-        /// object that deal with path information.
-        /// </summary>
+        
         /// <param name="item">
         /// The item to be wrapped.
         /// </param>
@@ -1859,10 +1702,7 @@ namespace System.Management.Automation.Provider
             return result;
         }
 
-        /// <summary>
-        /// Writes an item to the output as a PSObject with extra data attached
-        /// as notes.
-        /// </summary>
+        
         /// <param name="item">
         /// The item to be written.
         /// </param>
@@ -1884,10 +1724,7 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <summary>
-        /// Writes a property object to the output as a PSObject with extra data attached
-        /// as notes.
-        /// </summary>
+        
         /// <param name="propertyValue">
         /// The properties to be written.
         /// </param>
@@ -1905,10 +1742,7 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <summary>
-        /// Writes a Security Descriptor object to the output as a PSObject with extra data attached
-        /// as notes.
-        /// </summary>
+        
         /// <param name="securityDescriptor">
         /// The Security Descriptor to be written.
         /// </param>

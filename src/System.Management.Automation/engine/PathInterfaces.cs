@@ -7,16 +7,12 @@ using Dbg = System.Management.Automation;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Exposes the path manipulation and location APIs to the Cmdlet base class.
-    /// </summary>
+    
     public sealed class PathIntrinsics
     {
         #region Constructors
 
-        /// <summary>
-        /// Hide the default constructor since we always require an instance of SessionState.
-        /// </summary>
+        
         private PathIntrinsics()
         {
             Dbg.Diagnostics.Assert(
@@ -24,9 +20,7 @@ namespace System.Management.Automation
                 "This constructor should never be called. Only the constructor that takes an instance of SessionState should be called.");
         }
 
-        /// <summary>
-        /// Internal constructor for the PathIntrinsics facade.
-        /// </summary>
+        
         /// <param name="sessionState">
         /// The session for which this is a facade.
         /// </param>
@@ -50,9 +44,7 @@ namespace System.Management.Automation
 
         #region Public methods
 
-        /// <summary>
-        /// Gets the current location.
-        /// </summary>
+        
         /// <exception cref="InvalidOperationException">
         /// If a location has not been set yet.
         /// </exception>
@@ -68,9 +60,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the current location for a specific provider.
-        /// </summary>
+        
         /// <param name="providerName">
         /// The name of the provider to get the current location for.
         /// </param>
@@ -94,9 +84,7 @@ namespace System.Management.Automation
             return _sessionState.GetNamespaceCurrentLocation(providerName);
         }
 
-        /// <summary>
-        /// Gets the current location for the file system provider.
-        /// </summary>
+        
         /// <exception cref="DriveNotFoundException">
         /// If a current drive cannot be found for the FileSystem provider
         /// </exception>
@@ -112,9 +100,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Changes the current location to the specified path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to change the location to. This can be either a drive-relative or provider-relative
         /// path. It cannot be a provider-internal path.
@@ -150,9 +136,7 @@ namespace System.Management.Automation
             return _sessionState.SetLocation(path);
         }
 
-        /// <summary>
-        /// Changes the current location to the specified path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to change the location to. This can be either a drive-relative or provider-relative
         /// path. It cannot be a provider-internal path.
@@ -191,9 +175,7 @@ namespace System.Management.Automation
             return _sessionState.SetLocation(path, context);
         }
 
-        /// <summary>
-        /// Changes the current location to the specified path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to change the location to. This can be either a drive-relative or provider-relative
         /// path. It cannot be a provider-internal path.
@@ -235,9 +217,7 @@ namespace System.Management.Automation
             return _sessionState.SetLocation(path, context, literalPath);
         }
 
-        /// <summary>
-        /// Determines if the specified path is the current location or a parent of the current location.
-        /// </summary>
+        
         /// <param name="path">
         /// A drive or provider-qualified path to be compared against the current location.
         /// </param>
@@ -284,9 +264,7 @@ namespace System.Management.Automation
             return _sessionState.IsCurrentLocationOrAncestor(path, context);
         }
 
-        /// <summary>
-        /// Pushes the current location onto the location stack so that it can be retrieved later.
-        /// </summary>
+        
         /// <param name="stackName">
         /// The ID of the stack to push the location onto.
         /// </param>
@@ -299,9 +277,7 @@ namespace System.Management.Automation
             _sessionState.PushCurrentLocation(stackName);
         }
 
-        /// <summary>
-        /// Gets the location off the top of the location stack.
-        /// </summary>
+        
         /// <param name="stackName">
         /// The ID of the stack to pop the location from. If stackName is null or empty
         /// the default stack is used.
@@ -337,9 +313,7 @@ namespace System.Management.Automation
             return _sessionState.PopLocation(stackName);
         }
 
-        /// <summary>
-        /// Gets the location stack and all the locations on it.
-        /// </summary>
+        
         /// <param name="stackName">
         /// The stack ID of the stack to get the stack info for.
         /// </param>
@@ -352,9 +326,7 @@ namespace System.Management.Automation
             return _sessionState.LocationStack(stackName);
         }
 
-        /// <summary>
-        /// Sets the default location stack to that specified by the stack ID.
-        /// </summary>
+        
         /// <param name="stackName">
         /// The stack ID of the stack to use as the default location stack.
         /// </param>
@@ -370,10 +342,7 @@ namespace System.Management.Automation
             return _sessionState.SetDefaultLocationStack(stackName);
         }
 
-        /// <summary>
-        /// Resolves a drive or provider qualified absolute or relative path that may contain
-        /// wildcard characters into one or more absolute drive or provider qualified paths.
-        /// </summary>
+        
         /// <param name="path">
         /// The drive or provider qualified path to be resolved. This path may contain wildcard
         /// characters which will get resolved.
@@ -414,10 +383,7 @@ namespace System.Management.Automation
             return PathResolver.GetGlobbedMonadPathsFromMonadPath(path, false, out providerInstance);
         }
 
-        /// <summary>
-        /// Resolves a drive or provider qualified absolute or relative path that may contain
-        /// wildcard characters into one or more absolute drive or provider qualified paths.
-        /// </summary>
+        
         /// <param name="path">
         /// The drive or provider qualified path to be resolved. This path may contain wildcard
         /// characters which will get resolved.
@@ -459,10 +425,7 @@ namespace System.Management.Automation
             return PathResolver.GetGlobbedMonadPathsFromMonadPath(path, false, context, out providerInstance);
         }
 
-        /// <summary>
-        /// Resolves a drive or provider qualified absolute or relative path that may contain
-        /// wildcard characters into one or more provider-internal paths.
-        /// </summary>
+        
         /// <param name="path">
         /// The drive or provider qualified path to be resolved. This path may contain wildcard
         /// characters which will get resolved.
@@ -521,10 +484,7 @@ namespace System.Management.Automation
             return PathResolver.GetGlobbedProviderPathsFromMonadPath(path, allowNonexistingPaths, out provider, out providerInstance);
         }
 
-        /// <summary>
-        /// Resolves a drive or provider qualified absolute or relative path that may contain
-        /// wildcard characters into one or more provider-internal paths.
-        /// </summary>
+        
         /// <param name="path">
         /// The drive or provider qualified path to be resolved. This path may contain wildcard
         /// characters which will get resolved.
@@ -579,10 +539,7 @@ namespace System.Management.Automation
             return PathResolver.GetGlobbedProviderPathsFromMonadPath(path, false, context, out provider, out providerInstance);
         }
 
-        /// <summary>
-        /// Resolves a drive or provider qualified absolute or relative path that may contain
-        /// wildcard characters into one or more provider-internal paths.
-        /// </summary>
+        
         /// <param name="path">
         /// The drive or provider qualified path to be resolved. This path may contain wildcard
         /// characters which will get resolved.
@@ -623,10 +580,7 @@ namespace System.Management.Automation
             return PathResolver.GetGlobbedProviderPathsFromProviderPath(path, false, providerId, out providerInstance);
         }
 
-        /// <summary>
-        /// Resolves a drive or provider qualified absolute or relative path that may contain
-        /// wildcard characters into one or more provider-internal paths.
-        /// </summary>
+        
         /// <param name="path">
         /// The drive or provider qualified path to be resolved. This path may contain wildcard
         /// characters which will get resolved.
@@ -673,10 +627,7 @@ namespace System.Management.Automation
             return PathResolver.GetGlobbedProviderPathsFromProviderPath(path, false, providerId, context, out providerInstance);
         }
 
-        /// <summary>
-        /// Converts a drive or provider qualified absolute or relative path that may contain
-        /// wildcard characters into one a provider-internal path still containing the wildcard characters.
-        /// </summary>
+        
         /// <param name="path">
         /// The drive or provider qualified path to be converted. This path may contain wildcard
         /// characters which will not get resolved.
@@ -716,10 +667,7 @@ namespace System.Management.Automation
             return PathResolver.GetProviderPath(path);
         }
 
-        /// <summary>
-        /// Converts a drive or provider qualified absolute or relative path that may contain
-        /// wildcard characters into one a provider-internal path still containing the wildcard characters.
-        /// </summary>
+        
         /// <param name="path">
         /// The drive or provider qualified path to be converted. This path may contain wildcard
         /// characters which will not get resolved.
@@ -776,10 +724,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Converts a drive or provider qualified absolute or relative path that may contain
-        /// wildcard characters into one a provider-internal path still containing the wildcard characters.
-        /// </summary>
+        
         /// <param name="path">
         /// The drive or provider qualified path to be converted. This path may contain wildcard
         /// characters which will not get resolved.
@@ -833,9 +778,7 @@ namespace System.Management.Automation
             return PathResolver.GetProviderPath(path, context, out provider, out drive);
         }
 
-        /// <summary>
-        /// Determines if the give path is a PowerShell provider-qualified path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to check.
         /// </param>
@@ -856,9 +799,7 @@ namespace System.Management.Automation
             return LocationGlobber.IsProviderQualifiedPath(path);
         }
 
-        /// <summary>
-        /// Determines if the given path is a drive-qualified absolute path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to check.
         /// </param>
@@ -887,9 +828,7 @@ namespace System.Management.Automation
 
         #region Combine
 
-        /// <summary>
-        /// Combines two strings with a provider specific path separator.
-        /// </summary>
+        
         /// <param name="parent">
         /// The parent path to be joined with the child.
         /// </param>
@@ -926,9 +865,7 @@ namespace System.Management.Automation
             return _sessionState.MakePath(parent, child);
         }
 
-        /// <summary>
-        /// Combines two strings with a provider specific path separator.
-        /// </summary>
+        
         /// <param name="parent">
         /// The parent path to be joined with the child.
         /// </param>
@@ -972,9 +909,7 @@ namespace System.Management.Automation
 
         #region ParseParent
 
-        /// <summary>
-        /// Gets the parent path of the specified path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to get the parent path from.
         /// </param>
@@ -1007,9 +942,7 @@ namespace System.Management.Automation
             return _sessionState.GetParentPath(path, root);
         }
 
-        /// <summary>
-        /// Gets the parent path of the specified path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to get the parent path from.
         /// </param>
@@ -1048,11 +981,7 @@ namespace System.Management.Automation
             return _sessionState.GetParentPath(path, root, context, false);
         }
 
-        /// <summary>
-        /// Gets the parent path of the specified path.
-        /// Allow to use FileSystem as the default provider when the
-        /// given path is drive-qualified and the drive cannot be found.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to get the parent path from.
         /// </param>
@@ -1099,9 +1028,7 @@ namespace System.Management.Automation
 
         #region ParseChildName
 
-        /// <summary>
-        /// Gets the child name of the specified path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to get the child name from.
         /// </param>
@@ -1135,9 +1062,7 @@ namespace System.Management.Automation
             return _sessionState.GetChildName(path);
         }
 
-        /// <summary>
-        /// Gets the child name of the specified path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to get the child name from.
         /// </param>
@@ -1176,11 +1101,7 @@ namespace System.Management.Automation
             return _sessionState.GetChildName(path, context, false);
         }
 
-        /// <summary>
-        /// Gets the child name of the specified path.
-        /// Allow to use FileSystem as the default provider when the
-        /// given path is drive-qualified and the drive cannot be found.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to get the child name from.
         /// </param>
@@ -1227,10 +1148,7 @@ namespace System.Management.Automation
 
         #region NormalizeRelativePath
 
-        /// <summary>
-        /// Normalizes the path that was passed in and returns the normalized path
-        /// as a relative path to the basePath that was passed.
-        /// </summary>
+        
         /// <param name="path">
         /// A PowerShell path to an item. The item should exist
         /// or the provider should write out an error.
@@ -1264,10 +1182,7 @@ namespace System.Management.Automation
             return _sessionState.NormalizeRelativePath(path, basePath);
         }
 
-        /// <summary>
-        /// Normalizes the path that was passed in and returns the normalized path
-        /// as a relative path to the basePath that was passed.
-        /// </summary>
+        
         /// <param name="path">
         /// An MSH path to an item. The item should exist
         /// or the provider should write out an error.
@@ -1311,9 +1226,7 @@ namespace System.Management.Automation
 
         #region IsValid
 
-        /// <summary>
-        /// Determines if the path is a syntactically and semantically valid path for the provider.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to validate.
         /// </param>
@@ -1347,9 +1260,7 @@ namespace System.Management.Automation
             return _sessionState.IsValidPath(path);
         }
 
-        /// <summary>
-        /// Determines if the MSH path is a syntactically and semantically valid path for the provider.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to validate.
         /// </param>

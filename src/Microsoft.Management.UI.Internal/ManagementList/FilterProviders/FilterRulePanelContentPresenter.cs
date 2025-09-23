@@ -7,16 +7,11 @@ using System.Windows.Data;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <summary>
-    /// The FilterRulePanelContentPresenter selects a template based upon the ContentConverter
-    /// provided.
-    /// </summary>
+    
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public class FilterRulePanelContentPresenter : ContentPresenter
     {
-        /// <summary>
-        /// Initializes a new instance of the FilterRulePanelContentPresenter class.
-        /// </summary>
+        
         public FilterRulePanelContentPresenter()
         {
             Binding b = new Binding("FilterRuleTemplateSelector");
@@ -24,19 +19,14 @@ namespace Microsoft.Management.UI.Internal
             this.SetBinding(ContentTemplateSelectorProperty, b);
         }
 
-        /// <summary>
-        /// Gets or sets an IValueConverter used to convert the Content
-        /// value.
-        /// </summary>
+        
         public IValueConverter ContentConverter
         {
             get;
             set;
         }
 
-        /// <summary>
-        /// Chooses a template based upon the provided ContentConverter.
-        /// </summary>
+        
         /// <returns>
         /// Returns a DataTemplate.
         /// </returns>

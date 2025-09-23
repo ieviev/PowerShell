@@ -18,9 +18,7 @@ namespace Microsoft.Management.UI.Internal
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public partial class DismissiblePopup : Popup
     {
-        /// <summary>
-        /// Constructs an instance of DismissablePopup.
-        /// </summary>
+        
         public DismissiblePopup() : base()
         {
             // nothing
@@ -28,9 +26,7 @@ namespace Microsoft.Management.UI.Internal
 
         private delegate void FocusChildDelegate();
 
-        /// <summary>
-        /// Responds to the condition in which the value of the IsOpen property changes from false to true.
-        /// </summary>
+        
         /// <param name="e">The event arguments.</param>
         protected override void OnOpened(EventArgs e)
         {
@@ -46,9 +42,7 @@ namespace Microsoft.Management.UI.Internal
             this.SetupAutomationIdBinding();
         }
 
-        /// <summary>
-        /// Responds when the value of the IsOpen property changes from to true to false.
-        /// </summary>
+        
         /// <param name="e">The event arguments.</param>
         protected override void OnClosed(EventArgs e)
         {
@@ -115,9 +109,7 @@ namespace Microsoft.Management.UI.Internal
             return (FrameworkElement)element;
         }
 
-        /// <summary>
-        /// Provides class handling for the KeyDown routed event that occurs when the user presses a key while this control has focus.
-        /// </summary>
+        
         /// <param name="e">The event data.</param>
         protected override void OnKeyDown(System.Windows.Input.KeyEventArgs e)
         {

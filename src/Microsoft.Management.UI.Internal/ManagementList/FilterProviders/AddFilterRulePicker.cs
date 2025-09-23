@@ -8,10 +8,7 @@ using System.Windows.Controls;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <summary>
-    /// The AddFilterRulePicker class is responsible for allowing users to
-    /// add rules to an FilterRulePanel.
-    /// </summary>
+    
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public partial class AddFilterRulePicker : Control
     {
@@ -19,9 +16,7 @@ namespace Microsoft.Management.UI.Internal
 
         private ObservableCollection<AddFilterRulePickerItem> shortcutFilterRules = new ObservableCollection<AddFilterRulePickerItem>();
 
-        /// <summary>
-        /// Gets the collection of shortcut rules available for addition to the FilterRulePanel.
-        /// </summary>
+        
         public ObservableCollection<AddFilterRulePickerItem> ShortcutFilterRules
         {
             get
@@ -32,9 +27,7 @@ namespace Microsoft.Management.UI.Internal
 
         private ObservableCollection<AddFilterRulePickerItem> columnFilterRules = new ObservableCollection<AddFilterRulePickerItem>();
 
-        /// <summary>
-        /// Gets the collection of column rules available for addition to the FilterRulePanel.
-        /// </summary>
+        
         public ObservableCollection<AddFilterRulePickerItem> ColumnFilterRules
         {
             get

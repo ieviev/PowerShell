@@ -6,9 +6,7 @@
 
 namespace Microsoft.PowerShell.Commands.Internal.Format
 {
-    /// <summary>
-    /// In line definition of a format string control.
-    /// </summary>
+    
     internal sealed class FieldControlBody : ControlBody
     {
         internal FieldFormattingDirective fieldFormattingDirective = new FieldFormattingDirective();

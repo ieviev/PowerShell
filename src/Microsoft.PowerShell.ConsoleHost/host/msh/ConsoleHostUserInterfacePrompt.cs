@@ -20,23 +20,14 @@ namespace Microsoft.PowerShell
     internal partial
     class ConsoleHostUserInterface : System.Management.Automation.Host.PSHostUserInterface
     {
-        /// <summary>
-        /// Used by Prompt to indicate any common errors when converting the user input string to
-        ///  the type of the parameter.
-        /// </summary>
+        
         private enum PromptCommonInputErrors
         {
-            /// <summary>
-            /// No error or not an error prompt handles.
-            /// </summary>
+            
             None,
-            /// <summary>
-            /// Format error.
-            /// </summary>
+            
             Format,
-            /// <summary>
-            /// Overflow error.
-            /// </summary>
+            
             Overflow
         }
 
@@ -58,9 +49,7 @@ namespace Microsoft.PowerShell
             return false;
         }
 
-        /// <summary>
-        /// See base class.
-        /// </summary>
+        
         /// <param name="caption"></param>
         /// <param name="message"></param>
         /// <param name="descriptions"></param>
@@ -346,9 +335,7 @@ namespace Microsoft.PowerShell
             return null;
         }
 
-        /// <summary>
-        /// Called by Prompt. Reads user input and processes tilde commands.
-        /// </summary>
+        
         /// <param name="fieldPrompt">Prompt written to host for the field.</param>
         /// <param name="desc">The field to be read.</param>
         /// <param name="fieldEchoOnPrompt">True to echo user input.</param>
@@ -409,10 +396,7 @@ namespace Microsoft.PowerShell
             return processedInputString;
         }
 
-        /// <summary>
-        /// Uses LanguagePrimitives.ConvertTo to parse inputString for fieldType. Handles two most common parse
-        ///  exceptions: OverflowException and FormatException.
-        /// </summary>
+        
         /// <param name="fieldType">The type that inputString is to be interpreted.</param>
         /// <param name="isFromRemoteHost">Is the call coming from a remote host.</param>
         /// <param name="inputString">The string to be converted.</param>
@@ -475,17 +459,7 @@ namespace Microsoft.PowerShell
             return PromptCommonInputErrors.None;
         }
 
-        /// <summary>
-        /// Handles Tilde Commands in Prompt
-        /// If input does not start with PromptCommandPrefix (= "!"), returns input
-        /// Tilde commands -
-        /// !   end of list, only valid for input field types that implement IList, returns string.Empty
-        /// !!* input !* literally, returns !* where * is any string
-        /// !h  prints out field's Quick Help, returns null
-        /// All others tilde comments are invalid and return null
-        ///
-        /// returns null if-and-only-if there's nothing the caller can process.
-        /// </summary>
+        
         /// <param name="input"></param>
         /// <param name="desc"></param>
         /// <param name="inputDone"></param>

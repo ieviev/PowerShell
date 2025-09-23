@@ -23,7 +23,7 @@ namespace Microsoft.PowerShell.Commands
 
         private int _index;
 
-        /// <summary> Columns definition of the underlying Management List</summary>
+        
         private HeaderInfo _headerInfo;
 
         private bool _isWindowStarted;
@@ -38,9 +38,7 @@ namespace Microsoft.PowerShell.Commands
 
         private readonly GraphicalHostReflectionWrapper _graphicalHostReflectionWrapper;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="OutWindowProxy"/> class.
-        /// </summary>
+        
         internal OutWindowProxy(string title, OutputModeOption outPutMode, OutGridViewCommand parentCmdlet)
         {
             _title = title;
@@ -50,9 +48,7 @@ namespace Microsoft.PowerShell.Commands
             _graphicalHostReflectionWrapper = GraphicalHostReflectionWrapper.GetGraphicalHostReflectionWrapper(parentCmdlet, OutWindowProxy.OutGridViewWindowClassName);
         }
 
-        /// <summary>
-        /// Adds columns to the output window.
-        /// </summary>
+        
         /// <param name="propertyNames">An array of property names to add.</param>
         /// <param name="displayNames">An array of display names to add.</param>
         /// <param name="types">An array of types to add.</param>
@@ -159,9 +155,7 @@ namespace Microsoft.PowerShell.Commands
                                                           _parentCmdlet.ConvertToString(liveObject)));
         }
 
-        /// <summary>
-        /// Adds an item to the out window.
-        /// </summary>
+        
         /// <param name="livePSObject">
         /// The item to add.
         /// </param>
@@ -182,9 +176,7 @@ namespace Microsoft.PowerShell.Commands
             _graphicalHostReflectionWrapper.CallMethod("AddItem", stalePSObject);
         }
 
-        /// <summary>
-        /// Adds an item to the out window.
-        /// </summary>
+        
         /// <param name="livePSObject">
         /// The item to add.
         /// </param>
@@ -201,9 +193,7 @@ namespace Microsoft.PowerShell.Commands
             _graphicalHostReflectionWrapper.CallMethod("AddItem", stalePSObject);
         }
 
-        /// <summary>
-        /// Shows the out window if it has not already been displayed.
-        /// </summary>
+        
         internal void ShowWindow()
         {
             if (!_isWindowStarted)
@@ -216,9 +206,7 @@ namespace Microsoft.PowerShell.Commands
 
         internal void BlockUntilClosed() => _closedEvent?.WaitOne();
 
-        /// <summary>
-        /// Implements IDisposable logic.
-        /// </summary>
+        
         /// <param name="isDisposing">True if being called from Dispose.</param>
         private void Dispose(bool isDisposing)
         {
@@ -232,18 +220,14 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Dispose method in IDisposable.
-        /// </summary>
+        
         public void Dispose()
         {
             this.Dispose(true);
             GC.SuppressFinalize(this);
         }
 
-        /// <summary>
-        /// Close the window if it has already been displayed.
-        /// </summary>
+        
         internal void CloseWindow()
         {
             if (_isWindowStarted)
@@ -253,9 +237,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets a value indicating whether the out window is closed.
-        /// </summary>
+        
         /// <returns>
         /// True if the out window is closed, false otherwise.
         /// </returns>
@@ -264,16 +246,14 @@ namespace Microsoft.PowerShell.Commands
             return (bool)_graphicalHostReflectionWrapper.CallMethod("GetWindowClosedStatus");
         }
 
-        /// <summary>Returns any exception that has been thrown by previous method calls.</summary>
+        
         /// <returns>The thrown and caught exception. It returns null if no exceptions were thrown by any previous method calls.</returns>
         internal Exception GetLastException()
         {
             return (Exception)_graphicalHostReflectionWrapper.CallMethod("GetLastException");
         }
 
-        /// <summary>
-        /// Return the selected item of the OutGridView.
-        /// </summary>
+        
         /// <returns>
         /// The selected item.
         /// </returns>

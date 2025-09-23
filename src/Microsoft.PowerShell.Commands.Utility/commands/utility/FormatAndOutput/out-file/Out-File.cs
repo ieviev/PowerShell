@@ -18,16 +18,11 @@ namespace Microsoft.PowerShell.Commands
         }
     }
 
-    /// <summary>
-    /// Implementation for the out-file command.
-    /// </summary>
+    
     [Cmdlet(VerbsData.Out, "File", SupportsShouldProcess = true, DefaultParameterSetName = "ByPath", HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096621")]
     public class OutFileCommand : FrontEndCommandBase
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="OutFileCommand"/> class
-        /// and sets the inner command.
-        /// </summary>
+        
         public OutFileCommand()
         {
             this.implementation = new OutputManagerInner();
@@ -35,9 +30,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Command Line Parameters
 
-        /// <summary>
-        /// Mandatory file name to write to.
-        /// </summary>
+        
         [Alias("Path")]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = "ByPath")]
         public string FilePath
@@ -49,9 +42,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string _fileName;
 
-        /// <summary>
-        /// Mandatory file name to write to.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, ParameterSetName = "ByLiteralPath")]
         [Alias("PSPath", "LP")]
         public string LiteralPath
@@ -70,9 +61,7 @@ namespace Microsoft.PowerShell.Commands
 
         private bool _isLiteralPath = false;
 
-        /// <summary>
-        /// Encoding optional flag.
-        /// </summary>
+        
         [Parameter(Position = 1)]
         [ArgumentToEncodingTransformation]
         [ArgumentEncodingCompletions]
@@ -93,9 +82,7 @@ namespace Microsoft.PowerShell.Commands
 
         private Encoding _encoding = Encoding.Default;
 
-        /// <summary>
-        /// Property that sets append parameter.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter Append
         {
@@ -106,9 +93,7 @@ namespace Microsoft.PowerShell.Commands
 
         private bool _append;
 
-        /// <summary>
-        /// Property that sets force parameter.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter Force
         {
@@ -119,9 +104,7 @@ namespace Microsoft.PowerShell.Commands
 
         private bool _force;
 
-        /// <summary>
-        /// Property that prevents file overwrite.
-        /// </summary>
+        
         [Parameter]
         [Alias("NoOverwrite")]
         public SwitchParameter NoClobber
@@ -133,9 +116,7 @@ namespace Microsoft.PowerShell.Commands
 
         private bool _noclobber;
 
-        /// <summary>
-        /// Optional, number of columns to use when writing to device.
-        /// </summary>
+        
         [ValidateRange(2, int.MaxValue)]
         [Parameter]
         public int Width
@@ -147,9 +128,7 @@ namespace Microsoft.PowerShell.Commands
 
         private int? _width = null;
 
-        /// <summary>
-        /// False to add a newline to the end of the output string, true if not.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter NoNewline
         {
@@ -168,9 +147,7 @@ namespace Microsoft.PowerShell.Commands
 
         #endregion
 
-        /// <summary>
-        /// Read command line parameters.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             // set up the Screen Host interface
@@ -189,13 +166,7 @@ namespace Microsoft.PowerShell.Commands
             base.BeginProcessing();
         }
 
-        /// <summary>
-        /// One-time initialization: acquire a screen host interface
-        /// by creating one on top of a file.
-        /// NOTICE: we assume that at this time the file name is
-        /// available in the CRO. JonN recommends: file name has to be
-        /// a MANDATORY parameter on the command line.
-        /// </summary>
+        
         private LineOutput InstantiateLineOutputInterface()
         {
             string action = StringUtil.Format(FormatAndOut_out_xxx.OutFile_Action);
@@ -234,9 +205,7 @@ namespace Microsoft.PowerShell.Commands
             return (LineOutput)twlo;
         }
 
-        /// <summary>
-        /// Execution entry point.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             _processRecordExecuted = true;
@@ -251,9 +220,7 @@ namespace Microsoft.PowerShell.Commands
             _sw.Flush();
         }
 
-        /// <summary>
-        /// Execution entry point.
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             // When the Out-File is used in a redirection pipelineProcessor,
@@ -281,9 +248,7 @@ namespace Microsoft.PowerShell.Commands
             CleanUp();
         }
 
-        /// <summary>
-        /// InternalDispose.
-        /// </summary>
+        
         protected override void InternalDispose()
         {
             base.InternalDispose();
@@ -306,30 +271,16 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Handle to file stream.
-        /// </summary>
+        
         private FileStream _fs;
 
-        /// <summary>
-        /// Stream writer used to write to file.
-        /// </summary>
+        
         private StreamWriter _sw = null;
 
-        /// <summary>
-        /// Indicate whether the ProcessRecord method was executed.
-        /// When the Out-File is used in a redirection pipelineProcessor,
-        /// its ProcessRecord method may not be called when nothing is written to the
-        /// output pipe, for example:
-        ///     Write-Error error > test.txt
-        /// In this case, the EndProcess method should return immediately as if it's
-        /// never been called.
-        /// </summary>
+        
         private bool _processRecordExecuted = false;
 
-        /// <summary>
-        /// FileInfo of file to clear read-only flag when operation is complete.
-        /// </summary>
+        
         private FileInfo _readOnlyFileInfo = null;
     }
 }

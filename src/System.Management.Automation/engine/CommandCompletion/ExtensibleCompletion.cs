@@ -9,16 +9,7 @@ using System.Management.Automation.Language;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// This attribute is used to specify an argument completer for a parameter to a cmdlet or function.
-    /// <example>
-    /// <code>
-    ///     [Parameter()]
-    ///     [ArgumentCompleter(typeof(NounArgumentCompleter))]
-    ///     public string Noun { get; set; }
-    /// </code>
-    /// </example>
-    /// </summary>
+    
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
     public class ArgumentCompleterAttribute : Attribute
     {
@@ -40,10 +31,7 @@ namespace System.Management.Automation
             Type = type;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ArgumentCompleterAttribute"/> class.
-        /// This constructor is used by derived attributes implementing <see cref="IArgumentCompleterFactory"/>.
-        /// </summary>
+        
         protected ArgumentCompleterAttribute()
         {
             if (this is not IArgumentCompleterFactory)
@@ -52,9 +40,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// This constructor is used primarily via PowerShell scripts.
-        /// </summary>
+        
         /// <param name="scriptBlock"></param>
         public ArgumentCompleterAttribute(ScriptBlock scriptBlock)
         {
@@ -76,15 +62,11 @@ namespace System.Management.Automation
         }
     }
 
-    /// <summary>
-    /// A type specified by the <see cref="ArgumentCompleterAttribute"/> must implement this interface.
-    /// </summary>
+    
 #nullable enable
     public interface IArgumentCompleter
     {
-        /// <summary>
-        /// Implementations of this function are called by PowerShell to complete arguments.
-        /// </summary>
+        
         /// <param name="commandName">The name of the command that needs argument completion.</param>
         /// <param name="parameterName">The name of the parameter that needs argument completion.</param>
         /// <param name="wordToComplete">The (possibly empty) word being completed.</param>
@@ -106,9 +88,7 @@ namespace System.Management.Automation
     }
 #nullable restore
 
-    /// <summary>
-    /// Creates a new argument completer.
-    /// </summary>
+    
     /// <para>
     /// If an attribute that derives from <see cref="ArgumentCompleterAttribute"/> implements this interface,
     /// it will be used to create the <see cref="IArgumentCompleter"/>, thus giving a way to parameterize a completer.
@@ -150,16 +130,12 @@ namespace System.Management.Automation
     /// </example>
     public interface IArgumentCompleterFactory
     {
-        /// <summary>
-        /// Creates an instance of a class implementing the <see cref="IArgumentCompleter"/> interface.
-        /// </summary>
+        
         /// <returns>An IArgumentCompleter instance.</returns>
         IArgumentCompleter Create();
     }
 
-    /// <summary>
-    /// Base class for parameterized argument completer attributes.
-    /// </summary>
+    
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
     public abstract class ArgumentCompleterFactoryAttribute : ArgumentCompleterAttribute, IArgumentCompleterFactory
     {
@@ -167,8 +143,7 @@ namespace System.Management.Automation
         public abstract IArgumentCompleter Create();
     }
 
-    /// <summary>
-    /// </summary>
+    
     [Cmdlet(VerbsLifecycle.Register, "ArgumentCompleter", HelpUri = "https://go.microsoft.com/fwlink/?LinkId=528576")]
     public class RegisterArgumentCompleterCommand : PSCmdlet
     {
@@ -179,41 +154,30 @@ namespace System.Management.Automation
         // Use a key that is unlikely to be a file name or path to indicate the fallback completer for native commands.
         internal const string FallbackCompleterKey = "___ps::<native_fallback_key>@@___";
 
-        /// <summary>
-        /// Gets or sets the command names for which the argument completer is registered.
-        /// </summary>
+        
         [Parameter(ParameterSetName = NativeCommandSetName, Mandatory = true)]
         [Parameter(ParameterSetName = PowerShellSetName)]
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
         public string[] CommandName { get; set; }
 
-        /// <summary>
-        /// Gets or sets the name of the parameter for which the argument completer is registered.
-        /// </summary>
+        
         [Parameter(ParameterSetName = PowerShellSetName, Mandatory = true)]
         public string ParameterName { get; set; }
 
-        /// <summary>
-        /// Gets or sets the script block that will be executed to provide argument completions.
-        /// </summary>
+        
         [Parameter(Mandatory = true)]
         [AllowNull()]
         public ScriptBlock ScriptBlock { get; set; }
 
-        /// <summary>
-        /// Indicates the argument completer is for native commands.
-        /// </summary>
+        
         [Parameter(ParameterSetName = NativeCommandSetName)]
         public SwitchParameter Native { get; set; }
 
-        /// <summary>
-        /// Indicates the argument completer is a fallback for any native commands that don't have a completer registered.
-        /// </summary>
+        
         [Parameter(ParameterSetName = NativeFallbackSetName)]
         public SwitchParameter NativeFallback { get; set; }
 
-        /// <summary>
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             Dictionary<string, ScriptBlock> completerDictionary;
@@ -280,23 +244,13 @@ namespace System.Management.Automation
         }
     }
 
-    /// <summary>
-    /// This attribute is used to specify an argument completions for a parameter of a cmdlet or function
-    /// based on string array.
-    /// <example>
-    ///     [Parameter()]
-    ///     [ArgumentCompletions("Option1","Option2","Option3")]
-    ///     public string Noun { get; set; }
-    /// </example>
-    /// </summary>
+    
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
     public class ArgumentCompletionsAttribute : Attribute
     {
         private readonly string[] _completions;
 
-        /// <summary>
-        /// Initializes a new instance of the ArgumentCompletionsAttribute class.
-        /// </summary>
+        
         /// <param name="completions">List of complete values.</param>
         /// <exception cref="ArgumentNullException">For null arguments.</exception>
         /// <exception cref="ArgumentOutOfRangeException">For invalid arguments.</exception>
@@ -315,9 +269,7 @@ namespace System.Management.Automation
             _completions = completions;
         }
 
-        /// <summary>
-        /// The function returns completions for arguments.
-        /// </summary>
+        
         public IEnumerable<CompletionResult> CompleteArgument(string commandName, string parameterName, string wordToComplete, CommandAst commandAst, IDictionary fakeBoundParameters)
         {
             var wordToCompletePattern = WildcardPattern.Get(string.IsNullOrWhiteSpace(wordToComplete) ? "*" : wordToComplete + "*", WildcardOptions.IgnoreCase);

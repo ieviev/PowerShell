@@ -14,15 +14,10 @@ using Dbg = System.Management.Automation;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Holds the state of a PowerShell session.
-    /// </summary>
+    
     internal sealed partial class SessionStateInternal
     {
-        /// <summary>
-        /// A collection of the providers. Any provider in this collection can
-        /// have drives in any scope in session state.
-        /// </summary>
+        
         internal Dictionary<string, List<ProviderInfo>> Providers
         {
             get
@@ -37,11 +32,7 @@ namespace System.Management.Automation
             new Dictionary<string, List<ProviderInfo>>(
                     SessionStateConstants.DefaultDictionaryCapacity, StringComparer.OrdinalIgnoreCase);
 
-        /// <summary>
-        /// Stores the current working drive for each provider. This
-        /// allows for retrieving the current working directory for each
-        /// individual provider.
-        /// </summary>
+        
         internal Dictionary<ProviderInfo, PSDriveInfo> ProvidersCurrentWorkingDrive
         {
             get
@@ -54,10 +45,7 @@ namespace System.Management.Automation
 
         private readonly Dictionary<ProviderInfo, PSDriveInfo> _providersCurrentWorkingDrive = new Dictionary<ProviderInfo, PSDriveInfo>();
 
-        /// <summary>
-        /// Entrypoint used by to add a provider to the current session state
-        /// based on a SessionStateProviderEntry.
-        /// </summary>
+        
         /// <param name="providerEntry"></param>
         internal void AddSessionStateEntry(SessionStateProviderEntry providerEntry)
         {
@@ -125,10 +113,7 @@ namespace System.Management.Automation
             return provider;
         }
 
-        /// <summary>
-        /// Determines the appropriate provider for the drive and then calls the NewDrive
-        /// method of that provider.
-        /// </summary>
+        
         /// <param name="drive">
         /// The drive to have the provider verify.
         /// </param>
@@ -234,9 +219,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Gets an instance of a provider given the provider ID.
-        /// </summary>
+        
         /// <param name="providerId">
         /// The identifier for the provider to return an instance of.
         /// </param>
@@ -262,9 +245,7 @@ namespace System.Management.Automation
             return GetProviderInstance(provider);
         }
 
-        /// <summary>
-        /// Gets an instance of a provider given the provider information.
-        /// </summary>
+        
         /// <param name="provider">
         /// The provider to return an instance of.
         /// </param>
@@ -284,9 +265,7 @@ namespace System.Management.Automation
             return provider.CreateInstance();
         }
 
-        /// <summary>
-        /// Creates an exception for the case where the provider name matched multiple providers.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the provider.
         /// </param>
@@ -324,9 +303,7 @@ namespace System.Management.Automation
             return possibleMatches.ToString();
         }
 
-        /// <summary>
-        /// Gets an instance of an DriveCmdletProvider given the provider ID.
-        /// </summary>
+        
         /// <param name="providerId">
         /// The provider ID of the provider to get an instance of.
         /// </param>
@@ -359,9 +336,7 @@ namespace System.Management.Automation
             return driveCmdletProvider;
         }
 
-        /// <summary>
-        /// Gets an instance of an DriveCmdletProvider given the provider information.
-        /// </summary>
+        
         /// <param name="provider">
         /// The provider to get an instance of.
         /// </param>
@@ -391,9 +366,7 @@ namespace System.Management.Automation
             return driveCmdletProvider;
         }
 
-        /// <summary>
-        /// Gets an instance of an DriveCmdletProvider given the provider ID.
-        /// </summary>
+        
         /// <param name="providerInstance">
         /// The instance of the provider to use.
         /// </param>
@@ -423,9 +396,7 @@ namespace System.Management.Automation
             return driveCmdletProvider;
         }
 
-        /// <summary>
-        /// Gets an instance of an ItemCmdletProvider given the provider ID.
-        /// </summary>
+        
         /// <param name="providerId">
         /// The provider ID of the provider to get an instance of.
         /// </param>
@@ -458,9 +429,7 @@ namespace System.Management.Automation
             return itemCmdletProvider;
         }
 
-        /// <summary>
-        /// Gets an instance of an ItemCmdletProvider given the provider.
-        /// </summary>
+        
         /// <param name="provider">
         /// The provider to get an instance of.
         /// </param>
@@ -490,9 +459,7 @@ namespace System.Management.Automation
             return itemCmdletProvider;
         }
 
-        /// <summary>
-        /// Gets an instance of an ItemCmdletProvider given the provider ID.
-        /// </summary>
+        
         /// <param name="providerInstance">
         /// The instance of the provider to use.
         /// </param>
@@ -522,9 +489,7 @@ namespace System.Management.Automation
             return itemCmdletProvider;
         }
 
-        /// <summary>
-        /// Gets an instance of an ContainerCmdletProvider given the provider ID.
-        /// </summary>
+        
         /// <param name="providerId">
         /// The provider ID of the provider to get an instance of.
         /// </param>
@@ -557,9 +522,7 @@ namespace System.Management.Automation
             return containerCmdletProvider;
         }
 
-        /// <summary>
-        /// Gets an instance of an ContainerCmdletProvider given the provider.
-        /// </summary>
+        
         /// <param name="provider">
         /// The provider to get an instance of.
         /// </param>
@@ -589,9 +552,7 @@ namespace System.Management.Automation
             return containerCmdletProvider;
         }
 
-        /// <summary>
-        /// Gets an instance of an ContainerCmdletProvider given the provider ID.
-        /// </summary>
+        
         /// <param name="providerInstance">
         /// The instance of the provider to use.
         /// </param>
@@ -621,9 +582,7 @@ namespace System.Management.Automation
             return containerCmdletProvider;
         }
 
-        /// <summary>
-        /// Gets an instance of an NavigationCmdletProvider given the provider.
-        /// </summary>
+        
         /// <param name="provider">
         /// The provider to get an instance of.
         /// </param>
@@ -653,9 +612,7 @@ namespace System.Management.Automation
             return navigationCmdletProvider;
         }
 
-        /// <summary>
-        /// Gets an instance of an NavigationCmdletProvider given the provider ID.
-        /// </summary>
+        
         /// <param name="providerInstance">
         /// The instance of the provider to use.
         /// </param>
@@ -694,9 +651,7 @@ namespace System.Management.Automation
 
         #region GetProvider
 
-        /// <summary>
-        /// Determines if the specified CmdletProvider is loaded.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the CmdletProvider.
         /// </param>
@@ -730,9 +685,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Gets the provider of the specified name.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the provider to retrieve
         /// </param>
@@ -770,9 +723,7 @@ namespace System.Management.Automation
             return GetProvider(providerName);
         }
 
-        /// <summary>
-        /// Gets the provider of the specified name.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the provider to retrieve
         /// </param>
@@ -882,9 +833,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Gets all the CoreCommandProviders.
-        /// </summary>
+        
         internal IEnumerable<ProviderInfo> ProviderList
         {
             get
@@ -903,9 +852,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Copy the Providers from another session state instance...
-        /// </summary>
+        
         /// <param name="ss">The session state instance to copy from...</param>
         internal void CopyProviders(SessionStateInternal ss)
         {
@@ -925,11 +872,7 @@ namespace System.Management.Automation
 
         #region NewProvider
 
-        /// <summary>
-        /// Initializes a provider by loading the assembly, creating an instance of the
-        /// provider, calling its start method followed by the InitializeDefaultDrives method. The
-        /// Drives that are returned from the InitializeDefaultDrives method are then mounted.
-        /// </summary>
+        
         /// <param name="providerInstance">
         /// An instance of the provider to use for the initialization.
         /// </param>
@@ -1049,9 +992,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Creates and adds a provider to the provider container.
-        /// </summary>
+        
         /// <param name="provider">
         /// The provider to add.
         /// </param>
@@ -1265,9 +1206,7 @@ namespace System.Management.Automation
             return null;
         }
 
-        /// <summary>
-        /// Creates an entry in the providers hashtable for the new provider.
-        /// </summary>
+        
         /// <param name="provider">
         /// The provider being added.
         /// </param>
@@ -1316,9 +1255,7 @@ namespace System.Management.Automation
 
         #region Remove Provider
 
-        /// <summary>
-        /// Removes the provider of the given name.
-        /// </summary>
+        
         /// <param name="providerName">
         /// The name of the provider to remove.
         /// </param>
@@ -1505,9 +1442,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Removes the provider from the providers dictionary.
-        /// </summary>
+        
         /// <param name="provider">
         /// The provider to be removed.
         /// </param>
@@ -1534,9 +1469,7 @@ namespace System.Management.Automation
         }
         #endregion RemoveProvider
 
-        /// <summary>
-        /// Gets the count of the number of providers that are loaded.
-        /// </summary>
+        
         internal int ProviderCount
         {
             get

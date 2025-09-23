@@ -20,24 +20,12 @@ namespace Microsoft.WSMan.Management
 
     //
 
-    /// <summary>
-    /// Performs configuration actions to enable the local machine for remote
-    /// management. Steps include:
-    /// 1. Check if WinRM service is running. If not start the WinRM service
-    /// 2. Set the WinRM service type to auto start
-    /// 3. Create a listener to accept request on any IP address. By default
-    /// transport is http
-    /// 4. Enable firewall exception for WS-Management traffic.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Set, "WSManQuickConfig", HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097112")]
     [OutputType(typeof(string))]
     public class SetWSManQuickConfigCommand : PSCmdlet, IDisposable
     {
-        /// <summary>
-        /// The following is the definition of the input parameter "UseSSL".
-        /// Indicates a https listener to be created. If this switch is not specified
-        /// then by default a http listener will be created.
-        /// </summary>
+        
         [Parameter]
         [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "SSL")]
         public SwitchParameter UseSSL
@@ -52,10 +40,7 @@ namespace Microsoft.WSMan.Management
         // helper variable
         private WSManHelper helper;
 
-        /// <summary>
-        /// Property that sets force parameter. This will allow
-        /// configuring WinRM without prompting the user.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter Force
         {
@@ -66,9 +51,7 @@ namespace Microsoft.WSMan.Management
 
         private bool force = false;
 
-        /// <summary>
-        /// Property that will allow configuring WinRM with Public profile exception enabled.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter SkipNetworkProfileCheck
         {
@@ -79,9 +62,7 @@ namespace Microsoft.WSMan.Management
 
         private bool skipNetworkProfileCheck = false;
 
-        /// <summary>
-        /// BeginProcessing method.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             // If not running elevated, then throw an "elevation required" error message.
@@ -267,9 +248,7 @@ namespace Microsoft.WSMan.Management
 
         #region IDisposable Members
 
-        /// <summary>
-        /// Public dispose method.
-        /// </summary>
+        
         public
         void
         Dispose()
@@ -277,9 +256,7 @@ namespace Microsoft.WSMan.Management
             // CleanUp();
             GC.SuppressFinalize(this);
         }
-        /// <summary>
-        /// Public dispose method.
-        /// </summary>
+        
         public
         void
         Dispose(IWSManSession sessionObject)

@@ -11,9 +11,7 @@ using System.Text.RegularExpressions;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// Construct the Useragent string.
-    /// </summary>
+    
     public static class PSUserAgent
     {
         private static string? s_windowsUserAgent;
@@ -21,29 +19,19 @@ namespace Microsoft.PowerShell.Commands
         // Format the user-agent string from the various component parts
         internal static string UserAgent => string.Create(CultureInfo.InvariantCulture, $"{Compatibility} ({PlatformName}; {OS}; {Culture}) {App}");
 
-        /// <summary>
-        /// Useragent string for InternetExplorer (9.0).
-        /// </summary>
+        
         public static string InternetExplorer => string.Create(CultureInfo.InvariantCulture, $"{Compatibility} (compatible; MSIE 9.0; {PlatformName}; {OS}; {Culture})");
 
-        /// <summary>
-        /// Useragent string for Firefox (4.0).
-        /// </summary>
+        
         public static string FireFox => string.Create(CultureInfo.InvariantCulture, $"{Compatibility} ({PlatformName}; {OS}; {Culture}) Gecko/20100401 Firefox/4.0");
 
-        /// <summary>
-        /// Useragent string for Chrome (7.0).
-        /// </summary>
+        
         public static string Chrome => string.Create(CultureInfo.InvariantCulture, $"{Compatibility} ({PlatformName}; {OS}; {Culture}) AppleWebKit/534.6 (KHTML, like Gecko) Chrome/7.0.500.0 Safari/534.6");
 
-        /// <summary>
-        /// Useragent string for Opera (9.0).
-        /// </summary>
+        
         public static string Opera => string.Create(CultureInfo.InvariantCulture, $"Opera/9.70 ({PlatformName}; {OS}; {Culture}) Presto/2.2.1");
 
-        /// <summary>
-        /// Useragent string for Safari (5.0).
-        /// </summary>
+        
         public static string Safari => string.Create(CultureInfo.InvariantCulture, $"{Compatibility} ({PlatformName}; {OS}; {Culture}) AppleWebKit/533.16 (KHTML, like Gecko) Version/5.0 Safari/533.16");
 
         internal static string Compatibility => "Mozilla/5.0";

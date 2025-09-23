@@ -124,10 +124,7 @@ namespace System.Management.Automation.Interpreter
             return method.DeclaringType == typeof(Interpreter) && method.Name == "Run";
         }
 
-        /// <summary>
-        /// A single interpreted frame might be represented by multiple subsequent Interpreter.Run CLR frames.
-        /// This method filters out the duplicate CLR frames.
-        /// </summary>
+        
         public static IEnumerable<StackFrame> GroupStackFrames(IEnumerable<StackFrame> stackTrace)
         {
             bool inInterpretedFrame = false;
@@ -230,9 +227,7 @@ namespace System.Management.Automation.Interpreter
             return target.Index - InstructionIndex;
         }
 
-        /// <summary>
-        /// Get called from the LeaveFinallyInstruction.
-        /// </summary>
+        
         public int YieldToPendingContinuation()
         {
             Debug.Assert(_pendingContinuation >= 0);

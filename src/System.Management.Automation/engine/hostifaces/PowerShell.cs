@@ -27,24 +27,17 @@ namespace System.Management.Automation
 {
     #region Exceptions
 
-    /// <summary>
-    /// Defines exception which is thrown when state of the PowerShell is different
-    /// from the expected state.
-    /// </summary>
+    
     public class InvalidPowerShellStateException : SystemException
     {
-        /// <summary>
-        /// Creates a new instance of InvalidPowershellStateException class.
-        /// </summary>
+        
         public InvalidPowerShellStateException()
         : base
         (StringUtil.Format(PowerShellStrings.InvalidPowerShellStateGeneral))
         {
         }
 
-        /// <summary>
-        /// Creates a new instance of InvalidPowershellStateException class.
-        /// </summary>
+        
         /// <param name="message">
         /// The error message that explains the reason for the exception.
         /// </param>
@@ -53,9 +46,7 @@ namespace System.Management.Automation
         {
         }
 
-        /// <summary>
-        /// Creates a new instance of InvalidPowershellStateException class.
-        /// </summary>
+        
         /// <param name="message">
         /// The error message that explains the reason for the exception.
         /// </param>
@@ -67,10 +58,7 @@ namespace System.Management.Automation
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the InvalidPowerShellStateException and defines value of
-        /// CurrentState.
-        /// </summary>
+        
         /// <param name="currentState">Current state of powershell.</param>
         internal InvalidPowerShellStateException(PSInvocationState currentState)
         : base
@@ -84,10 +72,7 @@ namespace System.Management.Automation
         // No need to implement GetObjectData
         // if all fields are static or [NonSerialized]
 
-        /// <summary>
-        /// Initializes a new instance of the InvalidPowerShellStateException
-        /// class with serialized data.
-        /// </summary>
+        
         /// <param name="info">
         /// The <see cref="SerializationInfo"/> that holds the serialized object
         /// data about the exception being thrown.
@@ -105,9 +90,7 @@ namespace System.Management.Automation
 
         #endregion
 
-        /// <summary>
-        /// Gets CurrentState of the powershell.
-        /// </summary>
+        
         public PSInvocationState CurrentState
         {
             get
@@ -116,9 +99,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// State of powershell when exception was thrown.
-        /// </summary>
+        
         [NonSerialized]
         private readonly PSInvocationState _currState = 0;
     }
@@ -127,54 +108,32 @@ namespace System.Management.Automation
 
     #region PSInvocationState, PSInvocationStateInfo, PSInvocationStateChangedEventArgs
 
-    /// <summary>
-    /// Enumerated type defining the state of the PowerShell.
-    /// </summary>
+    
     public enum PSInvocationState
     {
-        /// <summary>
-        /// PowerShell has not been started.
-        /// </summary>
+        
         NotStarted = 0,
-        /// <summary>
-        /// PowerShell is executing.
-        /// </summary>
+        
         Running = 1,
-        /// <summary>
-        /// PowerShell is stoping execution.
-        /// </summary>
+        
         Stopping = 2,
-        /// <summary>
-        /// PowerShell is completed due to a stop request.
-        /// </summary>
+        
         Stopped = 3,
-        /// <summary>
-        /// PowerShell has completed executing a command.
-        /// </summary>
+        
         Completed = 4,
-        /// <summary>
-        /// PowerShell completed abnormally due to an error.
-        /// </summary>
+        
         Failed = 5,
-        /// <summary>
-        /// PowerShell is in disconnected state.
-        /// </summary>
+        
         Disconnected = 6
     }
 
-    /// <summary>
-    /// Enumerated type defining runspace modes for nested pipeline.
-    /// </summary>
+    
     public enum RunspaceMode
     {
-        /// <summary>
-        /// Use current runspace from the current thread of execution.
-        /// </summary>
+        
         CurrentRunspace = 0,
 
-        /// <summary>
-        /// Create new runspace.
-        /// </summary>
+        
         NewRunspace = 1
     }
 

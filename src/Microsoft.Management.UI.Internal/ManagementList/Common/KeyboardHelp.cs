@@ -19,9 +19,7 @@ namespace Microsoft.Management.UI.Internal
 
     internal static class KeyboardHelp
     {
-        /// <summary>
-        /// Gets the logical direction for a key, taking into account RTL settings.
-        /// </summary>
+        
         /// <param name="element">The element to get FlowDirection from.</param>
         /// <param name="key">The key pressed.</param>
         /// <returns>The logical direction.</returns>
@@ -58,9 +56,7 @@ namespace Microsoft.Management.UI.Internal
             }
         }
 
-        /// <summary>
-        /// Gets the focus direction for a key, taking into account RTL settings.
-        /// </summary>
+        
         /// <param name="element">The element to get FlowDirection from.</param>
         /// <param name="key">The key pressed.</param>
         /// <returns>The focus direction.</returns>
@@ -103,9 +99,7 @@ namespace Microsoft.Management.UI.Internal
             }
         }
 
-        /// <summary>
-        /// Determines if the control key is pressed.
-        /// </summary>
+        
         /// <returns>True if a control is pressed.</returns>
         public static bool IsControlPressed()
         {
@@ -119,9 +113,7 @@ namespace Microsoft.Management.UI.Internal
             }
         }
 
-        /// <summary>
-        /// Determines if the key is a navigation key.
-        /// </summary>
+        
         /// <param name="key">The key pressed.</param>
         /// <returns>True if the key is a navigation key.</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]

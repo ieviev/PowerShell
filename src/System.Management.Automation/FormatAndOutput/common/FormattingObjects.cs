@@ -28,25 +28,13 @@ using System.Management.Automation;
 namespace Microsoft.PowerShell.Commands.Internal.Format
 {
     #region Root of Class Hierarchy
-    /// <summary>
-    /// Base class from which all the formatting objects
-    /// will derive from.
-    /// It provides the mechanism to preserve type information.
-    /// </summary>
+    
     internal abstract partial class FormatInfoData
     {
-        /// <summary>
-        /// Name of the "get" property that allows access to CLSID information.
-        /// This is needed by the ERS API's.
-        /// </summary>
+        
         internal const string classidProperty = "ClassId2e4f51ef21dd47e99d3c952918aff9cd";
 
-        /// <summary>
-        /// String containing a GUID, to be set by each derived class
-        /// "get" property to get CLSID information.
-        /// It is named with a GUID like name to avoid potential collisions with
-        /// properties of payload objects.
-        /// </summary>
+        
         public abstract string ClassId2e4f51ef21dd47e99d3c952918aff9cd { get; }
     }
 
@@ -60,51 +48,34 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
 
     internal abstract partial class ControlInfoData : PacketInfoData
     {
-        /// <summary>
-        /// Null by default, present only if grouping specified.
-        /// </summary>
+        
         public GroupingEntry groupingEntry = null;
     }
 
     internal abstract partial class StartData : ControlInfoData
     {
-        /// <summary>
-        /// It needs to be either on FormatStartData or GroupStartData
-        /// but not both or neither.
-        /// </summary>
+        
         public ShapeInfo shapeInfo;
     }
 
-    /// <summary>
-    /// Sequence start: the very first message sent.
-    /// </summary>
+    
     internal sealed partial class FormatStartData : StartData
     {
         internal const string CLSID = "033ecb2bc07a4d43b5ef94ed5a35d280";
 
         public override string ClassId2e4f51ef21dd47e99d3c952918aff9cd { get { return CLSID; } }
 
-        /// <summary>
-        /// Optional.
-        /// </summary>
+        
         public PageHeaderEntry pageHeaderEntry;
 
-        /// <summary>
-        /// Optional.
-        /// </summary>
+        
         public PageFooterEntry pageFooterEntry;
 
-        /// <summary>
-        /// Autosize formatting directive. If present, the output command is instructed
-        /// to get the autosize "best fit" for the device screen according to the flags
-        /// this object contains.
-        /// </summary>
+        
         public AutosizeInfo autosizeInfo;
     }
 
-    /// <summary>
-    /// Sequence end: the very last message sent.
-    /// </summary>
+    
     internal sealed class FormatEndData : ControlInfoData
     {
         internal const string CLSID = "cf522b78d86c486691226b40aa69e95c";
@@ -112,9 +83,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         public override string ClassId2e4f51ef21dd47e99d3c952918aff9cd { get { return CLSID; } }
     }
 
-    /// <summary>
-    /// Group start: message marking the beginning of a group.
-    /// </summary>
+    
     internal sealed class GroupStartData : StartData
     {
         internal const string CLSID = "9e210fe47d09416682b841769c78b8a3";
@@ -122,9 +91,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         public override string ClassId2e4f51ef21dd47e99d3c952918aff9cd { get { return CLSID; } }
     }
 
-    /// <summary>
-    /// Group end: message marking the end of a group.
-    /// </summary>
+    
     internal sealed class GroupEndData : ControlInfoData
     {
         internal const string CLSID = "4ec4f0187cb04f4cb6973460dfe252df";
@@ -132,19 +99,14 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         public override string ClassId2e4f51ef21dd47e99d3c952918aff9cd { get { return CLSID; } }
     }
 
-    /// <summary>
-    /// Generic entry containing payload data and related formatting info.
-    /// </summary>
+    
     internal sealed partial class FormatEntryData : PacketInfoData
     {
         internal const string CLSID = "27c87ef9bbda4f709f6b4002fa4af63c";
 
         public override string ClassId2e4f51ef21dd47e99d3c952918aff9cd { get { return CLSID; } }
 
-        /// <summary>
-        /// Mandatory, but depending on the shape we send in
-        /// it must match what got sent in the format start message.
-        /// </summary>
+        
         public FormatEntryInfo formatEntryInfo = null;
 
         public bool outOfBand = false;
@@ -165,13 +127,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
 
         public override string ClassId2e4f51ef21dd47e99d3c952918aff9cd { get { return CLSID; } }
 
-        /// <summary>
-        /// Desired number of columns on the screen.
-        /// Advisory, the outputter can decide otherwise
-        ///
-        /// A zero value signifies let the outputter get the
-        /// best fit on the screen (possibly blocking until the end)
-        /// </summary>
+        
         public int columns = 0;
     }
 
@@ -197,11 +153,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
 
         public override string ClassId2e4f51ef21dd47e99d3c952918aff9cd { get { return CLSID; } }
 
-        /// <summary>
-        /// Width of the column:
-        /// == 0 -> let the outputter decide
-        /// > 0 -> user provided value.
-        /// </summary>
+        
         public int width = 0;
 
         public int alignment = TextAlignment.Left;
@@ -319,11 +271,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
 
         public override string ClassId2e4f51ef21dd47e99d3c952918aff9cd { get { return CLSID; } }
 
-        /// <summary>
-        /// Number of objects to compute the best fit.
-        /// Zero: all the objects
-        /// a positive number N: use the first N.
-        /// </summary>
+        
         public int objectCount = 0;
     }
 
@@ -374,9 +322,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
 
         public List<FormatValue> formatValueList;
 
-        /// <summary>
-        /// Optional information of frame data (indentation, etc.)
-        /// </summary>
+        
         public FrameInfo frameInfo;
     }
 

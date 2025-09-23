@@ -7,16 +7,12 @@ using Dbg = System.Management.Automation;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Exposes the Engine APIs for a particular instance of the engine.
-    /// </summary>
+    
     public class EngineIntrinsics
     {
         #region Constructors
 
-        /// <summary>
-        /// Hide the default constructor since we always require an instance of ExecutionContext.
-        /// </summary>
+        
         private EngineIntrinsics()
         {
             Dbg.Diagnostics.Assert(
@@ -24,9 +20,7 @@ namespace System.Management.Automation
                 "This constructor should never be called. Only the constructor that takes an instance of ExecutionContext should be called.");
         }
 
-        /// <summary>
-        /// The internal constructor for this object. It should be the only one that gets called.
-        /// </summary>
+        
         /// <param name="context">
         /// An instance of ExecutionContext that the APIs should work against.
         /// </param>
@@ -45,9 +39,7 @@ namespace System.Management.Automation
 
         #region Public methods
 
-        /// <summary>
-        /// Gets engine APIs to access the host.
-        /// </summary>
+        
         public PSHost Host
         {
             get
@@ -60,9 +52,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets engine APIs to access the event manager.
-        /// </summary>
+        
         public PSEventManager Events
         {
             get
@@ -71,9 +61,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the engine APIs to access providers.
-        /// </summary>
+        
         public ProviderIntrinsics InvokeProvider
         {
             get
@@ -82,9 +70,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the engine APIs to access session state.
-        /// </summary>
+        
         public SessionState SessionState
         {
             get
@@ -93,9 +79,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the engine APIs to invoke a command.
-        /// </summary>
+        
         public CommandInvocationIntrinsics InvokeCommand
         {
             get { return _invokeCommand ??= new CommandInvocationIntrinsics(_context); }

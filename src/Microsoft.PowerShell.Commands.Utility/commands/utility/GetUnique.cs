@@ -8,23 +8,18 @@ using System.Management.Automation.Internal;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Get, "Unique", DefaultParameterSetName = "AsString",
         HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097028", RemotingCapability = RemotingCapability.None)]
     public sealed class GetUniqueCommand : PSCmdlet
     {
         #region Parameters
-        /// <summary>
-        /// </summary>
+        
         /// <value></value>
         [Parameter(ValueFromPipeline = true)]
         public PSObject InputObject { get; set; } = AutomationNull.Value;
 
-        /// <summary>
-        /// This parameter specifies that objects should be converted to
-        /// strings and the strings should be compared.
-        /// </summary>
+        
         /// <value></value>
         [Parameter(ParameterSetName = "AsString")]
         public SwitchParameter AsString
@@ -36,10 +31,7 @@ namespace Microsoft.PowerShell.Commands
 
         private bool _asString;
 
-        /// <summary>
-        /// This parameter specifies that just the types of the objects
-        /// should be compared.
-        /// </summary>
+        
         /// <value></value>
         [Parameter(ParameterSetName = "UniqueByType")]
         public SwitchParameter OnType
@@ -51,17 +43,14 @@ namespace Microsoft.PowerShell.Commands
 
         private bool _onType = false;
 
-        /// <summary>
-        /// Gets or sets case insensitive switch for string comparison.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter CaseInsensitive { get; set; }
 
         #endregion Parameters
 
         #region Overrides
-        /// <summary>
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             bool isUnique = true;

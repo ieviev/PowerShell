@@ -19,14 +19,10 @@ using Dbg = System.Management.Automation.Diagnostics;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// EventArgs for the ScriptCmdletVariableUpdate event.
-    /// </summary>
+    
     public class CommandLookupEventArgs : EventArgs
     {
-        /// <summary>
-        /// Constructor for event args object.
-        /// </summary>
+        
         /// <param name="commandName">The name of the command we're searching for.</param>
         /// <param name="commandOrigin">The origin of the command internal or runspace (external).</param>
         /// <param name="context">The execution context for this command.</param>
@@ -39,30 +35,19 @@ namespace System.Management.Automation
 
         private readonly ExecutionContext _context;
 
-        /// <summary>
-        /// The name of the command we're looking for.
-        /// </summary>
+        
         public string CommandName { get; }
 
-        /// <summary>
-        /// The origin of the command internal or runspace (external)
-        /// </summary>
+        
         public CommandOrigin CommandOrigin { get; }
 
-        /// <summary>
-        /// If true on return from event handler, the search is stopped.
-        /// </summary>
+        
         public bool StopSearch { get; set; }
 
-        /// <summary>
-        /// The CommandInfo object for the command that was found.
-        /// </summary>
+        
         public CommandInfo Command { get; set; }
 
-        /// <summary>
-        /// Scriptblock to be returned as the found command. If it is set to
-        /// null, then the command to return and the StopSearch flag will be reset.
-        /// </summary>
+        
         public ScriptBlock CommandScriptBlock
         {
             get
@@ -90,31 +75,20 @@ namespace System.Management.Automation
         private ScriptBlock _scriptBlock;
     }
 
-    /// <summary>
-    /// Defines the preference options for the Module Auto-loading feature.
-    /// </summary>
+    
     public enum PSModuleAutoLoadingPreference
     {
-        /// <summary>
-        /// Do not auto-load modules when a command is not found.
-        /// </summary>
+        
         None = 0,
 
-        /// <summary>
-        /// Only auto-load modules when a command is not found, and the command
-        /// is module-qualified.
-        /// </summary>
+        
         ModuleQualified = 1,
 
-        /// <summary>
-        /// Auto-load modules when a command is not found.
-        /// </summary>
+        
         All = 2
     }
 
-    /// <summary>
-    /// CommandDiscovery...
-    /// </summary>
+    
     internal class CommandDiscovery
     {
         [TraceSource("CommandDiscovery", "Traces the discovery of cmdlets, scripts, functions, applications, etc.")]
@@ -126,9 +100,7 @@ namespace System.Management.Automation
 
         #region ctor
 
-        /// <summary>
-        /// Default constructor...
-        /// </summary>
+        
         /// <exception cref="ArgumentNullException">
         /// If <paramref name="context"/> is null.
         /// </exception>
@@ -143,9 +115,7 @@ namespace System.Management.Automation
             discoveryTracer.ShowHeaders = false;
         }
 
-        /// <summary>
-        /// Determines if the cmdlet is a cmdlet that shouldn't be in the discovery list.
-        /// </summary>
+        
         /// <param name="implementingType">
         /// Type implementing the cmdlet
         /// </param>
@@ -185,9 +155,7 @@ namespace System.Management.Automation
             return ci;
         }
 
-        /// <summary>
-        /// Adds the CmdletInfo to the cmdlet cache in the current scope object.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the cmdlet to add.
         /// </param>
@@ -223,18 +191,14 @@ namespace System.Management.Automation
             return Context.EngineSessionState.CurrentScope.AddCmdletToCache(newCmdletInfo.Name, newCmdletInfo, CommandOrigin.Internal, Context);
         }
 
-        /// <summary>
-        /// Add a SessionStateCmdletEntry to the cmdlet cache...
-        /// </summary>
+        
         /// <param name="entry"></param>
         internal void AddSessionStateCmdletEntryToCache(SessionStateCmdletEntry entry)
         {
             AddSessionStateCmdletEntryToCache(entry, false);
         }
 
-        /// <summary>
-        /// Add a SessionStateCmdletEntry to the cmdlet cache...
-        /// </summary>
+        
         /// <param name="entry"></param>
         /// <param name="local"></param>
         internal void AddSessionStateCmdletEntryToCache(SessionStateCmdletEntry entry, bool local)
@@ -250,9 +214,7 @@ namespace System.Management.Automation
 
         #region internal methods
 
-        /// <summary>
-        /// Look up a command named by the argument string and return its CommandProcessorBase.
-        /// </summary>
+        
         /// <param name="commandName">
         /// The command name to lookup.
         /// </param>
@@ -424,9 +386,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Look up a command using a CommandInfo object and return its CommandProcessorBase.
-        /// </summary>
+        
         /// <param name="commandInfo">
         /// The commandInfo for the command to lookup.
         /// </param>
@@ -624,9 +584,7 @@ namespace System.Management.Automation
             return new CommandProcessor(scriptCommandInfo, context, useNewScope, fromScriptFile, sessionState);
         }
 
-        /// <summary>
-        /// Look up a command and return its CommandInfo.
-        /// </summary>
+        
         /// <param name="commandName">
         /// The command name to lookup.
         /// </param>
@@ -1160,10 +1118,7 @@ namespace System.Management.Automation
         private readonly HashSet<string> _activeCommandNotFound = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         private readonly HashSet<string> _activePostCommand = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
-        /// <summary>
-        /// Gets the resolved paths contained in the PATH environment
-        /// variable.
-        /// </summary>
+        
         /// <returns>
         /// The contents of the PATH environment variable split on System.IO.Path.PathSeparator.
         /// </returns>
@@ -1225,29 +1180,20 @@ namespace System.Management.Automation
             return _cachedLookupPaths ??= result;
         }
 
-        /// <summary>
-        /// The cached list of lookup paths. It can be invalidated by
-        /// the PATH changing.
-        /// </summary>
+        
         private LookupPathCollection _cachedLookupPaths;
 
-        /// <summary>
-        /// The key that determines if the cached PATH can be used.
-        /// </summary>
+        
         private string _pathCacheKey;
 
-        /// <summary>
-        /// The cache of the tokenized PATH directories.
-        /// </summary>
+        
         private Collection<string> _cachedPath;
 
         #endregion internal members
 
         #region environment variable helpers
 
-        /// <summary>
-        /// Gets the PATHEXT environment variable extensions and tokenizes them.
-        /// </summary>
+        
         internal static string[] PathExtensionsWithPs1Prepended
         {
             get
@@ -1264,9 +1210,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the PATHEXT environment variable extensions and tokenizes them.
-        /// </summary>
+        
         internal static string[] PathExtensions
         {
             get
@@ -1307,9 +1251,7 @@ namespace System.Management.Automation
         private static string[] s_cachedPathExtCollection;
         private static string[] s_cachedPathExtCollectionWithPs1;
 
-        /// <summary>
-        /// Gets the cmdlet information for the specified name.
-        /// </summary>
+        
         /// <param name="cmdletName">
         /// The name of the cmdlet to return the information for.
         /// </param>
@@ -1430,21 +1372,13 @@ namespace System.Management.Automation
         #endregion
     }
 
-    /// <summary>
-    /// A helper collection of strings that doesn't allow duplicate strings. Comparison
-    /// is case-insensitive and done in the invariant culture.
-    /// </summary>
+    
     internal class LookupPathCollection : Collection<string>
     {
-        /// <summary>
-        /// Default constructor.
-        /// </summary>
+        
         internal LookupPathCollection() : base() { }
 
-        /// <summary>
-        /// Constructs a LookupPathCollection object and adds all the items
-        /// in the supplied collection to it.
-        /// </summary>
+        
         /// <param name="collection">
         /// A set of items to be added to the collection.
         /// </param>
@@ -1456,10 +1390,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Adds the specified string to the collection if its not already
-        /// a member of the collection.
-        /// </summary>
+        
         /// <param name="item">
         /// The string to add to the collection.
         /// </param>
@@ -1478,9 +1409,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Adds all the strings in the specified collection to this collection.
-        /// </summary>
+        
         /// <param name="collection">
         /// The collection of strings to add.
         /// </param>
@@ -1495,10 +1424,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Determines if the string already exists in the collection
-        /// using a invariant culture case insensitive comparison.
-        /// </summary>
+        
         /// <param name="item">
         /// The string to check for existence.
         ///  </param>
@@ -1521,9 +1447,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Returns a collection of all the indexes that are relative paths.
-        /// </summary>
+        
         /// <returns>
         /// A collection of all the indexes that are relative paths.
         /// </returns>
@@ -1544,10 +1468,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Finds the first index of the specified string. The string
-        /// is compared in the invariant culture using a case-insensitive comparison.
-        /// </summary>
+        
         /// <param name="item">
         /// The string to look for.
         /// </param>

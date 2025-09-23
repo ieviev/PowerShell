@@ -8,14 +8,10 @@ using System.Collections.ObjectModel;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// FormObjectCollection used in HtmlWebResponseObject.
-    /// </summary>
+    
     public class FormObjectCollection : Collection<FormObject>
     {
-        /// <summary>
-        /// Gets the FormObject from the key.
-        /// </summary>
+        
         /// <param name="key"></param>
         /// <returns></returns>
         public FormObject? this[string key]

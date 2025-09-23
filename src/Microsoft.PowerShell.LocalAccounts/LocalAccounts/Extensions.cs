@@ -11,14 +11,10 @@ using Microsoft.PowerShell.LocalAccounts;
 
 namespace System.Management.Automation.SecurityAccountsManager.Extensions
 {
-    /// <summary>
-    /// Provides extension methods for the Cmdlet class.
-    /// </summary>
+    
     internal static class CmdletExtensions
     {
-        /// <summary>
-        /// Attempt to create a SID from a string.
-        /// </summary>
+        
         /// <param name="cmdlet">The cmdlet being extended with this method.</param>
         /// <param name="s">The string to be converted to a SID.</param>
         /// <param name="allowSidConstants">
@@ -51,14 +47,10 @@ namespace System.Management.Automation.SecurityAccountsManager.Extensions
         }
     }
 
-    /// <summary>
-    /// Provides extension methods for the PSCmdlet class.
-    /// </summary>
+    
     internal static class PSExtensions
     {
-        /// <summary>
-        /// Determine if a given parameter was provided to the cmdlet.
-        /// </summary>
+        
         /// <param name="cmdlet">
         /// The <see cref="PSCmdlet"/> object to check.
         /// </param>
@@ -90,14 +82,10 @@ namespace System.Management.Automation.SecurityAccountsManager.Extensions
         }
     }
 
-    /// <summary>
-    /// Provides extension methods for the SecurityIdentifier class.
-    /// </summary>
+    
     internal static class SidExtensions
     {
-        /// <summary>
-        /// Get the Relative ID (RID) from a <see cref="SecurityIdentifier"/> object.
-        /// </summary>
+        
         /// <param name="sid">The SecurityIdentifier containing the desired Relative ID.</param>
         /// <returns>
         /// A UInt32 value containing the Relative ID in the SecurityIdentifier.
@@ -110,9 +98,7 @@ namespace System.Management.Automation.SecurityAccountsManager.Extensions
             return System.BitConverter.ToUInt32(sidBinary, sidBinary.Length-4);
         }
 
-        /// <summary>
-        /// Gets the Identifier Authority portion of a <see cref="SecurityIdentifier"/>
-        /// </summary>
+        
         /// <param name="sid">The SecurityIdentifier containing the desired Authority.</param>
         /// <returns>
         /// A long integer value containing the SecurityIdentifier's Identifier Authority value.
@@ -148,10 +134,7 @@ namespace System.Management.Automation.SecurityAccountsManager.Extensions
 
     internal static class SecureStringExtensions
     {
-        /// <summary>
-        /// Extension method to extract clear text from a
-        /// <see cref="System.Security.SecureString"/> object.
-        /// </summary>
+        
         /// <param name="str">
         /// This SecureString object, containing encrypted text.
         /// </param>

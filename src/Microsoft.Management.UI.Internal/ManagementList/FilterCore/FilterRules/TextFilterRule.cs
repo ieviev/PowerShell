@@ -9,24 +9,17 @@ using System.Text.RegularExpressions;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <summary>
-    /// The TextFilterRule class supports derived rules by offering services for
-    /// evaluating string operations.
-    /// </summary>
+    
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public abstract class TextFilterRule : SingleValueComparableValueFilterRule<string>
     {
-        /// <summary>
-        /// Gets a regex pattern that describes a word boundary that can include symbols.
-        /// </summary>
+        
         protected static readonly string WordBoundaryRegexPattern = @"(^|$|\W|\b)";
 
         private bool ignoreCase;
         private bool cultureInvariant;
 
-        /// <summary>
-        /// Gets or sets whether to ignore case when evaluating.
-        /// </summary>
+        
         public bool IgnoreCase
         {
             get
@@ -42,9 +35,7 @@ namespace Microsoft.Management.UI.Internal
             }
         }
 
-        /// <summary>
-        /// Gets or sets whether culture differences in language are ignored when evaluating.
-        /// </summary>
+        
         public bool CultureInvariant
         {
             get
@@ -60,18 +51,14 @@ namespace Microsoft.Management.UI.Internal
             }
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TextFilterRule"/> class.
-        /// </summary>
+        
         protected TextFilterRule()
         {
             this.IgnoreCase = true;
             this.CultureInvariant = false;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the  <see cref="TextFilterRule"/> class.
-        /// </summary>
+        
         /// <param name="source">The source to initialize from.</param>
         protected TextFilterRule(TextFilterRule source)
             : base(source)
@@ -80,9 +67,7 @@ namespace Microsoft.Management.UI.Internal
             this.CultureInvariant = source.CultureInvariant;
         }
 
-        /// <summary>
-        /// Gets the current value and determines whether it should be evaluated as an exact match.
-        /// </summary>
+        
         /// <param name="evaluateAsExactMatch">Whether the current value should be evaluated as an exact match.</param>
         /// <returns>The current value.</returns>
         protected internal string GetParsedValue(out bool evaluateAsExactMatch)
@@ -101,10 +86,7 @@ namespace Microsoft.Management.UI.Internal
             return parsedValue;
         }
 
-        /// <summary>
-        /// Gets a regular expression pattern based on the current value and the specified patterns.
-        /// If the current value is an exact-match string, <paramref name="exactMatchPattern"/> will be used; otherwise, <paramref name="pattern"/> will be used.
-        /// </summary>
+        
         /// <param name="pattern">The pattern to use if the current value is not an exact-match string. The pattern must contain a <c>{0}</c> token.</param>
         /// <param name="exactMatchPattern">The pattern to use if the current value is an exact-match string. The pattern must contain a <c>{0}</c> token.</param>
         /// <returns>A regular expression pattern based on the current value and the specified patterns.</returns>
@@ -131,9 +113,7 @@ namespace Microsoft.Management.UI.Internal
             return string.Format(CultureInfo.InvariantCulture, pattern, value);
         }
 
-        /// <summary>
-        /// Gets a <see cref="RegexOptions"/> object that matches the values of <see cref="IgnoreCase"/> and <see cref="CultureInvariant"/>.
-        /// </summary>
+        
         /// <returns>A <see cref="RegexOptions"/> object that matches the values of <see cref="IgnoreCase"/> and <see cref="CultureInvariant"/>.</returns>
         protected internal RegexOptions GetRegexOptions()
         {
@@ -152,10 +132,7 @@ namespace Microsoft.Management.UI.Internal
             return options;
         }
 
-        /// <summary>
-        /// Gets a value indicating whether the specified data matches one of the specified patterns.
-        /// If the current value is an exact-match string, <paramref name="exactMatchPattern"/> will be used; otherwise, <paramref name="pattern"/> will be used.
-        /// </summary>
+        
         /// <param name="data">The data to evaluate.</param>
         /// <param name="pattern">The pattern to use if the current value is not an exact-match string. The pattern must contain a <c>{0}</c> token.</param>
         /// <param name="exactMatchPattern">The pattern to use if the current value is an exact-match string. The pattern must contain a <c>{0}</c> token.</param>

@@ -7,28 +7,20 @@ using System.Management.Automation;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// This is the base class for update-typedata and update-formatdata.
-    /// </summary>
+    
     public class UpdateData : PSCmdlet
     {
-        /// <summary>
-        /// File parameter set name.
-        /// </summary>
+        
         protected const string FileParameterSet = "FileSet";
 
-        /// <summary>
-        /// Files to append to the existing set.
-        /// </summary>
+        
         [Parameter(Position = 0, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true,
             ParameterSetName = FileParameterSet)]
         [Alias("PSPath", "Path")]
         [ValidateNotNull]
         public string[] AppendPath { get; set; } = Array.Empty<string>();
 
-        /// <summary>
-        /// Files to prepend to the existing set.
-        /// </summary>
+        
         [Parameter(ParameterSetName = FileParameterSet)]
         [ValidateNotNull]
         public string[] PrependPath { get; set; } = Array.Empty<string>();
@@ -53,8 +45,7 @@ namespace Microsoft.PowerShell.Commands
             cmdlet.WriteError(errorRecord);
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="files"></param>
         /// <param name="errorId"></param>
         /// <param name="cmdlet"></param>

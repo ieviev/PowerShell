@@ -7,24 +7,16 @@ using System.Runtime.Serialization;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// An exception that wraps all exceptions that are thrown by providers. This allows
-    /// callers of the provider APIs to be able to catch a single exception no matter
-    /// what any of the various providers may have thrown.
-    /// </summary>
+    
     public class ProviderInvocationException : RuntimeException
     {
         #region Constructors
-        /// <summary>
-        /// Constructs a ProviderInvocationException.
-        /// </summary>
+        
         public ProviderInvocationException() : base()
         {
         }
 
-        /// <summary>
-        /// Constructs a ProviderInvocationException using serialized data.
-        /// </summary>
+        
         /// <param name="info">
         /// serialization information
         /// </param>
@@ -39,9 +31,7 @@ namespace System.Management.Automation
             throw new NotSupportedException();
         }
 
-        /// <summary>
-        /// Constructs a ProviderInvocationException with a message.
-        /// </summary>
+        
         /// <param name="message">
         /// The message for the exception.
         /// </param>
@@ -51,9 +41,7 @@ namespace System.Management.Automation
             _message = message;
         }
 
-        /// <summary>
-        /// Constructs a ProviderInvocationException with provider information and an inner exception.
-        /// </summary>
+        
         /// <param name="provider">
         /// Information about the provider to be used in formatting the message.
         /// </param>
@@ -80,10 +68,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Constructs a ProviderInvocationException with provider information and an
-        /// ErrorRecord.
-        /// </summary>
+        
         /// <param name="provider">
         /// Information about the provider to be used in formatting the message.
         /// </param>
@@ -101,10 +86,7 @@ namespace System.Management.Automation
             _errorRecord = errorRecord;
         }
 
-        /// <summary>
-        /// Constructs a ProviderInvocationException with a message
-        /// and inner exception.
-        /// </summary>
+        
         /// <param name="message">
         /// The message for the exception.
         /// </param>
@@ -117,9 +99,7 @@ namespace System.Management.Automation
             _message = message;
         }
 
-        /// <summary>
-        /// Constructs a ProviderInvocationException.
-        /// </summary>
+        
         /// <param name="errorId">
         /// This string will be used to construct the FullyQualifiedErrorId,
         /// which is a global identifier of the error condition.  Pass a
@@ -148,9 +128,7 @@ namespace System.Management.Automation
         {
         }
 
-        /// <summary>
-        /// Constructor to make it easy to wrap a provider exception.
-        /// </summary>
+        
         /// <param name="errorId">
         /// This string will be used to construct the FullyQualifiedErrorId,
         /// which is a global identifier of the error condition.  Pass a
@@ -214,17 +192,13 @@ namespace System.Management.Automation
         #endregion Constructors
 
         #region Properties
-        /// <summary>
-        /// Gets the provider information of the provider that threw an exception.
-        /// </summary>
+        
         public ProviderInfo ProviderInfo { get { return _providerInfo; } }
 
         [NonSerialized]
         internal ProviderInfo _providerInfo;
 
-        /// <summary>
-        /// Gets the error record.
-        /// </summary>
+        
         public override ErrorRecord ErrorRecord
         {
             get
@@ -305,9 +279,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Gets the exception message.
-        /// </summary>
+        
         public override string Message
         {
             get { return (string.IsNullOrEmpty(_message)) ? base.Message : _message; }
@@ -319,73 +291,45 @@ namespace System.Management.Automation
         #endregion Private/Internal
     }
 
-    /// <summary>
-    /// Categories of session state objects, used by SessionStateException.
-    /// </summary>
+    
     public enum SessionStateCategory
     {
-        /// <summary>
-        /// Used when an exception is thrown accessing a variable.
-        /// </summary>
+        
         Variable = 0,
 
-        /// <summary>
-        /// Used when an exception is thrown accessing an alias.
-        /// </summary>
+        
         Alias = 1,
 
-        /// <summary>
-        /// Used when an exception is thrown accessing a function.
-        /// </summary>
+        
         Function = 2,
 
-        /// <summary>
-        /// Used when an exception is thrown accessing a filter.
-        /// </summary>
+        
         Filter = 3,
 
-        /// <summary>
-        /// Used when an exception is thrown accessing a drive.
-        /// </summary>
+        
         Drive = 4,
 
-        /// <summary>
-        /// Used when an exception is thrown accessing a Cmdlet Provider.
-        /// </summary>
+        
         CmdletProvider = 5,
 
-        /// <summary>
-        /// Used when an exception is thrown manipulating the PowerShell language scopes.
-        /// </summary>
+        
         Scope = 6,
 
-        /// <summary>
-        /// Used when generically accessing any type of command...
-        /// </summary>
+        
         Command = 7,
 
-        /// <summary>
-        /// Other resources not covered by the previous categories...
-        /// </summary>
+        
         Resource = 8,
 
-        /// <summary>
-        /// Used when an exception is thrown accessing a cmdlet.
-        /// </summary>
+        
         Cmdlet = 9,
     }
 
-    /// <summary>
-    /// SessionStateException represents an error working with
-    /// session state objects: variables, aliases, functions, filters,
-    /// drives, or providers.
-    /// </summary>
+    
     public class SessionStateException : RuntimeException
     {
         #region ctor
-        /// <summary>
-        /// Constructs a SessionStateException.
-        /// </summary>
+        
         /// <param name="itemName">Name of session state object.</param>
         /// <param name="sessionStateCategory">Category of session state object.</param>
         /// <param name="resourceStr">This string is the message template string.</param>
@@ -414,17 +358,13 @@ namespace System.Management.Automation
             _errorCategory = errorCategory;
         }
 
-        /// <summary>
-        /// Constructs a SessionStateException.
-        /// </summary>
+        
         public SessionStateException()
             : base()
         {
         }
 
-        /// <summary>
-        /// Constructs a SessionStateException.
-        /// </summary>
+        
         /// <param name="message">
         /// The message used in the exception.
         /// </param>
@@ -433,9 +373,7 @@ namespace System.Management.Automation
         {
         }
 
-        /// <summary>
-        /// Constructs a SessionStateException.
-        /// </summary>
+        
         /// <param name="message">
         /// The message used in the exception.
         /// </param>
@@ -448,9 +386,7 @@ namespace System.Management.Automation
         {
         }
         #endregion ctor
-/// <summary>
-        /// Constructs a SessionStateException using serialized data.
-        /// </summary>
+
         /// <param name="info">Serialization information.</param>
         /// <param name="context">Streaming context.</param>
         [Obsolete("Legacy serialization support is deprecated since .NET 8", DiagnosticId = "SYSLIB0051")]
@@ -461,9 +397,7 @@ namespace System.Management.Automation
         }
 
         #region Properties
-        /// <summary>
-        /// Gets the error record information for this exception.
-        /// </summary>
+        
         public override ErrorRecord ErrorRecord
         {
             get
@@ -480,9 +414,7 @@ namespace System.Management.Automation
 
         private ErrorRecord _errorRecord;
 
-        /// <summary>
-        /// Gets the name of session state object the error occurred on.
-        /// </summary>
+        
         public string ItemName
         {
             get { return _itemName; }
@@ -490,9 +422,7 @@ namespace System.Management.Automation
 
         private readonly string _itemName = string.Empty;
 
-        /// <summary>
-        /// Gets the category of session state object the error occurred on.
-        /// </summary>
+        
         public SessionStateCategory SessionStateCategory
         {
             get { return _sessionStateCategory; }
@@ -528,19 +458,11 @@ namespace System.Management.Automation
         #endregion Private
     }
 
-    /// <summary>
-    /// SessionStateUnauthorizedAccessException occurs when
-    /// a change to a session state object cannot be completed
-    /// because the object is read-only or constant, or because
-    /// an object which is declared constant cannot be removed
-    /// or made non-constant.
-    /// </summary>
+    
     public class SessionStateUnauthorizedAccessException : SessionStateException
     {
         #region ctor
-        /// <summary>
-        /// Constructs a SessionStateUnauthorizedAccessException.
-        /// </summary>
+        
         /// <param name="itemName">
         /// The name of the session state object the error occurred on.
         /// </param>
@@ -568,9 +490,7 @@ namespace System.Management.Automation
         {
         }
 
-        /// <summary>
-        /// Constructs a SessionStateUnauthorizedAccessException using serialized data.
-        /// </summary>
+        
         /// <param name="info">Serialization information.</param>
         /// <param name="context">Streaming context.</param>
         [Obsolete("Legacy serialization support is deprecated since .NET 8", DiagnosticId = "SYSLIB0051")]
@@ -581,17 +501,13 @@ namespace System.Management.Automation
             throw new NotSupportedException();
         }
 
-        /// <summary>
-        /// Constructs a SessionStateUnauthorizedAccessException.
-        /// </summary>
+        
         public SessionStateUnauthorizedAccessException()
             : base()
         {
         }
 
-        /// <summary>
-        /// Constructs a SessionStateUnauthorizedAccessException.
-        /// </summary>
+        
         /// <param name="message">
         /// The message used by the exception.
         /// </param>
@@ -600,9 +516,7 @@ namespace System.Management.Automation
         {
         }
 
-        /// <summary>
-        /// Constructs a SessionStateUnauthorizedAccessException.
-        /// </summary>
+        
         /// <param name="message">
         /// The message used by the exception.
         /// </param>
@@ -617,16 +531,11 @@ namespace System.Management.Automation
         #endregion ctor
     }
 
-    /// <summary>
-    /// ProviderNotFoundException occurs when no provider can be found
-    /// with the specified name.
-    /// </summary>
+    
     public class ProviderNotFoundException : SessionStateException
     {
         #region ctor
-        /// <summary>
-        /// Constructs a ProviderNotFoundException.
-        /// </summary>
+        
         /// <param name="itemName">
         /// The name of provider that could not be found.
         /// </param>
@@ -660,17 +569,13 @@ namespace System.Management.Automation
         {
         }
 
-        /// <summary>
-        /// Constructs a ProviderNotFoundException.
-        /// </summary>
+        
         public ProviderNotFoundException()
             : base()
         {
         }
 
-        /// <summary>
-        /// Constructs a ProviderNotFoundException.
-        /// </summary>
+        
         /// <param name="message">
         /// The messaged used by the exception.
         /// </param>
@@ -679,9 +584,7 @@ namespace System.Management.Automation
         {
         }
 
-        /// <summary>
-        /// Constructs a ProviderNotFoundException.
-        /// </summary>
+        
         /// <param name="message">
         /// The message used by the exception.
         /// </param>
@@ -696,16 +599,11 @@ namespace System.Management.Automation
         #endregion ctor
     }
 
-    /// <summary>
-    /// ProviderNameAmbiguousException occurs when more than one provider exists
-    /// for a given name and the request did not contain the PSSnapin name qualifier.
-    /// </summary>
+    
     public class ProviderNameAmbiguousException : ProviderNotFoundException
     {
         #region ctor
-        /// <summary>
-        /// Constructs a ProviderNameAmbiguousException.
-        /// </summary>
+        
         /// <param name="providerName">
         /// The name of provider that was ambiguous.
         /// </param>
@@ -740,17 +638,13 @@ namespace System.Management.Automation
             _possibleMatches = new ReadOnlyCollection<ProviderInfo>(possibleMatches);
         }
 
-        /// <summary>
-        /// Constructs a ProviderNameAmbiguousException.
-        /// </summary>
+        
         public ProviderNameAmbiguousException()
             : base()
         {
         }
 
-        /// <summary>
-        /// Constructs a ProviderNameAmbiguousException.
-        /// </summary>
+        
         /// <param name="message">
         /// The messaged used by the exception.
         /// </param>
@@ -759,9 +653,7 @@ namespace System.Management.Automation
         {
         }
 
-        /// <summary>
-        /// Constructs a ProviderNameAmbiguousException.
-        /// </summary>
+        
         /// <param name="message">
         /// The message used by the exception.
         /// </param>
@@ -775,9 +667,7 @@ namespace System.Management.Automation
         }
         #endregion ctor
 
-        /// <summary>
-        /// Constructs a ProviderNameAmbiguousException using serialized data.
-        /// </summary>
+        
         /// <param name="info">Serialization information.</param>
         /// <param name="context">Streaming context.</param>
         [Obsolete("Legacy serialization support is deprecated since .NET 8", DiagnosticId = "SYSLIB0051")]
@@ -790,10 +680,7 @@ namespace System.Management.Automation
 
         #region public properties
 
-        /// <summary>
-        /// Gets the information of the providers which might match the specified
-        /// provider name.
-        /// </summary>
+        
         public ReadOnlyCollection<ProviderInfo> PossibleMatches
         {
             get
@@ -807,16 +694,11 @@ namespace System.Management.Automation
         #endregion public properties
     }
 
-    /// <summary>
-    /// DriveNotFoundException occurs when no drive can be found
-    /// with the specified name.
-    /// </summary>
+    
     public class DriveNotFoundException : SessionStateException
     {
         #region ctor
-        /// <summary>
-        /// Constructs a DriveNotFoundException.
-        /// </summary>
+        
         /// <param name="itemName">
         /// The name of the drive that could not be found.
         /// </param>
@@ -838,17 +720,13 @@ namespace System.Management.Automation
         {
         }
 
-        /// <summary>
-        /// Constructs a DriveNotFoundException.
-        /// </summary>
+        
         public DriveNotFoundException()
             : base()
         {
         }
 
-        /// <summary>
-        /// Constructs a DriveNotFoundException.
-        /// </summary>
+        
         /// <param name="message">
         /// The message that will be used by the exception.
         /// </param>
@@ -857,9 +735,7 @@ namespace System.Management.Automation
         {
         }
 
-        /// <summary>
-        /// Constructs a DriveNotFoundException.
-        /// </summary>
+        
         /// <param name="message">
         /// The message that will be used by the exception.
         /// </param>
@@ -873,9 +749,7 @@ namespace System.Management.Automation
         }
         #endregion ctor
 
-        /// <summary>
-        /// Constructs a DriveNotFoundException using serialized data.
-        /// </summary>
+        
         /// <param name="info">Serialization information.</param>
         /// <param name="context">Streaming context.</param>
         [Obsolete("Legacy serialization support is deprecated since .NET 8", DiagnosticId = "SYSLIB0051")]
@@ -887,16 +761,11 @@ namespace System.Management.Automation
         }
     }
 
-    /// <summary>
-    /// ItemNotFoundException occurs when the path contained no wildcard characters
-    /// and an item at that path could not be found.
-    /// </summary>
+    
     public class ItemNotFoundException : SessionStateException
     {
         #region ctor
-        /// <summary>
-        /// Constructs a ItemNotFoundException.
-        /// </summary>
+        
         /// <param name="path">
         /// The path that was not found.
         /// </param>
@@ -920,17 +789,13 @@ namespace System.Management.Automation
         {
         }
 
-        /// <summary>
-        /// Constructs a ItemNotFoundException.
-        /// </summary>
+        
         public ItemNotFoundException()
             : base()
         {
         }
 
-        /// <summary>
-        /// Constructs a ItemNotFoundException.
-        /// </summary>
+        
         /// <param name="message">
         /// The message used by the exception.
         /// </param>
@@ -939,9 +804,7 @@ namespace System.Management.Automation
         {
         }
 
-        /// <summary>
-        /// Constructs a ItemNotFoundException.
-        /// </summary>
+        
         /// <param name="message">
         /// The message used by the exception.
         /// </param>
@@ -955,9 +818,7 @@ namespace System.Management.Automation
         }
         #endregion ctor
 
-        /// <summary>
-        /// Constructs a ItemNotFoundException using serialized data.
-        /// </summary>
+        
         /// <param name="info">Serialization information.</param>
         /// <param name="context">Streaming context.</param>
         [Obsolete("Legacy serialization support is deprecated since .NET 8", DiagnosticId = "SYSLIB0051")]

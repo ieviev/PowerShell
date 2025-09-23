@@ -14,30 +14,21 @@ using System.Windows.Markup;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <summary>
-    /// Extends the basic GrdView class to introduce the Visible concept to the
-    /// Columns collection.
-    /// </summary>
+    
     /// 
     [ContentProperty("AvailableColumns")]
     public class InnerListGridView : GridView
     {
-        /// <summary>
-        /// Set to true when we want to change the Columns collection.
-        /// </summary>
+        
         private bool canChangeColumns = false;
 
-        /// <summary>
-        /// Instanctiates a new object of this class.
-        /// </summary>
+        
         public InnerListGridView()
             : this(new ObservableCollection<InnerListColumn>())
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="InnerListGridView"/> class with the specified columns.
-        /// </summary>
+        
         /// <param name="availableColumns">The columns this grid should display.</param>
         /// <exception cref="ArgumentNullException">The specified value is a null reference.</exception>
         internal InnerListGridView(ObservableCollection<InnerListColumn> availableColumns)
@@ -52,22 +43,14 @@ namespace Microsoft.Management.UI.Internal
             this.Columns.CollectionChanged += this.Columns_CollectionChanged;
         }
 
-        /// <summary>
-        /// Gets a collection of all columns which can be
-        /// added to the ManagementList, for example through ColumnPicker.
-        /// Columns is the collection of the columns which are currently
-        /// displayed (in the order in which they are displayed).
-        /// </summary>
+        
         internal ObservableCollection<InnerListColumn> AvailableColumns
         {
             get;
             private set;
         }
 
-        /// <summary>
-        /// Releases this instance's references to its controls.
-        /// This API supports the framework infrastructure and is not intended to be used directly from your code.
-        /// </summary>
+        
         public void ReleaseReferences()
         {
             this.AvailableColumns.CollectionChanged -= this.AvailableColumns_CollectionChanged;
@@ -89,10 +72,7 @@ namespace Microsoft.Management.UI.Internal
             this.Columns.Clear();
         }
 
-        /// <summary>
-        /// Called when the ItemsSource changes to auto populate the GridView columns
-        /// with reflection information on the first element of the ItemsSource.
-        /// </summary>
+        
         /// <param name="newValue">
         /// The new ItemsSource.
         /// This is used just to fetch .the first collection element.
@@ -127,9 +107,7 @@ namespace Microsoft.Management.UI.Internal
             }
         }
 
-        /// <summary>
-        /// Callback for displaying the Column Picker.
-        /// </summary>
+        
         /// <param name="sender">The send object.</param>
         /// <param name="e">The Event RoutedEventArgs.</param>
         internal void OnColumnPicker(object sender, RoutedEventArgs e)
@@ -173,9 +151,7 @@ namespace Microsoft.Management.UI.Internal
             }
         }
 
-        /// <summary>
-        /// Called when Columns changes so we can check we are the ones changing it.
-        /// </summary>
+        
         /// <param name="sender">The collection changing.</param>
         /// <param name="e">The event parameters.</param>
         private void Columns_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -203,9 +179,7 @@ namespace Microsoft.Management.UI.Internal
             }
         }
 
-        /// <summary>
-        /// Called when the AvailableColumns changes to pass through the VisibleColumns to Columns.
-        /// </summary>
+        
         /// <param name="sender">The collection changing.</param>
         /// <param name="e">The event parameters.</param>
         private void AvailableColumns_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -214,10 +188,7 @@ namespace Microsoft.Management.UI.Internal
             this.SynchronizeColumns();
         }
 
-        /// <summary>
-        /// Called from availableColumns_CollectionChanged to add or remove the notifications
-        /// used to track the Visible property.
-        /// </summary>
+        
         /// <param name="e">The parameter passed to availableColumns_CollectionChanged.</param>
         private void AddOrRemoveNotifications(NotifyCollectionChangedEventArgs e)
         {
@@ -241,10 +212,7 @@ namespace Microsoft.Management.UI.Internal
             }
         }
 
-        /// <summary>
-        /// Syncronizes AvailableColumns and Columns preserving the order from Columns that
-        /// comes from the user moving Columns around.
-        /// </summary>
+        
         private void SynchronizeColumns()
         {
             this.canChangeColumns = true;
@@ -275,9 +243,7 @@ namespace Microsoft.Management.UI.Internal
             }
         }
 
-        /// <summary>
-        /// Called when the Visible property of a column changes.
-        /// </summary>
+        
         /// <param name="sender">The column whose property changed.</param>
         /// <param name="e">The event parameters.</param>
         private void Column_PropertyChanged(object sender, PropertyChangedEventArgs e)

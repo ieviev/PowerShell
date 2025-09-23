@@ -13,13 +13,10 @@ using System.Text;
 
 namespace System.Management.Automation.Help
 {
-    /// <summary>
-    /// Positional parameter comparer.
-    /// </summary>
+    
     internal class PositionalParameterComparer : IComparer
     {
-        /// <summary>
-        /// </summary>
+        
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
@@ -34,18 +31,11 @@ namespace System.Management.Automation.Help
         }
     }
 
-    /// <summary>
-    /// The help object builder class attempts to create a full HelpInfo object from
-    /// a CmdletInfo object. This is used to generate the default UX when no help content
-    /// is present in the box. This class mimics the exact same structure as that of a MAML
-    /// node, so that the default UX does not introduce regressions.
-    /// </summary>
+    
     internal static class DefaultCommandHelpObjectBuilder
     {
         internal static readonly string TypeNameForDefaultHelp = "ExtendedCmdletHelpInfo";
-        /// <summary>
-        /// Generates a HelpInfo PSObject from a CmdletInfo object.
-        /// </summary>
+        
         /// <param name="input">Command info.</param>
         /// <returns>HelpInfo PSObject.</returns>
         internal static PSObject GetPSObjectFromCmdletInfo(CommandInfo input)
@@ -145,9 +135,7 @@ namespace System.Management.Automation.Help
             return obj;
         }
 
-        /// <summary>
-        /// Adds the details properties.
-        /// </summary>
+        
         /// <param name="obj">HelpInfo object.</param>
         /// <param name="name">Command name.</param>
         /// <param name="noun">Command noun.</param>
@@ -179,9 +167,7 @@ namespace System.Management.Automation.Help
             obj.Properties.Add(new PSNoteProperty("details", mshObject));
         }
 
-        /// <summary>
-        /// Adds the syntax properties.
-        /// </summary>
+        
         /// <param name="obj">HelpInfo object.</param>
         /// <param name="cmdletName">Command name.</param>
         /// <param name="parameterSets">Parameter sets.</param>
@@ -199,9 +185,7 @@ namespace System.Management.Automation.Help
             obj.Properties.Add(new PSNoteProperty("Syntax", mshObject));
         }
 
-        /// <summary>
-        /// Add the syntax item properties.
-        /// </summary>
+        
         /// <param name="obj">HelpInfo object.</param>
         /// <param name="cmdletName">Cmdlet name, you can't get this from parameterSets.</param>
         /// <param name="parameterSets">A collection of parameter sets.</param>
@@ -236,9 +220,7 @@ namespace System.Management.Automation.Help
             obj.Properties.Add(new PSNoteProperty("syntaxItem", mshObjects.ToArray()));
         }
 
-        /// <summary>
-        /// Add the syntax parameters properties (these parameters are used to create the syntax section)
-        /// </summary>
+        
         /// <param name="obj">HelpInfo object.</param>
         /// <param name="parameters">
         /// a collection of parameters in display order
@@ -329,9 +311,7 @@ namespace System.Management.Automation.Help
             obj.Properties.Add(new PSNoteProperty("parameter", mshObjects.ToArray()));
         }
 
-        /// <summary>
-        /// Adds a parameter value group (for enums)
-        /// </summary>
+        
         /// <param name="obj">Object.</param>
         /// <param name="values">Parameter group values.</param>
         private static void AddParameterValueGroupProperties(PSObject obj, string[] values)
@@ -347,9 +327,7 @@ namespace System.Management.Automation.Help
             obj.Properties.Add(new PSNoteProperty("parameterValueGroup", paramValueGroup));
         }
 
-        /// <summary>
-        /// Add the parameters properties (these parameters are used to create the parameters section)
-        /// </summary>
+        
         /// <param name="obj">HelpInfo object.</param>
         /// <param name="parameters">Parameters.</param>
         /// <param name="common">Common parameters.</param>
@@ -397,9 +375,7 @@ namespace System.Management.Automation.Help
             obj.Properties.Add(new PSNoteProperty("parameters", paramsObject));
         }
 
-        /// <summary>
-        /// Adds the parameter properties.
-        /// </summary>
+        
         /// <param name="obj">HelpInfo object.</param>
         /// <param name="name">Parameter name.</param>
         /// <param name="aliases">Parameter aliases.</param>
@@ -519,9 +495,7 @@ namespace System.Management.Automation.Help
             }
         }
 
-        /// <summary>
-        /// Adds the globbing properties.
-        /// </summary>
+        
         /// <param name="obj">HelpInfo object.</param>
         /// <param name="attributes">The attributes of the parameter (needed to look for PSTypeName).</param>
         private static void AddParameterGlobbingProperties(PSObject obj, IEnumerable<Attribute> attributes)
@@ -540,9 +514,7 @@ namespace System.Management.Automation.Help
             obj.Properties.Add(new PSNoteProperty("globbing", CultureInfo.CurrentCulture.TextInfo.ToLower(globbing.ToString())));
         }
 
-        /// <summary>
-        /// Adds the parameterType properties.
-        /// </summary>
+        
         /// <param name="obj">HelpInfo object.</param>
         /// <param name="parameterType">The type of a parameter.</param>
         /// <param name="attributes">The attributes of the parameter (needed to look for PSTypeName).</param>
@@ -559,9 +531,7 @@ namespace System.Management.Automation.Help
             obj.Properties.Add(new PSNoteProperty("type", mshObject));
         }
 
-        /// <summary>
-        /// Adds the parameterValue properties.
-        /// </summary>
+        
         /// <param name="obj">HelpInfo object.</param>
         /// <param name="parameterType">The type of a parameter.</param>
         /// <param name="attributes">The attributes of the parameter (needed to look for PSTypeName).</param>
@@ -588,9 +558,7 @@ namespace System.Management.Automation.Help
             obj.Properties.Add(new PSNoteProperty("parameterValue", mshObject));
         }
 
-        /// <summary>
-        /// Adds the InputTypes properties.
-        /// </summary>
+        
         /// <param name="obj">HelpInfo object.</param>
         /// <param name="parameters">Command parameters.</param>
         internal static void AddInputTypesProperties(PSObject obj, Dictionary<string, ParameterMetadata> parameters)
@@ -649,9 +617,7 @@ namespace System.Management.Automation.Help
             obj.Properties.Add(new PSNoteProperty("inputTypes", inputTypesObj));
         }
 
-        /// <summary>
-        /// Adds the OutputTypes properties.
-        /// </summary>
+        
         /// <param name="obj">HelpInfo object.</param>
         /// <param name="outputTypes">Output types.</param>
         private static void AddOutputTypesProperties(PSObject obj, ReadOnlyCollection<PSTypeName> outputTypes)
@@ -692,9 +658,7 @@ namespace System.Management.Automation.Help
             obj.Properties.Add(new PSNoteProperty("returnValues", returnValuesObj));
         }
 
-        /// <summary>
-        /// Adds the aliases properties.
-        /// </summary>
+        
         /// <param name="obj">HelpInfo object.</param>
         /// <param name="name">Command name.</param>
         /// <param name="context">Execution context.</param>
@@ -721,9 +685,7 @@ namespace System.Management.Automation.Help
             obj.Properties.Add(new PSNoteProperty("aliases", sb.ToString()));
         }
 
-        /// <summary>
-        /// Adds the remarks properties.
-        /// </summary>
+        
         /// <param name="obj">HelpInfo object.</param>
         /// <param name="cmdletName"></param>
         /// <param name="helpUri"></param>
@@ -739,9 +701,7 @@ namespace System.Management.Automation.Help
             }
         }
 
-        /// <summary>
-        /// Adds the related links properties.
-        /// </summary>
+        
         /// <param name="obj"></param>
         /// <param name="relatedLink"></param>
         internal static void AddRelatedLinksProperties(PSObject obj, string relatedLink)
@@ -794,9 +754,7 @@ namespace System.Management.Automation.Help
             }
         }
 
-        /// <summary>
-        /// Gets the parameter attribute from parameter metadata.
-        /// </summary>
+        
         /// <param name="attributes">Parameter attributes.</param>
         /// <returns>Collection of parameter attributes.</returns>
         private static Collection<ParameterAttribute> GetParameterAttribute(Collection<Attribute> attributes)
@@ -816,9 +774,7 @@ namespace System.Management.Automation.Help
             return paramAttributes;
         }
 
-        /// <summary>
-        /// Gets the validate set attribute from parameter metadata.
-        /// </summary>
+        
         /// <param name="attributes">Parameter attributes.</param>
         /// <returns>Collection of parameter attributes.</returns>
         private static Collection<ValidateSetAttribute> GetValidateSetAttribute(Collection<Attribute> attributes)
@@ -838,9 +794,7 @@ namespace System.Management.Automation.Help
             return validateSetAttributes;
         }
 
-        /// <summary>
-        /// Gets the pipeline input type.
-        /// </summary>
+        
         /// <param name="paramAttrib">Parameter attribute.</param>
         /// <returns>Pipeline input type.</returns>
         private static string GetPipelineInputString(ParameterAttribute paramAttrib)
@@ -889,9 +843,7 @@ namespace System.Management.Automation.Help
             return sb.ToString();
         }
 
-        /// <summary>
-        /// Checks if a set of parameters contains any of the common parameters.
-        /// </summary>
+        
         /// <param name="parameters">Parameters to check.</param>
         /// <returns>True if it contains common parameters, false otherwise.</returns>
         internal static bool HasCommonParameters(Dictionary<string, ParameterMetadata> parameters)
@@ -909,9 +861,7 @@ namespace System.Management.Automation.Help
             return (commonParams.Count == Cmdlet.CommonParameters.Count);
         }
 
-        /// <summary>
-        /// Checks if the module contains HelpInfoUri.
-        /// </summary>
+        
         /// <param name="module"></param>
         /// <param name="moduleName"></param>
         /// <returns></returns>

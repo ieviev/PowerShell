@@ -11,18 +11,14 @@ using Dbg = System.Management.Automation;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Holds the state of a Monad Shell session.
-    /// </summary>
+    
     internal sealed partial class SessionStateInternal
     {
         #region IPropertyCmdletProvider accessors
 
         #region GetProperty
 
-        /// <summary>
-        /// Gets the specified properties from the specified item.
-        /// </summary>
+        
         /// <param name="paths">
         /// The path(s) to the item(s) to get the properties from.
         /// </param>
@@ -73,9 +69,7 @@ namespace System.Management.Automation
             return results;
         }
 
-        /// <summary>
-        /// Gets the specified properties from the specified item.
-        /// </summary>
+        
         /// <param name="paths">
         /// The path(s) to the item(s) to get the properties from.
         /// </param>
@@ -148,9 +142,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the property from the item at the specified path.
-        /// </summary>
+        
         /// <param name="providerInstance">
         /// The provider instance to use.
         /// </param>
@@ -222,9 +214,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the get-itemproperty cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -293,9 +283,7 @@ namespace System.Management.Automation
             return null;
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the get-itemproperty cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -378,9 +366,7 @@ namespace System.Management.Automation
 
         #region SetProperty
 
-        /// <summary>
-        /// Sets the specified properties on the specified item.
-        /// </summary>
+        
         /// <param name="paths">
         /// The path(s) to the item(s) to set the properties on.
         /// </param>
@@ -437,9 +423,7 @@ namespace System.Management.Automation
             return results;
         }
 
-        /// <summary>
-        /// Sets the specified properties on specified item.
-        /// </summary>
+        
         /// <param name="paths">
         /// The path(s) to the item(s) to set the properties on.
         /// </param>
@@ -516,9 +500,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Sets the property of the item at the specified path.
-        /// </summary>
+        
         /// <param name="providerInstance">
         /// The provider instance to use.
         /// </param>
@@ -594,9 +576,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the clear-itemproperty cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -665,9 +645,7 @@ namespace System.Management.Automation
             return null;
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the set-itemproperty cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -750,9 +728,7 @@ namespace System.Management.Automation
 
         #region ClearProperty
 
-        /// <summary>
-        /// Clears the specified property on the specified item.
-        /// </summary>
+        
         /// <param name="paths">
         /// The path(s) to the item(s) to clear the property on.
         /// </param>
@@ -806,9 +782,7 @@ namespace System.Management.Automation
             context.ThrowFirstErrorOrDoNothing();
         }
 
-        /// <summary>
-        /// Clears the specified property in the specified item.
-        /// </summary>
+        
         /// <param name="paths">
         /// The path(s) to the item(s) to clear the property on.
         /// </param>
@@ -878,9 +852,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Clears the value of the property from the item at the specified path.
-        /// </summary>
+        
         /// <param name="providerInstance">
         /// The provider instance to use.
         /// </param>
@@ -956,9 +928,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the clear-itemproperty cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -1027,9 +997,7 @@ namespace System.Management.Automation
             return null;
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the clear-itemproperty cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>

@@ -13,10 +13,7 @@ using Microsoft.PowerShell.MarkdownRender;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// Converts a Markdown string to a MarkdownInfo object.
-    /// The conversion can be done into a HTML text or VT100 encoding string.
-    /// </summary>
+    
     [Cmdlet(
         VerbsData.ConvertFrom, "Markdown",
         DefaultParameterSetName = PathParameterSet,
@@ -24,31 +21,23 @@ namespace Microsoft.PowerShell.Commands
     [OutputType(typeof(Microsoft.PowerShell.MarkdownRender.MarkdownInfo))]
     public class ConvertFromMarkdownCommand : PSCmdlet
     {
-        /// <summary>
-        /// Gets or sets path to the file to convert from Markdown to MarkdownInfo.
-        /// </summary>
+        
         [ValidateNotNullOrEmpty]
         [Parameter(ParameterSetName = PathParameterSet, Mandatory = true, Position = 0)]
         public string[] Path { get; set; }
 
-        /// <summary>
-        /// Gets or sets the path to the file to convert from Markdown to MarkdownInfo.
-        /// </summary>
+        
         [ValidateNotNullOrEmpty]
         [Alias("PSPath", "LP")]
         [Parameter(ParameterSetName = LiteralPathParameterSet, Mandatory = true)]
         public string[] LiteralPath { get; set; }
 
-        /// <summary>
-        /// Gets or sets the InputObject of type System.IO.FileInfo or string with content to convert from Markdown to MarkdownInfo.
-        /// </summary>
+        
         [ValidateNotNullOrEmpty]
         [Parameter(ParameterSetName = InputObjParamSet, Mandatory = true, ValueFromPipeline = true)]
         public PSObject InputObject { get; set; }
 
-        /// <summary>
-        /// Gets or sets if the Markdown document should be converted to a VT100 encoded string.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter AsVT100EncodedString { get; set; }
 
@@ -59,9 +48,7 @@ namespace Microsoft.PowerShell.Commands
         private MarkdownConversionType _conversionType = MarkdownConversionType.HTML;
         private PSMarkdownOptionInfo _mdOption = null;
 
-        /// <summary>
-        /// Read the PSMarkdownOptionInfo set in SessionState.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             _mdOption = PSMarkdownOptionInfoCache.Get(this.CommandInfo);
@@ -81,9 +68,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Override ProcessRecord.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             switch (ParameterSetName)

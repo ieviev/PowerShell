@@ -6,9 +6,7 @@ using System.Management.Automation.Internal;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// The implementation of the "new-alias" cmdlet.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.New, "Alias", SupportsShouldProcess = true, ConfirmImpact = ConfirmImpact.Low,
         HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097022")]
     [OutputType(typeof(AliasInfo))]
@@ -16,9 +14,7 @@ namespace Microsoft.PowerShell.Commands
     {
         #region Command code
 
-        /// <summary>
-        /// The main processing loop of the command.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             // If not force, then see if the alias already exists

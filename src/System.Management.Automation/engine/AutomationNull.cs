@@ -3,9 +3,7 @@
 
 namespace System.Management.Automation.Internal
 {
-    /// <summary>
-    /// This is a singleton object that is used to indicate a void return result.
-    /// </summary>
+    
     /// <remarks>
     /// It's a singleton class. Sealed to prevent subclassing. Any operation that
     /// returns no actual value should return this object AutomationNull.Value.
@@ -23,9 +21,7 @@ namespace System.Management.Automation.Internal
 
         #region public_property
 
-        /// <summary>
-        /// Returns the singleton instance of this object.
-        /// </summary>
+        
         public static PSObject Value { get; } = new PSObject();
 
         #endregion public_property

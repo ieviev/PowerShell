@@ -22,9 +22,7 @@ using NotNullWhen = System.Diagnostics.CodeAnalysis.NotNullWhenAttribute;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// A thin wrapper over a property-getting Callsite, to allow reuse when possible.
-    /// </summary>
+    
     internal struct DynamicPropertyGetter
     {
         private CallSite<Func<CallSite, object, object>> _getValueDynamicSite;
@@ -55,10 +53,7 @@ namespace Microsoft.PowerShell.Commands
 
     #region Built-in cmdlets that are used by or require direct access to the engine.
 
-    /// <summary>
-    /// Implements a cmdlet that applies a script block
-    /// to each element of the pipeline.
-    /// </summary>
+    
     [Cmdlet("ForEach", "Object", SupportsShouldProcess = true, ConfirmImpact = ConfirmImpact.Low,
         DefaultParameterSetName = ForEachObjectCommand.ScriptBlockSet, HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096867",
         RemotingCapability = RemotingCapability.None)]
@@ -74,9 +69,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Common Parameters
 
-        /// <summary>
-        /// This parameter specifies the current pipeline object.
-        /// </summary>
+        
         [Parameter(ValueFromPipeline = true, ParameterSetName = ForEachObjectCommand.ScriptBlockSet)]
         [Parameter(ValueFromPipeline = true, ParameterSetName = ForEachObjectCommand.PropertyAndMethodSet)]
         [Parameter(ValueFromPipeline = true, ParameterSetName = ForEachObjectCommand.ParallelParameterSet)]
@@ -95,9 +88,7 @@ namespace Microsoft.PowerShell.Commands
 
         private readonly List<ScriptBlock> _scripts = new List<ScriptBlock>();
 
-        /// <summary>
-        /// Gets or sets the script block to apply in begin processing.
-        /// </summary>
+        
         [Parameter(ParameterSetName = ForEachObjectCommand.ScriptBlockSet)]
         public ScriptBlock Begin
         {
@@ -112,9 +103,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets or sets the script block to apply.
-        /// </summary>
+        
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ForEachObjectCommand.ScriptBlockSet)]
         [AllowNull]
         [AllowEmptyCollection]
@@ -141,9 +130,7 @@ namespace Microsoft.PowerShell.Commands
         private ScriptBlock _endScript;
         private bool _setEndScript;
 
-        /// <summary>
-        /// Gets or sets the script block to apply in complete processing.
-        /// </summary>
+        
         [Parameter(ParameterSetName = ForEachObjectCommand.ScriptBlockSet)]
         public ScriptBlock End
         {
@@ -159,9 +146,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets or sets the remaining script blocks to apply.
-        /// </summary>
+        
         [Parameter(ParameterSetName = ForEachObjectCommand.ScriptBlockSet, ValueFromRemainingArguments = true)]
         [AllowNull]
         [AllowEmptyCollection]
@@ -191,9 +176,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region PropertyAndMethodSet
 
-        /// <summary>
-        /// Gets or sets the property or method name.
-        /// </summary>
+        
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ForEachObjectCommand.PropertyAndMethodSet)]
         [ValidateTrustedData]
         [ValidateNotNullOrEmpty]
@@ -214,9 +197,7 @@ namespace Microsoft.PowerShell.Commands
         private string _targetString;
         private DynamicPropertyGetter _propGetter;
 
-        /// <summary>
-        /// The arguments passed to a method invocation.
-        /// </summary>
+        
         [Parameter(ParameterSetName = ForEachObjectCommand.PropertyAndMethodSet, ValueFromRemainingArguments = true)]
         [ValidateTrustedData]
         [Alias("Args")]
@@ -233,40 +214,25 @@ namespace Microsoft.PowerShell.Commands
 
         #region ParallelParameterSet
 
-        /// <summary>
-        /// Gets or sets a script block to run in parallel for each pipeline object.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ParameterSetName = ForEachObjectCommand.ParallelParameterSet)]
         public ScriptBlock Parallel { get; set; }
 
-        /// <summary>
-        /// Gets or sets the maximum number of concurrently running scriptblocks on separate threads.
-        /// The default number is 5.
-        /// </summary>
+        
         [Parameter(ParameterSetName = ForEachObjectCommand.ParallelParameterSet)]
         [ValidateRange(1, Int32.MaxValue)]
         public int ThrottleLimit { get; set; } = 5;
 
-        /// <summary>
-        /// Gets or sets a timeout time in seconds, after which the parallel running scripts will be stopped
-        /// The default value is 0, indicating no timeout.
-        /// </summary>
+        
         [Parameter(ParameterSetName = ForEachObjectCommand.ParallelParameterSet)]
         [ValidateRange(0, (Int32.MaxValue / 1000))]
         public int TimeoutSeconds { get; set; }
 
-        /// <summary>
-        /// Gets or sets a flag that returns a job object immediately for the parallel operation, instead of returning after
-        /// all foreach processing is completed.
-        /// </summary>
+        
         [Parameter(ParameterSetName = ForEachObjectCommand.ParallelParameterSet)]
         public SwitchParameter AsJob { get; set; }
 
-        /// <summary>
-        /// Gets or sets a flag so that a new runspace object is created for each loop iteration, instead of reusing objects
-        /// from the runspace pool.
-        /// By default, runspaces are reused from a runspace pool.
-        /// </summary>
+        
         [Parameter(ParameterSetName = ForEachObjectCommand.ParallelParameterSet)]
         public SwitchParameter UseNewRunspace { get; set; }
 
@@ -274,9 +240,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Overrides
 
-        /// <summary>
-        /// Execute the begin scriptblock at the start of processing.
-        /// </summary>
+        
         /// <exception cref="ParseException">Could not parse script.</exception>
         /// <exception cref="RuntimeException">See Pipeline.Invoke.</exception>
         /// <exception cref="ParameterBindingException">See Pipeline.Invoke.</exception>
@@ -294,10 +258,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Execute the processing script blocks on the current pipeline object
-        /// which is passed as it's only parameter.
-        /// </summary>
+        
         /// <exception cref="ParseException">Could not parse script.</exception>
         /// <exception cref="RuntimeException">See Pipeline.Invoke.</exception>
         /// <exception cref="ParameterBindingException">See Pipeline.Invoke.</exception>
@@ -319,9 +280,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Execute the end scriptblock when the pipeline is complete.
-        /// </summary>
+        
         /// <exception cref="ParseException">Could not parse script.</exception>
         /// <exception cref="RuntimeException">See Pipeline.Invoke.</exception>
         /// <exception cref="ParameterBindingException">See Pipeline.Invoke.</exception>
@@ -339,9 +298,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Handle pipeline stop signal.
-        /// </summary>
+        
         protected override void StopProcessing()
         {
             switch (ParameterSetName)
@@ -356,9 +313,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region IDisposable
 
-        /// <summary>
-        /// Dispose cmdlet instance.
-        /// </summary>
+        
         public void Dispose()
         {
             // Ensure all parallel task objects are disposed
@@ -1005,9 +960,7 @@ namespace Microsoft.PowerShell.Commands
                 args: emptyArray);
         }
 
-        /// <summary>
-        /// Do method invocation with arguments.
-        /// </summary>
+        
         private void MethodCallWithArguments()
         {
             // resolve the name
@@ -1083,9 +1036,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Get the string representation of the passed-in object.
-        /// </summary>
+        
         /// <param name="obj">Source object.</param>
         /// <returns>String representation of the source object.</returns>
         private static string GetStringRepresentation(object obj)
@@ -1110,10 +1061,7 @@ namespace Microsoft.PowerShell.Commands
             return objInString;
         }
 
-        /// <summary>
-        /// Get the value by taking _propertyOrMethodName as the key, if the
-        /// input object is a IDictionary.
-        /// </summary>
+        
         /// <returns>True if success.</returns>
         private bool GetValueFromIDictionaryInput()
         {
@@ -1146,10 +1094,7 @@ namespace Microsoft.PowerShell.Commands
             return false;
         }
 
-        /// <summary>
-        /// Unroll the object to be output. If it's of type IEnumerator, unroll and output it
-        /// by calling WriteOutIEnumerator. If it's not, unroll and output it by calling WriteObject(obj, true)
-        /// </summary>
+        
         /// <param name="obj">Source object.</param>
         private void WriteToPipelineWithUnrolling(object obj)
         {
@@ -1164,9 +1109,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Unroll an IEnumerator and output all entries.
-        /// </summary>
+        
         /// <param name="list">Source list.</param>
         private void WriteOutIEnumerator(IEnumerator list)
         {
@@ -1184,10 +1127,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Check if the language mode is the restrictedLanguageMode before invoking a method.
-        /// Write out error message and return true if we are in restrictedLanguageMode.
-        /// </summary>
+        
         /// <param name="inputObject">Source object.</param>
         /// <returns>True if we are in restrictedLanguageMode.</returns>
         private bool BlockMethodInLanguageMode(object inputObject)
@@ -1233,9 +1173,7 @@ namespace Microsoft.PowerShell.Commands
 
         #endregion
 
-        /// <summary>
-        /// Generate the appropriate error record.
-        /// </summary>
+        
         /// <param name="paraName"></param>
         /// <param name="resourceString"></param>
         /// <param name="errorId"></param>
@@ -1270,19 +1208,12 @@ namespace Microsoft.PowerShell.Commands
         }
     }
 
-    /// <summary>
-    /// Implements a cmdlet that applys a script block
-    /// to each element of the pipeline. If the result of that
-    /// application is true, then the current pipeline object
-    /// is passed on, otherwise it is dropped.
-    /// </summary>
+    
     [Cmdlet("Where", "Object", DefaultParameterSetName = "EqualSet",
         HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096806", RemotingCapability = RemotingCapability.None)]
     public sealed class WhereObjectCommand : PSCmdlet
     {
-        /// <summary>
-        /// Gets or sets the current pipeline object.
-        /// </summary>
+        
         [Parameter(ValueFromPipeline = true)]
         public PSObject InputObject
         {
@@ -1300,9 +1231,7 @@ namespace Microsoft.PowerShell.Commands
         private PSObject _inputObject = AutomationNull.Value;
 
         private ScriptBlock _script;
-        /// <summary>
-        /// Gets or sets the script block to apply.
-        /// </summary>
+        
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = "ScriptBlockSet")]
         public ScriptBlock FilterScript
         {
@@ -1319,9 +1248,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string _property;
 
-        /// <summary>
-        /// Gets or sets the property to retrieve value.
-        /// </summary>
+        
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = "EqualSet")]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = "CaseSensitiveEqualSet")]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = "NotEqualSet")]
@@ -1371,9 +1298,7 @@ namespace Microsoft.PowerShell.Commands
         private object _value = true;
         private bool _valueNotSpecified = true;
 
-        /// <summary>
-        /// The value to compare against.
-        /// </summary>
+        
         [Parameter(Position = 1, ParameterSetName = "EqualSet")]
         [Parameter(Position = 1, ParameterSetName = "CaseSensitiveEqualSet")]
         [Parameter(Position = 1, ParameterSetName = "NotEqualSet")]
@@ -1426,10 +1351,7 @@ namespace Microsoft.PowerShell.Commands
         // remain to be true if "EqualSet" is chosen by default.
         private bool _forceBooleanEvaluation = true;
 
-        /// <summary>
-        /// Gets or sets binary operator -Equal
-        /// It's the default parameter set, so -EQ is not mandatory.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "EqualSet")]
         [Alias("IEQ")]
         public SwitchParameter EQ
@@ -1446,9 +1368,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets or sets case sensitive binary operator -ceq.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ParameterSetName = "CaseSensitiveEqualSet")]
         public SwitchParameter CEQ
         {
@@ -1463,9 +1383,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets or sets binary operator -NotEqual.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ParameterSetName = "NotEqualSet")]
         [Alias("INE")]
         public SwitchParameter NE
@@ -1481,9 +1399,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets or sets case sensitive binary operator -cne.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ParameterSetName = "CaseSensitiveNotEqualSet")]
         public SwitchParameter CNE
         {
@@ -1498,9 +1414,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets or sets binary operator -GreaterThan.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ParameterSetName = "GreaterThanSet")]
         [Alias("IGT")]
         public SwitchParameter GT
@@ -1516,9 +1430,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets or sets case sensitive binary operator -cgt.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ParameterSetName = "CaseSensitiveGreaterThanSet")]
         public SwitchParameter CGT
         {
@@ -1533,9 +1445,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets or sets binary operator -LessThan.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ParameterSetName = "LessThanSet")]
         [Alias("ILT")]
         public SwitchParameter LT
@@ -1551,9 +1461,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets or sets case sensitive binary operator -clt.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ParameterSetName = "CaseSensitiveLessThanSet")]
         public SwitchParameter CLT
         {
@@ -1568,9 +1476,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets or sets binary operator -GreaterOrEqual.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ParameterSetName = "GreaterOrEqualSet")]
         [Alias("IGE")]
         public SwitchParameter GE
@@ -1586,9 +1492,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets or sets case sensitive binary operator -cge.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ParameterSetName = "CaseSensitiveGreaterOrEqualSet")]
         public SwitchParameter CGE
         {
@@ -1603,9 +1507,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets or sets binary operator -LessOrEqual.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ParameterSetName = "LessOrEqualSet")]
         [Alias("ILE")]
         public SwitchParameter LE
@@ -1621,9 +1523,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets or sets case sensitive binary operator -cle.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ParameterSetName = "CaseSensitiveLessOrEqualSet")]
         public SwitchParameter CLE
         {
@@ -1638,9 +1538,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        ///Gets or sets binary operator -Like.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ParameterSetName = "LikeSet")]
         [Alias("ILike")]
         public SwitchParameter Like
@@ -1656,9 +1554,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets or sets case sensitive binary operator -clike.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ParameterSetName = "CaseSensitiveLikeSet")]
         public SwitchParameter CLike
         {
@@ -1673,9 +1569,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets or sets binary operator -NotLike.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ParameterSetName = "NotLikeSet")]
         [Alias("INotLike")]
         public SwitchParameter NotLike
@@ -1691,9 +1585,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets or sets case sensitive binary operator -cnotlike.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ParameterSetName = "CaseSensitiveNotLikeSet")]
         public SwitchParameter CNotLike
         {
@@ -1708,9 +1600,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Get or sets binary operator -Match.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ParameterSetName = "MatchSet")]
         [Alias("IMatch")]
         public SwitchParameter Match
@@ -1726,9 +1616,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets or sets case sensitive binary operator -cmatch.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ParameterSetName = "CaseSensitiveMatchSet")]
         public SwitchParameter CMatch
         {
@@ -1743,9 +1631,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets or sets binary operator -NotMatch.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ParameterSetName = "NotMatchSet")]
         [Alias("INotMatch")]
         public SwitchParameter NotMatch
@@ -1761,9 +1647,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets or sets case sensitive binary operator -cnotmatch.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ParameterSetName = "CaseSensitiveNotMatchSet")]
         public SwitchParameter CNotMatch
         {
@@ -1778,9 +1662,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets or sets binary operator -Contains.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ParameterSetName = "ContainsSet")]
         [Alias("IContains")]
         public SwitchParameter Contains
@@ -1796,9 +1678,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets or sets case sensitive binary operator -ccontains.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ParameterSetName = "CaseSensitiveContainsSet")]
         public SwitchParameter CContains
         {
@@ -1813,9 +1693,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets or sets binary operator -NotContains.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ParameterSetName = "NotContainsSet")]
         [Alias("INotContains")]
         public SwitchParameter NotContains
@@ -1831,9 +1709,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets or sets case sensitive binary operator -cnotcontains.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ParameterSetName = "CaseSensitiveNotContainsSet")]
         public SwitchParameter CNotContains
         {
@@ -1848,9 +1724,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets or sets binary operator -In.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ParameterSetName = "InSet")]
         [Alias("IIn")]
         public SwitchParameter In
@@ -1866,9 +1740,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets or sets case sensitive binary operator -cin.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ParameterSetName = "CaseSensitiveInSet")]
         public SwitchParameter CIn
         {
@@ -1883,9 +1755,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets or sets binary operator -NotIn.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ParameterSetName = "NotInSet")]
         [Alias("INotIn")]
         public SwitchParameter NotIn
@@ -1901,9 +1771,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets or sets case sensitive binary operator -cnotin.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ParameterSetName = "CaseSensitiveNotInSet")]
         public SwitchParameter CNotIn
         {
@@ -1918,9 +1786,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets or sets binary operator -Is.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ParameterSetName = "IsSet")]
         public SwitchParameter Is
         {
@@ -1935,9 +1801,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets or sets binary operator -IsNot.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ParameterSetName = "IsNotSet")]
         public SwitchParameter IsNot
         {
@@ -1952,9 +1816,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets or sets binary operator -Not.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ParameterSetName = "Not")]
         public SwitchParameter Not
         {
@@ -2223,10 +2085,7 @@ namespace Microsoft.PowerShell.Commands
 
         private DynamicPropertyGetter _propGetter;
 
-        /// <summary>
-        /// Execute the script block passing in the current pipeline object as
-        /// it's only parameter.
-        /// </summary>
+        
         /// <exception cref="ParseException">Could not parse script.</exception>
         /// <exception cref="RuntimeException">See Pipeline.Invoke.</exception>
         /// <exception cref="ParameterBindingException">See Pipeline.Invoke.</exception>
@@ -2320,9 +2179,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Get the value based on the given property name.
-        /// </summary>
+        
         /// <returns>The value of the property.</returns>
         private object GetValue(ref bool error)
         {
@@ -2473,9 +2330,7 @@ namespace Microsoft.PowerShell.Commands
             return null;
         }
 
-        /// <summary>
-        /// Get the matched PSMembers.
-        /// </summary>
+        
         /// <returns>Matched PSMembers.</returns>
         private ReadOnlyPSMemberInfoCollection<PSMemberInfo> GetMatchMembers()
         {
@@ -2497,15 +2352,11 @@ namespace Microsoft.PowerShell.Commands
         }
     }
 
-    /// <summary>
-    /// Implements a cmdlet that sets the script debugging options.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Set, "PSDebug", HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096959")]
     public sealed class SetPSDebugCommand : PSCmdlet
     {
-        /// <summary>
-        /// Gets or sets the script tracing level.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "on")]
         [ValidateRange(0, 2)]
         public int Trace
@@ -2523,9 +2374,7 @@ namespace Microsoft.PowerShell.Commands
 
         private int _trace = -1;
 
-        /// <summary>
-        /// Gets or sets stepping on and off.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "on")]
         public SwitchParameter Step
         {
@@ -2542,9 +2391,7 @@ namespace Microsoft.PowerShell.Commands
 
         private bool? _step;
 
-        /// <summary>
-        /// Gets or sets strict mode on and off.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "on")]
         public SwitchParameter Strict
         {
@@ -2561,9 +2408,7 @@ namespace Microsoft.PowerShell.Commands
 
         private bool? _strict;
 
-        /// <summary>
-        /// Gets or sets all script debugging features off.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "off")]
         public SwitchParameter Off
         {
@@ -2580,9 +2425,7 @@ namespace Microsoft.PowerShell.Commands
 
         private bool _off;
 
-        /// <summary>
-        /// Execute the begin scriptblock at the start of processing.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             // -off gets processed after the others so it takes precedence...
@@ -2609,29 +2452,11 @@ namespace Microsoft.PowerShell.Commands
 
     #region Set-StrictMode
 
-    /// <summary>
-    /// Set-StrictMode causes the interpreter to throw an exception in the following cases:
-    /// * Referencing an unassigned variable
-    /// * Referencing a non-existent property of an object
-    /// * Calling a function as a method (with parentheses and commas)
-    /// * Using the variable expansion syntax in a string literal w/o naming a variable, i.e. "${}"
-    ///
-    /// Parameters:
-    ///
-    /// -Version allows the script author to specify which strict mode version to enforce.
-    /// -Off turns strict mode off
-    ///
-    /// Note:
-    ///
-    /// Unlike Set-PSDebug -strict, Set-StrictMode is not engine-wide, and only
-    /// affects the scope it was defined in.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Set, "StrictMode", DefaultParameterSetName = "Version", HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096804")]
     public class SetStrictModeCommand : PSCmdlet
     {
-        /// <summary>
-        /// Gets or sets strict mode off.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "Off", Mandatory = true)]
         public SwitchParameter Off
         {
@@ -2648,9 +2473,7 @@ namespace Microsoft.PowerShell.Commands
 
         private SwitchParameter _off;
 
-        /// <summary>
-        /// Handle 'latest', which we interpret to be the current version of PowerShell.
-        /// </summary>
+        
         private sealed class ArgumentToPSVersionTransformationAttribute : ArgumentToVersionTransformationAttribute
         {
             protected override bool TryConvertFromString(string versionString, [NotNullWhen(true)] out Version version)
@@ -2682,9 +2505,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets or sets strict mode in the current scope.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "Version", Mandatory = true)]
         [ArgumentCompleter(typeof(StrictModeVersionArgumentCompleter))]
         [ArgumentToPSVersionTransformation]
@@ -2705,9 +2526,7 @@ namespace Microsoft.PowerShell.Commands
 
         private Version _version;
 
-        /// <summary>
-        /// Set the correct version for strict mode checking in the current scope.
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             if (_off.IsPresent)
@@ -2719,16 +2538,12 @@ namespace Microsoft.PowerShell.Commands
         }
     }
 
-    /// <summary>
-    /// Provides argument completion for StrictMode Version parameter.
-    /// </summary>
+    
     public class StrictModeVersionArgumentCompleter : IArgumentCompleter
     {
         private static readonly string[] s_strictModeVersions = new string[] { "Latest", "3.0", "2.0", "1.0" };
 
-        /// <summary>
-        /// Returns completion results for version parameter.
-        /// </summary>
+        
         /// <param name="commandName">The command name.</param>
         /// <param name="parameterName">The parameter name.</param>
         /// <param name="wordToComplete">The word to complete.</param>

@@ -27,64 +27,40 @@ namespace System.Management.Automation.Language
     [Flags]
     internal enum CharTraits
     {
-        /// <summary>
-        /// No specific character traits.
-        /// </summary>
+        
         None = 0x0000,
 
-        /// <summary>
-        /// For identifiers, the first character must be a letter or underscore.
-        /// </summary>
+        
         IdentifierStart = 0x0002,
 
-        /// <summary>
-        /// The character is a valid first character of a multiplier.
-        /// </summary>
+        
         MultiplierStart = 0x0004,
 
-        /// <summary>
-        /// The character is a valid type suffix for numeric literals.
-        /// </summary>
+        
         TypeSuffix = 0x0008,
 
-        /// <summary>
-        /// The character is a whitespace character.
-        /// </summary>
+        
         Whitespace = 0x0010,
 
-        /// <summary>
-        /// The character terminates a line.
-        /// </summary>
+        
         Newline = 0x0020,
 
-        /// <summary>
-        /// The character is a hexadecimal digit.
-        /// </summary>
+        
         HexDigit = 0x0040,
 
-        /// <summary>
-        /// The character is a decimal digit.
-        /// </summary>
+        
         Digit = 0x0080,
 
-        /// <summary>
-        /// The character is allowed as the first character in an unbraced variable name.
-        /// </summary>
+        
         VarNameFirst = 0x0100,
 
-        /// <summary>
-        /// The character is not part of the token being scanned.
-        /// </summary>
+        
         ForceStartNewToken = 0x0200,
 
-        /// <summary>
-        /// The character is not part of the token being scanned, when the token is known to be part of an assembly name.
-        /// </summary>
+        
         ForceStartNewAssemblyNameSpecToken = 0x0400,
 
-        /// <summary>
-        /// The character is the first character of some operator (and hence is not part of a token that starts a number).
-        /// </summary>
+        
         ForceStartNewTokenAfterNumber = 0x0800,
     }
 
@@ -374,10 +350,7 @@ namespace System.Management.Automation.Language
             return c.IsWhitespace();
         }
 
-        /// <summary>
-        /// Check if the current character forces to end scanning a number token.
-        /// This allows the tokenizer to scan '7z' as a single token, but '7+' as 2 tokens.
-        /// </summary>
+        
         /// <param name="c">The character to check.</param>
         /// <param name="forceEndNumberOnTernaryOperatorChars">
         /// In some cases, we want '?' and ':' to end a number token too, so they can be

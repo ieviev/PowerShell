@@ -7,9 +7,7 @@ using System.Runtime.CompilerServices;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Define type for a reference object in PowerShell scripting language.
-    /// </summary>
+    
     /// <remarks>
     /// This class is used to describe both kinds of references:
     ///     a. reference to a value: _value will be holding the value being referenced.
@@ -27,18 +25,14 @@ namespace System.Management.Automation
     {
         private object _value;
 
-        /// <summary>
-        /// Create an instance of PSReference.
-        /// </summary>
+        
         /// <param name="value"></param>
         public PSReference(object value)
         {
             _value = value;
         }
 
-        /// <summary>
-        /// Get and set value of PSReference.
-        /// </summary>
+        
         /// <remarks>
         /// If underlining object is a value, the object itself will be operated on.
         /// If underlining object is a variable, the variable will be operated on.

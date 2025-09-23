@@ -16,14 +16,10 @@ using System.Text;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Exception with a full stack trace excluding the last two frames.
-    /// </summary>
+    
     internal class AssertException : SystemException
     {
-        /// <summary>
-        /// Calls the base class with message and sets the stack frame.
-        /// </summary>
+        
         /// <param name="message">Repassed to the base class.</param>
         internal AssertException(string message) : base(message)
         {
@@ -31,17 +27,12 @@ namespace System.Management.Automation
             StackTrace = Diagnostics.StackTrace(3);
         }
 
-        /// <summary>
-        /// Returns the stack trace set in the constructor.
-        /// </summary>
+        
         /// <value>the constructor's stackTrace</value>
         public override string StackTrace { get; }
     }
 
-    /// <summary>
-    /// This class contain the few methods necessary for
-    /// the basic assertion use.
-    /// </summary>
+    
     /// <remarks>
     /// All methods are public and static.
     /// The class cannot derive from the sealed System.Diagnostics.Debug
@@ -75,10 +66,7 @@ namespace System.Management.Automation
         private static readonly object s_throwInsteadOfAssertLock = 1;
 
         private static bool s_throwInsteadOfAssert = false;
-        /// <summary>
-        /// If set to true will prevent the assertion dialog from showing up
-        /// by throwing an exception instead of calling Debug.Assert.
-        /// </summary>
+        
         /// <value>false for dialog, true for exception</value>
         internal static bool ThrowInsteadOfAssert
         {
@@ -99,14 +87,10 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// This class only has statics, so we shouldn't need to instantiate any object.
-        /// </summary>
+        
         private Diagnostics() { }
 
-        /// <summary>
-        /// Basic assertion with logical condition and message.
-        /// </summary>
+        
         /// <param name="condition">
         /// logical condition that should be true for program to proceed
         /// </param>
@@ -128,9 +112,7 @@ namespace System.Management.Automation
             Diagnostics.Assert(condition, whyThisShouldNeverHappen, string.Empty);
         }
 
-        /// <summary>
-        /// Basic assertion with logical condition, message and detailed message.
-        /// </summary>
+        
         /// <param name="condition">
         /// logical condition that should be true for program to proceed
         /// </param>

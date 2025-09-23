@@ -65,10 +65,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
     }
 
-    /// <summary>
-    /// Class to process a complex control directive and generate
-    /// the corresponding formatting tokens.
-    /// </summary>
+    
     internal sealed class ComplexControlGenerator
     {
         internal ComplexControlGenerator(TypeInfoDataBase dataBase,
@@ -408,9 +405,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         private readonly int _maxDepth;
     }
 
-    /// <summary>
-    /// Class to generate a complex view from properties.
-    /// </summary>
+    
     internal sealed class ComplexViewObjectBrowser
     {
         internal ComplexViewObjectBrowser(FormatErrorManager resultErrorManager, PSPropertyExpressionFactory mshExpressionFactory, int enumerationLimit)
@@ -420,10 +415,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             _enumerationLimit = enumerationLimit;
         }
 
-        /// <summary>
-        /// Given an object, generate a tree-like view
-        /// of the object.
-        /// </summary>
+        
         /// <param name="so">Object to process.</param>
         /// <param name="inputParameters">Parameters from the command line.</param>
         /// <returns>Complex view entry to send to the output command.</returns>
@@ -499,9 +491,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             formatValueList.Add(new FormatNewLine());
         }
 
-        /// <summary>
-        /// Recursive call to display an object.
-        /// </summary>
+        
         /// <param name="so">Object to display.</param>
         /// <param name="currentLevel">Current level in the traversal.</param>
         /// <param name="parameterList">List of parameters from the command line.</param>
@@ -599,9 +589,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             }
         }
 
-        /// <summary>
-        /// Recursive call to display an object.
-        /// </summary>
+        
         /// <param name="e">Enumeration to display.</param>
         /// <param name="level">Current level in the traversal.</param>
         /// <param name="formatValueList">List of format tokens to add to.</param>
@@ -657,9 +645,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             }
         }
 
-        /// <summary>
-        /// Display a leaf value.
-        /// </summary>
+        
         /// <param name="val">Object to display.</param>
         /// <param name="formatValueList">List of format tokens to add to.</param>
         private void DisplayLeaf(object val, List<FormatValue> formatValueList)
@@ -671,9 +657,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             formatValueList.Add(new FormatNewLine());
         }
 
-        /// <summary>
-        /// Determine if we have to stop the expansion.
-        /// </summary>
+        
         /// <param name="val">Object to verify.</param>
         /// <param name="level">Current level of recursion.</param>
         /// <returns></returns>
@@ -685,9 +669,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             return TreatAsScalarType(PSObject.GetTypeNames(val));
         }
 
-        /// <summary>
-        /// Treat as scalar check.
-        /// </summary>
+        
         /// <param name="typeNames">Name of the type to check.</param>
         /// <returns>True if it has to be treated as a scalar.</returns>
         private static bool TreatAsScalarType(Collection<string> typeNames)
@@ -760,9 +742,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
 
         private ComplexSpecificParameters _complexSpecificParameters;
 
-        /// <summary>
-        /// Indentation added to each level in the recursion.
-        /// </summary>
+        
         private readonly int _indentationStep = 2;
 
         private readonly FormatErrorManager _errorManager;

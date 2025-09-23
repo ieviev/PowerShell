@@ -10,11 +10,7 @@ using System.Management.Automation.Tracing;
 
 namespace System.Management.Automation.PerformanceData
 {
-    /// <summary>
-    /// Powershell Performance Counters Manager class shall provide a mechanism
-    /// for components using SYstem.Management.Automation assembly to register
-    /// performance counters with Performance Counters subsystem.
-    /// </summary>
+    
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
     public class PSPerfCountersMgr
     {
@@ -38,10 +34,7 @@ namespace System.Management.Automation.PerformanceData
 
         #region Destructor
 
-        /// <summary>
-        /// Destructor which will trigger the cleanup of internal data structures and
-        /// disposal of counter set instances.
-        /// </summary>
+        
         ~PSPerfCountersMgr()
         {
             RemoveAllCounterSets();
@@ -51,17 +44,13 @@ namespace System.Management.Automation.PerformanceData
 
         #region Public Methods
 
-        /// <summary>
-        /// Getter method to retrieve the singleton instance of the PSPerfCountersMgr.
-        /// </summary>
+        
         public static PSPerfCountersMgr Instance
         {
             get { return s_PSPerfCountersMgrInstance ?? (s_PSPerfCountersMgrInstance = new PSPerfCountersMgr()); }
         }
 
-        /// <summary>
-        /// Helper method to generate an instance name for a counter set.
-        /// </summary>
+        
         public string GetCounterSetInstanceName()
         {
             Process currentProcess = Process.GetCurrentProcess();
@@ -69,10 +58,7 @@ namespace System.Management.Automation.PerformanceData
             return pid;
         }
 
-        /// <summary>
-        /// Method to determine whether the counter set given by 'counterSetName' is
-        /// registered with the system. If true, then counterSetId is populated.
-        /// </summary>
+        
         public bool IsCounterSetRegistered(string counterSetName, out Guid counterSetId)
         {
             counterSetId = new Guid();
@@ -86,18 +72,13 @@ namespace System.Management.Automation.PerformanceData
             return _CounterSetNameToIdMapping.TryGetValue(counterSetName, out counterSetId);
         }
 
-        /// <summary>
-        /// Method to determine whether the counter set given by 'counterSetId' is
-        /// registered with the system. If true, then CounterSetInstance is populated.
-        /// </summary>
+        
         public bool IsCounterSetRegistered(Guid counterSetId, out CounterSetInstanceBase counterSetInst)
         {
             return _CounterSetIdToInstanceMapping.TryGetValue(counterSetId, out counterSetInst);
         }
 
-        /// <summary>
-        /// Method to register a counter set with the Performance Counters Manager.
-        /// </summary>
+        
         public bool AddCounterSetInstance(CounterSetRegistrarBase counterSetRegistrarInstance)
         {
             if (counterSetRegistrarInstance == null)
@@ -156,12 +137,7 @@ namespace System.Management.Automation.PerformanceData
             return true;
         }
 
-        /// <summary>
-        /// If IsNumerator is true, then updates the numerator component
-        /// of target counter 'counterId' in Counter Set 'counterSetId'
-        /// by 'stepAmount'.
-        /// Otherwise, updates the denominator component by 'stepAmount'.
-        /// </summary>
+        
         public bool UpdateCounterByValue(
             Guid counterSetId,
             int counterId,
@@ -186,12 +162,7 @@ namespace System.Management.Automation.PerformanceData
             }
         }
 
-        /// <summary>
-        /// If IsNumerator is true, then updates the numerator component
-        /// of target counter 'counterName' in Counter Set 'counterSetId'
-        /// by 'stepAmount'.
-        /// Otherwise, updates the denominator component by 'stepAmount'.
-        /// </summary>
+        
         public bool UpdateCounterByValue(
             Guid counterSetId,
             string counterName,
@@ -216,12 +187,7 @@ namespace System.Management.Automation.PerformanceData
             }
         }
 
-        /// <summary>
-        /// If IsNumerator is true, then updates the numerator component
-        /// of target counter 'counterId' in Counter Set 'counterSetName'
-        /// by 'stepAmount'.
-        /// Otherwise, updates the denominator component by 'stepAmount'.
-        /// </summary>
+        
         public bool UpdateCounterByValue(
             string counterSetName,
             int counterId,
@@ -255,12 +221,7 @@ namespace System.Management.Automation.PerformanceData
             }
         }
 
-        /// <summary>
-        /// If IsNumerator is true, then updates the numerator component
-        /// of target counter 'counterName' in Counter Set 'counterSetName'
-        /// by 'stepAmount'.
-        /// Otherwise, updates the denominator component by 'stepAmount'.
-        /// </summary>
+        
         public bool UpdateCounterByValue(
             string counterSetName,
             string counterName,
@@ -293,12 +254,7 @@ namespace System.Management.Automation.PerformanceData
             }
         }
 
-        /// <summary>
-        /// If IsNumerator is true, then sets the numerator component
-        /// of target counter 'counterId' in Counter Set 'counterSetId'
-        /// to 'counterValue'.
-        /// Otherwise, updates the denominator component to 'counterValue'.
-        /// </summary>
+        
         public bool SetCounterValue(
             Guid counterSetId,
             int counterId,
@@ -323,12 +279,7 @@ namespace System.Management.Automation.PerformanceData
             }
         }
 
-        /// <summary>
-        /// If IsNumerator is true, then sets the numerator component
-        /// of target counter 'counterName' in Counter Set 'counterSetId'
-        /// to 'counterValue'.
-        /// Otherwise, updates the denominator component to 'counterValue'.
-        /// </summary>
+        
         public bool SetCounterValue(
             Guid counterSetId,
             string counterName,
@@ -353,12 +304,7 @@ namespace System.Management.Automation.PerformanceData
             }
         }
 
-        /// <summary>
-        /// If IsNumerator is true, then sets the numerator component
-        /// of target counter 'counterId' in Counter Set 'counterSetName'
-        /// to 'counterValue'.
-        /// Otherwise, updates the denominator component to 'counterValue'.
-        /// </summary>
+        
         public bool SetCounterValue(
             string counterSetName,
             int counterId,
@@ -391,12 +337,7 @@ namespace System.Management.Automation.PerformanceData
             }
         }
 
-        /// <summary>
-        /// If IsNumerator is true, then sets the numerator component
-        /// of target counter 'counterName' in Counter Set 'counterSetName'
-        /// to 'counterValue'.
-        /// Otherwise, updates the denominator component to 'counterValue'.
-        /// </summary>
+        
         public bool SetCounterValue(
             string counterSetName,
             string counterName,
@@ -433,9 +374,7 @@ namespace System.Management.Automation.PerformanceData
 
         #region Internal Methods
 
-        /// <summary>
-        /// NOTE: This method is provided solely for testing purposes.
-        /// </summary>
+        
         internal void RemoveAllCounterSets()
         {
             ICollection<Guid> counterSetIdKeys = _CounterSetIdToInstanceMapping.Keys;

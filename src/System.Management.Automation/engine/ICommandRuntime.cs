@@ -7,10 +7,7 @@ using System.Management.Automation.Host;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// This interface defines the set of functionality that must be implemented to directly
-    /// execute an instance of a Cmdlet.
-    /// </summary>
+    
     /// <remarks>
     /// When a cmdlet is instantiated and run directly, all calls to the stream APIs will be proxied
     /// through to an instance of this class. For example, when a cmdlet calls WriteObject, the
@@ -25,14 +22,10 @@ namespace System.Management.Automation
     /// </remarks>
     public interface ICommandRuntime
     {
-        /// <summary>
-        /// Returns an instance of the PSHost implementation for this environment.
-        /// </summary>
+        
         PSHost? Host { get; }
         #region Write
-        /// <summary>
-        /// Display debug information.
-        /// </summary>
+        
         /// <param name="text">Debug output.</param>
         /// <remarks>
         /// This API is called by the cmdlet to display debug information on the inner workings
@@ -42,9 +35,7 @@ namespace System.Management.Automation
         /// </remarks>
         void WriteDebug(string text);
 
-        /// <summary>
-        /// Internal variant: Writes the specified error to the error pipe.
-        /// </summary>
+        
         /// <remarks>
         /// Do not call WriteError(e.ErrorRecord).
         /// The ErrorRecord contained in the ErrorRecord property of
@@ -56,9 +47,7 @@ namespace System.Management.Automation
         /// <param name="errorRecord">Error.</param>
         void WriteError(ErrorRecord errorRecord);
 
-        /// <summary>
-        /// Called to write objects to the output pipe.
-        /// </summary>
+        
         /// <param name="sendToPipeline">
         /// The object that needs to be written.  This will be written as
         /// a single object, even if it is an enumeration.
@@ -69,12 +58,7 @@ namespace System.Management.Automation
         /// </remarks>
         void WriteObject(object? sendToPipeline);
 
-        /// <summary>
-        /// Called to write one or more objects to the output pipe.
-        /// If the object is a collection and the enumerateCollection flag
-        /// is true, the objects in the collection
-        /// will be written individually.
-        /// </summary>
+        
         /// <param name="sendToPipeline">
         /// The object that needs to be written to the pipeline.
         /// </param>
@@ -87,9 +71,7 @@ namespace System.Management.Automation
         /// </remarks>
         void WriteObject(object? sendToPipeline, bool enumerateCollection);
 
-        /// <summary>
-        /// Called by the cmdlet to display progress information.
-        /// </summary>
+        
         /// <param name="progressRecord">Progress information.</param>
         /// <remarks>
         /// Use WriteProgress to display progress information about
@@ -109,9 +91,7 @@ namespace System.Management.Automation
         /// <seealso cref="System.Management.Automation.ICommandRuntime.WriteVerbose(string)"/>
         void WriteProgress(ProgressRecord progressRecord);
 
-        /// <summary>
-        /// Displays progress output if enabled.
-        /// </summary>
+        
         /// <param name="sourceId">
         /// Identifies which command is reporting progress
         /// </param>
@@ -125,9 +105,7 @@ namespace System.Management.Automation
         /// </remarks>
         void WriteProgress(Int64 sourceId, ProgressRecord progressRecord);
 
-        /// <summary>
-        /// Called when the cmdlet want to display verbose information.
-        /// </summary>
+        
         /// <param name="text">Verbose output.</param>
         /// <remarks>
         /// Cmdlets use WriteVerbose to display more detailed information about
@@ -145,9 +123,7 @@ namespace System.Management.Automation
         /// <seealso cref="System.Management.Automation.ICommandRuntime.WriteProgress(ProgressRecord)"/>
         void WriteVerbose(string text);
 
-        /// <summary>
-        /// Called by the cmdlet to display warning information.
-        /// </summary>
+        
         /// <param name="text">Warning output.</param>
         /// <remarks>
         /// Use WriteWarning to display warnings about
@@ -165,9 +141,7 @@ namespace System.Management.Automation
         /// <seealso cref="System.Management.Automation.ICommandRuntime.WriteProgress(ProgressRecord)"/>
         void WriteWarning(string text);
 
-        /// <summary>
-        /// Write text into pipeline execution log.
-        /// </summary>
+        
         /// <param name="text">Text to be written to log.</param>
         /// <remarks>
         /// Use WriteCommandDetail to write important information about cmdlet execution to
@@ -184,12 +158,7 @@ namespace System.Management.Automation
         #endregion Write
 
         #region Should
-        /// <summary>
-        /// Called by the cmdlet to confirm the operation with the user.  Cmdlets which make changes
-        /// (e.g. delete files, stop services etc.) should call ShouldProcess
-        /// to give the user the opportunity to confirm that the operation
-        /// should actually be performed.
-        /// </summary>
+        
         /// <param name="target">
         /// Name of the target resource being acted upon. This will
         /// potentially be displayed to the user.
@@ -223,15 +192,7 @@ namespace System.Management.Automation
         /// <seealso cref="System.Management.Automation.ICommandRuntime.ShouldContinue(string,string,ref bool,ref bool)"/>
         bool ShouldProcess(string? target);
 
-        /// <summary>
-        /// Called by a cmdlet to confirm the operation with the user.  Cmdlets which make changes
-        /// (e.g. delete files, stop services etc.) should call ShouldProcess
-        /// to give the user the opportunity to confirm that the operation
-        /// should actually be performed.
-        ///
-        /// This variant allows the caller to specify text for both the
-        /// target resource and the action.
-        /// </summary>
+        
         /// <param name="target">
         /// Name of the target resource being acted upon. This will
         /// potentially be displayed to the user.
@@ -269,15 +230,7 @@ namespace System.Management.Automation
         /// <seealso cref="System.Management.Automation.ICommandRuntime.ShouldContinue(string,string,ref bool,ref bool)"/>
         bool ShouldProcess(string? target, string? action);
 
-        /// <summary>
-        /// Called by a cmdlet to confirm the operation with the user.  Cmdlets which make changes
-        /// (e.g. delete files, stop services etc.) should call ShouldProcess
-        /// to give the user the opportunity to confirm that the operation
-        /// should actually be performed.
-        ///
-        /// This variant allows the caller to specify the complete text
-        /// describing the operation, rather than just the name and action.
-        /// </summary>
+        
         /// <param name="verboseDescription">
         /// Textual description of the action to be performed.
         /// This is what will be displayed to the user for
@@ -323,15 +276,7 @@ namespace System.Management.Automation
         /// <seealso cref="System.Management.Automation.ICommandRuntime.ShouldContinue(string,string,ref bool,ref bool)"/>
         bool ShouldProcess(string? verboseDescription, string? verboseWarning, string? caption);
 
-        /// <summary>
-        /// Called by a cmdlet to confirm the operation with the user.  Cmdlets which make changes
-        /// (e.g. delete files, stop services etc.) should call ShouldProcess
-        /// to give the user the opportunity to confirm that the operation
-        /// should actually be performed.
-        ///
-        /// This variant allows the caller to specify the complete text
-        /// describing the operation, rather than just the name and action.
-        /// </summary>
+        
         /// <param name="verboseDescription">
         /// Textual description of the action to be performed.
         /// This is what will be displayed to the user for
@@ -383,13 +328,7 @@ namespace System.Management.Automation
         /// <seealso cref="System.Management.Automation.ICommandRuntime.ShouldContinue(string,string,ref bool,ref bool)"/>
         bool ShouldProcess(string? verboseDescription, string? verboseWarning, string? caption, out ShouldProcessReason shouldProcessReason);
 
-        /// <summary>
-        /// Called by a cmdlet to confirm an operation or grouping of operations with the user.
-        /// This differs from ShouldProcess in that it is not affected by
-        /// preference settings or command-line parameters,
-        /// it always does the query.
-        /// This variant only offers Yes/No, not YesToAll/NoToAll.
-        /// </summary>
+        
         /// <param name="query">
         /// Textual query of whether the action should be performed,
         /// usually in the form of a question.
@@ -440,13 +379,7 @@ namespace System.Management.Automation
         /// <seealso cref="System.Management.Automation.ICommandRuntime.ShouldProcess(string,string,string)"/>
         bool ShouldContinue(string? query, string? caption);
 
-        /// <summary>
-        /// Called to confirm an operation or grouping of operations with the user.
-        /// This differs from ShouldProcess in that it is not affected by
-        /// preference settings or command-line parameters,
-        /// it always does the query.
-        /// This variant offers Yes, No, YesToAll and NoToAll.
-        /// </summary>
+        
         /// <param name="query">
         /// Textual query of whether the action should be performed,
         /// usually in the form of a question.
@@ -508,23 +441,16 @@ namespace System.Management.Automation
         #endregion Should
 
         #region Transaction Support
-        /// <summary>
-        /// Returns true if a transaction is available and active.
-        /// </summary>
+        
         bool TransactionAvailable();
 
-        /// <summary>
-        /// Gets an object that surfaces the current PowerShell transaction.
-        /// When this object is disposed, PowerShell resets the active transaction.
-        /// </summary>
+        
         PSTransactionContext? CurrentPSTransaction { get; }
         #endregion Transaction Support
 
         #region Misc
         #region ThrowTerminatingError
-        /// <summary>
-        /// This interface will be called to route fatal errors from a cmdlet.
-        /// </summary>
+        
         /// <param name="errorRecord">
         /// The error which caused the command to be terminated
         /// </param>
@@ -558,26 +484,14 @@ namespace System.Management.Automation
 
     }
 
-    /// <summary>
-    /// This interface defines the set of functionality that must be implemented to directly
-    /// execute an instance of a Cmdlet. ICommandRuntime2 extends the ICommandRuntime interface
-    /// by adding support for the informational data stream.
-    /// </summary>
+    
     public interface ICommandRuntime2 : ICommandRuntime
     {
-        /// <summary>
-        /// Write an informational record to the command runtime.
-        /// </summary>
+        
         /// <param name="informationRecord">The informational record that should be transmitted to the host or user.</param>
         void WriteInformation(InformationRecord informationRecord);
 
-        /// <summary>
-        /// Confirm an operation or grouping of operations with the user.
-        /// This differs from ShouldProcess in that it is not affected by
-        /// preference settings or command-line parameters,
-        /// it always does the query.
-        /// This variant offers Yes, No, YesToAll and NoToAll.
-        /// </summary>
+        
         /// <param name="query">
         /// Textual query of whether the action should be performed,
         /// usually in the form of a question.

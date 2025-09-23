@@ -14,61 +14,40 @@ using System.Xml;
 
 namespace Microsoft.PowerShell.Commands.Internal.Format
 {
-    /// <summary>
-    /// Base exception to be used for all the exceptions that this framework will generate.
-    /// </summary>
+    
     internal abstract class TypeInfoDataBaseLoaderException : SystemException
     {
     }
 
-    /// <summary>
-    /// Exception thrown by the loader when the maximum number of errors is exceeded.
-    /// </summary>
+    
     internal class TooManyErrorsException : TypeInfoDataBaseLoaderException
     {
-        /// <summary>
-        /// Error count that triggered the exception.
-        /// </summary>
+        
         internal int errorCount;
     }
 
-    /// <summary>
-    /// Entry logged by the loader and made available to external consumers.
-    /// </summary>
+    
     internal class XmlLoaderLoggerEntry
     {
         internal enum EntryType { Error, Trace }
 
-        /// <summary>
-        /// Type of information being logged.
-        /// </summary>
+        
         internal EntryType entryType;
 
-        /// <summary>
-        /// Path of the file the info refers to.
-        /// </summary>
+        
         internal string filePath = null;
 
-        /// <summary>
-        /// XPath location inside the file.
-        /// </summary>
+        
         internal string xPath = null;
 
-        /// <summary>
-        /// Message to be displayed to the user.
-        /// </summary>
+        
         internal string message = null;
 
-        /// <summary>
-        /// Indicate whether we fail to load the file due to the security reason.
-        /// </summary>
+        
         internal bool failToLoadFile = false;
     }
 
-    /// <summary>
-    /// Logger object used by the loader (class XmlLoaderBase) to write log entries.
-    /// It logs to a memory buffer and (optionally) to a text file.
-    /// </summary>
+    
     internal class XmlLoaderLogger : IDisposable
     {
         #region tracer
@@ -77,9 +56,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         private static readonly PSTraceSource s_formatFileLoadingtracer = PSTraceSource.GetTracer("FormatFileLoading", "Loading format files", false);
 
         #endregion tracer
-        /// <summary>
-        /// Log an entry.
-        /// </summary>
+        
         /// <param name="entry">Entry to log.</param>
         internal void LogEntry(XmlLoaderLoggerEntry entry)
         {
@@ -105,9 +82,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             }
         }
 
-        /// <summary>
-        /// IDisposable implementation.
-        /// </summary>
+        
         /// <remarks>This method calls GC.SuppressFinalize</remarks>
         public void Dispose()
         {
@@ -139,26 +114,17 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             }
         }
 
-        /// <summary>
-        /// If true, log entries to memory.
-        /// </summary>
+        
         private readonly bool _saveInMemory = true;
 
-        /// <summary>
-        /// List of entries logged if saveInMemory is true.
-        /// </summary>
+        
         private readonly List<XmlLoaderLoggerEntry> _entries = new List<XmlLoaderLoggerEntry>();
 
-        /// <summary>
-        /// True if we ever logged an error.
-        /// </summary>
+        
         private bool _hasErrors = false;
     }
 
-    /// <summary>
-    /// Base class providing XML loading basic functionality (stack management and logging facilities)
-    /// NOTE: you need to implement to load an actual XML document and traverse it as see fit.
-    /// </summary>
+    
     internal abstract class XmlLoaderBase : IDisposable
     {
         #region tracer
@@ -166,9 +132,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         private static readonly PSTraceSource s_tracer = PSTraceSource.GetTracer("XmlLoaderBase", "XmlLoaderBase");
         #endregion tracer
 
-        /// <summary>
-        /// Class representing a stack frame for the XML document tree traversal.
-        /// </summary>
+        
         private sealed class XmlLoaderStackFrame : IDisposable
         {
             internal XmlLoaderStackFrame(XmlLoaderBase loader, XmlNode n, int index)
@@ -178,9 +142,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
                 this.index = index;
             }
 
-            /// <summary>
-            /// IDisposable implementation.
-            /// </summary>
+            
             public void Dispose()
             {
                 if (_loader != null)
@@ -190,26 +152,17 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
                 }
             }
 
-            /// <summary>
-            /// Back pointer to the loader, used to pop a stack frame.
-            /// </summary>
+            
             private XmlLoaderBase _loader;
 
-            /// <summary>
-            /// Node the stack frame refers to.
-            /// </summary>
+            
             internal XmlNode node;
 
-            /// <summary>
-            /// Node index for enumerations, valid only if != -1
-            /// NOTE: this allows to express the XPath construct "foo[0]"
-            /// </summary>
+            
             internal int index = -1;
         }
 
-        /// <summary>
-        /// IDisposable implementation.
-        /// </summary>
+        
         /// <remarks>This method calls GC.SuppressFinalize</remarks>
         public void Dispose()
         {
@@ -230,9 +183,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             }
         }
 
-        /// <summary>
-        /// Get the list of log entries.
-        /// </summary>
+        
         /// <value>list of entries logged during a load</value>
         internal List<XmlLoaderLoggerEntry> LogEntries
         {
@@ -242,9 +193,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             }
         }
 
-        /// <summary>
-        /// Check if there were errors.
-        /// </summary>
+        
         /// <value>true of the log entry list has errors</value>
         internal bool HasErrors
         {
@@ -254,10 +203,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             }
         }
 
-        /// <summary>
-        /// To be called when starting a stack frame.
-        /// The returned IDisposable should be used in a using(){...} block.
-        /// </summary>
+        
         /// <param name="n">Node to push on the stack.</param>
         /// <returns>Object to dispose when exiting the frame.</returns>
         protected IDisposable StackFrame(XmlNode n)
@@ -265,10 +211,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             return StackFrame(n, -1);
         }
 
-        /// <summary>
-        /// To be called when starting a stack frame.
-        /// The returned IDisposable should be used in a using(){...} block.
-        /// </summary>
+        
         /// <param name="n">Node to push on the stack.</param>
         /// <param name="index">Index of the node of the same name in a collection.</param>
         /// <returns>Object to dispose when exiting the frame.</returns>
@@ -282,10 +225,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             return sf;
         }
 
-        /// <summary>
-        /// Called by the Dispose code of the XmlLoaderStackFrame object
-        /// to pop a frame off the stack.
-        /// </summary>
+        
         private void RemoveStackFrame()
         {
             if (_logStackActivity)
@@ -348,11 +288,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             return a.Value;
         }
 
-        /// <summary>
-        /// Helper to compare node names, e.g. "foo" in <foo/>
-        /// it uses case sensitive, culture invariant compare.
-        /// This is because XML tags are case sensitive.
-        /// </summary>
+        
         /// <param name="n">XmlNode whose name is to compare.</param>
         /// <param name="s">String to compare the node name to.</param>
         /// <param name="allowAttributes">If true, accept the presence of attributes on the node.</param>
@@ -478,9 +414,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             ReportLogEntryHelper(StringUtil.Format(FormatAndOutXmlLoadingStrings.EmptyAttribute, ComputeCurrentXPath(), FilePath, a.Name), XmlLoaderLoggerEntry.EntryType.Error);
         }
 
-        /// <summary>
-        /// For tracing purposes only, don't add to log.
-        /// </summary>
+        
         /// <param name="message">
         /// trace message, non-localized string is OK.
         /// </param>
@@ -540,9 +474,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             }
         }
 
-        /// <summary>
-        /// Report error when loading formatting data from object model.
-        /// </summary>
+        
         /// <param name="message"></param>
         /// <param name="typeName"></param>
         protected void ReportErrorForLoadingFromObjectModel(string message, string typeName)
@@ -651,9 +583,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
 
         #endregion
 
-        /// <summary>
-        /// File system path for the file we are loading from.
-        /// </summary>
+        
         protected string FilePath
         {
             get

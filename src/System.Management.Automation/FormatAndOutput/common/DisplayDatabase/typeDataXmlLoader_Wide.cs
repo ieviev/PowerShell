@@ -7,10 +7,7 @@ using System.Xml;
 
 namespace Microsoft.PowerShell.Commands.Internal.Format
 {
-    /// <summary>
-    /// Class to load the XML document into data structures.
-    /// It encapsulates the file format specific code.
-    /// </summary>
+    
     internal sealed partial class TypeInfoDataBaseLoader : XmlLoaderBase
     {
         private WideControlBody LoadWideControl(XmlNode controlNode)

@@ -244,9 +244,7 @@ namespace System.Management.Automation
 
         #region Special Cases
 
-        /// <summary>
-        /// Check if we should complete file names for "switch -file"
-        /// </summary>
+        
         private static bool CompleteAgainstSwitchFile(Ast lastAst, Token tokenBeforeCursor)
         {
             Tuple<Token, Ast> fileConditionTuple;
@@ -1958,9 +1956,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Find the configuration statement contains current cursor.
-        /// </summary>
+        
         /// <param name="cursorPosition"></param>
         /// <param name="ast"></param>
         /// <param name="keywordAst"></param>
@@ -1982,20 +1978,7 @@ namespace System.Management.Automation
             return configureAst;
         }
 
-        /// <summary>
-        /// Generate auto complete results for identifier within configuration.
-        /// Results are generated based on DynamicKeywords matches given identifier.
-        /// For example, following "Fi" matches "File", and "Us" matches "User"
-        ///
-        ///     Configuration
-        ///     {
-        ///         Fi^
-        ///         Node("TargetMachine")
-        ///         {
-        ///             Us^
-        ///         }
-        ///     }
-        /// </summary>
+        
         /// <param name="completionContext"></param>
         /// <param name="configureAst"></param>
         /// <param name="keywordAst"></param>
@@ -2529,9 +2512,7 @@ namespace System.Management.Automation
             return null;
         }
 
-        /// <summary>
-        /// Complete file name as command.
-        /// </summary>
+        
         /// <param name="completionContext"></param>
         /// <returns></returns>
         private static List<CompletionResult> CompleteFileNameAsCommand(CompletionContext completionContext)
@@ -2579,9 +2560,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Complete loop labels after labeled control flow statements such as Break and Continue.
-        /// </summary>
+        
         private static List<CompletionResult> CompleteLoopLabel(CompletionContext completionContext)
         {
             var result = new List<CompletionResult>();

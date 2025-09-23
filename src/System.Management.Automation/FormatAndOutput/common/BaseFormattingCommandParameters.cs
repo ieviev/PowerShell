@@ -11,70 +11,41 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
 {
     #region Formatting Command Line Parameters
 
-    /// <summary>
-    /// It holds the command line parameter values
-    /// It unifies the data structures across the various
-    /// formatting command (e.g. table, wide and list)
-    /// </summary>
+    
     internal sealed class FormattingCommandLineParameters
     {
-        /// <summary>
-        /// MshParameter collection, as specified by metadata
-        /// the list can be empty of no data is specified.
-        /// </summary>
+        
         internal List<MshParameter> mshParameterList = new List<MshParameter>();
 
-        /// <summary>
-        /// Name of the group by property, it can be null.
-        /// </summary>
+        
         internal MshParameter groupByParameter = null;
 
-        /// <summary>
-        /// Name of a view from format.ps1xml, it can be null.
-        /// </summary>
+        
         internal string viewName = null;
 
-        /// <summary>
-        /// Flag to force a shape even on out of band objects.
-        /// </summary>
+        
         internal bool forceFormattingAlsoOnOutOfBand = false;
 
-        /// <summary>
-        /// Autosize formatting flag. If true, the output command is instructed
-        /// to get the "best fit" for the device screen.
-        /// </summary>
+        
         internal bool? autosize = null;
 
-        /// <summary>
-        /// If true, the header for a table is repeated after each screen full
-        /// of content.
-        /// </summary>
+        
         internal bool repeatHeader = false;
 
-        /// <summary>
-        /// Errors are shown as out of band messages.
-        /// </summary>
+        
         internal bool? showErrorsAsMessages = null;
 
-        /// <summary>
-        /// Errors are shown in the formatted output.
-        /// </summary>
+        
         internal bool? showErrorsInFormattedOutput = null;
 
-        /// <summary>
-        /// Expand IEnumerable flag.
-        /// </summary>
+        
         internal EnumerableExpansion? expansion = null;
 
-        /// <summary>
-        /// Extension mechanism for shape specific parameters.
-        /// </summary>
+        
         internal ShapeSpecificParameters shapeParameters = null;
     }
 
-    /// <summary>
-    /// Class to derive from to pass shepe specific data.
-    /// </summary>
+    
     internal abstract class ShapeSpecificParameters
     {
     }
@@ -92,18 +63,14 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
 
     internal sealed class ComplexSpecificParameters : ShapeSpecificParameters
     {
-        /// <summary>
-        /// Options for class info display on objects.
-        /// </summary>
+        
         internal enum ClassInfoDisplay { none, fullName, shortName }
 
         internal ClassInfoDisplay classDisplay = ClassInfoDisplay.shortName;
 
         internal const int maxDepthAllowable = 5;
 
-        /// <summary>
-        /// Max depth of recursion on sub objects.
-        /// </summary>
+        
         internal int maxDepth = maxDepthAllowable;
     }
 
@@ -111,9 +78,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
 
     #region MshParameter metadata
 
-    /// <summary>
-    /// Specialized class for the "expression" property.
-    /// </summary>
+    
     internal class ExpressionEntryDefinition : HashtableEntryDefinition
     {
         internal ExpressionEntryDefinition() : this(false)
@@ -410,9 +375,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
     }
 
-    /// <summary>
-    /// Definitions for hash table keys.
-    /// </summary>
+    
     internal static class FormatParameterDefinitionKeys
     {
         // common entries

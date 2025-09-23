@@ -10,20 +10,13 @@ using System.Text;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// The base class for the parameter binder controllers. This class and
-    /// its derived classes control the interaction between the command processor
-    /// and the parameter binder(s). It holds the state of the arguments and parameters.
-    /// </summary>
+    
     [DebuggerDisplay("InvocationInfo = {InvocationInfo}")]
     internal abstract class ParameterBinderController
     {
         #region ctor
 
-        /// <summary>
-        /// Constructs a parameter binder controller for the specified command
-        /// in the specified engine context.
-        /// </summary>
+        
         /// <param name="invocationInfo">
         ///     The invocation information about the code being run.
         /// </param>
@@ -48,25 +41,16 @@ namespace System.Management.Automation
 
         #region internal_members
 
-        /// <summary>
-        /// The engine context the command is running in.
-        /// </summary>
+        
         internal ExecutionContext Context { get; }
 
-        /// <summary>
-        /// Gets the parameter binder for the command.
-        /// </summary>
+        
         internal ParameterBinderBase DefaultParameterBinder { get; }
 
-        /// <summary>
-        /// The invocation information about the code being run.
-        /// </summary>
+        
         internal InvocationInfo InvocationInfo { get; }
 
-        /// <summary>
-        /// All the metadata associated with any of the parameters that
-        /// are available from the command.
-        /// </summary>
+        
         internal MergedCommandParameterMetadata BindableParameters
         {
             get { return _bindableParameters; }
@@ -74,15 +58,10 @@ namespace System.Management.Automation
 
         protected MergedCommandParameterMetadata _bindableParameters = new MergedCommandParameterMetadata();
 
-        /// <summary>
-        /// A list of the unbound parameters for the command.
-        /// </summary>
+        
         protected List<MergedCompiledCommandParameter> UnboundParameters { get; set; }
 
-        /// <summary>
-        /// A collection of the bound parameters for the command. The collection is
-        /// indexed based on the name of the parameter.
-        /// </summary>
+        
         protected Dictionary<string, MergedCompiledCommandParameter> BoundParameters { get; } = new Dictionary<string, MergedCompiledCommandParameter>(StringComparer.OrdinalIgnoreCase);
 
         internal CommandLineParameters CommandLineParameters
@@ -90,23 +69,17 @@ namespace System.Management.Automation
             get { return this.DefaultParameterBinder.CommandLineParameters; }
         }
 
-        /// <summary>
-        /// Set true if the default parameter binding is in use.
-        /// </summary>
+        
         protected bool DefaultParameterBindingInUse { get; set; } = false;
 
         // Set true if the default parameter values are applied
 
-        /// <summary>
-        /// A collection of bound default parameters.
-        /// </summary>
+        
         protected Collection<string> BoundDefaultParameters { get; } = new Collection<string>();
 
         // Keep record of the bound default parameters
 
-        /// <summary>
-        /// A collection of the unbound arguments.
-        /// </summary>
+        
         /// <value></value>
         protected Collection<CommandParameterInternal> UnboundArguments { get; set; } = new Collection<CommandParameterInternal>();
 
@@ -115,15 +88,10 @@ namespace System.Management.Automation
             UnboundArguments.Clear();
         }
 
-        /// <summary>
-        /// A collection of the arguments that have been bound.
-        /// </summary>
+        
         protected Dictionary<string, CommandParameterInternal> BoundArguments { get; } = new Dictionary<string, CommandParameterInternal>(StringComparer.OrdinalIgnoreCase);
 
-        /// <summary>
-        /// Reparses the unbound arguments using the parameter metadata of the
-        /// specified parameter binder as the parsing guide.
-        /// </summary>
+        
         /// <exception cref="ParameterBindingException">
         /// If a parameter token is not matched with an argument and its not a bool or
         /// SwitchParameter.
@@ -305,10 +273,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// The argument looks like a parameter if it is a string
-        /// and starts with a dash.
-        /// </summary>
+        
         /// <param name="arg">
         /// The argument to check.
         /// </param>
@@ -328,11 +293,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Reparses the arguments specified in the object[] and generates CommandParameterInternal instances
-        /// based on whether the arguments look like parameters. The CommandParameterInternal instances then
-        /// get added to the specified command processor.
-        /// </summary>
+        
         /// <param name="commandProcessor">
         /// The command processor instance to add the reparsed parameters to.
         /// </param>
@@ -401,9 +362,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Bind the argument to the specified parameter.
-        /// </summary>
+        
         /// <param name="argument">
         /// The argument to be bound.
         /// </param>
@@ -466,9 +425,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Derived classes need to define the binding of multiple arguments.
-        /// </summary>
+        
         /// <param name="parameters">
         /// The arguments to be bound.
         /// </param>
@@ -480,9 +437,7 @@ namespace System.Management.Automation
             throw new NotImplementedException();
         }
 
-        /// <summary>
-        /// Bind the argument to the specified parameter.
-        /// </summary>
+        
         /// <param name="parameterSets">
         /// The parameter set used to bind the arguments.
         /// </param>
@@ -545,9 +500,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// This is used by <see cref="BindNamedParameters"/> to validate and bind a given named parameter.
-        /// </summary>
+        
         protected virtual void BindNamedParameter(
             uint parameterSets,
             CommandParameterInternal argument,
@@ -556,10 +509,7 @@ namespace System.Management.Automation
             BindParameter(parameterSets, argument, parameter, ParameterBindingFlags.ShouldCoerceType);
         }
 
-        /// <summary>
-        /// Bind the named parameters from the specified argument collection,
-        /// for only the parameters in the specified parameter set.
-        /// </summary>
+        
         /// <param name="parameterSets">
         /// The parameter set used to bind the arguments.
         /// </param>
@@ -660,9 +610,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Binds the unbound arguments to positional parameters.
-        /// </summary>
+        
         /// <param name="unboundArguments">
         /// The unbound arguments to attempt to bind as positional arguments.
         /// </param>
@@ -870,10 +818,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// This method only updates the collections contained in the dictionary, not the dictionary
-        /// itself to contain only the parameters that are in the specified parameter set.
-        /// </summary>
+        
         /// <param name="positionalParameterDictionary">
         /// The sorted dictionary of positional parameters.
         /// </param>
@@ -1010,9 +955,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Generate elaborated binding exception so that the user will know the default binding might cause the failure.
-        /// </summary>
+        
         /// <param name="pbex"></param>
         protected void ThrowElaboratedBindingException(ParameterBindingException pbex)
         {
@@ -1091,10 +1034,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Gets the unbound positional parameters in a sorted dictionary in the order of their
-        /// positions.
-        /// </summary>
+        
         /// <returns>
         /// The sorted dictionary of MergedCompiledCommandParameter metadata with the position
         /// as the key.
@@ -1223,18 +1163,10 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Keeps track of the parameters that get bound through pipeline input, so that their
-        /// previous values can be restored before the next pipeline input comes.
-        /// </summary>
+        
         internal Collection<MergedCompiledCommandParameter> ParametersBoundThroughPipelineInput { get; } = new Collection<MergedCompiledCommandParameter>();
 
-        /// <summary>
-        /// For any unbound parameters, this method checks to see if the
-        /// parameter has a default value specified, and evaluates the expression
-        /// (if the expression is not constant) and binds the result to the parameter.
-        /// If not, we bind null to the parameter (which may go through type coercion).
-        /// </summary>
+        
         internal void BindUnboundScriptParameters()
         {
             foreach (MergedCompiledCommandParameter parameter in UnboundParameters)
@@ -1243,19 +1175,13 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// If the parameter binder might use the value more than once, this it can save the value to avoid
-        /// re-evaluating complicated expressions.
-        /// </summary>
+        
         protected virtual void SaveDefaultScriptParameterValue(string name, object value)
         {
             // By default, parameter binders don't need to remember the value, the exception being the cmdlet parameter binder.
         }
 
-        /// <summary>
-        /// Bind the default value for an unbound parameter to script (used by both the script binder
-        /// and the cmdlet binder).
-        /// </summary>
+        
         internal void BindUnboundScriptParameterWithDefaultValue(MergedCompiledCommandParameter parameter)
         {
             ScriptParameterBinder spb = (ScriptParameterBinder)this.DefaultParameterBinder;

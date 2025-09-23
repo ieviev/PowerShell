@@ -13,11 +13,7 @@ using System.Text.RegularExpressions;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// Defines the implementation of the 'Clear-RecycleBin' cmdlet.
-    /// This cmdlet clear all files in the RecycleBin for the given DriveLetter.
-    /// If not DriveLetter is specified, then the RecycleBin for all drives are cleared.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Clear, "RecycleBin", SupportsShouldProcess = true, HelpUri = "https://go.microsoft.com/fwlink/?LinkId=2109377", ConfirmImpact = ConfirmImpact.High)]
     public class ClearRecycleBinCommand : PSCmdlet
     {
@@ -25,9 +21,7 @@ namespace Microsoft.PowerShell.Commands
         private DriveInfo[] _availableDrives;
         private bool _force;
 
-        /// <summary>
-        /// Property that sets DriveLetter parameter.
-        /// </summary>
+        
         [Parameter(Position = 0, ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
@@ -38,9 +32,7 @@ namespace Microsoft.PowerShell.Commands
             set { _drivesList = value; }
         }
 
-        /// <summary>
-        /// Property that sets force parameter. This will allow to clear the recyclebin.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter Force
         {
@@ -55,17 +47,13 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// This method implements the BeginProcessing method for Clear-RecycleBin command.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             _availableDrives = DriveInfo.GetDrives();
         }
 
-        /// <summary>
-        /// This method implements the ProcessRecord method for Clear-RecycleBin command.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             // There are two scenarios:
@@ -100,9 +88,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Returns true if the given drive is 'fixed' and its path exist; otherwise, return false.
-        /// </summary>
+        
         /// <param name="drivePath"></param>
         /// <returns></returns>
         private bool ValidDrivePath(string drivePath)
@@ -149,9 +135,7 @@ namespace Microsoft.PowerShell.Commands
             return false;
         }
 
-        /// <summary>
-        /// Returns true if the given input is of the form c, c:, c:\, C, C: or C:\
-        /// </summary>
+        
         /// <param name="input"></param>
         /// <returns></returns>
         private static bool IsValidPattern(string input)
@@ -159,10 +143,7 @@ namespace Microsoft.PowerShell.Commands
             return Regex.IsMatch(input, @"^[a-z]{1}$|^[a-z]{1}:$|^[a-z]{1}:\\$", RegexOptions.IgnoreCase);
         }
 
-        /// <summary>
-        /// Returns a drive path of the form C:\ for the given drive driveName.
-        /// Supports the following inputs: C, C:, C:\
-        /// </summary>
+        
         /// <param name="driveName"></param>
         /// <returns></returns>
         private static string GetDrivePath(string driveName)
@@ -184,10 +165,7 @@ namespace Microsoft.PowerShell.Commands
             return drivePath;
         }
 
-        /// <summary>
-        /// Clear the recyclebin for the given drive name.
-        /// If no driveName is provided, it clears the recyclebin for all drives.
-        /// </summary>
+        
         /// <param name="drivePath"></param>
         private void EmptyRecycleBin(string drivePath)
         {

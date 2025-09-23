@@ -8,9 +8,7 @@ using System.Runtime.InteropServices;
 
 namespace Microsoft.PowerShell
 {
-    /// <summary>
-    /// Helper functions for process info.
-    /// </summary>
+    
     public static class ProcessCodeMethods
     {
         private const int InvalidProcessId = -1;
@@ -36,9 +34,7 @@ namespace Microsoft.PowerShell
             }
         }
 
-        /// <summary>
-        /// CodeMethod for getting the parent process of a process.
-        /// </summary>
+        
         /// <param name="obj"></param>
         /// <returns>The parent process, or null if the parent is no longer running.</returns>
         public static object GetParentProcess(PSObject obj)
@@ -47,9 +43,7 @@ namespace Microsoft.PowerShell
             return process?.GetParent();
         }
 
-        /// <summary>
-        /// Returns the parent id of a process or -1 if it fails.
-        /// </summary>
+        
         /// <param name="process"></param>
         /// <returns>The pid of the parent process.</returns>
 #if UNIX

@@ -13,9 +13,7 @@ using Microsoft.PowerShell.Commands.Internal.Format;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// Gets formatting information from the loading format information database.
-    /// </summary>
+    
     /// <remarks>Currently supports only table controls
     /// </remarks>
     [Cmdlet(VerbsCommon.Get, "FormatData", HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096614")]
@@ -25,9 +23,7 @@ namespace Microsoft.PowerShell.Commands
         private string[] _typename;
         private WildcardPattern[] _filter = new WildcardPattern[1];
 
-        /// <summary>
-        /// Get Formatting information only for the specified typename.
-        /// </summary>
+        
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
         [ValidateNotNullOrEmpty]
         [Parameter(Position = 0)]
@@ -58,16 +54,11 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// When specified, helps control whether or not to send richer formatting data
-        /// that was not supported by earlier versions of PowerShell.
-        /// </summary>
+        
         [Parameter]
         public Version PowerShellVersion { get; set; }
 
-        /// <summary>
-        /// Set the default filter.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             if (_filter[0] == null)
@@ -93,9 +84,7 @@ namespace Microsoft.PowerShell.Commands
             return typeGroupMap;
         }
 
-        /// <summary>
-        /// Takes out the content from the database and writes them out.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             // Remoting detection:

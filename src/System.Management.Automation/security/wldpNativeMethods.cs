@@ -15,40 +15,26 @@ using System.Runtime.InteropServices;
 
 namespace System.Management.Automation.Security
 {
-    /// <summary>
-    /// System wide policy enforcement for a specific script file.
-    /// </summary>
+    
     public enum SystemScriptFileEnforcement
     {
-        /// <summary>
-        /// No policy enforcement.
-        /// </summary>
+        
         None = 0,
 
-        /// <summary>
-        /// Script file is blocked from running.
-        /// </summary>
+        
         Block = 1,
 
-        /// <summary>
-        /// Script file is allowed to run without restrictions (FullLanguage mode).
-        /// </summary>
+        
         Allow = 2,
 
-        /// <summary>
-        /// Script file is allowed to run in ConstrainedLanguage mode only.
-        /// </summary>
+        
         AllowConstrained = 3,
 
-        /// <summary>
-        /// Script file is allowed to run in FullLanguage mode but will emit ConstrainedLanguage restriction audit logs.
-        /// </summary>
+        
         AllowConstrainedAudit = 4
     }
 
-    /// <summary>
-    /// How the policy is being enforced.
-    /// </summary>
+    
     // Internal Note: Current code that consumes this enum assumes that anything but 'Enforce' means
     // that the script is allowed, and that a system lockdown policy that is anything but 'None' means
     // that the API should be called again for individual files. If any elements are added to this enum,
@@ -65,19 +51,14 @@ namespace System.Management.Automation.Security
         Enforce = 2
     }
 
-    /// <summary>
-    /// Support class for dealing with the Windows Lockdown Policy,
-    /// Device Guard, and Constrained PowerShell.
-    /// </summary>
+    
     public sealed class SystemPolicy
     {
         private SystemPolicy()
         {
         }
 
-        /// <summary>
-        /// Writes to PowerShell WDAC Audit mode ETW log.
-        /// </summary>
+        
         /// <param name="context">Current execution context.</param>
         /// <param name="title">Audit message title.</param>
         /// <param name="message">Audit message message.</param>
@@ -132,9 +113,7 @@ namespace System.Management.Automation.Security
             }
         }
 
-        /// <summary>
-        /// Gets the system lockdown policy.
-        /// </summary>
+        
         /// <returns>An EnforcementMode that describes the system policy.</returns>
         public static SystemEnforcementMode GetSystemLockdownPolicy()
         {
@@ -161,10 +140,7 @@ namespace System.Management.Automation.Security
         private static bool s_allowDebugOverridePolicy = false;
         private static bool s_wldpCanExecuteAvailable = true;
 
-        /// <summary>
-        /// Gets the system wide script file policy enforcement for an open file.
-        /// Based on system WDAC (Windows Defender Application Control) or AppLocker policies.
-        /// </summary>
+        
         /// <param name="filePath">Script file path for policy check.</param>
         /// <param name="fileStream">FileStream object to script file path.</param>
         /// <returns>Policy check result for script file.</returns>
@@ -258,9 +234,7 @@ namespace System.Management.Automation.Security
             return false;
         }
 
-        /// <summary>
-        /// Gets lockdown policy as applied to a file.
-        /// </summary>
+        
         /// <returns>An EnforcementMode that describes policy.</returns>
         public static SystemEnforcementMode GetLockdownPolicy(string path, SafeHandle handle)
         {
@@ -622,9 +596,7 @@ namespace System.Management.Automation.Security
 
         private static bool s_hadMissingWldpAssembly = false;
 
-        /// <summary>
-        /// Gets lockdown policy as applied to a COM object.
-        /// </summary>
+        
         /// <returns>True if the COM object is allowed, False otherwise.</returns>
         internal static bool IsClassInApprovedList(Guid clsid)
         {
@@ -733,9 +705,7 @@ namespace System.Management.Automation.Security
         // Overrides for features that should only be enabled in debug mode
         internal static bool XamlWorkflowSupported { get; set; }
 
-        /// <summary>
-        /// Native constants for dealing with the lockdown policy.
-        /// </summary>
+        
         internal static class WldpNativeConstants
         {
             internal const uint WLDP_HOST_INFORMATION_REVISION = 0x00000001;
@@ -748,9 +718,7 @@ namespace System.Management.Automation.Security
             internal const uint WLDP_LOCKDOWN_UMCIAUDIT_FLAG = 8;
         }
 
-        /// <summary>
-        /// The different host IDs understood by the lockdown policy.
-        /// </summary>
+        
         internal enum WLDP_HOST_ID
         {
             WLDP_HOST_ID_UNKNOWN = 0,
@@ -763,9 +731,7 @@ namespace System.Management.Automation.Security
             WLDP_HOST_ID_MAX = 7,
         }
 
-        /// <summary>
-        /// Host information structure to contain the lockdown policy request.
-        /// </summary>
+        
         [StructLayoutAttribute(LayoutKind.Sequential)]
         internal struct WLDP_HOST_INFORMATION
         {
@@ -783,9 +749,7 @@ namespace System.Management.Automation.Security
             internal IntPtr hSource;
         }
 
-        /// <summary>
-        /// Options for WldpCanExecuteFile method.
-        /// </summary>
+        
         [Flags]
         internal enum WLDP_EXECUTION_EVALUATION_OPTIONS
         {
@@ -793,9 +757,7 @@ namespace System.Management.Automation.Security
             WLDP_EXECUTION_EVALUATION_OPTION_EXECUTE_IN_INTERACTIVE_SESSION = 0x1
         }
 
-        /// <summary>
-        /// Results from WldpCanExecuteFile method.
-        /// </summary>
+        
         internal enum WLDP_EXECUTION_POLICY
         {
             WLDP_CAN_EXECUTE_BLOCKED = 0,
@@ -803,20 +765,13 @@ namespace System.Management.Automation.Security
             WLDP_CAN_EXECUTE_REQUIRE_SANDBOX = 2
         }
 
-        /// <summary>
-        /// Powershell Script Host.
-        /// </summary>
+        
         internal static readonly Guid PowerShellHost = new Guid("8E9AAA7C-198B-4879-AE41-A50D47AD6458");
 
-        /// <summary>
-        /// Native methods for dealing with the lockdown policy.
-        /// </summary>
+        
         internal static class WldpNativeMethods
         {
-            /// <summary>
-            /// Returns a WLDP_EXECUTION_POLICY enum value indicating if and how a script file
-            /// should be executed.
-            /// </summary>
+            
             /// <param name="host">Host guid.</param>
             /// <param name="options">Evaluation options.</param>
             /// <param name="fileHandle">Evaluated file handle.</param>

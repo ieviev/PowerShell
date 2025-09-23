@@ -7,27 +7,20 @@ using System.Diagnostics;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <summary>
-    /// The FilterRulePanelItem class maintains the state for a row item within a <see cref="FilterRulePanel"/>.
-    /// </summary>
+    
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public class FilterRulePanelItem : INotifyPropertyChanged
     {
         #region Properties
 
-        /// <summary>
-        /// Gets a FilterRule that is stored in this FilterRulePanelItem.
-        /// </summary>
+        
         public FilterRule Rule
         {
             get;
             private set;
         }
 
-        /// <summary>
-        /// Gets a string that identifies which group this
-        /// item belongs to.
-        /// </summary>
+        
         public string GroupId
         {
             get;
@@ -36,9 +29,7 @@ namespace Microsoft.Management.UI.Internal
 
         private FilterRulePanelItemType itemType = FilterRulePanelItemType.Header;
 
-        /// <summary>
-        /// Gets the type of FilterRulePanelItemType.
-        /// </summary>
+        
         public FilterRulePanelItemType ItemType
         {
             get
@@ -58,18 +49,14 @@ namespace Microsoft.Management.UI.Internal
             }
         }
 
-        /// <summary>
-        /// Notifies listeners that a property has changed.
-        /// </summary>
+        
         public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion Properties
 
         #region Ctor
 
-        /// <summary>
-        /// Initializes a new instance of the FilterRulePanelItem class.
-        /// </summary>
+        
         /// <param name="rule">
         /// The FilterRule to store in this FilterRulePanelItem.
         /// </param>
@@ -90,9 +77,7 @@ namespace Microsoft.Management.UI.Internal
 
         #region Public Methods
 
-        /// <summary>
-        /// Notifies listeners that a property has changed.
-        /// </summary>
+        
         /// <param name="propertyName">
         /// The name of a property that has changed.
         /// </param>

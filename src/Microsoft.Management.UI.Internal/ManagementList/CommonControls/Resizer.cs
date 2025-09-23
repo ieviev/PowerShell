@@ -11,20 +11,14 @@ using System.Windows.Documents;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <summary>
-    /// The resize grip possibilities.
-    /// </summary>
+    
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public enum ResizeGripLocation
     {
-        /// <summary>
-        /// One grip is shown, on the right side.
-        /// </summary>
+        
         Right,
 
-        /// <summary>
-        /// One grip is shown, on the left side.
-        /// </summary>
+        
         Left,
     }
 
@@ -39,9 +33,7 @@ namespace Microsoft.Management.UI.Internal
         private UIElementAdorner adorner;
         private ContentControl adornerContent;
 
-        /// <summary>
-        /// Creates an instance of Resizer.
-        /// </summary>
+        
         public Resizer()
         {
             // nothing

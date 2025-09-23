@@ -8,13 +8,10 @@ using System.Management.Automation.Runspaces;
 
 namespace Microsoft.PowerShell
 {
-    /// <summary>
-    /// This class provides an entry point which is called
-    /// to transfer control to console host implementation.
-    /// </summary>
+    
     public static class ConsoleShell
     {
-        /// <summary>Entry point in to ConsoleShell. This method is called by main of minishell.</summary>
+        
         /// <param name="bannerText">Banner text to be displayed by ConsoleHost.</param>
         /// <param name="helpText">Help text for minishell. This is displayed on 'minishell -?'.</param>
         /// <param name="args">Commandline parameters specified by user.</param>
@@ -29,7 +26,7 @@ namespace Microsoft.PowerShell
                 issProvided: false);
         }
 
-        /// <summary>Entry point in to ConsoleShell. Used to create a custom Powershell console application.</summary>
+        
         /// <param name="initialSessionState">InitialSessionState to be used by the ConsoleHost.</param>
         /// <param name="bannerText">Banner text to be displayed by ConsoleHost.</param>
         /// <param name="helpText">Help text for the shell.</param>
@@ -45,10 +42,7 @@ namespace Microsoft.PowerShell
                 issProvided: true);
         }
 
-        /// <summary>
-        /// Implementation of entry point to ConsoleShell.
-        /// Used to create a custom Powershell console application.
-        /// </summary>
+        
         /// <param name="initialSessionState">InitialSessionState to be used by the ConsoleHost.</param>
         /// <param name="bannerText">Banner text to be displayed by ConsoleHost.</param>
         /// <param name="helpText">Help text for the shell.</param>

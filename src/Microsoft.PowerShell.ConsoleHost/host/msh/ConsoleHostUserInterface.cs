@@ -23,35 +23,23 @@ namespace Microsoft.PowerShell
 {
     using PowerShell = System.Management.Automation.PowerShell;
 
-    /// <summary>
-    /// ConsoleHostUserInterface implements console-mode user interface for powershell.
-    /// </summary>
+    
     [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling")]
     internal partial class ConsoleHostUserInterface : System.Management.Automation.Host.PSHostUserInterface
     {
-        /// <summary>
-        /// This is the char that is echoed to the console when the input is masked. This not localizable.
-        /// </summary>
+        
         private const char PrintToken = '*';
 
-        /// <summary>
-        /// Command completion implementation object.
-        /// </summary>
+        
         private PowerShell _commandCompletionPowerShell;
 
-        /// <summary>
-        /// This is a test hook for programmatically reading and writing ConsoleHost I/O.
-        /// </summary>
+        
         private static readonly PSHostUserInterface s_h = null;
 
-        /// <summary>
-        /// Return true if the console supports a VT100 like virtual terminal.
-        /// </summary>
+        
         public override bool SupportsVirtualTerminal { get; }
 
-        /// <summary>
-        /// Constructs an instance.
-        /// </summary>
+        
         /// <param name="parent"></param>
         /// <exception/>
         internal ConsoleHostUserInterface(ConsoleHost parent)
@@ -126,9 +114,7 @@ namespace Microsoft.PowerShell
 #endif
         }
 
-        /// <summary>
-        /// Supplies an implementation of PSHostRawUserInterface that provides low-level console mode UI facilities.
-        /// </summary>
+        
         /// <value></value>
         /// <exception/>
         public override PSHostRawUserInterface RawUI
@@ -144,9 +130,7 @@ namespace Microsoft.PowerShell
         }
 
         // deadcode; but could be needed in the future.
-        ///// <summary>
-        ///// gets the PSHost instance that uses this ConsoleHostUserInterface instance
-        ///// </summary>
+        //
         ///// <value></value>
         ///// <exception/>
 
@@ -165,9 +149,7 @@ namespace Microsoft.PowerShell
         //    }
         // }
 
-        /// <summary>
-        /// True if command completion is currently running.
-        /// </summary>
+        
         internal bool IsCommandCompletionRunning
         {
             get
@@ -177,21 +159,15 @@ namespace Microsoft.PowerShell
             }
         }
 
-        /// <summary>
-        /// True if the Read* functions should read from the stdin stream instead of from the win32 console.
-        /// </summary>
+        
         internal bool ReadFromStdin { get; set; }
 
-        /// <summary>
-        /// True if the host shouldn't write out prompts.
-        /// </summary>
+        
         internal bool NoPrompt { get; set; }
 
         #region Line-oriented interaction
 
-        /// <summary>
-        /// See base class.
-        /// </summary>
+        
         /// <returns></returns>
         /// <exception cref="HostException">
         /// If Win32's SetConsoleMode fails
@@ -211,9 +187,7 @@ namespace Microsoft.PowerShell
             return ReadLine(false, string.Empty, out _, true, true);
         }
 
-        /// <summary>
-        /// See base class.
-        /// </summary>
+        
         /// <returns></returns>
         /// <exception cref="HostException">
         /// If obtaining a handle to the active screen buffer failed
@@ -243,18 +217,7 @@ namespace Microsoft.PowerShell
             return secureResult;
         }
 
-        /// <summary>
-        /// Implementation based on NT CredUI's GetPasswdStr.
-        /// Use Win32.ReadConsole to construct a SecureString. The advantage of ReadConsole over ReadKey is
-        /// Alt-ddd where d is {0-9} is allowed.
-        /// It also manages the cursor as keys are entered and "backspaced". However, it is possible that
-        /// while this method is running, the console buffer contents could change. Then, its cursor mgmt
-        /// will likely be messed up.
-        ///
-        /// Secondary implementation for Unix based on Console.ReadKey(), where
-        /// the advantage is portability through abstraction. Does not support
-        /// arrow key movement, but supports backspace.
-        /// </summary>
+        
         /// <param name="isSecureString">
         /// True to specify reading a SecureString; false reading a string
         /// </param>
@@ -456,9 +419,7 @@ namespace Microsoft.PowerShell
             }
         }
 
-        /// <summary>
-        /// Handle writing print token with proper cursor adjustment for ReadLineSafe.
-        /// </summary>
+        
         /// <param name="printToken">
         /// token output for each char input. It must be a one-char string
         /// </param>
@@ -495,9 +456,7 @@ namespace Microsoft.PowerShell
             WriteToConsole(printToken, false);
         }
 
-        /// <summary>
-        /// Handle backspace with proper cursor adjustment for ReadLineSafe.
-        /// </summary>
+        
         /// <param name="originalCursorPosition">
         /// it is the cursor position where ReadLineSafe begins
         /// </param>
@@ -534,9 +493,7 @@ namespace Microsoft.PowerShell
             // do nothing if cursorPosition.X is left of screen
         }
 
-        /// <summary>
-        /// Blank out at and move rawui.CursorPosition to <paramref name="cursorPosition"/>
-        /// </summary>
+        
         /// <param name="cursorPosition">Position to blank out.</param>
         private void BlankAtCursor(Coordinates cursorPosition)
         {
@@ -546,10 +503,7 @@ namespace Microsoft.PowerShell
         }
 
 #if !UNIX
-        /// <summary>
-        /// If <paramref name="m"/> is set on <paramref name="flagToUnset"/>, unset it and return true;
-        /// otherwise return false.
-        /// </summary>
+        
         /// <param name="flagToUnset">
         /// a flag in ConsoleControl.ConsoleModes to be unset in <paramref name="m"/>
         /// </param>
@@ -694,9 +648,7 @@ namespace Microsoft.PowerShell
 
         #endregion WriteToConsole
 
-        /// <summary>
-        /// See base class.
-        /// </summary>
+        
         /// <param name="value"></param>
         /// <exception cref="HostException">
         /// If Win32's CreateFile fails
@@ -764,9 +716,7 @@ namespace Microsoft.PowerShell
             }
         }
 
-        /// <summary>
-        /// See base class.
-        /// </summary>
+        
         /// <param name="foregroundColor"></param>
         /// <param name="backgroundColor"></param>
         /// <param name="value"></param>
@@ -788,9 +738,7 @@ namespace Microsoft.PowerShell
             Write(foregroundColor, backgroundColor, value, newLine: false);
         }
 
-        /// <summary>
-        /// See base class.
-        /// </summary>
+        
         /// <param name="foregroundColor"></param>
         /// <param name="backgroundColor"></param>
         /// <param name="value"></param>
@@ -835,9 +783,7 @@ namespace Microsoft.PowerShell
             }
         }
 
-        /// <summary>
-        /// See base class.
-        /// </summary>
+        
         /// <param name="value"></param>
         /// <exception cref="HostException">
         ///    Win32's CreateFile fails
@@ -856,9 +802,7 @@ namespace Microsoft.PowerShell
             }
         }
 
-        /// <summary>
-        /// See base class.
-        /// </summary>
+        
         /// <exception cref="HostException">
         ///    Win32's CreateFile fails
         ///    OR
@@ -878,16 +822,7 @@ namespace Microsoft.PowerShell
 
         #region Word Wrapping
 
-        /// <summary>
-        /// This is a poor-man's word-wrapping routine.  It breaks a single string into segments small enough to fit within a
-        /// given number of cells.  A break is determined by the last occurrence of whitespace that allows all prior characters
-        /// on a line to be written within a given number of cells.  If there is no whitespace found within that span, then the
-        /// largest span that will fit in the bounds is used.
-        ///
-        /// The problem is complicated by the fact that a single character may consume more than one cell.  Conceptually, this
-        /// is the same case as placing an upper bound on the length of a line while also having a strlen function that
-        /// arbitrarily considers the length of any single character to be 1 or greater.
-        /// </summary>
+        
         /// <param name="text">
         /// Text to be emitted.
         /// Each tab character in the text is replaced with a space in the results.
@@ -988,9 +923,7 @@ namespace Microsoft.PowerShell
             return result;
         }
 
-        /// <summary>
-        /// Struct used by WrapText.
-        /// </summary>
+        
         [Flags]
         internal enum WordFlags
         {
@@ -1005,13 +938,7 @@ namespace Microsoft.PowerShell
             internal WordFlags Flags;
         }
 
-        /// <summary>
-        /// Chops text into "words," where a word is defined to be a sequence of whitespace characters, or a sequence of
-        /// non-whitespace characters, each sequence being no longer than a given maximum.  Therefore, in the text "this is a
-        /// string" there are 7 words: 4 sequences of non-whitespace characters and 3 sequences of whitespace characters.
-        ///
-        /// Whitespace is considered to be spaces or tabs.  Each tab character is replaced with a single space.
-        /// </summary>
+        
         /// <param name="text">
         /// The text to be chopped up.
         /// </param>
@@ -1110,10 +1037,7 @@ namespace Microsoft.PowerShell
             return result;
         }
 
-        /// <summary>
-        /// Helper for ChopTextIntoWords.  Takes a span of characters in a string and adds it to the word list, further
-        /// subdividing the span as needed so that each subdivision fits within the limit.
-        /// </summary>
+        
         /// <param name="text">
         /// The string of characters in which the span is to be extracted.
         /// </param>
@@ -1198,9 +1122,7 @@ namespace Microsoft.PowerShell
 
         #endregion Word Wrapping
 
-        /// <summary>
-        /// See base class.
-        /// </summary>
+        
         /// <param name="message"></param>
         /// <exception cref="HostException">
         /// If obtaining information about the buffer failed
@@ -1238,9 +1160,7 @@ namespace Microsoft.PowerShell
             }
         }
 
-        /// <summary>
-        /// See base class.
-        /// </summary>
+        
         /// <param name="record"></param>
         public override void WriteInformation(InformationRecord record)
         {
@@ -1255,9 +1175,7 @@ namespace Microsoft.PowerShell
             }
         }
 
-        /// <summary>
-        /// See base class.
-        /// </summary>
+        
         /// <param name="message"></param>
         /// <exception cref="HostException">
         /// If obtaining information about the buffer failed
@@ -1295,9 +1213,7 @@ namespace Microsoft.PowerShell
             }
         }
 
-        /// <summary>
-        /// See base class.
-        /// </summary>
+        
         /// <param name="message"></param>
         /// <exception cref="HostException">
         /// If obtaining information about the buffer failed
@@ -1335,9 +1251,7 @@ namespace Microsoft.PowerShell
             }
         }
 
-        /// <summary>
-        /// Invoked by CommandBase.WriteProgress to display a progress record.
-        /// </summary>
+        
         public override void WriteProgress(long sourceId, ProgressRecord record)
         {
             Dbg.Assert(record != null, "WriteProgress called with null ProgressRecord");
@@ -1446,10 +1360,7 @@ namespace Microsoft.PowerShell
 
         private const int MaxInputLineLength = 1024;
 
-        /// <summary>
-        /// Reads a line of input from the console.  Returns when the user hits enter, a break key, a break event occurs.  In
-        /// the case that stdin has been redirected, reads from the stdin stream instead of the console.
-        /// </summary>
+        
         /// <param name="endOnTab">
         /// true to end input when the user hits the tab or shift-tab keys, false to only end on the enter key (or a break
         /// event). Ignored if not reading from the console device.
@@ -1885,9 +1796,7 @@ namespace Microsoft.PowerShell
         }
 
 #if !UNIX
-        /// <summary>
-        /// Get the character at the cursor when the user types 'tab' in the middle of line.
-        /// </summary>
+        
         /// <param name="cursorPosition">The cursor position where 'tab' is hit.</param>
         /// <returns></returns>
         private char GetCharacterUnderCursor(Coordinates cursorPosition)
@@ -1914,9 +1823,7 @@ namespace Microsoft.PowerShell
         }
 #endif
 
-        /// <summary>
-        /// Strip nulls from a string.
-        /// </summary>
+        
         /// <param name="input">The string to process.</param>
         /// <returns>The string with any '\0' characters removed.</returns>
         private static string RemoveNulls(string input)
@@ -1938,9 +1845,7 @@ namespace Microsoft.PowerShell
             return sb.ToString();
         }
 
-        /// <summary>
-        /// Reads a line, and completes the input for the user if they hit tab.
-        /// </summary>
+        
         /// <param name="exec">
         /// The Executor instance on which to run any pipelines that are needed to find matches
         /// </param>

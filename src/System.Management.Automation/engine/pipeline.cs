@@ -16,9 +16,7 @@ using Dbg = System.Management.Automation.Diagnostics;
 
 namespace System.Management.Automation.Internal
 {
-    /// <summary>
-    /// Loads InternalCommand objects and executes them.
-    /// </summary>
+    
     /// <remarks>
     /// The PipelineProcessor class is not thread-safe, so methods such as
     /// AddCommand and SynchronousExecute should not be called
@@ -60,10 +58,7 @@ namespace System.Management.Automation.Internal
 
         private bool _disposed = false;
 
-        /// <summary>
-        /// When the command is complete, PipelineProcessor will be
-        /// disposed.
-        /// </summary>
+        
         /// <remarks>
         /// This is only public because it implements an interface method.
         /// The class itself is internal.
@@ -121,9 +116,7 @@ namespace System.Management.Automation.Internal
             }
         }
 
-        /// <summary>
-        /// Gets the CancellationToken that is signaled when the pipeline is stopping.
-        /// </summary>
+        
         internal CancellationToken PipelineStopToken => _pipelineStopTokenSource.Token;
 
         internal void LogExecutionInfo(InvocationInfo invocationInfo, string text)
@@ -259,9 +252,7 @@ namespace System.Management.Automation.Internal
 
         #region public_methods
 
-        /// <summary>
-        /// Add a single InternalCommand to the end of the pipeline.
-        /// </summary>
+        
         /// <returns>Results from last pipeline stage.</returns>
         /// <exception cref="InvalidOperationException">
         /// see AddCommand
@@ -309,9 +300,7 @@ namespace System.Management.Automation.Internal
         // 2004/02/28-JSnover (from spec review) ReadFromErrorQueue
         //   should be an int or enum to allow for more queues
         // 2005/03/08-JonN: This is an internal API
-        /// <summary>
-        /// Add a command to the pipeline.
-        /// </summary>
+        
         /// <param name="commandProcessor"></param>
         /// <param name="readFromCommand">Reference number of command from which to read, 0 for none.</param>
         /// <param name="readErrorQueue">Read from error queue of command readFromCommand.</param>
@@ -440,17 +429,7 @@ namespace System.Management.Automation.Internal
         }
 
         // 2005/03/08-JonN: This is an internal API
-        /// <summary>
-        /// Execute the accumulated commands and clear the pipeline.
-        /// SynchronousExecute does not return until all commands have
-        /// completed.  There is no asynchronous variant; instead, once the
-        /// pipeline is set up, the caller can spawn a thread and call
-        /// SynchronousExecute from that thread.  This does not mean that
-        /// PipelineProcessor is thread-safe; once SynchronousExecute is
-        /// running, PipelineProcessor should not be accessed through any
-        /// other means. This variant of the routine looks at it's input
-        /// object to see if it's enumerable or not.
-        /// </summary>
+        
         /// <param name="input">
         /// Input objects for first stage. If this is AutomationNull.Value, the
         /// first cmdlet is the beginning of the pipeline.
@@ -708,9 +687,7 @@ namespace System.Management.Automation.Internal
             ThrowFirstErrorIfExisting(logException: true);
         }
 
-        /// <summary>
-        /// Clean up resources for script commands in this pipeline processor.
-        /// </summary>
+        
         /// <remarks>
         /// Exception from a 'Clean' block is not allowed to propagate up and terminate the pipeline
         /// so that other 'Clean' blocks can run without being affected. Therefore, this method will
@@ -777,9 +754,7 @@ namespace System.Management.Automation.Internal
             }
         }
 
-        /// <summary>
-        /// Clean up resources for the script commands of a steppable pipeline.
-        /// </summary>
+        
         /// <remarks>
         /// The way we handle 'Clean' blocks in 'StartStepping', 'Step', and 'DoComplete' makes sure that:
         ///  1. The 'Clean' blocks get to run if any exception is thrown from the pipeline execution.
@@ -796,10 +771,7 @@ namespace System.Management.Automation.Internal
             DisposeCommands();
         }
 
-        /// <summary>
-        /// Implements DoComplete as a stand-alone function for completing
-        /// the execution of a steppable pipeline.
-        /// </summary>
+        
         /// <returns>The results of the execution.</returns>
         internal Array DoComplete()
         {
@@ -844,12 +816,7 @@ namespace System.Management.Automation.Internal
             }
         }
 
-        /// <summary>
-        /// This routine starts the stepping process. It is optional to call this but can be useful
-        /// if you want the begin clauses of the pipeline to be run even when there may not be any
-        /// input to process as is the case for I/O redirection into a file. We still want the file
-        /// opened, even if there was nothing to write to it.
-        /// </summary>
+        
         /// <param name="expectInput">True if you want to write to this pipeline.</param>
         internal void StartStepping(bool expectInput)
         {
@@ -882,11 +849,7 @@ namespace System.Management.Automation.Internal
             }
         }
 
-        /// <summary>
-        /// Request that the pipeline execution should stop.  Unlike other
-        /// methods of PipelineProcessor, this method can be called
-        /// asynchronously.
-        /// </summary>
+        
         internal void Stop()
         {
             // Only call StopProcessing if the pipeline is being stopped
@@ -930,10 +893,7 @@ namespace System.Management.Automation.Internal
 
         #region private_methods
 
-        /// <summary>
-        /// Partially execute the pipeline, and retrieve the output
-        /// after the input objects have been entered into the pipe.
-        /// </summary>
+        
         /// <param name="input">
         /// Array of input objects for first stage
         /// </param>
@@ -996,9 +956,7 @@ namespace System.Management.Automation.Internal
             }
         }
 
-        /// <summary>
-        /// Prepares the pipeline for execution.
-        /// </summary>
+        
         /// <param name="incomingStream">
         /// Input objects are expected, so do not close the first command.
         /// This will prevent the one default call to ProcessRecord
@@ -1146,9 +1104,7 @@ namespace System.Management.Automation.Internal
             }
         }
 
-        /// <summary>
-        /// Add ExternalErrorOutput to all commands whose error output is not yet claimed.
-        /// </summary>
+        
         private void SetExternalErrorOutput()
         {
             if (ExternalErrorOutput != null)
@@ -1167,9 +1123,7 @@ namespace System.Management.Automation.Internal
             }
         }
 
-        /// <summary>
-        /// Clear ErrorVariable as appropriate.
-        /// </summary>
+        
         private void SetupParameterVariables()
         {
             foreach (CommandProcessorBase commandProcessor in _commands)
@@ -1194,10 +1148,7 @@ namespace System.Management.Automation.Internal
             }
         }
 
-        /// <summary>
-        /// Partially execute the pipeline.  The output remains in
-        /// the pipes.
-        /// </summary>
+        
         /// <param name="input">
         /// Array of input objects for first stage
         /// </param>
@@ -1252,9 +1203,7 @@ namespace System.Management.Automation.Internal
             firstcommandProcessor.DoExecute();
         }
 
-        /// <summary>
-        /// Retrieve results from the pipeline.
-        /// </summary>
+        
         /// <returns>
         /// Results from last pipeline stage.  This will be empty if
         /// ExternalSuccessOutput is set or if this pipeline has been linked.
@@ -1303,11 +1252,7 @@ namespace System.Management.Automation.Internal
             return results is null ? MshCommandRuntime.StaticEmptyArray : results;
         }
 
-        /// <summary>
-        /// Links this pipeline to a pre-existing Pipe object. This allows nested pipes
-        /// to write into the parent pipeline. It does this by resetting the terminal
-        /// pipeline object.
-        /// </summary>
+        
         /// <param name="pipeToUse">The pipeline to write success objects to.</param>
         internal void LinkPipelineSuccessOutput(Pipe pipeToUse)
         {
@@ -1337,13 +1282,7 @@ namespace System.Management.Automation.Internal
             _linkedErrorOutput = true;
         }
 
-        /// <summary>
-        /// When the command is complete, Command should be disposed.
-        /// This enables cmdlets to reliably release file handles etc.
-        /// without waiting for garbage collection.
-        /// Exceptions occurring while disposing commands are recorded
-        /// but not passed through.
-        /// </summary>
+        
         private void DisposeCommands()
         {
             // Note that this is not in a lock.
@@ -1445,10 +1384,7 @@ namespace System.Management.Automation.Internal
         }
 
         private readonly object _stopReasonLock = new object();
-        /// <summary>
-        /// Makes an internal note of the exception, but only if this is
-        /// the first error.
-        /// </summary>
+        
         /// <param name="e">Error which terminated the pipeline.</param>
         /// <param name="command">Command against which to log SecondFailure.</param>
         /// <returns>True if-and-only-if the pipeline was not already stopped.</returns>
@@ -1497,10 +1433,7 @@ namespace System.Management.Automation.Internal
             return !wasStopping;
         }
 
-        /// <summary>
-        /// Sometimes we shouldn't be rethrow the exception we previously caught,
-        /// such as when the exception is handled by a trap.
-        /// </summary>
+        
         internal void ForgetFailure()
         {
             _firstTerminatingError = null;
@@ -1517,12 +1450,7 @@ namespace System.Management.Automation.Internal
 
         #region public_properties
 
-        /// <summary>
-        /// ExternalInput allows the caller to specify an asynchronous source for
-        /// the input to the first command in the pipeline.  Note that if
-        /// ExternalInput is specified, SynchronousExecute will not return
-        /// until the ExternalInput is closed.
-        /// </summary>
+        
         /// <remarks>
         /// It is the responsibility of the caller to ensure that the object
         /// reader is closed, usually by another thread.
@@ -1549,13 +1477,7 @@ namespace System.Management.Automation.Internal
             }
         }
 
-        /// <summary>
-        /// ExternalSuccessOutput provides asynchronous access to the
-        /// success output of the last command in the pipeline.  Note that
-        /// if ExternalSuccessOutput is specified, the result array return value
-        /// to SynchronousExecute will always be empty.  PipelineProcessor will
-        /// close ExternalSuccessOutput when the pipeline is finished.
-        /// </summary>
+        
         /// <exception cref="InvalidOperationException">
         /// ExecutionAlreadyStarted: pipeline has already started or completed
         /// </exception>
@@ -1578,14 +1500,7 @@ namespace System.Management.Automation.Internal
             }
         }
 
-        /// <summary>
-        /// ExternalErrorOutput provides asynchronous access to the combined
-        /// error output of all commands in the pipeline except what is routed
-        /// to other commands in the pipeline.  Note that if
-        /// ExternalErrorOutput is specified, the errorResults return parameter to
-        /// SynchronousExecute will always be empty.  PipelineProcessor will
-        /// close ExternalErrorOutput when the pipeline is finished.
-        /// </summary>
+        
         /// <exception cref="InvalidOperationException">
         /// ExecutionAlreadyStarted: pipeline has already started or completed
         /// </exception>
@@ -1608,18 +1523,13 @@ namespace System.Management.Automation.Internal
             }
         }
 
-        /// <summary>
-        /// Indicates whether this PipelineProcessor has already started.
-        /// If so, some properties can no longer be changed.
-        /// </summary>
+        
         internal bool ExecutionStarted
         {
             get { return _executionStarted; }
         }
 
-        /// <summary>
-        /// Indicates whether stop has been requested on this PipelineProcessor.
-        /// </summary>
+        
         internal bool Stopping
         {
             get { return _localPipeline != null && _localPipeline.IsStopping; }
@@ -1636,9 +1546,7 @@ namespace System.Management.Automation.Internal
 
         internal bool TopLevel { get; set; } = false;
 
-        /// <summary>
-        /// The scope the pipeline should execute in.
-        /// </summary>
+        
         internal SessionStateScope ExecutionScope
         {
             get

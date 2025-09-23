@@ -11,24 +11,18 @@ using System.Windows.Data;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <summary>
-    /// Removes whitespace at beginning and end of a string.
-    /// </summary>
+    
     [SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public class TextTrimConverter : IValueConverter
     {
-        /// <summary>
-        /// Creates a new TextTrimConverter. By default, both conversion directions are trimmed.
-        /// </summary>
+        
         public TextTrimConverter()
         {
         }
 
         #region IValueConverter Members
 
-        /// <summary>
-        /// Trims excess whitespace from the given string.
-        /// </summary>
+        
         /// <param name="value">Original string.</param>
         /// <param name="targetType">The parameter is not used.</param>
         /// <param name="parameter">The parameter is not used.</param>
@@ -50,9 +44,7 @@ namespace Microsoft.Management.UI.Internal
             return strValue.Trim();
         }
 
-        /// <summary>
-        /// Trims extra whitespace from the given string during backward conversion.
-        /// </summary>
+        
         /// <param name="value">Original string.</param>
         /// <param name="targetType">The parameter is not used.</param>
         /// <param name="parameter">The parameter is not used.</param>

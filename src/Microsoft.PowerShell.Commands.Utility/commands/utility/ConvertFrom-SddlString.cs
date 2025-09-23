@@ -12,22 +12,16 @@ using System.Text;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// Converts a SDDL string into an object-based representation of a security descriptor.
-    /// </summary>
+    
     [Cmdlet(VerbsData.ConvertFrom, "SddlString", HelpUri = "https://go.microsoft.com/fwlink/?LinkId=623636", RemotingCapability = RemotingCapability.None)]
     [OutputType(typeof(SecurityDescriptorInfo))]
     public sealed class ConvertFromSddlStringCommand : PSCmdlet
     {
-        /// <summary>
-        /// Gets and sets the string representing the security descriptor in SDDL syntax.
-        /// </summary>
+        
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
         public string Sddl { get; set; }
 
-        /// <summary>
-        /// Gets and sets type of rights that this SDDL string represents.
-        /// </summary>
+        
         [Parameter]
         public AccessRightTypeNames Type
         {
@@ -148,9 +142,7 @@ namespace Microsoft.PowerShell.Commands
             return aceStringList.ToArray();
         }
 
-        /// <summary>
-        /// ProcessRecord method.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             CommonSecurityDescriptor rawSecurityDescriptor = null;
@@ -175,49 +167,33 @@ namespace Microsoft.PowerShell.Commands
             WriteObject(outObj);
         }
 
-        /// <summary>
-        /// AccessRight type names.
-        /// </summary>
+        
         public enum AccessRightTypeNames
         {
-            /// <summary>
-            /// FileSystemRights.
-            /// </summary>
+            
             FileSystemRights,
 
-            /// <summary>
-            /// RegistryRights.
-            /// </summary>
+            
             RegistryRights,
 
-            /// <summary>
-            /// ActiveDirectoryRights.
-            /// </summary>
+            
             ActiveDirectoryRights,
 
-            /// <summary>
-            /// MutexRights.
-            /// </summary>
+            
             MutexRights,
 
-            /// <summary>
-            /// SemaphoreRights.
-            /// </summary>
+            
             SemaphoreRights,
 
             // We have 'CryptoKeyRights' in the list for Windows PowerShell, but that type is not available in .NET Core.
             // CryptoKeyRights,
 
-            /// <summary>
-            /// EventWaitHandleRights.
-            /// </summary>
+            
             EventWaitHandleRights
         }
     }
 
-    /// <summary>
-    /// Representation of a security descriptor.
-    /// </summary>
+    
     public sealed class SecurityDescriptorInfo
     {
         internal SecurityDescriptorInfo(
@@ -234,29 +210,19 @@ namespace Microsoft.PowerShell.Commands
             RawDescriptor = rawDescriptor;
         }
 
-        /// <summary>
-        /// EventWaitHandle rights.
-        /// </summary>
+        
         public readonly string Owner;
 
-        /// <summary>
-        /// EventWaitHandle rights.
-        /// </summary>
+        
         public readonly string Group;
 
-        /// <summary>
-        /// EventWaitHandle rights.
-        /// </summary>
+        
         public readonly string[] DiscretionaryAcl;
 
-        /// <summary>
-        /// EventWaitHandle rights.
-        /// </summary>
+        
         public readonly string[] SystemAcl;
 
-        /// <summary>
-        /// EventWaitHandle rights.
-        /// </summary>
+        
         public readonly CommonSecurityDescriptor RawDescriptor;
     }
 }

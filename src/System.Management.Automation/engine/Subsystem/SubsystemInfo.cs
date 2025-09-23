@@ -11,63 +11,40 @@ using Microsoft.PowerShell.Telemetry;
 
 namespace System.Management.Automation.Subsystem
 {
-    /// <summary>
-    /// Class used to represent the metadata and state of a subsystem.
-    /// </summary>
+    
     public abstract class SubsystemInfo
     {
         #region "Metadata of a Subsystem (public)"
 
-        /// <summary>
-        /// Gets the kind of a concrete subsystem.
-        /// </summary>
+        
         public SubsystemKind Kind { get; }
 
-        /// <summary>
-        /// Gets the type of a concrete subsystem.
-        /// </summary>
+        
         public Type SubsystemType { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether the subsystem allows to unregister an implementation.
-        /// </summary>
+        
         public bool AllowUnregistration { get; private set; }
 
-        /// <summary>
-        /// Gets a value indicating whether the subsystem allows to have multiple implementations registered.
-        /// </summary>
+        
         public bool AllowMultipleRegistration { get; private set; }
 
-        /// <summary>
-        /// Gets the names of the required cmdlets that have to be implemented by the subsystem implementation.
-        /// </summary>
+        
         public ReadOnlyCollection<string> RequiredCmdlets { get; private set; }
 
-        /// <summary>
-        /// Gets the names of the required functions that have to be implemented by the subsystem implementation.
-        /// </summary>
+        
         public ReadOnlyCollection<string> RequiredFunctions { get; private set; }
 
-        // /// <summary>
-        // /// A subsystem may depend on or more other subsystems.
-        // /// Maybe add a 'DependsOn' member?
-        // /// This can be validated when registering a subsystem implementation,
-        // /// to make sure its prerequisites have already been registered.
-        // /// </summary>
+        // 
         // public ReadOnlyCollection<SubsystemKind> DependsOn { get; private set; }
 
         #endregion
 
         #region "State of a Subsystem (public)"
 
-        /// <summary>
-        /// Indicate whether there is any implementation registered to the subsystem.
-        /// </summary>
+        
         public bool IsRegistered => _cachedImplInfos.Count > 0;
 
-        /// <summary>
-        /// Get the information about the registered implementations.
-        /// </summary>
+        
         public ReadOnlyCollection<ImplementationInfo> Implementations => _cachedImplInfos;
 
         #endregion
@@ -156,9 +133,7 @@ namespace System.Management.Automation.Subsystem
 
         #region "ImplementationInfo"
 
-        /// <summary>
-        /// Information about an implementation of a subsystem.
-        /// </summary>
+        
         public class ImplementationInfo
         {
             internal ImplementationInfo(SubsystemKind kind, ISubsystem implementation)
@@ -170,29 +145,19 @@ namespace System.Management.Automation.Subsystem
                 ImplementationType = implementation.GetType();
             }
 
-            /// <summary>
-            /// Gets the unique identifier for a subsystem implementation.
-            /// </summary>
+            
             public Guid Id { get; }
 
-            /// <summary>
-            /// Gets the kind of subsystem.
-            /// </summary>
+            
             public SubsystemKind Kind { get; }
 
-            /// <summary>
-            /// Gets the name of a subsystem implementation.
-            /// </summary>
+            
             public string Name { get; }
 
-            /// <summary>
-            /// Gets the description of a subsystem implementation.
-            /// </summary>
+            
             public string Description { get; }
 
-            /// <summary>
-            /// Gets the implementation type.
-            /// </summary>
+            
             public Type ImplementationType { get; }
         }
 
@@ -210,11 +175,7 @@ namespace System.Management.Automation.Subsystem
             _registeredImpls = Utils.EmptyReadOnlyCollection<TConcreteSubsystem>();
         }
 
-        /// <summary>
-        /// The 'add' and 'remove' operations are implemented in a way to optimize the 'reading' operation,
-        /// so that reading is lock-free and allocation-free, at the cost of O(n) copy in 'add' and 'remove'
-        /// ('n' is the number of registered implementations).
-        /// </summary>
+        
         /// <remarks>
         /// In the subsystem scenario, registration operations will be minimum, and in most cases, the registered
         /// implementation will never be unregistered, so optimization for reading is more important.
@@ -267,11 +228,7 @@ namespace System.Management.Automation.Subsystem
             }
         }
 
-        /// <summary>
-        /// The 'add' and 'remove' operations are implemented in a way to optimize the 'reading' operation,
-        /// so that reading is lock-free and allocation-free, at the cost of O(n) copy in 'add' and 'remove'
-        /// ('n' is the number of registered implementations).
-        /// </summary>
+        
         /// <remarks>
         /// In the subsystem scenario, registration operations will be minimum, and in most cases, the registered
         /// implementation will never be unregistered, so optimization for reading is more important.

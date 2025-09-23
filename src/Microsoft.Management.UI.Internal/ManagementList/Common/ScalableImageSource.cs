@@ -21,9 +21,7 @@ namespace Microsoft.Management.UI.Internal
     {
         #region Structors
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Microsoft.Management.UI.Internal.ScalableImageSource" /> class.
-        /// </summary>
+        
         public ScalableImageSource()
         {
             // This constructor intentionally left blank
@@ -33,9 +31,7 @@ namespace Microsoft.Management.UI.Internal
 
         #region Overrides
 
-        /// <summary>
-        /// Creates a new instance of the Freezable derived class.
-        /// </summary>
+        
         /// <returns>The new instance of the Freezable derived class.</returns>
         protected override Freezable CreateInstanceCore()
         {

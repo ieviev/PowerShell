@@ -13,9 +13,7 @@ using System.Text;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// Displays the hexadecimal equivalent of the input data.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Format, "Hex", HelpUri = "https://go.microsoft.com/fwlink/?LinkId=2096611")]
     [OutputType(typeof(ByteCollection))]
     [Alias("fhx")]
@@ -23,50 +21,33 @@ namespace Microsoft.PowerShell.Commands
     {
         private const int BUFFERSIZE = 16;
 
-        /// <summary>
-        /// For cases where a homogeneous collection of bytes or other items are directly piped in, we collect all the
-        /// bytes in a List&lt;byte&gt; and then output the formatted result all at once in EndProcessing().
-        /// </summary>
+        
         private readonly List<byte> _inputBuffer = new();
 
-        /// <summary>
-        /// Expect to group <see cref="InputObject"/>s by default. When receiving input that should not be grouped,
-        /// e.g., arrays, strings, FileInfo objects, this flag will be disabled until the next groupable
-        /// <see cref="InputObject"/> is received over the pipeline.
-        /// </summary>
+        
         private bool _groupInput = true;
 
-        /// <summary>
-        /// Keep track of prior input types to determine if we're given a heterogeneous collection.
-        /// </summary>
+        
         private Type _lastInputType;
 
         #region Parameters
 
-        /// <summary>
-        /// Gets or sets the path of file(s) to process.
-        /// </summary>
+        
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = "Path")]
         [ValidateNotNullOrEmpty]
         public string[] Path { get; set; }
 
-        /// <summary>
-        /// Gets or sets the literal path of file to process.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ParameterSetName = "LiteralPath")]
         [ValidateNotNullOrEmpty]
         [Alias("PSPath", "LP")]
         public string[] LiteralPath { get; set; }
 
-        /// <summary>
-        /// Gets or sets the object to process.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ParameterSetName = "ByInputObject", ValueFromPipeline = true)]
         public PSObject InputObject { get; set; }
 
-        /// <summary>
-        /// Gets or sets the type of character encoding for InputObject.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "ByInputObject")]
         [ArgumentToEncodingTransformation]
         [ArgumentEncodingCompletions]
@@ -87,23 +68,17 @@ namespace Microsoft.PowerShell.Commands
 
         private Encoding _encoding = Encoding.Default;
 
-        /// <summary>
-        /// Gets or sets count of bytes to read from the input stream.
-        /// </summary>
+        
         [Parameter]
         [ValidateRange(ValidateRangeKind.Positive)]
         public long Count { get; set; } = long.MaxValue;
 
-        /// <summary>
-        /// Gets or sets offset of bytes to start reading the input stream from.
-        /// </summary>
+        
         [Parameter]
         [ValidateRange(ValidateRangeKind.NonNegative)]
         public long Offset { get; set; }
 
-        /// <summary>
-        /// Gets or sets whether the file input should be swallowed as is. This parameter is no-op, deprecated.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "ByInputObject", DontShow = true)]
         [Obsolete("Raw parameter is deprecated.", true)]
         public SwitchParameter Raw { get; set; }
@@ -112,9 +87,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Overrides
 
-        /// <summary>
-        /// Implements the ProcessRecord method for the FormatHex command.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             if (string.Equals(ParameterSetName, "ByInputObject", StringComparison.OrdinalIgnoreCase))
@@ -131,9 +104,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Implements the EndProcessing method for the FormatHex command.
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             FlushInputBuffer();
@@ -143,11 +114,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Paths
 
-        /// <summary>
-        /// Validate each path provided and if valid, add to array of paths to process.
-        /// If path is a literal path it is added to the array to process; we cannot validate them until we
-        /// try to process file contents.
-        /// </summary>
+        
         /// <param name="path">The file path to resolve.</param>
         /// <param name="literalPath">The paths to process.</param>
         /// <returns></returns>
@@ -200,9 +167,7 @@ namespace Microsoft.PowerShell.Commands
             return pathsToProcess;
         }
 
-        /// <summary>
-        /// Pass each valid path on to process its contents.
-        /// </summary>
+        
         /// <param name="pathsToProcess">The paths to process.</param>
         private void ProcessPath(List<string> pathsToProcess)
         {
@@ -212,10 +177,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Creates a binary reader that reads the file content into a buffer (byte[]) 16 bytes at a time, and
-        /// passes a copy of that array on to the WriteHexadecimal method to output.
-        /// </summary>
+        
         /// <param name="path">The file path to retrieve content from for processing.</param>
         private void ProcessFileContent(string path)
         {
@@ -329,10 +291,7 @@ namespace Microsoft.PowerShell.Commands
             _inputBuffer.Clear();
         }
 
-        /// <summary>
-        /// Creates a byte array from the object passed to the cmdlet (based on type) and passes
-        /// that array on to the WriteHexadecimal method to output.
-        /// </summary>
+        
         /// <param name="inputObject">The pipeline input object being processed.</param>
         private void ProcessInputObjects(PSObject inputObject)
         {
@@ -379,10 +338,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Converts the input object to a byte array based on the underlying type for basic value types and strings,
-        /// as well as enum values or arrays.
-        /// </summary>
+        
         /// <param name="inputObject">The object to convert.</param>
         /// <returns>Returns a byte array of the input values, or null if there is no available conversion path.</returns>
         private byte[] ConvertToBytes(object inputObject)
@@ -467,9 +423,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Output
 
-        /// <summary>
-        /// Outputs the hexadecimal representation of the input data.
-        /// </summary>
+        
         /// <param name="inputBytes">Bytes for the hexadecimal representation.</param>
         /// <param name="path">File path.</param>
         /// <param name="offset">Offset in the file.</param>
@@ -486,9 +440,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Outputs the hexadecimal representation of the input data.
-        /// </summary>
+        
         /// <param name="inputBytes">Bytes for the hexadecimal representation.</param>
         /// <param name="offset">Offset in the file.</param>
         /// <param name="label">

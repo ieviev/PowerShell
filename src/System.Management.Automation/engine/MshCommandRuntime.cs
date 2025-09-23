@@ -17,30 +17,18 @@ using Dbg = System.Management.Automation.Diagnostics;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Monad internal implementation of the ICommandRuntime2 interface
-    /// used for execution in the monad engine environment.
-    ///
-    /// There will be one instance of this class for each cmdlet added to
-    /// a pipeline. When the cmdlet calls its WriteObject API, that API will call
-    /// the WriteObject implementation in this class which, in turn, calls
-    /// the downstream cmdlet.
-    /// </summary>
+    
     internal class MshCommandRuntime : ICommandRuntime2
     {
         #region private_members
 
-        /// <summary>
-        /// Gets/Set the execution context value for this runtime object.
-        /// </summary>
+        
         internal ExecutionContext Context { get; set; }
 
         private SessionState _state = null;
         internal InternalHost CBhost;
 
-        /// <summary>
-        /// The host object for this object.
-        /// </summary>
+        
         public PSHost Host { get; }
 
         // Output pipes.
@@ -48,16 +36,10 @@ namespace System.Management.Automation
         private Pipe _outputPipe;
         private Pipe _errorOutputPipe;
 
-        /// <summary>
-        /// IsClosed indicates to the Cmdlet whether its upstream partner
-        /// could still write more data to its incoming queue.
-        /// Note that there may still be data in the incoming queue.
-        /// </summary>
+        
         internal bool IsClosed { get; set; }
 
-        /// <summary>
-        /// True if we're not closed and the input pipe is non-null...
-        /// </summary>
+        
         internal bool IsPipelineInputExpected
         {
             get
@@ -73,11 +55,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// This allows all success output to be set to a variable.  Similar to the way -errorvariable sets
-        /// all errors to a variable name.  Semantically this is equivalent to :  cmd |set-var varname -passthru
-        /// but it should be MUCH faster as there is no binding that takes place.
-        /// </summary>
+        
         /// <exception cref="System.ArgumentNullException">
         /// may not be set to null
         /// </exception>
@@ -107,9 +85,7 @@ namespace System.Management.Automation
             LogPipelineExecutionDetail = InitShouldLogPipelineExecutionDetail();
         }
 
-        /// <summary>
-        /// For diagnostic purposes.
-        /// </summary>
+        
         /// <returns></returns>
         public override string ToString()
         {
@@ -119,18 +95,14 @@ namespace System.Management.Automation
         }
 
         private InvocationInfo _myInvocation;
-        /// <summary>
-        /// Return the invocation data object for this command.
-        /// </summary>
+        
         /// <value>The invocation object for this command.</value>
         internal InvocationInfo MyInvocation
         {
             get { return _myInvocation ??= _thisCommand.MyInvocation; }
         }
 
-        /// <summary>
-        /// Internal helper. Indicates whether stop has been requested on this command.
-        /// </summary>
+        
         internal bool IsStopping
         {
             get { return (this.PipelineProcessor != null && this.PipelineProcessor.Stopping); }
@@ -140,9 +112,7 @@ namespace System.Management.Automation
 
         // Trust: WriteObject needs to respect EmitTrustCategory
 
-        /// <summary>
-        /// Writes the object to the output pipe.
-        /// </summary>
+        
         /// <param name="sendToPipeline">
         /// The object that needs to be written.  This will be written as
         /// a single object, even if it is an enumeration.
@@ -207,12 +177,7 @@ namespace System.Management.Automation
             _WriteObjectSkipAllowCheck(sendToPipeline);
         }
 
-        /// <summary>
-        /// Writes one or more objects to the output pipe.
-        /// If the object is a collection and the enumerateCollection flag
-        /// is true, the objects in the collection
-        /// will be written individually.
-        /// </summary>
+        
         /// <param name="sendToPipeline">
         /// The object that needs to be written to the pipeline.
         /// </param>
@@ -269,9 +234,7 @@ namespace System.Management.Automation
 #endif
         }
 
-        /// <summary>
-        /// Writes an object enumerated from a collection to the output pipe.
-        /// </summary>
+        
         /// <param name="sendToPipeline">
         /// The enumerated object that needs to be written to the pipeline.
         /// </param>
@@ -298,9 +261,7 @@ namespace System.Management.Automation
         private static Int64 s_lastUsedSourceId ;
         private Int64 _sourceId ;
 
-        /// <summary>
-        /// Display progress information.
-        /// </summary>
+        
         /// <param name="progressRecord">Progress information.</param>
         /// <exception cref="System.Management.Automation.PipelineStoppedException">
         /// The pipeline has already been terminated, or was terminated
@@ -361,9 +322,7 @@ namespace System.Management.Automation
             this.WriteProgress(_sourceId, progressRecord, overrideInquire);
         }
 
-        /// <summary>
-        /// Displays progress output if enabled.
-        /// </summary>
+        
         /// <param name="sourceId">
         /// Identifies which command is reporting progress
         /// </param>
@@ -438,9 +397,7 @@ namespace System.Management.Automation
                 progressRecord.Activity);
         }
 
-        /// <summary>
-        /// Display debug information.
-        /// </summary>
+        
         /// <param name="text">Debug output.</param>
         /// <exception cref="System.Management.Automation.PipelineStoppedException">
         /// The pipeline has already been terminated, or was terminated
@@ -478,9 +435,7 @@ namespace System.Management.Automation
         internal bool IsWriteDebugEnabled()
             => WriteHelper_ShouldWrite(DebugPreference, lastDebugContinueStatus);
 
-        /// <summary>
-        /// Display debug information.
-        /// </summary>
+        
         internal void WriteDebug(DebugRecord record, bool overrideInquire = false)
         {
             ActionPreference preference = DebugPreference;
@@ -541,9 +496,7 @@ namespace System.Management.Automation
                 record.Message);
         }
 
-        /// <summary>
-        /// Display verbose information.
-        /// </summary>
+        
         /// <param name="text">Verbose output.</param>
         /// <exception cref="System.Management.Automation.PipelineStoppedException">
         /// The pipeline has already been terminated, or was terminated
@@ -575,9 +528,7 @@ namespace System.Management.Automation
         internal bool IsWriteVerboseEnabled()
             => WriteHelper_ShouldWrite(VerbosePreference, lastVerboseContinueStatus);
 
-        /// <summary>
-        /// Display verbose information.
-        /// </summary>
+        
         internal void WriteVerbose(VerboseRecord record, bool overrideInquire = false)
         {
             ActionPreference preference = VerbosePreference;
@@ -638,9 +589,7 @@ namespace System.Management.Automation
                 record.Message);
         }
 
-        /// <summary>
-        /// Display warning information.
-        /// </summary>
+        
         /// <param name="text">Warning output.</param>
         /// <exception cref="System.Management.Automation.PipelineStoppedException">
         /// The pipeline has already been terminated, or was terminated
@@ -672,9 +621,7 @@ namespace System.Management.Automation
         internal bool IsWriteWarningEnabled()
             => WriteHelper_ShouldWrite(WarningPreference, lastWarningContinueStatus);
 
-        /// <summary>
-        /// Display warning information.
-        /// </summary>
+        
         internal void WriteWarning(WarningRecord record, bool overrideInquire = false)
         {
             ActionPreference preference = WarningPreference;
@@ -737,9 +684,7 @@ namespace System.Management.Automation
                 record.Message);
         }
 
-        /// <summary>
-        /// Display tagged object information.
-        /// </summary>
+        
         public void WriteInformation(InformationRecord informationRecord)
         {
             WriteInformation(informationRecord, false);
@@ -748,9 +693,7 @@ namespace System.Management.Automation
         internal bool IsWriteInformationEnabled()
             => WriteHelper_ShouldWrite(InformationPreference, lastInformationContinueStatus);
 
-        /// <summary>
-        /// Display tagged object information.
-        /// </summary>
+        
         internal void WriteInformation(InformationRecord record, bool overrideInquire = false)
         {
             ActionPreference preference = InformationPreference;
@@ -882,9 +825,7 @@ namespace System.Management.Automation
                 record.ToString());
         }
 
-        /// <summary>
-        /// Write text into pipeline execution log.
-        /// </summary>
+        
         /// <param name="text">Text to be written to log.</param>
         /// <remarks>
         /// Use WriteCommandDetail to write important information about cmdlet execution to
@@ -937,10 +878,7 @@ namespace System.Management.Automation
             return false;
         }
 
-        /// <summary>
-        /// This allows all success output to be set to a variable, where the variable is reset for each item returned by
-        /// the cmdlet. Semantically this is equivalent to :  cmd | % { $pipelineVariable = $_; (...) }
-        /// </summary>
+        
         internal string PipelineVariable { get; set; }
 
         private PSVariable _pipelineVarReference;
@@ -1029,9 +967,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Configures the number of objects to buffer before calling the downstream Cmdlet.
-        /// </summary>
+        
         /// <remarks>
         /// This is a common parameter via class CommonParameters.
         /// </remarks>
@@ -1046,12 +982,7 @@ namespace System.Management.Automation
 
         #region Should
         #region ShouldProcess
-        /// <summary>
-        /// Confirm the operation with the user.  Cmdlets which make changes
-        /// (e.g. delete files, stop services etc.) should call ShouldProcess
-        /// to give the user the opportunity to confirm that the operation
-        /// should actually be performed.
-        /// </summary>
+        
         /// <param name="target">
         /// Name of the target resource being acted upon. This will
         /// potentially be displayed to the user.
@@ -1135,15 +1066,7 @@ namespace System.Management.Automation
             return DoShouldProcess(verboseDescription, null, null, out shouldProcessReason);
         }
 
-        /// <summary>
-        /// Confirm the operation with the user.  Cmdlets which make changes
-        /// (e.g. delete files, stop services etc.) should call ShouldProcess
-        /// to give the user the opportunity to confirm that the operation
-        /// should actually be performed.
-        ///
-        /// This variant allows the caller to specify text for both the
-        /// target resource and the action.
-        /// </summary>
+        
         /// <param name="target">
         /// Name of the target resource being acted upon. This will
         /// potentially be displayed to the user.
@@ -1230,15 +1153,7 @@ namespace System.Management.Automation
             return DoShouldProcess(verboseDescription, null, null, out shouldProcessReason);
         }
 
-        /// <summary>
-        /// Confirm the operation with the user.  Cmdlets which make changes
-        /// (e.g. delete files, stop services etc.) should call ShouldProcess
-        /// to give the user the opportunity to confirm that the operation
-        /// should actually be performed.
-        ///
-        /// This variant allows the caller to specify the complete text
-        /// describing the operation, rather than just the name and action.
-        /// </summary>
+        
         /// <param name="verboseDescription">
         /// Textual description of the action to be performed.
         /// This is what will be displayed to the user for
@@ -1339,15 +1254,7 @@ namespace System.Management.Automation
                 out shouldProcessReason);
         }
 
-        /// <summary>
-        /// Confirm the operation with the user.  Cmdlets which make changes
-        /// (e.g. delete files, stop services etc.) should call ShouldProcess
-        /// to give the user the opportunity to confirm that the operation
-        /// should actually be performed.
-        ///
-        /// This variant allows the caller to specify the complete text
-        /// describing the operation, rather than just the name and action.
-        /// </summary>
+        
         /// <param name="verboseDescription">
         /// Textual description of the action to be performed.
         /// This is what will be displayed to the user for
@@ -1478,9 +1385,7 @@ namespace System.Management.Automation
             return false;
         }
 
-        /// <summary>
-        /// Helper function for ShouldProcess APIs.
-        /// </summary>
+        
         /// <param name="verboseDescription">
         /// Description of operation, to be printed for Continue or WhatIf
         /// </param>
@@ -1654,13 +1559,7 @@ namespace System.Management.Automation
 
         #endregion ShouldProcess
         #region ShouldContinue
-        /// <summary>
-        /// Confirm an operation or grouping of operations with the user.
-        /// This differs from ShouldProcess in that it is not affected by
-        /// preference settings or command-line parameters,
-        /// it always does the query.
-        /// This variant only offers Yes/No, not YesToAll/NoToAll.
-        /// </summary>
+        
         /// <param name="query">
         /// Textual query of whether the action should be performed,
         /// usually in the form of a question.
@@ -1777,13 +1676,7 @@ namespace System.Management.Automation
                 ref noToAll);
         }
 
-        /// <summary>
-        /// Confirm an operation or grouping of operations with the user.
-        /// This differs from ShouldProcess in that it is not affected by
-        /// preference settings or command-line parameters,
-        /// it always does the query.
-        /// This variant offers Yes, No, YesToAll and NoToAll.
-        /// </summary>
+        
         /// <param name="query">
         /// Textual query of whether the action should be performed,
         /// usually in the form of a question.
@@ -1828,13 +1721,7 @@ namespace System.Management.Automation
             return DoShouldContinue(query, caption, hasSecurityImpact, true, ref yesToAll, ref noToAll);
         }
 
-        /// <summary>
-        /// Confirm an operation or grouping of operations with the user.
-        /// This differs from ShouldProcess in that it is not affected by
-        /// preference settings or command-line parameters,
-        /// it always does the query.
-        /// This variant offers Yes, No, YesToAll and NoToAll.
-        /// </summary>
+        
         /// <param name="query">
         /// Textual query of whether the action should be performed,
         /// usually in the form of a question.
@@ -2014,18 +1901,13 @@ namespace System.Management.Automation
         #endregion Should
 
         #region Transaction Support
-        /// <summary>
-        /// Returns true if a transaction is available for use.
-        /// </summary>
+        
         public bool TransactionAvailable()
         {
             return UseTransactionFlagSet && Context.TransactionManager.HasTransaction;
         }
 
-        /// <summary>
-        /// Gets an object that surfaces the current PowerShell transaction.
-        /// When this object is disposed, PowerShell resets the active transaction.
-        /// </summary>
+        
         public PSTransactionContext CurrentPSTransaction
         {
             get
@@ -2051,9 +1933,7 @@ namespace System.Management.Automation
         #endregion Transaction Support
 
         #region Misc
-        /// <summary>
-        /// Implementation of ThrowTerminatingError.
-        /// </summary>
+        
         /// <param name="errorRecord">
         /// The error which caused the command to be terminated
         /// </param>
@@ -2142,65 +2022,41 @@ namespace System.Management.Automation
 
         #region Data Merging
 
-        /// <summary>
-        /// Data streams available for merging.
-        /// </summary>
+        
         internal enum MergeDataStream
         {
-            /// <summary>
-            /// No data stream available for merging.
-            /// </summary>
+            
             None = 0,
 
-            /// <summary>
-            /// All data streams.
-            /// </summary>
+            
             All = 1,
 
-            /// <summary>
-            /// Success output.
-            /// </summary>
+            
             Output = 2,
 
-            /// <summary>
-            /// Error output.
-            /// </summary>
+            
             Error = 3,
 
-            /// <summary>
-            /// Warning output.
-            /// </summary>
+            
             Warning = 4,
 
-            /// <summary>
-            /// Verbose output.
-            /// </summary>
+            
             Verbose = 5,
 
-            /// <summary>
-            /// Debug output.
-            /// </summary>
+            
             Debug = 6,
 
-            /// <summary>
-            /// Host output.
-            /// </summary>
+            
             Host = 7,
 
-            /// <summary>
-            /// Information output.
-            /// </summary>
+            
             Information = 8
         }
 
-        /// <summary>
-        /// Get/sets error data stream merge state.
-        /// </summary>
+        
         internal MergeDataStream ErrorMergeTo { get; set; }
 
-        /// <summary>
-        /// Method to set data stream merging based on passed in runtime object.
-        /// </summary>
+        
         /// <param name="fromRuntime">MshCommandRuntime object.</param>
         internal void SetMergeFromRuntime(MshCommandRuntime fromRuntime)
         {
@@ -2231,18 +2087,14 @@ namespace System.Management.Automation
         // Legacy merge hints.
         //
 
-        /// <summary>
-        /// Claims the unclaimed error output of all previous commands.
-        /// </summary>
+        
         internal bool MergeUnclaimedPreviousErrorResults { get; set; } = false;
 
         #endregion
 
         #region Internal Pipes
 
-        /// <summary>
-        /// Gets or sets the input pipe.
-        /// </summary>
+        
         internal Pipe InputPipe
         {
             get { return _inputPipe ??= new Pipe(); }
@@ -2250,9 +2102,7 @@ namespace System.Management.Automation
             set { _inputPipe = value; }
         }
 
-        /// <summary>
-        /// Gets or sets the output pipe.
-        /// </summary>
+        
         internal Pipe OutputPipe
         {
             get { return _outputPipe ??= new Pipe(); }
@@ -2267,15 +2117,10 @@ namespace System.Management.Automation
             return _outputPipe.ToArray();
         }
 
-        /// <summary>
-        /// An empty array that is declared statically so we don't keep
-        /// allocating them over and over...
-        /// </summary>
+        
         internal static readonly object[] StaticEmptyArray = Array.Empty<object>();
 
-        /// <summary>
-        /// Gets or sets the error pipe.
-        /// </summary>
+        
         internal Pipe ErrorOutputPipe
         {
             get { return _errorOutputPipe ??= new Pipe(); }
@@ -2283,32 +2128,22 @@ namespace System.Management.Automation
             set { _errorOutputPipe = value; }
         }
 
-        /// <summary>
-        /// Gets or sets the warning output pipe.
-        /// </summary>
+        
         internal Pipe WarningOutputPipe { get; set; }
 
-        /// <summary>
-        /// Gets or sets the verbose output pipe.
-        /// </summary>
+        
         internal Pipe VerboseOutputPipe { get; set; }
 
-        /// <summary>
-        /// Gets or sets the debug output pipe.
-        /// </summary>
+        
         internal Pipe DebugOutputPipe { get; set; }
 
-        /// <summary>
-        /// Gets or sets the informational output pipe.
-        /// </summary>
+        
         internal Pipe InformationOutputPipe { get; set; }
 
         #endregion
 
         #region Internal helpers
-        /// <summary>
-        /// Throws if the pipeline is stopping.
-        /// </summary>
+        
         /// <exception cref="System.Management.Automation.PipelineStoppedException"></exception>
         internal void ThrowIfStopping()
         {
@@ -2316,11 +2151,7 @@ namespace System.Management.Automation
                 throw new PipelineStoppedException();
         }
 
-        /// <summary>
-        /// Throws if the caller is trying to call WriteObject/WriteError
-        /// from the wrong thread, or not during a call to
-        /// BeginProcessing/ProcessRecord/EndProcessing.
-        /// </summary>
+        
         /// <exception cref="System.InvalidOperationException"></exception>
         internal void ThrowIfWriteNotPermitted(bool needsToWriteToPipeline)
         {
@@ -2340,11 +2171,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// WriteObject/WriteObjecs/WriteError are only allowed during this scope.
-        /// Be sure to use this object only in "using" so that it is reliably
-        /// disposed and follows stack semantics.
-        /// </summary>
+        
         /// <returns>IDisposable.</returns>
         internal IDisposable AllowThisCommandToWrite(bool permittedToWriteToPipeline)
         {
@@ -2353,9 +2180,7 @@ namespace System.Management.Automation
 
         private sealed class AllowWrite : IDisposable
         {
-            /// <summary>
-            /// Begin the scope where WriteObject/WriteError is permitted.
-            /// </summary>
+            
             internal AllowWrite(InternalCommand permittedToWrite, bool permittedToWriteToPipeline)
             {
                 if (permittedToWrite == null)
@@ -2372,9 +2197,7 @@ namespace System.Management.Automation
                 _pp._permittedToWriteToPipeline = permittedToWriteToPipeline;
                 _pp._permittedToWriteThread = Thread.CurrentThread;
             }
-            /// <summary>
-            /// End the scope where WriteObject/WriteError is permitted.
-            /// </summary>
+            
             /// 
             public void Dispose()
             {
@@ -2393,13 +2216,7 @@ namespace System.Management.Automation
             private readonly Thread _wasPermittedToWriteThread = null;
         }
 
-        /// <summary>
-        /// Stores the exception to be returned from
-        /// PipelineProcessor.SynchronousExecute,
-        /// and writes it to the error variable.
-        /// The general pattern is to call
-        /// throw ManageException(e);
-        /// </summary>
+        
         /// <param name="e">The exception.</param>
         /// <returns>PipelineStoppedException.</returns>
         public Exception ManageException(Exception e)
@@ -2446,10 +2263,7 @@ namespace System.Management.Automation
         #region Error PSVariable
         private IList _errorVarList;
 
-        /// <summary>
-        /// ErrorVariable tells which variable to populate with the errors.
-        /// Use +varname to append to the variable rather than clearing it.
-        /// </summary>
+        
         /// <remarks>
         /// This is a common parameter via class CommonParameters.
         /// </remarks>
@@ -2472,9 +2286,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Append an error to the ErrorVariable if specified, and also to $ERROR.
-        /// </summary>
+        
         /// <param name="obj">Exception or ErrorRecord.</param>
         /// <exception cref="System.Management.Automation.ExtendedTypeSystemException">
         /// (An error occurred working with the error variable or $ERROR.
@@ -2489,13 +2301,7 @@ namespace System.Management.Automation
             this.OutputPipe.AppendVariableList(VariableStreamKind.Error, obj);
         }
 
-        /// <summary>
-        /// Appends the object to $global:error.  Non-terminating errors
-        /// are always added (even if they are redirected to another
-        /// Cmdlet), but terminating errors are only added if they are
-        /// at the top-level scope (the LocalPipeline scope).
-        /// We insert at position 0 and delete from position 63.
-        /// </summary>
+        
         /// <param name="obj">
         /// ErrorRecord or Exception to be written to $global:error
         /// </param>
@@ -2518,10 +2324,7 @@ namespace System.Management.Automation
         #region Warning PSVariable
         private IList _warningVarList;
 
-        /// <summary>
-        /// WarningVariable tells which variable to populate with the warnings.
-        /// Use +varname to append to the variable rather than clearing it.
-        /// </summary>
+        
         /// <remarks>
         /// This is a common parameter via class CommonParameters.
         /// </remarks>
@@ -2532,9 +2335,7 @@ namespace System.Management.Automation
             SetupVariable(VariableStreamKind.Warning, this.WarningVariable, ref _warningVarList);
         }
 
-        /// <summary>
-        /// Append a warning to WarningVariable if specified.
-        /// </summary>
+        
         /// <param name="obj">The warning message.</param>
         internal void AppendWarningVarList(object obj)
         {
@@ -2546,10 +2347,7 @@ namespace System.Management.Automation
         #region Information PSVariable
         private IList _informationVarList;
 
-        /// <summary>
-        /// InformationVariable tells which variable to populate with informational output.
-        /// Use +varname to append to the variable rather than clearing it.
-        /// </summary>
+        
         /// <remarks>
         /// This is a common parameter via class CommonParameters.
         /// </remarks>
@@ -2616,9 +2414,7 @@ namespace System.Management.Automation
             _state.PSVariable.Set(variableName, varList);
         }
 
-        /// <summary>
-        /// Append a Information to InformationVariable if specified.
-        /// </summary>
+        
         /// <param name="obj">The Information message.</param>
         internal void AppendInformationVarList(object obj)
         {
@@ -2630,9 +2426,7 @@ namespace System.Management.Automation
         #region Write
         internal bool UseSecurityContextRun = true;
 
-        /// <summary>
-        /// Writes an object to the output pipe, skipping the ThrowIfWriteNotPermitted check.
-        /// </summary>
+        
         /// <param name="sendToPipeline">
         /// The object to write to the output pipe.
         /// </param>
@@ -2654,9 +2448,7 @@ namespace System.Management.Automation
             this.OutputPipe.Add(sendToPipeline);
         }
 
-        /// <summary>
-        /// Enumerates and writes an object to the output pipe, skipping the ThrowIfWriteNotPermitted check.
-        /// </summary>
+        
         /// <param name="sendToPipeline">
         /// The object to enumerate and write to the output pipe.
         /// </param>
@@ -2697,9 +2489,7 @@ namespace System.Management.Automation
         #endregion Write
 
         #region WriteError
-        /// <summary>
-        /// Internal variant: Writes the specified error to the error pipe.
-        /// </summary>
+        
         /// <remarks>
         /// Do not call WriteError(e.ErrorRecord).
         /// The ErrorRecord contained in the ErrorRecord property of
@@ -2829,9 +2619,7 @@ namespace System.Management.Automation
             _WriteErrorSkipAllowCheck(errorRecord, preference);
         }
 
-        /// <summary>
-        /// Write an error, skipping the ThrowIfWriteNotPermitted check.
-        /// </summary>
+        
         /// <param name="errorRecord">The error record to write.</param>
         /// <param name="actionPreference">The configured error action preference.</param>
         /// <param name="isFromNativeStdError">
@@ -2973,9 +2761,7 @@ namespace System.Management.Automation
 
         private bool _isConfirmPreferenceCached = false;
         private ConfirmImpact _confirmPreference = InitialSessionState.DefaultConfirmPreference;
-        /// <summary>
-        /// Preference setting controlling behavior of ShouldProcess()
-        /// </summary>
+        
         /// <remarks>
         /// This is not an independent parameter, it just emerges from the
         /// Verbose, Debug, Confirm, and WhatIf parameters and the
@@ -3014,9 +2800,7 @@ namespace System.Management.Automation
         private bool _isDebugPreferenceSet = false;
         private ActionPreference _debugPreference = InitialSessionState.DefaultDebugPreference;
         private bool _isDebugPreferenceCached = false;
-        /// <summary>
-        /// Preference setting.
-        /// </summary>
+        
         /// <exception cref="System.Management.Automation.ExtendedTypeSystemException">
         /// (get-only) An error occurred accessing $DebugPreference.
         /// </exception>
@@ -3067,9 +2851,7 @@ namespace System.Management.Automation
 
         private readonly bool _isVerbosePreferenceCached = false;
         private ActionPreference _verbosePreference = InitialSessionState.DefaultVerbosePreference;
-        /// <summary>
-        /// Preference setting.
-        /// </summary>
+        
         /// <exception cref="System.Management.Automation.ExtendedTypeSystemException">
         /// An error occurred accessing $VerbosePreference.
         /// </exception>
@@ -3116,9 +2898,7 @@ namespace System.Management.Automation
 
         private readonly bool _isWarningPreferenceCached = false;
         private ActionPreference _warningPreference = InitialSessionState.DefaultWarningPreference;
-        /// <summary>
-        /// Preference setting.
-        /// </summary>
+        
         /// <exception cref="System.Management.Automation.ExtendedTypeSystemException">
         /// An error occurred accessing $WarningPreference.
         /// </exception>
@@ -3162,9 +2942,7 @@ namespace System.Management.Automation
         // where you'd like the underlying Cmdlet to have the same switches.
         private bool _verboseFlag = false;
 
-        /// <summary>
-        /// Echo tells the command to articulate the actions it performs while executing.
-        /// </summary>
+        
         /// <remarks>
         /// This is a common parameter via class CommonParameters.
         /// </remarks>
@@ -3186,9 +2964,7 @@ namespace System.Management.Automation
 
         private bool _confirmFlag = false;
 
-        /// <summary>
-        /// Confirm tells the command to ask the admin before performing an action.
-        /// </summary>
+        
         /// <remarks>
         /// This is a common parameter via class ShouldProcessParameters.
         /// </remarks>
@@ -3210,9 +2986,7 @@ namespace System.Management.Automation
 
         private bool _useTransactionFlag = false;
 
-        /// <summary>
-        /// UseTransaction tells the command to activate the current PowerShell transaction.
-        /// </summary>
+        
         /// <remarks>
         /// This is a common parameter via class TransactionParameters.
         /// </remarks>
@@ -3237,10 +3011,7 @@ namespace System.Management.Automation
         // have the same switches.
         private bool _debugFlag = false;
 
-        /// <summary>
-        /// Debug tell the command system to provide Programmer/Support type messages to understand what is really occurring
-        /// and give the user the opportunity to stop or debug the situation.
-        /// </summary>
+        
         /// <remarks>
         /// This is a common parameter via class CommonParameters.
         /// </remarks>
@@ -3262,10 +3033,7 @@ namespace System.Management.Automation
 
         private bool _whatIfFlag = InitialSessionState.DefaultWhatIfPreference;
         private bool _isWhatIfPreferenceCached ;
-        /// <summary>
-        /// WhatIf indicates that the command should not
-        /// perform any changes to persistent state outside Monad.
-        /// </summary>
+        
         /// <remarks>
         /// This is a common parameter via class ShouldProcessParameters.
         /// </remarks>
@@ -3293,9 +3061,7 @@ namespace System.Management.Automation
 
         private ActionPreference _errorAction = InitialSessionState.DefaultErrorActionPreference;
         private bool _isErrorActionPreferenceCached = false;
-        /// <summary>
-        /// ErrorAction tells the command what to do when an error occurs.
-        /// </summary>
+        
         /// <exception cref="System.Management.Automation.ExtendedTypeSystemException">
         /// (get-only) An error occurred accessing $ErrorAction.
         /// </exception>
@@ -3334,9 +3100,7 @@ namespace System.Management.Automation
 
         internal bool IsErrorActionSet { get; private set; } = false;
 
-        /// <summary>
-        /// Preference setting for displaying ProgressRecords when WriteProgress is called.
-        /// </summary>
+        
         /// <value></value>
         internal ActionPreference ProgressPreference
         {
@@ -3373,9 +3137,7 @@ namespace System.Management.Automation
 
         private bool _isProgressPreferenceCached = false;
 
-        /// <summary>
-        /// Preference setting for displaying InformationRecords when WriteInformation is called.
-        /// </summary>
+        
         /// <value></value>
         internal ActionPreference InformationPreference
         {
@@ -3420,10 +3182,7 @@ namespace System.Management.Automation
 
         #region Helpers
 
-        /// <summary>
-        /// ContinueStatus indicates the last reply from the user
-        /// whether or not the command should process an object.
-        /// </summary>
+        
         internal enum ContinueStatus
         {
             Yes,
@@ -3440,9 +3199,7 @@ namespace System.Management.Automation
         internal ContinueStatus lastProgressContinueStatus = ContinueStatus.Yes;
         internal ContinueStatus lastInformationContinueStatus = ContinueStatus.Yes;
 
-        /// <summary>
-        /// Should the verbose/debug/progress message be printed?
-        /// </summary>
+        
         /// <param name="preference"></param>
         /// <param name="lastContinueStatus"></param>
         /// <returns></returns>
@@ -3495,9 +3252,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Complete implementation of WriteDebug/WriteVerbose/WriteProgress.
-        /// </summary>
+        
         /// <param name="inquireCaption"></param>
         /// <param name="inquireMessage"></param>
         /// <param name="preference"></param>
@@ -3571,9 +3326,7 @@ namespace System.Management.Automation
             );
         }
 
-        /// <summary>
-        /// Helper for continue prompt, handles Inquire.
-        /// </summary>
+        
         /// <param name="inquireMessage">May be null.</param>
         /// <param name="inquireCaption">May be null.</param>
         /// <param name="allowYesToAll"></param>
@@ -3748,9 +3501,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Determines if this is being run in the context of a remote host or not.
-        /// </summary>
+        
         private bool IsSuspendPromptAllowed()
         {
             Dbg.Assert(this.CBhost != null, "Expected this.CBhost != null");

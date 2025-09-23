@@ -11,11 +11,7 @@ using Dbg = System.Management.Automation;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// This provider is the data accessor for shell variables. It uses
-    /// the HashtableProvider as the base class to get a hashtable as
-    /// a data store.
-    /// </summary>
+    
     [CmdletProvider(VariableProvider.ProviderName, ProviderCapabilities.ShouldProcess)]
     [OutputType(typeof(PSVariable), ProviderCmdlet = ProviderCmdlet.SetItem)]
     [OutputType(typeof(PSVariable), ProviderCmdlet = ProviderCmdlet.RenameItem)]
@@ -24,17 +20,12 @@ namespace Microsoft.PowerShell.Commands
     [OutputType(typeof(PSVariable), ProviderCmdlet = ProviderCmdlet.NewItem)]
     public sealed class VariableProvider : SessionStateProviderBase
     {
-        /// <summary>
-        /// Gets the name of the provider.
-        /// </summary>
+        
         public const string ProviderName = "Variable";
 
         #region Constructor
 
-        /// <summary>
-        /// The constructor for the provider that exposes variables to the user
-        /// as drives.
-        /// </summary>
+        
         public VariableProvider()
         {
         }
@@ -43,9 +34,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region DriveCmdletProvider overrides
 
-        /// <summary>
-        /// Initializes the variables drive.
-        /// </summary>
+        
         /// <returns>
         /// An array of a single PSDriveInfo object representing the variables drive.
         /// </returns>
@@ -70,9 +59,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region protected members
 
-        /// <summary>
-        /// Gets a variable from session state.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the variable to retrieve.
         /// </param>
@@ -88,9 +75,7 @@ namespace Microsoft.PowerShell.Commands
             return (PSVariable)SessionState.Internal.GetVariable(name, Context.Origin);
         }
 
-        /// <summary>
-        /// Sets the variable of the specified name to the specified value.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the variable to set.
         /// </param>
@@ -140,9 +125,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Removes the specified variable from session state.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the variable to remove from session state.
         /// </param>
@@ -155,9 +138,7 @@ namespace Microsoft.PowerShell.Commands
             SessionState.Internal.RemoveVariable(name, Force);
         }
 
-        /// <summary>
-        /// Gets a flattened view of the variables in session state.
-        /// </summary>
+        
         /// <returns>
         /// An IDictionary representing the flattened view of the variables in
         /// session state.
@@ -167,10 +148,7 @@ namespace Microsoft.PowerShell.Commands
             return (IDictionary)SessionState.Internal.GetVariableTable();
         }
 
-        /// <summary>
-        /// Gets the value of the item that is returned from GetItem by
-        /// extracting the PSVariable value.
-        /// </summary>
+        
         /// <param name="item">
         /// The item to extract the value from.
         /// </param>
@@ -197,10 +175,7 @@ namespace Microsoft.PowerShell.Commands
             return value;
         }
 
-        /// <summary>
-        /// Determines if the item can be renamed. Derived classes that need
-        /// to perform a check should override this method.
-        /// </summary>
+        
         /// <param name="item">
         /// The item to verify if it can be renamed.
         /// </param>

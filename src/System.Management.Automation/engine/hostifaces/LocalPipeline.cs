@@ -15,9 +15,7 @@ using Microsoft.PowerShell.Commands;
 
 namespace System.Management.Automation.Runspaces
 {
-    /// <summary>
-    /// Pipeline class to be used for LocalRunspace.
-    /// </summary>
+    
     internal sealed class LocalPipeline : PipelineBase
     {
         // Each OS platform uses different default stack size for threads:
@@ -30,9 +28,7 @@ namespace System.Management.Automation.Runspaces
 
         #region constructors
 
-        /// <summary>
-        /// Create a Pipeline with an existing command string.
-        /// </summary>
+        
         /// <param name="runspace">The LocalRunspace to associate with this
         /// pipeline.
         /// </param>
@@ -46,10 +42,7 @@ namespace System.Management.Automation.Runspaces
             InitStreams();
         }
 
-        /// <summary>
-        /// Create a Pipeline with an existing command string.
-        /// Caller should validate all the parameters.
-        /// </summary>
+        
         /// <param name="runspace">
         /// The LocalRunspace to associate with this pipeline.
         /// </param>
@@ -89,9 +82,7 @@ namespace System.Management.Automation.Runspaces
             InitStreams();
         }
 
-        /// <summary>
-        /// Copy constructor to support cloning.
-        /// </summary>
+        
         /// <param name="pipeline">The source pipeline.</param>
         internal LocalPipeline(LocalPipeline pipeline)
             : base((PipelineBase)(pipeline))
@@ -104,9 +95,7 @@ namespace System.Management.Automation.Runspaces
 
         #region public_methods
 
-        /// <summary>
-        /// Creates a new <see cref="Pipeline"/> that is a copy of the current instance.
-        /// </summary>
+        
         /// <returns>A new <see cref="Pipeline"/> that is a copy of this instance.</returns>
         public override Pipeline Copy()
         {
@@ -123,9 +112,7 @@ namespace System.Management.Automation.Runspaces
 
         #region private_methods
 
-        /// <summary>
-        /// Invoke the pipeline asynchronously with input.
-        /// </summary>
+        
         /// <remarks>
         /// Results are returned through the <see cref="Pipeline.Output"/> reader.
         /// </remarks>
@@ -251,9 +238,7 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// Prepares the invoke thread for execution.
-        /// </summary>
+        
         private void SetupInvokeThread(Thread invokeThread, bool changeName)
         {
             NestedPipelineExecutionThread = invokeThread;
@@ -269,9 +254,7 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// Helper method for asynchronous invoke
-        /// </summary>
+        
         /// <returns>Unhandled FlowControl exception if InvocationSettings.ExposeFlowControlExceptions is true.</returns>
         private FlowControlException InvokeHelper()
         {
@@ -526,10 +509,7 @@ namespace System.Management.Automation.Runspaces
         }
 
 #if !UNIX
-        /// <summary>
-        /// Invokes the InvokeThreadProc() method on new thread, and flows calling thread
-        /// impersonation as needed.
-        /// </summary>
+        
         private void InvokeThreadProcImpersonate()
         {
             if (_identityToImpersonate != null)
@@ -545,9 +525,7 @@ namespace System.Management.Automation.Runspaces
         }
 #endif
 
-        /// <summary>
-        /// Start thread method for asynchronous pipeline execution.
-        /// </summary>
+        
         private void InvokeThreadProc()
         {
             bool incompleteParseException = false;
@@ -727,9 +705,7 @@ namespace System.Management.Automation.Runspaces
 
         #region stop
 
-        /// <summary>
-        /// Stop the running pipeline.
-        /// </summary>
+        
         /// <param name="syncCall">If true pipeline is stopped synchronously
         /// else asynchronously.</param>
         protected override void ImplementStop(bool syncCall)
@@ -745,9 +721,7 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// Start method for asynchronous Stop.
-        /// </summary>
+        
         private void StopThreadProc()
         {
             StopHelper();
@@ -755,10 +729,7 @@ namespace System.Management.Automation.Runspaces
 
         private readonly PipelineStopper _stopper;
 
-        /// <summary>
-        /// Gets PipelineStopper object which maintains stack of PipelineProcessor
-        /// for this pipeline.
-        /// </summary>
+        
         /// <value></value>
         internal PipelineStopper Stopper
         {
@@ -767,9 +738,7 @@ namespace System.Management.Automation.Runspaces
                 return _stopper;
             }
         }
-        /// <summary>
-        /// Helper method for Stop functionality.
-        /// </summary>
+        
         private void StopHelper()
         {
             // Ensure that any saved debugger stop is released
@@ -797,9 +766,7 @@ namespace System.Management.Automation.Runspaces
             PipelineFinishedEvent.WaitOne();
         }
 
-        /// <summary>
-        /// Returns true if pipeline is stopping.
-        /// </summary>
+        
         /// <value></value>
         internal bool IsStopping
         {
@@ -810,9 +777,7 @@ namespace System.Management.Automation.Runspaces
         }
         #endregion stop
 
-        /// <summary>
-        /// Creates a PipelineProcessor object from LocalPipeline object.
-        /// </summary>
+        
         /// <returns>Created PipelineProcessor object.</returns>
         private PipelineProcessor CreatePipelineProcessor()
         {
@@ -918,9 +883,7 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// Resolves command.CommandInfo to an appropriate CommandProcessorBase implementation.
-        /// </summary>
+        
         /// <param name="command">Command to resolve.</param>
         /// <returns></returns>
         private CommandProcessorBase CreateCommandProcessBase(Command command)
@@ -953,10 +916,7 @@ namespace System.Management.Automation.Runspaces
             throw new NotImplementedException();
         }
 
-        /// <summary>
-        /// This method initializes streams and backs up their original states.
-        /// This should be only called from constructors.
-        /// </summary>
+        
         private void InitStreams()
         {
             if (LocalRunspace.ExecutionContext != null)
@@ -968,10 +928,7 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// This method sets streams to their original states from execution context.
-        /// This is done when Pipeline is completed/failed/stopped ie., termination state.
-        /// </summary>
+        
         private void ClearStreams()
         {
             if (LocalRunspace.ExecutionContext != null)
@@ -984,18 +941,13 @@ namespace System.Management.Automation.Runspaces
         // History object for this pipeline
         private DateTime _pipelineStartTime;
 
-        /// <summary>
-        /// Adds an entry in history for this pipeline.
-        /// </summary>
+        
         private void RecordPipelineStartTime()
         {
             _pipelineStartTime = DateTime.Now;
         }
 
-        /// <summary>
-        /// Add HistoryEntry for this pipeline. Use this function when writing
-        /// history at the end of pipeline.
-        /// </summary>
+        
         private void AddHistoryEntry(bool skipIfLocked)
         {
             // History id is greater than zero if entry was added to history
@@ -1006,9 +958,7 @@ namespace System.Management.Automation.Runspaces
         }
 
         private long _historyIdForThisPipeline = -1;
-        /// <summary>
-        /// This method is called Add-History cmdlet to add history entry.
-        /// </summary>
+        
         /// <remarks>
         /// In general history entry for current pipeline is added at the
         /// end of pipeline execution.
@@ -1034,11 +984,7 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// Add-history cmdlet adds history entry for the pipeline in its
-        /// begin processing. This method is called to update the end execution
-        /// time and status of pipeline.
-        /// </summary>
+        
         internal
         void UpdateHistoryEntryAddedByAddHistoryCmdlet(bool skipIfLocked)
         {
@@ -1048,9 +994,7 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// Sets the history string to the specified one.
-        /// </summary>
+        
         /// <param name="historyString">History string to set to.</param>
         internal override void SetHistoryString(string historyString)
         {
@@ -1059,10 +1003,7 @@ namespace System.Management.Automation.Runspaces
 
         #region TLS
 
-        /// <summary>
-        /// Gets the execution context in the thread local storage of current
-        /// thread.
-        /// </summary>
+        
         /// <returns>
         /// ExecutionContext, if it available in TLS
         /// Null, if ExecutionContext is not available in TLS
@@ -1084,10 +1025,7 @@ namespace System.Management.Automation.Runspaces
 
         #region private_fields
 
-        /// <summary>
-        /// Holds reference to LocalRunspace to which this pipeline is
-        /// associated with.
-        /// </summary>
+        
         private LocalRunspace LocalRunspace
         {
             get
@@ -1109,14 +1047,10 @@ namespace System.Management.Automation.Runspaces
 
         #region IDisposable Members
 
-        /// <summary>
-        /// Set to true when object is disposed.
-        /// </summary>
+        
         private bool _disposed;
 
-        /// <summary>
-        /// Protected dispose which can be overridden by derived classes.
-        /// </summary>
+        
         /// <param name="disposing"></param>
         protected override
         void
@@ -1142,14 +1076,10 @@ namespace System.Management.Automation.Runspaces
         #endregion IDisposable Members
     }
 
-    /// <summary>
-    /// Helper class that holds the thread used to execute pipelines when CreateThreadOptions.ReuseThread is used.
-    /// </summary>
+    
     internal class PipelineThread : IDisposable
     {
-        /// <summary>
-        /// Creates the worker thread and waits for it to be ready.
-        /// </summary>
+        
         internal PipelineThread(ApartmentState apartmentState)
         {
             _worker = new Thread(WorkerProc, LocalPipeline.DefaultPipelineStackSize);
@@ -1165,9 +1095,7 @@ namespace System.Management.Automation.Runspaces
 #endif
         }
 
-        /// <summary>
-        /// Returns the worker thread.
-        /// </summary>
+        
         internal Thread Worker
         {
             get
@@ -1176,9 +1104,7 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// Posts an item to the worker thread and wait for its completion.
-        /// </summary>
+        
         internal void Start(ThreadStart workItem)
         {
             if (_closed)
@@ -1195,17 +1121,13 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// Shortcut for dispose.
-        /// </summary>
+        
         internal void Close()
         {
             Dispose();
         }
 
-        /// <summary>
-        /// Implementation of the worker thread.
-        /// </summary>
+        
         private void WorkerProc()
         {
             while (!_closed)
@@ -1219,9 +1141,7 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// Releases the worker thread.
-        /// </summary>
+        
         public void Dispose()
         {
             if (_closed)
@@ -1243,9 +1163,7 @@ namespace System.Management.Automation.Runspaces
             GC.SuppressFinalize(this);
         }
 
-        /// <summary>
-        /// Finalizes an instance of the <see cref="PipelineThread"/> class.
-        /// </summary>
+        
         ~PipelineThread()
         {
             Dispose();
@@ -1257,36 +1175,23 @@ namespace System.Management.Automation.Runspaces
         private bool _closed;
     }
 
-    /// <summary>
-    /// This is helper class for stopping a running pipeline. This
-    /// class maintains a stack of currently active pipeline processors.
-    /// To stop a pipeline, stop is called on each pipeline processor
-    /// in the stack.
-    /// </summary>
+    
     internal class PipelineStopper
     {
-        /// <summary>
-        /// Stack of current executing pipeline processor.
-        /// </summary>
+        
         private readonly Stack<PipelineProcessor> _stack = new Stack<PipelineProcessor>();
 
-        /// <summary>
-        /// Object used for synchronization.
-        /// </summary>
+        
         private readonly object _syncRoot = new object();
         private readonly LocalPipeline _localPipeline;
 
-        /// <summary>
-        /// Default constructor.
-        /// </summary>
+        
         internal PipelineStopper(LocalPipeline localPipeline)
         {
             _localPipeline = localPipeline;
         }
 
-        /// <summary>
-        /// This is set true when stop is called.
-        /// </summary>
+        
         private bool _stopping;
 
         internal bool IsStopping
@@ -1302,9 +1207,7 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// Push item in to PipelineProcessor stack.
-        /// </summary>
+        
         /// <param name="item"></param>
         internal void Push(PipelineProcessor item)
         {
@@ -1327,9 +1230,7 @@ namespace System.Management.Automation.Runspaces
             item.LocalPipeline = _localPipeline;
         }
 
-        /// <summary>
-        /// Pop top item from PipelineProcessor stack.
-        /// </summary>
+        
         internal void Pop(bool fromSteppablePipeline)
         {
             lock (_syncRoot)

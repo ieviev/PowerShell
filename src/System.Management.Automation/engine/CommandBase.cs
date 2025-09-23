@@ -12,11 +12,7 @@ using System.Threading;
 
 namespace System.Management.Automation.Internal
 {
-    /// <summary>
-    /// Defines members used by Cmdlets.
-    /// All Cmdlets must derive from
-    /// <see cref="System.Management.Automation.Cmdlet"/>.
-    /// </summary>
+    
     /// <remarks>
     /// Only use <see cref="System.Management.Automation.Internal.InternalCommand"/>
     /// as a subclass of
@@ -40,9 +36,7 @@ namespace System.Management.Automation.Internal
 
         #region ctor
 
-        /// <summary>
-        /// Initializes the new instance of Cmdlet class.
-        /// </summary>
+        
         /// <remarks>
         /// The only constructor is internal, so outside users cannot create
         /// an instance of this class.
@@ -56,30 +50,22 @@ namespace System.Management.Automation.Internal
 
         #region internal_members
 
-        /// <summary>
-        /// Allows you to access the calling token for this command invocation...
-        /// </summary>
+        
         /// <value></value>
         internal IScriptExtent InvocationExtent { get; set; }
 
         private InvocationInfo _myInvocation = null;
-        /// <summary>
-        /// Return the invocation data object for this command.
-        /// </summary>
+        
         /// <value>The invocation object for this command.</value>
         internal InvocationInfo MyInvocation
         {
             get { return _myInvocation ??= new InvocationInfo(this); }
         }
 
-        /// <summary>
-        /// Represents the current pipeline object under consideration.
-        /// </summary>
+        
         internal PSObject currentObjectInPipeline = AutomationNull.Value;
 
-        /// <summary>
-        /// Gets or sets the current pipeline object under consideration.
-        /// </summary>
+        
         internal PSObject CurrentPipelineObject
         {
             get
@@ -93,9 +79,7 @@ namespace System.Management.Automation.Internal
             }
         }
 
-        /// <summary>
-        /// Internal helper. Interface that should be used for interaction with host.
-        /// </summary>
+        
         internal PSHost PSHostInternal
         {
             get { return _CBhost; }
@@ -103,9 +87,7 @@ namespace System.Management.Automation.Internal
 
         private PSHost _CBhost;
 
-        /// <summary>
-        /// Internal helper to get to SessionState.
-        /// </summary>
+        
         internal SessionState InternalState
         {
             get { return _state; }
@@ -113,9 +95,7 @@ namespace System.Management.Automation.Internal
 
         private SessionState _state;
 
-        /// <summary>
-        /// Internal helper. Indicates whether stop has been requested on this command.
-        /// </summary>
+        
         internal bool IsStopping
         {
             get
@@ -125,20 +105,14 @@ namespace System.Management.Automation.Internal
             }
         }
 
-        /// <summary>
-        /// Gets the CancellationToken that is signaled when the pipeline is stopping.
-        /// </summary>
+        
         internal CancellationToken StopToken => commandRuntime is MshCommandRuntime mcr
             ? mcr.PipelineProcessor.PipelineStopToken
             : default;
 
-        /// <summary>
-        /// The information about the command.
-        /// </summary>
+        
         private CommandInfo _commandInfo;
-        /// <summary>
-        /// Gets or sets the command information for the command.
-        /// </summary>
+        
         internal CommandInfo CommandInfo
         {
             get { return _commandInfo; }
@@ -150,9 +124,7 @@ namespace System.Management.Automation.Internal
 
         #region public_properties
 
-        /// <summary>
-        /// Gets or sets the execution context.
-        /// </summary>
+        
         /// <exception cref="System.ArgumentNullException">
         /// may not be set to null
         /// </exception>
@@ -182,10 +154,7 @@ namespace System.Management.Automation.Internal
 
         private ExecutionContext _context;
 
-        /// <summary>
-        /// This property tells you if you were being invoked inside the runspace or
-        /// if it was an external request.
-        /// </summary>
+        
         public CommandOrigin CommandOrigin
         {
             get { return CommandOriginInternal; }
@@ -197,54 +166,34 @@ namespace System.Management.Automation.Internal
 
         #region Override
 
-        /// <summary>
-        /// When overridden in the derived class, performs initialization
-        /// of command execution.
-        /// Default implementation in the base class just returns.
-        /// </summary>
+        
         internal virtual void DoBeginProcessing()
         {
         }
 
-        /// <summary>
-        /// When overridden in the derived class, performs execution
-        /// of the command.
-        /// </summary>
+        
         internal virtual void DoProcessRecord()
         {
         }
 
-        /// <summary>
-        /// When overridden in the derived class, performs clean-up
-        /// after the command execution.
-        /// Default implementation in the base class just returns.
-        /// </summary>
+        
         internal virtual void DoEndProcessing()
         {
         }
 
-        /// <summary>
-        /// When overridden in the derived class, interrupts currently
-        /// running code within the command. It should interrupt BeginProcessing,
-        /// ProcessRecord, and EndProcessing.
-        /// Default implementation in the base class just returns.
-        /// </summary>
+        
         internal virtual void DoStopProcessing()
         {
         }
 
-        /// <summary>
-        /// When overridden in the derived class, performs clean-up after the command execution.
-        /// </summary>
+        
         internal virtual void DoCleanResource()
         {
         }
 
         #endregion Override
 
-        /// <summary>
-        /// Throws if the pipeline is stopping.
-        /// </summary>
+        
         /// <exception cref="System.Management.Automation.PipelineStoppedException"></exception>
         internal void ThrowIfStopping()
         {
@@ -254,10 +203,7 @@ namespace System.Management.Automation.Internal
 
         #region Dispose
 
-        /// <summary>
-        /// IDisposable implementation
-        /// When the command is complete, release the associated members.
-        /// </summary>
+        
         /// <remarks>
         /// Using InternalDispose instead of Dispose pattern because this
         /// interface was shipped in PowerShell V1 and 3rd cmdlets indirectly
@@ -280,118 +226,81 @@ namespace System.Management.Automation.Internal
 namespace System.Management.Automation
 {
     #region NativeArgumentPassingStyle
-    /// <summary>
-    /// Defines the different native command argument parsing options.
-    /// </summary>
+    
     public enum NativeArgumentPassingStyle
     {
-        /// <summary>Use legacy argument parsing via ProcessStartInfo.Arguments.</summary>
+        
         Legacy = 0,
 
-        /// <summary>Use new style argument passing via ProcessStartInfo.ArgumentList.</summary>
+        
         Standard = 1,
 
-        /// <summary>
-        /// Use specific to Windows passing style which is Legacy for selected files on Windows, but
-        /// Standard for everything else. This is the default behavior for Windows.
-        /// </summary>
+        
         Windows = 2
     }
     #endregion NativeArgumentPassingStyle
 
     #region ErrorView
-    /// <summary>
-    /// Defines the potential ErrorView options.
-    /// </summary>
+    
     public enum ErrorView
     {
-        /// <summary>Existing all red multi-line output.</summary>
+        
         NormalView = 0,
 
-        /// <summary>Only show category information.</summary>
+        
         CategoryView = 1,
 
-        /// <summary>Concise shows more information on the context of the error or just the message if not a script or parser error.</summary>
+        
         ConciseView = 2,
 
-        /// <summary>Detailed will leverage Get-Error to get much more detailed information for the error.</summary>
+        
         DetailedView = 3,
     }
     #endregion ErrorView
 
     #region ActionPreference
-    /// <summary>
-    /// Defines the Action Preference options.  These options determine
-    /// what will happen when a particular type of event occurs.
-    /// For example, setting shell variable ErrorActionPreference to "Stop"
-    /// will cause the command to stop when an otherwise non-terminating
-    /// error occurs.
-    /// </summary>
+    
     public enum ActionPreference
     {
-        /// <summary>Ignore this event and continue</summary>
+        
         SilentlyContinue = 0,
 
-        /// <summary>Stop the command</summary>
+        
         Stop = 1,
 
-        /// <summary>Handle this event as normal and continue</summary>
+        
         Continue = 2,
 
-        /// <summary>Ask whether to stop or continue</summary>
+        
         Inquire = 3,
 
-        /// <summary>Ignore the event completely (not even logging it to the target stream)</summary>
+        
         Ignore = 4,
 
-        /// <summary>Reserved for future use.</summary>
+        
         Suspend = 5,
 
-        /// <summary>Enter the debugger.</summary>
+        
         Break = 6,
     } // enum ActionPreference
     #endregion ActionPreference
 
     #region ConfirmImpact
-    /// <summary>
-    /// Defines the ConfirmImpact levels.  These levels describe
-    /// the "destructiveness" of an action, and thus the degree of
-    /// important that the user confirm the action.
-    /// For example, setting the read-only flag on a file might be Low,
-    /// and reformatting a disk might be High.
-    /// These levels are also used in $ConfirmPreference to describe
-    /// which operations should be confirmed.  Operations with ConfirmImpact
-    /// equal to or greater than $ConfirmPreference are confirmed.
-    /// Operations with ConfirmImpact.None are never confirmed, and
-    /// no operations are confirmed when $ConfirmPreference is ConfirmImpact.None
-    /// (except when explicitly requested with -Confirm).
-    /// </summary>
+    
     public enum ConfirmImpact
     {
-        /// <summary>There is never any need to confirm this action.</summary>
+        
         None,
-        /// <summary>
-        /// This action only needs to be confirmed when the
-        /// user has requested that low-impact changes must be confirmed.
-        /// </summary>
+        
         Low,
-        /// <summary>
-        /// This action should be confirmed in most scenarios where
-        /// confirmation is requested.
-        /// </summary>
+        
         Medium,
-        /// <summary>
-        /// This action is potentially highly "destructive" and should be
-        /// confirmed by default unless otherwise specified.
-        /// </summary>
+        
         High,
     }
     #endregion ConfirmImpact
 
-    /// <summary>
-    /// Defines members and overrides used by Cmdlets.
-    /// All Cmdlets must derive from <see cref="System.Management.Automation.Cmdlet"/>.
-    /// </summary>
+    
     /// <remarks>
     /// There are two ways to create a Cmdlet: by deriving from the Cmdlet base class, and by
     /// deriving from the PSCmdlet base class.  The Cmdlet base class is the primary means by
@@ -416,9 +325,7 @@ namespace System.Management.Automation
 
         #region public_properties
 
-        /// <summary>
-        /// Gets the host interaction APIs.
-        /// </summary>
+        
         public PSHost Host
         {
             get
@@ -430,9 +337,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the instance of session state for the current runspace.
-        /// </summary>
+        
         public SessionState SessionState
         {
             get
@@ -444,9 +349,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the event manager for the current runspace.
-        /// </summary>
+        
         public PSEventManager Events
         {
             get
@@ -458,9 +361,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Repository for jobs.
-        /// </summary>
+        
         public JobRepository JobRepository
         {
             get
@@ -472,9 +373,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Manager for JobSourceAdapters registered.
-        /// </summary>
+        
         public JobManager JobManager
         {
             get
@@ -486,9 +385,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Repository for runspaces.
-        /// </summary>
+        
         internal RunspaceRepository RunspaceRepository
         {
             get
@@ -497,9 +394,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the instance of the provider interface APIs for the current runspace.
-        /// </summary>
+        
         public ProviderIntrinsics InvokeProvider
         {
             get
@@ -552,9 +447,7 @@ namespace System.Management.Automation
 
         #region ctor
 
-        /// <summary>
-        /// Initializes the new instance of PSCmdlet class.
-        /// </summary>
+        
         /// <remarks>
         /// Only subclasses of <see cref="System.Management.Automation.Cmdlet"/>
         /// can be created.

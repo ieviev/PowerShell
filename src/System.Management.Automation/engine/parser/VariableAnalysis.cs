@@ -383,9 +383,7 @@ namespace System.Management.Automation.Language
                 this._unreachable = unreachable;
             }
 
-            /// <summary>
-            /// Tell flow analysis that this block can flow to next block.
-            /// </summary>
+            
             /// <param name="next"></param>
             internal void FlowsTo(Block next)
             {
@@ -570,10 +568,7 @@ namespace System.Management.Automation.Language
             return (new VariableAnalysis()).AnalyzeImpl(ast, disableOptimizations, scriptCmdlet);
         }
 
-        /// <summary>
-        /// Analyze a member function, marking variable references as "dynamic" (so they can be reported as errors)
-        /// and also analyze the control flow to make sure every block returns (or throws)
-        /// </summary>
+        
         /// <param name="ast"></param>
         /// <returns></returns>
         internal static bool AnalyzeMemberFunction(FunctionMemberAst ast)

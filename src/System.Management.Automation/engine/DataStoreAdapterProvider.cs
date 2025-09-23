@@ -12,41 +12,29 @@ using Dbg = System.Management.Automation;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Information about a loaded Cmdlet Provider.
-    /// </summary>
+    
     /// <remarks>
     /// A cmdlet provider may want to derive from this class to provide their
     /// own public members to expose to the user or to cache information related to the provider.
     /// </remarks>
     public class ProviderInfo
     {
-        /// <summary>
-        /// Gets the System.Type of the class that implements the provider.
-        /// </summary>
+        
         public Type ImplementingType { get; }
 
-        /// <summary>
-        /// Gets the help file path for the provider.
-        /// </summary>
+        
         public string HelpFile { get; } = string.Empty;
 
-        /// <summary>
-        /// The instance of session state the provider belongs to.
-        /// </summary>
+        
         private readonly SessionState _sessionState;
 
         private string _fullName;
         private string _cachedModuleName;
 
-        /// <summary>
-        /// Gets the name of the provider.
-        /// </summary>
+        
         public string Name { get; }
 
-        /// <summary>
-        /// Gets the full name of the provider including the module name if available.
-        /// </summary>
+        
         internal string FullName
         {
             get
@@ -88,14 +76,10 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the Snap-in in which the provider is implemented.
-        /// </summary>
+        
         public PSSnapInInfo PSSnapIn { get; }
 
-        /// <summary>
-        /// Gets the pssnapin name that the provider is implemented in.
-        /// </summary>
+        
         internal string PSSnapInName
         {
             get
@@ -128,9 +112,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Get the name of the module exporting this provider.
-        /// </summary>
+        
         public string ModuleName
         {
             get
@@ -143,9 +125,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the module the defined this provider.
-        /// </summary>
+        
         public PSModuleInfo Module { get; private set; }
 
         internal void SetModule(PSModuleInfo module)
@@ -154,14 +134,10 @@ namespace System.Management.Automation
             _fullName = null;
         }
 
-        /// <summary>
-        /// Gets or sets the description for the provider.
-        /// </summary>
+        
         public string Description { get; set; }
 
-        /// <summary>
-        /// Gets the capabilities that are implemented by the provider.
-        /// </summary>
+        
         public Provider.ProviderCapabilities Capabilities
         {
             get
@@ -196,19 +172,14 @@ namespace System.Management.Automation
         private ProviderCapabilities _capabilities = ProviderCapabilities.None;
         private bool _capabilitiesRead;
 
-        /// <summary>
-        /// Gets or sets the home for the provider.
-        /// </summary>
+        
         /// <remarks>
         /// The location can be either a fully qualified provider path
         /// or a PowerShell path. This is the location that is substituted for the ~.
         /// </remarks>
         public string Home { get; set; }
 
-        /// <summary>
-        /// Gets an enumeration of drives that are available for
-        /// this provider.
-        /// </summary>
+        
         public Collection<PSDriveInfo> Drives
         {
             get
@@ -217,16 +188,10 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// A hidden drive for the provider that is used for setting
-        /// the location to a provider-qualified path.
-        /// </summary>
+        
         private readonly PSDriveInfo _hiddenDrive;
 
-        /// <summary>
-        /// Gets the hidden drive for the provider that is used
-        /// for setting a location to a provider-qualified path.
-        /// </summary>
+        
         internal PSDriveInfo HiddenDrive
         {
             get
@@ -235,9 +200,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the string representation of the instance which is the name of the provider.
-        /// </summary>
+        
         /// <returns>
         /// The name of the provider. If single-shell, the name is pssnapin-qualified. If custom-shell,
         /// the name is just the provider name.
@@ -248,39 +211,21 @@ namespace System.Management.Automation
         }
 
 #if USE_TLS
-        /// <summary>
-        /// Allocates some thread local storage to an instance of the
-        /// provider. We don't want to cache a single instance of the
-        /// provider because that could lead to problems in a multi-threaded
-        /// environment.
-        /// </summary>
+        
         private LocalDataStoreSlot instance =
             Thread.AllocateDataSlot();
 #endif
 
-        /// <summary>
-        /// Gets or sets if the drive-root relative paths on drives of this provider
-        ///  are separated by a colon or not.
-        ///
-        /// This is true for all PSDrives on all platforms, except for filesystems on
-        /// non-windows platforms.
-        /// </summary>
+        
         public bool VolumeSeparatedByColon { get; internal set; } = true;
 
-        /// <summary>
-        /// Gets the default item separator character for this provider.
-        /// </summary>
+        
         public char ItemSeparator { get; private set; }
 
-        /// <summary>
-        /// Gets the alternate item separator character for this provider.
-        /// </summary>
+        
         public char AltItemSeparator { get; private set; }
 
-        /// <summary>
-        /// Constructs an instance of the class using an existing reference
-        /// as a template.
-        /// </summary>
+        
         /// <param name="providerInfo">
         /// The provider information to copy to this instance.
         /// </param>
@@ -314,9 +259,7 @@ namespace System.Management.Automation
             AltItemSeparator = providerInfo.AltItemSeparator;
         }
 
-        /// <summary>
-        /// Constructor for the ProviderInfo class.
-        /// </summary>
+        
         /// <param name="sessionState">
         /// The instance of session state that the provider is being added to.
         /// </param>
@@ -351,9 +294,7 @@ namespace System.Management.Automation
         {
         }
 
-        /// <summary>
-        /// Constructor for the ProviderInfo class.
-        /// </summary>
+        
         /// <param name="sessionState">
         /// The instance of session state that the provider is being added to.
         /// </param>
@@ -437,10 +378,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Determines if the passed in name is either the fully-qualified pssnapin name or
-        /// short name of the provider.
-        /// </summary>
+        
         /// <param name="providerName">
         /// The name to compare with the provider name.
         /// </param>
@@ -533,9 +471,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Creates an instance of the provider.
-        /// </summary>
+        
         /// <returns>
         /// An instance of the provider or null if one could not be created.
         /// </returns>
@@ -637,9 +573,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Get the output types specified on this provider for the cmdlet requested.
-        /// </summary>
+        
         internal void GetOutputTypes(string cmdletname, List<PSTypeName> listToAppend)
         {
             if (_providerOutputType == null)

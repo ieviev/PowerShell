@@ -7,9 +7,7 @@ using Dbg = System.Management.Automation.Diagnostics;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// This is a class that represents a syntax error from parsing.
-    /// </summary>
+    
     public sealed class PSParseError
     {
         internal PSParseError(RuntimeException rte)
@@ -27,18 +25,14 @@ namespace System.Management.Automation
             Token = new PSToken(error.Extent);
         }
 
-        /// <summary>
-        /// The token that indicates the error location.
-        /// </summary>
+        
         /// <remarks>
         /// This can either be the real token at which place the error happens or a position
         /// token indicating the location where error happens.
         /// </remarks>
         public PSToken Token { get; }
 
-        /// <summary>
-        /// Error message.
-        /// </summary>
+        
         public string Message { get; }
     }
 }

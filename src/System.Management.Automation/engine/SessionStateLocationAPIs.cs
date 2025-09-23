@@ -12,18 +12,12 @@ using Dbg = System.Management.Automation;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Holds the state of a Monad Shell session.
-    /// </summary>
+    
     internal sealed partial class SessionStateInternal
     {
         #region Current working directory/drive
 
-        /// <summary>
-        /// Gets the current monad namespace specific working location. If
-        /// you want to change the current working directory use the SetLocation
-        /// method.
-        /// </summary>
+        
         /// <exception cref="InvalidOperationException">
         /// If a location has not been set yet.
         /// </exception>
@@ -50,10 +44,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the namespace specific path of the current working directory
-        /// for the specified namespace.
-        /// </summary>
+        
         /// <param name="namespaceID">
         /// An identifier that uniquely identifies the namespace to get the
         /// current working directory for.
@@ -126,9 +117,7 @@ namespace System.Management.Automation
             return new PathInfo(drive, drive.Provider, path, new SessionState(this));
         }
 
-        /// <summary>
-        /// Changes the current working directory to the path specified.
-        /// </summary>
+        
         /// <param name="path">
         /// The path of the new current working directory.
         /// </param>
@@ -158,9 +147,7 @@ namespace System.Management.Automation
             return SetLocation(path, null);
         }
 
-        /// <summary>
-        /// Changes the current working directory to the path specified.
-        /// </summary>
+        
         /// <param name="path">
         /// The path of the new current working directory
         /// </param>
@@ -196,9 +183,7 @@ namespace System.Management.Automation
             return SetLocation(path, context, literalPath: false);
         }
 
-        /// <summary>
-        /// Changes the current working directory to the path specified.
-        /// </summary>
+        
         /// <param name="path">
         /// The path of the new current working directory.
         /// </param>
@@ -587,10 +572,7 @@ namespace System.Management.Automation
             return this.CurrentLocation;
         }
 
-        /// <summary>
-        /// Determines if the specified path is the current working directory
-        /// or a parent of the current working directory.
-        /// </summary>
+        
         /// <param name="path">
         /// A monad namespace absolute or relative path.
         /// </param>
@@ -788,26 +770,17 @@ namespace System.Management.Automation
 
         #region push-Pop current working directory
 
-        /// <summary>
-        /// Location history for Set-Location that supports Undo/Redo using bounded stacks.
-        /// </summary>
+        
         private readonly HistoryStack<PathInfo> _setLocationHistory;
 
-        /// <summary>
-        /// A stack of the most recently pushed locations.
-        /// </summary>
+        
         private readonly Dictionary<string, Stack<PathInfo>> _workingLocationStack;
 
         private const string startingDefaultStackName = "default";
-        /// <summary>
-        /// The name of the default location stack.
-        /// </summary>
+        
         private string _defaultStackName = startingDefaultStackName;
 
-        /// <summary>
-        /// Pushes the current location onto the working
-        /// location stack so that it can be retrieved later.
-        /// </summary>
+        
         /// <param name="stackName">
         /// The ID of the stack to push the location on. If
         /// it is null or empty the default stack is used.
@@ -855,11 +828,7 @@ namespace System.Management.Automation
             return newPushLocation;
         }
 
-        /// <summary>
-        /// Resets the current working drive and directory to the first
-        /// entry on the working directory stack and removes that entry
-        /// from the stack.
-        /// </summary>
+        
         /// <param name="stackName">
         /// The ID of the stack to pop the location from. If it is null or
         /// empty the default stack is used.
@@ -971,10 +940,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Gets the monad namespace paths for all the directories that are
-        /// pushed on the working directory stack.
-        /// </summary>
+        
         /// <param name="stackName">
         /// The stack of the ID of the location stack to retrieve. If it is
         /// null or empty the default stack is used.
@@ -1018,9 +984,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Sets the default stack ID to the specified stack ID.
-        /// </summary>
+        
         /// <param name="stackName">
         /// The stack ID to be used as the default.
         /// </param>
@@ -1070,16 +1034,10 @@ namespace System.Management.Automation
         #endregion push-Pop current working directory
     }
 
-    /// <summary>
-    /// Event argument for the LocationChangedAction containing
-    /// information about the old location we were in and the new
-    /// location we changed to.
-    /// </summary>
+    
     public class LocationChangedEventArgs : EventArgs
     {
-        /// <summary>
-        /// Initializes a new instance of the LocationChangedEventArgs class.
-        /// </summary>
+        
         /// <param name="sessionState">
         /// The public session state instance associated with this runspace.
         /// </param>
@@ -1096,19 +1054,13 @@ namespace System.Management.Automation
             NewPath = newPath;
         }
 
-        /// <summary>
-        /// Gets the path we changed location from.
-        /// </summary>
+        
         public PathInfo OldPath { get; internal set; }
 
-        /// <summary>
-        /// Gets the path we changed location to.
-        /// </summary>
+        
         public PathInfo NewPath { get; internal set; }
 
-        /// <summary>
-        /// Gets the session state instance for the current runspace.
-        /// </summary>
+        
         public SessionState SessionState { get; internal set; }
     }
 }

@@ -11,19 +11,13 @@ using System.Linq;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Used to enumerate the commands on the system that match the specified
-    /// command name.
-    /// </summary>
+    
     internal class CommandPathSearch : IEnumerable<string>, IEnumerator<string>
     {
         [TraceSource("CommandSearch", "CommandSearch")]
         private static readonly PSTraceSource s_tracer = PSTraceSource.GetTracer("CommandSearch", "CommandSearch");
 
-        /// <summary>
-        /// Constructs a command searching enumerator that resolves the location
-        /// of a command using the PATH environment variable.
-        /// </summary>
+        
         /// <param name="commandName">
         /// The command name to search for in the path.
         /// </param>
@@ -91,10 +85,7 @@ namespace System.Management.Automation
             _justReset = true;
         }
 
-        /// <summary>
-        /// Ensures that all the paths in the lookupPaths member are absolute
-        /// file system paths.
-        /// </summary>
+        
         private void ResolveCurrentDirectoryInLookupPaths()
         {
             var indexesToRemove = new SortedDictionary<int, int>();
@@ -237,9 +228,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets an instance of a command enumerator.
-        /// </summary>
+        
         /// <returns>
         /// An instance of this class as IEnumerator.
         /// </returns>
@@ -248,9 +237,7 @@ namespace System.Management.Automation
             return this;
         }
 
-        /// <summary>
-        /// Gets an instance of a command enumerator.
-        /// </summary>
+        
         /// <returns>
         /// An instance of this class as IEnumerator.
         /// </returns>
@@ -259,9 +246,7 @@ namespace System.Management.Automation
             return this;
         }
 
-        /// <summary>
-        /// Moves the enumerator to the next command match.
-        /// </summary>
+        
         /// <returns>
         /// true if there was another command that matches, false otherwise.
         /// </returns>
@@ -351,9 +336,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Resets the enumerator to before the first command match.
-        /// </summary>
+        
         public void Reset()
         {
             _lookupPathsEnumerator.Dispose();
@@ -366,9 +349,7 @@ namespace System.Management.Automation
             _justReset = true;
         }
 
-        /// <summary>
-        /// Gets the path to the current command match.
-        /// </summary>
+        
         /// <value></value>
         /// <exception cref="InvalidOperationException">
         /// The enumerator is positioned before the first element of
@@ -395,10 +376,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Required by the IEnumerator generic interface.
-        /// Resets the searcher.
-        /// </summary>
+        
         public void Dispose()
         {
             Reset();
@@ -406,10 +384,7 @@ namespace System.Management.Automation
         }
         #region private members
 
-        /// <summary>
-        /// Gets the matching files in the specified directories and resets
-        /// the currentDirectoryResultsEnumerator to this new set of results.
-        /// </summary>
+        
         /// <param name="pattern">
         /// The pattern used to find the matching files in the specified directory.
         /// </param>
@@ -538,52 +513,31 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// The directory paths in which to look for commands.
-        /// This is derived from the PATH environment variable.
-        /// </summary>
+        
         private readonly LookupPathCollection _lookupPaths;
 
-        /// <summary>
-        /// The enumerator for the lookup paths.
-        /// </summary>
+        
         private IEnumerator<string> _lookupPathsEnumerator;
 
-        /// <summary>
-        /// The list of results matching the pattern in the current
-        /// path lookup directory. Resets to null.
-        /// </summary>
+        
         private IEnumerable<string> _currentDirectoryResults;
 
-        /// <summary>
-        /// The enumerator for the list of results.
-        /// </summary>
+        
         private IEnumerator<string> _currentDirectoryResultsEnumerator;
 
-        /// <summary>
-        /// The command name to search for.
-        /// </summary>
+        
         private readonly IEnumerable<string> _patterns;
 
-        /// <summary>
-        /// The enumerator for the patterns.
-        /// </summary>
+        
         private IEnumerator<string> _patternEnumerator;
 
-        /// <summary>
-        /// A reference to the execution context for this runspace.
-        /// </summary>
+        
         private readonly ExecutionContext _context;
 
-        /// <summary>
-        /// When reset is called, this gets set to true. Once MoveNext
-        /// is called, this gets set to false.
-        /// </summary>
+        
         private bool _justReset;
 
-        /// <summary>
-        /// If not null, called with the enumerated files for further processing.
-        /// </summary>
+        
         private readonly Func<string[], IEnumerable<string>?> _postProcessEnumeratedFiles;
 
         private readonly string[] _orderedPathExt;

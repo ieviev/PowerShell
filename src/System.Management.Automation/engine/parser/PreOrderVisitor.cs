@@ -5,33 +5,20 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace System.Management.Automation.Language
 {
-    /// <summary>
-    /// Each Visit* method in <see cref="AstVisitor" /> returns one of these values to control
-    /// how visiting nodes in the AST should proceed.
-    /// </summary>
+    
     public enum AstVisitAction
     {
-        /// <summary>
-        /// Continue visiting all nodes the ast.
-        /// </summary>
+        
         Continue,
 
-        /// <summary>
-        /// Skip visiting child nodes of currently visited node, but continue visiting other nodes.
-        /// </summary>
+        
         SkipChildren,
 
-        /// <summary>
-        /// Stop visiting all nodes.
-        /// </summary>
+        
         StopVisit,
     }
 
-    /// <summary>
-    /// AstVisitor is used for basic scenarios requiring traversal of the nodes in an Ast.
-    /// An implementation of AstVisitor does not explicitly traverse the Ast, instead,
-    /// the engine traverses all nodes in the Ast and calls the appropriate method on each node.
-    /// </summary>
+    
     public abstract class AstVisitor
     {
         internal AstVisitAction CheckForPostAction(Ast ast, AstVisitAction action)
@@ -214,9 +201,7 @@ namespace System.Management.Automation.Language
         public virtual AstVisitAction VisitNamedAttributeArgument(NamedAttributeArgumentAst namedAttributeArgumentAst) => DefaultVisit(namedAttributeArgumentAst);
     }
 
-    /// <summary>
-    /// AstVisitor for new Ast node types.
-    /// </summary>
+    
     public abstract class AstVisitor2 : AstVisitor
     {
         /// <summary/>
@@ -247,16 +232,11 @@ namespace System.Management.Automation.Language
         public virtual AstVisitAction VisitPipelineChain(PipelineChainAst statementChain) => DefaultVisit(statementChain);
     }
 
-    /// <summary>
-    /// Implement this interface when you implement <see cref="AstVisitor"/> or <see cref="AstVisitor2"/> when
-    /// you want to do something after possibly visiting the children of the ast.
-    /// </summary>
+    
 #nullable enable
     public interface IAstPostVisitHandler
     {
-        /// <summary>
-        /// The function called on each ast node after processing it's children.
-        /// </summary>
+        
         /// <param name="ast">The ast whose children have all been processed and whose siblings
         /// and parents are about to be processed.</param>
         void PostVisit(Ast ast);

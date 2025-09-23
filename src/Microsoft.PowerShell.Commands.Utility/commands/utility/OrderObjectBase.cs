@@ -13,17 +13,14 @@ using Microsoft.PowerShell.Commands.Internal.Format;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// Definitions for hash table keys.
-    /// </summary>
+    
     internal static class SortObjectParameterDefinitionKeys
     {
         internal const string AscendingEntryKey = "ascending";
         internal const string DescendingEntryKey = "descending";
     }
 
-    /// <summary>
-    /// </summary>
+    
     internal sealed class SortObjectExpressionParameterDefinition : CommandParameterDefinition
     {
         protected override void SetEntries()
@@ -34,8 +31,7 @@ namespace Microsoft.PowerShell.Commands
         }
     }
 
-    /// <summary>
-    /// </summary>
+    
     internal sealed class GroupObjectExpressionParameterDefinition : CommandParameterDefinition
     {
         protected override void SetEntries()
@@ -44,14 +40,11 @@ namespace Microsoft.PowerShell.Commands
         }
     }
 
-    /// <summary>
-    /// Base Cmdlet for cmdlets which deal with raw objects.
-    /// </summary>
+    
     public class ObjectCmdletBase : PSCmdlet
     {
         #region Parameters
-        /// <summary>
-        /// </summary>
+        
         /// <value></value>
         [Parameter]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("GoldMan", "#pw17903:UseOfLCID", Justification = "The CultureNumber is only used if the property has been set with a hex string starting with 0x")]
@@ -95,8 +88,7 @@ namespace Microsoft.PowerShell.Commands
 
         internal CultureInfo _cultureInfo = null;
 
-        /// <summary>
-        /// </summary>
+        
         /// <value></value>
         [Parameter]
         public SwitchParameter CaseSensitive
@@ -110,21 +102,16 @@ namespace Microsoft.PowerShell.Commands
         #endregion Parameters
     }
 
-    /// <summary>
-    /// Base Cmdlet for object cmdlets that deal with Grouping, Sorting and Comparison.
-    /// </summary>
+    
     public abstract class ObjectBase : ObjectCmdletBase
     {
         #region Parameters
 
-        /// <summary>
-        /// </summary>
+        
         [Parameter(ValueFromPipeline = true)]
         public PSObject InputObject { get; set; } = AutomationNull.Value;
 
-        /// <summary>
-        /// Gets or Sets the Properties that would be used for Grouping, Sorting and Comparison.
-        /// </summary>
+        
         [Parameter(Position = 0)]
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
         public object[] Property { get; set; }
@@ -132,16 +119,12 @@ namespace Microsoft.PowerShell.Commands
         #endregion Parameters
     }
 
-    /// <summary>
-    /// Base Cmdlet for object cmdlets that deal with Ordering and Comparison.
-    /// </summary>
+    
     public class OrderObjectBase : ObjectBase
     {
         #region Internal Properties
 
-        /// <summary>
-        /// Specifies sorting order.
-        /// </summary>
+        
         internal SwitchParameter DescendingOrder
         {
             get { return !_ascending; }
@@ -153,9 +136,7 @@ namespace Microsoft.PowerShell.Commands
 
         internal List<PSObject> InputObjects { get; } = new List<PSObject>();
 
-        /// <summary>
-        /// CultureInfo converted from the Culture Cmdlet parameter.
-        /// </summary>
+        
         internal CultureInfo ConvertedCulture
         {
             get
@@ -166,9 +147,7 @@ namespace Microsoft.PowerShell.Commands
 
         #endregion Internal Properties
 
-        /// <summary>
-        /// Simply accumulates the incoming objects.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             if (InputObject != null && InputObject != AutomationNull.Value)
@@ -182,9 +161,7 @@ namespace Microsoft.PowerShell.Commands
     {
         #region Internal properties
 
-        /// <summary>
-        /// A logical matrix where each row is an input object and its property values specified by Properties.
-        /// </summary>
+        
         internal List<OrderByPropertyEntry> OrderMatrix { get; }
 
         internal OrderByPropertyComparer Comparer { get; }
@@ -477,18 +454,14 @@ namespace Microsoft.PowerShell.Commands
             Comparer = CreateComparer(OrderMatrix, _mshParameterList, ascending, cultureInfo, caseSensitive);
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="OrderByProperty"/> class.
-        /// </summary>
+        
         internal OrderByProperty()
         {
             _mshParameterList = new List<MshParameter>();
             OrderMatrix = new List<OrderByPropertyEntry>();
         }
 
-        /// <summary>
-        /// Utility function used to create OrderByPropertyEntry for the supplied input object.
-        /// </summary>
+        
         /// <param name="cmdlet">PSCmdlet.</param>
         /// <param name="inputObject">Input Object.</param>
         /// <param name="isCaseSensitive">Indicates if the Property value comparisons need to be case sensitive or not.</param>
@@ -616,9 +589,7 @@ namespace Microsoft.PowerShell.Commands
         }
     }
 
-    /// <summary>
-    /// This is the row of the OrderMatrix.
-    /// </summary>
+    
     internal sealed class OrderByPropertyEntry
     {
         internal PSObject inputObject = null;

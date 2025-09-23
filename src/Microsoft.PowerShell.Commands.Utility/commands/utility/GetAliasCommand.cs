@@ -10,18 +10,14 @@ using System.Management.Automation.Internal;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// The implementation of the "get-alias" cmdlet.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Get, "Alias", DefaultParameterSetName = "Default", HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096702")]
     [OutputType(typeof(AliasInfo))]
     public class GetAliasCommand : PSCmdlet
     {
         #region Parameters
 
-        /// <summary>
-        /// The Name parameter for the command.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "Default", Position = 0, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty()]
         public string[] Name
@@ -33,9 +29,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string[] _names = new string[] { "*" };
 
-        /// <summary>
-        /// The Exclude parameter for the command.
-        /// </summary>
+        
         [Parameter]
         public string[] Exclude
         {
@@ -46,17 +40,12 @@ namespace Microsoft.PowerShell.Commands
 
         private string[] _excludes = Array.Empty<string>();
 
-        /// <summary>
-        /// The scope parameter for the command determines
-        /// which scope the aliases are retrieved from.
-        /// </summary>
+        
         [Parameter]
         [ArgumentCompleter(typeof(ScopeArgumentCompleter))]
         public string Scope { get; set; }
 
-        /// <summary>
-        /// Parameter definition to retrieve aliases based on their definitions.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "Definition")]
         [ValidateNotNullOrEmpty]
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
@@ -66,9 +55,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Command code
 
-        /// <summary>
-        /// The main processing loop of the command.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             if (ParameterSetName.Equals("Definition"))

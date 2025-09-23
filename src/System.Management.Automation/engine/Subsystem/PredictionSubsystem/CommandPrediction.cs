@@ -11,30 +11,19 @@ using System.Threading.Tasks;
 
 namespace System.Management.Automation.Subsystem.Prediction
 {
-    /// <summary>
-    /// The class represents the prediction result from a predictor.
-    /// </summary>
+    
     public sealed class PredictionResult
     {
-        /// <summary>
-        /// Gets the Id of the predictor.
-        /// </summary>
+        
         public Guid Id { get; }
 
-        /// <summary>
-        /// Gets the name of the predictor.
-        /// </summary>
+        
         public string Name { get; }
 
-        /// <summary>
-        /// Gets the mini-session id that represents a specific invocation to the <see cref="ICommandPredictor.GetSuggestion"/> API of the predictor.
-        /// When it's not specified, it's considered by a client that the predictor doesn't expect feedback.
-        /// </summary>
+        
         public uint? Session { get; }
 
-        /// <summary>
-        /// Gets the suggestions.
-        /// </summary>
+        
         public IReadOnlyList<PredictiveSuggestion> Suggestions { get; }
 
         internal PredictionResult(Guid id, string name, uint? session, List<PredictiveSuggestion> suggestions)
@@ -46,14 +35,10 @@ namespace System.Management.Automation.Subsystem.Prediction
         }
     }
 
-    /// <summary>
-    /// Provides a set of possible predictions for given input.
-    /// </summary>
+    
     public static class CommandPrediction
     {
-        /// <summary>
-        /// Collect the predictive suggestions from registered predictors using the default timeout.
-        /// </summary>
+        
         /// <param name="client">Represents the client that initiates the call.</param>
         /// <param name="ast">The <see cref="Ast"/> object from parsing the current command line input.</param>
         /// <param name="astTokens">The <see cref="Token"/> objects from parsing the current command line input.</param>
@@ -63,9 +48,7 @@ namespace System.Management.Automation.Subsystem.Prediction
             return PredictInputAsync(client, ast, astTokens, millisecondsTimeout: 20);
         }
 
-        /// <summary>
-        /// Collect the predictive suggestions from registered predictors using the specified timeout.
-        /// </summary>
+        
         /// <param name="client">Represents the client that initiates the call.</param>
         /// <param name="ast">The <see cref="Ast"/> object from parsing the current command line input.</param>
         /// <param name="astTokens">The <see cref="Token"/> objects from parsing the current command line input.</param>
@@ -134,9 +117,7 @@ namespace System.Management.Automation.Subsystem.Prediction
             }
         }
 
-        /// <summary>
-        /// Allow registered predictors to do early processing when a command line is accepted.
-        /// </summary>
+        
         /// <param name="client">Represents the client that initiates the call.</param>
         /// <param name="history">History command lines provided as references for prediction.</param>
         public static void OnCommandLineAccepted(PredictionClient client, IReadOnlyList<string> history)
@@ -167,9 +148,7 @@ namespace System.Management.Automation.Subsystem.Prediction
             }
         }
 
-        /// <summary>
-        /// Allow registered predictors to know the execution result (success/failure) of the last accepted command line.
-        /// </summary>
+        
         /// <param name="client">Represents the client that initiates the call.</param>
         /// <param name="commandLine">The last accepted command line.</param>
         /// <param name="success">Whether the execution of the last command line was successful.</param>
@@ -199,9 +178,7 @@ namespace System.Management.Automation.Subsystem.Prediction
             }
         }
 
-        /// <summary>
-        /// Send feedback to a predictor when one or more suggestions from it were displayed to the user.
-        /// </summary>
+        
         /// <param name="client">Represents the client that initiates the call.</param>
         /// <param name="predictorId">The identifier of the predictor whose prediction result was accepted.</param>
         /// <param name="session">The mini-session where the displayed suggestions came from.</param>
@@ -239,9 +216,7 @@ namespace System.Management.Automation.Subsystem.Prediction
             }
         }
 
-        /// <summary>
-        /// Send feedback to a predictor when a suggestion from it was accepted.
-        /// </summary>
+        
         /// <param name="client">Represents the client that initiates the call.</param>
         /// <param name="predictorId">The identifier of the predictor whose prediction result was accepted.</param>
         /// <param name="session">The mini-session where the accepted suggestion came from.</param>

@@ -11,9 +11,7 @@ using System.Windows.Media;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <summary>
-    /// Attached property provider to <see cref="TextBlock"/> control.
-    /// </summary>
+    
     [SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public static partial class TextBlockService
     {

@@ -12,10 +12,7 @@ using Microsoft.PowerShell.Commands.ShowCommandExtension;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// Help show-command create WPF object and invoke WPF windows with the
-    /// Microsoft.PowerShell.Commands.ShowCommandInternal.ShowCommandHelperhelp type defined in Microsoft.PowerShell.GraphicalHost.dll.
-    /// </summary>
+    
     internal sealed class ShowCommandProxy
     {
         private const string ShowCommandHelperName = "Microsoft.PowerShell.Commands.ShowCommandInternal.ShowCommandHelper";

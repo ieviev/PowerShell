@@ -9,44 +9,33 @@ using Dbg = System.Management.Automation;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// A command that adds the parent and child parts of a path together
-    /// with the appropriate path separator.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Join, "Path", SupportsTransactions = true, HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096811")]
     [OutputType(typeof(string))]
     public class JoinPathCommand : CoreCommandWithCredentialsBase
     {
         #region Parameters
 
-        /// <summary>
-        /// Gets or sets the path parameter to the command.
-        /// </summary>
+        
         [Parameter(Position = 0, Mandatory = true, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true)]
         [Alias("PSPath")]
         public string[] Path { get; set; }
 
-        /// <summary>
-        /// Gets or sets the childPath parameter to the command.
-        /// </summary>
+        
         [Parameter(Position = 1, Mandatory = true, ValueFromPipelineByPropertyName = true)]
         [AllowNull]
         [AllowEmptyString]
         [AllowEmptyCollection]
         public string[] ChildPath { get; set; }
 
-        /// <summary>
-        /// Gets or sets additional childPaths to the command.
-        /// </summary>
+        
         [Parameter(Position = 2, Mandatory = false, ValueFromPipelineByPropertyName = true, ValueFromRemainingArguments = true)]
         [AllowNull]
         [AllowEmptyString]
         [AllowEmptyCollection]
         public string[] AdditionalChildPath { get; set; } = Array.Empty<string>();
 
-        /// <summary>
-        /// Determines if the path should be resolved after being joined.
-        /// </summary>
+        
         /// <value></value>
         [Parameter]
         public SwitchParameter Resolve { get; set; }
@@ -55,10 +44,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Command code
 
-        /// <summary>
-        /// Parses the specified path and returns the portion determined by the
-        /// boolean parameters.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             Dbg.Diagnostics.Assert(

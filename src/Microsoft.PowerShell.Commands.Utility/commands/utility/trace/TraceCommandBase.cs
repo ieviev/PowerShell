@@ -7,14 +7,10 @@ using System.Management.Automation;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// A base class for cmdlets that has helper methods for globbing trace source instances.
-    /// </summary>
+    
     public class TraceCommandBase : PSCmdlet
     {
-        /// <summary>
-        /// Gets the matching PSTraceSource instances for the specified patterns.
-        /// </summary>
+        
         /// <param name="patternsToMatch">
         /// The patterns used to match the PSTraceSource name.
         /// </param>
@@ -33,9 +29,7 @@ namespace Microsoft.PowerShell.Commands
             return GetMatchingTraceSource(patternsToMatch, writeErrorIfMatchNotFound, out ignored);
         }
 
-        /// <summary>
-        /// Gets the matching PSTraceSource instances for the specified patterns.
-        /// </summary>
+        
         /// <param name="patternsToMatch">
         /// The patterns used to match the PSTraceSource name.
         /// </param>

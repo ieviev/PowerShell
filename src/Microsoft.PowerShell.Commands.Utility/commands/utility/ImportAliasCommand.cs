@@ -11,9 +11,7 @@ using System.Security;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// The implementation of the "import-alias" cmdlet.
-    /// </summary>
+    
     [Cmdlet(VerbsData.Import, "Alias", SupportsShouldProcess = true, DefaultParameterSetName = "ByPath", HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097125")]
     [OutputType(typeof(AliasInfo))]
     public class ImportAliasCommand : PSCmdlet
@@ -26,15 +24,11 @@ namespace Microsoft.PowerShell.Commands
 
         #region Parameters
 
-        /// <summary>
-        /// The path from which to import the aliases.
-        /// </summary>
+        
         [Parameter(Position = 0, Mandatory = true, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true, ParameterSetName = "ByPath")]
         public string Path { get; set; }
 
-        /// <summary>
-        /// The literal path from which to import the aliases.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true, ParameterSetName = LiteralPathParameterSetName)]
         [Alias("PSPath", "LP")]
         public string LiteralPath
@@ -50,17 +44,13 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// The scope to import the aliases to.
-        /// </summary>
+        
         [Parameter]
         [ValidateNotNullOrEmpty]
         [ArgumentCompleter(typeof(ScopeArgumentCompleter))]
         public string Scope { get; set; }
 
-        /// <summary>
-        /// If set to true, the alias that is set is passed to the pipeline.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter PassThru
         {
@@ -77,10 +67,7 @@ namespace Microsoft.PowerShell.Commands
 
         private bool _passThru;
 
-        /// <summary>
-        /// If set to true and an existing alias of the same name exists
-        /// and is ReadOnly, the alias will be overwritten.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter Force
         {
@@ -101,9 +88,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Command code
 
-        /// <summary>
-        /// The main processing loop of the command.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             Collection<AliasInfo> importedAliases = GetAliasesFromFile(this.ParameterSetName.Equals(LiteralPathParameterSetName,

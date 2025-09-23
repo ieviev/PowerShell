@@ -10,18 +10,13 @@ using System.Reflection;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <summary>
-    /// The BuiltinDataErrorInfoValidationRuleFactory creates default settings for the
-    /// builtin FilterRules.
-    /// </summary>
+    
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public class DefaultFilterRuleCustomizationFactory : FilterRuleCustomizationFactory
     {
         private IPropertyValueGetter propertyValueGetter;
 
-        /// <summary>
-        /// Gets or sets a <see cref="IPropertyValueGetter"/> that can retrieve the values of properties on a given object.
-        /// </summary>
+        
         public override IPropertyValueGetter PropertyValueGetter
         {
             get
@@ -42,10 +37,7 @@ namespace Microsoft.Management.UI.Internal
             }
         }
 
-        /// <summary>
-        /// Returns a collection containing the default rules used by a PropertyValueSelectorFilterRule
-        /// for type t.
-        /// </summary>
+        
         /// <typeparam name="T">
         /// The type used to determine what rules to include.
         /// </typeparam>
@@ -92,9 +84,7 @@ namespace Microsoft.Management.UI.Internal
             return rules;
         }
 
-        /// <summary>
-        /// Transfers the values from the old rule into the new rule.
-        /// </summary>
+        
         /// <param name="oldRule">
         /// The old filter rule.
         /// </param>
@@ -113,9 +103,7 @@ namespace Microsoft.Management.UI.Internal
             }
         }
 
-        /// <summary>
-        /// Clears the values from the filter rule.
-        /// </summary>
+        
         /// <param name="rule">
         /// The rule to clear.
         /// </param>
@@ -134,11 +122,7 @@ namespace Microsoft.Management.UI.Internal
             }
         }
 
-        /// <summary>
-        /// Get an error message to display to a user when they
-        /// provide a string value that cannot be parsed to type
-        /// typeToParseTo.
-        /// </summary>
+        
         /// <param name="value">
         /// The value entered by the user.
         /// </param>

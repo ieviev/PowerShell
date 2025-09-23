@@ -6,9 +6,7 @@ using System.Diagnostics;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <summary>
-    /// Provides common utilities for filtering.
-    /// </summary>
+    
     internal static class FilterUtilities
     {
         internal static bool TryCastItem<T>(object item, out T castItem)

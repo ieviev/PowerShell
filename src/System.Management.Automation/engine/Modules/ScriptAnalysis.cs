@@ -11,9 +11,7 @@ using System.Text.RegularExpressions;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Class describing a PowerShell module...
-    /// </summary>
+    
     internal class ScriptAnalysis
     {
         internal static ScriptAnalysis Analyze(string path, ExecutionContext context)

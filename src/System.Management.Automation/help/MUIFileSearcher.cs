@@ -12,10 +12,7 @@ namespace System.Management.Automation
 {
     internal sealed class MUIFileSearcher
     {
-        /// <summary>
-        /// Constructor. It is private so that MUIFileSearcher is used only internal for this class.
-        /// To access functionality in this class, static api should be used.
-        /// </summary>
+        
         /// <param name="target"></param>
         /// <param name="searchPaths"></param>
         /// <param name="searchMode"></param>
@@ -26,9 +23,7 @@ namespace System.Management.Automation
             SearchMode = searchMode;
         }
 
-        /// <summary>
-        /// A constructor to make searchMode optional.
-        /// </summary>
+        
         /// <param name="target"></param>
         /// <param name="searchPaths"></param>
         private MUIFileSearcher(string target, Collection<string> searchPaths)
@@ -38,23 +33,13 @@ namespace System.Management.Automation
 
         #region Basic Properties
 
-        /// <summary>
-        /// Search target. It can be
-        ///     1. a file name
-        ///     2. a search pattern
-        /// It can also include a path, in that case,
-        ///     1. the path will be searched first for the existence of the files.
-        /// </summary>
+        
         internal string Target { get; } = null;
 
-        /// <summary>
-        /// Search path as provided by user.
-        /// </summary>
+        
         internal Collection<string> SearchPaths { get; } = null;
 
-        /// <summary>
-        /// Search mode for this file search.
-        /// </summary>
+        
         internal SearchMode SearchMode { get; } = SearchMode.Unique;
 
         private static readonly System.IO.EnumerationOptions _enumerationOptions = new()
@@ -67,9 +52,7 @@ namespace System.Management.Automation
 
         private Collection<string> _result = null;
 
-        /// <summary>
-        /// Result of the search.
-        /// </summary>
+        
         internal Collection<string> Result
         {
             get
@@ -90,15 +73,10 @@ namespace System.Management.Automation
 
         #region File Search
 
-        /// <summary>
-        /// _uniqueMatches is used to track matches already found during the search process.
-        /// This is useful for ignoring duplicates in the case of unique search.
-        /// </summary>
+        
         private readonly Hashtable _uniqueMatches = new Hashtable(StringComparer.OrdinalIgnoreCase);
 
-        /// <summary>
-        /// Search for files using the target, searchPaths member of this class.
-        /// </summary>
+        
         private void SearchForFiles()
         {
             if (string.IsNullOrEmpty(this.Target))
@@ -163,11 +141,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Search for files of a particular pattern under a particular directory.
-        /// This will do MUI search in which appropriate language directories are
-        /// searched in order.
-        /// </summary>
+        
         /// <param name="pattern"></param>
         /// <param name="directory"></param>
         private void SearchForFiles(string pattern, string directory)
@@ -209,15 +183,7 @@ namespace System.Management.Automation
             return;
         }
 
-        /// <summary>
-        /// A help file is located in 3 steps
-        ///     1. If file itself contains a path itself, try to locate the file
-        ///        from path. LocateFile will fail if this file doesn't exist.
-        ///     2. Try to locate the file from searchPaths. Normally the searchPaths will
-        ///        contain the cmdlet/provider assembly directory if currently we are searching
-        ///        help for cmdlet and providers.
-        ///     3. Try to locate the file in the default PowerShell installation directory.
-        /// </summary>
+        
         /// <param name="target"></param>
         /// <param name="searchPaths"></param>
         /// <returns></returns>
@@ -269,9 +235,7 @@ namespace System.Management.Automation
 
         #region Static API's
 
-        /// <summary>
-        /// Search for files in default search paths.
-        /// </summary>
+        
         /// <param name="pattern"></param>
         /// <returns></returns>
         internal static Collection<string> SearchFiles(string pattern)
@@ -279,9 +243,7 @@ namespace System.Management.Automation
             return SearchFiles(pattern, new Collection<string>());
         }
 
-        /// <summary>
-        /// Search for files in specified search paths.
-        /// </summary>
+        
         /// <param name="pattern"></param>
         /// <param name="searchPaths"></param>
         /// <returns></returns>
@@ -292,9 +254,7 @@ namespace System.Management.Automation
             return searcher.Result;
         }
 
-        /// <summary>
-        /// Locate a file in default search paths.
-        /// </summary>
+        
         /// <param name="file"></param>
         /// <returns></returns>
         internal static string LocateFile(string file)
@@ -302,12 +262,7 @@ namespace System.Management.Automation
             return LocateFile(file, new Collection<string>());
         }
 
-        /// <summary>
-        /// Get the file in different search paths corresponding to current culture.
-        ///
-        /// The file name to search is the filename part of path parameter. (Normally path
-        /// parameter should contain only the filename part).
-        /// </summary>
+        
         /// <param name="file">This is the path to the file. If it has a path, we need to search under that path first.</param>
         /// <param name="searchPaths">Additional search paths.</param>
         /// <returns></returns>
@@ -324,9 +279,7 @@ namespace System.Management.Automation
         #endregion
     }
 
-    /// <summary>
-    /// This enum defines different search mode for the MUIFileSearcher.
-    /// </summary>
+    
     internal enum SearchMode
     {
         // return the first match

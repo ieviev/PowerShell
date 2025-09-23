@@ -7,9 +7,7 @@ using System.Diagnostics;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Provides information for applications that are not directly executable by PowerShell.
-    /// </summary>
+    
     /// <remarks>
     /// An application is any file that is executable by Windows either directly or through
     /// file associations excluding any .ps1 files or cmdlets.
@@ -18,9 +16,7 @@ namespace System.Management.Automation
     {
         #region ctor
 
-        /// <summary>
-        /// Creates an instance of the ApplicationInfo class with the specified name, and path.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the application.
         /// </param>
@@ -55,19 +51,13 @@ namespace System.Management.Automation
         private readonly ExecutionContext _context;
         #endregion ctor
 
-        /// <summary>
-        /// Gets the path for the application file.
-        /// </summary>
+        
         public string Path { get; } = string.Empty;
 
-        /// <summary>
-        /// Gets the extension of the application file.
-        /// </summary>
+        
         public string Extension { get; } = string.Empty;
 
-        /// <summary>
-        /// Gets the path of the application file.
-        /// </summary>
+        
         public override string Definition
         {
             get
@@ -76,17 +66,13 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the source of this command.
-        /// </summary>
+        
         public override string Source
         {
             get { return this.Definition; }
         }
 
-        /// <summary>
-        /// Gets the source version.
-        /// </summary>
+        
         public override Version Version
         {
             get
@@ -103,9 +89,7 @@ namespace System.Management.Automation
 
         private Version _version;
 
-        /// <summary>
-        /// Determine the visibility for this script...
-        /// </summary>
+        
         public override SessionStateEntryVisibility Visibility
         {
             get
@@ -119,9 +103,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// An application could return nothing, but commonly it returns a string.
-        /// </summary>
+        
         public override ReadOnlyCollection<PSTypeName> OutputType
         {
             get

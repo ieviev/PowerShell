@@ -14,9 +14,7 @@ using Dbg = System.Management.Automation.Diagnostics;
 
 namespace Microsoft.PowerShell.Commands.Internal.Format
 {
-    /// <summary>
-    /// Tear off class.
-    /// </summary>
+    
     internal class DisplayCellsHost : DisplayCells
     {
         internal DisplayCellsHost(PSHostRawUserInterface rawUserInterface)
@@ -77,9 +75,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         private readonly PSHostRawUserInterface _rawUserInterface;
     }
 
-    /// <summary>
-    /// Implementation of the LineOutput interface on top of Console and RawConsole.
-    /// </summary>
+    
     internal sealed class ConsoleLineOutput : LineOutput
     {
         #region tracer
@@ -87,16 +83,11 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         internal static readonly PSTraceSource tracer = PSTraceSource.GetTracer("ConsoleLineOutput", "ConsoleLineOutput");
         #endregion tracer
 
-        /// <summary>
-        /// The default buffer cell calculation already works for the PowerShell console host and Visual studio code host.
-        /// </summary>
+        
         private static readonly HashSet<string> s_psHost = new(StringComparer.Ordinal) { "ConsoleHost", "Visual Studio Code Host" };
 
         #region LineOutput implementation
-        /// <summary>
-        /// The # of columns is just the width of the screen buffer (not the
-        /// width of the window)
-        /// </summary>
+        
         /// <value></value>
         internal override int ColumnNumber
         {
@@ -125,10 +116,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             }
         }
 
-        /// <summary>
-        /// The # of rows is the # of rows visible in the window (and not the # of
-        /// rows in the screen buffer)
-        /// </summary>
+        
         /// <value></value>
         internal override int RowNumber
         {
@@ -151,9 +139,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             }
         }
 
-        /// <summary>
-        /// Write a line to the output device.
-        /// </summary>
+        
         /// <param name="s">Line to write.</param>
         internal override void WriteLine(string s)
         {
@@ -181,9 +167,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
         #endregion
 
-        /// <summary>
-        /// Constructor for the ConsoleLineOutput.
-        /// </summary>
+        
         /// <param name="host">PSHostUserInterface to wrap.</param>
         /// <param name="paging">True if we require prompting for page breaks.</param>
         /// <param name="errorContext">Error context to throw exceptions.</param>
@@ -232,9 +216,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             }
         }
 
-        /// <summary>
-        /// Callback to be called when ILineOutput.WriteLine() is called by WriteLineHelper.
-        /// </summary>
+        
         /// <param name="s">String to write.</param>
         private void OnWriteLine(string s)
         {
@@ -274,11 +256,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             LineWrittenEvent();
         }
 
-        /// <summary>
-        /// Callback to be called when ILineOutput.Write() is called by WriteLineHelper
-        /// This is called when the WriteLineHelper needs to write a line whose length
-        /// is the same as the width of the screen buffer.
-        /// </summary>
+        
         /// <param name="s">String to write.</param>
         private void OnWrite(string s)
         {
@@ -308,9 +286,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             LineWrittenEvent();
         }
 
-        /// <summary>
-        /// Called when a line was written to console.
-        /// </summary>
+        
         private void LineWrittenEvent()
         {
             // check to avoid reentrancy from the prompt handler
@@ -358,9 +334,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             }
         }
 
-        /// <summary>
-        /// Check if we need to put out a prompt.
-        /// </summary>
+        
         /// <value>true if we need to prompt</value>
         private bool NeedToPrompt
         {
@@ -392,14 +366,10 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         #region Private Members
-        /// <summary>
-        /// Object to manage prompting.
-        /// </summary>
+        
         private sealed class PromptHandler
         {
-            /// <summary>
-            /// Prompt handler with the given prompt.
-            /// </summary>
+            
             /// <param name="s">Prompt string to be used.</param>
             /// <param name="cmdlet">The Cmdlet using this prompt handler.</param>
             internal PromptHandler(string s, ConsoleLineOutput cmdlet)
@@ -411,9 +381,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
                 _callingCmdlet = cmdlet;
             }
 
-            /// <summary>
-            /// Determine how many rows the prompt should take.
-            /// </summary>
+            
             /// <param name="cols">Current number of columns on the screen.</param>
             /// <param name="displayCells">String manipulation helper.</param>
             /// <returns></returns>
@@ -424,9 +392,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
                 return _actualPrompt.Count;
             }
 
-            /// <summary>
-            /// Options returned by the PromptUser() call.
-            /// </summary>
+            
             internal enum PromptResponse
             {
                 NextPage,
@@ -434,9 +400,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
                 Quit
             }
 
-            /// <summary>
-            /// Do the actual prompting.
-            /// </summary>
+            
             /// <param name="console">PSHostUserInterface instance to prompt to.</param>
             internal PromptResponse PromptUser(PSHostUserInterface console)
             {
@@ -478,70 +442,43 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
                 }
             }
 
-            /// <summary>
-            /// Cached string(s) valid during a sequence of ComputePromptLines()/PromptUser()
-            /// </summary>
+            
             private StringCollection _actualPrompt;
 
-            /// <summary>
-            /// Prompt string as passed at initialization.
-            /// </summary>
+            
             private readonly string _promptString;
 
-            /// <summary>
-            /// The cmdlet that uses this prompt helper.
-            /// </summary>
+            
             private readonly ConsoleLineOutput _callingCmdlet = null;
         }
 
-        /// <summary>
-        /// Flag to force new lines in CMD.EXE by limiting the
-        /// usable width to N-1 (e.g. 80-1) and forcing a call
-        /// to WriteLine()
-        /// </summary>
+        
         private readonly bool _forceNewLine = true;
 
-        /// <summary>
-        /// Use this if IRawConsole is null;
-        /// </summary>
+        
         private readonly int _fallbackRawConsoleColumnNumber = 80;
 
-        /// <summary>
-        /// Use this if IRawConsole is null;
-        /// </summary>
+        
         private readonly int _fallbackRawConsoleRowNumber = 40;
 
         private readonly WriteLineHelper _writeLineHelper;
 
-        /// <summary>
-        /// Handler to prompt the user for page breaks
-        /// if this handler is not null, we have prompting.
-        /// </summary>
+        
         private readonly PromptHandler _prompt = null;
 
-        /// <summary>
-        /// Counter for the # of lines written when prompting is on.
-        /// </summary>
+        
         private long _linesWritten = 0;
 
-        /// <summary>
-        /// Flag to avoid reentrancy on prompting.
-        /// </summary>
+        
         private bool _disableLineWrittenEvent = false;
 
-        /// <summary>
-        /// Reference to the PSHostUserInterface interface we use.
-        /// </summary>
+        
         private readonly PSHostUserInterface _console = null;
 
-        /// <summary>
-        /// Msh host specific string manipulation helper.
-        /// </summary>
+        
         private readonly DisplayCells _displayCellsHost;
 
-        /// <summary>
-        /// Reference to error context to throw Msh exceptions.
-        /// </summary>
+        
         private readonly TerminatingErrorContext _errorContext = null;
 
         #endregion

@@ -11,9 +11,7 @@ using Dbg = System.Management.Automation.Diagnostics;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// PSParser class.
-    /// </summary>
+    
     /// <remarks>
     /// This is a class providing the interface for parsing a script into a collection of
     /// tokens, which primarily can be used for syntax colorization.
@@ -55,9 +53,7 @@ namespace System.Management.Automation
     //
     public sealed class PSParser
     {
-        /// <summary>
-        /// Constructor.
-        /// </summary>
+        
         /// <remarks>
         /// This constructor is made private intentionally. The only way to create an instance
         /// of PSParser object is from PSParser pool maintained in this class.
@@ -83,9 +79,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Return collection of tokens generated for recent parsing task.
-        /// </summary>
+        
         private Collection<PSToken> Tokens
         {
             get
@@ -102,9 +96,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Return collection of errors happened for recent parsing task.
-        /// </summary>
+        
         private Collection<PSParseError> Errors
         {
             get
@@ -123,9 +115,7 @@ namespace System.Management.Automation
 
         #region Public API
 
-        /// <summary>
-        /// Parse a script into a collection of tokens.
-        /// </summary>
+        
         /// <param name="script">Script to parse.</param>
         /// <param name="errors">Errors happened during parsing.</param>
         /// <returns>Collection of tokens generated during parsing.</returns>
@@ -150,9 +140,7 @@ namespace System.Management.Automation
             return psParser.Tokens;
         }
 
-        /// <summary>
-        /// Parse a script into a collection of tokens.
-        /// </summary>
+        
         /// <param name="script">Script to parse, as an array of lines.</param>
         /// <param name="errors">Errors happened during parsing.</param>
         /// <returns>Collection of tokens generated during parsing.</returns>

@@ -3,14 +3,10 @@
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// An object that represents a path.
-    /// </summary>
+    
     public sealed class PathInfo
     {
-        /// <summary>
-        /// Gets the drive that contains the path.
-        /// </summary>
+        
         public PSDriveInfo Drive
         {
             get
@@ -27,9 +23,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the provider that contains the path.
-        /// </summary>
+        
         public ProviderInfo Provider
         {
             get
@@ -38,9 +32,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// This is the internal mechanism to get the hidden drive.
-        /// </summary>
+        
         /// <returns>
         /// The drive associated with this PathInfo.
         /// </returns>
@@ -49,9 +41,7 @@ namespace System.Management.Automation
             return _drive;
         }
 
-        /// <summary>
-        /// Gets the provider internal path for the PSPath that this PathInfo represents.
-        /// </summary>
+        
         /// <exception cref="ProviderInvocationException">
         /// The provider encountered an error when resolving the path.
         /// </exception>
@@ -78,9 +68,7 @@ namespace System.Management.Automation
         private string _providerPath;
         private readonly SessionState _sessionState;
 
-        /// <summary>
-        /// Gets the PowerShell path that this object represents.
-        /// </summary>
+        
         public string Path
         {
             get
@@ -93,9 +81,7 @@ namespace System.Management.Automation
         private readonly ProviderInfo _provider;
         private readonly string _path = string.Empty;
 
-        /// <summary>
-        /// Gets a string representing the PowerShell path.
-        /// </summary>
+        
         /// <returns>
         /// A string representing the PowerShell path.
         /// </returns>
@@ -120,9 +106,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// The constructor of the PathInfo object.
-        /// </summary>
+        
         /// <param name="drive">
         /// The drive that contains the path
         /// </param>

@@ -11,9 +11,7 @@ using System.Management.Automation.Runspaces;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// This class implements Set-PSBreakpoint command.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Set, "PSBreakpoint", DefaultParameterSetName = LineParameterSetName, HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096623")]
     [OutputType(typeof(CommandBreakpoint), ParameterSetName = new string[] { CommandParameterSetName })]
     [OutputType(typeof(LineBreakpoint), ParameterSetName = new string[] { LineParameterSetName })]
@@ -22,53 +20,39 @@ namespace Microsoft.PowerShell.Commands
     {
         #region parameters
 
-        /// <summary>
-        /// Gets or sets the action to take when hitting this breakpoint.
-        /// </summary>
+        
         [Parameter(ParameterSetName = CommandParameterSetName)]
         [Parameter(ParameterSetName = LineParameterSetName)]
         [Parameter(ParameterSetName = VariableParameterSetName)]
         public ScriptBlock Action { get; set; }
 
-        /// <summary>
-        /// Gets or sets the column to set the breakpoint on.
-        /// </summary>
+        
         [Parameter(Position = 2, ParameterSetName = LineParameterSetName)]
         [ValidateRange(1, int.MaxValue)]
         public int Column { get; set; }
 
-        /// <summary>
-        /// Gets or sets the command(s) to set the breakpoint on.
-        /// </summary>
+        
         [Alias("C")]
         [Parameter(ParameterSetName = CommandParameterSetName, Mandatory = true)]
         public string[] Command { get; set; }
 
-        /// <summary>
-        /// Gets or sets the line to set the breakpoint on.
-        /// </summary>
+        
         [Parameter(Position = 1, ParameterSetName = LineParameterSetName, Mandatory = true)]
         public int[] Line { get; set; }
 
-        /// <summary>
-        /// Gets or sets the script to set the breakpoint on.
-        /// </summary>
+        
         [Parameter(ParameterSetName = CommandParameterSetName, Position = 0)]
         [Parameter(ParameterSetName = LineParameterSetName, Mandatory = true, Position = 0)]
         [Parameter(ParameterSetName = VariableParameterSetName, Position = 0)]
         [ValidateNotNull]
         public string[] Script { get; set; }
 
-        /// <summary>
-        /// Gets or sets the variables to set the breakpoint(s) on.
-        /// </summary>
+        
         [Alias("V")]
         [Parameter(ParameterSetName = VariableParameterSetName, Mandatory = true)]
         public string[] Variable { get; set; }
 
-        /// <summary>
-        /// Gets or sets the access type for variable breakpoints to break on.
-        /// </summary>
+        
         [Parameter(ParameterSetName = VariableParameterSetName)]
         public VariableAccessMode Mode { get; set; } = VariableAccessMode.Write;
 
@@ -76,9 +60,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region overrides
 
-        /// <summary>
-        /// Verifies that debugging is supported.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             // Call the base method to ensure Runspace is initialized properly.
@@ -117,9 +99,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Set a new breakpoint.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             // If there is a script, resolve its path

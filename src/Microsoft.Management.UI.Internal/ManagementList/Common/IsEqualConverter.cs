@@ -10,15 +10,11 @@ using System.Windows.Data;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <summary>
-    /// Takes two objects and determines whether they are equal.
-    /// </summary>
+    
     [SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public class IsEqualConverter : IMultiValueConverter
     {
-        /// <summary>
-        /// Takes two items and determines whether they are equal.
-        /// </summary>
+        
         /// <param name="values">
         /// Two objects of any type.
         /// </param>
@@ -55,9 +51,7 @@ namespace Microsoft.Management.UI.Internal
             return equal;
         }
 
-        /// <summary>
-        /// This method is not used.
-        /// </summary>
+        
         /// <param name="value">The parameter is not used.</param>
         /// <param name="targetTypes">The parameter is not used.</param>
         /// <param name="parameter">The parameter is not used.</param>

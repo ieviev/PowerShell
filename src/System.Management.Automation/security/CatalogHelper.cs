@@ -16,56 +16,36 @@ using System.Runtime.InteropServices;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Defines the possible status when validating integrity of catalog.
-    /// </summary>
+    
     public enum CatalogValidationStatus
     {
-        /// <summary>
-        /// Status when catalog is not tampered.
-        /// </summary>
+        
         Valid,
 
-        /// <summary>
-        /// Status when catalog is tampered.
-        /// </summary>
+        
         ValidationFailed
     }
 
-    /// <summary>
-    /// Object returned by Catalog Cmdlets.
-    /// </summary>
+    
     public class CatalogInformation
     {
-        /// <summary>
-        /// Status of catalog.
-        /// </summary>
+        
         public CatalogValidationStatus Status { get; set; }
 
-        /// <summary>
-        /// Hash Algorithm used to calculate the hashes of files in Catalog.
-        /// </summary>
+        
         public string HashAlgorithm { get; set; }
 
-        /// <summary>
-        /// Dictionary mapping files relative paths to their hash values found from Catalog.
-        /// </summary>
+        
         public Dictionary<string, string> CatalogItems { get; set; }
 
-        /// <summary>
-        /// Dictionary mapping files relative paths to their hash values.
-        /// </summary>
+        
         public Dictionary<string, string> PathItems { get; set; }
 
-        /// <summary>
-        /// Signature for the catalog.
-        /// </summary>
+        
         public Signature Signature { get; set; }
     }
 
-    /// <summary>
-    /// Helper functions for Windows Catalog functionality.
-    /// </summary>
+    
     internal static class CatalogHelper
     {
         // Catalog Version is (0X100 = 256) for Catalog Version 1
@@ -79,9 +59,7 @@ namespace System.Management.Automation
         private const string HashAlgorithmSHA256 = "SHA256";
         private static PSCmdlet _cmdlet = null;
 
-        /// <summary>
-        /// Find out the Version of Catalog by reading its Meta data. We can have either version 1 or version 2 catalog.
-        /// </summary>
+        
         /// <param name="catalogHandle">Handle to open catalog file.</param>
         /// <returns>Version of the catalog.</returns>
         private static int GetCatalogVersion(SafeCATHandle catalogHandle)
@@ -115,9 +93,7 @@ namespace System.Management.Automation
             return catalogVersion;
         }
 
-        /// <summary>
-        /// HashAlgorithm used by the Catalog. It is based on the version of Catalog.
-        /// </summary>
+        
         /// <param name="catalogVersion">Path of the output catalog file.</param>
         /// <returns>Version of the catalog.</returns>
         private static string GetCatalogHashAlgorithm(int catalogVersion)
@@ -146,9 +122,7 @@ namespace System.Management.Automation
             return hashAlgorithm;
         }
 
-        /// <summary>
-        /// Generate the Catalog Definition File representing files and folders.
-        /// </summary>
+        
         /// <param name="Path">Path of expected output .cdf file.</param>
         /// <param name="catalogFilePath">Path of the output catalog file.</param>
         /// <param name="cdfFilePath">Path of the catalog definition file.</param>
@@ -196,9 +170,7 @@ namespace System.Management.Automation
             return cdfFilePath;
         }
 
-        /// <summary>
-        /// Get file attribute (Relative path in our case) from catalog.
-        /// </summary>
+        
         /// <param name="fileToHash">File to hash.</param>
         /// <param name="dirInfo">Directory information about file needed to calculate relative file path.</param>
         /// <param name="relativePaths">Working set of relative paths of all files.</param>
@@ -241,9 +213,7 @@ namespace System.Management.Automation
                 _cmdlet.ThrowTerminatingError(errorRecord);
             }
         }
-        /// <summary>
-        /// Generate the Catalog file for Input Catalog Definition File.
-        /// </summary>
+        
         /// <param name="cdfFilePath">Path to the Input .cdf file.</param>
         internal static void GenerateCatalogFile(string cdfFilePath)
         {
@@ -318,9 +288,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// To generate Catalog for the folder.
-        /// </summary>
+        
         /// <param name="Path">Path to folder or File.</param>
         /// <param name="catalogFilePath">Catalog File Path.</param>
         /// <param name="catalogVersion">Catalog File Path.</param>
@@ -363,9 +331,7 @@ namespace System.Management.Automation
             return null;
         }
 
-        /// <summary>
-        /// Get file attribute (Relative path in our case) from catalog.
-        /// </summary>
+        
         /// <param name="memberAttrInfo">Pointer to current attribute of catalog member.</param>
         /// <returns>Value of the attribute.</returns>
         internal static string ProcessFilePathAttributeInCatalog(IntPtr memberAttrInfo)
@@ -389,9 +355,7 @@ namespace System.Management.Automation
             return relativePath;
         }
 
-        /// <summary>
-        /// Make a hash for the file.
-        /// </summary>
+        
         /// <param name="filePath">Path of the file.</param>
         /// <param name="hashAlgorithm">Used to calculate Hash.</param>
         /// <returns>HashValue for the file.</returns>
@@ -462,9 +426,7 @@ namespace System.Management.Automation
             return hashValue;
         }
 
-        /// <summary>
-        /// Make list of hashes for given Catalog File.
-        /// </summary>
+        
         /// <param name="catalogFilePath">Path to the folder having catalog file.</param>
         /// <param name="excludedPatterns"></param>
         /// <param name="catalogVersion">The version of input catalog we read from catalog meta data after opening it.</param>
@@ -562,9 +524,7 @@ namespace System.Management.Automation
             return catalogHashes;
         }
 
-        /// <summary>
-        /// Process file in path for its relative paths.
-        /// </summary>
+        
         /// <param name="relativePath">Relative path of file found in catalog.</param>
         /// <param name="fileHash">Hash of file found in catalog.</param>
         /// <param name="excludedPatterns">Skip file from validation if it matches these patterns.</param>
@@ -587,9 +547,7 @@ namespace System.Management.Automation
                 _cmdlet.WriteVerbose(StringUtil.Format(CatalogStrings.SkipValidationOfCatalogFile, relativePath));
             }
         }
-        /// <summary>
-        /// Process file in path for its relative paths.
-        /// </summary>
+        
         /// <param name="fileToHash">File to hash.</param>
         /// <param name="dirInfo">Directory information about file needed to calculate relative file path.</param>
         /// <param name="hashAlgorithm">Used to calculate Hash.</param>
@@ -639,9 +597,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Generate the hashes of all the files in given folder.
-        /// </summary>
+        
         /// <param name="folderPaths">Path to folder or File.</param>
         /// <param name="catalogFilePath">Catalog file path it should be skipped when calculating the hashes.</param>
         /// <param name="hashAlgorithm">Used to calculate Hash.</param>
@@ -675,9 +631,7 @@ namespace System.Management.Automation
             return fileHashes;
         }
 
-        /// <summary>
-        /// Compare Dictionary objects.
-        /// </summary>
+        
         /// <param name="catalogItems">Hashes extracted from Catalog.</param>
         /// <param name="pathItems">Hashes created from folders path.</param>
         /// <returns>True if both collections are same.</returns>
@@ -718,9 +672,7 @@ namespace System.Management.Automation
 
             return Status;
         }
-        /// <summary>
-        /// To Validate the Integrity of Catalog.
-        /// </summary>
+        
         /// <param name="catalogFolders">Folder for which catalog is created.</param>
         /// <param name="catalogFilePath">File Name of the Catalog.</param>
         /// <param name="excludedPatterns"></param>
@@ -757,9 +709,7 @@ namespace System.Management.Automation
             return null;
         }
 
-        /// <summary>
-        /// Check if file meets the skip validation criteria.
-        /// </summary>
+        
         /// <param name="filename"></param>
         /// <param name="excludedPatterns"></param>
         /// <returns>True if match is found else false.</returns>
@@ -778,9 +728,7 @@ namespace System.Management.Automation
 
             return false;
         }
-        /// <summary>
-        /// Call back when error is thrown by catalog API's.
-        /// </summary>
+        
         private static void ParseErrorCallback(uint dwErrorArea, uint dwLocalError, string pwszLine)
         {
             switch (dwErrorArea)

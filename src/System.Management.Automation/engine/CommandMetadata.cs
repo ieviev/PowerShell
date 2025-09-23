@@ -18,40 +18,26 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Defines session capabilities provided by a PowerShell session.
-    /// </summary>
+    
     /// <seealso cref="System.Management.Automation.Runspaces.InitialSessionState.CreateRestricted"/>
     /// <seealso cref="System.Management.Automation.CommandMetadata.GetRestrictedCommands"/>
     [Flags]
     public enum SessionCapabilities
     {
-        /// <summary>
-        /// Session with <see cref="RemoteServer"/> capabilities can be made available on a server
-        /// that wants to provide a full user experience to PowerShell clients.
-        /// Clients connecting to the server will be able to use implicit remoting
-        /// (Import-PSSession, Export-PSSession) as well as interactive remoting (Enter-PSSession, Exit-PSSession).
-        /// </summary>
+        
         RemoteServer = 0x1,
 
-        /// <summary>
-        /// Include language capabilities.
-        /// </summary>
+        
         Language = 0x4
     }
 
-    /// <summary>
-    /// This class represents the compiled metadata for a command type.
-    /// </summary>
+    
     [DebuggerDisplay("CommandName = {Name}; Type = {CommandType}")]
     public sealed class CommandMetadata
     {
         #region Public Constructor
 
-        /// <summary>
-        /// Constructs a CommandMetadata object for the given CLS complaint type
-        /// <paramref name="commandType"/>.
-        /// </summary>
+        
         /// <param name="commandType">
         /// CLS complaint type to inspect for Cmdlet metadata.
         /// </param>
@@ -67,9 +53,7 @@ namespace System.Management.Automation
             Init(null, null, commandType, false);
         }
 
-        /// <summary>
-        /// Construct a CommandMetadata object for the given commandInfo.
-        /// </summary>
+        
         /// <param name="commandInfo">
         /// The commandInfo object to construct CommandMetadata for
         /// </param>
@@ -85,9 +69,7 @@ namespace System.Management.Automation
         {
         }
 
-        /// <summary>
-        /// Construct a CommandMetadata object for the given commandInfo.
-        /// </summary>
+        
         /// <param name="commandInfo">
         /// The commandInfo object to construct CommandMetadata for
         /// </param>
@@ -140,9 +122,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Construct a CommandMetadata object for a script file.
-        /// </summary>
+        
         /// <param name="path">The path to the script file.</param>
         public CommandMetadata(string path)
         {
@@ -153,10 +133,7 @@ namespace System.Management.Automation
             _wrappedCommandType = CommandTypes.ExternalScript;
         }
 
-        /// <summary>
-        /// A copy constructor that creates a deep copy of the <paramref name="other"/> CommandMetadata object.
-        /// Instances of Attribute and Type classes are copied by reference.
-        /// </summary>
+        
         /// <param name="other">Object to copy.</param>
         public CommandMetadata(CommandMetadata other)
         {
@@ -206,9 +183,7 @@ namespace System.Management.Automation
             _staticCommandParameterMetadata = null;
         }
 
-        /// <summary>
-        /// Constructor used by implicit remoting.
-        /// </summary>
+        
         internal CommandMetadata(
             string name,
             CommandTypes commandType,
@@ -282,10 +257,7 @@ namespace System.Management.Automation
 
         #region ctor
 
-        /// <summary>
-        /// Gets the metadata for the specified cmdlet from the cache or creates
-        /// a new instance if its not in the cache.
-        /// </summary>
+        
         /// <param name="commandName">
         /// The name of the command that this metadata represents.
         /// </param>
@@ -340,9 +312,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Constructs an instance of CommandMetadata using reflection against a bindable object.
-        /// </summary>
+        
         /// <param name="commandName">
         /// The name of the command that this metadata represents.
         /// </param>
@@ -385,9 +355,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Constructor for creating command metadata from a script block.
-        /// </summary>
+        
         /// <param name="scriptblock"></param>
         /// <param name="context"></param>
         /// <param name="commandName"></param>
@@ -446,22 +414,16 @@ namespace System.Management.Automation
 
         #region Public Properties
 
-        /// <summary>
-        /// Gets the name of the command this metadata represents.
-        /// </summary>
+        
         public string Name { get; set; } = string.Empty;
 
-        /// <summary>
-        /// The Type which this CommandMetadata represents.
-        /// </summary>
+        
         public Type CommandType { get; private set; }
 
         // The ScriptBlock which this CommandMetadata represents.
         private ScriptBlock _scriptBlock;
 
-        /// <summary>
-        /// Gets/Sets the default parameter set name.
-        /// </summary>
+        
         public string DefaultParameterSetName
         {
             get
@@ -482,41 +444,26 @@ namespace System.Management.Automation
 
         private string _defaultParameterSetName = ParameterAttribute.AllParameterSets;
 
-        /// <summary>
-        /// True if the cmdlet declared that it supports ShouldProcess, false otherwise.
-        /// </summary>
+        
         /// <value></value>
         public bool SupportsShouldProcess { get; set; }
 
-        /// <summary>
-        /// True if the cmdlet declared that it supports Paging, false otherwise.
-        /// </summary>
+        
         /// <value></value>
         public bool SupportsPaging { get; set; }
 
-        /// <summary>
-        /// When true, the command will auto-generate appropriate parameter metadata to support positional
-        /// parameters if the script hasn't already specified multiple parameter sets or specified positions
-        /// explicitly via the <see cref="ParameterAttribute"/>.
-        /// </summary>
+        
         public bool PositionalBinding { get; set; } = true;
 
-        /// <summary>
-        /// True if the cmdlet declared that it supports transactions, false otherwise.
-        /// </summary>
+        
         /// <value></value>
         public bool SupportsTransactions { get; set; }
 
-        /// <summary>
-        /// Related link URI for Get-Help -Online.
-        /// </summary>
+        
         [SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings")]
         public string HelpUri { get; set; } = string.Empty;
 
-        /// <summary>
-        /// The remoting capabilities of this cmdlet, when exposed in a context
-        /// with ambient remoting.
-        /// </summary>
+        
         public RemotingCapability RemotingCapability
         {
             get
@@ -539,18 +486,11 @@ namespace System.Management.Automation
 
         private RemotingCapability _remotingCapability = RemotingCapability.PowerShell;
 
-        /// <summary>
-        /// Indicates the "destructiveness" of the command operation and
-        /// when it should be confirmed.  This is only effective when
-        /// the command calls ShouldProcess, which should only occur when
-        /// SupportsShouldProcess is specified.
-        /// </summary>
+        
         /// <value></value>
         public ConfirmImpact ConfirmImpact { get; set; } = ConfirmImpact.Medium;
 
-        /// <summary>
-        /// Gets the parameter data for this command.
-        /// </summary>
+        
         public Dictionary<string, ParameterMetadata> Parameters
         {
             get
@@ -592,9 +532,7 @@ namespace System.Management.Automation
         private Dictionary<string, ParameterMetadata> _parameters;
         private bool _shouldGenerateCommonParameters;
 
-        /// <summary>
-        /// Gets or sets the obsolete attribute on the command.
-        /// </summary>
+        
         /// <value></value>
         internal ObsoleteAttribute Obsolete { get; set; }
 
@@ -602,10 +540,7 @@ namespace System.Management.Automation
 
         #region internal members
 
-        /// <summary>
-        /// Gets the merged metadata for the command including cmdlet declared parameters,
-        /// common parameters, and (optionally) ShouldProcess and Transactions parameters.
-        /// </summary>
+        
         /// <value></value>
         internal MergedCommandParameterMetadata StaticCommandParameterMetadata
         {
@@ -617,9 +552,7 @@ namespace System.Management.Automation
 
         private readonly MergedCommandParameterMetadata _staticCommandParameterMetadata;
 
-        /// <summary>
-        /// True if the cmdlet implements dynamic parameters, or false otherwise.
-        /// </summary>
+        
         /// <value></value>
         internal bool ImplementsDynamicParameters
         {
@@ -628,9 +561,7 @@ namespace System.Management.Automation
 
         private bool _implementsDynamicParameters;
 
-        /// <summary>
-        /// Gets the bit in the parameter set map for the default parameter set.
-        /// </summary>
+        
         internal uint DefaultParameterSetFlag
         {
             get { return _defaultParameterSetFlag; }
@@ -640,10 +571,7 @@ namespace System.Management.Automation
 
         private uint _defaultParameterSetFlag;
 
-        /// <summary>
-        /// A collection of attributes that were declared at the cmdlet level but were not
-        /// recognized by the engine.
-        /// </summary>
+        
         private readonly Collection<Attribute> _otherAttributes = new Collection<Attribute>();
 
         // command this CommandMetadata instance is intended to wrap
@@ -671,10 +599,7 @@ namespace System.Management.Automation
 
         #region helper methods
 
-        /// <summary>
-        /// Constructs the command metadata by using reflection against the
-        /// CLR type.
-        /// </summary>
+        
         /// <exception cref="ParsingMetadataException">
         /// If more than int.MaxValue parameter-sets are defined for the command.
         /// </exception>
@@ -716,9 +641,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Extracts the cmdlet data from the CmdletAttribute.
-        /// </summary>
+        
         /// <param name="attribute">
         /// The CmdletAttribute to process
         /// </param>
@@ -764,10 +687,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Merges parameter metadata from different sources: those that are coming from Type,
-        /// CommonParameters, should process etc.
-        /// </summary>
+        
         /// <param name="context"></param>
         /// <param name="parameterMetadata"></param>
         /// <param name="shouldGenerateCommonParameters">
@@ -839,9 +759,7 @@ namespace System.Management.Automation
 
         #region Proxy Command generation
 
-        /// <summary>
-        /// Gets the ScriptCmdlet in string format.
-        /// </summary>
+        
         /// <returns></returns>
         internal string GetProxyCommand(string helpComment, bool generateDynamicParameters)
         {
@@ -1305,20 +1223,7 @@ clean
             return GetRestrictedCmdlet("Exit-PSSession", null, "https://go.microsoft.com/fwlink/?LinkID=2096787"); // no parameters are used
         }
 
-        /// <summary>
-        /// Returns a dictionary from a command name to <see cref="CommandMetadata"/> describing
-        /// how that command can be restricted to limit attack surface while still being usable
-        /// by features included in <paramref name="sessionCapabilities"/>.
-        ///
-        /// For example the implicit remoting feature
-        /// (included in <see cref="SessionCapabilities.RemoteServer"/>)
-        /// doesn't use all parameters of Get-Help
-        /// and uses only a limited set of argument values for the parameters it does use.
-        /// <see cref="CommandMetadata"/> can be passed to <see cref="ProxyCommand.Create(CommandMetadata)"/> method to generate
-        /// a body of a proxy function that forwards calls to the actual cmdlet, while exposing only the parameters
-        /// listed in <see cref="CommandMetadata"/>.  Exposing only the restricted proxy function while making
-        /// the actual cmdlet and its aliases private can help in reducing attack surface of the remoting server.
-        /// </summary>
+        
         /// <returns></returns>
         /// <seealso cref="System.Management.Automation.Runspaces.InitialSessionState.CreateRestricted(SessionCapabilities)"/>
         public static Dictionary<string, CommandMetadata> GetRestrictedCommands(SessionCapabilities sessionCapabilities)
@@ -1539,10 +1444,7 @@ clean
         #endregion
 
         #region Command Metadata cache
-        /// <summary>
-        /// The command metadata cache. This is separate from the parameterMetadata cache
-        /// because it is specific to cmdlets.
-        /// </summary>
+        
         private static readonly System.Collections.Concurrent.ConcurrentDictionary<string, CommandMetadata> s_commandMetadataCache =
             new System.Collections.Concurrent.ConcurrentDictionary<string, CommandMetadata>(StringComparer.OrdinalIgnoreCase);
 

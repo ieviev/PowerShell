@@ -9,17 +9,11 @@ using Microsoft.PowerShell.Commands.Internal.Format;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// Implementation for the out-lineoutput command
-    /// it provides a wrapper for the OutCommandInner class,
-    /// which is the general purpose output command.
-    /// </summary>
+    
     [Cmdlet(VerbsData.Out, "LineOutput")]
     public class OutLineOutputCommand : FrontEndCommandBase
     {
-        /// <summary>
-        /// Command line switch for ILineOutput communication channel.
-        /// </summary>
+        
         /// <value></value>
         [Parameter(Mandatory = true, Position = 0)]
         public object LineOutput
@@ -31,16 +25,13 @@ namespace Microsoft.PowerShell.Commands
 
         private object _lineOutput = null;
 
-        /// <summary>
-        /// Set inner command.
-        /// </summary>
+        
         public OutLineOutputCommand()
         {
             this.implementation = new OutCommandInner();
         }
 
-        /// <summary>
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             if (_lineOutput == null)

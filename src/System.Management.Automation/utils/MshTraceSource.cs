@@ -8,10 +8,7 @@ using System.Management.Automation.Internal;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// An PSTraceSource is a representation of a System.Diagnostics.TraceSource instance
-    /// that is used in the PowerShell components to produce trace output.
-    /// </summary>
+    
     /// <remarks>
     /// It is permitted to subclass <see cref="PSTraceSource"/>
     /// but there is no established scenario for doing this, nor has it been tested.
@@ -19,14 +16,10 @@ namespace System.Management.Automation
     /// 
     public partial class PSTraceSource
     {
-        /// <summary>
-        /// Lock object for the GetTracer method.
-        /// </summary>
+        
         private static readonly object s_getTracerLock = new object();
 
-        /// <summary>
-        /// A helper to get an instance of the PSTraceSource class.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the category that this class
         /// will control the tracing for.
@@ -47,9 +40,7 @@ namespace System.Management.Automation
             return PSTraceSource.GetTracer(name, description, true);
         }
 
-        /// <summary>
-        /// A helper to get an instance of the PSTraceSource class.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the category that this class
         /// will control the tracing for.
@@ -170,11 +161,7 @@ namespace System.Management.Automation
 
         #region TraceFlags.New*Exception methods/helpers
 
-        /// <summary>
-        /// Traces the Message and StackTrace properties of the exception
-        /// and returns the new exception. This is not allowed to call other
-        /// Throw*Exception variants, since they call this.
-        /// </summary>
+        
         /// <param name="paramName">
         /// The name of the parameter whose argument value was null
         /// </param>
@@ -189,11 +176,7 @@ namespace System.Management.Automation
             return e;
         }
 
-        /// <summary>
-        /// Traces the Message and StackTrace properties of the exception
-        /// and returns the new exception. This variant allows the caller to
-        /// specify alternate template text, but only in assembly S.M.A.Core.
-        /// </summary>
+        
         /// <param name="paramName">
         /// The name of the parameter whose argument value was invalid
         /// </param>
@@ -225,12 +208,7 @@ namespace System.Management.Automation
             return e;
         }
 
-        /// <summary>
-        /// Traces the Message and StackTrace properties of the exception
-        /// and returns the new exception. This variant uses the default
-        /// ArgumentException template text. This is not allowed to call
-        /// other Throw*Exception variants, since they call this.
-        /// </summary>
+        
         /// <param name="paramName">
         /// The name of the parameter whose argument value was invalid
         /// </param>
@@ -247,11 +225,7 @@ namespace System.Management.Automation
             return e;
         }
 
-        /// <summary>
-        /// Traces the Message and StackTrace properties of the exception
-        /// and returns the new exception. This variant allows the caller to
-        /// specify alternate template text, but only in assembly S.M.A.Core.
-        /// </summary>
+        
         /// <param name="paramName">
         /// The name of the parameter whose argument value was invalid
         /// </param>
@@ -283,10 +257,7 @@ namespace System.Management.Automation
             return e;
         }
 
-        /// <summary>
-        /// Traces the Message and StackTrace properties of the exception
-        /// and returns the new exception.
-        /// </summary>
+        
         /// <returns>Exception instance ready to throw.</returns>
         internal static PSInvalidOperationException NewInvalidOperationException()
         {
@@ -297,11 +268,7 @@ namespace System.Management.Automation
             return e;
         }
 
-        /// <summary>
-        /// Traces the Message and StackTrace properties of the exception
-        /// and returns the new exception. This variant allows the caller to
-        /// specify alternate template text, but only in assembly S.M.A.Core.
-        /// </summary>
+        
         /// <param name="resourceString">
         /// The template string for this error
         /// </param>
@@ -323,11 +290,7 @@ namespace System.Management.Automation
             return e;
         }
 
-        /// <summary>
-        /// Traces the Message and StackTrace properties of the exception
-        /// and returns the new exception. This variant allows the caller to
-        /// specify alternate template text, but only in assembly S.M.A.Core.
-        /// </summary>
+        
         /// <param name="innerException">
         /// This is the InnerException for the InvalidOperationException
         /// </param>
@@ -353,11 +316,7 @@ namespace System.Management.Automation
             return e;
         }
 
-        /// <summary>
-        /// Traces the Message and StackTrace properties of the exception
-        /// and returns the new exception. This is not allowed to call other
-        /// Throw*Exception variants, since they call this.
-        /// </summary>
+        
         /// <returns>Exception instance ready to throw.</returns>
         internal static PSNotSupportedException NewNotSupportedException()
         {
@@ -368,11 +327,7 @@ namespace System.Management.Automation
             return e;
         }
 
-        /// <summary>
-        /// Traces the Message and StackTrace properties of the exception
-        /// and returns the new exception. This is not allowed to call other
-        /// Throw*Exception variants, since they call this.
-        /// </summary>
+        
         /// <param name="resourceString">
         /// The template string for this error
         /// </param>
@@ -395,11 +350,7 @@ namespace System.Management.Automation
             return e;
         }
 
-        /// <summary>
-        /// Traces the Message and StackTrace properties of the exception
-        /// and returns the new exception. This is not allowed to call other
-        /// Throw*Exception variants, since they call this.
-        /// </summary>
+        
         /// <returns>Exception instance ready to throw.</returns>
         internal static PSNotImplementedException NewNotImplementedException()
         {
@@ -410,12 +361,7 @@ namespace System.Management.Automation
             return e;
         }
 
-        /// <summary>
-        /// Traces the Message and StackTrace properties of the exception
-        /// and returns the new exception. This variant uses the default
-        /// ArgumentOutOfRangeException template text. This is not allowed to call
-        /// other Throw*Exception variants, since they call this.
-        /// </summary>
+        
         /// <param name="paramName">
         /// The name of the parameter whose argument value was out of range
         /// </param>
@@ -433,11 +379,7 @@ namespace System.Management.Automation
             return e;
         }
 
-        /// <summary>
-        /// Traces the Message and StackTrace properties of the exception
-        /// and returns the new exception. This variant allows the caller to
-        /// specify alternate template text, but only in assembly S.M.A.Core.
-        /// </summary>
+        
         /// <param name="paramName">
         /// The name of the parameter whose argument value was invalid
         /// </param>
@@ -470,12 +412,7 @@ namespace System.Management.Automation
             return e;
         }
 
-        /// <summary>
-        /// Traces the Message and StackTrace properties of the exception
-        /// and returns the new exception. This variant uses the default
-        /// ObjectDisposedException template text. This is not allowed to call
-        /// other Throw*Exception variants, since they call this.
-        /// </summary>
+        
         /// <param name="objectName">
         /// The name of the disposed object
         /// </param>

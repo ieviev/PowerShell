@@ -11,9 +11,7 @@ namespace Microsoft.PowerShell.Commands
 {
     #region get-date
 
-    /// <summary>
-    /// Implementation for the get-date command.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Get, "Date", DefaultParameterSetName = DateAndFormatParameterSet, HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096615")]
     [OutputType(typeof(string))]
     [OutputType(typeof(DateTime), ParameterSetName = new[] { DateAndFormatParameterSet, UnixTimeSecondsAndFormatParameterSet })]
@@ -21,9 +19,7 @@ namespace Microsoft.PowerShell.Commands
     {
         #region parameters
 
-        /// <summary>
-        /// Allows user to override the date/time object that will be processed.
-        /// </summary>
+        
         [Parameter(ParameterSetName = DateAndFormatParameterSet, Position = 0, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true)]
         [Parameter(ParameterSetName = DateAndUFormatParameterSet, Position = 0, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true)]
         [Alias("LastWriteTime")]
@@ -50,9 +46,7 @@ namespace Microsoft.PowerShell.Commands
         // The const comes from DateTimeOffset.MaxValue.ToUnixTimeSeconds()
         private const long MaximumUnixTimeSecond = 253402300799;
 
-        /// <summary>
-        /// Gets or sets whether to treat a numeric input as ticks, or unix time.
-        /// </summary>
+        
         [Parameter(ParameterSetName = UnixTimeSecondsAndFormatParameterSet, Mandatory = true)]
         [Parameter(ParameterSetName = UnixTimeSecondsAndUFormatParameterSet, Mandatory = true)]
         [ValidateRange(MinimumUnixTimeSecond, MaximumUnixTimeSecond)]
@@ -74,9 +68,7 @@ namespace Microsoft.PowerShell.Commands
         private long _unixTimeSeconds;
         private bool _unixTimeSecondsSpecified;
 
-        /// <summary>
-        /// Allows the user to override the year.
-        /// </summary>
+        
         [Parameter]
         [ValidateRange(1, 9999)]
         public int Year
@@ -96,9 +88,7 @@ namespace Microsoft.PowerShell.Commands
         private int _year;
         private bool _yearSpecified;
 
-        /// <summary>
-        /// Allows the user to override the month.
-        /// </summary>
+        
         [Parameter]
         [ValidateRange(1, 12)]
         public int Month
@@ -118,9 +108,7 @@ namespace Microsoft.PowerShell.Commands
         private int _month;
         private bool _monthSpecified;
 
-        /// <summary>
-        /// Allows the user to override the day.
-        /// </summary>
+        
         [Parameter]
         [ValidateRange(1, 31)]
         public int Day
@@ -140,9 +128,7 @@ namespace Microsoft.PowerShell.Commands
         private int _day;
         private bool _daySpecified;
 
-        /// <summary>
-        /// Allows the user to override the hour.
-        /// </summary>
+        
         [Parameter]
         [ValidateRange(0, 23)]
         public int Hour
@@ -162,9 +148,7 @@ namespace Microsoft.PowerShell.Commands
         private int _hour;
         private bool _hourSpecified;
 
-        /// <summary>
-        /// Allows the user to override the minute.
-        /// </summary>
+        
         [Parameter]
         [ValidateRange(0, 59)]
         public int Minute
@@ -184,9 +168,7 @@ namespace Microsoft.PowerShell.Commands
         private int _minute;
         private bool _minuteSpecified;
 
-        /// <summary>
-        /// Allows the user to override the second.
-        /// </summary>
+        
         [Parameter]
         [ValidateRange(0, 59)]
         public int Second
@@ -206,9 +188,7 @@ namespace Microsoft.PowerShell.Commands
         private int _second;
         private bool _secondSpecified;
 
-        /// <summary>
-        /// Allows the user to override the millisecond.
-        /// </summary>
+        
         [Parameter]
         [ValidateRange(0, 999)]
         public int Millisecond
@@ -228,39 +208,29 @@ namespace Microsoft.PowerShell.Commands
         private int _millisecond;
         private bool _millisecondSpecified;
 
-        /// <summary>
-        /// This option determines the default output format used to display the object get-date emits.
-        /// </summary>
+        
         [Parameter]
         public DisplayHintType DisplayHint { get; set; } = DisplayHintType.DateTime;
 
-        /// <summary>
-        /// Unix format string.
-        /// </summary>
+        
         [Parameter(ParameterSetName = DateAndUFormatParameterSet, Mandatory = true)]
         [Parameter(ParameterSetName = UnixTimeSecondsAndUFormatParameterSet, Mandatory = true)]
         public string UFormat { get; set; }
 
-        /// <summary>
-        /// DotNet format string.
-        /// </summary>
+        
         [Parameter(ParameterSetName = DateAndFormatParameterSet)]
         [Parameter(ParameterSetName = UnixTimeSecondsAndFormatParameterSet)]
         [ArgumentCompletions("FileDate", "FileDateUniversal", "FileDateTime", "FileDateTimeUniversal")]
         public string Format { get; set; }
 
-        /// <summary>
-        /// Gets or sets a value that converts date to UTC before formatting.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter AsUTC { get; set; }
         #endregion
 
         #region methods
 
-        /// <summary>
-        /// Get the time.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             DateTime dateToUse = DateTime.Now;
@@ -376,9 +346,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// This is more an implementation of the UNIX strftime.
-        /// </summary>
+        
         private string UFormatDateString(DateTime dateTime)
         {
             int offset = 0;
@@ -578,22 +546,14 @@ namespace Microsoft.PowerShell.Commands
 
     #region DisplayHintType enum
 
-    /// <summary>
-    /// Display Hint type.
-    /// </summary>
+    
     public enum DisplayHintType
     {
-        /// <summary>
-        /// Display preference Date-Only.
-        /// </summary>
+        
         Date,
-        /// <summary>
-        /// Display preference Time-Only.
-        /// </summary>
+        
         Time,
-        /// <summary>
-        /// Display preference Date and Time.
-        /// </summary>
+        
         DateTime
     }
     #endregion

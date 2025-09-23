@@ -14,14 +14,12 @@ using System.Text;
 
 namespace Microsoft.PowerShell.Commands.Utility
 {
-    /// <summary>
-    /// Join-Object implementation.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Join, "String", RemotingCapability = RemotingCapability.None, DefaultParameterSetName = "default")]
     [OutputType(typeof(string))]
     public sealed class JoinStringCommand : PSCmdlet
     {
-        /// <summary>A bigger default to not get re-allocations in common use cases.</summary>
+        
         private const int DefaultOutputStringCapacity = 256;
 
         private readonly StringBuilder _outputBuilder = new(DefaultOutputStringCapacity);
@@ -30,16 +28,12 @@ namespace Microsoft.PowerShell.Commands.Utility
         private char _quoteChar;
         private bool _firstInputObject = true;
 
-        /// <summary>
-        /// Gets or sets the property name or script block to use as the value to join.
-        /// </summary>
+        
         [Parameter(Position = 0)]
         [ArgumentCompleter(typeof(PropertyNameCompleter))]
         public PSPropertyExpression Property { get; set; }
 
-        /// <summary>
-        /// Gets or sets the delimiter to join the output with.
-        /// </summary>
+        
         [Parameter(Position = 1)]
         [ArgumentCompleter(typeof(SeparatorArgumentCompleter))]
         [AllowEmptyString]
@@ -49,48 +43,34 @@ namespace Microsoft.PowerShell.Commands.Utility
             set => _separator = value;
         }
 
-        /// <summary>
-        /// Gets or sets text to include before the joined input text.
-        /// </summary>
+        
         [Parameter]
         [Alias("op")]
         public string OutputPrefix { get; set; }
 
-        /// <summary>
-        /// Gets or sets text to include after the joined input text.
-        /// </summary>
+        
         [Parameter]
         [Alias("os")]
         public string OutputSuffix { get; set; }
 
-        /// <summary>
-        /// Gets or sets if the output items should we wrapped in single quotes.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "SingleQuote")]
         public SwitchParameter SingleQuote { get; set; }
 
-        /// <summary>
-        /// Gets or sets if the output items should we wrapped in double quotes.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "DoubleQuote")]
         public SwitchParameter DoubleQuote { get; set; }
 
-        /// <summary>
-        /// Gets or sets a format string that is applied to each input object.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "Format")]
         [ArgumentCompleter(typeof(FormatStringArgumentCompleter))]
         public string FormatString { get; set; }
 
-        /// <summary>
-        /// Gets or sets if the current culture should be used with formatting instead of the invariant culture.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter UseCulture { get; set; }
 
-        /// <summary>
-        /// Gets or sets the input object to join into text.
-        /// </summary>
+        
         [Parameter(ValueFromPipeline = true)]
         public PSObject[] InputObject { get; set; }
 
@@ -160,9 +140,7 @@ namespace Microsoft.PowerShell.Commands.Utility
         }
     }
 
-    /// <summary>
-    /// Provides completion for the Separator parameter of the Join-String cmdlet.
-    /// </summary>
+    
     public sealed class SeparatorArgumentCompleter : IArgumentCompleter
     {
         private const string NewLineText =
@@ -211,9 +189,7 @@ namespace Microsoft.PowerShell.Commands.Utility
             " ",
         };
 
-        /// <summary>
-        /// Returns completion results for Separator parameter.
-        /// </summary>
+        
         /// <param name="commandName">The command name.</param>
         /// <param name="parameterName">The parameter name.</param>
         /// <param name="wordToComplete">The word to complete.</param>
@@ -233,9 +209,7 @@ namespace Microsoft.PowerShell.Commands.Utility
                     resultType: CompletionResultType.ParameterValue);
     }
 
-    /// <summary>
-    /// Provides completion for the FormatString parameter of the Join-String cmdlet.
-    /// </summary>
+    
     public sealed class FormatStringArgumentCompleter : IArgumentCompleter
     {
         private static readonly IReadOnlyList<string> s_formatStringValues = new List<string>(capacity: 4)
@@ -251,9 +225,7 @@ namespace Microsoft.PowerShell.Commands.Utility
 #endif
         };
 
-        /// <summary>
-        /// Returns completion results for FormatString parameter.
-        /// </summary>
+        
         /// <param name="commandName">The command name.</param>
         /// <param name="parameterName">The parameter name.</param>
         /// <param name="wordToComplete">The word to complete.</param>

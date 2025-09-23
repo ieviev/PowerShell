@@ -14,16 +14,10 @@ using System.Text.RegularExpressions;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// ClrFacade contains all diverging code (different implementation for FullCLR and CoreCLR using if/def).
-    /// It exposes common APIs that can be used by the rest of the code base.
-    /// </summary>
+    
     internal static class ClrFacade
     {
-        /// <summary>
-        /// Initialize powershell AssemblyLoadContext and register the 'Resolving' event, if it's not done already.
-        /// If powershell is hosted by a native host such as DSC, then PS ALC may be initialized via 'SetPowerShellAssemblyLoadContext' before loading S.M.A.
-        /// </summary>
+        
         /// <remarks>
         /// We do this both here and during the initialization of the 'RunspaceBase' type.
         /// This is because we want to make sure the assembly/library resolvers are:
@@ -50,9 +44,7 @@ namespace System.Management.Automation
             return GetAssemblies(typeNameToSearch);
         }
 
-        /// <summary>
-        /// Facade for AppDomain.GetAssemblies.
-        /// </summary>
+        
         /// <param name="namespaceQualifiedTypeName">
         /// In CoreCLR context, if it's for string-to-type conversion and the namespace qualified type name is known, pass it in so that
         /// powershell can load the necessary TPA if the target type is from an unloaded TPA.
@@ -62,11 +54,7 @@ namespace System.Management.Automation
             return PSAssemblyLoadContext.GetAssembly(namespaceQualifiedTypeName) ?? GetPSVisibleAssemblies();
         }
 
-        /// <summary>
-        /// Return assemblies from the default load context and the 'individual' load contexts.
-        /// The 'individual' load contexts are the ones holding assemblies loaded via 'Assembly.Load(byte[])' and 'Assembly.LoadFile'.
-        /// Assemblies loaded in any custom load contexts are not consider visible to PowerShell to avoid type identity issues.
-        /// </summary>
+        
         private static IEnumerable<Assembly> GetPSVisibleAssemblies()
         {
             const string IndividualAssemblyLoadContext = "System.Runtime.Loader.IndividualAssemblyLoadContext";
@@ -91,16 +79,10 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Get the namespace-qualified type names of all available .NET Core types shipped with PowerShell.
-        /// This is used for type name auto-completion in PS engine.
-        /// </summary>
+        
         internal static IEnumerable<string> AvailableDotNetTypeNames => PSAssemblyLoadContext.AvailableDotNetTypeNames;
 
-        /// <summary>
-        /// Get the assembly names of all available .NET Core assemblies shipped with PowerShell.
-        /// This is used for type name auto-completion in PS engine.
-        /// </summary>
+        
         internal static HashSet<string> AvailableDotNetAssemblyNames => PSAssemblyLoadContext.AvailableDotNetAssemblyNames;
 
         private static PowerShellAssemblyLoadContext PSAssemblyLoadContext => PowerShellAssemblyLoadContext.Instance;
@@ -109,10 +91,7 @@ namespace System.Management.Automation
 
         #region Encoding
 
-        /// <summary>
-        /// Facade for getting OEM encoding
-        /// OEM encodings work on all platforms, or rather codepage 437 is available on both Windows and Non-Windows.
-        /// </summary>
+        
         internal static Encoding GetOEMEncoding()
         {
             if (s_oemEncoding == null)
@@ -135,9 +114,7 @@ namespace System.Management.Automation
 #if !UNIX
         #region Security
 
-        /// <summary>
-        /// Facade to get the SecurityZone information of a file.
-        /// </summary>
+        
         internal static SecurityZone GetFileSecurityZone(string filePath)
         {
             Diagnostics.Assert(Path.IsPathRooted(filePath), "Caller makes sure the path is rooted.");
@@ -145,9 +122,7 @@ namespace System.Management.Automation
             return MapSecurityZone(filePath);
         }
 
-        /// <summary>
-        /// Map the file to SecurityZone.
-        /// </summary>
+        
         /// <remarks>
         /// The algorithm is as follows:
         ///
@@ -234,9 +209,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Read the 'Zone.Identifier' alternate data stream to determin SecurityZone of the file.
-        /// </summary>
+        
         private static SecurityZone ReadFromZoneIdentifierDataStream(string filePath)
         {
             if (!AlternateDataStreamUtilities.TryCreateFileStream(filePath, "Zone.Identifier", FileMode.Open, FileAccess.Read, FileShare.Read, out var zoneDataStream))
@@ -298,9 +271,7 @@ namespace System.Management.Automation
 
         #region Misc
 
-        /// <summary>
-        /// Facade for ManagementDateTimeConverter.ToDmtfDateTime(DateTime)
-        /// </summary>
+        
         internal static string ToDmtfDateTime(DateTime date)
         {
 #if CORECLR

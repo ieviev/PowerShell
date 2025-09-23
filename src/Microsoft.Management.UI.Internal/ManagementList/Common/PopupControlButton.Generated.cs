@@ -9,23 +9,17 @@ using System.Windows;
 namespace Microsoft.Management.UI.Internal
 {
 
-    /// <summary>
-    /// A toggle button which controls is a popup is open or not.
-    /// </summary>
+    
     [Localizability(LocalizationCategory.None)]
     partial class PopupControlButton
     {
         //
         // IsPopupOpen dependency property
         //
-        /// <summary>
-        /// Identifies the IsPopupOpen dependency property.
-        /// </summary>
+        
         public static readonly DependencyProperty IsPopupOpenProperty = DependencyProperty.Register( "IsPopupOpen", typeof(bool), typeof(PopupControlButton), new FrameworkPropertyMetadata( BooleanBoxes.FalseBox, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, IsPopupOpenProperty_PropertyChanged) );
 
-        /// <summary>
-        /// Gets or sets a value indicating whether the popup is open or not.
-        /// </summary>
+        
         /// <remarks>
         /// The Popup.IsOpen property should be two-way bound to this property.
         /// </remarks>
@@ -51,14 +45,10 @@ namespace Microsoft.Management.UI.Internal
             obj.OnIsPopupOpenChanged( new PropertyChangedEventArgs<bool>((bool)e.OldValue, (bool)e.NewValue) );
         }
 
-        /// <summary>
-        /// Occurs when IsPopupOpen property changes.
-        /// </summary>
+        
         public event EventHandler<PropertyChangedEventArgs<bool>> IsPopupOpenChanged;
 
-        /// <summary>
-        /// Called when IsPopupOpen property changes.
-        /// </summary>
+        
         protected virtual void OnIsPopupOpenChanged(PropertyChangedEventArgs<bool> e)
         {
             OnIsPopupOpenChangedImplementation(e);
@@ -67,9 +57,7 @@ namespace Microsoft.Management.UI.Internal
 
         partial void OnIsPopupOpenChangedImplementation(PropertyChangedEventArgs<bool> e);
 
-        /// <summary>
-        /// Called when a property changes.
-        /// </summary>
+        
         private void RaisePropertyChangedEvent<T>(EventHandler<PropertyChangedEventArgs<T>> eh, PropertyChangedEventArgs<T> e)
         {
             if (eh != null)

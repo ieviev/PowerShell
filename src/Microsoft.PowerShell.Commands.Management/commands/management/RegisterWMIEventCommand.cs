@@ -13,52 +13,38 @@ using System.Threading;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// Registers for an event on an object.
-    /// </summary>
+    
     [Cmdlet(VerbsLifecycle.Register, "WmiEvent", DefaultParameterSetName = "class",
         HelpUri = "https://go.microsoft.com/fwlink/?LinkID=135245", RemotingCapability = RemotingCapability.OwnedByCommand)]
     public class RegisterWmiEventCommand : ObjectEventRegistrationBase
     {
         #region parameters
 
-        /// <summary>
-        /// The WMI namespace to use.
-        /// </summary>
+        
         [Parameter]
         [Alias("NS")]
         public string Namespace { get; set; } = "root\\cimv2";
 
-        /// <summary>
-        /// The credential to use.
-        /// </summary>
+        
         [Parameter]
         [Credential]
         public PSCredential Credential { get; set; }
 
-        /// <summary>
-        /// The ComputerName in which to query.
-        /// </summary>
+        
         [Parameter]
         [Alias("Cn")]
         [ValidateNotNullOrEmpty]
         public string ComputerName { get; set; } = "localhost";
 
-        /// <summary>
-        /// The WMI class to use.
-        /// </summary>
+        
         [Parameter(Position = 0, Mandatory = true, ParameterSetName = "class")]
         public string Class { get; set; } = null;
 
-        /// <summary>
-        /// The query string to search for objects.
-        /// </summary>
+        
         [Parameter(Position = 0, Mandatory = true, ParameterSetName = "query")]
         public string Query { get; set; } = null;
 
-        /// <summary>
-        /// Timeout in milliseconds.
-        /// </summary>
+        
         [Parameter]
         [Alias("TimeoutMSec")]
         public Int64 Timeout
@@ -97,9 +83,7 @@ namespace Microsoft.PowerShell.Commands
         }
         #endregion helper functions
 
-        /// <summary>
-        /// Returns the object that generates events to be monitored.
-        /// </summary>
+        
         protected override object GetSourceObject()
         {
             string wmiQuery = this.Query;
@@ -158,17 +142,13 @@ namespace Microsoft.PowerShell.Commands
             return watcher;
         }
 
-        /// <summary>
-        /// Returns the event name to be monitored on the input object.
-        /// </summary>
+        
         protected override string GetSourceObjectEventName()
         {
             return "EventArrived";
         }
 
-        /// <summary>
-        /// Processes the event subscriber after the base class has registered.
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             base.EndProcessing();

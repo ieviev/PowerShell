@@ -6,18 +6,14 @@ using System.Management.Automation;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// A cmdlet that gets the TraceSource instances that are instantiated in the process.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Get, "TraceSource", HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096707")]
     [OutputType(typeof(PSTraceSource))]
     public class GetTraceSourceCommand : TraceCommandBase
     {
         #region Parameters
 
-        /// <summary>
-        /// Gets or sets the category parameter which determines which trace switch to get.
-        /// </summary>
+        
         /// <value></value>
         [Parameter(Position = 0, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty()]
@@ -45,9 +41,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Cmdlet code
 
-        /// <summary>
-        /// Gets the PSTraceSource for the specified category.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             var sources = GetMatchingTraceSource(_names, true);

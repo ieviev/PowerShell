@@ -10,41 +10,35 @@ using Microsoft.PowerShell.Commands.Internal.Format;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// </summary>
+    
     [Cmdlet(VerbsData.Compare, "Object", HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096605",
         RemotingCapability = RemotingCapability.None)]
     public sealed class CompareObjectCommand : ObjectCmdletBase
     {
         #region Parameters
-        /// <summary>
-        /// </summary>
+        
         [Parameter(Position = 0, Mandatory = true)]
         [AllowEmptyCollection]
         public PSObject[] ReferenceObject { get; set; }
 
-        /// <summary>
-        /// </summary>
+        
         [Parameter(Position = 1, Mandatory = true, ValueFromPipeline = true)]
         [AllowEmptyCollection]
         public PSObject[] DifferenceObject { get; set; }
 
-        /// <summary>
-        /// </summary>
+        
         [Parameter]
         [ValidateRange(0, int.MaxValue)]
         public int SyncWindow { get; set; } = int.MaxValue;
 
-        /// <summary>
-        /// </summary>
+        
         /// <value></value>
         [Parameter]
         public object[] Property { get; set; }
 
         
 
-        /// <summary>
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter ExcludeDifferent
         {
@@ -55,8 +49,7 @@ namespace Microsoft.PowerShell.Commands
 
         private bool _excludeDifferent ;
 
-        /// <summary>
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter IncludeEqual
         {
@@ -75,8 +68,7 @@ namespace Microsoft.PowerShell.Commands
         private bool _includeEqual ;
         private bool _isIncludeEqualSpecified ;
 
-        /// <summary>
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter PassThru
         {
@@ -109,38 +101,7 @@ namespace Microsoft.PowerShell.Commands
         private const string SideIndicatorDifference = "=>";
         private const string InputObjectPropertyName = "InputObject";
 
-        /// <summary>
-        /// The following is the matching algorithm:
-        /// Retrieve the incoming object (differenceEntry) if any
-        /// Retrieve the next reference object (referenceEntry) if any
-        /// If differenceEntry matches referenceEntry
-        ///   Emit referenceEntry as a match
-        ///   Return
-        /// If differenceEntry matches any entry in referenceEntryBacklog
-        ///   Emit the backlog entry as a match
-        ///   Remove the backlog entry from referenceEntryBacklog
-        ///   Clear differenceEntry
-        /// If referenceEntry (if any) matches any entry in differenceEntryBacklog
-        ///   Emit referenceEntry as a match
-        ///   Remove the backlog entry from differenceEntryBacklog
-        ///   Clear referenceEntry
-        /// If differenceEntry is still present
-        ///   If SyncWindow is 0
-        ///     Emit differenceEntry as unmatched
-        ///   Else
-        ///     While there is no space in differenceEntryBacklog
-        ///       Emit oldest entry in differenceEntryBacklog as unmatched
-        ///       Remove oldest entry from differenceEntryBacklog
-        ///     Add differenceEntry to differenceEntryBacklog
-        /// If referenceEntry is still present
-        ///   If SyncWindow is 0
-        ///     Emit referenceEntry as unmatched
-        ///   Else
-        ///     While there is no space in referenceEntryBacklog
-        ///       Emit oldest entry in referenceEntryBacklog as unmatched
-        ///       Remove oldest entry from referenceEntryBacklog
-        ///     Add referenceEntry to referenceEntryBacklog.
-        /// </summary>
+        
         /// <param name="differenceEntry"></param>
         private void Process(OrderByPropertyEntry differenceEntry)
         {
@@ -365,10 +326,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Overrides
 
-        /// <summary>
-        /// If the parameter 'ExcludeDifferent' is present, then the 'IncludeEqual'
-        /// switch is turned on unless it's turned off by the user specifically.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             if (ExcludeDifferent)
@@ -382,8 +340,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             if (ReferenceObject == null || ReferenceObject.Length == 0)
@@ -413,8 +370,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             // Clear remaining reference objects if there are more

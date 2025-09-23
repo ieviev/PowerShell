@@ -97,9 +97,7 @@ namespace System.Management.Automation.Internal
             return result;
         }
 
-        /// <summary>
-        /// Substring implementation that takes into account the VT escape sequences.
-        /// </summary>
+        
         /// <param name="str">String that may contain VT escape sequences.</param>
         /// <param name="startOffset">
         /// When the string doesn't contain VT sequences, it's the starting index.
@@ -111,9 +109,7 @@ namespace System.Management.Automation.Internal
             return VtSubstring(str, startOffset, int.MaxValue, prependStr: null, appendStr: null);
         }
 
-        /// <summary>
-        /// Substring implementation that takes into account the VT escape sequences.
-        /// </summary>
+        
         /// <param name="str">String that may contain VT escape sequences.</param>
         /// <param name="startOffset">
         /// When the string doesn't contain VT sequences, it's the starting index.
@@ -125,9 +121,7 @@ namespace System.Management.Automation.Internal
             return VtSubstring(str, startOffset, length, prependStr: null, appendStr: null);
         }
 
-        /// <summary>
-        /// Substring implementation that takes into account the VT escape sequences.
-        /// </summary>
+        
         /// <param name="str">String that may contain VT escape sequences.</param>
         /// <param name="startOffset">
         /// When the string doesn't contain VT sequences, it's the starting index.
@@ -140,9 +134,7 @@ namespace System.Management.Automation.Internal
             return VtSubstring(str, startOffset, int.MaxValue, prependStr, appendStr);
         }
 
-        /// <summary>
-        /// Substring implementation that takes into account the VT escape sequences.
-        /// </summary>
+        
         /// <param name="str">String that may contain VT escape sequences.</param>
         /// <param name="startOffset">
         /// When the string doesn't contain VT sequences, it's the starting index.

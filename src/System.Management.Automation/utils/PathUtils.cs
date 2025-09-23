@@ -15,15 +15,10 @@ using Dbg = System.Management.Automation.Diagnostics;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Defines generic utilities and helper methods for PowerShell.
-    /// </summary>
+    
     internal static class PathUtils
     {
-        /// <summary>
-        /// THE method for opening a file for writing.
-        /// Should be used by all cmdlets that write to a file.
-        /// </summary>
+        
         /// <param name="cmdlet">Cmdlet that is opening the file (used mainly for error reporting).</param>
         /// <param name="filePath">Path to the file (as specified on the command line - this method will resolve the path).</param>
         /// <param name="encoding">Encoding (this method will convert the command line string to an Encoding instance).</param>
@@ -54,10 +49,7 @@ namespace System.Management.Automation
             MasterStreamOpen(cmdlet, filePath, resolvedEncoding, defaultEncoding, Append, Force, NoClobber, out fileStream, out streamWriter, out readOnlyFileInfo, isLiteralPath);
         }
 
-        /// <summary>
-        /// THE method for opening a file for writing.
-        /// Should be used by all cmdlets that write to a file.
-        /// </summary>
+        
         /// <param name="cmdlet">Cmdlet that is opening the file (used mainly for error reporting).</param>
         /// <param name="filePath">Path to the file (as specified on the command line - this method will resolve the path).</param>
         /// <param name="resolvedEncoding">Encoding (this method will convert the command line string to an Encoding instance).</param>
@@ -142,10 +134,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// THE method for opening a file for writing.
-        /// Should be used by all cmdlets that write to a file.
-        /// </summary>
+        
         /// <param name="filePath">Path to the file (as specified on the command line - this method will resolve the path).</param>
         /// <param name="resolvedEncoding">Encoding (this method will convert the command line string to an Encoding instance).</param>
         /// <param name="defaultEncoding">If <see langword="true"/>, then we will use default .NET encoding instead of the encoding specified in <paramref name="encoding"/> parameter.</param>
@@ -240,10 +229,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// THE method for opening a file for writing.
-        /// Should be used by all cmdlets that write to a file.
-        /// </summary>
+        
         /// <param name="resolvedPath">Path to the file (as specified on the command line - this method will resolve the path).</param>
         /// <param name="resolvedEncoding">Encoding (this method will convert the command line string to an Encoding instance).</param>
         /// <param name="defaultEncoding">If <see langword="true"/>, then we will use default .NET encoding instead of the encoding specified in <paramref name="encoding"/> parameter.</param>
@@ -380,10 +366,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Resolve a user provided file name or path (including globbing characters)
-        /// to a fully qualified file path, using the file system provider.
-        /// </summary>
+        
         /// <param name="filePath"></param>
         /// <param name="command"></param>
         /// <returns></returns>
@@ -392,10 +375,7 @@ namespace System.Management.Automation
             return ResolveFilePath(filePath, command, false);
         }
 
-        /// <summary>
-        /// Resolve a user provided file name or path (including globbing characters)
-        /// to a fully qualified file path, using the file system provider.
-        /// </summary>
+        
         /// <param name="filePath"></param>
         /// <param name="command"></param>
         /// <param name="isLiteralPath"></param>
@@ -459,10 +439,7 @@ namespace System.Management.Automation
             return path;
         }
 
-        /// <summary>
-        /// Resolve a user provided file name or path (including globbing characters)
-        /// to a fully qualified file path, using the file system provider.
-        /// </summary>
+        
         /// <param name="filePath"></param>
         /// <param name="isLiteralPath"></param>
         /// <returns></returns>
@@ -739,13 +716,7 @@ namespace System.Management.Automation
 
 #nullable enable
 
-        /// <summary>
-        /// Adds the extended path prefix (\\?\) if not already a device path, IF the path is not relative,
-        /// AND the path is more than 259 characters. (> MAX_PATH + null). This will also insert the extended
-        /// prefix if the path ends with a period or a space. Trailing periods and spaces are normally eaten
-        /// away from paths during normalization, but if we see such a path at this point it should be
-        /// normalized and has retained the final characters. (Typically from one of the *Info classes).
-        /// </summary>
+        
         /// <param name="path">File path.</param>
         /// <returns>File path (with extended prefix if the path is long path).</returns>
         [return: NotNullIfNotNull(nameof(path))]
@@ -794,9 +765,7 @@ namespace System.Management.Automation
             return c == ' ' || c == '.';
         }
 
-        /// <summary>
-        /// Returns true if the given character is a valid drive letter
-        /// </summary>
+        
         private static bool IsValidDriveChar(char value)
         {
             return ((value >= 'A' && value <= 'Z') || (value >= 'a' && value <= 'z'));
@@ -824,11 +793,7 @@ namespace System.Management.Automation
                 && path[3] == '\\';
         }
 
-        /// <summary>
-        /// Returns true if the path specified is relative to the current drive or working directory.
-        /// Returns false if the path is fixed to a specific drive or UNC path.  This method does no
-        /// validation of the path (URIs will be returned as relative as a result).
-        /// </summary>
+        
         /// <remarks>
         /// Handles paths that use the alternate directory separator.  It is a frequent mistake to
         /// assume that rooted paths (Path.IsPathRooted) are not relative.  This isn't the case.
@@ -861,9 +826,7 @@ namespace System.Management.Automation
                 // not qualified if you don't have a valid drive. "=:\" is the "=" file's default data stream.
                 && IsValidDriveChar(path[0]));
         }
-        /// <summary>
-        /// True if the given character is a directory separator.
-        /// </summary>
+        
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static bool IsDirectorySeparator(char c)
         {
@@ -874,29 +837,21 @@ namespace System.Management.Automation
 
         #region Helpers for checking invalid paths using SearchValues
 
-        /// <summary>
-        /// Contains characters that are invalid in file names.
-        /// </summary>
+        
         private static readonly SearchValues<char> s_invalidFileNameChars
             = SearchValues.Create(Path.GetInvalidFileNameChars());
 
-        /// <summary>
-        /// Contains characters that are invalid in path names.
-        /// </summary>
+        
         private static readonly SearchValues<char> s_invalidPathChars
             = SearchValues.Create(Path.GetInvalidPathChars());
 
-        /// <summary>
-        /// Checks if the specified filename contains any characters that are invalid in file names.
-        /// </summary>
+        
         /// <param name="filename">The path to check.</param>
         /// <returns>True if the filename contains invalid file name characters, otherwise false.</returns>
         internal static bool ContainsInvalidFileNameChars(ReadOnlySpan<char> filename)
             => filename.ContainsAny(s_invalidFileNameChars);
 
-        /// <summary>
-        /// Checks if the specified path contains any characters that are invalid in path names.
-        /// </summary>
+        
         /// <param name="path">The path to check.</param>
         /// <returns>True if the path contains invalid path characters, otherwise false.</returns>
         internal static bool ContainsInvalidPathChars(ReadOnlySpan<char> path)

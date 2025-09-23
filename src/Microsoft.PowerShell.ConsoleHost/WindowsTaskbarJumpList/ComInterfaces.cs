@@ -109,52 +109,40 @@ namespace Microsoft.PowerShell
                 [MarshalAs(UnmanagedType.LPWStr)] string pszFile);
         }
 
-        /// <summary>
-        /// A property store.
-        /// </summary>
+        
         [ComImport]
         [Guid("886D8EEB-8CF2-4446-8D02-CDBA1DBDCF99")]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         internal interface IPropertyStore
         {
-            /// <summary>
-            /// Gets the number of properties contained in the property store.
-            /// </summary>
+            
             /// <param name="propertyCount"></param>
             /// <returns></returns>
             [PreserveSig]
             HResult GetCount([Out] out uint propertyCount);
 
-            /// <summary>
-            /// Get a property key located at a specific index.
-            /// </summary>
+            
             /// <param name="propertyIndex"></param>
             /// <param name="key"></param>
             /// <returns></returns>
             [PreserveSig]
             HResult GetAt([In] uint propertyIndex, out PropertyKey key);
 
-            /// <summary>
-            /// Gets the value of a property from the store.
-            /// </summary>
+            
             /// <param name="key"></param>
             /// <param name="pv"></param>
             /// <returns></returns>
             [PreserveSig]
             HResult GetValue([In] in PropertyKey key, [Out] PropVariant pv);
 
-            /// <summary>
-            /// Sets the value of a property in the store.
-            /// </summary>
+            
             /// <param name="key"></param>
             /// <param name="pv"></param>
             /// <returns></returns>
             [PreserveSig]
             HResult SetValue([In] in PropertyKey key, [In] PropVariant pv);
 
-            /// <summary>
-            /// Commits the changes.
-            /// </summary>
+            
             /// <returns></returns>
             [PreserveSig]
             HResult Commit();

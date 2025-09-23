@@ -18,30 +18,20 @@ using CimInstance = Microsoft.Management.Infrastructure.CimInstance;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Enum describing permissions to use runtime evaluation during type inference.
-    /// </summary>
+    
     public enum TypeInferenceRuntimePermissions
     {
-        /// <summary>
-        /// No runtime use is allowed.
-        /// </summary>
+        
         None = 0,
 
-        /// <summary>
-        /// Use of SafeExprEvaluator visitor is allowed.
-        /// </summary>
+        
         AllowSafeEval = 1,
     }
 
-    /// <summary>
-    /// Static class containing methods to work with type inference of abstract syntax trees.
-    /// </summary>
+    
     internal static class AstTypeInference
     {
-        /// <summary>
-        /// Infers the type that the result of executing a statement would have without using runtime safe eval.
-        /// </summary>
+        
         /// <param name="ast">The ast to infer the type from.</param>
         /// <returns>List of inferred typenames.</returns>
         public static IList<PSTypeName> InferTypeOf(Ast ast)
@@ -49,9 +39,7 @@ namespace System.Management.Automation
             return InferTypeOf(ast, TypeInferenceRuntimePermissions.None);
         }
 
-        /// <summary>
-        /// Infers the type that the result of executing a statement would have.
-        /// </summary>
+        
         /// <param name="ast">The ast to infer the type from.</param>
         /// <param name="evalPermissions">The runtime usage permissions allowed during type inference.</param>
         /// <returns>List of inferred typenames.</returns>
@@ -60,9 +48,7 @@ namespace System.Management.Automation
             return InferTypeOf(ast, PowerShell.Create(RunspaceMode.CurrentRunspace), evalPermissions);
         }
 
-        /// <summary>
-        /// Infers the type that the result of executing a statement would have without using runtime safe eval.
-        /// </summary>
+        
         /// <param name="ast">The ast to infer the type from.</param>
         /// <param name="powerShell">The instance of powershell to use for expression evaluation needed for type inference.</param>
         /// <returns>List of inferred typenames.</returns>
@@ -71,9 +57,7 @@ namespace System.Management.Automation
             return InferTypeOf(ast, powerShell, TypeInferenceRuntimePermissions.None);
         }
 
-        /// <summary>
-        /// Infers the type that the result of executing a statement would have.
-        /// </summary>
+        
         /// <param name="ast">The ast to infer the type from.</param>
         /// <param name="powerShell">The instance of powershell to user for expression evaluation needed for type inference.</param>
         /// <param name="evalPersmissions">The runtime usage permissions allowed during type inference.</param>
@@ -84,9 +68,7 @@ namespace System.Management.Automation
             return InferTypeOf(ast, context, evalPersmissions);
         }
 
-        /// <summary>
-        /// Infers the type that the result of executing a statement would have.
-        /// </summary>
+        
         /// <param name="ast">The ast to infer the type from.</param>
         /// <param name="context">The current type inference context.</param>
         /// <param name="evalPersmissions">The runtime usage permissions allowed during type inference.</param>
@@ -131,10 +113,7 @@ namespace System.Management.Automation
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TypeInferenceContext"/> class.
-        /// The powerShell instance passed need to have a non null Runspace.
-        /// </summary>
+        
         /// <param name="powerShell">The instance of powershell to use for expression evaluation needed for type inference.</param>
         public TypeInferenceContext(PowerShell powerShell)
         {
@@ -1463,9 +1442,7 @@ namespace System.Management.Automation
             inferredTypes.AddRange(commandInfo.OutputType);
         }
 
-        /// <summary>
-        /// Infer types from the well-known object cmdlets, like foreach-object, where-object, sort-object etc.
-        /// </summary>
+        
         /// <param name="commandAst">The ast to infer types from.</param>
         /// <param name="cmdletInfo">The cmdletInfo.</param>
         /// <param name="pseudoBinding">Pseudo bindings of parameters.</param>
@@ -2531,9 +2508,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the most specific array type possible from a group of inferred types.
-        /// </summary>
+        
         /// <param name="inferredTypes">The inferred types all the items in the array.</param>
         /// <returns>The inferred strongly typed array type.</returns>
         private static PSTypeName GetArrayType(IEnumerable<PSTypeName> inferredTypes)
@@ -2587,9 +2562,7 @@ namespace System.Management.Automation
             return new PSTypeName(foundType.Type.MakeArrayType());
         }
 
-        /// <summary>
-        /// Gets the most specific type item type from a type that is potentially enumerable.
-        /// </summary>
+        
         /// <param name="enumerableType">The type to infer enumerated item type from.</param>
         /// <returns>The inferred enumerated item type.</returns>
         private static Type GetMostSpecificEnumeratedItemType(Type enumerableType)
@@ -2650,9 +2623,7 @@ namespace System.Management.Automation
             return null;
         }
 
-        /// <summary>
-        /// Determines if the interface can be used to infer a specific enumerated type.
-        /// </summary>
+        
         /// <param name="interfaceType">The interface to test.</param>
         /// <param name="hasSeenNonGeneric">
         /// A reference to a value indicating whether a non-generic enumerable type has been
@@ -2785,10 +2756,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Infers the types as if they were enumerated. For example, a <see cref="List{T}"/>
-        /// of type <see cref="string"/> would be returned as <see cref="string"/>.
-        /// </summary>
+        
         /// <param name="enumerableTypes">
         /// The potentially enumerable types to infer enumerated type from.
         /// </param>
@@ -2880,50 +2848,31 @@ namespace System.Management.Automation
 
         private sealed class VariableAssignmentVisitor : AstVisitor2
         {
-            /// <summary>
-            /// If set, we only look for local/private assignments in the scope of the variable we are inferring.
-            /// </summary>
+            
             internal bool LocalScopeOnly;
             
-            /// <summary>
-            /// The current scope is local to the variable that is being inferred.
-            /// </summary>
+            
             internal bool ScopeIsLocal;
             
-            /// <summary>
-            /// The variable that we are trying to determine the type of.
-            /// </summary>
+            
             internal VariableExpressionAst VariableTarget;
 
-            /// <summary>
-            /// The last type constraint applied to the variable. This takes priority when determining the type of the variable.
-            /// </summary>
+            
             internal ITypeName LastConstraint;
             
-            /// <summary>
-            /// The last ast that assigned a value to the variable. This determines the value of the variable unless a type constraint has been applied.
-            /// </summary>
+            
             internal Ast LastAssignment;
             
-            /// <summary>
-            /// The inferred type from the most recent assignment. This is only used for stream redirections to variables, or the special OutVariable common parameters.
-            /// </summary>
+            
             internal PSTypeName LastAssignmentType;
             
-            /// <summary>
-            /// Whether or not the types from the last assignment should be enumerated.
-            /// For assignments made by the PipelineVariable parameter or the foreach statement.
-            /// </summary>
+            
             internal bool EnumerateAssignment;
             
-            /// <summary>
-            /// Whether or not the last assignment was via command redirection.
-            /// </summary>
+            
             internal bool RedirectionAssignment;
 
-            /// <summary>
-            /// The Ast of the scope we are currently analyzing.
-            /// </summary>
+            
             internal Ast ScopeDefinitionAst;
             internal int StopSearchOffset;
             private int LastAssignmentOffset = -1;

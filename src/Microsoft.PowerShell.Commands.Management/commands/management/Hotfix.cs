@@ -15,9 +15,7 @@ namespace Microsoft.PowerShell.Commands
 {
     #region Get-HotFix
 
-    /// <summary>
-    /// Cmdlet for Get-Hotfix Proxy.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Get, "HotFix", DefaultParameterSetName = "Default",
         HelpUri = "https://go.microsoft.com/fwlink/?linkid=2109716", RemotingCapability = RemotingCapability.SupportedByCommand)]
     [OutputType(@"System.Management.ManagementObject#root\cimv2\Win32_QuickFixEngineering")]
@@ -25,35 +23,27 @@ namespace Microsoft.PowerShell.Commands
     {
         #region Parameters
 
-        /// <summary>
-        /// Specifies the HotFixID. Unique identifier associated with a particular update.
-        /// </summary>
+        
         [Parameter(Position = 0, ParameterSetName = "Default")]
         [ValidateNotNullOrEmpty]
         [Alias("HFID")]
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
         public string[] Id { get; set; }
 
-        /// <summary>
-        /// To search on description of Hotfixes.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "Description")]
         [ValidateNotNullOrEmpty]
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
         public string[] Description { get; set; }
 
-        /// <summary>
-        /// Parameter to pass the Computer Name.
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         [Alias("CN", "__Server", "IPAddress")]
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
         public string[] ComputerName { get; set; } = new string[] { "localhost" };
 
-        /// <summary>
-        /// Parameter to pass the Credentials.
-        /// </summary>
+        
         [Parameter]
         [Credential]
         [ValidateNotNullOrEmpty]
@@ -68,9 +58,7 @@ namespace Microsoft.PowerShell.Commands
         private bool _inputContainsWildcard = false;
         private readonly ConnectionOptions _connectionOptions = new();
 
-        /// <summary>
-        /// Sets connection options.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             _connectionOptions.Authentication = AuthenticationLevel.Packet;
@@ -79,9 +67,7 @@ namespace Microsoft.PowerShell.Commands
             _connectionOptions.SecurePassword = Credential?.Password;
         }
 
-        /// <summary>
-        /// Get the List of HotFixes installed on the Local Machine.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             foreach (string computer in ComputerName)
@@ -164,9 +150,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// To implement ^C.
-        /// </summary>
+        
         protected override void StopProcessing()
         {
             _searchProcess?.Dispose();
@@ -205,9 +189,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region "IDisposable Members"
 
-        /// <summary>
-        /// Dispose Method.
-        /// </summary>
+        
         public void Dispose()
         {
             this.Dispose(true);
@@ -216,9 +198,7 @@ namespace Microsoft.PowerShell.Commands
             GC.SuppressFinalize(this);
         }
 
-        /// <summary>
-        /// Dispose Method.
-        /// </summary>
+        
         /// <param name="disposing"></param>
         public void Dispose(bool disposing)
         {

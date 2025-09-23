@@ -11,16 +11,12 @@ using Dbg = System.Management.Automation.Diagnostics;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Holds the state of a Monad Shell session.
-    /// </summary>
+    
     internal sealed partial class SessionStateInternal
     {
         #region Functions
 
-        /// <summary>
-        /// Add an new SessionState function entry to this session state object...
-        /// </summary>
+        
         /// <param name="entry">The entry to add.</param>
         internal void AddSessionStateEntry(SessionStateFunctionEntry entry)
         {
@@ -32,11 +28,7 @@ namespace System.Management.Automation
             fn.ScriptBlock.LanguageMode = entry.ScriptBlock.LanguageMode ?? PSLanguageMode.FullLanguage;
         }
 
-        /// <summary>
-        /// Gets a flattened view of the functions that are visible using
-        /// the current scope as a reference and filtering the functions in
-        /// the other scopes based on the scoping rules.
-        /// </summary>
+        
         /// <returns>
         /// An IDictionary representing the visible functions.
         /// </returns>
@@ -62,9 +54,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Gets an IEnumerable for the function table for a given scope.
-        /// </summary>
+        
         /// <param name="scopeID">
         /// A scope identifier that is either one of the "special" scopes like
         /// "global", "script", "local", or "private, or a numeric ID of a relative scope
@@ -100,21 +90,15 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// List of functions/filters to export from this session state object...
-        /// </summary>
+        
         internal List<FunctionInfo> ExportedFunctions { get; } = new List<FunctionInfo>();
 
         internal bool UseExportList { get; set; } = false;
 
-        /// <summary>
-        /// Set to true when module functions are being explicitly exported using Export-ModuleMember.
-        /// </summary>
+        
         internal bool FunctionsExported { get; set; }
 
-        /// <summary>
-        /// Set to true when any processed module functions are being explicitly exported using '*' wildcard.
-        /// </summary>
+        
         internal bool FunctionsExportedWithWildcard
         {
             get
@@ -134,14 +118,10 @@ namespace System.Management.Automation
 
         private bool _functionsExportedWithWildcard;
 
-        /// <summary>
-        /// Set to true if module loading is performed under a manifest that explicitly exports functions (no wildcards)
-        /// </summary>
+        
         internal bool ManifestWithExplicitFunctionExport { get; set; }
 
-        /// <summary>
-        /// Get a functions out of session state.
-        /// </summary>
+        
         /// <param name="name">
         /// name of function to look up
         /// </param>
@@ -207,9 +187,7 @@ namespace System.Management.Automation
             return true;
         }
 
-        /// <summary>
-        /// Get a functions out of session state.
-        /// </summary>
+        
         /// <param name="name">
         /// name of function to look up
         /// </param>
@@ -245,9 +223,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Set a function in the current scope of session state.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the function to set.
         /// </param>
@@ -321,9 +297,7 @@ namespace System.Management.Automation
             return functionInfo;
         }
 
-        /// <summary>
-        /// Set a function in the current scope of session state.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the function to set.
         /// </param>
@@ -362,9 +336,7 @@ namespace System.Management.Automation
             return SetFunction(name, function, originalFunction, options, force, origin, ExecutionContext, null);
         }
 
-        /// <summary>
-        /// Set a function in the current scope of session state.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the function to set.
         /// </param>
@@ -407,9 +379,7 @@ namespace System.Management.Automation
             return SetFunction(name, function, originalFunction, options, force, origin, ExecutionContext, helpFile, false);
         }
 
-        /// <summary>
-        /// Set a function in the current scope of session state.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the function to set.
         /// </param>
@@ -456,9 +426,7 @@ namespace System.Management.Automation
             return SetFunction(name, function, originalFunction, options, force, origin, context, helpFile, false);
         }
 
-        /// <summary>
-        /// Set a function in the current scope of session state.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the function to set.
         /// </param>
@@ -548,9 +516,7 @@ namespace System.Management.Automation
             return searcher.InitialScope.SetFunction(name, function, originalFunction, options, force, origin, context, helpFile);
         }
 
-        /// <summary>
-        /// Set a function in the current scope of session state.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the function to set.
         /// </param>
@@ -661,12 +627,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Set a function in the current scope of session state.
-        ///
-        /// BUGBUG: this overload is preserved because a lot of tests use reflection to
-        /// call it. The tests should be fixed and this API eventually removed.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the function to set.
         /// </param>
@@ -693,9 +654,7 @@ namespace System.Management.Automation
             return SetFunction(name, function, null, force, CommandOrigin.Internal);
         }
 
-        /// <summary>
-        /// Removes a function from the function table.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the function to remove.
         /// </param>
@@ -738,9 +697,7 @@ namespace System.Management.Automation
             scope.RemoveFunction(name, force);
         }
 
-        /// <summary>
-        /// Removes a function from the function table.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the function to remove.
         /// </param>
@@ -758,12 +715,7 @@ namespace System.Management.Automation
             RemoveFunction(name, force, CommandOrigin.Internal);
         }
 
-        /// <summary>
-        /// Removes a function from the function table
-        /// if the function was imported from the given module.
-        ///
-        /// BUGBUG: This is only used by the implicit remoting functions...
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the function to remove.
         /// </param>

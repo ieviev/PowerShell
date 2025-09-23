@@ -11,10 +11,7 @@ using Microsoft.PowerShell.Telemetry;
 
 namespace System.Management.Automation;
 
-/// <summary>
-/// Represents a lazily retrieved <see cref="Stream" /> for transfering bytes
-/// to or from.
-/// </summary>
+
 internal abstract class BytePipe
 {
     public abstract Task<Stream> GetStream(CancellationToken cancellationToken);
@@ -26,10 +23,7 @@ internal abstract class BytePipe
     }
 }
 
-/// <summary>
-/// Represents a <see cref="Stream" /> lazily retrieved from the underlying
-/// <see cref="NativeCommandProcessor" />.
-/// </summary>
+
 internal sealed class NativeCommandProcessorBytePipe : BytePipe
 {
     private readonly NativeCommandProcessor _nativeCommand;
@@ -60,9 +54,7 @@ internal sealed class NativeCommandProcessorBytePipe : BytePipe
     }
 }
 
-/// <summary>
-/// Provides an byte pipe implementation representing a <see cref="FileStream" />.
-/// </summary>
+
 internal sealed class FileBytePipe : BytePipe
 {
     private readonly Stream _stream;

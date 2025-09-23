@@ -10,10 +10,7 @@ using System.Runtime.CompilerServices;
 
 namespace System.Management.Automation.Interpreter
 {
-    /// <summary>
-    /// Manages creation of interpreted delegates. These delegates will get
-    /// compiled if they are executed often enough.
-    /// </summary>
+    
     internal sealed class LightDelegateCreator
     {
         // null if we are forced to compile
@@ -53,10 +50,7 @@ namespace System.Management.Automation.Interpreter
             get { return _compiled != null; }
         }
 
-        /// <summary>
-        /// True if the compiled delegate has the same type as the lambda;
-        /// false if the type was changed for interpretation.
-        /// </summary>
+        
         internal bool SameDelegateType
         {
             get { return _compiledDelegateType == DelegateType; }
@@ -113,9 +107,7 @@ namespace System.Management.Automation.Interpreter
             }
         }
 
-        /// <summary>
-        /// Used by LightLambda to get the compiled delegate.
-        /// </summary>
+        
         internal Delegate CreateCompiledDelegate(StrongBox<object>[] closure)
         {
             Debug.Assert(HasClosure == (closure != null));
@@ -130,11 +122,7 @@ namespace System.Management.Automation.Interpreter
             return _compiled;
         }
 
-        /// <summary>
-        /// Create a compiled delegate for the LightLambda, and saves it so
-        /// future calls to Run will execute the compiled code instead of
-        /// interpreting.
-        /// </summary>
+        
         internal void Compile(object state)
         {
             if (_compiled != null)

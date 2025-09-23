@@ -7,18 +7,14 @@ using System.Management.Automation;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// Gets events from the event queue.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Get, "Event", DefaultParameterSetName = "BySource", HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097014")]
     [OutputType(typeof(PSEventArgs))]
     public class GetEventCommand : PSCmdlet
     {
         #region parameters
 
-        /// <summary>
-        /// An identifier for this event subscription.
-        /// </summary>
+        
         [Parameter(Position = 0, ValueFromPipelineByPropertyName = true, ParameterSetName = "BySource")]
         [ValidateNotNullOrEmpty]
         public string SourceIdentifier
@@ -41,9 +37,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string _sourceIdentifier = null;
 
-        /// <summary>
-        /// An identifier for this event subscription.
-        /// </summary>
+        
         [Parameter(Mandatory = true, Position = 0, ValueFromPipelineByPropertyName = true, ParameterSetName = "ById")]
         [Alias("Id")]
         public int EventIdentifier
@@ -65,9 +59,7 @@ namespace Microsoft.PowerShell.Commands
 
         private WildcardPattern _matchPattern;
 
-        /// <summary>
-        /// Get the requested events.
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             bool foundMatch = false;

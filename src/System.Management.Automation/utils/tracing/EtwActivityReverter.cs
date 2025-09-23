@@ -8,18 +8,13 @@ namespace System.Management.Automation.Tracing
 {
     using System;
 
-    /// <summary>
-    ///     An object that can be used to revert the ETW activity ID of the current thread
-    ///     to its original value.
-    /// </summary>
+    
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Etw")]
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Reverter")]
     public interface IEtwActivityReverter :
         IDisposable
     {
-        /// <summary>
-        ///     Reverts the ETW activity ID of the current thread to its original value.
-        /// </summary>
+        
         /// <remarks>
         ///     <para>Calling <see cref="IDisposable.Dispose"/> has the same effect as
         ///         calling this method and is useful in the C# "using" syntax.</para>

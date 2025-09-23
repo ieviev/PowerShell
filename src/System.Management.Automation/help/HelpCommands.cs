@@ -20,15 +20,11 @@ using Microsoft.Win32;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// This class implements get-help command.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Get, "Help", DefaultParameterSetName = "AllUsersView", HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096483")]
     public sealed class GetHelpCommand : PSCmdlet
     {
-        /// <summary>
-        /// Help Views.
-        /// </summary>
+        
         internal enum HelpView
         {
             Default = 0x00, // Default View
@@ -37,31 +33,23 @@ namespace Microsoft.PowerShell.Commands
             ExamplesView = 0x03
         }
 
-        /// <summary>
-        /// Default constructor for the GetHelpCommand class.
-        /// </summary>
+        
         public GetHelpCommand()
         {
         }
 
         #region Cmdlet Parameters
 
-        /// <summary>
-        /// Target to search for help.
-        /// </summary>
+        
         [Parameter(Position = 0, ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty()]
         public string Name { get; set; } = string.Empty;
 
-        /// <summary>
-        /// Path to provider location that user is curious about.
-        /// </summary>
+        
         [Parameter]
         public string Path { get; set; }
 
-        /// <summary>
-        /// List of help categories to search for help.
-        /// </summary>
+        
         [Parameter]
         [ValidateSet(
             "Alias", "Cmdlet", "Provider", "General", "FAQ", "Glossary", "HelpFile", "ScriptCommand", "Function", "Filter", "ExternalScript", "All", "DefaultHelp", "DscResource", "Class", "Configuration",
@@ -70,9 +58,7 @@ namespace Microsoft.PowerShell.Commands
 
         private readonly string _provider = string.Empty;
 
-        /// <summary>
-        /// Changes the view of HelpObject returned.
-        /// </summary>
+        
         /// <remarks>
         /// Currently we support following views:
         ///
@@ -97,9 +83,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Changes the view of HelpObject returned.
-        /// </summary>
+        
         /// <remarks>
         /// Currently we support following views:
         ///
@@ -124,9 +108,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Changes the view of HelpObject returned.
-        /// </summary>
+        
         /// <remarks>
         /// Currently we support following views:
         ///
@@ -150,38 +132,26 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Parameter name.
-        /// </summary>
+        
         /// <remarks>
         /// Support WildCard strings as supported by WildcardPattern class.
         /// </remarks>
         [Parameter(ParameterSetName = "Parameters", Mandatory = true)]
         public string[] Parameter { get; set; }
 
-        /// <summary>
-        /// Gets and sets list of Component's to search on.
-        /// </summary>
+        
         [Parameter]
         public string[] Component { get; set; }
 
-        /// <summary>
-        /// Gets and sets list of Functionality's to search on.
-        /// </summary>
+        
         [Parameter]
         public string[] Functionality { get; set; }
 
-        /// <summary>
-        /// Gets and sets list of Role's to search on.
-        /// </summary>
+        
         [Parameter]
         public string[] Role { get; set; }
 
-        /// <summary>
-        /// This parameter,if true, will direct get-help cmdlet to
-        /// navigate to a URL (stored in the command MAML file under
-        /// the uri node).
-        /// </summary>
+        
         [Parameter(ParameterSetName = "Online", Mandatory = true)]
         public SwitchParameter Online
         {
@@ -206,9 +176,7 @@ namespace Microsoft.PowerShell.Commands
         private GraphicalHostReflectionWrapper graphicalHostReflectionWrapper;
         private bool showWindow;
 
-        /// <summary>
-        /// Gets or sets a value indicating whether the help should be displayed in a separate window.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "ShowWindow", Mandatory = true)]
         public SwitchParameter ShowWindow
         {
@@ -240,9 +208,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Cmdlet API implementation
 
-        /// <summary>
-        /// Implements the BeginProcessing() method for get-help command.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
 #if LEGACYTELEMETRY
@@ -250,9 +216,7 @@ namespace Microsoft.PowerShell.Commands
 #endif
         }
 
-        /// <summary>
-        /// Implements the ProcessRecord() method for get-help command.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
 #if !UNIX
@@ -405,13 +369,7 @@ namespace Microsoft.PowerShell.Commands
             return helpCategory;
         }
 
-        /// <summary>
-        /// Change <paramref name="originalHelpObject"/> as per user request.
-        ///
-        /// This method creates a new type to the existing typenames
-        /// depending on Detailed,Full,Example parameters and adds this
-        /// new type(s) to the top of the list.
-        /// </summary>
+        
         /// <param name="originalHelpObject">Full help object to transform.</param>
         /// <returns>Transformed help object with new TypeNames.</returns>
         /// <remarks>If Detailed and Full are not specified, nothing is changed.</remarks>
@@ -467,9 +425,7 @@ namespace Microsoft.PowerShell.Commands
             return objectToReturn;
         }
 
-        /// <summary>
-        /// Gets the parameter info for patterns identified by Parameter property.
-        /// </summary>
+        
         /// <param name="helpInfo">HelpInfo object to look for the parameter.</param>
         /// <returns>Array of parameter infos.</returns>
         private PSObject[] GetParameterInfo(HelpInfo helpInfo)
@@ -487,11 +443,7 @@ namespace Microsoft.PowerShell.Commands
             return parameterInfosList.ToArray();
         }
 
-        /// <summary>
-        /// Gets the parameter info for patterns identified by Parameter property.
-        /// Writes the parameter info(s) to the output stream. An error is thrown
-        /// if a parameter with a given pattern is not found.
-        /// </summary>
+        
         /// <param name="helpInfo">HelpInfo Object to look for the parameter.</param>
         private void GetAndWriteParameterInfo(HelpInfo helpInfo)
         {
@@ -514,9 +466,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Validates input parameters. 
-        /// </summary>
+        
         /// <param name="cat">Category specified by the user.</param>
         /// <exception cref="ArgumentException">
         /// If the request can't be serviced.
@@ -561,11 +511,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Helper method used to Write the help object onto the output
-        /// stream or show online help (URI extracted from the HelpInfo)
-        /// object.
-        /// </summary>
+        
         private void WriteObjectsOrShowOnlineHelp(HelpInfo helpInfo, bool showFullHelp)
         {
             if (helpInfo != null)
@@ -631,10 +577,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Opens the Uri. System's default application will be used
-        /// to show the uri.
-        /// </summary>
+        
         /// <param name="uriToLaunch"></param>
         private void LaunchOnlineHelp(Uri uriToLaunch)
         {
@@ -739,14 +682,10 @@ namespace Microsoft.PowerShell.Commands
         #endregion
     }
 
-    /// <summary>
-    /// Helper methods used as powershell extension from a types file.
-    /// </summary>
+    
     public static class GetHelpCodeMethods
     {
-        /// <summary>
-        /// Checks whether the default runspace associated with the current thread has the standard Get-Help cmdlet.
-        /// </summary>
+        
         /// <returns>True if Get-Help is found, false otherwise.</returns>
         private static bool DoesCurrentRunspaceIncludeCoreHelpCmdlet()
         {
@@ -779,9 +718,7 @@ namespace Microsoft.PowerShell.Commands
                 && getHelpCmdlet.ImplementingType == typeof(GetHelpCommand);
         }
 
-        /// <summary>
-        /// Retrieves the HelpUri given a CommandInfo instance.
-        /// </summary>
+        
         /// <param name="commandInfoPSObject">
         /// CommandInfo instance wrapped as PSObject
         /// </param>

@@ -7,16 +7,12 @@ using System.Security.AccessControl;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Holds the state of a Monad Shell session.
-    /// </summary>
+    
     internal sealed partial class SessionStateInternal
     {
         #region private methods
 
-        /// <summary>
-        /// Gets an instance of an ISecurityDescriptorCmdletProvider given the provider ID.
-        /// </summary>
+        
         /// <param name="providerInstance">
         /// An instance of a CmdletProvider.
         /// </param>
@@ -49,9 +45,7 @@ namespace System.Management.Automation
 
         #region GetSecurityDescriptor
 
-        /// <summary>
-        /// Gets the security descriptor from the specified item.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to retrieve the security descriptor from.
         /// </param>
@@ -80,9 +74,7 @@ namespace System.Management.Automation
             return contextResults;
         }
 
-        /// <summary>
-        /// Gets the security descriptor from the specified item.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to retrieve the security descriptor from.
         /// </param>
@@ -181,9 +173,7 @@ namespace System.Management.Automation
 
         #region SetSecurityDescriptor
 
-        /// <summary>
-        /// Sets the security descriptor on the specified item.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to set the security descriptor on.
         /// </param>
@@ -217,9 +207,7 @@ namespace System.Management.Automation
             return contextResults;
         }
 
-        /// <summary>
-        /// Sets the security descriptor on the specified item.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to set the security descriptor on.
         /// </param>
@@ -366,9 +354,7 @@ namespace System.Management.Automation
 
         #region NewSecurityDescriptor
 
-        /// <summary>
-        /// Gets the security descriptor from the specified item.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to retrieve the security descriptor from.
         /// </param>
@@ -477,9 +463,7 @@ namespace System.Management.Automation
             return sd;
         }
 
-        /// <summary>
-        /// Gets the security descriptor from the specified item.
-        /// </summary>
+        
         /// <param name="type">
         /// The type of the item which corresponds to the security
         /// descriptor that we want to create.
@@ -503,9 +487,7 @@ namespace System.Management.Automation
             return NewSecurityDescriptorOfType(providerInstance, type, sections);
         }
 
-        /// <summary>
-        /// Gets the security descriptor from the specified item.
-        /// </summary>
+        
         /// <param name="type">
         /// The type of the item which corresponds to the security
         /// descriptor that we want to create.

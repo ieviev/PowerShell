@@ -10,19 +10,13 @@ using System.Windows.Data;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <summary>
-    /// The InputFieldBackgroundTextConverter is responsible for determining the
-    /// correct background text to display for a particular type of data.
-    /// </summary>
+    
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public class InputFieldBackgroundTextConverter : IValueConverter
     {
         private static readonly Type ValidatingValueGenericType = typeof(ValidatingValue<>);
 
-        /// <summary>
-        /// Converts a value of type ValidatingValue of T into a background string
-        /// which provides a hint to the end user (e.g. Empty, M/d/yy).
-        /// </summary>
+        
         /// <param name="value">
         /// A value of type ValidatingValue.
         /// </param>
@@ -51,9 +45,7 @@ namespace Microsoft.Management.UI.Internal
             return this.GetBackgroundTextForType(inputType);
         }
 
-        /// <summary>
-        /// This method is not used.
-        /// </summary>
+        
         /// <param name="value">The parameter is not used.</param>
         /// <param name="targetType">The parameter is not used.</param>
         /// <param name="parameter">The parameter is not used.</param>

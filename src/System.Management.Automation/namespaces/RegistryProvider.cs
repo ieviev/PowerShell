@@ -16,14 +16,7 @@ using Microsoft.PowerShell.Commands.Internal;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// Provider that provides access to Registry through cmdlets. This provider
-    /// implements <see cref="System.Management.Automation.Provider.NavigationCmdletProvider"/>,
-    /// <see cref="System.Management.Automation.Provider.IPropertyCmdletProvider"/>,
-    /// <see cref="System.Management.Automation.Provider.IDynamicPropertyCmdletProvider"/>,
-    /// <see cref="System.Management.Automation.Provider.ISecurityDescriptorCmdletProvider"/>
-    /// interfaces.
-    /// </summary>
+    
     /// 
 #if CORECLR // System.Transaction namespace is not in CoreClr.
     [CmdletProvider(RegistryProvider.ProviderName, ProviderCapabilities.ShouldProcess)]
@@ -49,10 +42,7 @@ namespace Microsoft.PowerShell.Commands
     {
         #region tracer
 
-        /// <summary>
-        /// An instance of the PSTraceSource class used for trace output
-        /// using "ProviderProvider" as the category.
-        /// </summary>
+        
         [Dbg.TraceSourceAttribute(
             "RegistryProvider",
             "The namespace navigation provider for the Windows Registry")]
@@ -62,25 +52,19 @@ namespace Microsoft.PowerShell.Commands
 
         #endregion tracer
 
-        /// <summary>
-        /// Gets the name of the provider.
-        /// </summary>
+        
         public const string ProviderName = "Registry";
 
         #region CmdletProvider overrides
 
-        /// <summary>
-        /// Gets the alternate item separator character for this provider.
-        /// </summary>
+        
         public override char AltItemSeparator => ItemSeparator;
 
         #endregion
 
         #region DriveCmdletProvider overrides
 
-        /// <summary>
-        /// Verifies that the new drive has a valid root.
-        /// </summary>
+        
         /// <returns>A PSDriveInfo object.</returns>
         /// 
         protected override PSDriveInfo NewDrive(PSDriveInfo drive)
@@ -103,9 +87,7 @@ namespace Microsoft.PowerShell.Commands
             return drive;
         }
 
-        /// <summary>
-        /// Creates HKEY_LOCAL_MACHINE and HKEY_CURRENT_USER registry drives during provider initialization.
-        /// </summary>
+        
         /// <remarks>
         /// After the Start method is called on a provider, the InitializeDefaultDrives
         /// method is called. This is an opportunity for the provider to
@@ -140,9 +122,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region ItemCmdletProvider overrides
 
-        /// <summary>
-        /// Determines if the specified <paramref name="path"/> is syntactically and semantically valid.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to validate.
         /// </param>
@@ -186,11 +166,7 @@ namespace Microsoft.PowerShell.Commands
             return result;
         }
 
-        /// <summary>
-        /// Gets the RegistryKey item at the specified <paramref name="path"/>
-        /// and writes it to the pipeline using the WriteObject method.
-        /// Any non-terminating exceptions are written to the WriteError method.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the key to retrieve.
         /// </param>
@@ -210,9 +186,7 @@ namespace Microsoft.PowerShell.Commands
             WriteRegistryItemObject(result, path);
         }
 
-        /// <summary>
-        /// Sets registry values at <paramref name="path "/> to the <paramref name="value"/> specified.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item that is to be set. Only registry values can be set using
         /// this method.
@@ -354,9 +328,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the SetItem method.
-        /// </summary>
+        
         /// <param name="path">
         /// Ignored.
         /// </param>
@@ -372,9 +344,7 @@ namespace Microsoft.PowerShell.Commands
             return new RegistryProviderSetItemDynamicParameter();
         }
 
-        /// <summary>
-        /// Clears the item at the specified <paramref name="path"/>.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item that is to be cleared. Only registry values can be cleared using
         /// this method.
@@ -485,9 +455,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region ContainerCmdletProvider overrides
 
-        /// <summary>
-        /// Gets all the child keys and values of the key at the specified <paramref name="path"/>.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the key to get the child keys of.
         /// </param>/
@@ -637,9 +605,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets all the child key and value names of the key at the specified <paramref name="path"/>.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the key to get the child names from.
         /// </param>
@@ -733,10 +699,7 @@ namespace Microsoft.PowerShell.Commands
 
         private const string charactersThatNeedEscaping = ".*?[]:";
 
-        /// <summary>
-        /// Escapes the characters in the registry key path that are used by globbing and
-        /// path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to escape.
         /// </param>
@@ -782,10 +745,7 @@ namespace Microsoft.PowerShell.Commands
             return result.ToString();
         }
 
-        /// <summary>
-        /// Escapes the characters in the registry key name that are used by globbing and
-        /// path.
-        /// </summary>
+        
         /// <param name="name">
         /// The name to escape.
         /// </param>
@@ -831,9 +791,7 @@ namespace Microsoft.PowerShell.Commands
             return result.ToString();
         }
 
-        /// <summary>
-        /// Renames the key at the specified <paramref name="path"/> to <paramref name="newName"/>.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the key to rename.
         /// </param>
@@ -895,9 +853,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Creates a new registry key or value at the specified <paramref name="path"/>.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the new key to create.
         /// </param>
@@ -1059,9 +1015,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Removes the specified registry key and all sub-keys.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the key to remove.
         /// </param>
@@ -1146,9 +1100,7 @@ namespace Microsoft.PowerShell.Commands
             key.Close();
         }
 
-        /// <summary>
-        /// Determines if the key at the specified path exists.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the key to determine if it exists.
         /// </param>
@@ -1200,9 +1152,7 @@ namespace Microsoft.PowerShell.Commands
             return result;
         }
 
-        /// <summary>
-        /// Determines if the specified key has subkeys.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the key to determine if it has sub keys.
         /// </param>
@@ -1253,9 +1203,7 @@ namespace Microsoft.PowerShell.Commands
             return result;
         }
 
-        /// <summary>
-        /// Copies the specified registry key to the specified <paramref name="path"/>.
-        /// </summary>
+        
         /// <param name="path">
         /// The path of the registry key to copy.
         /// </param>
@@ -1546,9 +1494,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region NavigationCmdletProvider overrides
 
-        /// <summary>
-        /// Determines if the key at the specified <paramref name="path"/> is a container.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to a key.
         /// </param>
@@ -1602,9 +1548,7 @@ namespace Microsoft.PowerShell.Commands
             return result;
         }
 
-        /// <summary>
-        /// Moves the specified key.
-        /// </summary>
+        
         /// <param name="path">
         /// The path of the key to move.
         /// </param>
@@ -1740,9 +1684,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region IPropertyCmdletProvider
 
-        /// <summary>
-        /// Gets the properties of the item specified by the <paramref name="path"/>.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to retrieve properties from.
         /// </param>
@@ -1819,9 +1761,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Sets the specified properties of the item at the specified <paramref name="path"/>.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to set the properties on.
         /// </param>
@@ -1926,10 +1866,7 @@ namespace Microsoft.PowerShell.Commands
             key.Close();
         }
 
-        /// <summary>
-        /// Gives the provider a chance to attach additional parameters to the
-        /// get-itemproperty cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// If the path was specified on the command line, this is the path
         /// to the item to get the dynamic parameters for.
@@ -1949,9 +1886,7 @@ namespace Microsoft.PowerShell.Commands
             return new RegistryProviderSetItemDynamicParameter();
         }
 
-        /// <summary>
-        /// Clears a property of the item at the specified <paramref name="path"/>.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item on which to clear the property.
         /// </param>
@@ -2027,10 +1962,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Unimplemented methods
 
-        /// <summary>
-        /// Gives the provider a chance to attach additional parameters to the
-        /// get-itemproperty cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// If the path was specified on the command line, this is the path
         /// to the item to get the dynamic parameters for.
@@ -2050,10 +1982,7 @@ namespace Microsoft.PowerShell.Commands
             return null;
         }
 
-        /// <summary>
-        /// Gives the provider a chance to attach additional parameters to the
-        /// clear-itemproperty cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// If the path was specified on the command line, this is the path
         /// to the item to get the dynamic parameters for.
@@ -2077,9 +2006,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region IDynamicPropertyCmdletProvider
 
-        /// <summary>
-        /// Creates a new property on the specified item.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item on which the new property should be created.
         /// </param>
@@ -2198,9 +2125,7 @@ namespace Microsoft.PowerShell.Commands
             key.Close();
         }
 
-        /// <summary>
-        /// Removes a property on the item specified by the path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item on which the property should be removed.
         /// </param>
@@ -2297,9 +2222,7 @@ namespace Microsoft.PowerShell.Commands
             WriteErrorIfPerfectMatchNotFound(hadAMatch, path, propertyName);
         }
 
-        /// <summary>
-        /// Renames a property of the item at the specified <paramref name="path"/>.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item on which to rename the property.
         /// </param>
@@ -2381,10 +2304,7 @@ namespace Microsoft.PowerShell.Commands
             key.Close();
         }
 
-        /// <summary>
-        /// Copies a property of the item at the specified <paramref name="path"/> to a new property on the
-        /// destination <paramref name="path"/>.
-        /// </summary>
+        
         /// <param name="sourcePath">
         /// The path to the item on which to copy the property.
         /// </param>
@@ -2482,9 +2402,7 @@ namespace Microsoft.PowerShell.Commands
             key.Close();
         }
 
-        /// <summary>
-        /// Moves a property on an item specified by <paramref name="sourcePath"/>.
-        /// </summary>
+        
         /// <param name="sourcePath">
         /// The path to the item on which to move the property.
         /// </param>
@@ -2583,9 +2501,7 @@ namespace Microsoft.PowerShell.Commands
             destinationKey.Close();
         }
 
-        /// <summary>
-        /// Gets the parent path of the given <paramref name="path"/>.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to get the parent of.
         /// </param>
@@ -2637,9 +2553,7 @@ namespace Microsoft.PowerShell.Commands
             return EnsureDriveIsRooted(parentPath);
         }
 
-        /// <summary>
-        /// Gets the child name for the given <paramref name="path"/>.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to get the leaf element of.
         /// </param>
@@ -2680,10 +2594,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Unimplemented methods
 
-        /// <summary>
-        /// Gives the provider a chance to attach additional parameters to the
-        /// new-itemproperty cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// If the path was specified on the command line, this is the path
         /// to the item to get the dynamic parameters for.
@@ -2710,10 +2621,7 @@ namespace Microsoft.PowerShell.Commands
             return null;
         }
 
-        /// <summary>
-        /// Gives the provider a chance to attach additional parameters to the
-        /// remove-itemproperty cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// If the path was specified on the command line, this is the path
         /// to the item to get the dynamic parameters for.
@@ -2732,10 +2640,7 @@ namespace Microsoft.PowerShell.Commands
             return null;
         }
 
-        /// <summary>
-        /// Gives the provider a chance to attach additional parameters to the
-        /// rename-itemproperty cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// If the path was specified on the command line, this is the path
         /// to the item to get the dynamic parameters for.
@@ -2758,10 +2663,7 @@ namespace Microsoft.PowerShell.Commands
             return null;
         }
 
-        /// <summary>
-        /// Gives the provider a chance to attach additional parameters to the
-        /// copy-itemproperty cmdlet.
-        /// </summary>
+        
         /// <param name="sourcePath">
         /// If the path was specified on the command line, this is the path
         /// to the item to get the dynamic parameters for.
@@ -2788,10 +2690,7 @@ namespace Microsoft.PowerShell.Commands
             return null;
         }
 
-        /// <summary>
-        /// Gives the provider a chance to attach additional parameters to the
-        /// move-itemproperty cmdlet.
-        /// </summary>
+        
         /// <param name="sourcePath">
         /// If the path was specified on the command line, this is the path
         /// to the item to get the dynamic parameters for.
@@ -2911,9 +2810,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Converts all / in the path to \
-        /// </summary>
+        
         /// <param name="path">
         /// The path to normalize.
         /// </param>
@@ -3087,9 +2984,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// IT resets the a registry key value to its default.
-        /// </summary>
+        
         /// <param name="key">Key whose value has to be reset.</param>
         /// <param name="valueName">Name of the value to reset.</param>
         /// <returns>Default value the key was set to.</returns>
@@ -3165,9 +3060,7 @@ namespace Microsoft.PowerShell.Commands
             return defaultValue;
         }
 
-        /// <summary>
-        /// Checks if the given path is the top container path (the one containing the hives)
-        /// </summary>
+        
         /// <param name="path">
         /// path to check
         /// </param>
@@ -3192,10 +3085,7 @@ namespace Microsoft.PowerShell.Commands
             return result;
         }
 
-        /// <summary>
-        /// Checks the container. if the container is the hive container (Registry::\)
-        /// it throws an exception.
-        /// </summary>
+        
         /// <param name="path">Path to check.</param>
         /// <returns>False if the operation is not allowed.</returns>
         private bool CheckOperationNotAllowedOnHiveContainer(string path)
@@ -3212,10 +3102,7 @@ namespace Microsoft.PowerShell.Commands
             return true;
         }
 
-        /// <summary>
-        /// Checks the container. if the container is the hive container (Registry::\)
-        /// it throws an exception.
-        /// </summary>
+        
         /// <param name="sourcePath">Source path to check.</param>
         /// <param name="destinationPath">Destination path to check.</param>
         private bool CheckOperationNotAllowedOnHiveContainer(string sourcePath, string destinationPath)
@@ -3240,9 +3127,7 @@ namespace Microsoft.PowerShell.Commands
             return true;
         }
 
-        /// <summary>
-        /// Gets the appropriate hive root name for the specified path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to get the hive root name from.
         /// </param>
@@ -3283,9 +3168,7 @@ namespace Microsoft.PowerShell.Commands
             return null;
         }
 
-        /// <summary>
-        /// Creates the parent for the keypath specified by <paramref name="path"/>.
-        /// </summary>
+        
         /// <param name="path">RegistryKey path.</param>
         /// <returns>
         /// True if key is created or already exist,False otherwise.
@@ -3397,11 +3280,7 @@ namespace Microsoft.PowerShell.Commands
             return result;
         }
 
-        /// <summary>
-        /// A private helper method that retrieves a RegistryKey for the specified
-        /// path and if an exception is thrown retrieving the key, an error is written
-        /// and null is returned.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the registry key to retrieve.
         /// </param>
@@ -3464,10 +3343,7 @@ namespace Microsoft.PowerShell.Commands
             return result;
         }
 
-        /// <summary>
-        /// A private helper method that retrieves a RegistryKey for the specified
-        /// path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the registry key to retrieve.
         /// </param>
@@ -3631,9 +3507,7 @@ namespace Microsoft.PowerShell.Commands
             TransactedRegistry.Users
         };
 
-        /// <summary>
-        /// Sets or creates a registry value on a key.
-        /// </summary>
+        
         /// <param name="key">
         /// The key to set or create the value on.
         /// </param>
@@ -3654,9 +3528,7 @@ namespace Microsoft.PowerShell.Commands
             SetRegistryValue(key, propertyName, value, kind, path, true);
         }
 
-        /// <summary>
-        /// Sets or creates a registry value on a key.
-        /// </summary>
+        
         /// <param name="key">
         /// The key to set or create the value on.
         /// </param>
@@ -3748,10 +3620,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Helper to wrap property values when sent to the pipeline into an PSObject;
-        /// it adds the name of the property as a note.
-        /// </summary>
+        
         /// <param name="value">The property to be written.</param>
         /// <param name="propertyName">Name of the property being written.</param>
         /// <param name="path">The path of the item being written.</param>
@@ -3770,10 +3639,7 @@ namespace Microsoft.PowerShell.Commands
             WritePropertyObject(result, path);
         }
 
-        /// <summary>
-        /// Uses LanguagePrimitives.ConvertTo to convert the value to the type that is appropriate
-        /// for the specified RegistryValueKind.
-        /// </summary>
+        
         /// <param name="value">
         /// The value to convert.
         /// </param>
@@ -3871,9 +3737,7 @@ namespace Microsoft.PowerShell.Commands
             return value;
         }
 
-        /// <summary>
-        /// Helper to infer the RegistryValueKind from an object.
-        /// </summary>
+        
         /// <param name="value">Object whose RegistryValueKind has to be determined.</param>
         /// <returns>Corresponding RegistryValueKind.</returns>
         private static RegistryValueKind GetValueKindFromObject(object value)
@@ -3913,9 +3777,7 @@ namespace Microsoft.PowerShell.Commands
             return result;
         }
 
-        /// <summary>
-        /// Helper to get RegistryValueKind for a Property.
-        /// </summary>
+        
         /// <param name="key">RegistryKey containing property.</param>
         /// <param name="valueName">Property for which RegistryValueKind is requested.</param>
         /// <returns>RegistryValueKind of the property. If the property does not exit,returns RegistryValueKind.Unknown.</returns>
@@ -3942,9 +3804,7 @@ namespace Microsoft.PowerShell.Commands
             return RegistryValueKind.Unknown;
         }
 
-        /// <summary>
-        /// Helper to read back an existing registry key value.
-        /// </summary>
+        
         /// <param name="key">Key to read the value from.</param>
         /// <param name="valueName">Name of the value to read.</param>
         /// <returns>Value of the key, null if it could not retrieve
@@ -3973,11 +3833,7 @@ namespace Microsoft.PowerShell.Commands
             return null;
         }
 
-        /// <summary>
-        /// Wraps a registry item in a PSObject and sets the TreatAs to
-        /// Microsoft.Win32.RegistryKey. This way values will be presented
-        /// in the same format as keys.
-        /// </summary>
+        
         /// <param name="key">
         /// The registry key to be written out.
         /// </param>
@@ -4022,11 +3878,7 @@ namespace Microsoft.PowerShell.Commands
             WriteItemObject(outputObject, path, true);
         }
 
-        /// <summary>
-        /// Takes a string and tries to parse it into a RegistryValueKind enum
-        /// type.
-        /// If the conversion fails, WriteError() is called.
-        /// </summary>
+        
         /// <param name="type">
         /// The type as specified by the user that should be parsed into a RegistryValueKind enum.
         /// </param>
@@ -4083,10 +3935,7 @@ namespace Microsoft.PowerShell.Commands
             return success;
         }
 
-        /// <summary>
-        /// Gets the default value name token from the resource.
-        /// In English that token is "(default)" without the quotes.
-        /// </summary>
+        
         /// <remarks>
         /// This should not be localized as it will break scripts.
         /// </remarks>
@@ -4095,10 +3944,7 @@ namespace Microsoft.PowerShell.Commands
         /// </returns>
         private static string LocalizedDefaultToken => "(default)";
 
-        /// <summary>
-        /// Converts an empty or null userEnteredPropertyName to the localized
-        /// string for the default property name.
-        /// </summary>
+        
         /// <param name="userEnteredPropertyName">
         /// The property name to convert.
         /// </param>
@@ -4128,15 +3974,10 @@ namespace Microsoft.PowerShell.Commands
         #endregion Private members
     }
 
-    /// <summary>
-    /// Defines dynamic parameters for the registry provider.
-    /// </summary>
+    
     public class RegistryProviderSetItemDynamicParameter
     {
-        /// <summary>
-        /// Gets or sets the Type parameter as a dynamic parameter for
-        /// the registry provider's SetItem method.
-        /// </summary>
+        
         /// <remarks>
         /// The only acceptable values for this parameter are those found
         /// in the RegistryValueKind enum

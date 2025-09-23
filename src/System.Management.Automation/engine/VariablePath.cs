@@ -23,42 +23,30 @@ namespace System.Management.Automation
         UnscopedVariableMask = Local | Script | Global | Private | Function | DriveQualified,
     }
 
-    /// <summary>
-    /// A variable path that you can query the scope and drive of the variable reference.
-    /// </summary>
+    
     public class VariablePath
     {
         #region private data
 
-        /// <summary>
-        /// Stores the path that was passed to the constructor.
-        /// </summary>
+        
         private string _userPath;
 
-        /// <summary>
-        /// The name of the variable without any scope or drive.
-        /// </summary>
+        
         private string _unqualifiedPath;
 
-        /// <summary>
-        /// Store flags about the path, such as private/global/local/etc.
-        /// </summary>
+        
         private VariablePathFlags _flags = VariablePathFlags.None;
 
         #endregion private data
 
         #region Constructor
 
-        /// <summary>
-        /// Private constructor for CloneAndSetLocal().
-        /// </summary>
+        
         private VariablePath()
         {
         }
 
-        /// <summary>
-        /// Constructs a variable path.
-        /// </summary>
+        
         /// <param name="path">The path to parse.</param>
         /// <exception cref="ArgumentNullException">
         /// If <paramref name="path"/> is null.
@@ -68,9 +56,7 @@ namespace System.Management.Automation
         {
         }
 
-        /// <summary>
-        /// Constructs a scoped item lookup path.
-        /// </summary>
+        
         /// <param name="path">The path to parse.</param>
         /// <param name="knownFlags">
         /// These flags for anything known about the path (such as, is it a function) before
@@ -214,61 +200,38 @@ namespace System.Management.Automation
 
         #region data accessors
 
-        /// <summary>
-        /// Gets the full path including any possibly specified scope and/or drive name.
-        /// </summary>
+        
         public string UserPath { get { return _userPath; } }
 
-        /// <summary>
-        /// Returns true if the path explicitly specifies 'global:'.
-        /// </summary>
+        
         public bool IsGlobal { get { return (_flags & VariablePathFlags.Global) != 0; } }
 
-        /// <summary>
-        /// Returns true if the path explicitly specifies 'local:'.
-        /// </summary>
+        
         public bool IsLocal { get { return (_flags & VariablePathFlags.Local) != 0; } }
 
-        /// <summary>
-        /// Returns true if the path explicitly specifies 'private:'.
-        /// </summary>
+        
         public bool IsPrivate { get { return (_flags & VariablePathFlags.Private) != 0; } }
 
-        /// <summary>
-        /// Returns true if the path explicitly specifies 'script:'.
-        /// </summary>
+        
         public bool IsScript { get { return (_flags & VariablePathFlags.Script) != 0; } }
 
-        /// <summary>
-        /// Returns true if the path specifies no drive or scope qualifiers.
-        /// </summary>
+        
         public bool IsUnqualified { get { return (_flags & VariablePathFlags.Unqualified) != 0; } }
 
-        /// <summary>
-        /// Returns true if the path specifies a variable path with no scope qualifiers.
-        /// </summary>
+        
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Unscoped")]
         public bool IsUnscopedVariable { get { return ((_flags & VariablePathFlags.UnscopedVariableMask) == 0); } }
 
-        /// <summary>
-        /// Returns true if the path defines a variable.
-        /// </summary>
+        
         public bool IsVariable { get { return (_flags & VariablePathFlags.Variable) != 0; } }
 
-        /// <summary>
-        /// Returns true if the path defines a function.
-        /// </summary>
+        
         internal bool IsFunction { get { return (_flags & VariablePathFlags.Function) != 0; } }
 
-        /// <summary>
-        /// Returns true if the path specifies a drive other than the variable drive.
-        /// </summary>
+        
         public bool IsDriveQualified { get { return (_flags & VariablePathFlags.DriveQualified) != 0; } }
 
-        /// <summary>
-        /// The drive name, or null if the path is for a variable.
-        /// It may also be null for some functions (specifically if this is a FunctionScopedItemLookupPath.)
-        /// </summary>
+        
         public string DriveName
         {
             get
@@ -285,17 +248,13 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the namespace specific string.
-        /// </summary>
+        
         internal string UnqualifiedPath
         {
             get { return _unqualifiedPath; }
         }
 
-        /// <summary>
-        /// Return the drive qualified name, if any drive specified, otherwise the simple variable name.
-        /// </summary>
+        
         internal string QualifiedName
         {
             get { return IsDriveQualified ? _userPath : _unqualifiedPath; }
@@ -303,9 +262,7 @@ namespace System.Management.Automation
 
         #endregion data accessors
 
-        /// <summary>
-        /// Helpful for debugging.
-        /// </summary>
+        
         public override string ToString()
         {
             return _userPath;

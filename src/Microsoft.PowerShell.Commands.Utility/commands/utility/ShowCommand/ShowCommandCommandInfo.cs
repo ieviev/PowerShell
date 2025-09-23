@@ -8,15 +8,10 @@ using System.Management.Automation;
 
 namespace Microsoft.PowerShell.Commands.ShowCommandExtension
 {
-    /// <summary>
-    /// Implements a facade around CommandInfo and its deserialized counterpart.
-    /// </summary>
+    
     public class ShowCommandCommandInfo
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ShowCommandCommandInfo"/> class
-        /// with the specified <see cref="CommandInfo"/>.
-        /// </summary>
+        
         /// <param name="other">
         /// The object to wrap.
         /// </param>
@@ -59,10 +54,7 @@ namespace Microsoft.PowerShell.Commands.ShowCommandExtension
             }
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ShowCommandCommandInfo"/> class
-        /// with the specified <see cref="PSObject"/>.
-        /// </summary>
+        
         /// <param name="other">
         /// The object to wrap.
         /// </param>
@@ -95,9 +87,7 @@ namespace Microsoft.PowerShell.Commands.ShowCommandExtension
             }
         }
 
-        /// <summary>
-        /// Builds a strongly typed IEnumerable{object} out of an IEnumerable.
-        /// </summary>
+        
         /// <param name="enumerable">
         /// The object to enumerate.
         /// </param>
@@ -109,34 +99,22 @@ namespace Microsoft.PowerShell.Commands.ShowCommandExtension
             }
         }
 
-        /// <summary>
-        /// A string representing the definition of the command.
-        /// </summary>
+        
         public string Name { get; }
 
-        /// <summary>
-        /// A string representing module the command belongs to.
-        /// </summary>
+        
         public string ModuleName { get; }
 
-        /// <summary>
-        /// A reference to the module the command came from.
-        /// </summary>
+        
         public ShowCommandModuleInfo Module { get; }
 
-        /// <summary>
-        /// An enumeration of the command types this command belongs to.
-        /// </summary>
+        
         public CommandTypes CommandType { get; }
 
-        /// <summary>
-        /// A string representing the definition of the command.
-        /// </summary>
+        
         public string Definition { get; }
 
-        /// <summary>
-        /// A string representing the definition of the command.
-        /// </summary>
+        
         public ICollection<ShowCommandParameterSetInfo> ParameterSets { get; }
     }
 }

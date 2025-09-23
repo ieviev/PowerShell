@@ -14,24 +14,16 @@ using Microsoft.PowerShell.Commands;
 
 namespace System.Management.Automation.Subsystem.Feedback
 {
-    /// <summary>
-    /// The class represents a result from a feedback provider.
-    /// </summary>
+    
     public class FeedbackResult
     {
-        /// <summary>
-        /// Gets the Id of the feedback provider.
-        /// </summary>
+        
         public Guid Id { get; }
 
-        /// <summary>
-        /// Gets the name of the feedback provider.
-        /// </summary>
+        
         public string Name { get; }
 
-        /// <summary>
-        /// Gets the feedback item.
-        /// </summary>
+        
         public FeedbackItem Item { get; }
 
         internal FeedbackResult(Guid id, string name, FeedbackItem item)
@@ -42,22 +34,16 @@ namespace System.Management.Automation.Subsystem.Feedback
         }
     }
 
-    /// <summary>
-    /// Provides a set of feedbacks for given input.
-    /// </summary>
+    
     public static class FeedbackHub
     {
-        /// <summary>
-        /// Collect the feedback from registered feedback providers using the default timeout.
-        /// </summary>
+        
         public static List<FeedbackResult>? GetFeedback(Runspace runspace)
         {
             return GetFeedback(runspace, millisecondsTimeout: 1000);
         }
 
-        /// <summary>
-        /// Collect the feedback from registered feedback providers using the specified timeout.
-        /// </summary>
+        
         public static List<FeedbackResult>? GetFeedback(Runspace runspace, int millisecondsTimeout)
         {
             ArgumentOutOfRangeException.ThrowIfNegativeOrZero(millisecondsTimeout);

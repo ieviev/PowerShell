@@ -14,25 +14,17 @@ namespace System.Management.Automation
 {
     internal class DscResourceHelpProvider : HelpProviderWithCache
     {
-        /// <summary>
-        /// Constructor for DscResourceHelpProvider.
-        /// </summary>
+        
         internal DscResourceHelpProvider(HelpSystem helpSystem)
             : base(helpSystem)
         {
             _context = helpSystem.ExecutionContext;
         }
 
-        /// <summary>
-        /// Execution context of the HelpSystem.
-        /// </summary>
+        
         private readonly ExecutionContext _context;
 
-        /// <summary>
-        /// This is a hashtable to track which help files are loaded already.
-        ///
-        /// This will avoid one help file getting loaded again and again.
-        /// </summary>
+        
         private readonly Hashtable _helpFiles = new Hashtable();
 
         [TraceSource("DscResourceHelpProvider", "DscResourceHelpProvider")]
@@ -40,17 +32,13 @@ namespace System.Management.Automation
 
         #region common properties
 
-        /// <summary>
-        /// Name of the Help Provider.
-        /// </summary>
+        
         internal override string Name
         {
             get { return "Dsc Resource Help Provider"; }
         }
 
-        /// <summary>
-        /// Supported Help Categories.
-        /// </summary>
+        
         internal override HelpCategory HelpCategory
         {
             get { return Automation.HelpCategory.DscResource; }
@@ -58,9 +46,7 @@ namespace System.Management.Automation
 
         #endregion
 
-        /// <summary>
-        /// Override SearchHelp to find a dsc resource help matching a pattern.
-        /// </summary>
+        
         /// <param name="helpRequest">Help request.</param>
         /// <param name="searchOnlyContent">Not used.</param>
         /// <returns></returns>
@@ -92,9 +78,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Override ExactMatchHelp to find the matching DscResource matching help request.
-        /// </summary>
+        
         /// <param name="helpRequest">Help Request for the search.</param>
         /// <returns>Enumerable of HelpInfo objects.</returns>
         internal override IEnumerable<HelpInfo> ExactMatchHelp(HelpRequest helpRequest)
@@ -119,9 +103,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Get the help in for the DscResource Info.        ///
-        /// </summary>
+        
         /// <param name="searcher">Searcher for DscResources.</param>
         /// <returns>Next HelpInfo object.</returns>
         private IEnumerable<HelpInfo> GetHelpInfo(DscResourceSearcher searcher)
@@ -164,16 +146,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Check whether a HelpItems node indicates that the help content is
-        /// authored using maml schema.
-        ///
-        /// This covers two cases:
-        ///     a. If the help file has an extension .maml.
-        ///     b. If HelpItems node (which should be the top node of any command help file)
-        ///        has an attribute "schema" with value "maml", its content is in maml
-        ///        schema.
-        /// </summary>
+        
         /// <param name="helpFile">File name.</param>
         /// <param name="helpItemsNode">Nodes to check.</param>
         /// <returns></returns>
@@ -225,9 +198,7 @@ namespace System.Management.Automation
             return null;
         }
 
-        /// <summary>
-        /// Gets the HelpInfo object corresponding to the command.
-        /// </summary>
+        
         /// <param name="helpFileIdentifier">Help file identifier (either name of PSSnapIn or simply full path to help file).</param>
         /// <param name="helpCategory">Help Category for search.</param>
         /// <returns>HelpInfo object.</returns>
@@ -287,10 +258,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Load help file for HelpInfo objects. The HelpInfo objects will be
-        /// put into help cache.
-        /// </summary>
+        
         /// <remarks>
         /// 1. Needs to pay special attention about error handling in this function.
         /// Common errors include: file not found and invalid xml. None of these error

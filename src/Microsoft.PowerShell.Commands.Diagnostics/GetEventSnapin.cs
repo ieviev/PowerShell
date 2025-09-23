@@ -9,25 +9,17 @@ using System.Text;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// Create the PowerShell snap-in used to register the
-    /// Get-WinEvent cmdlet. Declaring the PSSnapIn class identifies
-    /// this .cs file as a PowerShell snap-in.
-    /// </summary>
+    
     [RunInstaller(true)]
     public class GetEventPSSnapIn : PSSnapIn
     {
-        /// <summary>
-        /// Create an instance of the GetEventPSSnapIn class.
-        /// </summary>
+        
         public GetEventPSSnapIn()
                : base()
         {
         }
 
-        /// <summary>
-        /// Specify the name of the PowerShell snap-in.
-        /// </summary>
+        
         public override string Name
         {
             get
@@ -36,9 +28,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Specify the vendor of the PowerShell snap-in.
-        /// </summary>
+        
         public override string Vendor
         {
             get
@@ -47,9 +37,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Get resource information for vendor. This is a string of format: resourceBaseName,resourceName.
-        /// </summary>
+        
         public override string VendorResource
         {
             get
@@ -58,9 +46,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Specifies the description of the PowerShell snap-in.
-        /// </summary>
+        
         public override string Description
         {
             get
@@ -69,9 +55,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Get resource information for description. This is a string of format: resourceBaseName,resourceName.
-        /// </summary>
+        
         public override string DescriptionResource
         {
             get
@@ -80,9 +64,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Get type files to be used for this PSSnapin.
-        /// </summary>
+        
         public override string[] Types
         {
             get
@@ -93,9 +75,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string[] _types = new string[] { "getevent.types.ps1xml" };
 
-        /// <summary>
-        /// Get format files to be used for this PSSnapin.
-        /// </summary>
+        
         public override string[] Formats
         {
             get

@@ -9,17 +9,12 @@ using System.Reflection;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// The metadata associated with a parameter.
-    /// </summary>
+    
     internal class CompiledCommandParameter
     {
         #region ctor
 
-        /// <summary>
-        /// Constructs an instance of the CompiledCommandAttribute using the specified
-        /// runtime-defined parameter.
-        /// </summary>
+        
         /// <param name="runtimeDefinedParameter">
         /// A runtime defined parameter that contains the definition of the parameter and its metadata.
         /// </param>
@@ -99,10 +94,7 @@ namespace System.Management.Automation
                 : aliases.ToArray();
         }
 
-        /// <summary>
-        /// Constructs an instance of the CompiledCommandAttribute using the reflection information retrieved
-        /// from the enclosing bindable object type.
-        /// </summary>
+        
         /// <param name="member">
         /// The member information for the parameter
         /// </param>
@@ -190,126 +182,74 @@ namespace System.Management.Automation
 
         #endregion ctor
 
-        /// <summary>
-        /// Gets the name of the parameter.
-        /// </summary>
+        
         internal string Name { get; }
 
-        /// <summary>
-        /// The PSTypeName from a PSTypeNameAttribute.
-        /// </summary>
+        
         internal string PSTypeName { get; private set; }
 
-        /// <summary>
-        /// Gets the Type information of the attribute.
-        /// </summary>
+        
         internal Type Type { get; }
 
-        /// <summary>
-        /// Gets the Type information of the attribute.
-        /// </summary>
+        
         internal Type DeclaringType { get; }
 
-        /// <summary>
-        /// Gets whether the parameter is a dynamic parameter or not.
-        /// </summary>
+        
         internal bool IsDynamic { get; }
 
-        /// <summary>
-        /// Gets the parameter collection type information.
-        /// </summary>
+        
         internal ParameterCollectionTypeInformation CollectionTypeInformation { get; }
 
-        /// <summary>
-        /// A collection of the attributes found on the member. The attributes have been compiled into
-        /// a format that easier to digest by the metadata processor.
-        /// </summary>
+        
         internal Collection<Attribute> CompiledAttributes { get; }
 
-        /// <summary>
-        /// Gets the collection of data generation attributes on this parameter.
-        /// </summary>
+        
         internal ArgumentTransformationAttribute[] ArgumentTransformationAttributes { get; }
 
-        /// <summary>
-        /// Gets the collection of data validation attributes on this parameter.
-        /// </summary>
+        
         internal ValidateArgumentsAttribute[] ValidationAttributes { get; }
 
-        /// <summary>
-        /// Get and private set the obsolete attribute on this parameter.
-        /// </summary>
+        
         internal ObsoleteAttribute ObsoleteAttribute { get; private set; }
 
-        /// <summary>
-        /// If true, null can be bound to the parameter even if the parameter is mandatory.
-        /// </summary>
+        
         internal bool AllowsNullArgument { get; private set; }
 
-        /// <summary>
-        /// If true, null cannot be bound to the parameter (ValidateNotNull
-        /// and/or ValidateNotNullOrEmpty has been specified).
-        /// </summary>
+        
         internal bool CannotBeNull { get; private set; }
 
-        /// <summary>
-        /// If true, an empty string can be bound to the string parameter
-        /// even if the parameter is mandatory.
-        /// </summary>
+        
         internal bool AllowsEmptyStringArgument { get; private set; }
 
-        /// <summary>
-        /// If true, an empty collection can be bound to the collection/array parameter
-        /// even if the parameter is mandatory.
-        /// </summary>
+        
         internal bool AllowsEmptyCollectionArgument { get; private set; }
 
-        /// <summary>
-        /// Gets or sets the value that tells whether this parameter
-        /// is for the "all" parameter set.
-        /// </summary>
+        
         internal bool IsInAllSets { get; set; }
 
-        /// <summary>
-        /// Returns true if this parameter is ValueFromPipeline or ValueFromPipelineByPropertyName
-        /// in one or more (but not necessarily all) parameter sets.
-        /// </summary>
+        
         internal bool IsPipelineParameterInSomeParameterSet { get; private set; }
 
-        /// <summary>
-        /// Returns true if this parameter is Mandatory in one or more (but not necessarily all) parameter sets.
-        /// </summary>
+        
         internal bool IsMandatoryInSomeParameterSet { get; private set; }
 
-        /// <summary>
-        /// Gets or sets the parameter set flags that map the parameter sets
-        /// for this parameter to the parameter set names.
-        /// </summary>
+        
         /// <remarks>
         /// This is a bit-field that maps the parameter sets in this parameter
         /// to the parameter sets for the rest of the command.
         /// </remarks>
         internal uint ParameterSetFlags { get; set; }
 
-        /// <summary>
-        /// A delegate that can set the property.
-        /// </summary>
+        
         internal Action<object, object> Setter { get; set; }
 
-        /// <summary>
-        /// A dictionary of the parameter sets and the parameter set specific data for this parameter.
-        /// </summary>
+        
         internal Dictionary<string, ParameterSetSpecificMetadata> ParameterSetData { get; }
 
-        /// <summary>
-        /// The alias names for this parameter.
-        /// </summary>
+        
         internal string[] Aliases { get; }
 
-        /// <summary>
-        /// Determines if this parameter takes pipeline input for any of the specified
-        /// parameter set flags.
-        /// </summary>
+        
         /// <param name="validParameterSetFlags">
         /// The flags for the parameter sets to check to see if the parameter takes
         /// pipeline input.
@@ -343,9 +283,7 @@ namespace System.Management.Automation
             return false;
         }
 
-        /// <summary>
-        /// Gets the parameter set data for this parameter for the specified parameter set.
-        /// </summary>
+        
         /// <param name="parameterSetFlag">
         /// The parameter set to get the parameter set data for.
         /// </param>
@@ -378,9 +316,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Gets the parameter set data for this parameter for the specified parameter sets.
-        /// </summary>
+        
         /// <param name="parameterSetFlags">
         /// The parameter sets to get the parameter set data for.
         /// </param>
@@ -411,9 +347,7 @@ namespace System.Management.Automation
 
         #region helper methods
 
-        /// <summary>
-        /// Processes the Attribute metadata to generate a CompiledCommandAttribute.
-        /// </summary>
+        
         /// <exception cref="MetadataException">
         /// If the attribute is a parameter attribute and another parameter attribute
         /// has been processed with the same parameter-set name.
@@ -512,9 +446,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Extracts the data from the ParameterAttribute and creates the member data as necessary.
-        /// </summary>
+        
         /// <param name="parameterName">
         /// The name of the parameter.
         /// </param>
@@ -567,9 +499,7 @@ namespace System.Management.Automation
         #endregion helper methods
     }
 
-    /// <summary>
-    /// The types of collections that are supported as parameter types.
-    /// </summary>
+    
     internal enum ParameterCollectionType
     {
         NotCollection,
@@ -578,16 +508,10 @@ namespace System.Management.Automation
         ICollectionGeneric
     }
 
-    /// <summary>
-    /// Contains the collection type information for a parameter.
-    /// </summary>
+    
     internal class ParameterCollectionTypeInformation
     {
-        /// <summary>
-        /// Constructs a parameter collection type information object
-        /// which exposes the specified Type's collection type in a
-        /// simple way.
-        /// </summary>
+        
         /// <param name="type">
         /// The type to determine the collection information for.
         /// </param>
@@ -670,14 +594,10 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// The collection type of the parameter.
-        /// </summary>
+        
         internal ParameterCollectionType ParameterCollectionType { get; }
 
-        /// <summary>
-        /// The type of the elements in the collection.
-        /// </summary>
+        
         internal Type ElementType { get; }
     }
 }

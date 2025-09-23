@@ -16,9 +16,7 @@ using Debug = System.Management.Automation.Diagnostics;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// This class implements base class for `Get-Random` and `Get-SecureRandom` cmdlets.
-    /// </summary>
+    
     public class GetRandomCommandBase : PSCmdlet
     {
         #region Parameter set handling
@@ -133,9 +131,7 @@ namespace Microsoft.PowerShell.Commands
 
         private PolymorphicRandomNumberGenerator _generator;
 
-        /// <summary>
-        /// Gets and sets generator associated with the current cmdlet and runspace.
-        /// </summary>
+        
         internal PolymorphicRandomNumberGenerator Generator
         {
             get
@@ -191,15 +187,11 @@ namespace Microsoft.PowerShell.Commands
 
         #region Parameters for RandomNumberParameterSet
 
-        /// <summary>
-        /// Gets or sets the maximum number to generate.
-        /// </summary>
+        
         [Parameter(ParameterSetName = RandomNumberParameterSet, Position = 0)]
         public object Maximum { get; set; }
 
-        /// <summary>
-        /// Gets or sets the minimum number to generate.
-        /// </summary>
+        
         [Parameter(ParameterSetName = RandomNumberParameterSet)]
         public object Minimum { get; set; }
 
@@ -261,18 +253,14 @@ namespace Microsoft.PowerShell.Commands
         private List<object> _chosenListItems;
         private int _numberOfProcessedListItems;
 
-        /// <summary>
-        /// Gets or sets the list from which random elements are chosen.
-        /// </summary>
+        
         [Parameter(ParameterSetName = RandomListItemParameterSet, ValueFromPipeline = true, Position = 0, Mandatory = true)]
         [Parameter(ParameterSetName = ShuffleParameterSet, ValueFromPipeline = true, Position = 0, Mandatory = true)]
         [System.Management.Automation.AllowNull]
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
         public object[] InputObject { get; set; }
 
-        /// <summary>
-        /// Gets or sets the number of items to output (number of list items or of numbers).
-        /// </summary>
+        
         [Parameter(ParameterSetName = RandomNumberParameterSet)]
         [Parameter(ParameterSetName = RandomListItemParameterSet)]
         [ValidateRange(1, int.MaxValue)]
@@ -282,9 +270,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Shuffle parameter
 
-        /// <summary>
-        /// Gets or sets whether the command should return all input objects in randomized order.
-        /// </summary>
+        
         [Parameter(ParameterSetName = ShuffleParameterSet, Mandatory = true)]
         public SwitchParameter Shuffle { get; set; }
 
@@ -327,9 +313,7 @@ namespace Microsoft.PowerShell.Commands
             return randomNumber;
         }
 
-        /// <summary>
-        /// Get a random Int64 type number.
-        /// </summary>
+        
         /// <param name="minValue">Minimum value.</param>
         /// <param name="maxValue">Maximum value.</param>
         /// <returns>Rnadom long.</returns>
@@ -375,9 +359,7 @@ namespace Microsoft.PowerShell.Commands
             return (long)randomNumber;
         }
 
-        /// <summary>
-        /// This method implements the BeginProcessing method for derived cmdlets.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             if (EffectiveParameterSet == MyParameterSet.RandomNumber)
@@ -481,9 +463,7 @@ namespace Microsoft.PowerShell.Commands
         //
         // which proves that P_final(I) = K / N for all values of I.  QED.
 
-        /// <summary>
-        /// This method implements the ProcessRecord method for derived cmdlets.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             if (EffectiveParameterSet == MyParameterSet.RandomListItem)
@@ -525,9 +505,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// This method implements the EndProcessing method for derived cmdlets.
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             if (EffectiveParameterSet == MyParameterSet.RandomListItem)
@@ -555,26 +533,17 @@ namespace Microsoft.PowerShell.Commands
         #endregion Processing methods
     }
 
-    /// <summary>
-    /// Provides an adapter API for random numbers that may be either cryptographically random, or
-    /// generated with the regular pseudo-random number generator. Re-implementations of
-    /// methods using the NextBytes() primitive based on the CLR implementation:
-    ///     https://referencesource.microsoft.com/#mscorlib/system/random.cs.
-    /// </summary>
+    
     internal sealed class PolymorphicRandomNumberGenerator
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PolymorphicRandomNumberGenerator"/> class.
-        /// </summary>
+        
         public PolymorphicRandomNumberGenerator()
         {
             _cryptographicGenerator = RandomNumberGenerator.Create();
             _pseudoGenerator = null;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PolymorphicRandomNumberGenerator"/> using pseudorandom generator instead of the cryptographic one.
-        /// </summary>
+        
         /// <param name="seed">The seed value.</param>
         internal PolymorphicRandomNumberGenerator(int seed)
         {
@@ -585,9 +554,7 @@ namespace Microsoft.PowerShell.Commands
         private readonly Random _pseudoGenerator = null;
         private readonly RandomNumberGenerator _cryptographicGenerator = null;
 
-        /// <summary>
-        /// Generates a random floating-point number that is greater than or equal to 0.0, and less than 1.0.
-        /// </summary>
+        
         /// <returns>A random floating-point number that is greater than or equal to 0.0, and less than 1.0.</returns>
         internal double NextDouble()
         {
@@ -596,9 +563,7 @@ namespace Microsoft.PowerShell.Commands
             return Next() * (1.0 / int.MaxValue);
         }
 
-        /// <summary>
-        /// Generates a non-negative random integer.
-        /// </summary>
+        
         /// <returns>A non-negative random integer.</returns>
         internal int Next()
         {
@@ -621,9 +586,7 @@ namespace Microsoft.PowerShell.Commands
             return randomNumber;
         }
 
-        /// <summary>
-        /// Returns a random integer that is within a specified range.
-        /// </summary>
+        
         /// <param name="maxValue">The exclusive upper bound of the random number returned.</param>
         /// <returns>Next random integer.</returns>
         internal int Next(int maxValue)
@@ -636,9 +599,7 @@ namespace Microsoft.PowerShell.Commands
             return Next(0, maxValue);
         }
 
-        /// <summary>
-        /// Returns a random integer that is within a specified range.
-        /// </summary>
+        
         /// <param name="minValue">The inclusive lower bound of the random number returned.</param>
         /// <param name="maxValue">The exclusive upper bound of the random number returned. maxValue must be greater than or equal to minValue.</param>
         /// <returns>Next random integer.</returns>
@@ -665,9 +626,7 @@ namespace Microsoft.PowerShell.Commands
             return randomNumber;
         }
 
-        /// <summary>
-        /// Fills the elements of a specified array of bytes with random numbers.
-        /// </summary>
+        
         /// <param name="buffer">The array to be filled.</param>
         internal void NextBytes(byte[] buffer)
         {
@@ -681,9 +640,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Samples a random integer.
-        /// </summary>
+        
         /// <returns>A random integer, using the full range of Int32.</returns>
         private int InternalSample()
         {
@@ -696,11 +653,7 @@ namespace Microsoft.PowerShell.Commands
             return randomNumber;
         }
 
-        /// <summary>
-        /// Samples a random int when the range is large. This does
-        /// not need to be in the range of -Double.MaxValue .. Double.MaxValue,
-        /// just 0.. (2 * Int32.MaxValue) - 1 .
-        /// </summary>
+        
         /// <returns>A random double.</returns>
         private double InternalSampleLargeRange()
         {

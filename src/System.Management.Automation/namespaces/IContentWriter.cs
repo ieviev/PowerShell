@@ -9,17 +9,10 @@ namespace System.Management.Automation.Provider
 {
     #region IContentWriter
 
-    /// <summary>
-    /// A Cmdlet provider that implements the IContentCmdletProvider interface must provide an
-    /// object that implements this interface when GetContentWriter() is called.
-    ///
-    /// The interface allows for writing content to an item.
-    /// </summary>
+    
     public interface IContentWriter : IDisposable
     {
-        /// <summary>
-        /// Writes content to the item.
-        /// </summary>
+        
         /// <param name="content">
         /// An array of content "blocks" to be written to the item.
         /// </param>
@@ -37,10 +30,7 @@ namespace System.Management.Automation.Provider
         /// </remarks>
         IList Write(IList content);
 
-        /// <summary>
-        /// Moves the current "block" to be written to a position relative to a place
-        /// in the writer.
-        /// </summary>
+        
         /// <param name="offset">
         /// An offset of the number of blocks to seek from the origin.
         /// </param>
@@ -54,10 +44,7 @@ namespace System.Management.Automation.Provider
         /// </remarks>
         void Seek(long offset, SeekOrigin origin);
 
-        /// <summary>
-        /// Closes the writer. Further writes should fail if the writer
-        /// has been closed.
-        /// </summary>
+        
         /// <remarks>
         /// The implementation of this method should close any resources held open by the
         /// writer.

@@ -281,10 +281,7 @@ namespace System.Management.Automation.Language
             internal readonly List<(string fieldName, IParameterMetadataProvider bodyAst, bool isStatic)> _fieldsToInitForMemberFunctions;
             private bool _baseClassHasDefaultCtor;
 
-            /// <summary>
-            /// If type has fatal errors we cannot construct .NET type from it.
-            /// TypeBuilder.CreateTypeInfo() would throw exception.
-            /// </summary>
+            
             public bool HasFatalErrors { get; private set; }
 
             public DefineTypeHelper(Parser parser, ModuleBuilder module, TypeDefinitionAst typeDefinitionAst, string typeName)
@@ -309,9 +306,7 @@ namespace System.Management.Automation.Language
                 _sessionStateKeeperField = _staticHelpersTypeBuilder.DefineField(s_sessionStateKeeperFieldName, typeof(SessionStateKeeper), FieldAttributes.Assembly | FieldAttributes.Static);
             }
 
-            /// <summary>
-            /// Return base class type, never return null.
-            /// </summary>
+            
             /// <param name="parser"></param>
             /// <param name="typeDefinitionAst"></param>
             /// <param name="interfaces">Return declared interfaces.</param>
@@ -1504,15 +1499,11 @@ namespace System.Management.Automation.Language
         }
     }
 
-    /// <summary>
-    /// The attribute for a PowerShell class to not affiliate with a particular Runspace\SessionState.
-    /// </summary>
+    
     [AttributeUsage(AttributeTargets.Class)]
     public sealed class NoRunspaceAffinityAttribute : ParsingBaseAttribute
     {
-        /// <summary>
-        /// Initializes a new instance of the attribute.
-        /// </summary>
+        
         public NoRunspaceAffinityAttribute()
         {
         }

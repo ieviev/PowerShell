@@ -33,44 +33,32 @@ namespace Microsoft.Management.UI.Internal
     {
         #region internal fields
         #region StyleCop Suppression - generated code
-        /// <summary>
-        /// The current ICollectionView being displayed.
-        /// </summary>
+        
         internal ICollectionView CollectionView;
 
         #endregion StyleCop Suppression - generated code
         #endregion internal fields
 
         #region private fields
-        /// <summary>
-        /// The current GridView.
-        /// </summary>
+        
         private InnerListGridView innerGrid;
 
         private InnerListColumn sortedColumn;
 
-        /// <summary>
-        /// ContextMenu for InnerList columns.
-        /// </summary>
+        
         private ContextMenu contextMenu;
 
-        /// <summary>
-        /// Private setter for <see cref="Columns"/>.
-        /// </summary>
+        
         private ObservableCollection<InnerListColumn> columns = new ObservableCollection<InnerListColumn>();
 
-        /// <summary>
-        /// Gets or sets whether the current items source is non-null and has items.
-        /// </summary>
+        
         private bool itemsSourceIsEmpty = false;
 
         #endregion private fields
 
         #region constructors
 
-        /// <summary>
-        /// Initializes a new instance of this control.
-        /// </summary>
+        
         public InnerList()
             : base()
         {
@@ -83,18 +71,13 @@ namespace Microsoft.Management.UI.Internal
 
         #region Events
 
-        /// <summary>
-        ///  Register PropertyChangedEventHandler ItemSourcesPropertyChanged .
-        /// </summary>
+        
         public event PropertyChangedEventHandler ItemSourcesPropertyChanged;
         #endregion Events
 
         #region public properties
 
-        /// <summary>
-        /// Gets ItemsSource instead.
-        /// <see cref="InnerList"/> Does not support adding to Items.
-        /// </summary>
+        
         [Browsable(false)]
         public new ItemCollection Items
         {
@@ -104,9 +87,7 @@ namespace Microsoft.Management.UI.Internal
             }
         }
 
-        /// <summary>
-        /// Gets the column that is sorted, or <c>null</c> if no column is sorted.
-        /// </summary>
+        
         public InnerListColumn SortedColumn
         {
             get
@@ -115,18 +96,14 @@ namespace Microsoft.Management.UI.Internal
             }
         }
 
-        /// <summary>
-        /// Gets InnerListGridView.
-        /// </summary>
+        
         public InnerListGridView InnerGrid
         {
             get { return this.innerGrid; }
             protected set { this.innerGrid = value; }
         }
 
-        /// <summary>
-        /// Gets the collection of columns that this list should display.
-        /// </summary>
+        
         public ObservableCollection<InnerListColumn> Columns
         {
             get { return this.columns; }
@@ -136,9 +113,7 @@ namespace Microsoft.Management.UI.Internal
 
         #region public methods
 
-        /// <summary>
-        /// Causes the object to scroll into view.
-        /// </summary>
+        
         /// <param name="item">Object to scroll.</param>
         /// <remarks>This method overrides ListBox.ScrollIntoView(), which throws NullReferenceException when VirtualizationMode is set to Recycling.
         /// This implementation uses a workaround recommended by the WPF team.</remarks>
@@ -158,9 +133,7 @@ namespace Microsoft.Management.UI.Internal
                 item);
         }
 
-        /// <summary>
-        /// Causes the object to scroll into view from the top, so that it tends to appear at the bottom of the scroll area.
-        /// </summary>
+        
         /// <param name="item">Object to scroll.</param>
         public void ScrollIntoViewFromTop(object item)
         {
@@ -171,17 +144,13 @@ namespace Microsoft.Management.UI.Internal
             }
         }
 
-        /// <summary>
-        /// Updates the InnerGrid based upon the columns collection.
-        /// </summary>
+        
         public void RefreshColumns()
         {
             this.UpdateView(this.ItemsSource);
         }
 
-        /// <summary>
-        /// Sorts the list by the specified column. This has no effect if the list does not have a data source.
-        /// </summary>
+        
         /// <param name="column">
         /// The column to sort
         /// </param>
@@ -229,9 +198,7 @@ namespace Microsoft.Management.UI.Internal
             }
         }
 
-        /// <summary>
-        /// Gets a list of data descriptions for the columns that are not the primary sort column.
-        /// </summary>
+        
         /// <returns>A list of data descriptions for the columns that are not the primary sort column.</returns>
         private List<UIPropertyGroupDescription> GetDescriptionsForSorting()
         {
@@ -250,9 +217,7 @@ namespace Microsoft.Management.UI.Internal
             return dataDescriptions;
         }
 
-        /// <summary>
-        /// Clears the sort order from the list.
-        /// </summary>
+        
         public void ClearSort()
         {
             if (this.CollectionView == null)
@@ -281,10 +246,7 @@ namespace Microsoft.Management.UI.Internal
         #endregion internal methods
 
         #region protected methods
-        /// <summary>
-        /// Called when the ItemsSource changes to set internal fields, subscribe to the view change
-        /// and possibly autopopulate columns.
-        /// </summary>
+        
         /// <param name="oldValue">Previous ItemsSource.</param>
         /// <param name="newValue">Current ItemsSource.</param>
         protected override void OnItemsSourceChanged(System.Collections.IEnumerable oldValue, System.Collections.IEnumerable newValue)
@@ -316,10 +278,7 @@ namespace Microsoft.Management.UI.Internal
             }
         }
 
-        /// <summary>
-        /// Called when ItemsChange to throw an exception indicating we don't support
-        /// changing Items directly.
-        /// </summary>
+        
         /// <param name="e">Event parameters.</param>
         protected override void OnItemsChanged(NotifyCollectionChangedEventArgs e)
         {
@@ -344,9 +303,7 @@ namespace Microsoft.Management.UI.Internal
             }
         }
 
-        /// <summary>
-        /// Called when a key is pressed while within the InnerList scope.
-        /// </summary>
+        
         /// <param name="e">The event args.</param>
         protected override void OnKeyDown(KeyEventArgs e)
         {
@@ -370,9 +327,7 @@ namespace Microsoft.Management.UI.Internal
 
         #region static private methods
 
-        /// <summary>
-        /// Called when the View property is changed.
-        /// </summary>
+        
         /// <param name="obj">InnerList whose property is being changed.</param>
         /// <param name="e">Event arguments.</param>
         private static void InnerList_OnViewChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
@@ -392,9 +347,7 @@ namespace Microsoft.Management.UI.Internal
             ((InnerList)obj).innerGrid = innerGrid;
         }
 
-        /// <summary>
-        /// Gets the exception to be thrown when using Items.
-        /// </summary>
+        
         /// <returns>The exception to be thrown when using Items.</returns>
         private static NotSupportedException GetItemsException()
         {
@@ -408,10 +361,7 @@ namespace Microsoft.Management.UI.Internal
         #endregion static private methods
 
         #region instance private methods
-        /// <summary>
-        /// Called from OnItemsSourceChanged to set the collectionView field and
-        /// subscribe to the collectionView changed event.
-        /// </summary>
+        
         /// <param name="newValue">ITemsSource passed to OnItemsSourceChanged.</param>
         private void SetCollectionView(System.Collections.IEnumerable newValue)
         {
@@ -433,9 +383,7 @@ namespace Microsoft.Management.UI.Internal
             }
         }
 
-        /// <summary>
-        /// Update View And CollectionView.
-        /// </summary>
+        
         /// <param name="value">InnerList object.</param>
         private void UpdateViewAndCollectionView(IEnumerable value)
         {
@@ -485,9 +433,7 @@ namespace Microsoft.Management.UI.Internal
             }
         }
 
-        /// <summary>
-        /// Releases all references to the current inner grid, if one exists.
-        /// </summary>
+        
         private void ReleaseInnerGridReferences()
         {
             if (this.innerGrid != null)
@@ -509,10 +455,7 @@ namespace Microsoft.Management.UI.Internal
             }
         }
 
-        /// <summary>
-        /// Called when the ItemsSource changes, after SetGridview to add event handlers
-        /// to the column header.
-        /// </summary>
+        
         internal void SetColumnHeaderActions()
         {
             if (this.innerGrid == null)
@@ -564,9 +507,7 @@ namespace Microsoft.Management.UI.Internal
 
         #region Copy Helpers
 
-        /// <summary>
-        /// Gets a tab-delimited string representing the data of the selected rows.
-        /// </summary>
+        
         /// <returns>A tab-delimited string representing the data of the selected rows.</returns>
         protected internal string GetClipboardTextForSelectedItems()
         {
@@ -617,9 +558,7 @@ namespace Microsoft.Management.UI.Internal
 
         #endregion ApplicationCommands.Copy
 
-        /// <summary>
-        /// Called to implement sorting functionality on column header pressed by space or enter key.
-        /// </summary>
+        
         /// <param name="sender">Typically a GridViewColumnHeader.</param>
         /// <param name="e">The event information.</param>
         private void Header_KeyDown(object sender, KeyEventArgs e)
@@ -634,9 +573,7 @@ namespace Microsoft.Management.UI.Internal
             e.Handled = true;
         }
 
-        /// <summary>
-        /// Called to implement sorting functionality on column header click.
-        /// </summary>
+        
         /// <param name="sender">Typically a GridViewColumnHeader.</param>
         /// <param name="e">The event information.</param>
         private void Header_Click(object sender, RoutedEventArgs e)
@@ -645,9 +582,7 @@ namespace Microsoft.Management.UI.Internal
             this.HeaderActionProcess(sender);
         }
 
-        /// <summary>
-        /// Called to implement sorting functionality.
-        /// </summary>
+        
         /// <param name="sender">Typically a GridViewColumnHeader.</param>
         private void HeaderActionProcess(object sender)
         {
@@ -669,9 +604,7 @@ namespace Microsoft.Management.UI.Internal
             this.ApplySort(column, true);
         }
 
-        /// <summary>
-        /// Create default Context Menu.
-        /// </summary>
+        
         /// <returns>ContextMenu of List Columns.</returns>
         private ContextMenu GetListColumnsContextMenu()
         {
@@ -683,9 +616,7 @@ namespace Microsoft.Management.UI.Internal
             return this.contextMenu;
         }
 
-        /// <summary>
-        /// Set up context menu item for Column Picker feature.
-        /// </summary>
+        
         /// <returns>True if it is successfully set up.</returns>
         private bool SetColumnPickerContextMenuItem()
         {

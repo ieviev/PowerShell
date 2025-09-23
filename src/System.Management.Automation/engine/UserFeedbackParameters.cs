@@ -6,10 +6,7 @@ using System.Management.Automation.Language;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// The parameters for the paging support enabled by <see cref="CmdletCommonMetadataAttribute.SupportsPaging"/>.
-    /// Includes: -IncludeTotalCount, -Skip [int], -First [int]
-    /// </summary>
+    
     public sealed class PagingParameters
     {
         #region ctor
@@ -28,23 +25,15 @@ namespace System.Management.Automation
 
         #region parameters
 
-        /// <summary>
-        /// Gets or sets the value of the -IncludeTotalCount parameter for all cmdlets that support paging.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter IncludeTotalCount { get; set; }
 
-        /// <summary>
-        /// Gets or sets the value of the -Skip parameter for all cmdlets that support paging.
-        /// If the user doesn't specify anything, the default is <c>0</c>.
-        /// </summary>
+        
         [Parameter]
         public UInt64 Skip { get; set; }
 
-        /// <summary>
-        /// Gets or sets the value of the -First parameter for all cmdlets that support paging.
-        /// If the user doesn't specify anything, the default is <see cref="System.UInt64.MaxValue"/>.
-        /// </summary>
+        
         [Parameter]
         public UInt64 First { get; set; } = UInt64.MaxValue;
 
@@ -52,11 +41,7 @@ namespace System.Management.Automation
 
         #region emitting total count
 
-        /// <summary>
-        /// A helper method for creating an object that represents a total count
-        /// of objects that the cmdlet would return without paging
-        /// (this can be more than the size of the page specified in the <see cref="First"/> cmdlet parameter).
-        /// </summary>
+        
         /// <param name="totalCount">A total count of objects that the cmdlet would return without paging.</param>
         /// <param name="accuracy">
         /// accuracy of the <paramref name="totalCount"/> parameter.
@@ -98,16 +83,12 @@ namespace System.Management.Automation
 
 namespace System.Management.Automation.Internal
 {
-    /// <summary>
-    /// The declaration of parameters for the ShouldProcess mechanisms. -Whatif, and -Confirm.
-    /// </summary>
+    
     public sealed class ShouldProcessParameters
     {
         #region ctor
 
-        /// <summary>
-        /// Constructs an instance with the specified command instance.
-        /// </summary>
+        
         /// <param name="commandRuntime">
         /// The instance of the command that the parameters should set the
         /// user feedback properties on when the parameters get bound.
@@ -125,9 +106,7 @@ namespace System.Management.Automation.Internal
 
         #region parameters
 
-        /// <summary>
-        /// Gets or sets the value of the -Whatif parameter for all cmdlets.
-        /// </summary>
+        
         [Parameter]
         [Alias("wi")]
         public SwitchParameter WhatIf
@@ -143,9 +122,7 @@ namespace System.Management.Automation.Internal
             }
         }
 
-        /// <summary>
-        /// Gets or sets the value of the -Confirm parameter for all cmdlets.
-        /// </summary>
+        
         [Parameter]
         [Alias("cf")]
         public SwitchParameter Confirm
@@ -165,17 +142,13 @@ namespace System.Management.Automation.Internal
         private readonly MshCommandRuntime _commandRuntime;
     }
 
-    /// <summary>
-    /// The declaration of parameters for the Transactions mechanisms. -UseTransaction, and -BypassTransaction.
-    /// </summary>
+    
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes", Justification = "These are only exposed by way of the PowerShell cmdlets that surface them.")]
     public sealed class TransactionParameters
     {
         #region ctor
 
-        /// <summary>
-        /// Constructs an instance with the specified command instance.
-        /// </summary>
+        
         /// <param name="commandRuntime">
         /// The instance of the command that the parameters should set the
         /// user feedback properties on when the parameters get bound.
@@ -188,9 +161,7 @@ namespace System.Management.Automation.Internal
 
         #region parameters
 
-        /// <summary>
-        /// Gets or sets the value of the -UseTransaction parameter for all cmdlets.
-        /// </summary>
+        
         [Parameter]
         [Alias("usetx")]
         public SwitchParameter UseTransaction

@@ -7,34 +7,22 @@ using System.Collections.Generic;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// FormObject used in HtmlWebResponseObject.
-    /// </summary>
+    
     public class FormObject
     {
-        /// <summary>
-        /// Gets the Id property.
-        /// </summary>
+        
         public string Id { get; }
 
-        /// <summary>
-        /// Gets the Method property.
-        /// </summary>
+        
         public string Method { get; }
 
-        /// <summary>
-        /// Gets the Action property.
-        /// </summary>
+        
         public string Action { get; }
 
-        /// <summary>
-        /// Gets the Fields property.
-        /// </summary>
+        
         public Dictionary<string, string> Fields { get; }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="FormObject"/> class.
-        /// </summary>
+        
         /// <param name="id"></param>
         /// <param name="method"></param>
         /// <param name="action"></param>

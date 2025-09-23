@@ -67,9 +67,7 @@ namespace System.Diagnostics.Eventing
             EVENT_ACTIVITY_CTRL_CREATE_SET_ID = 5
         }
 
-        /// <summary>
-        /// Constructor for EventProvider class.
-        /// </summary>
+        
         /// <param name="providerGuid">
         /// Unique GUID among all trace sources running on a system
         /// </param>
@@ -85,13 +83,7 @@ namespace System.Diagnostics.Eventing
             EtwRegister();
         }
 
-        /// <summary>
-        /// This method registers the controlGuid of this class with ETW.
-        /// We need to be running on Vista or above. If not an
-        /// PlatformNotSupported exception will be thrown.
-        /// If for some reason the ETW EtwRegister call failed
-        /// a NotSupported exception will be thrown.
-        /// </summary>
+        
         [System.Security.SecurityCritical]
         private unsafe void EtwRegister()
         {
@@ -151,9 +143,7 @@ namespace System.Diagnostics.Eventing
             Deregister();
         }
 
-        /// <summary>
-        /// This method deregisters the controlGuid of this class with ETW.
-        /// </summary>
+        
         public virtual void Close()
         {
             Dispose();
@@ -164,9 +154,7 @@ namespace System.Diagnostics.Eventing
             Dispose(false);
         }
 
-        /// <summary>
-        /// This method un-registers from ETW.
-        /// </summary>
+        
         [System.Security.SecurityCritical]
         private unsafe void Deregister()
         {
@@ -200,17 +188,13 @@ namespace System.Diagnostics.Eventing
             return;
         }
 
-        /// <summary>
-        /// IsEnabled, method used to test if provider is enabled.
-        /// </summary>
+        
         public bool IsEnabled()
         {
             return _enabled != 0;
         }
 
-        /// <summary>
-        /// IsEnabled, method used to test if event is enabled.
-        /// </summary>
+        
         /// <param name="level">
         /// Level to test
         /// </param>
@@ -402,10 +386,7 @@ namespace System.Diagnostics.Eventing
             return null;
         }
 
-        /// <summary>
-        /// WriteMessageEvent, method to write a string with level and Keyword.
-        /// The activity ID will be propagated only if the call stays on the same native thread as SetActivityId().
-        /// </summary>
+        
         /// <param name="eventMessage">
         /// Message to write
         /// </param>
@@ -448,10 +429,7 @@ namespace System.Diagnostics.Eventing
             return true;
         }
 
-        /// <summary>
-        /// WriteMessageEvent, method to write a string with level=0 and Keyword=0
-        /// The activity ID will be propagated only if the call stays on the same native thread as SetActivityId().
-        /// </summary>
+        
         /// <param name="eventMessage">
         /// Message to log
         /// </param>
@@ -460,9 +438,7 @@ namespace System.Diagnostics.Eventing
             return WriteMessageEvent(eventMessage, 0, 0);
         }
 
-        /// <summary>
-        /// WriteEvent method to write parameters with event schema properties.
-        /// </summary>
+        
         /// <param name="eventDescriptor">
         /// Event Descriptor for this event.
         /// </param>
@@ -473,9 +449,7 @@ namespace System.Diagnostics.Eventing
             return WriteTransferEvent(in eventDescriptor, Guid.Empty, eventPayload);
         }
 
-        /// <summary>
-        /// WriteEvent, method to write a string with event schema properties.
-        /// </summary>
+        
         /// <param name="eventDescriptor">
         /// Event Descriptor for this event.
         /// </param>
@@ -529,9 +503,7 @@ namespace System.Diagnostics.Eventing
             return true;
         }
 
-        /// <summary>
-        /// WriteEvent, method to be used by generated code on a derived class.
-        /// </summary>
+        
         /// <param name="eventDescriptor">
         /// Event Descriptor for this event.
         /// </param>
@@ -568,9 +540,7 @@ namespace System.Diagnostics.Eventing
             return true;
         }
 
-        /// <summary>
-        /// WriteTransferEvent, method to write a parameters with event schema properties.
-        /// </summary>
+        
         /// <param name="eventDescriptor">
         /// Event Descriptor for this event.
         /// </param>

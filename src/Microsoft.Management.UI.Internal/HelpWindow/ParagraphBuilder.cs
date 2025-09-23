@@ -10,36 +10,22 @@ using System.Windows.Media;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <summary>
-    /// Builds a paragraph based on Text + Bold + Highlight information.
-    /// Bold are the segments of the text that should be bold, and Highlight are
-    /// the segments of the text that should be highlighted (like search results).
-    /// </summary>
+    
     internal class ParagraphBuilder : INotifyPropertyChanged
     {
-        /// <summary>
-        /// The text spans that should be bold.
-        /// </summary>
+        
         private readonly List<TextSpan> boldSpans;
 
-        /// <summary>
-        /// The text spans that should be highlighted.
-        /// </summary>
+        
         private readonly List<TextSpan> highlightedSpans;
 
-        /// <summary>
-        /// The text displayed.
-        /// </summary>
+        
         private readonly StringBuilder textBuilder;
 
-        /// <summary>
-        /// Paragraph built in BuildParagraph.
-        /// </summary>
+        
         private readonly Paragraph paragraph;
 
-        /// <summary>
-        /// Initializes a new instance of the ParagraphBuilder class.
-        /// </summary>
+        
         /// <param name="paragraph">Paragraph we will be adding lines to in BuildParagraph.</param>
         internal ParagraphBuilder(Paragraph paragraph)
         {
@@ -52,38 +38,23 @@ namespace Microsoft.Management.UI.Internal
         }
 
         #region INotifyPropertyChanged Members
-        /// <summary>
-        /// Used to notify of property changes.
-        /// </summary>
+        
         public event PropertyChangedEventHandler PropertyChanged;
         #endregion
 
-        /// <summary>
-        /// Gets the number of highlights.
-        /// </summary>
+        
         internal int HighlightCount
         {
             get { return this.highlightedSpans.Count; }
         }
 
-        /// <summary>
-        /// Gets the paragraph built in BuildParagraph.
-        /// </summary>
+        
         internal Paragraph Paragraph
         {
             get { return this.paragraph; }
         }
 
-        /// <summary>
-        /// Called after all the AddText calls have been made to build the paragraph
-        /// based on the current text.
-        /// This method goes over 3 collections simultaneously:
-        ///    1) characters in this.textBuilder
-        ///    2) spans in this.boldSpans
-        ///    3) spans in this.highlightedSpans
-        /// And adds the minimal number of Inlines to the paragraph so that all
-        /// characters that should be bold and/or highlighted are.
-        /// </summary>
+        
         internal void BuildParagraph()
         {
             this.paragraph.Inlines.Clear();
@@ -124,10 +95,7 @@ namespace Microsoft.Management.UI.Internal
             ParagraphBuilder.AddInline(this.paragraph, currentBold, currentHighlighted, sequence);
         }
 
-        /// <summary>
-        /// Highlights all occurrences of <paramref name="search"/>.
-        /// This is called after all calls to AddText have been made.
-        /// </summary>
+        
         /// <param name="search">Search string.</param>
         /// <param name="caseSensitive">True if search should be case sensitive.</param>
         /// <param name="wholeWord">True if we should search whole word only.</param>
@@ -175,9 +143,7 @@ namespace Microsoft.Management.UI.Internal
             this.OnNotifyPropertyChanged("HighlightCount");
         }
 
-        /// <summary>
-        /// Adds text to the paragraph later build with BuildParagraph.
-        /// </summary>
+        
         /// <param name="str">Text to be added.</param>
         /// <param name="bold">True if the text should be bold.</param>
         internal void AddText(string str, bool bold)
@@ -197,10 +163,7 @@ namespace Microsoft.Management.UI.Internal
             this.textBuilder.Append(str);
         }
 
-        /// <summary>
-        /// Called before a derived class starts adding text
-        /// to reset the current content.
-        /// </summary>
+        
         internal void ResetAllText()
         {
             this.boldSpans.Clear();
@@ -208,9 +171,7 @@ namespace Microsoft.Management.UI.Internal
             this.textBuilder.Clear();
         }
 
-        /// <summary>
-        /// Adds an inline to <paramref name="currentParagraph"/> based on the remaining parameters.
-        /// </summary>
+        
         /// <param name="currentParagraph">Paragraph to add Inline to.</param>
         /// <param name="currentBold">True if text should be added in bold.</param>
         /// <param name="currentHighlighted">True if the text should be added with highlight.</param>
@@ -233,14 +194,7 @@ namespace Microsoft.Management.UI.Internal
             sequence.Clear();
         }
 
-        /// <summary>
-        /// This is an auxiliar method in BuildParagraph to move the current bold or highlighted spans
-        /// according to the <paramref name="caracterPosition"/>
-        /// The current bold and highlighted span should be ending ahead of the current position.
-        /// Moves <paramref name="currentSpanIndex"/> and <paramref name="currentSpan"/> to the
-        /// proper span in <paramref name="allSpans"/> according to the <paramref name="caracterPosition"/>
-        /// This is an auxiliar method in BuildParagraph.
-        /// </summary>
+        
         /// <param name="currentSpanIndex">Current index within <paramref name="allSpans"/>.</param>
         /// <param name="currentSpan">Current span within <paramref name="allSpans"/>.</param>
         /// <param name="caracterPosition">Character position. This comes from a position within this.textBuilder.</param>
@@ -268,10 +222,7 @@ namespace Microsoft.Management.UI.Internal
             currentSpan = null;
         }
 
-        /// <summary>
-        /// Adds one individual text highlight
-        /// This is called after all calls to AddText have been made.
-        /// </summary>
+        
         /// <param name="start">Highlight start.</param>
         /// <param name="length">Highlight length.</param>
         private void AddHighlight(int start, int length)
@@ -282,9 +233,7 @@ namespace Microsoft.Management.UI.Internal
             this.highlightedSpans.Add(new TextSpan(start, length));
         }
 
-        /// <summary>
-        /// Called internally to notify when a property changed.
-        /// </summary>
+        
         /// <param name="propertyName">Property name.</param>
         private void OnNotifyPropertyChanged(string propertyName)
         {
@@ -295,24 +244,16 @@ namespace Microsoft.Management.UI.Internal
             }
         }
 
-        /// <summary>
-        /// A text span used to mark bold and highlighted segments.
-        /// </summary>
+        
         internal struct TextSpan
         {
-            /// <summary>
-            /// Index of the first character in the span.
-            /// </summary>
+            
             private readonly int start;
 
-            /// <summary>
-            /// Index of the last character in the span.
-            /// </summary>
+            
             private readonly int end;
 
-            /// <summary>
-            /// Initializes a new instance of the TextSpan struct.
-            /// </summary>
+            
             /// <param name="start">Index of the first character in the span.</param>
             /// <param name="length">Index of the last character in the span.</param>
             internal TextSpan(int start, int length)
@@ -324,17 +265,13 @@ namespace Microsoft.Management.UI.Internal
                 this.end = start + length - 1;
             }
 
-            /// <summary>
-            /// Gets the index of the first character in the span.
-            /// </summary>
+            
             internal int Start
             {
                 get { return this.start; }
             }
 
-            /// <summary>
-            /// Gets the index of the first character in the span.
-            /// </summary>
+            
             internal int End
             {
                 get
@@ -343,9 +280,7 @@ namespace Microsoft.Management.UI.Internal
                 }
             }
 
-            /// <summary>
-            /// Returns true if the <paramref name="position"/> is between start and end (inclusive).
-            /// </summary>
+            
             /// <param name="position">Position to verify if is in the span.</param>
             /// <returns>True if the <paramref name="position"/> is between start and end (inclusive).</returns>
             internal bool Contains(int position)

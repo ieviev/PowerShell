@@ -18,9 +18,7 @@ namespace Microsoft.Management.UI.Internal
     {
         private SearchTextParser parser;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SearchBox"/> class.
-        /// </summary>
+        
         public SearchBox()
         {
             // This constructor intentionally left blank
@@ -28,9 +26,7 @@ namespace Microsoft.Management.UI.Internal
 
         #region IFilterExpressionProvider Implementation
 
-        /// <summary>
-        /// Gets the filter expression representing the current search text.
-        /// </summary>
+        
         public FilterExpressionNode FilterExpression
         {
             get
@@ -39,9 +35,7 @@ namespace Microsoft.Management.UI.Internal
             }
         }
 
-        /// <summary>
-        /// Gets a value indicating whether this provider currently has a non-empty filter expression.
-        /// </summary>
+        
         public bool HasFilterExpression
         {
             get
@@ -50,14 +44,10 @@ namespace Microsoft.Management.UI.Internal
             }
         }
 
-        /// <summary>
-        /// Occurs when the filter expression has changed.
-        /// </summary>
+        
         public event EventHandler FilterExpressionChanged;
 
-        /// <summary>
-        /// Notifies any listeners that the filter expression has changed.
-        /// </summary>
+        
         protected virtual void NotifyFilterExpressionChanged()
         {
             EventHandler eh = this.FilterExpressionChanged;
@@ -69,9 +59,7 @@ namespace Microsoft.Management.UI.Internal
 
         #endregion
 
-        /// <summary>
-        /// Gets or sets the parser used to parse the search text.
-        /// </summary>
+        
         public SearchTextParser Parser
         {
             get
@@ -107,9 +95,7 @@ namespace Microsoft.Management.UI.Internal
             this.Text = string.Empty;
         }
 
-        /// <summary>
-        /// Converts the specified collection of searchbox items to a filter expression.
-        /// </summary>
+        
         /// <param name="searchBoxItems">A collection of searchbox items to convert.</param>
         /// <returns>A filter expression.</returns>
         /// <exception cref="ArgumentNullException">The specified value is a null reference.</exception>

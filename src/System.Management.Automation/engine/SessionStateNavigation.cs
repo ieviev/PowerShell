@@ -11,18 +11,14 @@ using Dbg = System.Management.Automation;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Holds the state of a Monad Shell session.
-    /// </summary>
+    
     internal sealed partial class SessionStateInternal
     {
         #region NavigationCmdletProvider accessors
 
         #region GetParentPath
 
-        /// <summary>
-        /// Gets the path to the parent object for the given object.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the object to get the parent path from
         /// </param>
@@ -60,9 +56,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Gets the path to the parent object for the given object.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the object to get the parent path from
         /// </param>
@@ -96,11 +90,7 @@ namespace System.Management.Automation
             return GetParentPath(path, root, context, false);
         }
 
-        /// <summary>
-        /// Gets the path to the parent object for the given object.
-        /// Allow to use FileSystem as the default provider when the
-        /// given path is drive-qualified and the drive cannot be found.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the object to get the parent path from
         /// </param>
@@ -222,9 +212,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Removes either the drive or provider qualifier or both from the path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to strip the provider qualifier from.
         /// </param>
@@ -289,9 +277,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Gets the path to the parent object for the given object.
-        /// </summary>
+        
         /// <param name="provider">
         /// The provider that should handle the GetParentPath call.
         /// </param>
@@ -347,9 +333,7 @@ namespace System.Management.Automation
             return GetParentPath(providerInstance, path, root, context);
         }
 
-        /// <summary>
-        /// Gets the path to the parent object for the given object.
-        /// </summary>
+        
         /// <param name="providerInstance">
         /// The instance of the provider that should handle the GetParentPath call.
         /// </param>
@@ -439,10 +423,7 @@ namespace System.Management.Automation
 
         #region NormalizeRelativePath
 
-        /// <summary>
-        /// Normalizes the path that was passed in and returns the normalized path
-        /// as a relative path to the basePath that was passed.
-        /// </summary>
+        
         /// <param name="path">
         /// An MSH path to an item. The item should exist
         /// or the provider should write out an error.
@@ -481,10 +462,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Normalizes the path that was passed in and returns the normalized path
-        /// as a relative path to the basePath that was passed.
-        /// </summary>
+        
         /// <param name="path">
         /// An MSH path to an item. The item should exist
         /// or the provider should write out an error.
@@ -634,10 +612,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Tests the specified character for equality with one of the powershell path separators and
-        /// returns true if it matches.
-        /// </summary>
+        
         /// <param name="c">The character to test.</param>
         /// <returns>True if the character is a path separator.</returns>
         private static bool IsPathSeparator(char c)
@@ -645,10 +620,7 @@ namespace System.Management.Automation
             return c == StringLiterals.DefaultPathSeparator || c == StringLiterals.AlternatePathSeparator;
         }
 
-        /// <summary>
-        /// Normalizes the path that was passed in and returns the normalized path
-        /// as a relative path to the basePath that was passed.
-        /// </summary>
+        
         /// <param name="provider">
         /// The provider to use to normalize the path.
         /// </param>
@@ -741,9 +713,7 @@ namespace System.Management.Automation
 
         #region MakePath
 
-        /// <summary>
-        /// Generates a path from the given parts.
-        /// </summary>
+        
         /// <param name="parent">
         /// The parent segment of the path to be joined with the child.
         /// </param>
@@ -777,9 +747,7 @@ namespace System.Management.Automation
             return MakePath(parent, child, context);
         }
 
-        /// <summary>
-        /// Generates a path from the given parts.
-        /// </summary>
+        
         /// <param name="parent">
         /// The parent segment of the path to be joined with the child.
         /// </param>
@@ -876,9 +844,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Uses the specified provider to put the two parts of a path together.
-        /// </summary>
+        
         /// <param name="provider">
         /// The provider to use.
         /// </param>
@@ -925,9 +891,7 @@ namespace System.Management.Automation
             return MakePath(providerInstance, parent, child, context);
         }
 
-        /// <summary>
-        /// Uses the specified provider to put the two parts of a path together.
-        /// </summary>
+        
         /// <param name="providerInstance">
         /// The provider instance to use.
         /// </param>
@@ -1017,9 +981,7 @@ namespace System.Management.Automation
 
         #region GetChildName
 
-        /// <summary>
-        /// Gets the name of the leaf element in the specified path.
-        /// </summary>
+        
         /// <param name="path">
         /// The fully qualified path to the item
         /// </param>
@@ -1058,9 +1020,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Gets the name of the leaf element in the specified path.
-        /// </summary>
+        
         /// <param name="path">
         /// The fully qualified path to the item
         /// </param>
@@ -1093,11 +1053,7 @@ namespace System.Management.Automation
             return GetChildName(path, context, false);
         }
 
-        /// <summary>
-        /// Gets the name of the leaf element in the specified path.
-        /// Allow to use FileSystem as the default provider when the
-        /// given path is drive-qualified and the drive cannot be found.
-        /// </summary>
+        
         /// <param name="path">
         /// The fully qualified path to the item
         /// </param>
@@ -1163,9 +1119,7 @@ namespace System.Management.Automation
             return GetChildName(provider, workingPath, context);
         }
 
-        /// <summary>
-        /// Gets the leaf element of the specified path.
-        /// </summary>
+        
         /// <param name="provider">
         /// The provider to use.
         /// </param>
@@ -1207,9 +1161,7 @@ namespace System.Management.Automation
             return GetChildName(providerInstance, path, context, true);
         }
 
-        /// <summary>
-        /// Gets the leaf element of the specified path.
-        /// </summary>
+        
         /// <param name="providerInstance">
         /// The provider instance to use.
         /// </param>
@@ -1293,9 +1245,7 @@ namespace System.Management.Automation
 
         #region MoveItem
 
-        /// <summary>
-        /// Moves the item specified by path to the specified destination.
-        /// </summary>
+        
         /// <param name="paths">
         /// The path(s) to the item(s) to be moved.
         /// </param>
@@ -1356,9 +1306,7 @@ namespace System.Management.Automation
             return context.GetAccumulatedObjects();
         }
 
-        /// <summary>
-        /// Moves the item specified by path to the specified destination.
-        /// </summary>
+        
         /// <param name="paths">
         /// The path(s) to the item(s) to be moved.
         /// </param>
@@ -1512,9 +1460,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Moves the item at the specified path to the destination path.
-        /// </summary>
+        
         /// <param name="providerInstance">
         /// The provider instance to use.
         /// </param>
@@ -1585,9 +1531,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the move-item cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -1656,9 +1600,7 @@ namespace System.Management.Automation
             return null;
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the move-item cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>

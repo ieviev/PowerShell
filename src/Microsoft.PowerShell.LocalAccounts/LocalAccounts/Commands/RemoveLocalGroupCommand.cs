@@ -14,10 +14,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// The Remove-LocalGroup cmdlet deletes a security group from the Windows
-    /// Security Accounts manager.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Remove, "LocalGroup",
             SupportsShouldProcess = true,
             HelpUri = "https://go.microsoft.com/fwlink/?LinkId=717975")]
@@ -29,10 +26,7 @@ namespace Microsoft.PowerShell.Commands
         #endregion Instance Data
 
         #region Parameter Properties
-        /// <summary>
-        /// The following is the definition of the input parameter "InputObject".
-        /// Specifies security groups from the local Security Accounts Manager.
-        /// </summary>
+        
         [Parameter(Mandatory = true,
                    Position = 0,
                    ValueFromPipeline = true,
@@ -49,11 +43,7 @@ namespace Microsoft.PowerShell.Commands
 
         private Microsoft.PowerShell.Commands.LocalGroup[] inputobject;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "Name".
-        /// Specifies the local groups to be deleted from the local Security Accounts
-        /// Manager.
-        /// </summary>
+        
         [Parameter(Mandatory = true,
                    Position = 0,
                    ValueFromPipeline = true,
@@ -70,11 +60,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string[] name;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "SID".
-        /// Specifies the LocalGroup accounts to remove by
-        /// System.Security.Principal.SecurityIdentifier.
-        /// </summary>
+        
         [Parameter(Mandatory = true,
                    Position = 0,
                    ValueFromPipeline = true,
@@ -93,17 +79,13 @@ namespace Microsoft.PowerShell.Commands
         #endregion Parameter Properties
 
         #region Cmdlet Overrides
-        /// <summary>
-        /// BeginProcessing method.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             sam = new Sam();
         }
 
-        /// <summary>
-        /// ProcessRecord method.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             try
@@ -118,9 +100,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// EndProcessing method.
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             if (sam != null)
@@ -132,9 +112,7 @@ namespace Microsoft.PowerShell.Commands
         #endregion Cmdlet Overrides
 
         #region Private Methods
-        /// <summary>
-        /// Process groups requested by -Name.
-        /// </summary>
+        
         /// <remarks>
         /// All arguments to -Name will be treated as names,
         /// even if a name looks like a SID.
@@ -158,9 +136,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Process groups requested by -SID.
-        /// </summary>
+        
         private void ProcessSids()
         {
             if (SID != null)
@@ -180,9 +156,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Process groups given through -InputObject.
-        /// </summary>
+        
         private void ProcessGroups()
         {
             if (InputObject != null)

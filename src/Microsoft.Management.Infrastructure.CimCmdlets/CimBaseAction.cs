@@ -11,23 +11,15 @@ using Microsoft.Management.Infrastructure.Options;
 
 namespace Microsoft.Management.Infrastructure.CimCmdlets
 {
-    /// <summary>
-    /// Base action class, implemented to write results to pipeline.
-    /// </summary>
+    
     internal abstract class CimBaseAction
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CimBaseAction"/> class.
-        /// </summary>
+        
         protected CimBaseAction()
         {
         }
 
-        /// <summary>
-        /// <para>
-        /// Execute the write operation to given cmdlet object
-        /// </para>
-        /// </summary>
+        
         /// <param name="cmdlet">
         /// cmdlet wrapper object, to which write result.
         /// <see cref="CmdletOperationBase"/> for details.
@@ -36,39 +28,21 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         {
         }
 
-        /// <summary>
-        /// <para>
-        /// <see cref="XOperationContextBase"/> object that related to current action.
-        /// It may used by action, such as <see cref="CimWriteResultObject"/>,
-        /// since later on action may require namespace, and proxy object to reuse
-        /// <see cref="CimSession"/>, <see cref="CimOperationOptions"/> object.
-        /// </para>
-        /// </summary>
+        
         protected XOperationContextBase Context { get; set; }
     }
 
-    /// <summary>
-    /// <para>
-    /// Synchronous action class, implemented to write results to pipeline
-    /// and block current thread until the action is completed.
-    /// </para>
-    /// </summary>
+    
     internal class CimSyncAction : CimBaseAction, IDisposable
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CimSyncAction"/> class.
-        /// </summary>
+        
         public CimSyncAction()
         {
             this.completeEvent = new ManualResetEventSlim(false);
             this.responseType = CimResponseType.None;
         }
 
-        /// <summary>
-        /// <para>
-        /// Block current thread until action completed
-        /// </para>
-        /// </summary>
+        
         /// <returns>Response from user.</returns>
         public virtual CimResponseType GetResponse()
         {
@@ -76,32 +50,19 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             return responseType;
         }
 
-        /// <summary>
-        /// <para>
-        /// Set the response result.
-        /// </para>
-        /// </summary>
+        
         internal CimResponseType ResponseType
         {
             set { this.responseType = value; }
         }
 
-        /// <summary>
-        /// <para>
-        /// Call this method when the action is completed or
-        /// the operation is terminated.
-        /// </para>
-        /// </summary>
+        
         internal virtual void OnComplete()
         {
             this.completeEvent.Set();
         }
 
-        /// <summary>
-        /// <para>
-        /// Block current thread.
-        /// </para>
-        /// </summary>
+        
         protected virtual void Block()
         {
             this.completeEvent.Wait();
@@ -110,31 +71,19 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         #region members
 
-        /// <summary>
-        /// Action completed event.
-        /// </summary>
+        
         private readonly ManualResetEventSlim completeEvent;
 
-        /// <summary>
-        /// Response result.
-        /// </summary>
+        
         protected CimResponseType responseType;
 
         #endregion
 
         #region IDisposable interface
-        /// <summary>
-        /// IDisposable interface.
-        /// </summary>
+        
         private bool _disposed;
 
-        /// <summary>
-        /// <para>
-        /// Dispose() calls Dispose(true).
-        /// Implement IDisposable. Do not make this method virtual.
-        /// A derived class should not be able to override this method.
-        /// </para>
-        /// </summary>
+        
         public void Dispose()
         {
             Dispose(true);
@@ -146,17 +95,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             GC.SuppressFinalize(this);
         }
 
-        /// <summary>
-        /// <para>
-        /// Dispose(bool disposing) executes in two distinct scenarios.
-        /// If disposing equals true, the method has been called directly
-        /// or indirectly by a user's code. Managed and unmanaged resources
-        /// can be disposed.
-        /// If disposing equals false, the method has been called by the
-        /// runtime from inside the finalizer and you should not reference
-        /// other objects. Only unmanaged resources can be disposed.
-        /// </para>
-        /// </summary>
+        
         /// <param name="disposing">Whether it is directly called.</param>
         protected virtual void Dispose(bool disposing)
         {

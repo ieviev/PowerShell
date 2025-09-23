@@ -106,9 +106,7 @@ namespace System.Management.Automation
 
         #region Helpers
 
-        /// <summary>
-        /// Converts an object to a string safely...
-        /// </summary>
+        
         /// <param name="obj">The object to convert.</param>
         /// <returns>The result of the conversion...</returns>
         internal static string SafeToString(object obj)
@@ -143,9 +141,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Converts an object to a string adn, if the string is not empty, adds it to the list.
-        /// </summary>
+        
         /// <param name="list">The list to update.</param>
         /// <param name="obj">The object to convert to a string...</param>
         internal static void SafeAddToStringList(List<string> list, object obj)

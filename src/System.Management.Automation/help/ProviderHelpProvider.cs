@@ -11,18 +11,14 @@ using System.Xml;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Class ProviderHelpProvider implement the help provider for commands.
-    /// </summary>
+    
     /// <remarks>
     /// Provider Help information are stored in 'help.xml' files. Location of these files
     /// can be found from CommandDiscovery.
     /// </remarks>
     internal class ProviderHelpProvider : HelpProviderWithCache
     {
-        /// <summary>
-        /// Constructor for HelpProvider.
-        /// </summary>
+        
         internal ProviderHelpProvider(HelpSystem helpSystem) : base(helpSystem)
         {
             _sessionState = helpSystem.ExecutionContext.SessionState;
@@ -32,9 +28,7 @@ namespace System.Management.Automation
 
         #region Common Properties
 
-        /// <summary>
-        /// Name of this help provider.
-        /// </summary>
+        
         /// <value>Name of this help provider.</value>
         internal override string Name
         {
@@ -44,9 +38,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Help category of this provider.
-        /// </summary>
+        
         /// <value>Help category of this provider</value>
         internal override HelpCategory HelpCategory
         {
@@ -60,9 +52,7 @@ namespace System.Management.Automation
 
         #region Help Provider Interface
 
-        /// <summary>
-        /// Do exact match help based on the target.
-        /// </summary>
+        
         /// <param name="helpRequest">Help request object.</param>
         internal override IEnumerable<HelpInfo> ExactMatchHelp(HelpRequest helpRequest)
         {
@@ -129,18 +119,10 @@ namespace System.Management.Automation
             return Path.GetDirectoryName(providerInfo.ImplementingType.Assembly.Location);
         }
 
-        /// <summary>
-        /// This is a hashtable to track which help files are loaded already.
-        ///
-        /// This will avoid one help file getting loaded again and again.
-        /// (Which should not happen unless some provider is pointing
-        /// to a help file that actually doesn't contain the help for it).
-        /// </summary>
+        
         private readonly Hashtable _helpFiles = new Hashtable();
 
-        /// <summary>
-        /// Load help file provided.
-        /// </summary>
+        
         /// <remarks>
         /// This will load providerHelpInfo from help file into help cache.
         /// </remarks>
@@ -260,9 +242,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Search for provider help based on a search target.
-        /// </summary>
+        
         /// <param name="helpRequest">Help request object.</param>
         /// <param name="searchOnlyContent">
         /// If true, searches for pattern in the help content. Individual
@@ -370,9 +350,7 @@ namespace System.Management.Automation
             yield return providerCommandHelpInfo;
         }
 #if V2
-        /// <summary>
-        /// Process a helpInfo forwarded from other providers (normally commandHelpProvider)
-        /// </summary>
+        
         /// <remarks>
         /// For command help info, this will
         ///     1. check whether provider-specific commandlet help exists.
@@ -416,10 +394,7 @@ namespace System.Management.Automation
         }
 #endif
 
-        /// <summary>
-        /// This will reset the help cache. Normally this corresponds to a
-        /// help culture change.
-        /// </summary>
+        
         internal override void Reset()
         {
             base.Reset();

@@ -6,17 +6,13 @@ using System.Windows;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <summary>
-    /// A common weak event listener which can be used for different kinds of events.
-    /// </summary>
+    
     /// <typeparam name="TEventArgs">The EventArgs type for the event.</typeparam>
     internal class WeakEventListener<TEventArgs> : IWeakEventListener where TEventArgs : EventArgs
     {
         private EventHandler<TEventArgs> realHander;
 
-        /// <summary>
-        /// Constructs an instance of WeakEventListener.
-        /// </summary>
+        
         /// <param name="handler">The handler for the event.</param>
         public WeakEventListener(EventHandler<TEventArgs> handler)
         {
@@ -25,9 +21,7 @@ namespace Microsoft.Management.UI.Internal
             this.realHander = handler;
         }
 
-        /// <summary>
-        /// Receives events from the centralized event manager.
-        /// </summary>
+        
         /// <param name="managerType">The type of the WeakEventManager calling this method.</param>
         /// <param name="sender">Object that originated the event.</param>
         /// <param name="e">Event data.</param>

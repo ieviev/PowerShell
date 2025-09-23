@@ -8,10 +8,7 @@ using System.Management.Automation;
 
 namespace Microsoft.PowerShell.Commands.Internal.Format
 {
-    /// <summary>
-    /// Helper class to hold a resolved expression and its
-    /// originating parameter.
-    /// </summary>
+    
     internal sealed class MshResolvedExpressionParameterAssociation
     {
         #region tracer
@@ -169,14 +166,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             return retVal;
         }
 
-        /// <summary>
-        /// Helper method to handle PSComputerName and PSShowComputerName properties from
-        /// the formating objects. If PSShowComputerName exists and is false, removes
-        /// PSComputerName from the display.
-        ///
-        /// PSShowComputerName is an internal property..so this property is always
-        /// removed from the display.
-        /// </summary>
+        
         /// <param name="so"></param>
         /// <param name="activeAssociationList"></param>
         internal static void HandleComputerNameProperties(PSObject so, List<MshResolvedExpressionParameterAssociation> activeAssociationList)

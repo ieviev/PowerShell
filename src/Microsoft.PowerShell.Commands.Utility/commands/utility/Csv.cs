@@ -5,9 +5,7 @@ using System.Collections.ObjectModel;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// This class is used to parse CSV text.
-    /// </summary>
+    
     internal sealed class CSVHelper
     {
         internal CSVHelper(char delimiter)
@@ -15,14 +13,10 @@ namespace Microsoft.PowerShell.Commands
             Delimiter = delimiter;
         }
 
-        /// <summary>
-        /// Gets or sets the delimiter that separates the values.
-        /// </summary>
+        
         internal char Delimiter { get; } = ',';
 
-        /// <summary>
-        /// Parse a CSV string.
-        /// </summary>
+        
         /// <param name="csv">
         /// String to be parsed.
         /// </param>

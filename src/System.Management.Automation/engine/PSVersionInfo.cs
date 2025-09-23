@@ -10,22 +10,7 @@ using Microsoft.Win32;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// <para>
-    /// Encapsulates $PSVersionTable.
-    /// </para>
-    /// <para>
-    /// Provides a simple interface to retrieve details from the PowerShell version table:
-    /// <code>
-    ///    PSVersionInfo.PSVersion;
-    /// </code>
-    /// The above statement retrieves the PowerShell version.
-    /// <code>
-    ///    PSVersionInfo.PSEdition;
-    /// </code>
-    /// The above statement retrieves the PowerShell edition.
-    /// </para>
-    /// </summary>
+    
     public static partial class PSVersionInfo
     {
         internal const string PSVersionTableName = "PSVersionTable";
@@ -45,9 +30,7 @@ namespace System.Management.Automation
 
         
 
-        /// <summary>
-        /// A constant to track current PowerShell Version.
-        /// </summary>
+        
         /// <remarks>
         /// We can't depend on assembly version for PowerShell version.
         ///
@@ -67,9 +50,7 @@ namespace System.Management.Automation
         private static readonly Version s_psVersion = new(10, 0);
         private static readonly SemanticVersion s_psSemVersion;
 
-        /// <summary>
-        /// A constant to track current PowerShell Edition.
-        /// </summary>
+        
         internal const string PSEditionValue = "Core";
 
         // Static Constructor.
@@ -146,9 +127,7 @@ namespace System.Management.Automation
 
         #region Programmer APIs
 
-        /// <summary>
-        /// Gets the version of PowerShell.
-        /// </summary>
+        
         public static Version PSVersion
         {
             get
@@ -157,9 +136,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the edition of PowerShell.
-        /// </summary>
+        
         public static string PSEdition
         {
             get
@@ -176,8 +153,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <remarks>
         /// For 3.0 PowerShell, we use "3" as the registry version key only for Engine
         /// related data like ApplicationBase.
@@ -245,10 +221,7 @@ namespace System.Management.Automation
         #endregion
     }
 
-    /// <summary>
-    /// Represents an implementation of '$PSVersionTable' variable.
-    /// The implementation contains ordered 'Keys' and 'GetEnumerator' to get user-friendly output.
-    /// </summary>
+    
     public sealed class PSVersionHashTable : Hashtable, IEnumerable
     {
         private static readonly PSVersionTableComparer s_keysComparer = new PSVersionTableComparer();
@@ -257,13 +230,7 @@ namespace System.Management.Automation
         {
         }
 
-        /// <summary>
-        /// Returns ordered collection with Keys of 'PSVersionHashTable'
-        /// We want see special order:
-        ///     1. PSVersionName
-        ///     2. PSEditionName
-        ///     3. Remaining properties in alphabetical order.
-        /// </summary>
+        
         public override ICollection Keys
         {
             get
@@ -303,10 +270,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Returns an enumerator for 'PSVersionHashTable'.
-        /// The enumeration is ordered (based on ordered version of 'Keys').
-        /// </summary>
+        
         IEnumerator IEnumerable.GetEnumerator()
         {
             foreach (object key in Keys)
@@ -316,14 +280,7 @@ namespace System.Management.Automation
         }
     }
 
-    /// <summary>
-    /// An implementation of semantic versioning (https://semver.org)
-    /// that can be converted to/from <see cref="System.Version"/>.
-    ///
-    /// When converting to <see cref="Version"/>, a PSNoteProperty is
-    /// added to the instance to store the semantic version label so
-    /// that it can be recovered when creating a new SemanticVersion.
-    /// </summary>
+    
     public sealed class SemanticVersion : IComparable, IComparable<SemanticVersion>, IEquatable<SemanticVersion>
     {
         private const string VersionSansRegEx = @"^(?<major>\d+)(\.(?<minor>\d+))?(\.(?<patch>\d+))?$";
@@ -336,9 +293,7 @@ namespace System.Management.Automation
 
         private string versionString;
 
-        /// <summary>
-        /// Construct a SemanticVersion from a string.
-        /// </summary>
+        
         /// <param name="version">The version to parse.</param>
         /// <exception cref="FormatException"></exception>
         /// <exception cref="OverflowException"></exception>
@@ -353,9 +308,7 @@ namespace System.Management.Automation
             BuildLabel = v.BuildLabel;
         }
 
-        /// <summary>
-        /// Construct a SemanticVersion.
-        /// </summary>
+        
         /// <param name="major">The major version.</param>
         /// <param name="minor">The minor version.</param>
         /// <param name="patch">The patch version.</param>
@@ -389,9 +342,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Construct a SemanticVersion.
-        /// </summary>
+        
         /// <param name="major">The major version.</param>
         /// <param name="minor">The minor version.</param>
         /// <param name="patch">The minor version.</param>
@@ -419,9 +370,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Construct a SemanticVersion.
-        /// </summary>
+        
         /// <param name="major">The major version.</param>
         /// <param name="minor">The minor version.</param>
         /// <param name="patch">The minor version.</param>
@@ -453,9 +402,7 @@ namespace System.Management.Automation
             // BuildLabel = null;
         }
 
-        /// <summary>
-        /// Construct a SemanticVersion.
-        /// </summary>
+        
         /// <param name="major">The major version.</param>
         /// <param name="minor">The minor version.</param>
         /// <exception cref="PSArgumentException">
@@ -463,19 +410,14 @@ namespace System.Management.Automation
         /// </exception>
         public SemanticVersion(int major, int minor) : this(major, minor, 0) { }
 
-        /// <summary>
-        /// Construct a SemanticVersion.
-        /// </summary>
+        
         /// <param name="major">The major version.</param>
         /// <exception cref="PSArgumentException">
         /// If <paramref name="major"/> is less than 0.
         /// </exception>
         public SemanticVersion(int major) : this(major, 0, 0) { }
 
-        /// <summary>
-        /// Construct a <see cref="SemanticVersion"/> from a <see cref="Version"/>,
-        /// copying the NoteProperty storing the label if the expected property exists.
-        /// </summary>
+        
         /// <param name="version">The version.</param>
         /// <exception cref="ArgumentNullException">
         /// If <paramref name="version"/> is null.
@@ -512,12 +454,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Convert a <see cref="SemanticVersion"/> to a <see cref="Version"/>.
-        /// If there is a <see cref="PreReleaseLabel"/> or/and a <see cref="BuildLabel"/>,
-        /// it is added as a NoteProperty to the result so that you can round trip
-        /// back to a <see cref="SemanticVersion"/> without losing the label.
-        /// </summary>
+        
         /// <param name="semver"></param>
         public static implicit operator Version(SemanticVersion semver)
         {
@@ -545,34 +482,22 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// The major version number, never negative.
-        /// </summary>
+        
         public int Major { get; }
 
-        /// <summary>
-        /// The minor version number, never negative.
-        /// </summary>
+        
         public int Minor { get; }
 
-        /// <summary>
-        /// The patch version, -1 if not specified.
-        /// </summary>
+        
         public int Patch { get; }
 
-        /// <summary>
-        /// PreReleaseLabel position in the SemVer string 'major.minor.patch-PreReleaseLabel+BuildLabel'.
-        /// </summary>
+        
         public string PreReleaseLabel { get; }
 
-        /// <summary>
-        /// BuildLabel position in the SemVer string 'major.minor.patch-PreReleaseLabel+BuildLabel'.
-        /// </summary>
+        
         public string BuildLabel { get; }
 
-        /// <summary>
-        /// Parse <paramref name="version"/> and return the result if it is a valid <see cref="SemanticVersion"/>, otherwise throws an exception.
-        /// </summary>
+        
         /// <param name="version">The string to parse.</param>
         /// <returns></returns>
         /// <exception cref="PSArgumentException"></exception>
@@ -597,10 +522,7 @@ namespace System.Management.Automation
             return r._parsedVersion;
         }
 
-        /// <summary>
-        /// Parse <paramref name="version"/> and return true if it is a valid <see cref="SemanticVersion"/>, otherwise return false.
-        /// No exceptions are raised.
-        /// </summary>
+        
         /// <param name="version">The string to parse.</param>
         /// <param name="result">The return value when the string is a valid <see cref="SemanticVersion"/></param>
         public static bool TryParse(string version, out SemanticVersion result)
@@ -732,9 +654,7 @@ namespace System.Management.Automation
             return true;
         }
 
-        /// <summary>
-        /// Implement ToString()
-        /// </summary>
+        
         public override string ToString()
         {
             if (versionString == null)
@@ -759,9 +679,7 @@ namespace System.Management.Automation
             return versionString;
         }
 
-        /// <summary>
-        /// Implement Compare.
-        /// </summary>
+        
         public static int Compare(SemanticVersion versionA, SemanticVersion versionB)
         {
             if (versionA != null)
@@ -777,9 +695,7 @@ namespace System.Management.Automation
             return 0;
         }
 
-        /// <summary>
-        /// Implement <see cref="IComparable.CompareTo"/>
-        /// </summary>
+        
         public int CompareTo(object version)
         {
             if (version == null)
@@ -795,10 +711,7 @@ namespace System.Management.Automation
             return CompareTo(v);
         }
 
-        /// <summary>
-        /// Implement <see cref="IComparable{T}.CompareTo"/>.
-        /// Meets SemVer 2.0 p.11 https://semver.org/
-        /// </summary>
+        
         public int CompareTo(SemanticVersion value)
         {
             if (value is null)
@@ -817,17 +730,13 @@ namespace System.Management.Automation
             return ComparePreLabel(this.PreReleaseLabel, value.PreReleaseLabel);
         }
 
-        /// <summary>
-        /// Override <see cref="object.Equals(object)"/>
-        /// </summary>
+        
         public override bool Equals(object obj)
         {
             return Equals(obj as SemanticVersion);
         }
 
-        /// <summary>
-        /// Implement <see cref="IEquatable{T}.Equals(T)"/>
-        /// </summary>
+        
         public bool Equals(SemanticVersion other)
         {
             // SemVer 2.0 standard requires to ignore 'BuildLabel' (Build metadata).
@@ -836,17 +745,13 @@ namespace System.Management.Automation
                    string.Equals(PreReleaseLabel, other.PreReleaseLabel, StringComparison.Ordinal);
         }
 
-        /// <summary>
-        /// Override <see cref="object.GetHashCode()"/>
-        /// </summary>
+        
         public override int GetHashCode()
         {
             return this.ToString().GetHashCode();
         }
 
-        /// <summary>
-        /// Overloaded == operator.
-        /// </summary>
+        
         public static bool operator ==(SemanticVersion v1, SemanticVersion v2)
         {
             if (v1 is null)
@@ -857,41 +762,31 @@ namespace System.Management.Automation
             return v1.Equals(v2);
         }
 
-        /// <summary>
-        /// Overloaded != operator.
-        /// </summary>
+        
         public static bool operator !=(SemanticVersion v1, SemanticVersion v2)
         {
             return !(v1 == v2);
         }
 
-        /// <summary>
-        /// Overloaded &lt; operator.
-        /// </summary>
+        
         public static bool operator <(SemanticVersion v1, SemanticVersion v2)
         {
             return (Compare(v1, v2) < 0);
         }
 
-        /// <summary>
-        /// Overloaded &lt;= operator.
-        /// </summary>
+        
         public static bool operator <=(SemanticVersion v1, SemanticVersion v2)
         {
             return (Compare(v1, v2) <= 0);
         }
 
-        /// <summary>
-        /// Overloaded &gt; operator.
-        /// </summary>
+        
         public static bool operator >(SemanticVersion v1, SemanticVersion v2)
         {
             return (Compare(v1, v2) > 0);
         }
 
-        /// <summary>
-        /// Overloaded &gt;= operator.
-        /// </summary>
+        
         public static bool operator >=(SemanticVersion v1, SemanticVersion v2)
         {
             return (Compare(v1, v2) >= 0);

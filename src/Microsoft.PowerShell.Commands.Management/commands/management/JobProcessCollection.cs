@@ -10,46 +10,29 @@ using Microsoft.Win32.SafeHandles;
 
 namespace Microsoft.PowerShell.Commands;
 
-/// <summary>
-/// JobProcessCollection is a helper class used by Start-Process -Wait cmdlet to monitor the
-/// child processes created by the main process hosted by the Start-process cmdlet.
-/// </summary>
+
 internal sealed class JobProcessCollection : IDisposable
 {
-    /// <summary>
-    /// Stores the initialisation state of the job and completion port.
-    /// </summary>
+    
     private bool? _initStatus;
 
-    /// <summary>
-    /// JobObjectHandle is a reference to the job object used to track
-    /// the child processes created by the main process hosted by the Start-Process cmdlet.
-    /// </summary>
+    
     private Interop.Windows.SafeJobHandle? _jobObject;
 
-    /// <summary>
-    /// The completion port handle that is used to monitor job events.
-    /// </summary>
+    
     private Interop.Windows.SafeIoCompletionPort? _completionPort;
 
-    /// <summary>
-    /// Initializes a new instance of the <see cref="JobProcessCollection"/> class.
-    /// </summary>
+    
     public JobProcessCollection()
     { }
 
-    /// <summary>
-    /// Initializes the job and IO completion port and adds the process to the
-    /// job object.
-    /// </summary>
+    
     /// <param name="process">The process to add to the job.</param>
     /// <returns>Whether the job creation and assignment worked or not.</returns>
     public bool AssignProcessToJobObject(SafeProcessHandle process)
         => InitializeJob() && Interop.Windows.AssignProcessToJobObject(_jobObject, process);
 
-    /// <summary>
-    /// Blocks the current thread until all processes in the job have exited.
-    /// </summary>
+    
     /// <param name="cancellationToken">A token to cancel the operation.</param>
     public void WaitForExit(CancellationToken cancellationToken)
     {

@@ -8,18 +8,14 @@ using System.Globalization;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <summary>
-    /// Provides methods for retrieving the property values of objects.
-    /// </summary>
+    
     public class PropertyValueGetter : IPropertyValueGetter
     {
         private const string PropertyDescriptorColumnId = "PropertyDescriptor";
 
         private DataTable cachedProperties;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PropertyValueGetter"/> class.
-        /// </summary>
+        
         public PropertyValueGetter()
         {
             // Create the table locally first so that FxCop detects the setting of Locale \\
@@ -34,7 +30,7 @@ namespace Microsoft.Management.UI.Internal
             this.cachedProperties = cachedProperties;
         }
 
-        /// <summary>Gets the value of the specified property on the specified object.</summary>
+        
         /// <param name="propertyName">The name of the property to get the value for.</param>
         /// <param name="value">The object to get value from.</param>
         /// <param name="propertyValue">The value of the property.</param>
@@ -59,7 +55,7 @@ namespace Microsoft.Management.UI.Internal
             return this.TryGetPropertyValueInternal(descriptor, value, out propertyValue);
         }
 
-        /// <summary>Gets the value of the specified property on the specified object.</summary>
+        
         /// <typeparam name="T">The type of the property value.</typeparam>
         /// <param name="propertyName">The name of the property to get the value for.</param>
         /// <param name="value">The object to get value from.</param>

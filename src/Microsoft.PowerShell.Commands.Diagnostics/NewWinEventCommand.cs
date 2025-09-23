@@ -14,10 +14,7 @@ using System.Xml;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// Class that implements the New-WinEvent cmdlet.
-    /// This cmdlet writes a new Etw event using the provider specified in parameter.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.New, "WinEvent", HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096808")]
     public sealed class NewWinEventCommand : PSCmdlet
     {
@@ -29,18 +26,14 @@ namespace Microsoft.PowerShell.Commands
 
         private readonly ResourceManager _resourceMgr = Microsoft.PowerShell.Commands.Diagnostics.Common.CommonUtilities.GetResourceManager();
 
-        /// <summary>
-        /// ProviderName.
-        /// </summary>
+        
         [Parameter(
             Position = 0,
             Mandatory = true,
             ParameterSetName = ParameterAttribute.AllParameterSets)]
         public string ProviderName { get; set; }
 
-        /// <summary>
-        /// Id (EventId defined in manifest file)
-        /// </summary>
+        
         [Parameter(
             Position = 1,
             Mandatory = true,
@@ -62,9 +55,7 @@ namespace Microsoft.PowerShell.Commands
         private int _id;
         private bool _idSpecified = false;
 
-        /// <summary>
-        /// Version (event version)
-        /// </summary>
+        
         [Parameter(
             Mandatory = false,
             ParameterSetName = ParameterAttribute.AllParameterSets)]
@@ -85,9 +76,7 @@ namespace Microsoft.PowerShell.Commands
         private byte _version;
         private bool _versionSpecified = false;
 
-        /// <summary>
-        /// Event Payload.
-        /// </summary>
+        
         [Parameter(
             Position = 2,
             Mandatory = false,
@@ -98,9 +87,7 @@ namespace Microsoft.PowerShell.Commands
             Justification = "A string[] is required here because that is the type Powershell supports")]
         public object[] Payload { get; set; }
 
-        /// <summary>
-        /// BeginProcessing.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             LoadProvider();
@@ -282,9 +269,7 @@ namespace Microsoft.PowerShell.Commands
                 keywords);
         }
 
-        /// <summary>
-        /// ProcessRecord.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             using (EventProvider provider = new(_providerMetadata.Id))
@@ -312,9 +297,7 @@ namespace Microsoft.PowerShell.Commands
             base.ProcessRecord();
         }
 
-        /// <summary>
-        /// EndProcessing.
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             _providerMetadata?.Dispose();

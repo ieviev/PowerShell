@@ -9,18 +9,13 @@ using System.Runtime.InteropServices;
 
 namespace System.Management.Automation.Tracing
 {
-    /// <summary>
-    /// Provides a class for describing a message resource for an ETW event.
-    /// </summary>
+    
     internal static class EventResource
     {
         // Defines the resource id of the message to use when an event id is not valid.
         private const string MissingEventIdResourceName = "MissingEventIdMessage";
 
-        /// <summary>
-        /// Gets the name of the message resource to use for event ids that are not found.
-        /// is not found.
-        /// </summary>
+        
         /// <remarks>
         /// This method is called when GetMessage returns a null value indicating the passed
         /// in event id was not found. The message should be used as the format string
@@ -32,9 +27,7 @@ namespace System.Management.Automation.Tracing
             return MissingEventIdResourceName;
         }
 
-        /// <summary>
-        /// Gets the message resource id for the specified event id.
-        /// </summary>
+        
         /// <param name="eventId">The event id for the message resource to retrieve.</param>
         /// <param name="parameterCount">The number of parameters required by the message resource.</param>
         /// <returns>The string resource id of the associated event message; otherwise, a null reference if the event id is not valid.</returns>

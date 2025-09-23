@@ -8,9 +8,7 @@ using System.Management.Automation;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// Class for Get-Error implementation.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Get, "Error",
         HelpUri = "https://go.microsoft.com/fwlink/?linkid=2241804",
         DefaultParameterSetName = NewestParameterSetName)]
@@ -23,24 +21,18 @@ namespace Microsoft.PowerShell.Commands
         internal const string ErrorRecordPSExtendedError = "System.Management.Automation.ErrorRecord#PSExtendedError";
         internal const string ExceptionPSExtendedError = "System.Exception#PSExtendedError";
 
-        /// <summary>
-        /// Gets or sets the error object to resolve.
-        /// </summary>
+        
         [Parameter(Position = 0, ValueFromPipeline = true, ParameterSetName = ErrorParameterSetName)]
         [ValidateNotNullOrEmpty]
         public PSObject InputObject { get; set; }
 
-        /// <summary>
-        /// Gets or sets the number of error objects to resolve starting with newest first.
-        /// </summary>
+        
         [Parameter(ParameterSetName = NewestParameterSetName)]
         [Alias(AliasNewest)]
         [ValidateRange(1, int.MaxValue)]
         public int Newest { get; set; } = 1;
 
-        /// <summary>
-        /// Process the error object.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             var errorRecords = new List<object>();

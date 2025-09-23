@@ -5,17 +5,12 @@ using System.Management.Automation.Internal;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// The parameter binder for runtime-defined parameters which are declared through the RuntimeDefinedParameterDictionary.
-    /// </summary>
+    
     internal class RuntimeDefinedParameterBinder : ParameterBinderBase
     {
         #region ctor
 
-        /// <summary>
-        /// Constructs the parameter binder with the specified type metadata. The binder is only valid
-        /// for a single instance of a bindable runtime-defined parameter collection and only for the duration of a command.
-        /// </summary>
+        
         /// <param name="target">
         /// The target runtime-defined parameter collection that the parameter values will be bound to.
         /// </param>
@@ -62,10 +57,7 @@ namespace System.Management.Automation
 
         #region internal members
 
-        /// <summary>
-        /// Hides the base class Target property to ensure the target
-        /// is always a RuntimeDefinedParameterDictionary.
-        /// </summary>
+        
         internal new RuntimeDefinedParameterDictionary Target
         {
             get
@@ -81,9 +73,7 @@ namespace System.Management.Automation
 
         #region Parameter default values
 
-        /// <summary>
-        /// Gets the default value for the specified parameter.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the parameter to get the value for.
         /// </param>
@@ -104,10 +94,7 @@ namespace System.Management.Automation
 
         #endregion Parameter default values
 
-        /// <summary>
-        /// Uses ETS to set the property specified by name to the value on
-        /// the target bindable object.
-        /// </summary>
+        
         /// <param name="name">
         ///     The name of the parameter to bind the value to.
         /// </param>

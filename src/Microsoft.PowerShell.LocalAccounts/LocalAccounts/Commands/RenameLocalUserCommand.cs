@@ -13,10 +13,7 @@ using Microsoft.PowerShell.LocalAccounts;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// The Rename-LocalUser cmdlet renames a local user account in the Security
-    /// Accounts Manager.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Rename, "LocalUser",
             SupportsShouldProcess = true,
             HelpUri = "https://go.microsoft.com/fwlink/?LinkID=717983")]
@@ -28,11 +25,7 @@ namespace Microsoft.PowerShell.Commands
         #endregion Instance Data
 
         #region Parameter Properties
-        /// <summary>
-        /// The following is the definition of the input parameter "InputObject".
-        /// Specifies the of the local user account to rename in the local Security
-        /// Accounts Manager.
-        /// </summary>
+        
         [Parameter(Mandatory = true,
                    Position = 0,
                    ValueFromPipeline = true,
@@ -48,11 +41,7 @@ namespace Microsoft.PowerShell.Commands
 
         private Microsoft.PowerShell.Commands.LocalUser inputobject;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "Name".
-        /// Specifies the local user account to be renamed in the local Security
-        /// Accounts Manager.
-        /// </summary>
+        
         [Parameter(Mandatory = true,
                    Position = 0,
                    ValueFromPipeline = true,
@@ -68,11 +57,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string name;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "NewName".
-        /// Specifies the new name for the local user account in the Security Accounts
-        /// Manager.
-        /// </summary>
+        
         [Parameter(Mandatory = true,
                    Position = 1)]
         [ValidateNotNullOrEmpty]
@@ -85,10 +70,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string newname;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "SID".
-        /// Specifies the local user to rename.
-        /// </summary>
+        
         [Parameter(Mandatory = true,
                    Position = 0,
                    ValueFromPipeline = true,
@@ -106,17 +88,13 @@ namespace Microsoft.PowerShell.Commands
         #endregion Parameter Properties
 
         #region Cmdlet Overrides
-        /// <summary>
-        /// BeginProcessing method.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             sam = new Sam();
         }
 
-        /// <summary>
-        /// ProcessRecord method.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             try
@@ -131,9 +109,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// EndProcessing method.
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             if (sam != null)
@@ -145,9 +121,7 @@ namespace Microsoft.PowerShell.Commands
         #endregion Cmdlet Overrides
 
         #region Private Methods
-        /// <summary>
-        /// Process user requested by -Name.
-        /// </summary>
+        
         /// <remarks>
         /// Arguments to -Name will be treated as names,
         /// even if a name looks like a SID.
@@ -168,9 +142,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Process user requested by -SID.
-        /// </summary>
+        
         private void ProcessSid()
         {
             if (SID != null)
@@ -187,9 +159,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Process group given through -InputObject.
-        /// </summary>
+        
         private void ProcessUser()
         {
             if (InputObject != null)
@@ -206,11 +176,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Determine if a user should be processed.
-        /// Just a wrapper around Cmdlet.ShouldProcess, with localized string
-        /// formatting.
-        /// </summary>
+        
         /// <param name="userName">
         /// Name of the user to rename.
         /// </param>

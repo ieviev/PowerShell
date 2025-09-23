@@ -10,18 +10,12 @@ using Dbg = System.Management.Automation;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Implements the interfaces used by navigation commands to work with
-    /// the virtual drive system.
-    /// </summary>
+    
     internal sealed class LocationGlobber
     {
         #region Trace object
 
-        /// <summary>
-        /// An instance of the PSTraceSource class used for trace output
-        /// using "LocationGlobber" as the category.
-        /// </summary>
+        
         [Dbg.TraceSource(
              "LocationGlobber",
              "The location globber converts PowerShell paths with glob characters to zero or more paths.")]
@@ -29,9 +23,7 @@ namespace System.Management.Automation
             Dbg.PSTraceSource.GetTracer("LocationGlobber",
              "The location globber converts PowerShell paths with glob characters to zero or more paths.");
 
-        /// <summary>
-        /// User level tracing for path resolution.
-        /// </summary>
+        
         [Dbg.TraceSource(
              "PathResolution",
              "Traces the path resolution algorithm.")]
@@ -45,9 +37,7 @@ namespace System.Management.Automation
 
         #region Constructor
 
-        /// <summary>
-        /// Constructs an instance of the LocationGlobber from the current SessionState.
-        /// </summary>
+        
         /// <param name="sessionState">
         /// The instance of session state on which this location globber acts.
         /// </param>
@@ -69,10 +59,7 @@ namespace System.Management.Automation
         #region Public methods
 
         #region PowerShell paths from PowerShell path globbing
-        /// <summary>
-        /// Converts a PowerShell path containing glob characters to PowerShell paths that match
-        /// the glob string.
-        /// </summary>
+        
         /// <param name="path">
         /// A PowerShell path containing glob characters.
         /// </param>
@@ -119,10 +106,7 @@ namespace System.Management.Automation
             return GetGlobbedMonadPathsFromMonadPath(path, allowNonexistingPaths, context, out providerInstance);
         }
 
-        /// <summary>
-        /// Converts a PowerShell path containing glob characters to PowerShell paths that match
-        /// the glob string.
-        /// </summary>
+        
         /// <param name="path">
         /// A PowerShell path containing glob characters.
         /// </param>
@@ -600,10 +584,7 @@ namespace System.Management.Automation
 
         #region Provider paths from PowerShell path globbing
 
-        /// <summary>
-        /// Converts a PowerShell path containing glob characters to the provider
-        /// specific paths matching the glob strings.
-        /// </summary>
+        
         /// <param name="path">
         /// A PowerShell path containing glob characters.
         /// </param>
@@ -672,10 +653,7 @@ namespace System.Management.Automation
             return GetGlobbedProviderPathsFromMonadPath(path, allowNonexistingPaths, context, out provider, out providerInstance);
         }
 
-        /// <summary>
-        /// Converts a PowerShell path containing glob characters to the provider
-        /// specific paths matching the glob strings.
-        /// </summary>
+        
         /// <param name="path">
         /// A PowerShell path containing glob characters.
         /// </param>
@@ -793,11 +771,7 @@ namespace System.Management.Automation
 
         #region Provider paths from provider path globbing
 
-        /// <summary>
-        /// Given a provider specific path that contains glob characters, this method
-        /// will perform the globbing using the specified provider and return the
-        /// matching provider specific paths.
-        /// </summary>
+        
         /// <param name="path">
         /// The path containing the glob characters to resolve.
         /// </param>
@@ -877,11 +851,7 @@ namespace System.Management.Automation
             return results;
         }
 
-        /// <summary>
-        /// Given a provider specific path that contains glob characters, this method
-        /// will perform the globbing using the specified provider and return the
-        /// matching provider specific paths.
-        /// </summary>
+        
         /// <param name="path">
         /// The path containing the glob characters to resolve. The path must be in the
         /// form providerId::providerPath.
@@ -965,10 +935,7 @@ namespace System.Management.Automation
 
         #region Path manipulation
 
-        /// <summary>
-        /// Gets a provider specific path when given an Msh path without resolving the
-        /// glob characters.
-        /// </summary>
+        
         /// <param name="path">
         /// An Msh path.
         /// </param>
@@ -1010,10 +977,7 @@ namespace System.Management.Automation
             return GetProviderPath(path, out provider);
         }
 
-        /// <summary>
-        /// Gets a provider specific path when given an Msh path without resolving the
-        /// glob characters.
-        /// </summary>
+        
         /// <param name="path">
         /// An Msh path.
         /// </param>
@@ -1082,10 +1046,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Gets a provider specific path when given an Msh path without resolving the
-        /// glob characters.
-        /// </summary>
+        
         /// <param name="path">
         /// An Msh path.
         /// </param>
@@ -1140,9 +1101,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Returns a provider specific path for given PowerShell path.
-        /// </summary>
+        
         /// <param name="path">
         /// Either a PowerShell path or a provider path in the form providerId::providerPath
         /// </param>
@@ -1199,9 +1158,7 @@ namespace System.Management.Automation
                 out drive);
         }
 
-        /// <summary>
-        /// Returns a provider specific path for given PowerShell path.
-        /// </summary>
+        
         /// <param name="path">Path to resolve.</param>
         /// <param name="context">Cmdlet context.</param>
         /// <param name="isTrusted">When true bypass trust check.</param>
@@ -1331,11 +1288,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Determines if the specified path is a provider. This is done by looking for
-        /// two colons in a row. Anything before the colons is considered the provider ID,
-        /// and everything after is considered a namespace specific path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to check to see if it is a provider path.
         /// </param>
@@ -1351,11 +1304,7 @@ namespace System.Management.Automation
             return IsProviderQualifiedPath(path, out providerId);
         }
 
-        /// <summary>
-        /// Determines if the specified path is a provider. This is done by looking for
-        /// two colons in a row. Anything before the colons is considered the provider ID,
-        /// and everything after is considered a namespace specific path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to check to see if it is a provider path.
         /// </param>
@@ -1430,9 +1379,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Determines if the given path is absolute while on a single root filesystem.
-        /// </summary>
+        
         /// <remarks>
         /// Porting notes: absolute paths on non-Windows filesystems start with a '/' (no "C:" drive
         /// prefix, the slash is the prefix). We compare against both '/' and '\' (default and
@@ -1454,9 +1401,7 @@ namespace System.Management.Automation
 #endif
         }
 
-        /// <summary>
-        /// Determines if the given path is relative or absolute.
-        /// </summary>
+        
         /// <param name="path">
         /// The path used in the determination
         /// </param>
@@ -1542,9 +1487,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Determines if the given path is relative or absolute.
-        /// </summary>
+        
         /// <param name="path">
         /// The path used in the determination
         /// </param>
@@ -1651,14 +1594,10 @@ namespace System.Management.Automation
 
         #region private fields and methods
 
-        /// <summary>
-        /// The instance of session state on which this globber acts.
-        /// </summary>
+        
         private readonly SessionState _sessionState;
 
-        /// <summary>
-        /// Removes the back tick "`" from any of the glob characters in the path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to remove the glob escaping from.
         /// </param>
@@ -1682,11 +1621,7 @@ namespace System.Management.Automation
 
         #region Path manipulation methods
 
-        /// <summary>
-        /// Determines if the given drive name is a "special" name defined
-        /// by the shell. For instance, "default", "current", "global", and "scope[##]" are scopes
-        /// for variables and are considered shell virtual drives.
-        /// </summary>
+        
         /// <param name="driveName">
         /// The name of the drive to check to see if it is a shell virtual drive.
         /// </param>
@@ -1747,10 +1682,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Gets a provider specific path that represents the specified path and is relative
-        /// to the root of the PowerShell drive.
-        /// </summary>
+        
         /// <param name="path">
         /// Can be a relative or absolute path.
         /// </param>
@@ -1995,10 +1927,7 @@ namespace System.Management.Automation
             return childPath;
         }
 
-        /// <summary>
-        /// Builds a provider specific path from the current working
-        /// directory using the specified relative path.
-        /// </summary>
+        
         /// <param name="drive">
         /// The drive to generate the provider specific path from.
         /// </param>
@@ -2291,10 +2220,7 @@ namespace System.Management.Automation
                 comparePath.StartsWith('~'));
         }
 
-        /// <summary>
-        /// Uses the drive and a relative working path to construct
-        /// a string which has a fully qualified provider specific path.
-        /// </summary>
+        
         /// <param name="drive">
         /// The drive to use as the root of the path.
         /// </param>
@@ -2357,10 +2283,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Parses the provider-qualified path into the provider name and
-        /// the provider-internal path.
-        /// </summary>
+        
         /// <param name="path">
         /// The provider-qualified path to parse.
         /// </param>
@@ -2407,11 +2330,7 @@ namespace System.Management.Automation
 
         #region internal methods
 
-        /// <summary>
-        /// Given a provider specific path that contains glob characters, this method
-        /// will perform the globbing using the specified provider and return the
-        /// matching provider specific paths.
-        /// </summary>
+        
         /// <param name="path">
         /// The path containing the glob characters to resolve.
         /// </param>
@@ -2483,10 +2402,7 @@ namespace System.Management.Automation
             return expandedPaths;
         }
 
-        /// <summary>
-        /// Determines if the specified path contains any globing characters. These
-        /// characters are defined as '?' and '*'.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to search for globing characters.
         /// </param>
@@ -2506,10 +2422,7 @@ namespace System.Management.Automation
             return WildcardPattern.ContainsWildcardCharacters(path);
         }
 
-        /// <summary>
-        /// Determines if the path and context are such that we need to run through
-        /// the globbing algorithm.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to check for glob characters.
         /// </param>
@@ -2551,10 +2464,7 @@ namespace System.Management.Automation
             return (pathContainsGlobCharacters || contextContainsIncludeExclude) && (!contextContainsNoGlob);
         }
 
-        /// <summary>
-        /// Generates an array of provider specific paths from the single provider specific
-        /// path using globing rules.
-        /// </summary>
+        
         /// <param name="path">
         /// A path that may or may not contain globing characters.
         /// </param>
@@ -2958,10 +2868,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Gets either a drive-qualified or provider-qualified path based on the drive
-        /// information.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to create a qualified path from.
         /// </param>
@@ -3005,9 +2912,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Removes the provider or drive qualifier from a Msh path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to remove the qualifier from.
         /// </param>
@@ -3042,10 +2947,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Given an Msh relative or absolute path, returns a drive-qualified absolute path.
-        /// No globbing or relative path character expansion is done.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to get the drive qualified path from.
         /// </param>
@@ -3141,9 +3043,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Removes the drive qualifier from a drive qualified MSH path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to remove the drive qualifier from.
         /// </param>
@@ -3185,10 +3085,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Given an Msh path, returns a provider-qualified path.
-        /// No globbing or relative path character expansion is done.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to get the drive qualified path from.
         /// </param>
@@ -3243,9 +3140,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Removes the provider qualifier from a provider-qualified MSH path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to remove the provider qualifier from.
         /// </param>
@@ -3273,11 +3168,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Generates a collection of containers and/or leaves that are children of the containers
-        /// in the currentDirs parameter and match the glob expression in the
-        /// <paramref name="leafElement"/> parameter.
-        /// </summary>
+        
         /// <param name="currentDirs">
         /// A collection of paths that should be searched for leaves that match the
         /// <paramref name="leafElement"/> expression.
@@ -3509,10 +3400,7 @@ namespace System.Management.Automation
             return newDirs;
         }
 
-        /// <summary>
-        /// Generates an array of provider specific paths from the single provider specific
-        /// path using globing rules.
-        /// </summary>
+        
         /// <param name="path">
         /// A path that may or may not contain globing characters.
         /// </param>
@@ -3892,11 +3780,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Generates a collection of containers and/or leaves that are children of the containers
-        /// in the currentDirs parameter and match the glob expression in the
-        /// <paramref name="leafElement"/> parameter.
-        /// </summary>
+        
         /// <param name="currentDirs">
         /// A collection of paths that should be searched for leaves that match the
         /// <paramref name="leafElement"/> expression.
@@ -4094,9 +3978,7 @@ namespace System.Management.Automation
             return newDirs;
         }
 
-        /// <summary>
-        /// Gets the child names in the specified path by using the provider.
-        /// </summary>
+        
         /// <param name="dir">
         /// The path of the directory to get the child names from. If this is an Msh Path,
         /// dirIsProviderPath must be false, If this is a provider-internal path,
@@ -4306,10 +4188,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Determines if the specified PSObject contains a string that matches the specified
-        /// wildcard patterns.
-        /// </summary>
+        
         /// <param name="childObject">
         /// The PSObject that contains the child names.
         /// </param>
@@ -4406,10 +4285,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Converts a back tick '`' escape into back slash escape for
-        /// all occurrences in the string.
-        /// </summary>
+        
         /// <param name="path">
         /// A string that may or may not have back ticks as escape characters.
         /// </param>
@@ -4504,10 +4380,7 @@ namespace System.Management.Automation
             return result.ToString();
         }
 
-        /// <summary>
-        /// Determines if the path is relative to a provider home based on
-        /// the ~ character.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to determine if it is a home path.
         /// </param>
@@ -4554,10 +4427,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Determines if the specified path looks like a remote path. (starts with
-        /// // or \\.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to check to determine if it is a remote path.
         /// </param>
@@ -4578,10 +4448,7 @@ namespace System.Management.Automation
                    path.StartsWith(StringLiterals.AlternateRemotePathPrefix, StringComparison.Ordinal);
         }
 
-        /// <summary>
-        /// Generates the path for the home location for a provider when given a
-        /// path starting with ~ or "provider:~" followed by a relative path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to generate into a home path.
         /// </param>

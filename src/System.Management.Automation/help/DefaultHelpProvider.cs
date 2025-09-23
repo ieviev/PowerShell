@@ -5,17 +5,10 @@ using System.Collections.Generic;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Class DefaultHelpProvider implement the help provider for commands.
-    ///
-    /// Command Help information are stored in 'help.xml' files. Location of these files
-    /// can be found from CommandDiscovery.
-    /// </summary>
+    
     internal class DefaultHelpProvider : HelpFileHelpProvider
     {
-        /// <summary>
-        /// Constructor for HelpProvider.
-        /// </summary>
+        
         internal DefaultHelpProvider(HelpSystem helpSystem)
             : base(helpSystem)
         {
@@ -23,8 +16,7 @@ namespace System.Management.Automation
 
         #region Common Properties
 
-        /// <summary>
-        /// </summary>
+        
         /// <value></value>
         internal override string Name
         {
@@ -34,8 +26,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <value></value>
         internal override HelpCategory HelpCategory
         {
@@ -49,8 +40,7 @@ namespace System.Management.Automation
 
         #region Help Provider Interface
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="helpRequest">Help request object.</param>
         /// <returns></returns>
         internal override IEnumerable<HelpInfo> ExactMatchHelp(HelpRequest helpRequest)

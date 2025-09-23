@@ -7,17 +7,13 @@ using System.Management.Automation;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// Cmdlet used to write a collection of formatting directives to an XML file.
-    /// </summary>
+    
     [Cmdlet(VerbsData.Export, "FormatData", DefaultParameterSetName = "ByPath", HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096834")]
     public class ExportFormatDataCommand : PSCmdlet
     {
         private ExtendedTypeDefinition[] _typeDefinition;
 
-        /// <summary>
-        /// Type definition to include in export.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
         public ExtendedTypeDefinition[] InputObject
@@ -35,9 +31,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string _filepath;
 
-        /// <summary>
-        /// Path of the XML file.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "ByPath", Mandatory = true)]
         [Alias("FilePath")]
         public string Path
@@ -53,9 +47,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Literal path of the XML file.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "ByLiteralPath", Mandatory = true)]
         [Alias("PSPath", "LP")]
         public string LiteralPath
@@ -78,9 +70,7 @@ namespace Microsoft.PowerShell.Commands
 
         private bool _force;
 
-        /// <summary>
-        /// Force writing a file.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter Force
         {
@@ -95,9 +85,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Do not overwrite file if exists.
-        /// </summary>
+        
         [Parameter]
         [Alias("NoOverwrite")]
         public SwitchParameter NoClobber
@@ -115,9 +103,7 @@ namespace Microsoft.PowerShell.Commands
 
         private bool _noclobber;
 
-        /// <summary>
-        /// Include scriptblocks for export.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter IncludeScriptBlock
         {
@@ -134,9 +120,7 @@ namespace Microsoft.PowerShell.Commands
 
         private bool _includescriptblock;
 
-        /// <summary>
-        /// Adds the type to the collection.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             foreach (ExtendedTypeDefinition typedef in _typeDefinition)
@@ -145,10 +129,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Writes out the formatting directives from the
-        /// collection to the specified XML file.
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             FormatXmlWriter.WriteToPs1Xml(this, _typeDefinitions, _filepath, _force, _noclobber, _includescriptblock, _isLiteralPath);

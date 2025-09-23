@@ -15,17 +15,12 @@ using System.Security;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// This is the base class for all the providers that produce a view
-    /// on session state data (Variables, Aliases, and Functions)
-    /// </summary>
+    
     public abstract class SessionStateProviderBase : ContainerCmdletProvider, IContentCmdletProvider
     {
         #region tracer
 
-        /// <summary>
-        /// An instance of the PSTraceSource class used for trace output.
-        /// </summary>
+        
         [Dbg.TraceSource(
              "SessionStateProvider",
              "Providers that produce a view of session state data.")]
@@ -37,9 +32,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region protected members
 
-        /// <summary>
-        /// Derived classes must override to get items from session state.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the item to get.
         /// </param>
@@ -48,11 +41,7 @@ namespace Microsoft.PowerShell.Commands
         /// </returns>
         internal abstract object GetSessionStateItem(string name);
 
-        /// <summary>
-        /// Sets a session state item in the appropriate session state table.
-        /// Derived classes must override this method to set the item in the
-        /// proper table.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the item to set.
         /// </param>
@@ -64,29 +53,20 @@ namespace Microsoft.PowerShell.Commands
         /// </param>
         internal abstract void SetSessionStateItem(string name, object value, bool writeItem);
 
-        /// <summary>
-        /// Removes a session state item from the appropriate session state table.
-        /// Derived classes must override this method to remove items from the
-        /// proper table.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the item to remove.
         /// </param>
         internal abstract void RemoveSessionStateItem(string name);
 
-        /// <summary>
-        /// Gets all the items in the appropriate session state table.
-        /// </summary>
+        
         /// <returns>
         /// An IDictionary representing the items in the session state table.
         /// The key is the name of the item and the value is the value.
         /// </returns>
         internal abstract IDictionary GetSessionStateTable();
 
-        /// <summary>
-        /// Since items are often more than their value, this method should
-        /// be overridden to provide the value for an item.
-        /// </summary>
+        
         /// <param name="item">
         /// The item to extract the value from.
         /// </param>
@@ -113,10 +93,7 @@ namespace Microsoft.PowerShell.Commands
             return value;
         }
 
-        /// <summary>
-        /// Determines if the item can be renamed. Derived classes that need
-        /// to perform a check should override this method.
-        /// </summary>
+        
         /// <param name="item">
         /// The item to verify if it can be renamed.
         /// </param>
@@ -132,9 +109,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region ItemCmdletProvider overrides
 
-        /// <summary>
-        /// Gets an item from session state.
-        /// </summary>
+        
         /// <param name="name">
         /// Name of the item to get.
         /// </param>
@@ -170,9 +145,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Sets a session state item to a given value.
-        /// </summary>
+        
         /// <param name="name">
         /// Name of the item to set
         /// </param>
@@ -233,8 +206,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="path"></param>
         protected override void ClearItem(string path)
         {
@@ -287,9 +259,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region ContainerCmdletProvider overrides
 
-        /// <summary>
-        /// Gets the item(s) at the given path.
-        /// </summary>
+        
         /// <param name="path">
         /// The name of the item to retrieve, or all if empty or null.
         /// </param>
@@ -403,9 +373,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets the name(s) of the item(s) at the given path.
-        /// </summary>
+        
         /// <param name="path">
         /// The name of the item to retrieve, or all if empty or null.
         /// </param>
@@ -495,9 +463,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Determines if there are any items.
-        /// </summary>
+        
         /// <param name="path">
         /// The container to check to see if there are any children.
         /// </param>
@@ -531,9 +497,7 @@ namespace Microsoft.PowerShell.Commands
             return result;
         }
 
-        /// <summary>
-        /// Determines if the specified item exists.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to check. If this is null or empty, the item
         /// container is used (and always exists).
@@ -576,9 +540,7 @@ namespace Microsoft.PowerShell.Commands
             return result;
         }
 
-        /// <summary>
-        /// Determines if the specified path is syntactically and semantically valid.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to validate.
         /// </param>
@@ -594,9 +556,7 @@ namespace Microsoft.PowerShell.Commands
             return !string.IsNullOrEmpty(path);
         }
 
-        /// <summary>
-        /// Removes the item at the specified path.
-        /// </summary>
+        
         /// <param name="path">
         /// The name of the item to be removed.
         /// </param>
@@ -665,9 +625,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Creates a new item if one of the same name doesn't already exist.
-        /// </summary>
+        
         /// <param name="path">
         /// The name of the item to create.
         /// </param>
@@ -742,9 +700,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Copies the specified item.
-        /// </summary>
+        
         /// <param name="path">
         /// The name of the item to copy.
         /// </param>
@@ -850,9 +806,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Copies the specified item.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the item to copy.
         /// </param>
@@ -998,10 +952,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region IContentCmdletProvider methods
 
-        /// <summary>
-        /// Gets an instance of the content reader for this provider for the
-        /// specified path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to get the content reader for.
         /// </param>
@@ -1013,10 +964,7 @@ namespace Microsoft.PowerShell.Commands
             return new SessionStateProviderBaseContentReaderWriter(path, this);
         }
 
-        /// <summary>
-        /// Gets an instance of the content writer for this provider for the
-        /// specified path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to get the content writer for.
         /// </param>
@@ -1028,9 +976,7 @@ namespace Microsoft.PowerShell.Commands
             return new SessionStateProviderBaseContentReaderWriter(path, this);
         }
 
-        /// <summary>
-        /// Always throws a NotSupportedException.
-        /// </summary>
+        
         /// <param name="path">
         /// ignored.
         /// </param>
@@ -1049,23 +995,17 @@ namespace Microsoft.PowerShell.Commands
         // For now, none of the derived providers need dynamic parameters
         // so these methods just return null
 
-        /// <summary>
-        /// Always returns null.
-        /// </summary>
+        
         /// <param name="path"></param>
         /// <returns>Null.</returns>
         public object GetContentReaderDynamicParameters(string path) { return null; }
 
-        /// <summary>
-        /// Always returns null.
-        /// </summary>
+        
         /// <param name="path"></param>
         /// <returns>Null.</returns>
         public object GetContentWriterDynamicParameters(string path) { return null; }
 
-        /// <summary>
-        /// Always returns null.
-        /// </summary>
+        
         /// <param name="path"></param>
         /// <returns>Null.</returns>
         public object ClearContentDynamicParameters(string path) { return null; }
@@ -1074,15 +1014,10 @@ namespace Microsoft.PowerShell.Commands
         #endregion
     }
 
-    /// <summary>
-    /// The content reader/writer for all providers deriving from SessionStateProviderBase.
-    /// </summary>
+    
     public class SessionStateProviderBaseContentReaderWriter : IContentReader, IContentWriter
     {
-        /// <summary>
-        /// Constructs a content reader/writer for the specified provider using the specified
-        /// path to read or write the content.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the session state item which the content will be read or written.
         /// </param>
@@ -1115,9 +1050,7 @@ namespace Microsoft.PowerShell.Commands
         private readonly string _path;
         private readonly SessionStateProviderBase _provider;
 
-        /// <summary>
-        /// Reads the content from the item.
-        /// </summary>
+        
         /// <param name="readCount">
         /// The number of "blocks" of data to be read from the item.
         /// </param>
@@ -1154,9 +1087,7 @@ namespace Microsoft.PowerShell.Commands
 
         private bool _contentRead;
 
-        /// <summary>
-        /// Writes content to the item.
-        /// </summary>
+        
         /// <param name="content">
         /// An array of content "blocks" to be written to the item.
         /// </param>
@@ -1186,10 +1117,7 @@ namespace Microsoft.PowerShell.Commands
             return content;
         }
 
-        /// <summary>
-        /// None of the derived providers supports seeking for V1 so this
-        /// always throws a NotSupportedException.
-        /// </summary>
+        
         /// <param name="offset">
         /// ignored
         /// </param>
@@ -1206,16 +1134,10 @@ namespace Microsoft.PowerShell.Commands
                     SessionStateStrings.IContent_Seek_NotSupported);
         }
 
-        /// <summary>
-        /// Closes the reader. None of the derived providers need to
-        /// close their reader so do nothing.
-        /// </summary>
+        
         public void Close() { }
 
-        /// <summary>
-        /// Closes the reader. None of the derived providers need to
-        /// close their reader so do nothing.
-        /// </summary>
+        
         public void Dispose() { Close(); GC.SuppressFinalize(this); }
     }
 }

@@ -203,10 +203,7 @@ namespace System.Management.Automation
         }
     }
 
-    /// <summary>
-    /// Converts a ScriptBlock to a PowerShell object by traversing the
-    /// given Ast.
-    /// </summary>
+    
     internal sealed class ScriptBlockToPowerShellConverter
     {
         private readonly PowerShell _powershell;
@@ -313,11 +310,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Get using values as dictionary for the Foreach-Object parallel cmdlet.
-        /// Ignore any using expressions that are associated with inner nested Foreach-Object parallel calls,
-        /// since they are only effective in the nested call scope and not the current outer scope.
-        /// </summary>
+        
         /// <param name = "scriptBlock">Scriptblock to search.</param>
         /// <param name = "isTrustedInput">True when input is trusted.</param>
         /// <param name = "context">Execution context.</param>
@@ -419,10 +412,7 @@ namespace System.Management.Automation
             return false;
         }
 
-        /// <summary>
-        /// Walks the using Ast to verify it is used within a foreach-object -parallel command
-        /// and parameter set scope, and not from within a nested foreach-object -parallel call.
-        /// </summary>
+        
         /// <param name="scriptblockAst">Scriptblock Ast containing this using Ast</param>
         /// <param name="usingAst">Using Ast to check.</param>
         /// <returns>True if using expression is in current call scope.</returns>
@@ -452,27 +442,19 @@ namespace System.Management.Automation
             return true;
         }
 
-        /// <summary>
-        /// Get using values in the dictionary form.
-        /// </summary>
+        
         internal static Dictionary<string, object> GetUsingValuesAsDictionary(ScriptBlock scriptBlock, bool isTrustedInput, ExecutionContext context, Dictionary<string, object> variables)
         {
             return GetUsingValues(scriptBlock.Ast, isTrustedInput, context, variables, false).Item1;
         }
 
-        /// <summary>
-        /// Get using values in the array form.
-        /// </summary>
+        
         internal static object[] GetUsingValuesAsArray(ScriptBlock scriptBlock, bool isTrustedInput, ExecutionContext context, Dictionary<string, object> variables)
         {
             return GetUsingValues(scriptBlock.Ast, isTrustedInput, context, variables, false).Item2;
         }
 
-        /// <summary>
-        /// Collect values for UsingExpressions, in the form of a dictionary and an array.
-        ///  - The dictionary form is used when the remote server is PSv5 and later version for handling UsingExpression in Invoke-Command/Start-Job
-        ///  - The array form is used when the remote server is PSv3 and PSv4 for handling UsingExpression in Invoke-Command.
-        /// </summary>
+        
         /// <remarks>
         /// We still keep the array-form using values because we want to avoid any breaking changes when running Invoke-Command
         /// targeting PSv3 or PSv4 remote end -- if UsingExpressions are all in the same scope, then we still pass an array of using
@@ -596,9 +578,7 @@ namespace System.Management.Automation
             return Tuple.Create(usingValueMap, usingValueArray);
         }
 
-        /// <summary>
-        /// Check if the given UsingExpression is in a different scope from the previous UsingExpression that we analyzed.
-        /// </summary>
+        
         /// <remarks>
         /// Note that the value of <paramref name="usingExpr"/> is retrieved by calling 'UsingExpressionAstSearcher.FindAllUsingExpressions'.
         /// So <paramref name="usingExpr"/> is guaranteed not inside a workflow.

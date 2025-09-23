@@ -16,18 +16,14 @@ using Dbg = System.Management.Automation;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Holds the state of a Monad Shell session.
-    /// </summary>
+    
     internal sealed partial class SessionStateInternal
     {
         #region ContainerCmdletProvider accessors
 
         #region ItemExists
 
-        /// <summary>
-        /// Determines if the monad virtual namespace path exists.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the object to determine if it exists.
         /// </param>
@@ -74,9 +70,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Determines if the monad virtual namespace path exists.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the object to determine if it exists.
         /// </param>
@@ -142,9 +136,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Determines if the item at the specified path exists.
-        /// </summary>
+        
         /// <param name="providerInstance">
         /// The provider instance to use.
         /// </param>
@@ -215,9 +207,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the test-path cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -283,9 +273,7 @@ namespace System.Management.Automation
             return null;
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the test-path cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -363,9 +351,7 @@ namespace System.Management.Automation
 
         #region IsValidPath
 
-        /// <summary>
-        /// Determines if the MSH path is a syntactically and semantically valid path for the provider.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to validate.
         /// </param>
@@ -404,9 +390,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Determines if the MSH path is a syntactically and semantically valid path for the provider.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to validate.
         /// </param>
@@ -456,9 +440,7 @@ namespace System.Management.Automation
             return IsValidPath(providerInstance, providerPath, context);
         }
 
-        /// <summary>
-        /// Determines if the specified path is valid.
-        /// </summary>
+        
         /// <param name="providerInstance">
         /// The provider instance to use.
         /// </param>
@@ -533,9 +515,7 @@ namespace System.Management.Automation
 
         #region IsItemContainer
 
-        /// <summary>
-        /// Determines if the monad virtual namespace path is a container.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the object to determine if it is a container.
         /// </param>
@@ -574,9 +554,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Determines if the monad virtual namespace path is a container.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the object to determine if it is a container.
         /// </param>
@@ -642,9 +620,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Determines if the item at the specified path is a container.
-        /// </summary>
+        
         /// <param name="providerInstance">
         /// The provider instance to use.
         /// </param>
@@ -754,9 +730,7 @@ namespace System.Management.Automation
 
         #region RemoveItem
 
-        /// <summary>
-        /// Deletes the specified object.
-        /// </summary>
+        
         /// <param name="paths">
         /// A relative or absolute path to the object to be deleted.
         /// </param>
@@ -801,9 +775,7 @@ namespace System.Management.Automation
             context.ThrowFirstErrorOrDoNothing();
         }
 
-        /// <summary>
-        /// Deletes the specified object.
-        /// </summary>
+        
         /// <param name="paths">
         /// A relative or absolute path to the object to be deleted.
         /// </param>
@@ -868,9 +840,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Internal remove item method that just calls the provider directly without globbing.
-        /// </summary>
+        
         /// <param name="providerId">
         /// The name of the provider to use.
         /// </param>
@@ -919,9 +889,7 @@ namespace System.Management.Automation
             RemoveItem(providerInstance, path, recurse, context);
         }
 
-        /// <summary>
-        /// Internal remove item method that just calls the provider directly without globbing.
-        /// </summary>
+        
         /// <param name="providerInstance">
         /// The instance of the provider to use.
         /// </param>
@@ -1041,9 +1009,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the remove-item cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -1112,9 +1078,7 @@ namespace System.Management.Automation
             return null;
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the remove-item cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -1196,9 +1160,7 @@ namespace System.Management.Automation
 
         #region GetChildItems
 
-        /// <summary>
-        /// Gets the children of the specified item.
-        /// </summary>
+        
         /// <param name="paths">
         /// An array of relative or absolute paths to the object to get the children of.
         /// </param>
@@ -1262,9 +1224,7 @@ namespace System.Management.Automation
             return context.GetAccumulatedObjects();
         }
 
-        /// <summary>
-        /// Gets the children of the specified item.
-        /// </summary>
+        
         /// <param name="path">
         /// A relative or absolute path to the object to get the children of.
         /// </param>
@@ -1529,9 +1489,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the child items of the item at the specified path.
-        /// </summary>
+        
         /// <param name="providerInstance">
         /// The provider instance to use.
         /// </param>
@@ -1606,9 +1564,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Determines if the item at the specified path is a container.
-        /// </summary>
+        
         /// <param name="providerInstance">
         /// The provider instance to use.
         /// </param>
@@ -1649,12 +1605,7 @@ namespace System.Management.Automation
             return itemContainer;
         }
 
-        /// <summary>
-        /// Since we can't do include and exclude filtering on items we have to
-        /// do the recursion ourselves. We get each child name and see if it matches
-        /// the include and exclude filters. If the child is a container we recurse
-        /// into that container.
-        /// </summary>
+        
         /// <param name="providerInstance">
         /// The instance of the provider to use.
         /// </param>
@@ -1698,12 +1649,7 @@ namespace System.Management.Automation
             ProcessPathItems(providerInstance, path, recurse, uint.MaxValue, context, out childrenNotMatchingFilterCriteria, processMode, skipIsItemContainerCheck);
         }
 
-        /// <summary>
-        /// Since we can't do include and exclude filtering on items we have to
-        /// do the recursion ourselves. We get each child name and see if it matches
-        /// the include and exclude filters. If the child is a container we recurse
-        /// into that container.
-        /// </summary>
+        
         /// <param name="providerInstance">
         /// The instance of the provider to use.
         /// </param>
@@ -1947,9 +1893,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the get-childitem cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -2079,9 +2023,7 @@ namespace System.Management.Automation
             return (mi != null);
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the get-childitem cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -2164,9 +2106,7 @@ namespace System.Management.Automation
 
         #region GetChildNames
 
-        /// <summary>
-        /// Gets names of the children of the specified path.
-        /// </summary>
+        
         /// <param name="paths">
         /// The paths to the items from which to retrieve the child names.
         /// </param>
@@ -2256,9 +2196,7 @@ namespace System.Management.Automation
             return results;
         }
 
-        /// <summary>
-        /// Gets names of the children of the specified path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item from which to retrieve the child names.
         /// </param>
@@ -2489,11 +2427,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the child names of the item at the specified path by
-        /// manually recursing through all the containers instead of
-        /// allowing the provider to do the recursion.
-        /// </summary>
+        
         /// <param name="providerInstance">
         /// The provider instance to use.
         /// </param>
@@ -2682,9 +2616,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the names of the children of the item at the specified path.
-        /// </summary>
+        
         /// <param name="providerInstance">
         /// The provider instance to use.
         /// </param>
@@ -2756,9 +2688,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the get-childitem -name cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -2854,9 +2784,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the get-childitem -names cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -2935,9 +2863,7 @@ namespace System.Management.Automation
 
         #region RenameItem
 
-        /// <summary>
-        /// Renames the item at the specified path to the new name provided.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to rename.
         /// </param>
@@ -2986,9 +2912,7 @@ namespace System.Management.Automation
             return context.GetAccumulatedObjects();
         }
 
-        /// <summary>
-        /// Renames the item at the specified path to the new name provided.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to rename.
         /// </param>
@@ -3066,9 +2990,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Renames the item at the specified path.
-        /// </summary>
+        
         /// <param name="providerInstance">
         /// The provider instance to use.
         /// </param>
@@ -3139,9 +3061,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the rename-item cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -3211,9 +3131,7 @@ namespace System.Management.Automation
             return null;
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the rename-item cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -3296,9 +3214,7 @@ namespace System.Management.Automation
 
         #region NewItem
 
-        /// <summary>
-        /// Creates a new item at the specified path.
-        /// </summary>
+        
         /// <param name="paths">
         /// The path(s) to the container(s) to create the item in.
         /// </param>
@@ -3351,9 +3267,7 @@ namespace System.Management.Automation
             return context.GetAccumulatedObjects();
         }
 
-        /// <summary>
-        /// Creates a new item at the specified path.
-        /// </summary>
+        
         /// <param name="paths">
         /// The path(s) to the item(s) to create.
         /// </param>
@@ -3505,9 +3419,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Creates a new item at the specified path.
-        /// </summary>
+        
         /// <param name="providerInstance">
         /// The provider instance to use.
         /// </param>
@@ -3578,9 +3490,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the new-item cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -3653,9 +3563,7 @@ namespace System.Management.Automation
             return null;
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the new-item cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -3741,9 +3649,7 @@ namespace System.Management.Automation
 
         #region HasChildItems
 
-        /// <summary>
-        /// Determines if the item at the specified path has children.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to see if it has children.
         /// </param>
@@ -3790,9 +3696,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Determines if the item at the specified path has children.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to see if it has children.
         /// </param>
@@ -3855,9 +3759,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Determines if the item at the specified path has children.
-        /// </summary>
+        
         /// <param name="providerId">
         /// The provider to use.
         /// </param>
@@ -3897,9 +3799,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Determines if the item at the specified path has children.
-        /// </summary>
+        
         /// <param name="providerId">
         /// The provider to use.
         /// </param>
@@ -3928,9 +3828,7 @@ namespace System.Management.Automation
             return HasChildItems(providerInstance, path, context);
         }
 
-        /// <summary>
-        /// Determines if the item at the specified path has children.
-        /// </summary>
+        
         /// <param name="providerInstance">
         /// The provider instance to use.
         /// </param>
@@ -4005,9 +3903,7 @@ namespace System.Management.Automation
 
         #region CopyItem
 
-        /// <summary>
-        /// Copies an item at the specified path to an item at the <paramref name="copyPath"/>.
-        /// </summary>
+        
         /// <param name="paths">
         /// The path(s) of the item(s) to copy.
         /// </param>
@@ -4070,9 +3966,7 @@ namespace System.Management.Automation
             return context.GetAccumulatedObjects();
         }
 
-        /// <summary>
-        /// Copies an item at the specified path to an item at the <paramref name="copyPath"/>.
-        /// </summary>
+        
         /// <param name="paths">
         /// The path(s) of the item(s) to copy.
         /// </param>
@@ -4389,9 +4283,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Copies the specified item(s) to the specified destination.
-        /// </summary>
+        
         /// <param name="providerInstance">
         /// The provider instance to use.
         /// </param>
@@ -4466,9 +4358,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Recursively copies many items to a single container.
-        /// </summary>
+        
         /// <param name="providerInstance">
         /// The provider instance to use.
         /// </param>
@@ -4542,9 +4432,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the copy-item cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -4651,9 +4539,7 @@ namespace System.Management.Automation
             return null;
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the copy-item cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -4877,19 +4763,13 @@ namespace System.Management.Automation
         #endregion ContainerCmdletProvider accessors
     }
 
-    /// <summary>
-    /// Defines the action to be taken for Navigation cmdlets.
-    /// </summary>
+    
     internal enum ProcessMode
     {
-        /// <summary>
-        /// Write out the details.
-        /// </summary>
+        
         Enumerate = 1,
 
-        /// <summary>
-        /// Delete the item.
-        /// </summary>
+        
         Delete = 2
     }
 }

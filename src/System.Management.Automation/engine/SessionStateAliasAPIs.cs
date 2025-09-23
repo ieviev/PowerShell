@@ -8,16 +8,12 @@ using Dbg = System.Management.Automation;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Holds the state of a Monad Shell session.
-    /// </summary>
+    
     internal sealed partial class SessionStateInternal
     {
         #region aliases
 
-        /// <summary>
-        /// Add a new alias entry to this session state object...
-        /// </summary>
+        
         /// <param name="entry">The entry to add.</param>
         /// <param name="scopeID">
         /// A scope identifier that is either one of the "special" scopes like
@@ -37,9 +33,7 @@ namespace System.Management.Automation
             this.SetAliasItemAtScope(alias, scopeID, true, CommandOrigin.Internal);
         }
 
-        /// <summary>
-        /// Gets an IEnumerable for the alias table.
-        /// </summary>
+        
         internal IDictionary<string, AliasInfo> GetAliasTable()
         {
             // On 7.0 version we have 132 aliases so we set a larger number to reduce re-allocations.
@@ -71,9 +65,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Gets an IEnumerable for the alias table for a given scope.
-        /// </summary>
+        
         /// <param name="scopeID">
         /// A scope identifier that is either one of the "special" scopes like
         /// "global", "script", "local", or "private, or a numeric ID of a relative scope
@@ -109,14 +101,10 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// List of aliases to export from this session state object...
-        /// </summary>
+        
         internal List<AliasInfo> ExportedAliases { get; } = new List<AliasInfo>();
 
-        /// <summary>
-        /// Gets the value of the specified alias from the alias table.
-        /// </summary>
+        
         /// <param name="aliasName">
         /// The name of the alias value to retrieve.
         /// </param>
@@ -167,9 +155,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Gets the value of the specified alias from the alias table.
-        /// </summary>
+        
         /// <param name="aliasName">
         /// The name of the alias value to retrieve.
         /// </param>
@@ -181,9 +167,7 @@ namespace System.Management.Automation
             return GetAlias(aliasName, CommandOrigin.Internal);
         }
 
-        /// <summary>
-        /// Gets the value of the specified alias from the alias table.
-        /// </summary>
+        
         /// <param name="aliasName">
         /// The name of the alias value to retrieve.
         /// </param>
@@ -227,9 +211,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Sets the alias with specified name to the specified value in the current scope.
-        /// </summary>
+        
         /// <param name="aliasName">
         /// The name of the alias to set.
         /// </param>
@@ -268,11 +250,7 @@ namespace System.Management.Automation
             return info;
         }
 
-        /// <summary>
-        /// Sets the alias with specified name to the specified value in the current scope.
-        /// BUGBUG: this overload only exists for the test suites. They should be cleaned up
-        /// and this overload removed.
-        /// </summary>
+        
         /// <param name="aliasName">
         /// The name of the alias to set.
         /// </param>
@@ -296,9 +274,7 @@ namespace System.Management.Automation
             return SetAliasValue(aliasName, value, force, CommandOrigin.Internal);
         }
 
-        /// <summary>
-        /// Sets the alias with specified name to the specified value in the current scope.
-        /// </summary>
+        
         /// <param name="aliasName">
         /// The name of the alias to set.
         /// </param>
@@ -345,10 +321,7 @@ namespace System.Management.Automation
             return info;
         }
 
-        /// <summary>
-        /// Sets the alias with specified name to the specified value in the current scope.
-        /// BUGBUG: this api only exists for the test suites. They should be fixed and it should be removed.
-        /// </summary>
+        
         /// <param name="aliasName">
         /// The name of the alias to set.
         /// </param>
@@ -379,9 +352,7 @@ namespace System.Management.Automation
             return SetAliasValue(aliasName, value, options, force, CommandOrigin.Internal);
         }
 
-        /// <summary>
-        /// Sets the alias with specified name to the specified value in the current scope.
-        /// </summary>
+        
         /// <param name="alias">
         /// The AliasInfo representing the alias.
         /// </param>
@@ -413,9 +384,7 @@ namespace System.Management.Automation
             return info;
         }
 
-        /// <summary>
-        /// Sets the alias with specified name to the specified value in the current scope.
-        /// </summary>
+        
         /// <param name="alias">
         /// The AliasInfo representing the alias.
         /// </param>
@@ -470,9 +439,7 @@ namespace System.Management.Automation
             return info;
         }
 
-        /// <summary>
-        /// Sets the alias with specified name to the specified value in the current scope.
-        /// </summary>
+        
         /// <param name="alias">
         /// The AliasInfo representing the alias.
         /// </param>
@@ -507,9 +474,7 @@ namespace System.Management.Automation
             return SetAliasItemAtScope(alias, scopeID, force, CommandOrigin.Internal);
         }
 
-        /// <summary>
-        /// Removes the specified alias.
-        /// </summary>
+        
         /// <param name="aliasName">
         /// The name of the alias to remove.
         /// </param>
@@ -559,9 +524,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the aliases by command name (used by metadata-driven help)
-        /// </summary>
+        
         /// <param name="command"></param>
         /// <returns></returns>
         internal IEnumerable<string> GetAliasesByCommandName(string command)

@@ -14,16 +14,14 @@ using Microsoft.PowerShell.Commands.Internal.Format;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// Class comment.
-    /// </summary>
+    
     [Cmdlet(VerbsData.ConvertTo, "Html", DefaultParameterSetName = "Page",
         HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096595", RemotingCapability = RemotingCapability.None)]
     [OutputType(typeof(string))]
     public sealed
     class ConvertToHtmlCommand : PSCmdlet
     {
-        /// <summary>The incoming object</summary>
+        
         /// <value></value>
         [Parameter(ValueFromPipeline = true)]
         public PSObject InputObject
@@ -41,10 +39,7 @@ namespace Microsoft.PowerShell.Commands
 
         private PSObject _inputObject;
 
-        /// <summary>
-        /// The list of properties to display.
-        /// These take the form of a PSPropertyExpression.
-        /// </summary>
+        
         /// <value></value>
         [Parameter(Position = 0)]
         public object[] Property
@@ -62,9 +57,7 @@ namespace Microsoft.PowerShell.Commands
 
         private object[] _property;
 
-        /// <summary>
-        /// Text to go after the opening body tag and before the table.
-        /// </summary>
+        
         /// <value></value>
         [Parameter(ParameterSetName = "Page", Position = 3)]
         public string[] Body
@@ -82,9 +75,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string[] _body;
 
-        /// <summary>
-        /// Text to go into the head section of the html doc.
-        /// </summary>
+        
         /// <value></value>
         [Parameter(ParameterSetName = "Page", Position = 1)]
         public string[] Head
@@ -102,13 +93,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string[] _head;
 
-        /// <summary>
-        /// The string for the title tag
-        /// The title is also placed in the body of the document
-        /// before the table between h3 tags
-        /// If the -Head parameter is used, this parameter has no
-        /// effect.
-        /// </summary>
+        
         /// <value></value>
         [Parameter(ParameterSetName = "Page", Position = 2)]
         [ValidateNotNullOrEmpty]
@@ -127,11 +112,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string _title = "HTML TABLE";
 
-        /// <summary>
-        /// This specifies whether the objects should
-        /// be rendered as an HTML TABLE or
-        /// HTML LIST.
-        /// </summary>
+        
         /// <value></value>
         [Parameter]
         [ValidateNotNullOrEmpty]
@@ -151,11 +132,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string _as = "Table";
 
-        /// <summary>
-        /// This specifies a full or partial URI
-        /// for the CSS information.
-        /// The HTML should reference the CSS file specified.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "Page")]
         [Alias("cu", "uri")]
         [ValidateNotNullOrEmpty]
@@ -176,11 +153,7 @@ namespace Microsoft.PowerShell.Commands
         private Uri _cssuri;
         private bool _cssuriSpecified;
 
-        /// <summary>
-        /// When this switch is specified generate only the
-        /// HTML representation of the incoming object
-        /// without the HTML,HEAD,TITLE,BODY,etc tags.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "Fragment")]
         [ValidateNotNullOrEmpty]
         public SwitchParameter Fragment
@@ -198,9 +171,7 @@ namespace Microsoft.PowerShell.Commands
 
         private SwitchParameter _fragment;
 
-        /// <summary>
-        /// Specifies the text to include prior the closing body tag of the HTML output.
-        /// </summary>
+        
         [Parameter]
         [ValidateNotNullOrEmpty]
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
@@ -219,9 +190,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string[] _postContent;
 
-        /// <summary>
-        /// Specifies the text to include after the body tag of the HTML output.
-        /// </summary>
+        
         [Parameter]
         [ValidateNotNullOrEmpty]
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
@@ -240,9 +209,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string[] _preContent;
 
-        /// <summary>
-        /// Sets and Gets the meta property of the HTML head.
-        /// </summary>
+        
         /// <returns></returns>
         [Parameter(ParameterSetName = "Page")]
         [ValidateNotNullOrEmpty]
@@ -263,9 +230,7 @@ namespace Microsoft.PowerShell.Commands
         private Hashtable _meta;
         private bool _metaSpecified = false;
 
-        /// <summary>
-        /// Specifies the charset encoding for the HTML document.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "Page")]
         [ValidateNotNullOrEmpty]
         [ValidatePattern("^[A-Za-z0-9]\\w+\\S+[A-Za-z0-9]$")]
@@ -286,10 +251,7 @@ namespace Microsoft.PowerShell.Commands
         private string _charset;
         private bool _charsetSpecified = false;
 
-        /// <summary>
-        /// When this switch statement is specified,
-        /// it will change the DOCTYPE to XHTML Transitional DTD.
-        /// </summary>
+        
         /// <returns></returns>
         [Parameter(ParameterSetName = "Page")]
         [ValidateNotNullOrEmpty]
@@ -308,9 +270,7 @@ namespace Microsoft.PowerShell.Commands
 
         private bool _transitional = false;
 
-        /// <summary>
-        /// Definitions for hash table keys.
-        /// </summary>
+        
         internal static class ConvertHTMLParameterDefinitionKeys
         {
             internal const string LabelEntryKey = "label";
@@ -318,9 +278,7 @@ namespace Microsoft.PowerShell.Commands
             internal const string WidthEntryKey = "width";
         }
 
-        /// <summary>
-        /// This allows for @{e='foo';label='bar';alignment='center';width='20'}.
-        /// </summary>
+        
         internal sealed class ConvertHTMLExpressionParameterDefinition : CommandParameterDefinition
         {
             protected override void SetEntries()
@@ -334,9 +292,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Create a list of MshParameter from properties.
-        /// </summary>
+        
         /// <param name="properties">Can be a string, ScriptBlock, or Hashtable.</param>
         /// <returns></returns>
         private List<MshParameter> ProcessParameter(object[] properties)
@@ -349,9 +305,7 @@ namespace Microsoft.PowerShell.Commands
             return processor.ProcessParameters(properties, invocationContext);
         }
 
-        /// <summary>
-        /// Resolve all wildcards in user input Property into resolvedNameMshParameters.
-        /// </summary>
+        
         private void InitializeResolvedNameMshParameters()
         {
             // temp list of properties with wildcards resolved
@@ -411,9 +365,7 @@ namespace Microsoft.PowerShell.Commands
             return ht;
         }
 
-        /// <summary>
-        /// Calls ToString. If an exception occurs, eats it and return string.Empty.
-        /// </summary>
+        
         /// <param name="obj"></param>
         /// <returns></returns>
         private static string SafeToString(object obj)
@@ -435,8 +387,7 @@ namespace Microsoft.PowerShell.Commands
             return string.Empty;
         }
 
-        /// <summary>
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             // ValidateNotNullOrEmpty attribute is not working for System.Uri datatype, so handling it here
@@ -540,9 +491,7 @@ namespace Microsoft.PowerShell.Commands
             _isTHWritten = false;
         }
 
-        /// <summary>
-        /// Reads Width and Alignment from Property and write Col tags.
-        /// </summary>
+        
         /// <param name="mshParams"></param>
         private void WriteColumns(List<MshParameter> mshParams)
         {
@@ -575,9 +524,7 @@ namespace Microsoft.PowerShell.Commands
             WriteObject(COLTag.ToString());
         }
 
-        /// <summary>
-        /// Writes the list entries when the As parameter has value List.
-        /// </summary>
+        
         private void WriteListEntry()
         {
             foreach (MshParameter p in _resolvedNameMshParameters)
@@ -599,9 +546,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// To write the Property name.
-        /// </summary>
+        
         private static void WritePropertyName(StringBuilder Listtag, MshParameter p)
         {
             // for writing the property name
@@ -616,9 +561,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// To write the Property value.
-        /// </summary>
+        
         private void WritePropertyValue(StringBuilder Listtag, MshParameter p)
         {
             PSPropertyExpression exValue = p.GetEntry(FormatParameterDefinitionKeys.ExpressionEntryKey) as PSPropertyExpression;
@@ -643,9 +586,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// To write the Table header for the object property names.
-        /// </summary>
+        
         private static void WriteTableHeader(StringBuilder THtag, List<MshParameter> resolvedNameMshParameters)
         {
             // write the property names
@@ -657,9 +598,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// To write the Table row for the object property values.
-        /// </summary>
+        
         private void WriteTableRow(StringBuilder TRtag, List<MshParameter> resolvedNameMshParameters)
         {
             // write the property values
@@ -674,8 +613,7 @@ namespace Microsoft.PowerShell.Commands
         // count of the objects
         private int _numberObjects = 0;
 
-        /// <summary>
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             // writes the table headers
@@ -730,8 +668,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             // if fragment,end with table
@@ -748,9 +685,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region private
 
-        /// <summary>
-        /// List of incoming objects to compare.
-        /// </summary>
+        
         private bool _isTHWritten;
         private List<MshParameter> _propertyMshParameterList;
         private List<MshParameter> _resolvedNameMshParameters;

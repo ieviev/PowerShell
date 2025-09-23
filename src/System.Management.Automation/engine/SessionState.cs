@@ -15,18 +15,13 @@ using Dbg = System.Management.Automation;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Holds the state of a Monad Shell session.
-    /// </summary>
+    
     [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "This is a bridge class between internal classes and a public interface. It requires this much coupling.")]
     internal sealed partial class SessionStateInternal
     {
         #region tracer
 
-        /// <summary>
-        /// An instance of the PSTraceSource class used for trace output
-        /// using "SessionState" as the category.
-        /// </summary>
+        
         [Dbg.TraceSource(
              "SessionState",
              "SessionState Class")]
@@ -38,9 +33,7 @@ namespace System.Management.Automation
 
         #region Constructor
 
-        /// <summary>
-        /// Constructor for session state object.
-        /// </summary>
+        
         /// <param name="context">
         /// The context for the runspace to which this session state object belongs.
         /// </param>
@@ -105,10 +98,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Add any special variables to the session state variable table. This routine
-        /// must be called at construction time or if the variable table is reset.
-        /// </summary>
+        
         internal void InitializeSessionStateInternalSpecialVariables(bool clearVariablesTable)
         {
             if (clearVariablesTable)
@@ -138,9 +128,7 @@ namespace System.Management.Automation
 
         #region Private data
 
-        /// <summary>
-        /// Provides all the path manipulation and globbing for Monad paths.
-        /// </summary>
+        
         internal LocationGlobber Globber
         {
             get { return _globberPrivate ??= ExecutionContext.LocationGlobber; }
@@ -148,14 +136,10 @@ namespace System.Management.Automation
 
         private LocationGlobber _globberPrivate;
 
-        /// <summary>
-        /// The context of the runspace to which this session state object belongs.
-        /// </summary>
+        
         internal ExecutionContext ExecutionContext { get; }
 
-        /// <summary>
-        /// Returns the public session state facade object for this session state instance.
-        /// </summary>
+        
         internal SessionState PublicSessionState
         {
             get { return _publicSessionState ??= new SessionState(this); }
@@ -165,9 +149,7 @@ namespace System.Management.Automation
 
         private SessionState _publicSessionState;
 
-        /// <summary>
-        /// Gets the engine APIs to access providers.
-        /// </summary>
+        
         internal ProviderIntrinsics InvokeProvider
         {
             get { return _invokeProvider ??= new ProviderIntrinsics(this); }
@@ -175,23 +157,17 @@ namespace System.Management.Automation
 
         private ProviderIntrinsics _invokeProvider;
 
-        /// <summary>
-        /// The module info object associated with this session state.
-        /// </summary>
+        
         internal PSModuleInfo Module { get; set; } = null;
 
         // This is used to maintain the order in which modules were imported.
         // This is used by Get-Command -All to order by last imported
         internal List<string> ModuleTableKeys = new List<string>();
 
-        /// <summary>
-        /// The private module table for this session state object...
-        /// </summary>
+        
         internal Dictionary<string, PSModuleInfo> ModuleTable { get; } = new Dictionary<string, PSModuleInfo>(StringComparer.OrdinalIgnoreCase);
 
-        /// <summary>
-        /// Get/set constraints for this execution environment.
-        /// </summary>
+        
         internal PSLanguageMode LanguageMode
         {
             get
@@ -205,9 +181,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// If true the PowerShell debugger will use FullLanguage mode, otherwise it will use the current language mode.
-        /// </summary>
+        
         internal bool UseFullLanguageModeInDebugger
         {
             get
@@ -216,15 +190,10 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// The list of scripts that are allowed to be run. If the name "*"
-        /// is in the list, then all scripts can be run. (This is the default.)
-        /// </summary>
+        
         public List<string> Scripts { get; } = new List<string>(new string[] { "*" });
 
-        /// <summary>
-        /// See if a script is allowed to be run.
-        /// </summary>
+        
         /// <param name="scriptPath">Path to check.</param>
         /// <returns>True if script is allowed.</returns>
         internal SessionStateEntryVisibility CheckScriptVisibility(string scriptPath)
@@ -232,35 +201,23 @@ namespace System.Management.Automation
             return checkPathVisibility(Scripts, scriptPath);
         }
 
-        /// <summary>
-        /// The list of applications that are allowed to be run. If the name "*"
-        /// is in the list, then all applications can be run. (This is the default.)
-        /// </summary>
+        
         public List<string> Applications { get; } = new List<string>(new string[] { "*" });
 
-        /// <summary>
-        /// List of functions/filters to export from this session state object...
-        /// </summary>
+        
         internal List<CmdletInfo> ExportedCmdlets { get; } = new List<CmdletInfo>();
 
-        /// <summary>
-        /// Defines the default command visibility for this session state. Binding an InitialSessionState instance
-        /// with private members will set this to Private.
-        /// </summary>
+        
         internal SessionStateEntryVisibility DefaultCommandVisibility = SessionStateEntryVisibility.Public;
 
-        /// <summary>
-        /// Add an new SessionState cmdlet entry to this session state object...
-        /// </summary>
+        
         /// <param name="entry">The entry to add.</param>
         internal void AddSessionStateEntry(SessionStateCmdletEntry entry)
         {
             AddSessionStateEntry(entry, false);
         }
 
-        /// <summary>
-        /// Add an new SessionState cmdlet entry to this session state object...
-        /// </summary>
+        
         /// <param name="entry">The entry to add.</param>
         /// <param name="local">If local, add cmdlet to current scope. Else, add to module scope.</param>
         internal void AddSessionStateEntry(SessionStateCmdletEntry entry, bool local)
@@ -268,27 +225,21 @@ namespace System.Management.Automation
             ExecutionContext.CommandDiscovery.AddSessionStateCmdletEntryToCache(entry, local);
         }
 
-        /// <summary>
-        /// Add an new SessionState cmdlet entry to this session state object...
-        /// </summary>
+        
         /// <param name="entry">The entry to add.</param>
         internal void AddSessionStateEntry(SessionStateApplicationEntry entry)
         {
             this.Applications.Add(entry.Path);
         }
 
-        /// <summary>
-        /// Add an new SessionState cmdlet entry to this session state object...
-        /// </summary>
+        
         /// <param name="entry">The entry to add.</param>
         internal void AddSessionStateEntry(SessionStateScriptEntry entry)
         {
             this.Scripts.Add(entry.Path);
         }
 
-        /// <summary>
-        /// Add the variables that must always be present in a SessionState instance...
-        /// </summary>
+        
         internal void InitializeFixedVariables()
         {
             //
@@ -378,9 +329,7 @@ namespace System.Management.Automation
             this.GlobalScope.SetVariable(v.Name, v, asValue: false, force: true, this, CommandOrigin.Internal, fastPath: true);
         }
 
-        /// <summary>
-        /// Check to see if an application is allowed to be run.
-        /// </summary>
+        
         /// <param name="applicationPath">The path to the application to check.</param>
         /// <returns>True if application is permitted.</returns>
         internal SessionStateEntryVisibility CheckApplicationVisibility(string applicationPath)
@@ -427,10 +376,7 @@ namespace System.Management.Automation
 
         #endregion Private data
 
-        /// <summary>
-        /// Notification for SessionState to do cleanup
-        /// before runspace is closed.
-        /// </summary>
+        
         internal void RunspaceClosingNotification()
         {
             if (this != ExecutionContext.TopLevelSessionState && Providers.Count > 0)
@@ -450,10 +396,7 @@ namespace System.Management.Automation
 
         #region Errors
 
-        /// <summary>
-        /// Constructs a new instance of a ProviderInvocationException
-        /// using the specified data.
-        /// </summary>
+        
         /// <param name="resourceId">
         /// The resource ID to use as the format message for the error.
         /// </param>
@@ -488,10 +431,7 @@ namespace System.Management.Automation
             return NewProviderInvocationException(resourceId, resourceStr, provider, path, e, true);
         }
 
-        /// <summary>
-        /// Constructs a new instance of a ProviderInvocationException
-        /// using the specified data.
-        /// </summary>
+        
         /// <param name="resourceId">
         /// The resource ID to use as the format message for the error.
         /// </param>

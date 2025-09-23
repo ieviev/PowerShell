@@ -8,17 +8,12 @@ using Dbg = System.Management.Automation;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Exposes the Content nouns to the Cmdlet Providers to the Cmdlet base class. The methods of this class
-    /// use the providers to perform operations.
-    /// </summary>
+    
     public sealed class ContentCmdletProviderIntrinsics
     {
         #region Constructors
 
-        /// <summary>
-        /// Hide the default constructor since we always require an instance of SessionState.
-        /// </summary>
+        
         private ContentCmdletProviderIntrinsics()
         {
             Dbg.Diagnostics.Assert(
@@ -26,9 +21,7 @@ namespace System.Management.Automation
                 "This constructor should never be called. Only the constructor that takes an instance of SessionState should be called.");
         }
 
-        /// <summary>
-        /// Constructs a facade over the "real" session state API.
-        /// </summary>
+        
         /// <param name="cmdlet">
         /// An instance of the cmdlet.
         /// </param>
@@ -46,9 +39,7 @@ namespace System.Management.Automation
             _sessionState = cmdlet.Context.EngineSessionState;
         }
 
-        /// <summary>
-        /// Constructs a facade over the "real" session state API.
-        /// </summary>
+        
         /// <param name="sessionState">
         /// An instance of the sessionState.
         /// </param>
@@ -71,9 +62,7 @@ namespace System.Management.Automation
 
         #region GetContentReader
 
-        /// <summary>
-        /// Gets the content reader for the item at the specified path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to get the content reader for.
         /// </param>
@@ -111,9 +100,7 @@ namespace System.Management.Automation
             return _sessionState.GetContentReader(new string[] { path }, false, false);
         }
 
-        /// <summary>
-        /// Gets the content reader for the item at the specified path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path(s) to the item(s) to get the content reader for.
         /// </param>
@@ -157,8 +144,7 @@ namespace System.Management.Automation
             return _sessionState.GetContentReader(path, force, literalPath);
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="path">
         /// </param>
         /// <param name="context">
@@ -198,9 +184,7 @@ namespace System.Management.Automation
             return _sessionState.GetContentReader(new string[] { path }, context);
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the get-content cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -245,9 +229,7 @@ namespace System.Management.Automation
 
         #region GetContentWriter
 
-        /// <summary>
-        /// Gets the content writer for the item(s) at the specified path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item(s) to get the content writer for.
         /// </param>
@@ -285,9 +267,7 @@ namespace System.Management.Automation
             return _sessionState.GetContentWriter(new string[] { path }, false, false);
         }
 
-        /// <summary>
-        /// Gets the content writer for the item(s) at the specified path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path(s) to the item(s) to get the content writer for.
         /// </param>
@@ -331,8 +311,7 @@ namespace System.Management.Automation
             return _sessionState.GetContentWriter(path, force, literalPath);
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="path">
         /// </param>
         /// <param name="context">
@@ -372,9 +351,7 @@ namespace System.Management.Automation
             return _sessionState.GetContentWriter(new string[] { path }, context);
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the set-content and add-content cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>
@@ -419,9 +396,7 @@ namespace System.Management.Automation
 
         #region ClearContent
 
-        /// <summary>
-        /// Clears the content from the item(s) specified by the path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item(s) to clear the content from.
         /// </param>
@@ -456,9 +431,7 @@ namespace System.Management.Automation
             _sessionState.ClearContent(new string[] { path }, false, false);
         }
 
-        /// <summary>
-        /// Clears the content from the item(s) specified by the path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path(s) to the item(s) to clear the content from.
         /// </param>
@@ -499,9 +472,7 @@ namespace System.Management.Automation
             _sessionState.ClearContent(path, force, literalPath);
         }
 
-        /// <summary>
-        /// Clears the content from the specified item(s)
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item(s) to clear the content from.
         /// </param>
@@ -539,9 +510,7 @@ namespace System.Management.Automation
             _sessionState.ClearContent(new string[] { path }, context);
         }
 
-        /// <summary>
-        /// Gets the dynamic parameters for the clear-content cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item if it was specified on the command line.
         /// </param>

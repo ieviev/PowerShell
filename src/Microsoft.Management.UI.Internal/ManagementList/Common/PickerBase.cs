@@ -15,16 +15,11 @@ using System.Windows.Threading;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <summary>
-    /// Implements a re-usable base component useful for showing
-    /// Picker-like controls.
-    /// </summary>
+    
     [SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public partial class PickerBase : HeaderedContentControl
     {
-        /// <summary>
-        /// Creates a new instance of the PickerBase class.
-        /// </summary>
+        
         public PickerBase()
         {
             // empty

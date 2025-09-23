@@ -8,9 +8,7 @@ using BenchmarkDotNet.Validators;
 
 namespace BenchmarkDotNet.Extensions
 {
-    /// <summary>
-    /// we need to tell our users that having more than 16 test cases per benchmark is a VERY BAD idea
-    /// </summary>
+    
     public class TooManyTestCasesValidator : IValidator
     {
         private const int Limit = 16;

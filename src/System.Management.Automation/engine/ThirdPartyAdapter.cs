@@ -7,9 +7,7 @@ using System.Reflection;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Internal wrapper for third-party adapters (PSPropertyAdapter)
-    /// </summary>
+    
     internal class ThirdPartyAdapter : PropertyOnlyAdapter
     {
         internal ThirdPartyAdapter(Type adaptedType, PSPropertyAdapter externalAdapter)
@@ -18,14 +16,10 @@ namespace System.Management.Automation
             _externalAdapter = externalAdapter;
         }
 
-        /// <summary>
-        /// The type this instance is adapting.
-        /// </summary>
+        
         internal Type AdaptedType { get; }
 
-        /// <summary>
-        /// The type of the external adapter.
-        /// </summary>
+        
         internal Type ExternalAdapterType
         {
             get
@@ -34,9 +28,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Returns the TypeNameHierarchy out of an object.
-        /// </summary>
+        
         protected override IEnumerable<string> GetTypeNameHierarchy(object obj)
         {
             Collection<string> typeNameHierarchy = null;
@@ -64,9 +56,7 @@ namespace System.Management.Automation
             return typeNameHierarchy;
         }
 
-        /// <summary>
-        /// Retrieves all the properties available in the object.
-        /// </summary>
+        
         protected override void DoAddAllProperties<T>(object obj, PSMemberInfoInternalCollection<T> members)
         {
             Collection<PSAdaptedProperty> properties = null;
@@ -99,11 +89,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Returns null if propertyName is not a property in the adapter or
-        /// the corresponding PSProperty with its adapterData set to information
-        /// to be used when retrieving the property.
-        /// </summary>
+        
         protected override PSProperty DoGetProperty(object obj, string propertyName)
         {
             PSAdaptedProperty property = null;
@@ -152,9 +138,7 @@ namespace System.Management.Automation
             return property;
         }
 
-        /// <summary>
-        /// Ensures that the adapter and base object are set in the given PSAdaptedProperty.
-        /// </summary>
+        
         private void InitializeProperty(PSAdaptedProperty property, object baseObject)
         {
             if (property.adapter == null)
@@ -164,9 +148,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Returns true if the property is settable.
-        /// </summary>
+        
         protected override bool PropertyIsSettable(PSProperty property)
         {
             PSAdaptedProperty adaptedProperty = property as PSAdaptedProperty;
@@ -186,9 +168,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Returns true if the property is gettable.
-        /// </summary>
+        
         protected override bool PropertyIsGettable(PSProperty property)
         {
             PSAdaptedProperty adaptedProperty = property as PSAdaptedProperty;
@@ -208,9 +188,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Returns the value from a property coming from a previous call to DoGetProperty.
-        /// </summary>
+        
         protected override object PropertyGet(PSProperty property)
         {
             PSAdaptedProperty adaptedProperty = property as PSAdaptedProperty;
@@ -230,9 +208,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Sets the value of a property coming from a previous call to DoGetProperty.
-        /// </summary>
+        
         protected override void PropertySet(PSProperty property, object setValue, bool convertIfPossible)
         {
             PSAdaptedProperty adaptedProperty = property as PSAdaptedProperty;
@@ -253,9 +229,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Returns the name of the type corresponding to the property.
-        /// </summary>
+        
         protected override string PropertyType(PSProperty property, bool forDisplay)
         {
             PSAdaptedProperty adaptedProperty = property as PSAdaptedProperty;
@@ -282,17 +256,13 @@ namespace System.Management.Automation
         private readonly PSPropertyAdapter _externalAdapter;
     }
 
-    /// <summary>
-    /// User-defined property adapter.
-    /// </summary>
+    
     /// <remarks>
     /// This class is used to expose a simplified version of the type adapter API
     /// </remarks>
     public abstract class PSPropertyAdapter
     {
-        /// <summary>
-        /// Returns the type hierarchy for the given object.
-        /// </summary>
+        
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", MessageId = "object")]
         public virtual Collection<string> GetTypeNameHierarchy(object baseObject)
         {
@@ -308,46 +278,30 @@ namespace System.Management.Automation
             return types;
         }
 
-        /// <summary>
-        /// Returns a list of the adapted properties.
-        /// </summary>
+        
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", MessageId = "object")]
         public abstract Collection<PSAdaptedProperty> GetProperties(object baseObject);
 
-        /// <summary>
-        /// Returns a specific property, or null if the base object does not contain the given property.
-        /// </summary>
+        
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", MessageId = "object")]
         public abstract PSAdaptedProperty GetProperty(object baseObject, string propertyName);
 
-        /// <summary>
-        /// Returns true if the given property is settable.
-        /// </summary>
+        
         public abstract bool IsSettable(PSAdaptedProperty adaptedProperty);
 
-        /// <summary>
-        /// Returns true if the given property is gettable.
-        /// </summary>
+        
         public abstract bool IsGettable(PSAdaptedProperty adaptedProperty);
 
-        /// <summary>
-        /// Returns the value of a given property.
-        /// </summary>
+        
         public abstract object GetPropertyValue(PSAdaptedProperty adaptedProperty);
 
-        /// <summary>
-        /// Sets the value of a given property.
-        /// </summary>
+        
         public abstract void SetPropertyValue(PSAdaptedProperty adaptedProperty, object value);
 
-        /// <summary>
-        /// Returns the type for a given property.
-        /// </summary>
+        
         public abstract string GetPropertyTypeName(PSAdaptedProperty adaptedProperty);
 
-        /// <summary>
-        /// Returns a property if it's name matches the specified <see cref="MemberNamePredicate"/>, otherwise null.
-        /// </summary>
+        
         /// <returns>An adapted property if the predicate matches, or <see langword="null"/>.</returns>
         public virtual PSAdaptedProperty GetFirstPropertyOrDefault(object baseObject, MemberNamePredicate predicate)
         {

@@ -21,22 +21,13 @@ using Dbg = System.Management.Automation;
 namespace Microsoft.WSMan.Management
 {
     #region Get-WSManInstance
-    /// <summary>
-    /// Executes action on a target object specified by RESOURCE_URI, where
-    /// parameters are specified by key value pairs.
-    /// eg., Call StartService method on the spooler service
-    /// Invoke-WSManAction -Action StartService -ResourceURI wmicimv2/Win32_Service
-    /// -SelectorSet {Name=Spooler}
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Get, "WSManInstance", DefaultParameterSetName = "GetInstance", HelpUri = "https://go.microsoft.com/fwlink/?LinkId=2096627")]
     [OutputType(typeof(XmlElement))]
     public class GetWSManInstanceCommand : AuthenticatingWSManCommand, IDisposable
     {
         #region parameter
-        /// <summary>
-        /// The following is the definition of the input parameter "ApplicationName".
-        /// ApplicationName identifies the remote endpoint.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "GetInstance")]
         [Parameter(ParameterSetName = "Enumerate")]
         public string ApplicationName
@@ -54,12 +45,7 @@ namespace Microsoft.WSMan.Management
 
         private string applicationname = null;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "BasePropertiesOnly".
-        /// Enumerate only those properties that are part of the base class
-        /// specification in the Resource URI. When
-        /// Shallow is specified then this flag has no effect.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "Enumerate")]
         [Alias("UBPO", "Base")]
         public SwitchParameter BasePropertiesOnly
@@ -77,12 +63,7 @@ namespace Microsoft.WSMan.Management
 
         private SwitchParameter basepropertiesonly;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "ComputerName".
-        /// Executes the management operation on the specified computer(s). The default
-        /// is the local computer. Type the fully qualified domain name, NETBIOS name or
-        /// IP address to indicate the remote host(s)
-        /// </summary>
+        
         [Parameter(ParameterSetName = "GetInstance")]
         [Parameter(ParameterSetName = "Enumerate")]
         [Alias("CN")]
@@ -105,12 +86,7 @@ namespace Microsoft.WSMan.Management
 
         private string computername = null;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "ConnectionURI".
-        /// Specifies the transport, server, port, and Prefix, needed to connect to the
-        /// remote machine. The format of this string is:
-        /// transport://server:port/Prefix.
-        /// </summary>
+        
         [Parameter(
                   ParameterSetName = "GetInstance")]
         [Parameter(
@@ -132,10 +108,7 @@ namespace Microsoft.WSMan.Management
 
         private Uri connectionuri;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "Dialect".
-        /// Defines the dialect for the filter predicate.
-        /// </summary>
+        
         [Parameter]
         public Uri Dialect
         {
@@ -152,11 +125,7 @@ namespace Microsoft.WSMan.Management
 
         private Uri dialect;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "Enumerate".
-        /// Switch indicates list all instances of a management resource. Equivalent to
-        /// WSManagement Enumerate.
-        /// </summary>
+        
         [Parameter(Mandatory = true,
                   ParameterSetName = "Enumerate")]
         public SwitchParameter Enumerate
@@ -174,10 +143,7 @@ namespace Microsoft.WSMan.Management
 
         private SwitchParameter enumerate;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "Filter".
-        /// Indicates the filter expression for the enumeration.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "Enumerate")]
         [ValidateNotNullOrEmpty]
         public string Filter
@@ -195,11 +161,7 @@ namespace Microsoft.WSMan.Management
 
         private string filter;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "Fragment".
-        /// Specifies a section inside the instance that is to be updated or retrieved
-        /// for the given operation.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "GetInstance")]
         [ValidateNotNullOrEmpty]
         public string Fragment
@@ -217,11 +179,7 @@ namespace Microsoft.WSMan.Management
 
         private string fragment;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "OptionSet".
-        /// OptionSet is a hashtable and is used to pass a set of switches to the
-        /// service to modify or refine the nature of the request.
-        /// </summary>
+        
         [Parameter(ValueFromPipeline = true,
                    ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
@@ -242,10 +200,7 @@ namespace Microsoft.WSMan.Management
 
         private Hashtable optionset;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "Port".
-        /// Specifies the port to be used when connecting to the ws management service.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "Enumerate")]
         [Parameter(ParameterSetName = "GetInstance")]
         public int Port
@@ -263,12 +218,7 @@ namespace Microsoft.WSMan.Management
 
         private int port = 0;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "Associations".
-        /// Associations indicates retrieval of association instances as opposed to
-        /// associated instances. This can only be used when specifying the Dialect as
-        /// Association.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "Enumerate")]
         public SwitchParameter Associations
         {
@@ -285,10 +235,7 @@ namespace Microsoft.WSMan.Management
 
         private SwitchParameter associations;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "ResourceURI".
-        /// URI of the resource class/instance representation.
-        /// </summary>
+        
         [Parameter(Mandatory = true,
                    Position = 0,
                    ValueFromPipeline = true,
@@ -311,18 +258,7 @@ namespace Microsoft.WSMan.Management
 
         private Uri resourceuri;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "ReturnType".
-        /// Indicates the type of data returned. Possible options are 'Object', 'EPR',
-        /// and 'ObjectAndEPR'. Default is Object.
-        /// If Object is specified or if this parameter is absent then only the objects
-        /// are returned
-        /// If EPR is specified then only the EPRs of the objects
-        /// are returned. EPRs contain information about the Resource URI and selectors
-        /// for the instance
-        /// If ObjectAndEPR is specified, then both the object and the associated EPRs
-        /// are returned.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "Enumerate")]
 
         [ValidateNotNullOrEmpty]
@@ -343,12 +279,7 @@ namespace Microsoft.WSMan.Management
 
         private string returntype = "object";
 
-        /// <summary>
-        /// The following is the definition of the input parameter "SelectorSet".
-        /// SelectorSet is a hash table which helps in identify an instance of the
-        /// management resource if there are more than 1 instance of the resource
-        /// class.
-        /// </summary>
+        
         [Parameter(
                    ParameterSetName = "GetInstance")]
 
@@ -368,11 +299,7 @@ namespace Microsoft.WSMan.Management
 
         private Hashtable selectorset;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "SessionOption".
-        /// Defines a set of extended options for the WSMan session.  This can be
-        /// created by using the cmdlet New-WSManSessionOption.
-        /// </summary>
+        
         [Parameter]
         [ValidateNotNullOrEmpty]
         [Alias("SO")]
@@ -392,12 +319,7 @@ namespace Microsoft.WSMan.Management
 
         private SessionOption sessionoption;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "Shallow".
-        /// Enumerate only instances of the base class specified in the resource URI. If
-        /// this flag is not specified, instances of the base class specified in the URI
-        /// and all its derived classes are returned.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "Enumerate")]
 
         public SwitchParameter Shallow
@@ -415,12 +337,7 @@ namespace Microsoft.WSMan.Management
 
         private SwitchParameter shallow;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "UseSSL".
-        /// Uses the Secure Sockets Layer (SSL) protocol to establish a connection to
-        /// the remote computer. If SSL is not available on the port specified by the
-        /// Port parameter, the command fails.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "GetInstance")]
         [Parameter(ParameterSetName = "Enumerate")]
 
@@ -560,9 +477,7 @@ namespace Microsoft.WSMan.Management
         }
         #endregion private
         #region override
-        /// <summary>
-        /// ProcessRecord method.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             IWSManSession m_session = null;
@@ -643,9 +558,7 @@ namespace Microsoft.WSMan.Management
         #endregion override
         #region IDisposable Members
 
-        /// <summary>
-        /// Public dispose method.
-        /// </summary>
+        
         public
         void
         Dispose()
@@ -653,9 +566,7 @@ namespace Microsoft.WSMan.Management
             // CleanUp();
             GC.SuppressFinalize(this);
         }
-        /// <summary>
-        /// Public dispose method.
-        /// </summary>
+        
         public
         void
         Dispose(IWSManSession sessionObject)
@@ -666,9 +577,7 @@ namespace Microsoft.WSMan.Management
 
         #endregion IDisposable Members
 
-        /// <summary>
-        /// BeginProcessing method.
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             helper.CleanUp();
@@ -678,22 +587,13 @@ namespace Microsoft.WSMan.Management
 
     #region Set-WsManInstance
 
-    /// <summary>
-    /// Executes action on a target object specified by RESOURCE_URI, where
-    /// parameters are specified by key value pairs.
-    /// eg., Call StartService method on the spooler service
-    /// Set-WSManInstance -Action StartService -ResourceURI wmicimv2/Win32_Service
-    /// -SelectorSet {Name=Spooler}
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Set, "WSManInstance", DefaultParameterSetName = "ComputerName", HelpUri = "https://go.microsoft.com/fwlink/?LinkId=2096937")]
     [OutputType(typeof(XmlElement), typeof(string))]
     public class SetWSManInstanceCommand : AuthenticatingWSManCommand, IDisposable
     {
         #region Parameters
-        /// <summary>
-        /// The following is the definition of the input parameter "ApplicationName".
-        /// ApplicationName identifies the remote endpoint.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "ComputerName")]
         [ValidateNotNullOrEmpty]
         public string ApplicationName
@@ -705,12 +605,7 @@ namespace Microsoft.WSMan.Management
 
         private string applicationname = null;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "ComputerName".
-        /// Executes the management operation on the specified computer(s). The default
-        /// is the local computer. Type the fully qualified domain name, NETBIOS name or
-        /// IP address to indicate the remote host(s)
-        /// </summary>
+        
         [Parameter(ParameterSetName = "ComputerName")]
         [Alias("cn")]
         public string ComputerName
@@ -732,12 +627,7 @@ namespace Microsoft.WSMan.Management
 
         private string computername = null;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "ConnectionURI".
-        /// Specifies the transport, server, port, and ApplicationName of the new
-        /// runspace. The format of this string is:
-        /// transport://server:port/ApplicationName.
-        /// </summary>
+        
         [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "URI")]
         [Parameter(ParameterSetName = "URI")]
         [ValidateNotNullOrEmpty]
@@ -750,10 +640,7 @@ namespace Microsoft.WSMan.Management
 
         private Uri connectionuri;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "Dialect".
-        /// Defines the dialect for the filter predicate.
-        /// </summary>
+        
         [Parameter]
         [ValidateNotNullOrEmpty]
         public Uri Dialect
@@ -765,11 +652,7 @@ namespace Microsoft.WSMan.Management
 
         private Uri dialect;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "FilePath".
-        /// Updates the management resource specified by the ResourceURI and SelectorSet
-        /// via this input file.
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true)]
         [Alias("Path")]
         [ValidateNotNullOrEmpty]
@@ -782,11 +665,7 @@ namespace Microsoft.WSMan.Management
 
         private string filepath;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "Fragment".
-        /// Specifies a section inside the instance that is to be updated or retrieved
-        /// for the given operation.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "ComputerName")]
         [Parameter(ParameterSetName = "URI")]
         [ValidateNotNullOrEmpty]
@@ -799,12 +678,7 @@ namespace Microsoft.WSMan.Management
 
         private string fragment;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "OptionSet".
-        /// OptionSet is a hahs table which help modify or refine the nature of the
-        /// request. These are similar to switches used in command line shells in that
-        /// they are service-specific.
-        /// </summary>
+        
         [Parameter]
         [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         [Alias("os")]
@@ -818,10 +692,7 @@ namespace Microsoft.WSMan.Management
 
         private Hashtable optionset;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "Port".
-        /// Specifies the port to be used when connecting to the ws management service.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "ComputerName")]
         [ValidateNotNullOrEmpty]
         [ValidateRange(1, int.MaxValue)]
@@ -834,10 +705,7 @@ namespace Microsoft.WSMan.Management
 
         private int port = 0;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "ResourceURI".
-        /// URI of the resource class/instance representation.
-        /// </summary>
+        
         [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "URI")]
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Resourceuri")]
 
@@ -853,12 +721,7 @@ namespace Microsoft.WSMan.Management
 
         private Uri resourceuri;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "SelectorSet".
-        /// SelectorSet is a hash table which helps in identify an instance of the
-        /// management resource if there are more than 1 instance of the resource
-        /// class.
-        /// </summary>
+        
         [Parameter(Position = 1,
                    ValueFromPipeline = true,
                    ValueFromPipelineByPropertyName = true)]
@@ -873,11 +736,7 @@ namespace Microsoft.WSMan.Management
 
         private Hashtable selectorset;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "SessionOption".
-        /// Defines a set of extended options for the WSMan session. This can be created
-        /// by using the cmdlet New-WSManSessionOption.
-        /// </summary>
+        
         [Parameter]
         [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         [Alias("so")]
@@ -891,12 +750,7 @@ namespace Microsoft.WSMan.Management
 
         private SessionOption sessionoption;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "UseSSL".
-        /// Uses the Secure Sockets Layer (SSL) protocol to establish a connection to
-        /// the remote computer. If SSL is not available on the port specified by the
-        /// Port parameter, the command fails.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "ComputerName")]
         [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "SSL")]
         [Alias("ssl")]
@@ -909,11 +763,7 @@ namespace Microsoft.WSMan.Management
 
         private SwitchParameter usessl;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "ValueSet".
-        /// ValueSet is a hash table which helps to modify resource represented by the
-        /// ResourceURI and SelectorSet.
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true)]
         [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         [ValidateNotNullOrEmpty]
@@ -929,9 +779,7 @@ namespace Microsoft.WSMan.Management
         #endregion
 
         private WSManHelper helper;
-        /// <summary>
-        /// ProcessRecord method.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             IWSManEx m_wsmanObject = (IWSManEx)new WSManClass();
@@ -1016,9 +864,7 @@ namespace Microsoft.WSMan.Management
 
         #region IDisposable Members
 
-        /// <summary>
-        /// Public dispose method.
-        /// </summary>
+        
         public
         void
         Dispose()
@@ -1026,9 +872,7 @@ namespace Microsoft.WSMan.Management
             // CleanUp();
             GC.SuppressFinalize(this);
         }
-        /// <summary>
-        /// Public dispose method.
-        /// </summary>
+        
         public
         void
         Dispose(IWSManSession sessionObject)
@@ -1039,9 +883,7 @@ namespace Microsoft.WSMan.Management
 
         #endregion IDisposable Members
 
-        /// <summary>
-        /// BeginProcessing method.
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             helper.CleanUp();
@@ -1052,21 +894,12 @@ namespace Microsoft.WSMan.Management
 
     #region Remove-WsManInstance
 
-    /// <summary>
-    /// Executes action on a target object specified by RESOURCE_URI, where
-    /// parameters are specified by key value pairs.
-    /// eg., Call StartService method on the spooler service
-    /// Set-WSManInstance -Action StartService -ResourceURI wmicimv2/Win32_Service
-    /// -SelectorSet {Name=Spooler}
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Remove, "WSManInstance", DefaultParameterSetName = "ComputerName", HelpUri = "https://go.microsoft.com/fwlink/?LinkId=2096721")]
     public class RemoveWSManInstanceCommand : AuthenticatingWSManCommand, IDisposable
     {
         #region Parameters
-        /// <summary>
-        /// The following is the definition of the input parameter "ApplicationName".
-        /// ApplicationName identifies the remote endpoint.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "ComputerName")]
         [ValidateNotNullOrEmpty]
         public string ApplicationName
@@ -1078,12 +911,7 @@ namespace Microsoft.WSMan.Management
 
         private string applicationname = null;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "ComputerName".
-        /// Executes the management operation on the specified computer(s). The default
-        /// is the local computer. Type the fully qualified domain name, NETBIOS name or
-        /// IP address to indicate the remote host(s)
-        /// </summary>
+        
         [Parameter(ParameterSetName = "ComputerName")]
         [Alias("cn")]
         public string ComputerName
@@ -1105,12 +933,7 @@ namespace Microsoft.WSMan.Management
 
         private string computername = null;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "ConnectionURI".
-        /// Specifies the transport, server, port, and ApplicationName of the new
-        /// runspace. The format of this string is:
-        /// transport://server:port/ApplicationName.
-        /// </summary>
+        
         [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "URI")]
         [Parameter(ParameterSetName = "URI")]
         [ValidateNotNullOrEmpty]
@@ -1123,12 +946,7 @@ namespace Microsoft.WSMan.Management
 
         private Uri connectionuri;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "OptionSet".
-        /// OptionSet is a hahs table which help modify or refine the nature of the
-        /// request. These are similar to switches used in command line shells in that
-        /// they are service-specific.
-        /// </summary>
+        
         [Parameter]
         [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         [Alias("os")]
@@ -1142,10 +960,7 @@ namespace Microsoft.WSMan.Management
 
         private Hashtable optionset;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "Port".
-        /// Specifies the port to be used when connecting to the ws management service.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "ComputerName")]
         [ValidateNotNullOrEmpty]
         [ValidateRange(1, int.MaxValue)]
@@ -1158,10 +973,7 @@ namespace Microsoft.WSMan.Management
 
         private int port = 0;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "ResourceURI".
-        /// URI of the resource class/instance representation.
-        /// </summary>
+        
         [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "URI")]
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Resourceuri")]
 
@@ -1177,12 +989,7 @@ namespace Microsoft.WSMan.Management
 
         private Uri resourceuri;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "SelectorSet".
-        /// SelectorSet is a hash table which helps in identify an instance of the
-        /// management resource if there are more than 1 instance of the resource
-        /// class.
-        /// </summary>
+        
         [Parameter(Position = 1, Mandatory = true,
                    ValueFromPipeline = true,
                    ValueFromPipelineByPropertyName = true)]
@@ -1197,11 +1004,7 @@ namespace Microsoft.WSMan.Management
 
         private Hashtable selectorset;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "SessionOption".
-        /// Defines a set of extended options for the WSMan session. This can be created
-        /// by using the cmdlet New-WSManSessionOption.
-        /// </summary>
+        
         [Parameter]
         [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         [Alias("so")]
@@ -1215,12 +1018,7 @@ namespace Microsoft.WSMan.Management
 
         private SessionOption sessionoption;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "UseSSL".
-        /// Uses the Secure Sockets Layer (SSL) protocol to establish a connection to
-        /// the remote computer. If SSL is not available on the port specified by the
-        /// Port parameter, the command fails.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "ComputerName")]
         [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "SSL")]
         [Alias("ssl")]
@@ -1235,9 +1033,7 @@ namespace Microsoft.WSMan.Management
 
         #endregion
 
-        /// <summary>
-        /// ProcessRecord method.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             WSManHelper helper = new WSManHelper(this);
@@ -1294,9 +1090,7 @@ namespace Microsoft.WSMan.Management
 
         #region IDisposable Members
 
-        /// <summary>
-        /// Public dispose method.
-        /// </summary>
+        
         public
         void
         Dispose()
@@ -1304,9 +1098,7 @@ namespace Microsoft.WSMan.Management
             // CleanUp();
             GC.SuppressFinalize(this);
         }
-        /// <summary>
-        /// Public dispose method.
-        /// </summary>
+        
         public
         void
         Dispose(IWSManSession sessionObject)
@@ -1321,18 +1113,12 @@ namespace Microsoft.WSMan.Management
     #endregion
 
     #region New-WsManInstance
-    /// <summary>
-    /// Creates an instance of a management resource identified by the resource URI
-    /// using specified ValueSet or input File.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.New, "WSManInstance", DefaultParameterSetName = "ComputerName", HelpUri = "https://go.microsoft.com/fwlink/?LinkId=2096933")]
     [OutputType(typeof(XmlElement))]
     public class NewWSManInstanceCommand : AuthenticatingWSManCommand, IDisposable
     {
-        /// <summary>
-        /// The following is the definition of the input parameter "ApplicationName".
-        /// ApplicationName identifies the remote endpoint.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "ComputerName")]
         [ValidateNotNullOrEmpty]
         public string ApplicationName
@@ -1344,12 +1130,7 @@ namespace Microsoft.WSMan.Management
 
         private string applicationname = null;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "ComputerName".
-        /// Executes the management operation on the specified computer(s). The default
-        /// is the local computer. Type the fully qualified domain name, NETBIOS name or
-        /// IP address to indicate the remote host(s)
-        /// </summary>
+        
         [Parameter(ParameterSetName = "ComputerName")]
         [Alias("cn")]
         public string ComputerName
@@ -1371,12 +1152,7 @@ namespace Microsoft.WSMan.Management
 
         private string computername = null;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "ConnectionURI".
-        /// Specifies the transport, server, port, and ApplicationName of the new
-        /// runspace. The format of this string is:
-        /// transport://server:port/ApplicationName.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "URI")]
         [ValidateNotNullOrEmpty]
         [Alias("CURI", "CU")]
@@ -1390,11 +1166,7 @@ namespace Microsoft.WSMan.Management
 
         private Uri connectionuri;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "FilePath".
-        /// Updates the management resource specified by the ResourceURI and SelectorSet
-        /// via this input file.
-        /// </summary>
+        
         [Parameter]
         [ValidateNotNullOrEmpty]
         [Alias("Path")]
@@ -1407,11 +1179,7 @@ namespace Microsoft.WSMan.Management
 
         private string filepath;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "OptionSet".
-        /// OptionSet is a hash table and is used to pass a set of switches to the
-        /// service to modify or refine the nature of the request.
-        /// </summary>
+        
         [Parameter]
         [ValidateNotNullOrEmpty]
         [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -1425,10 +1193,7 @@ namespace Microsoft.WSMan.Management
 
         private Hashtable optionset;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "Port".
-        /// Specifies the port to be used when connecting to the ws management service.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "ComputerName")]
         [ValidateNotNullOrEmpty]
         [ValidateRange(1, int.MaxValue)]
@@ -1441,10 +1206,7 @@ namespace Microsoft.WSMan.Management
 
         private int port = 0;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "ResourceURI".
-        /// URI of the resource class/instance representation.
-        /// </summary>
+        
         [Parameter(Mandatory = true, Position = 0)]
         [ValidateNotNullOrEmpty]
         [Alias("ruri")]
@@ -1458,12 +1220,7 @@ namespace Microsoft.WSMan.Management
 
         private Uri resourceuri;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "SelectorSet".
-        /// SelectorSet is a hash table which helps in identify an instance of the
-        /// management resource if there are more than 1 instance of the resource
-        /// class.
-        /// </summary>
+        
         [Parameter(Mandatory = true, Position = 1,
                    ValueFromPipeline = true)]
         [ValidateNotNullOrEmpty]
@@ -1477,10 +1234,7 @@ namespace Microsoft.WSMan.Management
 
         private Hashtable selectorset;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "SessionOption".
-        /// Defines a set of extended options for the WSMan session.
-        /// </summary>
+        
         [Parameter]
         [ValidateNotNullOrEmpty]
         [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -1494,12 +1248,7 @@ namespace Microsoft.WSMan.Management
 
         private SessionOption sessionoption;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "UseSSL".
-        /// Uses the Secure Sockets Layer (SSL) protocol to establish a connection to
-        /// the remote computer. If SSL is not available on the port specified by the
-        /// Port parameter, the command fails.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "ComputerName")]
         [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "SSL")]
         public SwitchParameter UseSSL
@@ -1511,11 +1260,7 @@ namespace Microsoft.WSMan.Management
 
         private SwitchParameter usessl;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "ValueSet".
-        /// ValueSet is a hash table which helps to modify resource represented by the
-        /// ResourceURI and SelectorSet.
-        /// </summary>
+        
         [Parameter]
         [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public Hashtable ValueSet
@@ -1532,9 +1277,7 @@ namespace Microsoft.WSMan.Management
         private IWSManSession m_session = null;
         private string connectionStr = string.Empty;
 
-        /// <summary>
-        /// BeginProcessing method.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             helper = new WSManHelper(this);
@@ -1556,9 +1299,7 @@ namespace Microsoft.WSMan.Management
             }
         }
 
-        /// <summary>
-        /// ProcessRecord method.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             try
@@ -1602,9 +1343,7 @@ namespace Microsoft.WSMan.Management
 
         #region IDisposable Members
 
-        /// <summary>
-        /// Public dispose method.
-        /// </summary>
+        
         public
         void
         Dispose()
@@ -1612,9 +1351,7 @@ namespace Microsoft.WSMan.Management
             // CleanUp();
             GC.SuppressFinalize(this);
         }
-        /// <summary>
-        /// Public dispose method.
-        /// </summary>
+        
         public
         void
         Dispose(IWSManSession sessionObject)
@@ -1625,9 +1362,7 @@ namespace Microsoft.WSMan.Management
 
         #endregion IDisposable Members
 
-        /// <summary>
-        /// EndProcessing method.
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             helper.CleanUp();

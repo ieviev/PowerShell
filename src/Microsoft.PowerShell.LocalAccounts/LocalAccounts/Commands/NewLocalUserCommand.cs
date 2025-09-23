@@ -13,9 +13,7 @@ using Microsoft.PowerShell.LocalAccounts;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// The New-LocalUser cmdlet creates a new local user account.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.New, "LocalUser",
             DefaultParameterSetName = "Password",
             SupportsShouldProcess = true,
@@ -42,10 +40,7 @@ namespace Microsoft.PowerShell.Commands
         #endregion Instance Data
 
         #region Parameter Properties
-        /// <summary>
-        /// The following is the definition of the input parameter "AccountExpires".
-        /// Specifies when the user account will expire.
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true)]
         public System.DateTime AccountExpires
         {
@@ -57,10 +52,7 @@ namespace Microsoft.PowerShell.Commands
         private System.DateTime accountexpires;
 
         // This parameter added by hand (copied from SetLocalUserCommand), not by Cmdlet Designer
-        /// <summary>
-        /// The following is the definition of the input parameter "AccountNeverExpires".
-        /// Specifies that the account will not expire.
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true)]
         public System.Management.Automation.SwitchParameter AccountNeverExpires
         {
@@ -71,10 +63,7 @@ namespace Microsoft.PowerShell.Commands
 
         private System.Management.Automation.SwitchParameter accountneverexpires;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "Description".
-        /// A descriptive comment for this user account.
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true)]
         [ValidateNotNull]
         public string Description
@@ -86,10 +75,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string description;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "Disabled".
-        /// Specifies whether this user account is enabled or disabled.
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true)]
         public System.Management.Automation.SwitchParameter Disabled
         {
@@ -100,11 +86,7 @@ namespace Microsoft.PowerShell.Commands
 
         private System.Management.Automation.SwitchParameter disabled;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "FullName".
-        /// Specifies the full name of the user account. This is different from the
-        /// username of the user account.
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true)]
         [ValidateNotNull]
         public string FullName
@@ -116,11 +98,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string fullname;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "Name".
-        /// Specifies the user name for the local user account. This can be a local user
-        /// account or a local user account that is connected to a Microsoft Account.
-        /// </summary>
+        
         [Parameter(Mandatory = true,
                    Position = 0,
                    ValueFromPipeline = true,
@@ -136,11 +114,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string name;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "Password".
-        /// Specifies the password for the local user account. A password can contain up
-        /// to 127 characters.
-        /// </summary>
+        
         [Parameter(Mandatory = true,
                    ParameterSetName = "Password",
                    ValueFromPipelineByPropertyName = true)]
@@ -154,10 +128,7 @@ namespace Microsoft.PowerShell.Commands
 
         private System.Security.SecureString password;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "PasswordChangeableDate".
-        /// Specifies that the new User account has no password.
-        /// </summary>
+        
         [Parameter(Mandatory = true,
                    ParameterSetName = "NoPassword",
                    ValueFromPipelineByPropertyName = true)]
@@ -170,10 +141,7 @@ namespace Microsoft.PowerShell.Commands
 
         private System.Management.Automation.SwitchParameter nopassword;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "PasswordNeverExpires".
-        /// Specifies that the password will not expire.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "Password",
                    ValueFromPipelineByPropertyName = true)]
         public System.Management.Automation.SwitchParameter PasswordNeverExpires
@@ -185,11 +153,7 @@ namespace Microsoft.PowerShell.Commands
 
         private System.Management.Automation.SwitchParameter passwordneverexpires;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "UserMayNotChangePassword".
-        /// Specifies whether the user is allowed to change the password on this
-        /// account. The default value is True.
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true)]
         public System.Management.Automation.SwitchParameter UserMayNotChangePassword
         {
@@ -202,9 +166,7 @@ namespace Microsoft.PowerShell.Commands
         #endregion Parameter Properties
 
         #region Cmdlet Overrides
-        /// <summary>
-        /// BeginProcessing method.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             if (this.HasParameter("AccountExpires") && AccountNeverExpires.IsPresent)
@@ -216,9 +178,7 @@ namespace Microsoft.PowerShell.Commands
             sam = new Sam();
         }
 
-        /// <summary>
-        /// ProcessRecord method.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             try
@@ -270,9 +230,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// EndProcessing method.
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             if (sam != null)

@@ -8,9 +8,7 @@ namespace System.Management.Automation.Provider
 {
     #region DriveCmdletProvider
 
-    /// <summary>
-    /// The base class for Cmdlet providers that can be exposed through PSDrives.
-    /// </summary>
+    
     /// <remarks>
     /// Although it is possible to derive from this base class to implement a Cmdlet Provider, in most
     /// cases one should derive from <see cref="System.Management.Automation.Provider.ItemCmdletProvider"/>,
@@ -23,11 +21,7 @@ namespace System.Management.Automation.Provider
 
         #region DriveCmdletProvider method wrappers
 
-        /// <summary>
-        /// Internal wrapper for the NewDrive protected method. It is called instead
-        /// of the protected method that is overridden by derived classes so that the
-        /// context of the command can be set.
-        /// </summary>
+        
         /// <param name="drive">
         /// The PSDriveInfo object the represents the drive to be mounted.
         /// </param>
@@ -55,10 +49,7 @@ namespace System.Management.Automation.Provider
             return NewDrive(drive);
         }
 
-        /// <summary>
-        /// Gives the provider to attach additional parameters to
-        /// the New-PSDrive cmdlet.
-        /// </summary>
+        
         /// <param name="context">
         /// The context under which this method is being called.
         /// </param>
@@ -72,11 +63,7 @@ namespace System.Management.Automation.Provider
             return NewDriveDynamicParameters();
         }
 
-        /// <summary>
-        /// Internal wrapper for the RemoveDrive protected method. It is called instead
-        /// of the protected method that is overridden by derived classes so that the
-        /// context of the command can be set.
-        /// </summary>
+        
         /// <param name="drive">
         /// The PSDriveInfo object the represents the mounted drive.
         /// </param>
@@ -92,11 +79,7 @@ namespace System.Management.Automation.Provider
             return RemoveDrive(drive);
         }
 
-        /// <summary>
-        /// Internal wrapper for the InitializeDefaultDrives protected method. It is called instead
-        /// of the protected method that is overridden by derived classes so that the
-        /// context of the command can be set.
-        /// </summary>
+        
         /// <param name="context">
         /// The context under which this method is being called.
         /// </param>
@@ -117,13 +100,7 @@ namespace System.Management.Automation.Provider
 
         #region Protected methods that should be overridden by derived classes
 
-        /// <summary>
-        /// Gives the provider an opportunity to validate the drive
-        /// that is being added. It also allows the provider to modify parts
-        /// of the PSDriveInfo object. This may be done for performance or
-        /// reliability reasons or to provide extra data to all calls using
-        /// the Drive.
-        /// </summary>
+        
         /// <param name="drive">
         /// The proposed new drive.
         /// </param>
@@ -156,10 +133,7 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <summary>
-        /// Gives the provider an opportunity to attach additional parameters to
-        /// the New-PSDrive cmdlet.
-        /// </summary>
+        
         /// <returns>
         /// Overrides of this method should return an object that has properties and fields decorated with
         /// parsing attributes similar to a cmdlet class or a
@@ -175,10 +149,7 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <summary>
-        /// Gives the provider an opportunity to clean up any provider specific data
-        /// for the drive that is going to be removed.
-        /// </summary>
+        
         /// <param name="drive">
         /// The Drive object the represents the mounted drive.
         /// </param>
@@ -201,9 +172,7 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <summary>
-        /// Gives the provider the ability to map drives after initialization.
-        /// </summary>
+        
         /// <returns>
         /// A collection of the drives the provider wants to be added to the session upon initialization.
         ///

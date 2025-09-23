@@ -5,15 +5,10 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace System.Management.Automation.Internal
 {
-    /// <summary>
-    /// CabinetExtractor interface, implemented by CabinetExtractor
-    /// in native code to handle the extraction of cabinet files.
-    /// </summary>
+    
     internal abstract class ICabinetExtractor : IDisposable
     {
-        /// <summary>
-        /// Extracts a cabinet file.
-        /// </summary>
+        
         /// <param name="cabinetName">Cabinet file name.</param>
         /// <param name="srcPath">Cabinet directory name, must be back slash terminated.</param>
         /// <param name="destPath">Destination directory name, must be back slash terminated.</param>
@@ -26,14 +21,10 @@ namespace System.Management.Automation.Internal
         // enables derived classes to handle it cleanly.
         //
 
-        /// <summary>
-        /// Flag: Has Dispose already been called?
-        /// </summary>
+        
         private bool _disposed = false;
 
-        /// <summary>
-        /// Disposes the instance, callable by consumers.
-        /// </summary>
+        
         public void Dispose()
         {
             Dispose(true);
@@ -63,11 +54,7 @@ namespace System.Management.Automation.Internal
         #endregion
     }
 
-    /// <summary>
-    /// Abstract class which defines a CabinetExtractor loader. An implementation
-    /// of this class will be instantiated onetime from the C++/CLI
-    /// assembly using reflection.
-    /// </summary>
+    
     /// <remarks>The C++/CLI implementation of this class needs to be
     /// static</remarks>
     internal abstract class ICabinetExtractorLoader
@@ -75,26 +62,20 @@ namespace System.Management.Automation.Internal
         internal virtual ICabinetExtractor GetCabinetExtractor() { return null; }
     }
 
-    /// <summary>
-    /// Used to create a CabinetExtractor class.
-    /// </summary>
+    
     internal static class CabinetExtractorFactory
     {
         private static readonly ICabinetExtractorLoader s_cabinetLoader;
         internal static readonly ICabinetExtractor EmptyExtractor = new EmptyCabinetExtractor();
 
-        /// <summary>
-        /// Static constructor.
-        /// </summary>
+        
         [SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.Reflection.Assembly.LoadFrom")]
         static CabinetExtractorFactory()
         {
             s_cabinetLoader = CabinetExtractorLoader.GetInstance();
         }
 
-        /// <summary>
-        /// Provider a CabinetExtractor instance.
-        /// </summary>
+        
         /// <returns>Tracer instance.</returns>
         internal static ICabinetExtractor GetCabinetExtractor()
         {
@@ -109,14 +90,10 @@ namespace System.Management.Automation.Internal
         }
     }
 
-    /// <summary>
-    /// Dummy cabinet extractor implementation.
-    /// </summary>
+    
     internal sealed class EmptyCabinetExtractor : ICabinetExtractor
     {
-        /// <summary>
-        /// Extracts a cabinet file.
-        /// </summary>
+        
         /// <param name="cabinetName">Cabinet file name.</param>
         /// <param name="srcPath">Cabinet directory name, must be back slash terminated.</param>
         /// <param name="destPath">Destination directory name, must be back slash terminated.</param>
@@ -126,9 +103,7 @@ namespace System.Management.Automation.Internal
             return false;
         }
 
-        /// <summary>
-        /// Disposes the instance.
-        /// </summary>
+        
         /// <param name="disposing"></param>
         protected override void Dispose(bool disposing)
         {

@@ -10,65 +10,10 @@ using System.Xml;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// MamlNode is an xml node in MAML schema. Maml schema includes formatting oriented tags like para, list
-    /// etc, which needs to be taken care of during display. As a result, xml node in Maml schema can't be
-    /// converted into PSObject directly with XmlNodeAdapter.
-    ///
-    /// MamlNode class provides logic in converting formatting tags into the format acceptable by monad format
-    /// and output engine.
-    ///
-    /// Following three kinds of formating tags are supported per our agreement with Maml team,
-    ///     1. para,
-    ///         <para>
-    ///             para text here
-    ///         </para>
-    ///     2. list,
-    ///         <list class="ordered|unordered">
-    ///             <listItem>
-    ///                 <para>
-    ///                     listItem Text here
-    ///                 </para>
-    ///             </listItem>
-    ///         </list>
-    ///     3. definition list,
-    ///         <definitionList>
-    ///             <definitionListItem>
-    ///                 <term>
-    ///                     definition term text here
-    ///                 </term>
-    ///                 <definition>
-    ///                     <para>
-    ///                         definition text here
-    ///                     </para>
-    ///                 </definition>
-    ///             </definitionListItem>
-    ///         </definitionList>
-    /// After processing, content of these three tags will be converted into textItem and its derivations,
-    ///     1. para => paraTextItem
-    ///         <textItem class="paraTextItem">
-    ///             <text>para text here</text>
-    ///         </textItem>
-    ///     2. list => a list of listTextItem's (which can be ordered or unordered)
-    ///         <textItem class="unorderedListTextItem">
-    ///             <tag>*</tag>
-    ///             <text>text for list item 1</text>
-    ///         </textItem>
-    ///         <textItem class="unorderedListTextItem">
-    ///             <tag>*</tag>
-    ///             <text>text for list item 2</text>
-    ///         </textItem>
-    ///     3. definitionList => a list of definitionTextItem's
-    ///         <definitionListItem>
-    ///             <term>definition term here</term>
-    ///             <definition>definition text here</definition>
-    ///         </definitionListItem>
-    /// </summary>
+    
     internal class MamlNode
     {
-        /// <summary>
-        /// Constructor for HelpInfo.
-        /// </summary>
+        
         internal MamlNode(XmlNode xmlNode)
         {
             _xmlNode = xmlNode;
@@ -76,9 +21,7 @@ namespace System.Management.Automation
 
         private readonly XmlNode _xmlNode;
 
-        /// <summary>
-        /// Underline xmlNode for this MamlNode object.
-        /// </summary>
+        
         /// <value></value>
         internal XmlNode XmlNode
         {
@@ -90,9 +33,7 @@ namespace System.Management.Automation
 
         private PSObject _mshObject;
 
-        /// <summary>
-        /// MshObject which is converted from XmlNode.
-        /// </summary>
+        
         /// <value></value>
         internal PSObject PSObject
         {
@@ -114,80 +55,7 @@ namespace System.Management.Automation
 
         #region Conversion of xmlNode => PSObject
 
-        /// <summary>
-        /// Convert an xmlNode into an PSObject. There are four scenarios,
-        ///     1. Null xml, this will return an PSObject wrapping a null object.
-        ///     2. Atomic xml, which is an xmlNode with only one simple text child node
-        ///         <atomicXml attribute="value">
-        ///             atomic xml text
-        ///         </atomicXml>
-        ///        In this case, an PSObject that wraps string "atomic xml text" will be returned with following properties
-        ///             attribute => name
-        ///     3. Composite xml, which is an xmlNode with structured child nodes, but not a special case for Maml formatting.
-        ///         <compositeXml attribute="attribute">
-        ///             <singleChildNode>
-        ///                 single child node text
-        ///             </singleChildNode>
-        ///             <dupChildNode>
-        ///                 dup child node text 1
-        ///             </dupChildNode>
-        ///             <dupChildNode>
-        ///                 dup child node text 2
-        ///             </dupChildNode>
-        ///         </compositeXml>
-        ///        In this case, an PSObject will base generated based on an inside PSObject,
-        ///        which in turn has following properties
-        ///             a. property "singleChildNode", with its value an PSObject wrapping string "single child node text"
-        ///             b. property "dupChildNode", with its value an PSObject array wrapping strings for two dupChildNode's
-        ///        The outside PSObject will have property,
-        ///             a. property "attribute", with its value an PSObject wrapping string "attribute"
-        ///     4. Maml formatting xml, this is a special case for Composite xml, for example
-        ///         <description attribute="value">
-        ///             <para>
-        ///                 para 1
-        ///             </para>
-        ///             <list>
-        ///                 <listItem>
-        ///                     <para>
-        ///                         list item 1
-        ///                     </para>
-        ///                 </listItem>
-        ///                 <listItem>
-        ///                     <para>
-        ///                         list item 2
-        ///                     </para>
-        ///                 </listItem>
-        ///             </list>
-        ///             <definitionList>
-        ///                 <definitionListItem>
-        ///                     <term>
-        ///                         term 1
-        ///                     </term>
-        ///                     <definition>
-        ///                         definition list item 1
-        ///                     </definition>
-        ///                 </definitionListItem>
-        ///                 <definitionListItem>
-        ///                     <term>
-        ///                         term 2
-        ///                     </term>
-        ///                     <definition>
-        ///                         definition list item 2
-        ///                     </definition>
-        ///                 </definitionListItem>
-        ///             </definitionList>
-        ///         </description>
-        ///         In this case, an PSObject based on an PSObject array will be created. The inside PSObject array
-        ///         will contain following items
-        ///             . a MamlParaTextItem based on "para 1"
-        ///             . a MamlUnorderedListItem based on "list item 1"
-        ///             . a MamlUnorderedListItem based on "list item 2"
-        ///             . a MamlDefinitionListItem based on "definition list item 1"
-        ///             . a MamlDefinitionListItem based on "definition list item 2"
-        ///
-        ///         The outside PSObject will have a property
-        ///             attribute => "value"
-        /// </summary>
+        
         /// <param name="xmlNode"></param>
         /// <returns></returns>
         private PSObject GetPSObject(XmlNode xmlNode)
@@ -234,24 +102,7 @@ namespace System.Management.Automation
             return mshObject;
         }
 
-        /// <summary>
-        /// Get inside PSObject created based on inside nodes of xmlNode.
-        ///
-        /// The inside PSObject will be based on null. It will created one
-        /// property per inside node grouping by node names.
-        ///
-        /// For example, for xmlNode like,
-        ///     <command>
-        ///         <name>get-item</name>
-        ///         <note>note 1</note>
-        ///         <note>note 2</note>
-        ///     </command>
-        /// It will create an PSObject based on null, with following two properties
-        ///     . property 1: name="name" value=an PSObject to wrap string "get-item"
-        ///     . property 2: name="note" value=an PSObject array with following two PSObjects
-        ///         1. PSObject wrapping string "note 1"
-        ///         2. PSObject wrapping string "note 2"
-        /// </summary>
+        
         /// <param name="xmlNode"></param>
         /// <returns></returns>
         private PSObject GetInsidePSObject(XmlNode xmlNode)
@@ -270,30 +121,7 @@ namespace System.Management.Automation
             return mshObject;
         }
 
-        /// <summary>
-        /// This is for getting inside properties of an XmlNode. Properties are
-        /// stored in a hashtable with key as property name and value as property value.
-        ///
-        /// Inside node with same node names will be grouped into one property with
-        /// property value as an array.
-        ///
-        /// For example, for xmlNode like,
-        ///     <command>
-        ///         <name>get-item</name>
-        ///         <note>note 1</note>
-        ///         <note>note 2</note>
-        ///     </command>
-        /// It will create an PSObject based on null, with following two properties
-        ///     . property 1: name="name" value=an PSObject to wrap string "get-item"
-        ///     . property 2: name="note" value=an PSObject array with following two PSObjects
-        ///         1. PSObject wrapping string "note 1"
-        ///         2. PSObject wrapping string "note 2"
-        ///
-        /// Since we don't know whether an node name will be used more than once,
-        /// We are making each property value is an array (PSObject[]) to start with.
-        /// At the end, SimplifyProperties will be called to reduce PSObject[] containing
-        /// only one element to PSObject itself.
-        /// </summary>
+        
         /// <param name="xmlNode"></param>
         /// <returns></returns>
         private Hashtable GetInsideProperties(XmlNode xmlNode)
@@ -314,10 +142,7 @@ namespace System.Management.Automation
             return SimplifyProperties(properties);
         }
 
-        /// <summary>
-        /// Removes unsupported child nodes recursively from the given
-        /// xml node so that they wont spoil the format.
-        /// </summary>
+        
         /// <param name="xmlNode">
         /// Node whose children are verified for maml.
         /// </param>
@@ -346,31 +171,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// This is for adding a property into a property hashtable.
-        ///
-        /// As mentioned in comment of GetInsideProperties, property values stored in
-        /// property hashtable is an array to begin with.
-        ///
-        /// The property value to be added is an mshObject whose base object can be an
-        /// PSObject array itself. In that case, each PSObject in the array will be
-        /// added separately into the property value array. This case can only happen when
-        /// an node with maml formatting node inside is treated. The side effect of this
-        /// is that the properties for outside mshObject will be lost. An example of this
-        /// is that,
-        /// <command>
-        ///     <description attrib1="value1">
-        ///         <para></para>
-        ///         <list></list>
-        ///         <definitionList></definitionList>
-        ///     </description>
-        /// </command>
-        /// After the processing, PSObject corresponding to command will have an property
-        /// with name "description" and a value of an PSObject array created based on
-        /// maml formatting node inside "description" node. The attribute of description node
-        /// "attrib1" will be lost. This seems to be OK with current practice of authoring
-        /// monad command help.
-        /// </summary>
+        
         /// <param name="properties">Property hashtable.</param>
         /// <param name="name">Property name.</param>
         /// <param name="mshObject">Property value.</param>
@@ -404,15 +205,7 @@ namespace System.Management.Automation
             return;
         }
 
-        /// <summary>
-        /// This is for simplifying property value array of only one element.
-        ///
-        /// As mentioned in comments for GetInsideProperties, this is needed
-        /// to reduce an array of only one PSObject into the PSObject itself.
-        ///
-        /// A side effect of this function is to turn property values from
-        /// ArrayList into PSObject[].
-        /// </summary>
+        
         /// <param name="properties"></param>
         /// <returns></returns>
         private static Hashtable SimplifyProperties(Hashtable properties)
@@ -451,9 +244,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// An xmlNode is atomic if it contains no structured inside nodes.
-        /// </summary>
+        
         /// <param name="xmlNode"></param>
         /// <returns></returns>
         private static bool IsAtomic(XmlNode xmlNode)
@@ -480,10 +271,7 @@ namespace System.Management.Automation
 
         #region Maml formatting
 
-        /// <summary>
-        /// Check whether an xmlNode contains childnodes which is for
-        /// maml formatting.
-        /// </summary>
+        
         /// <param name="xmlNode"></param>
         /// <returns></returns>
         private static bool IncludeMamlFormatting(XmlNode xmlNode)
@@ -505,12 +293,7 @@ namespace System.Management.Automation
             return false;
         }
 
-        /// <summary>
-        /// Check whether a node is for maml formatting. This include following nodes,
-        ///     a. para
-        ///     b. list
-        ///     c. definitionList.
-        /// </summary>
+        
         /// <param name="xmlNode"></param>
         /// <returns></returns>
         private static bool IsMamlFormattingNode(XmlNode xmlNode)
@@ -527,9 +310,7 @@ namespace System.Management.Automation
             return false;
         }
 
-        /// <summary>
-        /// Check whether an mshObject is created from a maml formatting node.
-        /// </summary>
+        
         /// <param name="mshObject"></param>
         /// <returns></returns>
         private static bool IsMamlFormattingPSObject(PSObject mshObject)
@@ -542,53 +323,7 @@ namespace System.Management.Automation
             return typeNames[typeNames.Count - 1].Equals("MamlTextItem", StringComparison.OrdinalIgnoreCase);
         }
 
-        /// <summary>
-        /// Convert an xmlNode containing maml formatting nodes into an PSObject array.
-        ///
-        /// For example, for node,
-        ///    <description attribute="value">
-        ///        <para>
-        ///            para 1
-        ///        </para>
-        ///        <list>
-        ///            <listItem>
-        ///                <para>
-        ///                    list item 1
-        ///                </para>
-        ///            </listItem>
-        ///            <listItem>
-        ///                <para>
-        ///                    list item 2
-        ///                </para>
-        ///            </listItem>
-        ///        </list>
-        ///        <definitionList>
-        ///            <definitionListItem>
-        ///                <term>
-        ///                    term 1
-        ///                </term>
-        ///                <definition>
-        ///                    definition list item 1
-        ///                </definition>
-        ///            </definitionListItem>
-        ///            <definitionListItem>
-        ///                <term>
-        ///                    term 2
-        ///                </term>
-        ///                <definition>
-        ///                    definition list item 2
-        ///                </definition>
-        ///            </definitionListItem>
-        ///        </definitionList>
-        ///    </description>
-        ///    In this case, an PSObject based on an PSObject array will be created. The inside PSObject array
-        ///    will contain following items
-        ///        . a MamlParaTextItem based on "para 1"
-        ///        . a MamlUnorderedListItem based on "list item 1"
-        ///        . a MamlUnorderedListItem based on "list item 2"
-        ///        . a MamlDefinitionListItem based on "definition list item 1"
-        ///        . a MamlDefinitionListItem based on "definition list item 2"
-        /// </summary>
+        
         /// <param name="xmlNode"></param>
         /// <returns></returns>
         private PSObject[] GetMamlFormattingPSObjects(XmlNode xmlNode)
@@ -641,9 +376,7 @@ namespace System.Management.Automation
             return (PSObject[])mshObjects.ToArray(typeof(PSObject));
         }
 
-        /// <summary>
-        /// Gets the number of para nodes.
-        /// </summary>
+        
         /// <param name="nodes"></param>
         /// <returns></returns>
         private static int GetParaMamlNodeCount(XmlNodeList nodes)
@@ -666,9 +399,7 @@ namespace System.Management.Automation
             return i;
         }
 
-        /// <summary>
-        /// Write an error to helpsystem to indicate an invalid maml child node.
-        /// </summary>
+        
         /// <param name="node"></param>
         /// <param name="childNode"></param>
         private void WriteMamlInvalidChildNodeError(XmlNode node, XmlNode childNode)
@@ -678,9 +409,7 @@ namespace System.Management.Automation
             this.Errors.Add(errorRecord);
         }
 
-        /// <summary>
-        /// Write an error to help system to indicate an invalid child node count.
-        /// </summary>
+        
         /// <param name="node"></param>
         /// <param name="childNodeName"></param>
         /// <param name="count"></param>
@@ -732,16 +461,7 @@ namespace System.Management.Automation
             return string.Empty;
         }
 
-        /// <summary>
-        /// Convert a para node into an mshObject.
-        ///
-        /// For example,
-        ///    <para>
-        ///        para text
-        ///    </para>
-        ///    In this case, an PSObject of type "MamlParaTextItem" will be created with following property
-        ///        a. text="para text"
-        /// </summary>
+        
         /// <param name="xmlNode"></param>
         /// <param name="newLine"></param>
         /// <param name="trim"></param>
@@ -782,28 +502,7 @@ namespace System.Management.Automation
             return mshObject;
         }
 
-        /// <summary>
-        /// Convert a list node into an PSObject array.
-        ///
-        /// For example,
-        ///    <list class="ordered">
-        ///        <listItem>
-        ///            <para>
-        ///                text for list item 1
-        ///            </para>
-        ///        </listItem>
-        ///        <listItem>
-        ///            <para>
-        ///                text for list item 2
-        ///            </para>
-        ///        </listItem>
-        ///    </list>
-        /// In this case, an array of PSObject, each of type "MamlOrderedListText" will be created with following
-        /// two properties,
-        ///        a. tag=" 1. " or " 2. "
-        ///        b. text="text for list item 1" or "text for list item 2"
-        /// In the case of unordered list, similar PSObject will created with type to be "MamlUnorderedListText" and tag="*"
-        /// </summary>
+        
         /// <param name="xmlNode"></param>
         /// <returns></returns>
         private ArrayList GetListPSObjects(XmlNode xmlNode)
@@ -841,9 +540,7 @@ namespace System.Management.Automation
             return mshObjects;
         }
 
-        /// <summary>
-        /// Check whether a list is ordered or not.
-        /// </summary>
+        
         /// <param name="xmlNode"></param>
         /// <returns></returns>
         private static bool IsOrderedList(XmlNode xmlNode)
@@ -866,9 +563,7 @@ namespace System.Management.Automation
             return false;
         }
 
-        /// <summary>
-        /// Convert an listItem node into an PSObject with property "tag" and "text"
-        /// </summary>
+        
         /// <param name="xmlNode"></param>
         /// <param name="ordered"></param>
         /// <param name="index"></param>
@@ -931,10 +626,7 @@ namespace System.Management.Automation
             return mshObject;
         }
 
-        /// <summary>
-        /// Convert definitionList node into an array of PSObject, an for
-        /// each definitionListItem node inside this node.
-        /// </summary>
+        
         /// <param name="xmlNode"></param>
         /// <returns></returns>
         private ArrayList GetDefinitionListPSObjects(XmlNode xmlNode)
@@ -969,25 +661,7 @@ namespace System.Management.Automation
             return mshObjects;
         }
 
-        /// <summary>
-        /// Convert an definitionListItem node into an PSObject
-        ///
-        /// For example
-        ///        <definitionListItem>
-        ///            <term>
-        ///                term text
-        ///            </term>
-        ///            <definition>
-        ///                <para>
-        ///                    definition text
-        ///                </para>
-        ///            </definition>
-        ///        </definitionListItem>
-        /// In this case, an PSObject of type "definitionListText" will be created with following
-        /// properties
-        ///        a. term="term text"
-        ///        b. definition="definition text"
-        /// </summary>
+        
         /// <param name="xmlNode"></param>
         /// <returns></returns>
         private PSObject GetDefinitionListItemPSObject(XmlNode xmlNode)
@@ -1034,9 +708,7 @@ namespace System.Management.Automation
             return mshObject;
         }
 
-        /// <summary>
-        /// Get the text for definition. The will treat some intermediate nodes like "definition" and "para"
-        /// </summary>
+        
         /// <param name="xmlNode"></param>
         /// <returns></returns>
         private string GetDefinitionText(XmlNode xmlNode)
@@ -1075,32 +747,7 @@ namespace System.Management.Automation
 
         #region Preformatted string processing
 
-        /// <summary>
-        /// This is for getting preformatted text from an xml document.
-        ///
-        /// Normally in xml document, preformatted text will be indented by
-        /// a fix amount based on its position. The task of this function
-        /// is to remove that fixed amount from the text.
-        ///
-        /// For example, in xml,
-        /// <preformatted>
-        ///     void function()
-        ///     {
-        ///         // call some other function here;
-        ///     }
-        /// </preformatted>
-        /// we can find that the preformatted text are indented unanimously
-        /// by 4 spaces because of its position in xml.
-        ///
-        /// After massaging in this function, the result text will be,
-        ///
-        /// void function
-        /// {
-        ///     // call some other function here;
-        /// }
-        ///
-        /// please notice that the indention is reduced.
-        /// </summary>
+        
         /// <param name="text"></param>
         /// <returns></returns>
         private static string GetPreformattedText(string text)
@@ -1139,9 +786,7 @@ namespace System.Management.Automation
             return result.ToString();
         }
 
-        /// <summary>
-        /// Trim empty lines from the either end of an string array.
-        /// </summary>
+        
         /// <param name="lines">Lines to trim.</param>
         /// <returns>An string array with empty lines trimed on either end.</returns>
         private static string[] TrimLines(string[] lines)
@@ -1178,9 +823,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Get minimum indentation of a paragraph.
-        /// </summary>
+        
         /// <param name="lines"></param>
         /// <returns></returns>
         private static int GetMinIndentation(string[] lines)
@@ -1201,10 +844,7 @@ namespace System.Management.Automation
             return minIndentation;
         }
 
-        /// <summary>
-        /// Get indentation of a line, i.e., number of spaces
-        /// at the beginning of the line.
-        /// </summary>
+        
         /// <param name="line"></param>
         /// <returns></returns>
         private static int GetIndentation(string line)
@@ -1217,11 +857,7 @@ namespace System.Management.Automation
             return line.Length - leftTrimedLine.Length;
         }
 
-        /// <summary>
-        /// Test whether a line is empty.
-        ///
-        /// A line is empty if it contains only white spaces.
-        /// </summary>
+        
         /// <param name="line"></param>
         /// <returns></returns>
         private static bool IsEmptyLine(string line)
@@ -1240,10 +876,7 @@ namespace System.Management.Automation
 
         #region Error handling
 
-        /// <summary>
-        /// This is for tracking the set of errors happened during the parsing of
-        /// maml text.
-        /// </summary>
+        
         /// <value></value>
         internal Collection<ErrorRecord> Errors { get; } = new Collection<ErrorRecord>();
 

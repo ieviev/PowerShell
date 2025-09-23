@@ -12,9 +12,7 @@ using System.Windows.Controls;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <summary>
-    /// Allows the state of the ManagementList to be saved and restored.
-    /// </summary>
+    
     [SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public class ManagementListStateDescriptor : StateDescriptor<ManagementList>
     {
@@ -26,18 +24,14 @@ namespace Microsoft.Management.UI.Internal
         #endregion Fields
 
         #region Constructors
-        /// <summary>
-        /// Constructs a new instance of the ManagementListStateDescriptor class.
-        /// </summary>
+        
         public ManagementListStateDescriptor()
             : base()
         {
             // empty
         }
 
-        /// <summary>
-        /// Constructs a new instance of the ManagementListStateDescriptor class.
-        /// </summary>
+        
         /// <param name="name">The name that will be displayed to users.</param>
         public ManagementListStateDescriptor(string name)
             : base(name)
@@ -47,9 +41,7 @@ namespace Microsoft.Management.UI.Internal
         #endregion Constructors
 
         #region Save/Restore
-        /// <summary>
-        /// Saves a snapshot of the ManagementList state.
-        /// </summary>
+        
         /// <param name="subject">
         /// The ManagementList instance whose state should be preserved.
         /// </param>
@@ -69,18 +61,14 @@ namespace Microsoft.Management.UI.Internal
             this.SaveRulesSelected(subject);
         }
 
-        /// <summary>
-        /// Restores the state of the passed in ManagementList and applies the restored filter.
-        /// </summary>
+        
         /// <param name="subject">The ManagementList instance whose state should be restored.</param>
         public override void RestoreState(ManagementList subject)
         {
             this.RestoreState(subject, true);
         }
 
-        /// <summary>
-        /// Restores the state of the passed in ManagementList.
-        /// </summary>
+        
         /// <param name="subject">
         /// The ManagementList instance whose state should be restored.
         /// </param>
@@ -130,9 +118,7 @@ namespace Microsoft.Management.UI.Internal
             return true;
         }
 
-        /// <summary>
-        /// Checks whether columns can be restored.
-        /// </summary>
+        
         /// <param name="subject">Target ManagementList.</param>
         /// <param name="callback">RetryActionAfterLoaded callback method.</param>
         /// <returns>True if-and-only-if columns are restorable.</returns>
@@ -239,10 +225,7 @@ namespace Microsoft.Management.UI.Internal
             subject.List.RefreshColumns();
         }
 
-        /// <summary>
-        /// Set column state for target <see cref="ManagementList"/> to
-        /// previously persisted state.
-        /// </summary>
+        
         /// <param name="subject">
         /// Target <see cref="ManagementList"/> whose column state
         /// is to be restored.
@@ -471,36 +454,28 @@ namespace Microsoft.Management.UI.Internal
             private ListSortDirection sortDirection;
             private double width;
 
-            /// <summary>
-            /// Gets or sets the location of the column.
-            /// </summary>
+            
             public int Index
             {
                 get { return this.index; }
                 set { this.index = value; }
             }
 
-            /// <summary>
-            /// Gets or sets a value indicating whether the column should be shown.
-            /// </summary>
+            
             public bool IsInUse
             {
                 get { return this.isInUse; }
                 set { this.isInUse = value; }
             }
 
-            /// <summary>
-            /// Gets or sets the sort direction of the column.
-            /// </summary>
+            
             public ListSortDirection SortDirection
             {
                 get { return this.sortDirection; }
                 set { this.sortDirection = value; }
             }
 
-            /// <summary>
-            /// Gets or sets a value indicating the width of a column.
-            /// </summary>
+            
             public double Width
             {
                 get { return this.width; }
@@ -510,18 +485,14 @@ namespace Microsoft.Management.UI.Internal
 
         internal class RuleStateDescriptor
         {
-            /// <summary>
-            /// Gets or sets the UniqueName associated with the rule.
-            /// </summary>
+            
             public string UniqueName
             {
                 get;
                 set;
             }
 
-            /// <summary>
-            /// Gets the FilterRule associated with the rule.
-            /// </summary>
+            
             public FilterRule Rule
             {
                 get;
@@ -533,19 +504,14 @@ namespace Microsoft.Management.UI.Internal
         {
             private Dictionary<string, ColumnStateDescriptor> columns;
 
-            /// <summary>
-            /// Constructor that takes a lookup dictionary of column information.
-            /// </summary>
+            
             /// <param name="columns">The lookup dictionary.</param>
             public InnerListColumnOrderComparer(Dictionary<string, ColumnStateDescriptor> columns)
             {
                 this.columns = columns;
             }
 
-            /// <summary>
-            /// Compares two InnerListColumn objects and determines their relative
-            /// ordering.
-            /// </summary>
+            
             /// <param name="x">The first object.</param>
             /// <param name="y">The second object.</param>
             /// <returns>
@@ -585,9 +551,7 @@ namespace Microsoft.Management.UI.Internal
         #endregion Helper Classes
 
         #region ToString
-        /// <summary>
-        /// Displayable string identifying this class instance.
-        /// </summary>
+        
         /// <returns>A string to represent the instance of this class.</returns>
         public override string ToString()
         {

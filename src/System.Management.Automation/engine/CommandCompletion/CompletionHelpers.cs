@@ -7,9 +7,7 @@ using System.Management.Automation.Language;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Shared helper class for common completion helper methods.
-    /// </summary>
+    
     internal static class CompletionHelpers
     {
         private static readonly SearchValues<char> s_defaultCharsToCheck = SearchValues.Create("$`");
@@ -17,10 +15,7 @@ namespace System.Management.Automation
         private const string SingleQuote = "'";
         private const string DoubleQuote = "\"";
 
-        /// <summary>
-        /// Get matching completions from word to complete.
-        /// This makes it easier to handle different variations of completions with consideration of quotes.
-        /// </summary>
+        
         /// <param name="wordToComplete">The word to complete.</param>
         /// <param name="possibleCompletionValues">The possible completion values to iterate.</param>
         /// <param name="displayInfoMapper">The optional completion display info mapper delegate for tool tip and list item text.</param>
@@ -56,25 +51,17 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Provides the display information for a completion result.
-        /// This delegate is used to map a string value to its corresponding display information.
-        /// </summary>
+        
         /// <param name="value">The input value to be mapped</param>
         /// <returns>Completion display info containing tool tip and list item text.</returns>
         internal delegate (string ToolTip, string ListItemText) CompletionDisplayInfoMapper(string value);
 
-        /// <summary>
-        /// Provides the default display information for a completion result.
-        /// Defaults to using the input value for both the tool tip and list item text.
-        /// </summary>
+        
         /// <returns>Completion display info containing tool tip and list item text.</returns>
         internal static readonly CompletionDisplayInfoMapper DefaultDisplayInfoMapper = value
             => (value, value);
 
-        /// <summary>
-        /// Normalizes the input string to an expandable string format for PowerShell.
-        /// </summary>
+        
         /// <param name="value">The input string to be normalized.</param>
         /// <returns>The normalized string with special characters replaced by their PowerShell escape sequences.</returns>
         /// <remarks>
@@ -103,9 +90,7 @@ namespace System.Management.Automation
                 .Replace("\f", "`f")
                 .Replace("\v", "`v");
 
-        /// <summary>
-        /// Defines a strategy for determining if a value matches a word or pattern.
-        /// </summary>
+        
         /// <param name="value">The input string to check for a match.</param>
         /// <param name="wordToComplete">The word or pattern to match against.</param>
         /// <returns>
@@ -113,18 +98,14 @@ namespace System.Management.Automation
         /// </returns>
         internal delegate bool MatchStrategy(string value, string wordToComplete);
 
-        /// <summary>
-        /// Determines if the given value matches the specified word using a literal, case-insensitive prefix match.
-        /// </summary>
+        
         /// <returns>
         /// <c>true</c> if the value starts with the word (case-insensitively); otherwise, <c>false</c>.
         /// </returns>
         internal static readonly MatchStrategy LiteralMatchOrdinalIgnoreCase = (value, wordToComplete)
             => value.StartsWith(wordToComplete, StringComparison.OrdinalIgnoreCase);
 
-        /// <summary>
-        /// Determines if the given value matches the specified word using wildcard pattern matching.
-        /// </summary>
+        
         /// <returns>
         /// <c>true</c> if the value matches the word as a wildcard pattern; otherwise, <c>false</c>.
         /// </returns>
@@ -137,9 +118,7 @@ namespace System.Management.Automation
                 .Get(wordToComplete + "*", WildcardOptions.IgnoreCase)
                 .IsMatch(value);
 
-        /// <summary>
-        /// Determines if the given value matches the specified word considering wildcard characters literally.
-        /// </summary>
+        
         /// <returns>
         /// <c>true</c> if the value matches either the literal normalized word or the wildcard pattern with escaping; 
         /// otherwise, <c>false</c>.
@@ -152,9 +131,7 @@ namespace System.Management.Automation
             => LiteralMatchOrdinalIgnoreCase(value, wordToComplete) ||
                WildcardPatternMatchIgnoreCase(value, WildcardPattern.Escape(wordToComplete));
 
-        /// <summary>
-        /// Determines if the given value matches the specified word taking into account wildcard characters.
-        /// </summary>
+        
         /// <returns>
         /// <c>true</c> if the value matches either the literal normalized word or the wildcard pattern; otherwise, <c>false</c>.
         /// </returns>
@@ -165,9 +142,7 @@ namespace System.Management.Automation
             => LiteralMatchOrdinalIgnoreCase(value, wordToComplete) ||
                WildcardPatternMatchIgnoreCase(value, wordToComplete);
 
-        /// <summary>
-        /// Removes wrapping quotes from a string and returns the quote used, if present.
-        /// </summary>
+        
         /// <param name="wordToComplete">
         /// The string to process, potentially surrounded by single or double quotes.
         /// This parameter is updated in-place to exclude the removed quotes.
@@ -231,16 +206,7 @@ namespace System.Management.Automation
             return string.Empty;
         }
 
-        /// <summary>
-        /// Determines whether the specified completion string requires quotes.
-        /// Quoting is required if:
-        /// <list type="bullet">
-        ///   <item><description>There are parsing errors in the input string.</description></item>
-        ///   <item><description>The parsed token count is not exactly two (the input token + EOF).</description></item>
-        ///   <item><description>The first token is a string or a PowerShell keyword containing special characters.</description></item>
-        ///   <item><description>The first token is a semi colon or comma token.</description></item>
-        /// </list>
-        /// </summary>
+        
         /// <param name="completion">The input string to analyze for quoting requirements.</param>
         /// <returns><c>true</c> if the string requires quotes, <c>false</c> otherwise.</returns>
         internal static bool CompletionRequiresQuotes(string completion)
@@ -270,9 +236,7 @@ namespace System.Management.Automation
             return requireQuote;
         }
 
-        /// <summary>
-        /// Determines whether the given text contains an escaped newline string.
-        /// </summary>
+        
         /// <param name="text">The input string to check for escaped newlines.</param>
         /// <returns>
         /// <c>true</c> if the text contains the escaped Unix-style newline string ("`n") or
@@ -284,9 +248,7 @@ namespace System.Management.Automation
         private static bool ContainsCharsToCheck(ReadOnlySpan<char> text)
             => text.ContainsAny(s_defaultCharsToCheck);
 
-        /// <summary>
-        /// Quotes a given completion text.
-        /// </summary>
+        
         /// <param name="completionText">
         /// The text to be quoted.
         /// </param>

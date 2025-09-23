@@ -12,38 +12,20 @@ using Microsoft.PowerShell.Commands.ShowCommandExtension;
 
 namespace Microsoft.PowerShell.Commands.ShowCommandInternal
 {
-    /// <summary>
-    /// Contains information about a single parameter inside a parameter set.
-    /// If a parameter with the same name belongs to two (or more) parameter sets,
-    /// there will be two (or more) ParameterViewModel objects for the parameters,
-    /// each one inside its own ParameterSetViewModel.
-    /// </summary>
+    
     public class ParameterViewModel : INotifyPropertyChanged
     {
-        /// <summary>
-        /// ParameterMetadata contains information that is the same throughout parameter sets
-        /// like Name and Type.
-        /// Note: It also happens to contain a list of all ParameterSetMetadata for the parametersets
-        /// in this cmdlet, but this information is not used in this class since if a parameter is
-        /// in multiple parametersets, there will be a ParameterViewModel for each time the parameter
-        /// appears in a parameterset.
-        /// </summary>
+        
         private ShowCommandParameterInfo parameter;
 
-        /// <summary>
-        /// value entered in the GUI for the parameter.
-        /// </summary>
+        
         private object parameterValue;
 
-        /// <summary>
-        /// Name of the parameter set this parameter is in.
-        /// </summary>
+        
         private string parameterSetName;
 
         #region Construction and Destructor
-        /// <summary>
-        /// Initializes a new instance of the ParameterViewModel class.
-        /// </summary>
+        
         /// <param name="parameter">The parameter information for this parameter.</param>
         /// <param name="parameterSetName">The name of the parameter set this parameter is in.</param>
         public ParameterViewModel(ShowCommandParameterInfo parameter, string parameterSetName)
@@ -68,26 +50,19 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
 
         #region INotifyPropertyChanged Members
 
-        /// <summary>
-        /// PropertyChanged Event.
-        /// </summary>
+        
         public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
 
         #region Properties
-        /// <summary>
-        /// Gets the ParameterMetadata that contains information that is the same throughout parameter sets
-        /// like Name and Type.
-        /// </summary>
+        
         public ShowCommandParameterInfo Parameter
         {
             get { return this.parameter; }
         }
 
-        /// <summary>
-        /// Gets or sets the value for this parameter from the GUI.
-        /// </summary>
+        
         public object Value
         {
             get
@@ -105,33 +80,25 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
             }
         }
 
-        /// <summary>
-        /// Gets the parameter name.
-        /// </summary>
+        
         public string Name
         {
             get { return this.Parameter.Name; }
         }
 
-        /// <summary>
-        /// Gets the name of the parameter set this parameter is in.
-        /// </summary>
+        
         public string ParameterSetName
         {
             get { return this.parameterSetName; }
         }
 
-        /// <summary>
-        /// Gets a value indicating whether this parameter is in the shared parameterset.
-        /// </summary>
+        
         public bool IsInSharedParameterSet
         {
             get { return CommandViewModel.IsSharedParameterSetName(this.parameterSetName); }
         }
 
-        /// <summary>
-        /// Gets Name with an extra suffix to indicate if the parameter is mandatory to serve.
-        /// </summary>
+        
         public string NameTextLabel
         {
             get
@@ -149,9 +116,7 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
             }
         }
 
-        /// <summary>
-        /// Gets Label in the case this parameter is used in a combo box.
-        /// </summary>
+        
         public string NameCheckLabel
         {
             get
@@ -166,9 +131,7 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
             }
         }
 
-        /// <summary>
-        /// Gets Tooltip string for the parameter.
-        /// </summary>
+        
         public string ToolTip
         {
             get
@@ -182,17 +145,13 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
             }
         }
 
-        /// <summary>
-        /// Gets a value indicating whether the parameter is mandatory.
-        /// </summary>
+        
         public bool IsMandatory
         {
             get { return this.Parameter.IsMandatory; }
         }
 
-        /// <summary>
-        /// Gets a value indicating whether the parameter has a value.
-        /// </summary>
+        
         public bool HasValue
         {
             get
@@ -212,9 +171,7 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
         }
         #endregion
 
-        /// <summary>
-        /// Evaluates the tooltip based on the parameters.
-        /// </summary>
+        
         /// <param name="typeName">Parameter type name.</param>
         /// <param name="position">Parameter position.</param>
         /// <param name="mandatory">True if the parameter is mandatory.</param>
@@ -256,9 +213,7 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
             return returnValue.ToString();
         }
 
-        /// <summary>
-        /// If property changed will be notify.
-        /// </summary>
+        
         /// <param name="propertyName">The changed property.</param>
         private void OnNotifyPropertyChanged(string propertyName)
         {

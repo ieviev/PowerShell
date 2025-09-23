@@ -213,27 +213,7 @@ namespace System.Management.Automation.Interpreter
         }
     }
 
-    /// <summary>
-    /// This instruction implements a goto expression that can jump out of any expression.
-    /// It pops values (arguments) from the evaluation stack that the expression tree nodes in between
-    /// the goto expression and the target label node pushed and not consumed yet.
-    /// A goto expression can jump into a node that evaluates arguments only if it carries
-    /// a value and jumps right after the first argument (the carried value will be used as the first argument).
-    /// Goto can jump into an arbitrary child of a BlockExpression since the block doesn't accumulate values
-    /// on evaluation stack as its child expressions are being evaluated.
-    ///
-    /// Goto needs to execute any finally blocks on the way to the target label.
-    /// <example>
-    /// {
-    ///     f(1, 2, try { g(3, 4, try { goto L } finally { ... }, 6) } finally { ... }, 7, 8)
-    ///     L: ...
-    /// }
-    /// </example>
-    /// The goto expression here jumps to label L while having 4 items on evaluation stack (1, 2, 3 and 4).
-    /// The jump needs to execute both finally blocks, the first one on stack level 4 the
-    /// second one on stack level 2. So, it needs to jump the first finally block, pop 2 items from the stack,
-    /// run second finally block and pop another 2 items from the stack and set instruction pointer to label L.
-    /// </summary>
+    
     internal sealed class GotoInstruction : IndexedBranchInstruction
     {
         private const int Variants = 4;
@@ -433,9 +413,7 @@ namespace System.Management.Automation.Interpreter
         }
     }
 
-    /// <summary>
-    /// The first instruction of finally block.
-    /// </summary>
+    
     internal sealed class EnterFinallyInstruction : IndexedBranchInstruction
     {
         private static readonly EnterFinallyInstruction[] s_cache = new EnterFinallyInstruction[CacheSize];
@@ -475,9 +453,7 @@ namespace System.Management.Automation.Interpreter
         }
     }
 
-    /// <summary>
-    /// The last instruction of finally block.
-    /// </summary>
+    
     internal sealed class LeaveFinallyInstruction : Instruction
     {
         internal static readonly Instruction Instance = new LeaveFinallyInstruction();
@@ -533,9 +509,7 @@ namespace System.Management.Automation.Interpreter
         }
     }
 
-    /// <summary>
-    /// The last instruction of a catch exception handler.
-    /// </summary>
+    
     internal sealed class LeaveExceptionHandlerInstruction : IndexedBranchInstruction
     {
         private static readonly LeaveExceptionHandlerInstruction[] s_cache = new LeaveExceptionHandlerInstruction[2 * CacheSize];
@@ -576,9 +550,7 @@ namespace System.Management.Automation.Interpreter
         }
     }
 
-    /// <summary>
-    /// The last instruction of a fault exception handler.
-    /// </summary>
+    
     internal sealed class LeaveFaultInstruction : Instruction
     {
         internal static readonly Instruction NonVoid = new LeaveFaultInstruction(true);

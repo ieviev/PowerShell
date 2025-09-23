@@ -62,10 +62,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         private static readonly HashSet<string> s_defaultScalarTypesHash = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
     }
 
-    /// <summary>
-    /// Class to manage the selection of a desired view type and
-    /// manage state associated to the selected view.
-    /// </summary>
+    
     internal sealed class FormatViewManager
     {
         #region tracer
@@ -203,12 +200,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             }
         }
 
-        /// <summary>
-        /// Prepares a given view for remote object processing ie., lets the view
-        /// display (or not) ComputerName property. This will query the object to
-        /// check if ComputerName property is present. If present, this will prepare
-        /// the view.
-        /// </summary>
+        
         /// <param name="viewGenerator"></param>
         /// <param name="so"></param>
         private static void PrepareViewForRemoteObjects(ViewGenerator viewGenerator, PSObject so)
@@ -219,11 +211,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             }
         }
 
-        /// <summary>
-        /// Helper method to process Unknown error message.
-        /// It helps is creating appropriate error message to
-        /// be displayed to the user.
-        /// </summary>
+        
         /// <param name="errorContext">Error context.</param>
         /// <param name="viewName">Uses supplied view name.</param>
         /// <param name="so">Source object.</param>
@@ -453,16 +441,11 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             return viewGenerator;
         }
 
-        /// <summary>
-        /// The view generator that produced data for a selected shape.
-        /// </summary>
+        
         private ViewGenerator _viewGenerator = null;
     }
 
-    /// <summary>
-    /// Class to manage the selection of a desired view type
-    /// for out of band objects.
-    /// </summary>
+    
     internal static class OutOfBandFormatViewManager
     {
         private static bool IsNotRemotingProperty(string name)
@@ -549,14 +532,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
     }
 
-    /// <summary>
-    /// Helper class to manage the logging of errors resulting from
-    /// evaluations of PSPropertyExpression instances
-    ///
-    /// Depending on settings, it queues the failing PSPropertyExpressionResult
-    /// instances and generates a list of out-of-band FormatEntryData
-    /// objects to be sent to the output pipeline.
-    /// </summary>
+    
     internal sealed class FormatErrorManager
     {
         internal FormatErrorManager(FormatErrorPolicy formatErrorPolicy)
@@ -564,9 +540,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             _formatErrorPolicy = formatErrorPolicy;
         }
 
-        /// <summary>
-        /// Log a failed evaluation of an PSPropertyExpression.
-        /// </summary>
+        
         /// <param name="result">PSPropertyExpressionResult containing the failed evaluation data.</param>
         /// <param name="sourceObject">Object used to evaluate the PSPropertyExpression.</param>
         internal void LogPSPropertyExpressionFailedResult(PSPropertyExpressionResult result, object sourceObject)
@@ -579,9 +553,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             _formattingErrorList.Add(error);
         }
 
-        /// <summary>
-        /// Log a failed formatting operation.
-        /// </summary>
+        
         /// <param name="error">String format error object.</param>
         internal void LogStringFormatError(StringFormatError error)
         {
@@ -614,11 +586,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             get { return _formatErrorPolicy.formatErrorStringInFormattedOutput; }
         }
 
-        /// <summary>
-        /// Provide a list of ErrorRecord entries
-        /// to be written to the error pipeline and clear the list of pending
-        /// errors.
-        /// </summary>
+        
         /// <returns>List of ErrorRecord objects.</returns>
         internal List<ErrorRecord> DrainFailedResultList()
         {
@@ -637,9 +605,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             return retVal;
         }
 
-        /// <summary>
-        /// Conversion between an error internal representation and ErrorRecord.
-        /// </summary>
+        
         /// <param name="error">Internal error object.</param>
         /// <returns>Corresponding ErrorRecord instance.</returns>
         private static ErrorRecord GenerateErrorRecord(FormattingError error)
@@ -677,9 +643,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
 
         private readonly FormatErrorPolicy _formatErrorPolicy;
 
-        /// <summary>
-        /// Current list of failed PSPropertyExpression evaluations.
-        /// </summary>
+        
         private readonly List<FormattingError> _formattingErrorList = new List<FormattingError>();
     }
 }

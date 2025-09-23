@@ -6,14 +6,10 @@ using System.Management.Automation.Help;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// The MamlUtil class.
-    /// </summary>
+    
     internal static class MamlUtil
     {
-        /// <summary>
-        /// Takes Name value from maml2 and overrides it in maml1.
-        /// </summary>
+        
         /// <param name="maml1"></param>
         /// <param name="maml2"></param>
         internal static void OverrideName(PSObject maml1, PSObject maml2)
@@ -22,9 +18,7 @@ namespace System.Management.Automation
             PrependPropertyValue(maml1, maml2, new string[] { "Details", "Name" }, true);
         }
 
-        /// <summary>
-        /// Takes Name value from maml2 and overrides it in maml1.
-        /// </summary>
+        
         /// <param name="maml1"></param>
         /// <param name="maml2"></param>
         internal static void OverridePSTypeNames(PSObject maml1, PSObject maml2)
@@ -46,9 +40,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Adds common properties like PSSnapIn,ModuleName from maml2 to maml1.
-        /// </summary>
+        
         /// <param name="maml1"></param>
         /// <param name="maml2"></param>
         internal static void AddCommonProperties(PSObject maml1, PSObject maml2)
@@ -72,26 +64,19 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Prepend - Modify Syntax element in maml1 using the Syntax element from maml2.
-        /// </summary>
+        
         internal static void PrependSyntax(PSObject maml1, PSObject maml2)
         {
             PrependPropertyValue(maml1, maml2, new string[] { "Syntax", "SyntaxItem" }, false);
         }
 
-        /// <summary>
-        /// Prepend - Modify DetailedDescription element in maml1 using the DetailedDescription element from maml2.
-        /// </summary>
+        
         internal static void PrependDetailedDescription(PSObject maml1, PSObject maml2)
         {
             PrependPropertyValue(maml1, maml2, new string[] { "Description" }, false);
         }
 
-        /// <summary>
-        /// Override - Modify Parameters element in maml1 using the Parameters element from maml2.
-        /// This will copy parameters from maml2 that are not present in maml1.
-        /// </summary>
+        
         internal static void OverrideParameters(PSObject maml1, PSObject maml2)
         {
             string[] parametersPath = new string[] { "Parameters", "Parameter" };
@@ -179,17 +164,13 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Prepend - Modify Notes element in maml1 using the Notes element from maml2.
-        /// </summary>
+        
         internal static void PrependNotes(PSObject maml1, PSObject maml2)
         {
             PrependPropertyValue(maml1, maml2, new string[] { "AlertSet", "Alert" }, false);
         }
 
-        /// <summary>
-        /// Get property info.
-        /// </summary>
+        
         internal static PSPropertyInfo GetPropertyInfo(PSObject psObject, string[] path)
         {
             if (path.Length == 0)
@@ -218,9 +199,7 @@ namespace System.Management.Automation
             return null;
         }
 
-        /// <summary>
-        /// Prepend property value.
-        /// </summary>
+        
         /// <param name="maml1">
         /// </param>
         /// <param name="maml2">
@@ -285,9 +264,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Ensure property info path exists.
-        /// </summary>
+        
         internal static void EnsurePropertyInfoPathExists(PSObject psObject, string[] path)
         {
             if (path.Length == 0)

@@ -13,9 +13,7 @@ using System.Management.Automation.Internal;
 namespace Microsoft.PowerShell.Commands
 {
     #region GetEventLogCommand
-    /// <summary>
-    /// This class implements the Get-EventLog command.
-    /// </summary>
+    
     /// <remarks>
     /// The CLR EventLogEntryCollection class has problems with managing
     /// rapidly spinning logs (i.e. logs set to "Overwrite" which are
@@ -38,32 +36,24 @@ namespace Microsoft.PowerShell.Commands
     public sealed class GetEventLogCommand : PSCmdlet
     {
         #region Parameters
-        /// <summary>
-        /// Read eventlog entries from this log.
-        /// </summary>
+        
         [Parameter(Position = 0, Mandatory = true, ParameterSetName = "LogName")]
         [Alias("LN")]
         public string LogName { get; set; }
 
-        /// <summary>
-        /// Read eventlog entries from this computer.
-        /// </summary>
+        
         [Parameter]
         [ValidateNotNullOrEmpty]
         [Alias("Cn")]
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
         public string[] ComputerName { get; set; } = Array.Empty<string>();
 
-        /// <summary>
-        /// Read only this number of entries.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "LogName")]
         [ValidateRange(0, Int32.MaxValue)]
         public int Newest { get; set; } = Int32.MaxValue;
 
-        /// <summary>
-        /// Return entries "after " this date.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "LogName")]
         [ValidateNotNullOrEmpty]
         public DateTime After
@@ -80,9 +70,7 @@ namespace Microsoft.PowerShell.Commands
 
         private DateTime _after;
 
-        /// <summary>
-        /// Return entries "Before" this date.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "LogName")]
         [ValidateNotNullOrEmpty]
         public DateTime Before
@@ -99,9 +87,7 @@ namespace Microsoft.PowerShell.Commands
 
         private DateTime _before;
 
-        /// <summary>
-        /// Return entries for this user.Wild characters is supported.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "LogName")]
         [ValidateNotNullOrEmpty]
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
@@ -118,10 +104,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string[] _username;
 
-        /// <summary>
-        /// Match eventlog entries by the InstanceIds
-        /// gets or sets an array of instanceIds.
-        /// </summary>
+        
         [Parameter(Position = 1, ParameterSetName = "LogName")]
         [ValidateNotNullOrEmpty]
         [ValidateRangeAttribute((long)0, long.MaxValue)]
@@ -139,10 +122,7 @@ namespace Microsoft.PowerShell.Commands
 
         private long[] _instanceIds = null;
 
-        /// <summary>
-        /// Match eventlog entries by the Index
-        /// gets or sets an array of indexes.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "LogName")]
         [ValidateNotNullOrEmpty]
         [ValidateRangeAttribute((int)1, int.MaxValue)]
@@ -160,10 +140,7 @@ namespace Microsoft.PowerShell.Commands
 
         private int[] _indexes = null;
 
-        /// <summary>
-        /// Match eventlog entries by the EntryType
-        /// gets or sets an array of EntryTypes.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "LogName")]
         [ValidateNotNullOrEmpty]
         [ValidateSetAttribute(new string[] { "Error", "Information", "FailureAudit", "SuccessAudit", "Warning" })]
@@ -182,9 +159,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string[] _entryTypes = null;
 
-        /// <summary>
-        /// Get or sets an array of Source.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "LogName")]
         [ValidateNotNullOrEmpty]
         [Alias("ABO")]
@@ -203,9 +178,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string[] _sources;
 
-        /// <summary>
-        /// Get or Set Message string to searched in EventLog.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "LogName")]
         [ValidateNotNullOrEmpty]
         [Alias("MSG")]
@@ -225,21 +198,15 @@ namespace Microsoft.PowerShell.Commands
 
         private string _message;
 
-        /// <summary>
-        /// Returns Log Entry as base object.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "LogName")]
         public SwitchParameter AsBaseObject { get; set; }
 
-        /// <summary>
-        /// Return the Eventlog objects rather than the log contents.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "List")]
         public SwitchParameter List { get; set; }
 
-        /// <summary>
-        /// Return the log names rather than the EventLog objects.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "List")]
         public SwitchParameter AsString
         {
@@ -259,16 +226,12 @@ namespace Microsoft.PowerShell.Commands
 
         #region Overrides
 
-        /// <summary>
-        /// Sets true when Filter is Specified.
-        /// </summary>
+        
         private bool _isFilterSpecified = false;
         private bool _isDateSpecified = false;
         private bool _isThrowError = true;
 
-        /// <summary>
-        /// Process the specified logs.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             if (ParameterSetName == "List")
@@ -642,27 +605,21 @@ namespace Microsoft.PowerShell.Commands
     #endregion GetEventLogCommand
 
     #region ClearEventLogCommand
-    /// <summary>
-    /// This class implements the Clear-EventLog command.
-    /// </summary>
+    
 
     [Cmdlet(VerbsCommon.Clear, "EventLog", SupportsShouldProcess = true,
         HelpUri = "https://go.microsoft.com/fwlink/?LinkID=135198", RemotingCapability = RemotingCapability.SupportedByCommand)]
     public sealed class ClearEventLogCommand : PSCmdlet
     {
         #region Parameters
-        /// <summary>
-        /// Clear these logs.
-        /// </summary>
+        
         [Parameter(Position = 0, Mandatory = true, ValueFromPipelineByPropertyName = true)]
         [Alias("LN")]
         [ValidateNotNullOrEmpty]
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
         public string[] LogName { get; set; }
 
-        /// <summary>
-        /// Clear eventlog entries from these Computers.
-        /// </summary>
+        
         [Parameter(Position = 1, ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
@@ -673,9 +630,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Overrides
 
-        /// <summary>
-        /// Does the processing.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             string computer = string.Empty;
@@ -738,75 +693,57 @@ namespace Microsoft.PowerShell.Commands
     #endregion ClearEventLogCommand
 
     #region WriteEventLogCommand
-    /// <summary>
-    /// This class implements the Write-EventLog command.
-    /// </summary>
+    
 
     [Cmdlet(VerbsCommunications.Write, "EventLog", HelpUri = "https://go.microsoft.com/fwlink/?LinkID=135281", RemotingCapability = RemotingCapability.SupportedByCommand)]
     public sealed class WriteEventLogCommand : PSCmdlet
     {
         #region Parameters
-        /// <summary>
-        /// Write eventlog entries in this log.
-        /// </summary>
+        
         [Parameter(Position = 0, Mandatory = true)]
         [Alias("LN")]
         [ValidateNotNullOrEmpty]
         public string LogName { get; set; }
 
-        /// <summary>
-        /// The source by which the application is registered on the specified computer.
-        /// </summary>
+        
         [Parameter(Position = 1, Mandatory = true)]
         [Alias("SRC")]
         [ValidateNotNullOrEmpty]
         public string Source { get; set; }
 
-        /// <summary>
-        /// String which represents One of the EventLogEntryType values.
-        /// </summary>
+        
         [Parameter(Position = 3)]
         [Alias("ET")]
         [ValidateNotNullOrEmpty]
         [ValidateSetAttribute(new string[] { "Error", "Information", "FailureAudit", "SuccessAudit", "Warning" })]
         public EventLogEntryType EntryType { get; set; } = EventLogEntryType.Information;
 
-        /// <summary>
-        /// The application-specific subcategory associated with the message.
-        /// </summary>
+        
         [Parameter]
         public Int16 Category { get; set; } = 1;
 
-        /// <summary>
-        /// The application-specific identifier for the event.
-        /// </summary>
+        
         [Parameter(Position = 2, Mandatory = true)]
         [Alias("ID", "EID")]
         [ValidateNotNullOrEmpty]
         [ValidateRange(0, UInt16.MaxValue)]
         public Int32 EventId { get; set; }
 
-        /// <summary>
-        /// The message goes here.
-        /// </summary>
+        
         [Parameter(Position = 4, Mandatory = true)]
         [Alias("MSG")]
         [ValidateNotNullOrEmpty]
         [ValidateLength(0, 32766)]
         public string Message { get; set; }
 
-        /// <summary>
-        /// Write eventlog entries of this log.
-        /// </summary>
+        
         [Parameter]
         [Alias("RD")]
         [ValidateNotNullOrEmpty]
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
         public byte[] RawData { get; set; }
 
-        /// <summary>
-        /// Write eventlog entries of this log.
-        /// </summary>
+        
         [Parameter]
         [Alias("CN")]
         [ValidateNotNullOrEmpty]
@@ -826,9 +763,7 @@ namespace Microsoft.PowerShell.Commands
         #endregion private
         #region Overrides
 
-        /// <summary>
-        /// Does the processing.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             string _computerName = string.Empty;
@@ -885,36 +820,28 @@ namespace Microsoft.PowerShell.Commands
     #endregion WriteEventLogCommand
 
     #region LimitEventLogCommand
-    /// <summary>
-    /// This class implements the Limit-EventLog command.
-    /// </summary>
+    
 
     [Cmdlet(VerbsData.Limit, "EventLog", SupportsShouldProcess = true,
         HelpUri = "https://go.microsoft.com/fwlink/?LinkID=135227", RemotingCapability = RemotingCapability.SupportedByCommand)]
     public sealed class LimitEventLogCommand : PSCmdlet
     {
         #region Parameters
-        /// <summary>
-        /// Limit the properties of this log.
-        /// </summary>
+        
         [Parameter(Position = 0, Mandatory = true)]
         [Alias("LN")]
         [ValidateNotNullOrEmpty]
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
         public string[] LogName { get; set; }
 
-        /// <summary>
-        /// Limit eventlog entries of this computer.
-        /// </summary>
+        
         [Parameter]
         [Alias("CN")]
         [ValidateNotNullOrEmpty]
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
         public string[] ComputerName { get; set; } = { "." };
 
-        /// <summary>
-        /// Minimum retention days for this log.
-        /// </summary>
+        
         [Parameter]
         [Alias("MRD")]
         [ValidateNotNullOrEmpty]
@@ -932,9 +859,7 @@ namespace Microsoft.PowerShell.Commands
 
         private Int32 _retention;
         private bool _retentionSpecified = false;
-        /// <summary>
-        /// Overflow action to be taken.
-        /// </summary>
+        
         [Parameter]
         [Alias("OFA")]
         [ValidateNotNullOrEmpty]
@@ -953,9 +878,7 @@ namespace Microsoft.PowerShell.Commands
 
         private System.Diagnostics.OverflowAction _overflowaction;
         private bool _overflowSpecified = false;
-        /// <summary>
-        /// Maximum size of this log.
-        /// </summary>
+        
         [Parameter]
         [ValidateNotNullOrEmpty]
         public Int64 MaximumSize
@@ -985,9 +908,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Overrides
 
-        /// <summary>
-        /// Does the processing.
-        /// </summary>
+        
         protected override
         void
         BeginProcessing()
@@ -1097,18 +1018,14 @@ namespace Microsoft.PowerShell.Commands
     #endregion LimitEventLogCommand
 
     #region ShowEventLogCommand
-    /// <summary>
-    /// This class implements the Show-EventLog command.
-    /// </summary>
+    
 
     [Cmdlet(VerbsCommon.Show, "EventLog", HelpUri = "https://go.microsoft.com/fwlink/?LinkID=135257", RemotingCapability = RemotingCapability.SupportedByCommand)]
     public sealed class ShowEventLogCommand : PSCmdlet
     {
         #region Parameters
 
-        /// <summary>
-        /// Show eventviewer of this computer.
-        /// </summary>
+        
         [Parameter(Position = 0)]
         [Alias("CN")]
         [ValidateNotNullOrEmpty]
@@ -1119,9 +1036,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Overrides
 
-        /// <summary>
-        /// Does the processing.
-        /// </summary>
+        
         protected override
         void
         BeginProcessing()
@@ -1158,87 +1073,45 @@ namespace Microsoft.PowerShell.Commands
     #endregion ShowEventLogCommand
 
     #region NewEventLogCommand
-    /// <summary>
-    /// This cmdlet creates the new event log .This cmdlet can also be used to
-    /// configure a new source for writing entries to an event log on the local
-    /// computer or a remote computer.
-    /// You can create an event source for an existing event log or a new event log.
-    /// When you create a new source for a new event log, the system registers the
-    /// source for that log, but the log is not created until the first entry is
-    /// written to it.
-    /// The operating system stores event logs as files. The associated file is
-    /// stored in the %SystemRoot%\System32\Config directory on the specified
-    /// computer. The file name is set by appending the first 8 characters of the
-    /// Log property with the ".evt" file name extension.
-    /// You can register the event source with localized resource file(s) for your
-    /// event category and message strings. Your application can write event log
-    /// entries using resource identifiers, rather than specifying the actual
-    /// string. You can register a separate file for event categories, messages and
-    /// parameter insertion strings, or you can register the same resource file for
-    /// all three types of strings.
-    /// </summary>
+    
 
     [Cmdlet(VerbsCommon.New, "EventLog", HelpUri = "https://go.microsoft.com/fwlink/?LinkID=135235", RemotingCapability = RemotingCapability.SupportedByCommand)]
     public class NewEventLogCommand : PSCmdlet
     {
         #region Parameter
-        /// <summary>
-        /// The following is the definition of the input parameter "CategoryResourceFile".
-        /// Specifies the path of the resource file that contains category strings for
-        /// the source
-        /// Resource File is expected to be present in Local/Remote Machines.
-        /// </summary>
+        
         [Parameter]
         [ValidateNotNullOrEmpty]
         [Alias("CRF")]
         public string CategoryResourceFile { get; set; }
 
-        /// <summary>
-        /// The following is the definition of the input parameter "ComputerName".
-        /// Specify the Computer Name. The default is local computer.
-        /// </summary>
+        
         [Parameter(Position = 2)]
         [ValidateNotNullOrEmpty]
         [Alias("CN")]
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
         public string[] ComputerName { get; set; } = { "." };
 
-        /// <summary>
-        /// The following is the definition of the input parameter "LogName".
-        /// Specifies the name of the log.
-        /// </summary>
+        
         [Parameter(Mandatory = true,
                    Position = 0)]
         [ValidateNotNullOrEmpty]
         [Alias("LN")]
         public string LogName { get; set; }
 
-        /// <summary>
-        /// The following is the definition of the input parameter "MessageResourceFile".
-        /// Specifies the path of the message resource file that contains message
-        /// formatting strings for the source
-        /// Resource File is expected to be present in Local/Remote Machines.
-        /// </summary>
+        
         [Parameter]
         [ValidateNotNullOrEmpty]
         [Alias("MRF")]
         public string MessageResourceFile { get; set; }
 
-        /// <summary>
-        /// The following is the definition of the input parameter "ParameterResourceFile".
-        /// Specifies the path of the resource file that contains message parameter
-        /// strings for the source
-        /// Resource File is expected to be present in Local/Remote Machines.
-        /// </summary>
+        
         [Parameter]
         [ValidateNotNullOrEmpty]
         [Alias("PRF")]
         public string ParameterResourceFile { get; set; }
 
-        /// <summary>
-        /// The following is the definition of the input parameter "Source".
-        /// Specifies the Source of the EventLog.
-        /// </summary>
+        
         [Parameter(Mandatory = true,
                    Position = 1)]
         [ValidateNotNullOrEmpty]
@@ -1259,9 +1132,7 @@ namespace Microsoft.PowerShell.Commands
         #endregion private
 
         #region override
-        /// <summary>
-        /// BeginProcessing method.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             string computer = string.Empty;
@@ -1324,21 +1195,14 @@ namespace Microsoft.PowerShell.Commands
     #endregion NewEventLogCommand
 
     #region RemoveEventLogCommand
-    /// <summary>
-    /// This cmdlet is used to delete the specified event log from the specified
-    /// computer. This can also be used to Clear the entries of the specified event
-    /// log and also to unregister the Source associated with the eventlog.
-    /// </summary>
+    
 
     [Cmdlet(VerbsCommon.Remove, "EventLog",
              SupportsShouldProcess = true, DefaultParameterSetName = "Default",
              HelpUri = "https://go.microsoft.com/fwlink/?LinkID=135248", RemotingCapability = RemotingCapability.SupportedByCommand)]
     public class RemoveEventLogCommand : PSCmdlet
     {
-        /// <summary>
-        /// The following is the definition of the input parameter "ComputerName".
-        /// Specifies the Computer Name.
-        /// </summary>
+        
         [Parameter(Position = 1)]
         [ValidateNotNull]
         [ValidateNotNullOrEmpty]
@@ -1346,10 +1210,7 @@ namespace Microsoft.PowerShell.Commands
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
         public string[] ComputerName { get; set; } = { "." };
 
-        /// <summary>
-        /// The following is the definition of the input parameter "LogName".
-        /// Specifies the Event Log Name.
-        /// </summary>
+        
         [Parameter(Mandatory = true,
                    Position = 0, ParameterSetName = "Default")]
         [ValidateNotNull]
@@ -1358,15 +1219,7 @@ namespace Microsoft.PowerShell.Commands
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
         public string[] LogName { get; set; }
 
-        /// <summary>
-        /// The following is the definition of the input parameter "RemoveSource".
-        /// Specifies either to remove the event log and associated source or
-        /// source. alone.
-        /// When this parameter is not specified, the cmdlet uses Delete Method which
-        /// clears the eventlog and also the source associated with it.
-        /// When this parameter value is true, then this cmdlet uses DeleteEventSource
-        /// Method to delete the Source alone.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "Source")]
         [ValidateNotNull]
         [ValidateNotNullOrEmpty]
@@ -1374,9 +1227,7 @@ namespace Microsoft.PowerShell.Commands
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
         public string[] Source { get; set; }
 
-        /// <summary>
-        /// BeginProcessing method.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             try

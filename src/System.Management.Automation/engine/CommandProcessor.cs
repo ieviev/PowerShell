@@ -14,10 +14,7 @@ using Dbg = System.Management.Automation.Diagnostics;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Class definition of CommandProcessor - This class provides interface to create
-    /// and execute commands written in CLS compliant languages.
-    /// </summary>
+    
     internal class CommandProcessor : CommandProcessorBase
     {
         #region ctor
@@ -43,9 +40,7 @@ namespace System.Management.Automation
             s_constructInstanceCache.GetOrAdd(typeof(OutLineOutputCommand), () => new OutLineOutputCommand());
         }
 
-        /// <summary>
-        /// Initializes the new instance of CommandProcessor class.
-        /// </summary>
+        
         /// <param name="cmdletInfo">
         /// The information about the cmdlet.
         /// </param>
@@ -61,9 +56,7 @@ namespace System.Management.Automation
             Init(cmdletInfo);
         }
 
-        /// <summary>
-        /// This is the constructor for script as cmdlet.
-        /// </summary>
+        
         /// <param name="scriptCommandInfo">
         /// The information about the cmdlet.
         /// </param>
@@ -87,9 +80,7 @@ namespace System.Management.Automation
 
         #region internal members
 
-        /// <summary>
-        /// Returns a CmdletParameterBinderController for the specified command.
-        /// </summary>
+        
         /// <param name="command">
         /// The cmdlet to bind parameters to.
         /// </param>
@@ -137,9 +128,7 @@ namespace System.Management.Automation
 
         private CmdletParameterBinderController _cmdletParameterBinderController;
 
-        /// <summary>
-        /// Get the ObsoleteAttribute of the current command.
-        /// </summary>
+        
         internal override ObsoleteAttribute ObsoleteAttribute
         {
             get { return _obsoleteAttribute; }
@@ -147,9 +136,7 @@ namespace System.Management.Automation
 
         private ObsoleteAttribute _obsoleteAttribute;
 
-        /// <summary>
-        /// Binds the specified command-line parameters to the target.
-        /// </summary>
+        
         /// <returns>
         /// true if encode succeeds otherwise false.
         /// </returns>
@@ -178,10 +165,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Prepares the command. Encodes the command-line parameters
-        /// JonN     2003-04-02 Split from Execute()
-        /// </summary>
+        
         /// <exception cref="ParameterBindingException">
         /// If any parameters fail to bind,
         /// or
@@ -275,9 +259,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Execute BeginProcessing part of command.
-        /// </summary>
+        
         internal override void DoBegin()
         {
             if (!RanBeginAlready && CmdletParameterBinderController.ObsoleteParameterWarningList != null)
@@ -300,10 +282,7 @@ namespace System.Management.Automation
             base.DoBegin();
         }
 
-        /// <summary>
-        /// This calls the command.  It assumes that Prepare() has already been called.
-        /// JonN     2003-04-02 Split from Execute()
-        /// </summary>
+        
         /// <exception cref="PipelineStoppedException">
         /// a terminating error occurred, or the pipeline was otherwise stopped
         /// </exception>
@@ -424,19 +403,13 @@ namespace System.Management.Automation
 
         #region helper_methods
 
-        /// <summary>
-        /// Tells whether it is the first call to Read.
-        /// </summary>
+        
         private bool _firstCallToRead = true;
 
-        /// <summary>
-        /// Tells whether to bail out in the next call to Read.
-        /// </summary>
+        
         private bool _bailInNextCall;
 
-        /// <summary>
-        /// Populates the parameters specified from the pipeline.
-        /// </summary>
+        
         /// <returns>
         /// A bool indicating whether read succeeded.
         /// </returns>
@@ -580,10 +553,7 @@ namespace System.Management.Automation
             return true;
         }
 
-        /// <summary>
-        /// Writes an ErrorRecord to the commands error pipe because the specified
-        /// input object was not bound to the command.
-        /// </summary>
+        
         /// <param name="inputObject">
         /// The pipeline input object that was not bound.
         /// </param>
@@ -628,9 +598,7 @@ namespace System.Management.Automation
             this.commandRuntime._WriteErrorSkipAllowCheck(errorRecord);
         }
 
-        /// <summary>
-        /// Reads an object from an input pipeline and attempts to bind the parameters.
-        /// </summary>
+        
         /// <param name="inputObject">
         /// The pipeline input object to be processed.
         /// </param>
@@ -677,9 +645,7 @@ namespace System.Management.Automation
                         : Expression.Constant(null, typeof(Cmdlet))).Compile())();
         }
 
-        /// <summary>
-        /// Initializes the command's request object.
-        /// </summary>
+        
         /// <param name="cmdletInformation">
         /// The information about the cmdlet.
         /// </param>
@@ -814,10 +780,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Checks if user has requested help (for example passing "-?" parameter for a cmdlet)
-        /// and if yes, then returns the help target to display.
-        /// </summary>
+        
         /// <param name="helpTarget">Help target to request.</param>
         /// <param name="helpCategory">Help category to request.</param>
         /// <returns><see langword="true"/> if user requested help; <see langword="false"/> otherwise.</returns>

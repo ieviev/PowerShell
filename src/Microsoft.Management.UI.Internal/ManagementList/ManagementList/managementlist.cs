@@ -23,9 +23,7 @@ namespace Microsoft.Management.UI.Internal
 
         private ObservableCollection<StateDescriptor<ManagementList>> views = new ObservableCollection<StateDescriptor<ManagementList>>();
 
-        /// <summary>
-        /// Gets the collection of saved views.
-        /// </summary>
+        
         public ObservableCollection<StateDescriptor<ManagementList>> Views
         {
             get { return this.views; }
@@ -33,9 +31,7 @@ namespace Microsoft.Management.UI.Internal
 
         private IStateDescriptorFactory<ManagementList> savedViewFactory;
 
-        /// <summary>
-        /// Gets or sets a factory used to create new views.
-        /// </summary>
+        
         public IStateDescriptorFactory<ManagementList> SavedViewFactory
         {
             get
@@ -60,9 +56,7 @@ namespace Microsoft.Management.UI.Internal
 
         #region Ctor
 
-        /// <summary>
-        /// Initializes a new instance of the ManagementList class.
-        /// </summary>
+        
         public ManagementList()
         {
             this.SearchBox = new SearchBox();
@@ -88,9 +82,7 @@ namespace Microsoft.Management.UI.Internal
 
         #endregion Ctor
 
-        /// <summary>
-        /// Moves focus to the SearchBox when Ctrl+E is pressed.
-        /// </summary>
+        
         /// <param name="e">The event data.</param>
         protected override void OnKeyDown(KeyEventArgs e)
         {
@@ -107,9 +99,7 @@ namespace Microsoft.Management.UI.Internal
             }
         }
 
-        /// <summary>
-        /// Gets an enumerator for logical child elements of this element.
-        /// </summary>
+        
         protected override IEnumerator LogicalChildren
         {
             get
@@ -165,11 +155,7 @@ namespace Microsoft.Management.UI.Internal
 
         #region Registration Helpers
 
-        /// <summary>
-        /// Adds the specified column.
-        /// Default filter rules for the column will be added if the filter is shown.
-        /// A default search rule will be added if the search box is shown and the column's data type is searchable.
-        /// </summary>
+        
         /// <param name="column">The column to add.</param>
         /// <exception cref="ArgumentNullException">The specified value is a null reference.</exception>
         public void AddColumn(InnerListColumn column)
@@ -179,9 +165,7 @@ namespace Microsoft.Management.UI.Internal
             this.AddColumn(column, this.IsFilterShown);
         }
 
-        /// <summary>
-        /// Adds the specified columns, and optionally default filter and search rules.
-        /// </summary>
+        
         /// <param name="column">The column to add.</param>
         /// <param name="addDefaultFilterRules">Whether to add default filter rules for the specified column.</param>
         /// <exception cref="ArgumentNullException">The specified value is a null reference.</exception>
@@ -213,9 +197,7 @@ namespace Microsoft.Management.UI.Internal
             }
         }
 
-        /// <summary>
-        /// Adds the specified rule, using the rule's display name as its group name.
-        /// </summary>
+        
         /// <param name="rule">The rule to add.</param>
         /// <exception cref="ArgumentNullException">The specified value is a null reference.</exception>
         public void AddRule(FilterRule rule)
@@ -225,9 +207,7 @@ namespace Microsoft.Management.UI.Internal
             this.AddFilterRulePicker.ShortcutFilterRules.Add(new AddFilterRulePickerItem(new FilterRulePanelItem(rule, rule.DisplayName)));
         }
 
-        /// <summary>
-        /// Clears all of the current columns, searchable rules and filter rules.
-        /// </summary>
+        
         public void ResetView()
         {
             this.List.Columns.Clear();

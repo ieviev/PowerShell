@@ -13,17 +13,12 @@ namespace System.Management.Automation.Runspaces
 
 #pragma warning disable 1634, 1691 // Stops compiler from warning about unknown warnings
 
-    /// <summary>
-    /// This class has common base implementation for Pipeline class.
-    /// LocalPipeline and RemotePipeline classes derives from it.
-    /// </summary>
+    
     internal abstract class PipelineBase : Pipeline
     {
         #region constructors
 
-        /// <summary>
-        /// Create a pipeline initialized with a command string.
-        /// </summary>
+        
         /// <param name="runspace">The associated Runspace/></param>
         /// <param name="command">Command string.</param>
         /// <param name="addToHistory">If true, add pipeline to history.</param>
@@ -42,10 +37,7 @@ namespace System.Management.Automation.Runspaces
             ErrorStream = new ObjectStream();
         }
 
-        /// <summary>
-        /// Create a Pipeline with an existing command string.
-        /// Caller should validate all the parameters.
-        /// </summary>
+        
         /// <param name="runspace">
         /// The LocalRunspace to associate with this pipeline.
         /// </param>
@@ -112,9 +104,7 @@ namespace System.Management.Automation.Runspaces
             InformationalBuffers = infoBuffers;
         }
 
-        /// <summary>
-        /// Copy constructor to support cloning.
-        /// </summary>
+        
         /// <param name="pipeline">The source pipeline.</param>
         /// <remarks>
         /// The copy constructor's intent is to support the scenario
@@ -153,9 +143,7 @@ namespace System.Management.Automation.Runspaces
 
         private Runspace _runspace;
 
-        /// <summary>
-        /// Access the runspace this pipeline is created on.
-        /// </summary>
+        
         public override Runspace Runspace
         {
             get
@@ -164,9 +152,7 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// This internal method doesn't do the _disposed check.
-        /// </summary>
+        
         /// <returns></returns>
         internal Runspace GetRunspace()
         {
@@ -175,9 +161,7 @@ namespace System.Management.Automation.Runspaces
 
         private bool _isNested;
 
-        /// <summary>
-        /// Is this pipeline nested.
-        /// </summary>
+        
         public override bool IsNested
         {
             get
@@ -186,16 +170,12 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// Is this a pulse pipeline (created by the EventManager)
-        /// </summary>
+        
         internal bool IsPulsePipeline { get; set; }
 
         private PipelineStateInfo _pipelineStateInfo = new PipelineStateInfo(PipelineState.NotStarted);
 
-        /// <summary>
-        /// Info about current state of the pipeline.
-        /// </summary>
+        
         /// <remarks>
         /// This value indicates the state of the pipeline after the change.
         /// </remarks>
@@ -212,9 +192,7 @@ namespace System.Management.Automation.Runspaces
         }
 
         // 913921-2005/07/08 ObjectWriter can be retrieved on a closed stream
-        /// <summary>
-        /// Access the input writer for this pipeline.
-        /// </summary>
+        
         public override PipelineWriter Input
         {
             get
@@ -223,9 +201,7 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// Access the output reader for this pipeline.
-        /// </summary>
+        
         public override PipelineReader<PSObject> Output
         {
             get
@@ -234,9 +210,7 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// Access the error output reader for this pipeline.
-        /// </summary>
+        
         /// <remarks>
         /// This is the non-terminating error stream from the command.
         /// In this release, the objects read from this PipelineReader
@@ -250,38 +224,26 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// Is this pipeline a child pipeline?
-        ///
-        /// IsChild flag makes it possible for the pipeline to differentiate between
-        /// a true v1 nested pipeline and the cmdlets calling cmdlets case. See bug
-        /// 211462.
-        /// </summary>
+        
         internal override bool IsChild { get; set; }
 
         #endregion properties
 
         #region stop
 
-        /// <summary>
-        /// Synchronous call to stop the running pipeline.
-        /// </summary>
+        
         public override void Stop()
         {
             CoreStop(true);
         }
 
-        /// <summary>
-        /// Asynchronous call to stop the running pipeline.
-        /// </summary>
+        
         public override void StopAsync()
         {
             CoreStop(false);
         }
 
-        /// <summary>
-        /// Stop the running pipeline.
-        /// </summary>
+        
         /// <param name="syncCall">If true pipeline is stopped synchronously
         /// else asynchronously.</param>
         private void CoreStop(bool syncCall)
@@ -350,9 +312,7 @@ namespace System.Management.Automation.Runspaces
             ImplementStop(syncCall);
         }
 
-        /// <summary>
-        /// Stop execution of pipeline.
-        /// </summary>
+        
         /// <param name="syncCall">If false, call is asynchronous.</param>
         protected abstract void ImplementStop(bool syncCall);
 
@@ -360,10 +320,7 @@ namespace System.Management.Automation.Runspaces
 
         #region invoke
 
-        /// <summary>
-        /// Invoke the pipeline, synchronously, returning the results as an
-        /// array of objects.
-        /// </summary>
+        
         /// <param name="input">an array of input objects to pass to the pipeline.
         /// Array may be empty but may not be null</param>
         /// <returns>An array of zero or more result objects.</returns>
@@ -416,9 +373,7 @@ namespace System.Management.Automation.Runspaces
             return Output.NonBlockingRead(Int32.MaxValue);
         }
 
-        /// <summary>
-        /// Invoke the pipeline asynchronously.
-        /// </summary>
+        
         /// <remarks>
         /// Results are returned through the <see cref="Pipeline.Output"/> reader.
         /// </remarks>
@@ -427,15 +382,10 @@ namespace System.Management.Automation.Runspaces
             CoreInvoke(null, false);
         }
 
-        /// <summary>
-        /// This parameter is true if Invoke is called.
-        /// It is false if InvokeAsync is called.
-        /// </summary>
+        
         protected bool SyncInvokeCall { get; private set; }
 
-        /// <summary>
-        /// Invoke the pipeline asynchronously with input.
-        /// </summary>
+        
         /// <param name="input">input to provide to pipeline. Input is
         /// used only for synchronous execution</param>
         /// <param name="syncCall">True if this method is called from
@@ -554,31 +504,20 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// Invokes a remote command and immediately disconnects if
-        /// transport layer supports it.
-        /// </summary>
+        
         internal override void InvokeAsyncAndDisconnect()
         {
             throw new NotSupportedException();
         }
 
-        /// <summary>
-        /// Starts execution of pipeline.
-        /// </summary>
+        
         protected abstract void StartPipelineExecution();
 
         #region concurrent pipeline check
 
         private bool _performNestedCheck = true;
 
-        /// <summary>
-        /// For nested pipeline, system checks that Execute is called from
-        /// currently executing pipeline.
-        /// If PerformNestedCheck is false, this check is bypassed. This
-        /// is set to true by remote provider. In remote provider case all
-        /// the checks are done by the client proxy.
-        /// </summary>
+        
         internal bool PerformNestedCheck
         {
             set
@@ -587,21 +526,10 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// This is the thread on which NestedPipeline can be executed.
-        /// In case of LocalPipeline, this is the thread of execution
-        /// of LocalPipeline. In case of RemotePipeline, this is thread
-        /// on which EnterNestedPrompt is called.
-        /// RemotePipeline proxy should set it on at the beginning of
-        /// EnterNestedPrompt and clear it on return.
-        /// </summary>
+        
         internal Thread NestedPipelineExecutionThread { get; set; }
 
-        /// <summary>
-        /// Check if anyother pipeline is executing.
-        /// In case of nested pipeline, checks that it is called
-        /// from currently executing pipeline's thread.
-        /// </summary>
+        
         /// <param name="syncCall">True if method is called from Invoke, false
         /// if called from InvokeAsync</param>
         /// <param name="syncObject">The sync object on which the lock is acquired.</param>
@@ -705,10 +633,7 @@ namespace System.Management.Automation.Runspaces
 
         #region Connect
 
-        /// <summary>
-        /// Connects synchronously to a running command on a remote server.
-        /// The pipeline object must be in the disconnected state.
-        /// </summary>
+        
         /// <returns>A collection of result objects.</returns>
         public override Collection<PSObject> Connect()
         {
@@ -716,9 +641,7 @@ namespace System.Management.Automation.Runspaces
             throw PSTraceSource.NewNotSupportedException(PipelineStrings.ConnectNotSupported);
         }
 
-        /// <summary>
-        /// Connects asynchronously to a running command on a remote server.
-        /// </summary>
+        
         public override void ConnectAsync()
         {
             // Connect semantics not supported on local (non-remoting) pipelines.
@@ -729,14 +652,10 @@ namespace System.Management.Automation.Runspaces
 
         #region state change event
 
-        /// <summary>
-        /// Event raised when Pipeline's state changes.
-        /// </summary>
+        
         public override event EventHandler<PipelineStateEventArgs> StateChanged = null;
 
-        /// <summary>
-        /// Current state of the pipeline.
-        /// </summary>
+        
         /// <remarks>
         /// This value indicates the state of the pipeline after the change.
         /// </remarks>
@@ -748,9 +667,7 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// This returns true if pipeline state is Completed, Failed or Stopped.
-        /// </summary>
+        
         /// <returns></returns>
         protected bool IsPipelineFinished()
         {
@@ -759,13 +676,7 @@ namespace System.Management.Automation.Runspaces
                     PipelineState == PipelineState.Stopped);
         }
 
-        /// <summary>
-        /// This is queue of all the state change event which have occurred for
-        /// this pipeline. RaisePipelineStateEvents raises event for each
-        /// item in this queue. We don't raise the event with in SetPipelineState
-        /// because often SetPipelineState is called with in a lock.
-        /// Raising event in lock introduces chances of deadlock in GUI applications.
-        /// </summary>
+        
         private Queue<ExecutionEventQueueItem> _executionEventQueue = new Queue<ExecutionEventQueueItem>();
 
         private sealed class ExecutionEventQueueItem
@@ -782,9 +693,7 @@ namespace System.Management.Automation.Runspaces
             public RunspaceAvailability NewRunspaceAvailability;
         }
 
-        /// <summary>
-        /// Sets the new execution state.
-        /// </summary>
+        
         /// <param name="state">The new state.</param>
         /// <param name="reason">
         /// An exception indicating that state change is the result of an error,
@@ -822,18 +731,14 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// Set the new execution state.
-        /// </summary>
+        
         /// <param name="state">The new state.</param>
         protected void SetPipelineState(PipelineState state)
         {
             SetPipelineState(state, null);
         }
 
-        /// <summary>
-        /// Raises events for changes in execution state.
-        /// </summary>
+        
         protected void RaisePipelineStateEvents()
         {
             Queue<ExecutionEventQueueItem> tempEventQueue = null;
@@ -889,29 +794,18 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// ManualResetEvent which is signaled when pipeline execution is
-        /// completed/failed/stopped.
-        /// </summary>
+        
         internal ManualResetEvent PipelineFinishedEvent { get; private set; }
 
         #endregion
 
         #region streams
 
-        /// <summary>
-        /// OutputStream from PipelineProcessor. Host will read on
-        /// ObjectReader of this stream. PipelineProcessor will write to
-        /// ObjectWriter of this stream.
-        /// </summary>
+        
         protected ObjectStreamBase OutputStream { get; }
 
         private ObjectStreamBase _errorStream;
-        /// <summary>
-        /// ErrorStream from PipelineProcessor. Host will read on
-        /// ObjectReader of this stream. PipelineProcessor will write to
-        /// ObjectWriter of this stream.
-        /// </summary>
+        
         protected ObjectStreamBase ErrorStream
         {
             get
@@ -940,21 +834,14 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// Informational Buffers that represent verbose, debug, progress,
-        /// warning emanating from the command execution.
-        /// </summary>
+        
         /// <remarks>
         /// Informational buffers are introduced after 1.0. This can be
         /// null if executing command as part of 1.0 hosting interfaces.
         /// </remarks>
         protected PSInformationalBuffers InformationalBuffers { get; }
 
-        /// <summary>
-        /// Stream for providing input to PipelineProcessor. Host will write on
-        /// ObjectWriter of this stream. PipelineProcessor will read from
-        /// ObjectReader of this stream.
-        /// </summary>
+        
         protected ObjectStreamBase InputStream { get; }
 
         #endregion streams
@@ -964,14 +851,10 @@ namespace System.Management.Automation.Runspaces
         // History information is internal so that Pipeline serialization code
         // can access it.
 
-        /// <summary>
-        /// If true, this pipeline is added in history.
-        /// </summary>
+        
         internal bool AddToHistory { get; set; }
 
-        /// <summary>
-        /// String which is added in the history.
-        /// </summary>
+        
         /// <remarks>This needs to be internal so that it can be replaced
         /// by invoke-cmd to place correct string in history.</remarks>
         internal string HistoryString { get; set; }
@@ -980,9 +863,7 @@ namespace System.Management.Automation.Runspaces
 
         #region misc
 
-        /// <summary>
-        /// Initialized the current pipeline instance with the supplied data.
-        /// </summary>
+        
         /// <param name="runspace"></param>
         /// <param name="command"></param>
         /// <param name="addToHistory"></param>
@@ -1022,23 +903,17 @@ namespace System.Management.Automation.Runspaces
             }
         }
 
-        /// <summary>
-        /// Object used for synchronization.
-        /// </summary>
+        
         protected internal object SyncRoot { get; } = new object();
 
         #endregion misc
 
         #region IDisposable Members
 
-        /// <summary>
-        /// Set to true when object is disposed.
-        /// </summary>
+        
         private bool _disposed;
 
-        /// <summary>
-        /// Protected dispose which can be overridden by derived classes.
-        /// </summary>
+        
         /// <param name="disposing"></param>
         protected override
         void

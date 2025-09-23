@@ -11,10 +11,7 @@ using Dbg = System.Management.Automation;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// A command to resolve PowerShell paths containing glob characters to
-    /// PowerShell paths that match the glob strings.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Split, "Path", DefaultParameterSetName = "ParentSet", SupportsTransactions = true, HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097149")]
     [OutputType(typeof(string), ParameterSetName = new[] { leafSet,
                                                            leafBaseSet,
@@ -28,49 +25,31 @@ namespace Microsoft.PowerShell.Commands
     {
         #region Parameters
 
-        /// <summary>
-        /// The parameter set name to get the parent path.
-        /// </summary>
+        
         private const string parentSet = "ParentSet";
 
-        /// <summary>
-        /// The parameter set name to get the leaf name.
-        /// </summary>
+        
         private const string leafSet = "LeafSet";
 
-        /// <summary>
-        /// The parameter set name to get the leaf base name.
-        /// </summary>
+        
         private const string leafBaseSet = "LeafBaseSet";
 
-        /// <summary>
-        /// The parameter set name to get the extension.
-        /// </summary>
+        
         private const string extensionSet = "ExtensionSet";
 
-        /// <summary>
-        /// The parameter set name to get the qualifier set.
-        /// </summary>
+        
         private const string qualifierSet = "QualifierSet";
 
-        /// <summary>
-        /// The parameter set name to get the noqualifier set.
-        /// </summary>
+        
         private const string noQualifierSet = "NoQualifierSet";
 
-        /// <summary>
-        /// The parameter set name to get the IsAbsolute set.
-        /// </summary>
+        
         private const string isAbsoluteSet = "IsAbsoluteSet";
 
-        /// <summary>
-        /// The parameter set name to get the LiteralPath set.
-        /// </summary>
+        
         private const string literalPathSet = "LiteralPathSet";
 
-        /// <summary>
-        /// Gets or sets the path parameter to the command.
-        /// </summary>
+        
         [Parameter(Position = 0, ParameterSetName = parentSet, Mandatory = true, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true)]
         [Parameter(Position = 0, ParameterSetName = leafSet, Mandatory = true, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true)]
         [Parameter(Position = 0, ParameterSetName = leafBaseSet, Mandatory = true, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true)]
@@ -80,9 +59,7 @@ namespace Microsoft.PowerShell.Commands
         [Parameter(Position = 0, ParameterSetName = isAbsoluteSet, Mandatory = true, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true)]
         public string[] Path { get; set; }
 
-        /// <summary>
-        /// Gets or sets the literal path parameter to the command.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "LiteralPathSet", Mandatory = true, ValueFromPipeline = false, ValueFromPipelineByPropertyName = true)]
         [Alias("PSPath", "LP")]
         public string[] LiteralPath
@@ -99,9 +76,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Determines if the qualifier should be returned.
-        /// </summary>
+        
         /// <value>
         /// If true the qualifier of the path will be returned.
         /// The qualifier is the drive or provider that is qualifying
@@ -110,9 +85,7 @@ namespace Microsoft.PowerShell.Commands
         [Parameter(ParameterSetName = qualifierSet, Mandatory = true, ValueFromPipelineByPropertyName = true)]
         public SwitchParameter Qualifier { get; set; }
 
-        /// <summary>
-        /// Determines if the qualifier should be returned.
-        /// </summary>
+        
         /// <value>
         /// If true the qualifier of the path will be returned.
         /// The qualifier is the drive or provider that is qualifying
@@ -121,52 +94,40 @@ namespace Microsoft.PowerShell.Commands
         [Parameter(ParameterSetName = noQualifierSet, Mandatory = true, ValueFromPipelineByPropertyName = true)]
         public SwitchParameter NoQualifier { get; set; }
 
-        /// <summary>
-        /// Determines if the parent path should be returned.
-        /// </summary>
+        
         /// <value>
         /// If true the parent of the path will be returned.
         /// </value>
         [Parameter(ParameterSetName = parentSet, Mandatory = false, ValueFromPipelineByPropertyName = true)]
         public SwitchParameter Parent { get; set; } = true;
 
-        /// <summary>
-        /// Determines if the leaf name should be returned.
-        /// </summary>
+        
         /// <value>
         /// If true the leaf name of the path will be returned.
         /// </value>
         [Parameter(ParameterSetName = leafSet, Mandatory = true, ValueFromPipelineByPropertyName = true)]
         public SwitchParameter Leaf { get; set; }
 
-        /// <summary>
-        /// Determines if the leaf base name (name without extension) should be returned.
-        /// </summary>
+        
         /// <value>
         /// If true the leaf base name of the path will be returned.
         /// </value>
         [Parameter(ParameterSetName = leafBaseSet, Mandatory = true, ValueFromPipelineByPropertyName = true)]
         public SwitchParameter LeafBase { get; set; }
 
-        /// <summary>
-        /// Determines if the extension should be returned.
-        /// </summary>
+        
         /// <value>
         /// If true the extension of the path will be returned.
         /// </value>
         [Parameter(ParameterSetName = extensionSet, Mandatory = true, ValueFromPipelineByPropertyName = true)]
         public SwitchParameter Extension { get; set; }
 
-        /// <summary>
-        /// Determines if the path should be resolved before being parsed.
-        /// </summary>
+        
         /// <value></value>
         [Parameter]
         public SwitchParameter Resolve { get; set; }
 
-        /// <summary>
-        /// Determines if the path is an absolute path.
-        /// </summary>
+        
         [Parameter(ParameterSetName = isAbsoluteSet, Mandatory = true)]
         public SwitchParameter IsAbsolute { get; set; }
 
@@ -178,10 +139,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Command code
 
-        /// <summary>
-        /// Parses the specified path and returns the portion determined by the
-        /// boolean parameters.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             StringCollection pathsToParse = new();
@@ -430,9 +388,7 @@ namespace Microsoft.PowerShell.Commands
         }
         #endregion Command code
 
-        /// <summary>
-        /// Removes either the drive or provider qualifier or both from the path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to strip the provider qualifier from.
         /// </param>

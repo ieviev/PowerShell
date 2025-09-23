@@ -10,31 +10,17 @@ using System.Reflection;
 
 namespace Microsoft.PowerShell
 {
-    /// <summary>
-    /// EngineInstaller is a class for facilitating registry of necessary
-    /// information for PowerShell engine.
-    ///
-    /// At install time, installation utilities (like InstallUtil.exe) will
-    /// call install this engine assembly based on the implementation in
-    /// this class.
-    ///
-    /// This class derives from base class PSInstaller. PSInstaller will
-    /// handle the details about how information got written into registry.
-    /// Here, the information about registry content is provided.
-    /// </summary>
+    
     [RunInstaller(true)]
     public sealed class EngineInstaller : PSInstaller
     {
-        /// <summary>
-        /// Constructor.
-        /// </summary>
+        
         public EngineInstaller()
             : base()
         {
         }
 
-        /// <summary>
-        /// </summary>
+        
         internal sealed override string RegKey
         {
             get
@@ -52,8 +38,7 @@ namespace Microsoft.PowerShell
         }
 
         private Dictionary<string, object> _regValues = null;
-        /// <summary>
-        /// </summary>
+        
         internal sealed override Dictionary<string, object> RegValues
         {
             get

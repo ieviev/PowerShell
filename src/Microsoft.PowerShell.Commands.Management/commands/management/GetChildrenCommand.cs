@@ -7,18 +7,13 @@ using Dbg = System.Management.Automation;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// The get-childitem command class.
-    /// This command lists the contents of a container.
-    /// </summary>
+    
     /// <remarks>
     /// </remarks>
     [Cmdlet(VerbsCommon.Get, "ChildItem", DefaultParameterSetName = "Items", SupportsTransactions = true, HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096492")]
     public class GetChildItemCommand : CoreCommandBase
     {
-        /// <summary>
-        /// The string declaration for the Items parameter set in this command.
-        /// </summary>
+        
         /// <remarks>
         /// The "Items" parameter set includes the following parameters:
         ///     -filter
@@ -29,9 +24,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Command parameters
 
-        /// <summary>
-        /// Gets or sets the path for the operation.
-        /// </summary>
+        
         [Parameter(Position = 0, ParameterSetName = childrenSet,
                    ValueFromPipeline = true, ValueFromPipelineByPropertyName = true)]
         public string[] Path
@@ -47,9 +40,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets or sets the literal path parameter to the command.
-        /// </summary>
+        
         [Parameter(ParameterSetName = literalChildrenSet,
                    Mandatory = true, ValueFromPipeline = false, ValueFromPipelineByPropertyName = true)]
         [Alias("PSPath", "LP")]
@@ -67,9 +58,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets or sets the filter property.
-        /// </summary>
+        
         [Parameter(Position = 1)]
         public override string Filter
         {
@@ -84,9 +73,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets or sets the include property.
-        /// </summary>
+        
         [Parameter]
         public override string[] Include
         {
@@ -101,9 +88,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets or sets the exclude property.
-        /// </summary>
+        
         [Parameter]
         public override string[] Exclude
         {
@@ -118,9 +103,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets or sets the recurse switch.
-        /// </summary>
+        
         [Parameter]
         [Alias("s", "r")]
         public SwitchParameter Recurse
@@ -136,12 +119,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets or sets max depth of recursion; automatically sets Recurse parameter;
-        /// Value '0' will show only contents of container specified by -Path (same result as running 'Get-ChildItem' without '-Recurse');
-        /// Value '1' will show 1 level deep, etc...;
-        /// Default is uint.MaxValue - it performs full recursion (this parameter has no effect).
-        /// </summary>
+        
         [Parameter]
         public uint Depth
         {
@@ -157,9 +135,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets or sets the force property.
-        /// </summary>
+        
         /// <remarks>
         /// Gives the provider guidance on how vigorous it should be about performing
         /// the operation. If true, the provider should do everything possible to perform
@@ -183,9 +159,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets or sets the names switch.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter Name
         {
@@ -200,11 +174,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// A virtual method for retrieving the dynamic parameters for a cmdlet. Derived cmdlets
-        /// that require dynamic parameters should override this method and return the
-        /// dynamic parameter object.
-        /// </summary>
+        
         /// <param name="context">
         /// The context under which the command is running.
         /// </param>
@@ -253,36 +223,23 @@ namespace Microsoft.PowerShell.Commands
 
         #region command data
 
-        /// <summary>
-        /// The path for the get-location operation.
-        /// </summary>
+        
         private string[] _paths;
 
-        /// <summary>
-        /// Determines if the command should do recursion.
-        /// </summary>
+        
         private bool _recurse;
 
-        /// <summary>
-        /// Limits the depth of recursion; used with Recurse parameter;
-        /// Value '0' will show only contents of container specified by -Path (same result as running 'Get-ChildItem' without '-Recurse');
-        /// Value '1' will show 1 level deep, etc...;
-        /// Default is uint.MaxValue - it performs full recursion (this parameter has no effect).
-        /// </summary>
+        
         private uint _depth = uint.MaxValue;
 
-        /// <summary>
-        /// The flag that specifies whether to retrieve the child names or the child items.
-        /// </summary>
+        
         private bool _childNames = false;
 
         #endregion command data
 
         #region command code
 
-        /// <summary>
-        /// The main execution method for the get-childitem command.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             CmdletProviderContext currentContext = CmdletProviderContext;

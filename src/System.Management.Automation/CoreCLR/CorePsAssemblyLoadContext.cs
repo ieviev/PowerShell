@@ -13,9 +13,7 @@ using Microsoft.PowerShell.Telemetry;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// The powershell custom AssemblyLoadContext implementation.
-    /// </summary>
+    
     internal sealed partial class PowerShellAssemblyLoadContext
     {
         #region Resource_Strings
@@ -34,9 +32,7 @@ namespace System.Management.Automation
 
         #region Constructor
 
-        /// <summary>
-        /// Initialize a singleton of PowerShellAssemblyLoadContext.
-        /// </summary>
+        
         internal static PowerShellAssemblyLoadContext InitializeSingleton(string basePaths, bool throwOnReentry)
         {
             lock (s_syncObj)
@@ -54,9 +50,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Constructor.
-        /// </summary>
+        
         /// <param name="basePaths">
         /// Base directory paths that are separated by semicolon ';'. They will be the default paths to probe assemblies.
         /// The passed-in argument could be null or an empty string, in which case there is no default paths to probe assemblies.
@@ -128,9 +122,7 @@ namespace System.Management.Automation
         private string _gacPath64;
 #endif
 
-        /// <summary>
-        /// Assembly cache across the AppDomain.
-        /// </summary>
+        
         /// <remarks>
         /// We user the assembly short name (AssemblyName.Name) as the key.
         /// According to the Spec of AssemblyLoadContext, "in the context of a given instance of AssemblyLoadContext, only one assembly with
@@ -149,27 +141,19 @@ namespace System.Management.Automation
 
         #region Properties
 
-        /// <summary>
-        /// Singleton instance of PowerShellAssemblyLoadContext.
-        /// </summary>
+        
         internal static PowerShellAssemblyLoadContext Instance
         {
             get; private set;
         }
 
-        /// <summary>
-        /// Get the namespace-qualified type names of all available .NET Core types shipped with PowerShell.
-        /// This is used for type name auto-completion in PS engine.
-        /// </summary>
+        
         internal IEnumerable<string> AvailableDotNetTypeNames
         {
             get { return _coreClrTypeCatalog.Keys; }
         }
 
-        /// <summary>
-        /// Get the assembly names of all available .NET Core assemblies shipped with PowerShell.
-        /// This is used for type name auto-completion in PS engine.
-        /// </summary>
+        
         internal HashSet<string> AvailableDotNetAssemblyNames
         {
             get { return _availableDotNetAssemblyNames.Value; }
@@ -179,9 +163,7 @@ namespace System.Management.Automation
 
         #region Internal_Methods
 
-        /// <summary>
-        /// Get the current loaded assemblies.
-        /// </summary>
+        
         internal IEnumerable<Assembly> GetAssembly(string namespaceQualifiedTypeName)
         {
             // If 'namespaceQualifiedTypeName' is specified and it's a CoreCLR framework type,
@@ -202,44 +184,7 @@ namespace System.Management.Automation
             return null;
         }
 
-        /// <summary>
-        /// If a managed dll has native dependencies the handler will try to find these native dlls.
-        ///     1. Gets the managed.dll location (folder)
-        ///     2. Based on OS name and architecture name builds subfolder name where it is expected the native dll resides:
-        ///     3. Loads the native dll
-        ///
-        ///     managed.dll folder
-        ///                     |
-        ///                     |--- 'win-x64' subfolder
-        ///                     |       |--- native.dll
-        ///                     |
-        ///                     |--- 'win-x86' subfolder
-        ///                     |       |--- native.dll
-        ///                     |
-        ///                     |--- 'win-arm' subfolder
-        ///                     |       |--- native.dll
-        ///                     |
-        ///                     |--- 'win-arm64' subfolder
-        ///                     |       |--- native.dll
-        ///                     |
-        ///                     |--- 'linux-x64' subfolder
-        ///                     |       |--- native.so
-        ///                     |
-        ///                     |--- 'linux-x86' subfolder
-        ///                     |       |--- native.so
-        ///                     |
-        ///                     |--- 'linux-arm' subfolder
-        ///                     |       |--- native.so
-        ///                     |
-        ///                     |--- 'linux-arm64' subfolder
-        ///                     |       |--- native.so
-        ///                     |
-        ///                     |--- 'osx-x64' subfolder
-        ///                     |       |--- native.dylib
-        ///                     |
-        ///                     |--- 'osx-arm64' subfolder
-        ///                     |       |--- native.dylib
-        /// </summary>
+        
         internal static IntPtr NativeDllHandler(Assembly assembly, string libraryName)
         {
             s_nativeDllSubFolder ??= GetNativeDllSubFolderName(out s_nativeDllExtension);
@@ -253,9 +198,7 @@ namespace System.Management.Automation
 
         #region Private_Methods
 
-        /// <summary>
-        /// The handler for the Resolving event.
-        /// </summary>
+        
         private Assembly Resolve(AssemblyLoadContext loadContext, AssemblyName assemblyName)
         {
             // Probe the assembly cache
@@ -428,9 +371,7 @@ namespace System.Management.Automation
         }
 #endif
 
-        /// <summary>
-        /// Try to get the specified assembly from cache.
-        /// </summary>
+        
         private static bool TryGetAssemblyFromCache(AssemblyName assemblyName, out Assembly asmLoaded)
         {
             if (s_assemblyCache.TryGetValue(assemblyName.Name, out asmLoaded))
@@ -449,9 +390,7 @@ namespace System.Management.Automation
             return false;
         }
 
-        /// <summary>
-        /// Check if the loaded assembly matches the request.
-        /// </summary>
+        
         /// <param name="requestedAssembly">AssemblyName of the requested assembly.</param>
         /// <param name="loadedAssembly">AssemblyName of the loaded assembly.</param>
         /// <returns></returns>
@@ -496,9 +435,7 @@ namespace System.Management.Automation
             return true;
         }
 
-        /// <summary>
-        /// Get the TPA that is represented by the specified assembly strong name.
-        /// </summary>
+        
         /// <param name="tpaStrongName">
         /// The assembly strong name of a CoreCLR Trusted_Platform_Assembly
         /// </param>
@@ -515,18 +452,14 @@ namespace System.Management.Automation
             return asmLoaded;
         }
 
-        /// <summary>
-        /// Throw FileLoadException.
-        /// </summary>
+        
         private static void ThrowFileLoadException(string errorTemplate, params object[] args)
         {
             string message = string.Format(CultureInfo.CurrentCulture, errorTemplate, args);
             throw new FileLoadException(message);
         }
 
-        /// <summary>
-        /// Throw FileNotFoundException.
-        /// </summary>
+        
         private static void ThrowFileNotFoundException(string errorTemplate, params object[] args)
         {
             string message = string.Format(CultureInfo.CurrentCulture, errorTemplate, args);
@@ -564,15 +497,10 @@ namespace System.Management.Automation
         #endregion Private_Methods
     }
 
-    /// <summary>
-    /// This is the managed entry point for Microsoft.PowerShell.CoreCLR.AssemblyLoadContext.dll.
-    /// </summary>
+    
     public static class PowerShellAssemblyLoadContextInitializer
     {
-        /// <summary>
-        /// Create a singleton of PowerShellAssemblyLoadContext.
-        /// Then register to the Resolving event of the load context that loads this assembly.
-        /// </summary>
+        
         /// <remarks>
         /// This method is to be used by native host whose TPA list doesn't include PS assemblies, such as the
         /// in-box Nano powershell, the PS remote WinRM plugin, in-box Nano DSC and in-box Nano SCOM agent.
@@ -590,14 +518,10 @@ namespace System.Management.Automation
         }
     }
 
-    /// <summary>
-    /// Provides helper functions to facilitate calling managed code from a native PowerShell host.
-    /// </summary>
+    
     public static unsafe class PowerShellUnsafeAssemblyLoad
     {
-        /// <summary>
-        /// Load an assembly in memory from unmanaged code.
-        /// </summary>
+        
         /// <remarks>
         /// This API is covered by the experimental feature 'PSLoadAssemblyFromNativeCode',
         /// and it may be deprecated and removed in future.

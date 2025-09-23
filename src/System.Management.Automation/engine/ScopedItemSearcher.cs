@@ -5,10 +5,7 @@ using System.Collections.Generic;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Enumerates the items matching a particular name in the scopes specified using
-    /// the appropriate scoping lookup rules.
-    /// </summary>
+    
     /// <typeparam name="T">
     /// The type of items that the derived class returns.
     /// </typeparam>
@@ -16,9 +13,7 @@ namespace System.Management.Automation
     {
         #region ctor
 
-        /// <summary>
-        /// Constructs a scoped item searcher.
-        /// </summary>
+        
         /// <param name="sessionState">
         /// The state of the engine instance to enumerate through the scopes.
         /// </param>
@@ -52,9 +47,7 @@ namespace System.Management.Automation
 
         #region IEnumerable/IEnumerator members
 
-        /// <summary>
-        /// Gets the current object as an IEnumerator.
-        /// </summary>
+        
         /// <returns>
         /// The current object as an IEnumerator.
         /// </returns>
@@ -68,9 +61,7 @@ namespace System.Management.Automation
             return this;
         }
 
-        /// <summary>
-        /// Moves the enumerator to the next matching scoped item.
-        /// </summary>
+        
         /// <returns>
         /// True if another matching scoped item was found, or false otherwise.
         /// </returns>
@@ -108,9 +99,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Gets the current scoped item.
-        /// </summary>
+        
         T IEnumerator<T>.Current
         {
             get
@@ -141,10 +130,7 @@ namespace System.Management.Automation
             GC.SuppressFinalize(this);
         }
 
-        /// <summary>
-        /// Derived classes override this method to return their
-        /// particular type of scoped item.
-        /// </summary>
+        
         /// <param name="scope">
         /// The scope to look the item up in.
         /// </param>
@@ -164,9 +150,7 @@ namespace System.Management.Automation
 
         #endregion IEnumerable/IEnumerator members
 
-        /// <summary>
-        /// Gets the lookup scope that the Current item was found in.
-        /// </summary>
+        
         internal SessionStateScope CurrentLookupScope
         {
             get { return _currentScope; }
@@ -174,9 +158,7 @@ namespace System.Management.Automation
 
         private SessionStateScope _currentScope;
 
-        /// <summary>
-        /// Gets the scope in which the search begins.
-        /// </summary>
+        
         internal SessionStateScope InitialScope
         {
             get { return _initialScope; }
@@ -238,9 +220,7 @@ namespace System.Management.Automation
         #endregion private members
     }
 
-    /// <summary>
-    /// The scope searcher for variables.
-    /// </summary>
+    
     internal class VariableScopeItemSearcher : ScopedItemSearcher<PSVariable>
     {
         public VariableScopeItemSearcher(
@@ -253,10 +233,7 @@ namespace System.Management.Automation
 
         private readonly CommandOrigin _origin;
 
-        /// <summary>
-        /// Derived classes override this method to return their
-        /// particular type of scoped item.
-        /// </summary>
+        
         /// <param name="scope">
         /// The scope to look the item up in.
         /// </param>
@@ -296,9 +273,7 @@ namespace System.Management.Automation
         }
     }
 
-    /// <summary>
-    /// The scope searcher for aliases.
-    /// </summary>
+    
     internal class AliasScopeItemSearcher : ScopedItemSearcher<AliasInfo>
     {
         public AliasScopeItemSearcher(
@@ -307,10 +282,7 @@ namespace System.Management.Automation
         {
         }
 
-        /// <summary>
-        /// Derived classes override this method to return their
-        /// particular type of scoped item.
-        /// </summary>
+        
         /// <param name="scope">
         /// The scope to look the item up in.
         /// </param>
@@ -349,9 +321,7 @@ namespace System.Management.Automation
         }
     }
 
-    /// <summary>
-    /// The scope searcher for functions.
-    /// </summary>
+    
     internal class FunctionScopeItemSearcher : ScopedItemSearcher<FunctionInfo>
     {
         public FunctionScopeItemSearcher(
@@ -364,10 +334,7 @@ namespace System.Management.Automation
 
         private readonly CommandOrigin _origin;
 
-        /// <summary>
-        /// Derived classes override this method to return their
-        /// particular type of scoped item.
-        /// </summary>
+        
         /// <param name="scope">
         /// The scope to look the item up in.
         /// </param>
@@ -438,9 +405,7 @@ namespace System.Management.Automation
         private string _name = string.Empty;
     }
 
-    /// <summary>
-    /// The scope searcher for drives.
-    /// </summary>
+    
     internal class DriveScopeItemSearcher : ScopedItemSearcher<PSDriveInfo>
     {
         public DriveScopeItemSearcher(
@@ -449,10 +414,7 @@ namespace System.Management.Automation
         {
         }
 
-        /// <summary>
-        /// Derived classes override this method to return their
-        /// particular type of scoped item.
-        /// </summary>
+        
         /// <param name="scope">
         /// The scope to look the item up in.
         /// </param>

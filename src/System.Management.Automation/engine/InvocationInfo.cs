@@ -11,17 +11,13 @@ using System.Management.Automation.Language;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Describes how and where this command was invoked.
-    /// </summary>
+    
     [DebuggerDisplay("Command = {MyCommand}")]
     public class InvocationInfo
     {
         #region Constructors
 
-        /// <summary>
-        /// Constructor for InvocationInfo object when the associated command object is present.
-        /// </summary>
+        
         /// <param name="command"></param>
         internal InvocationInfo(InternalCommand command)
             : this(command.CommandInfo,
@@ -30,9 +26,7 @@ namespace System.Management.Automation
             CommandOrigin = command.CommandOrigin;
         }
 
-        /// <summary>
-        /// Constructor for InvocationInfo object.
-        /// </summary>
+        
         /// <param name="commandInfo">
         /// The command information the invocation info represents.
         /// </param>
@@ -45,9 +39,7 @@ namespace System.Management.Automation
             // nothing to do here
         }
 
-        /// <summary>
-        /// Constructor for InvocationInfo object.
-        /// </summary>
+        
         /// <param name="commandInfo">
         /// The command information the invocation info represents.
         /// </param>
@@ -84,9 +76,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Creates an InformationalRecord from an instance serialized as a PSObject by ToPSObjectForRemoting.
-        /// </summary>
+        
         internal InvocationInfo(PSObject psObject)
         {
             CommandOrigin = (CommandOrigin)SerializationUtilities.GetPsObjectPropertyBaseObject(psObject, "InvocationInfo_CommandOrigin");
@@ -187,16 +177,11 @@ namespace System.Management.Automation
 
         #region Public Members
 
-        /// <summary>
-        /// Provide basic information about the command.
-        /// </summary>
+        
         /// <value>may be null</value>
         public CommandInfo MyCommand { get; }
 
-        /// <summary>
-        /// This member provides a dictionary of the parameters that were bound for this
-        /// script or command.
-        /// </summary>
+        
         public Dictionary<string, object> BoundParameters
         {
             get
@@ -210,9 +195,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// This member provides a list of the arguments that were not bound to any parameter.
-        /// </summary>
+        
         public List<object> UnboundArguments
         {
             get { return _unboundArguments ??= new List<object>(); }
@@ -220,43 +203,32 @@ namespace System.Management.Automation
             internal set { _unboundArguments = value; }
         }
 
-        /// <summary>
-        /// The line number in the executing script that contained this cmdlet.
-        /// </summary>
+        
         /// <value>The script line number or -1 if not executing in a script.</value>
         public int ScriptLineNumber
         {
             get { return ScriptPosition.StartLineNumber; }
         }
 
-        /// <summary>
-        /// Command's character offset in that line. If the command was
-        /// executed directly through the host interfaces, this will be -1.
-        /// </summary>
+        
         /// <value>The line offset or -1 if not executed from a text line.</value>
         public int OffsetInLine
         {
             get { return ScriptPosition.StartColumnNumber; }
         }
 
-        /// <summary>
-        /// History ID that represents the command. If unavailable, this will be -1.
-        /// </summary>
+        
         /// <value>The history ID or -1 if not available.</value>
         public long HistoryId { get; internal set; } = -1;
 
-        /// <summary>
-        /// The name of the script containing the cmdlet.
-        /// </summary>
+        
         /// <value>The script name or "" if there was no script.</value>
         public string ScriptName
         {
             get { return ScriptPosition.File ?? string.Empty; }
         }
 
-        /// <summary>
-        /// The text of the line that contained this cmdlet invocation.
-        /// </summary>
+        
         /// <value>Line that was entered to invoke this command</value>
         public string Line
         {
@@ -271,9 +243,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// The full text of the invocation statement, may span multiple lines.
-        /// </summary>
+        
         /// <value>Statement that was entered to invoke this command.</value>
         public string Statement
         {
@@ -283,19 +253,14 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Formatted message indicating where the cmdlet appeared
-        /// in the line.
-        /// </summary>
+        
         /// <value>Formatted string indicating the command's position in the line</value>
         public string PositionMessage
         {
             get { return PositionUtilities.VerboseMessage(ScriptPosition); }
         }
 
-        /// <summary>
-        /// This property tells you the directory from where you were being invoked.
-        /// </summary>
+        
         public string PSScriptRoot
         {
             get
@@ -311,18 +276,13 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// This property tells you the full path to the command from where you were being invoked.
-        /// </summary>
+        
         public string PSCommandPath
         {
             get { return ScriptPosition.File; }
         }
 
-        /// <summary>
-        /// Command name used to invoke this string - if invoked through an alias, then
-        /// this would be the alias name.
-        /// </summary>
+        
         /// <value>The name string.</value>
         public string InvocationName
         {
@@ -331,37 +291,24 @@ namespace System.Management.Automation
             internal set { _invocationName = value; }
         }
 
-        /// <summary>
-        /// How many elements are in the containing pipeline.
-        /// </summary>
+        
         /// <value>number of elements in the containing pipeline</value>
         public int PipelineLength { get; internal set; }
 
-        /// <summary>
-        /// Which element this command was in the containing pipeline.
-        /// </summary>
+        
         /// <value>which element this command was in the containing pipeline</value>
         public int PipelinePosition { get; internal set; }
 
-        /// <summary>
-        /// Is true if this command is expecting input...
-        /// </summary>
+        
         public bool ExpectingInput { get; internal set; }
 
-        /// <summary>
-        /// This property tells you if you were being invoked inside the runspace or
-        /// if it was an external request.
-        /// </summary>
+        
         public CommandOrigin CommandOrigin { get; internal set; }
 
-        /// <summary>
-        /// The position for the invocation or error.
-        /// </summary>
+        
         public IScriptExtent DisplayScriptPosition { get; set; }
 
-        /// <summary>
-        /// Create.
-        /// </summary>
+        
         /// <param name="commandInfo"></param>
         /// <param name="scriptPosition"></param>
         /// <returns></returns>
@@ -379,9 +326,7 @@ namespace System.Management.Automation
 
         #region Internal Members
 
-        /// <summary>
-        /// The position for the invocation or error.
-        /// </summary>
+        
         internal IScriptExtent ScriptPosition
         {
             get
@@ -402,27 +347,20 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Returns the full text of the script for this invocation info.
-        /// </summary>
+        
         internal string GetFullScript()
         {
             return (ScriptPosition != null) && (ScriptPosition.StartScriptPosition != null) ?
                 ScriptPosition.StartScriptPosition.GetFullScript() : null;
         }
 
-        /// <summary>
-        /// Index of the ProcessRecord iteration for each of the commands in the pipeline.
-        /// </summary>
+        
         /// <remarks>
         /// All the commands in a given pipeline share the same PipelinePositionInfo.
         /// </remarks>
         internal int[] PipelineIterationInfo { get; set; } = Array.Empty<int>();
 
-        /// <summary>
-        /// Adds the information about this informational record to a PSObject as note properties.
-        /// The PSObject is used to serialize the record during remote operations.
-        /// </summary>
+        
         /// <remarks>
         /// InvocationInfos are usually serialized as part of another object, so we add "InvocationInfo_" to
         /// the note properties to prevent collisions with any properties set by the containing object.
@@ -465,27 +403,20 @@ namespace System.Management.Automation
         #endregion Internal Members
     }
 
-    /// <summary>
-    /// A CommandInfo that has been serialized/deserialized as part of an InvocationInfo during a remote invocation.
-    /// </summary>
+    
     public class RemoteCommandInfo : CommandInfo
     {
-        /// <summary>
-        /// </summary>
+        
         private RemoteCommandInfo(string name, CommandTypes type)
             : base(name, type)
         {
             // nothing to do here
         }
 
-        /// <summary>
-        /// A string representing the definition of the command.
-        /// </summary>
+        
         public override string Definition { get { return _definition; } }
 
-        /// <summary>
-        /// Creates a RemoteCommandInfo from an instance serialized as a PSObject by ToPSObjectForRemoting.
-        /// </summary>
+        
         internal static RemoteCommandInfo FromPSObjectForRemoting(PSObject psObject)
         {
             RemoteCommandInfo commandInfo = null;
@@ -505,10 +436,7 @@ namespace System.Management.Automation
             return commandInfo;
         }
 
-        /// <summary>
-        /// Adds the information about this instance to a PSObject as note properties.
-        /// The PSObject is used to serialize the CommandInfo during remote operations.
-        /// </summary>
+        
         /// <remarks>
         /// CommandInfos are usually serialized as part of InvocationInfos, so we add "CommandInfo_" to
         /// the note properties to prevent collisions with any properties set by the containing object.
@@ -524,9 +452,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// NYI.
-        /// </summary>
+        
         public override ReadOnlyCollection<PSTypeName> OutputType
         {
             get { return null; }

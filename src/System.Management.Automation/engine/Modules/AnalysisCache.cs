@@ -19,15 +19,7 @@ using Microsoft.PowerShell.Commands;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Class to manage the caching of analysis data.
-    /// For performance, module command caching is flattened after discovery. Many modules have nested
-    /// modules that can only be resolved at runtime - for example,
-    /// script modules that declare: $env:PATH += "; $psScriptRoot". When
-    /// doing initial analysis, we include these in 'ExportedCommands'.
-    /// Changes to these type of modules will not be re-analyzed, unless the user re-imports the module,
-    /// or runs Get-Module -List.
-    /// </summary>
+    
     internal static class AnalysisCache
     {
         private static readonly AnalysisCacheData s_cacheData = AnalysisCacheData.Get();
@@ -167,9 +159,7 @@ namespace System.Management.Automation
             return result ?? AnalyzeTheOldWay(modulePath, context, lastWriteTime);
         }
 
-        /// <summary>
-        /// Check if a module is compatible with the current PSEdition given its path and its manifest properties.
-        /// </summary>
+        
         /// <param name="modulePath">The path to the module.</param>
         /// <param name="moduleManifestProperties">The properties of the module's manifest.</param>
         /// <returns></returns>
@@ -452,11 +442,7 @@ namespace System.Management.Automation
             return null;
         }
 
-        /// <summary>
-        /// Return the exported types for a specific module.
-        /// If the module is already cache, return from cache, else cache the module.
-        /// Also re-cache the module if the cached item is stale.
-        /// </summary>
+        
         /// <param name="modulePath">Path to the module to get exported types from.</param>
         /// <param name="context">Current Context.</param>
         /// <returns></returns>

@@ -15,9 +15,7 @@ namespace Microsoft.PowerShell
 {
     internal partial class ConsoleHostUserInterface : PSHostUserInterface, IHostUISupportsMultipleChoiceSelection
     {
-        /// <summary>
-        /// See base class.
-        /// </summary>
+        
         /// <param name="caption"></param>
         /// <param name="message"></param>
         /// <param name="choices"></param>
@@ -141,9 +139,7 @@ namespace Microsoft.PowerShell
             }
         }
 
-        /// <summary>
-        /// Presents a dialog allowing the user to choose options from a set of options.
-        /// </summary>
+        
         /// <param name="caption">
         /// Caption to precede or title the prompt.  E.g. "Parameters for get-foo (instance 1 of 2)"
         /// </param>
@@ -430,9 +426,7 @@ namespace Microsoft.PowerShell
             }
         }
 
-        /// <summary>
-        /// Guarantee a contrasting color for the prompt...
-        /// </summary>
+        
         private ConsoleColor PromptColor
         {
             get
@@ -449,10 +443,7 @@ namespace Microsoft.PowerShell
                 }
             }
         }
-        /// <summary>
-        /// Guarantee a contrasting color for the default prompt that is slightly
-        /// different from the other prompt elements.
-        /// </summary>
+        
         private ConsoleColor DefaultPromptColor
         {
             get

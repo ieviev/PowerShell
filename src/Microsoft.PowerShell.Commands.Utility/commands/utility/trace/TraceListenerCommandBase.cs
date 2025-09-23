@@ -12,23 +12,15 @@ using System.Security;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// A base class for the trace cmdlets that allow you to specify
-    /// which trace listeners to add to a TraceSource.
-    /// </summary>
+    
     public class TraceListenerCommandBase : TraceCommandBase
     {
         #region Parameters
 
-        /// <summary>
-        /// The TraceSource parameter determines which TraceSource categories the
-        /// operation will take place on.
-        /// </summary>
+        
         internal string[] NameInternal { get; set; } = Array.Empty<string>();
 
-        /// <summary>
-        /// The flags to be set on the TraceSource.
-        /// </summary>
+        
         /// <value></value>
         internal PSTraceSourceOptions OptionsInternal
         {
@@ -46,14 +38,10 @@ namespace Microsoft.PowerShell.Commands
 
         private PSTraceSourceOptions _options = PSTraceSourceOptions.All;
 
-        /// <summary>
-        /// True if the Options parameter has been set, or false otherwise.
-        /// </summary>
+        
         internal bool optionsSpecified;
 
-        /// <summary>
-        /// The parameter which determines the options for output from the trace listeners.
-        /// </summary>
+        
         internal TraceOptions ListenerOptionsInternal
         {
             get
@@ -70,35 +58,24 @@ namespace Microsoft.PowerShell.Commands
 
         private TraceOptions _traceOptions = TraceOptions.None;
 
-        /// <summary>
-        /// True if the TraceOptions parameter was specified, or false otherwise.
-        /// </summary>
+        
         internal bool traceOptionsSpecified;
 
-        /// <summary>
-        /// Adds the file trace listener using the specified file.
-        /// </summary>
+        
         /// <value></value>
         internal string FileListener { get; set; }
 
-        /// <summary>
-        /// Property that sets force parameter.  This will clear the
-        /// read-only attribute on an existing file if present.
-        /// </summary>
+        
         /// <remarks>
         /// Note that we do not attempt to reset the read-only attribute.
         /// </remarks>
         public bool ForceWrite { get; set; }
 
-        /// <summary>
-        /// If this parameter is specified the Debugger trace listener will be added.
-        /// </summary>
+        
         /// <value></value>
         internal bool DebuggerListener { get; set; }
 
-        /// <summary>
-        /// If this parameter is specified the Msh Host trace listener will be added.
-        /// </summary>
+        
         /// <value></value>
         internal SwitchParameter PSHostListener
         {
@@ -191,9 +168,7 @@ namespace Microsoft.PowerShell.Commands
         }
 
         #region AddTraceListeners
-        /// <summary>
-        /// Adds the console, debugger, file, or host listener if requested.
-        /// </summary>
+        
         internal void AddTraceListenersToSources(Collection<PSTraceSource> matchingSources)
         {
             if (DebuggerListener)
@@ -380,9 +355,7 @@ namespace Microsoft.PowerShell.Commands
         private PSHostTraceListener _hostListener;
         private Collection<TextWriterTraceListener> _fileListeners;
 
-        /// <summary>
-        /// The file streams that were open by this command.
-        /// </summary>
+        
         internal Collection<FileStream> FileStreams { get; private set; }
 
         private static void AddListenerToSources(Collection<PSTraceSource> matchingSources, TraceListener listener)
@@ -398,9 +371,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region RemoveTraceListeners
 
-        /// <summary>
-        /// Removes the tracelisteners from the specified trace sources.
-        /// </summary>
+        
         internal static void RemoveListenersByName(
             Collection<PSTraceSource> matchingSources,
             string[] listenerNames,
@@ -449,9 +420,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region SetTraceListenerOptions
 
-        /// <summary>
-        /// Sets the trace listener options based on the ListenerOptions parameter.
-        /// </summary>
+        
         internal void SetTraceListenerOptions(Collection<PSTraceSource> matchingSources)
         {
             // Set the trace options if they were specified
@@ -471,9 +440,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region SetFlags
 
-        /// <summary>
-        /// Sets the flags for all the specified TraceSources.
-        /// </summary>
+        
         internal void SetFlags(Collection<PSTraceSource> matchingSources)
         {
             foreach (PSTraceSource structuredSource in matchingSources)
@@ -485,9 +452,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region TurnOnTracing
 
-        /// <summary>
-        /// Turns on tracing for the TraceSources, flags, and listeners defined by the parameters.
-        /// </summary>
+        
         internal void TurnOnTracing(Collection<PSTraceSource> matchingSources, bool preConfigured)
         {
             foreach (PSTraceSource source in matchingSources)
@@ -536,11 +501,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region ResetTracing
 
-        /// <summary>
-        /// Resets tracing to the previous level for the TraceSources defined by the parameters.
-        /// Note, TurnOnTracing must be called before calling ResetTracing or else all
-        /// TraceSources will be turned off.
-        /// </summary>
+        
         internal void ResetTracing(Collection<PSTraceSource> matchingSources)
         {
             foreach (PSTraceSource source in matchingSources)
@@ -582,9 +543,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region stored state
 
-        /// <summary>
-        /// Clears the store TraceSource state.
-        /// </summary>
+        
         protected void ClearStoredState()
         {
             // First close all listeners

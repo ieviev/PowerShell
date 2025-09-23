@@ -15,9 +15,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Microsoft.PowerShell
 {
-    /// <summary>
-    /// A Helper class for printing notification on PowerShell startup when there is a new update.
-    /// </summary>
+    
     /// <remarks>
     /// For the detailed design, please take a look at the corresponding RFC.
     /// </remarks>
@@ -28,30 +26,17 @@ namespace Microsoft.PowerShell
         private const string StableBuildInfoURL = "https://aka.ms/pwsh-buildinfo-stable";
         private const string PreviewBuildInfoURL = "https://aka.ms/pwsh-buildinfo-preview";
 
-        /// <summary>
-        /// The version of new update is persisted using a file, not as the file content, but instead baked in the file name in the following template:
-        ///  `update{notification-type}_{version}_{publish-date}` -- held by 's_updateFileNameTemplate',
-        /// while 's_updateFileNamePattern' holds the pattern of this file name.
-        /// </summary>
+        
         private static readonly string s_updateFileNameTemplate, s_updateFileNamePattern;
 
-        /// <summary>
-        /// For each notification type, we need two files to achieve the synchronization for the update check:
-        ///  `_sentinel{notification-type}_` -- held by 's_sentinelFileName';
-        ///  `sentinel{notification-type}-{year}-{month}-{day}.done`
-        ///     -- held by 's_doneFileNameTemplate', while 's_doneFileNamePattern' holds the pattern of this file name.
-        /// The {notification-type} part will be the integer value of the corresponding `NotificationType` member.
-        /// The {year}-{month}-{day} part will be filled with the date of current day when the update check runs.
-        /// </summary>
+        
         private static readonly string s_sentinelFileName, s_doneFileNameTemplate, s_doneFileNamePattern;
 
         private static readonly string s_cacheDirectory;
         private static readonly EnumerationOptions s_enumOptions;
         private static readonly NotificationType s_notificationType;
 
-        /// <summary>
-        /// Gets a value indicating whether update notification should be done.
-        /// </summary>
+        
         internal static readonly bool CanNotifyUpdates;
 
         static UpdatesNotification()
@@ -269,9 +254,7 @@ namespace Microsoft.PowerShell
             }
         }
 
-        /// <summary>
-        /// Check for the existence of the update file and parse the file name if it exists.
-        /// </summary>
+        
         /// <param name="updateFilePath">Get the exact update file path.</param>
         /// <param name="lastUpdateVersion">Get the version of the new release.</param>
         /// <param name="lastUpdateDate">Get the publish date of the new release.</param>
@@ -387,9 +370,7 @@ namespace Microsoft.PowerShell
             return releaseToReturn;
         }
 
-        /// <summary>
-        /// Get the notification type setting.
-        /// </summary>
+        
         private static NotificationType GetNotificationType()
         {
             string str = Environment.GetEnvironmentVariable(UpdateCheckEnvVar);
@@ -406,26 +387,16 @@ namespace Microsoft.PowerShell
             return NotificationType.Default;
         }
 
-        /// <summary>
-        /// Notification type that can be configured.
-        /// </summary>
+        
         private enum NotificationType
         {
-            /// <summary>
-            /// Turn off the update notification.
-            /// </summary>
+            
             Off = 0,
 
-            /// <summary>
-            /// Give you the default behaviors:
-            ///  - the preview version 'pwsh' checks for the new preview version and the new GA version.
-            ///  - the GA version 'pwsh' checks for the new GA version only.
-            /// </summary>
+            
             Default = 1,
 
-            /// <summary>
-            /// Both preview and GA version 'pwsh' checks for the new LTS version only.
-            /// </summary>
+            
             LTS = 2
         }
 
@@ -437,14 +408,10 @@ namespace Microsoft.PowerShell
                 TagName = tagName;
             }
 
-            /// <summary>
-            /// The datetime stamp is in UTC. For example: 2019-03-28T18:42:02Z.
-            /// </summary>
+            
             internal string PublishAt { get; }
 
-            /// <summary>
-            /// The release tag name.
-            /// </summary>
+            
             internal string TagName { get; }
         }
     }

@@ -16,10 +16,7 @@ namespace System.Management.Automation
 {
     #region PSTransaction
 
-    /// <summary>
-    /// We don't need PSTransaction related types on CSS because System.Transactions
-    /// namespace is not available in CoreCLR.
-    /// </summary>
+    
     public sealed class PSTransactionContext : IDisposable
     {
         internal PSTransactionContext(Internal.PSTransactionManager transactionManager) { }
@@ -27,25 +24,16 @@ namespace System.Management.Automation
         public void Dispose() { }
     }
 
-    /// <summary>
-    /// The severity of error that causes PowerShell to automatically
-    /// rollback the transaction.
-    /// </summary>
+    
     public enum RollbackSeverity
     {
-        /// <summary>
-        /// Non-terminating errors or worse.
-        /// </summary>
+        
         Error,
 
-        /// <summary>
-        /// Terminating errors or worse.
-        /// </summary>
+        
         TerminatingError,
 
-        /// <summary>
-        /// Do not rollback the transaction on error.
-        /// </summary>
+        
         Never
     }
 
@@ -54,15 +42,10 @@ namespace System.Management.Automation
 
 namespace System.Management.Automation.Internal
 {
-    /// <summary>
-    /// We don't need PSTransaction related types on CSS because System.Transactions
-    /// namespace is not available in CoreCLR.
-    /// </summary>
+    
     internal sealed class PSTransactionManager : IDisposable
     {
-        /// <summary>
-        /// Determines if you have a transaction that you can set active and work on.
-        /// </summary>
+        
         /// <remarks>
         /// Always return false in CoreCLR
         /// </remarks>
@@ -74,9 +57,7 @@ namespace System.Management.Automation.Internal
             }
         }
 
-        /// <summary>
-        /// Determines if the last transaction has been committed.
-        /// </summary>
+        
         internal bool IsLastTransactionCommitted
         {
             get
@@ -85,9 +66,7 @@ namespace System.Management.Automation.Internal
             }
         }
 
-        /// <summary>
-        /// Determines if the last transaction has been rolled back.
-        /// </summary>
+        
         internal bool IsLastTransactionRolledBack
         {
             get
@@ -96,9 +75,7 @@ namespace System.Management.Automation.Internal
             }
         }
 
-        /// <summary>
-        /// Gets the rollback preference for the active transaction.
-        /// </summary>
+        
         internal RollbackSeverity RollbackPreference
         {
             get
@@ -107,10 +84,7 @@ namespace System.Management.Automation.Internal
             }
         }
 
-        /// <summary>
-        /// Called by engine APIs to ensure they are protected from
-        /// ambient transactions.
-        /// </summary>
+        
         /// <remarks>
         /// Always return null in CoreCLR
         /// </remarks>
@@ -119,9 +93,7 @@ namespace System.Management.Automation.Internal
             return null;
         }
 
-        /// <summary>
-        /// Aborts the current transaction, no matter how many subscribers are part of it.
-        /// </summary>
+        
         internal void Rollback(bool suppressErrors)
         {
             throw new NotImplementedException("Rollback");
@@ -285,10 +257,7 @@ namespace System.Management.Automation.Internal
 {
     using Microsoft.PowerShell.Commands;
 
-    /// <summary>
-    /// TODO:CORECLR - The actual PowerShellModuleAssemblyAnalyzer cannot be enabled because we don't have 'System.Reflection.Metadata.dll' in our branch yet.
-    /// This stub will be removed once we enable the actual 'PowerShellModuleAssemblyAnalyzer'.
-    /// </summary>
+    
     internal static class PowerShellModuleAssemblyAnalyzer
     {
         internal static BinaryAnalysisResult AnalyzeModuleAssembly(string path, out Version assemblyVersion)
@@ -312,10 +281,7 @@ namespace System.Management.Automation
             return new RegistryStringResourceIndirect();
         }
 
-        /// <summary>
-        /// Dispose method unloads the app domain that was
-        /// created in the constructor.
-        /// </summary>
+        
         public void Dispose()
         {
         }
@@ -348,17 +314,13 @@ namespace System.Management.Automation.ComInterop
     using System.Dynamic;
     using System.Runtime.InteropServices;
 
-    /// <summary>
-    /// Provides helper methods to bind COM objects dynamically.
-    /// </summary>
+    
     /// <remarks>
     /// COM is not supported on Unix platforms. So this is a stub type.
     /// </remarks>
     internal static class ComBinder
     {
-        /// <summary>
-        /// Tries to perform binding of the dynamic get index operation.
-        /// </summary>
+        
         /// <remarks>
         /// Always return false in CoreCLR.
         /// </remarks>
@@ -368,9 +330,7 @@ namespace System.Management.Automation.ComInterop
             return false;
         }
 
-        /// <summary>
-        /// Tries to perform binding of the dynamic set index operation.
-        /// </summary>
+        
         /// <remarks>
         /// Always return false in CoreCLR.
         /// </remarks>
@@ -380,9 +340,7 @@ namespace System.Management.Automation.ComInterop
             return false;
         }
 
-        /// <summary>
-        /// Tries to perform binding of the dynamic get member operation.
-        /// </summary>
+        
         /// <remarks>
         /// Always return false in CoreCLR.
         /// </remarks>
@@ -392,9 +350,7 @@ namespace System.Management.Automation.ComInterop
             return false;
         }
 
-        /// <summary>
-        /// Tries to perform binding of the dynamic set member operation.
-        /// </summary>
+        
         /// <remarks>
         /// Always return false in CoreCLR.
         /// </remarks>
@@ -404,9 +360,7 @@ namespace System.Management.Automation.ComInterop
             return false;
         }
 
-        /// <summary>
-        /// Tries to perform binding of the dynamic invoke member operation.
-        /// </summary>
+        
         /// <remarks>
         /// Always return false in CoreCLR.
         /// </remarks>
@@ -428,16 +382,12 @@ namespace System.Management.Automation.ComInterop
 
 namespace System.Management.Automation.Security
 {
-    /// <summary>
-    /// Application white listing security policies only affect Windows OSs.
-    /// </summary>
+    
     public sealed class SystemPolicy
     {
         private SystemPolicy() { }
 
-        /// <summary>
-        /// Writes to PowerShell WDAC Audit mode ETW log.
-        /// </summary>
+        
         /// <param name="context">Current execution context.</param>
         /// <param name="title">Audit message title.</param>
         /// <param name="message">Audit message message.</param>
@@ -452,18 +402,14 @@ namespace System.Management.Automation.Security
         {
         }
 
-        /// <summary>
-        /// Gets the system lockdown policy.
-        /// </summary>
+        
         /// <remarks>Always return SystemEnforcementMode.None on non-Windows platforms.</remarks>
         public static SystemEnforcementMode GetSystemLockdownPolicy()
         {
             return SystemEnforcementMode.None;
         }
 
-        /// <summary>
-        /// Gets lockdown policy as applied to a file.
-        /// </summary>
+        
         /// <remarks>Always return SystemEnforcementMode.None on non-Windows platforms.</remarks>
         public static SystemEnforcementMode GetLockdownPolicy(string path, System.Runtime.InteropServices.SafeHandle handle)
         {
@@ -475,10 +421,7 @@ namespace System.Management.Automation.Security
             throw new NotImplementedException("SystemPolicy.IsClassInApprovedList not implemented");
         }
 
-        /// <summary>
-        /// Gets the system wide script file policy enforcement for an open file.
-        /// Based on system WDAC (Windows Defender Application Control) or AppLocker policies.
-        /// </summary>
+        
         /// <param name="filePath">Script file path for policy check.</param>
         /// <param name="fileStream">FileStream object to script file path.</param>
         /// <returns>Policy check result for script file.</returns>
@@ -490,9 +433,7 @@ namespace System.Management.Automation.Security
         }
     }
 
-    /// <summary>
-    /// How the policy is being enforced.
-    /// </summary>
+    
     public enum SystemEnforcementMode
     {
         /// Not enforced at all
@@ -505,34 +446,22 @@ namespace System.Management.Automation.Security
         Enforce = 2
     }
 
-    /// <summary>
-    /// System wide policy enforcement for a specific script file.
-    /// </summary>
+    
     public enum SystemScriptFileEnforcement
     {
-        /// <summary>
-        /// No policy enforcement.
-        /// </summary>
+        
         None = 0,
 
-        /// <summary>
-        /// Script file is blocked from running.
-        /// </summary>
+        
         Block = 1,
 
-        /// <summary>
-        /// Script file is allowed to run without restrictions (FullLanguage mode).
-        /// </summary>
+        
         Allow = 2,
 
-        /// <summary>
-        /// Script file is allowed to run in ConstrainedLanguage mode only.
-        /// </summary>
+        
         AllowConstrained = 3,
 
-        /// <summary>
-        /// Script file is allowed to run in FullLanguage mode but will emit ConstrainedLanguage restriction audit logs.
-        /// </summary>
+        
         AllowConstrainedAudit = 4
     }
 }
@@ -543,13 +472,11 @@ namespace System.Management.Automation.Tracing
     using System.Diagnostics.CodeAnalysis;
     using System.Management.Automation.Internal;
 
-    /// <summary>
-    /// </summary>
+    
     [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
     public abstract class EtwActivity
     {
-        /// <summary>
-        /// </summary>
+        
         /// <param name="activityId"></param>
         /// <returns></returns>
         public static bool SetActivityId(Guid activityId)
@@ -557,16 +484,14 @@ namespace System.Management.Automation.Tracing
             return false;
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <returns></returns>
         public static Guid CreateActivityId()
         {
             return Guid.Empty;
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <returns></returns>
         public static Guid GetActivityId()
         {
@@ -576,99 +501,64 @@ namespace System.Management.Automation.Tracing
 
     public enum PowerShellTraceTask
     {
-        /// <summary>
-        /// None.
-        /// </summary>
+        
         None = 0,
 
-        /// <summary>
-        /// CreateRunspace.
-        /// </summary>
+        
         CreateRunspace = 1,
 
-        /// <summary>
-        /// ExecuteCommand.
-        /// </summary>
+        
         ExecuteCommand = 2,
 
-        /// <summary>
-        /// Serialization.
-        /// </summary>
+        
         Serialization = 3,
 
-        /// <summary>
-        /// PowerShellConsoleStartup.
-        /// </summary>
+        
         PowerShellConsoleStartup = 4,
     }
 
-    /// <summary>
-    /// Defines Keywords.
-    /// </summary>
+    
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1028")]
     [Flags]
     public enum PowerShellTraceKeywords : ulong
     {
-        /// <summary>
-        /// None.
-        /// </summary>
+        
         None = 0,
 
-        /// <summary>
-        /// Runspace.
-        /// </summary>
+        
         Runspace = 0x1,
 
-        /// <summary>
-        /// Pipeline.
-        /// </summary>
+        
         Pipeline = 0x2,
 
-        /// <summary>
-        /// Protocol.
-        /// </summary>
+        
         Protocol = 0x4,
 
-        /// <summary>
-        /// Transport.
-        /// </summary>
+        
         Transport = 0x8,
 
-        /// <summary>
-        /// Host.
-        /// </summary>
+        
         Host = 0x10,
 
-        /// <summary>
-        /// Cmdlets.
-        /// </summary>
+        
         Cmdlets = 0x20,
 
-        /// <summary>
-        /// Serializer.
-        /// </summary>
+        
         Serializer = 0x40,
 
-        /// <summary>
-        /// Session.
-        /// </summary>
+        
         Session = 0x80,
 
-        /// <summary>
-        /// ManagedPlugIn.
-        /// </summary>
+        
         ManagedPlugIn = 0x100,
 
-        /// <summary>
-        /// </summary>
+        
         UseAlwaysDebug = 0x2000000000000000,
 
-        /// <summary>
-        /// </summary>
+        
         UseAlwaysOperational = 0x8000000000000000,
 
-        /// <summary>
-        /// </summary>
+        
         UseAlwaysAnalytic = 0x4000000000000000,
     }
 
@@ -744,8 +634,7 @@ namespace System.Management.Automation.Tracing
             return false;
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="message1"></param>
         /// <param name="message2"></param>
         /// <returns></returns>
@@ -754,8 +643,7 @@ namespace System.Management.Automation.Tracing
             return false;
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="message"></param>
         /// <param name="instanceId"></param>
         /// <returns></returns>
@@ -764,8 +652,7 @@ namespace System.Management.Automation.Tracing
             return false;
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="className"></param>
         /// <param name="methodName"></param>
         /// <param name="workflowId"></param>
@@ -777,8 +664,7 @@ namespace System.Management.Automation.Tracing
             return;
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="className"></param>
         /// <param name="methodName"></param>
         /// <param name="workflowId"></param>
@@ -797,45 +683,22 @@ namespace System.Management.Automation.Tracing
         }
     }
 
-    /// <summary>
-    /// TraceSourceFactory will return an instance of TraceSource every time GetTraceSource method is called.
-    /// </summary>
+    
     public static class PowerShellTraceSourceFactory
     {
-        /// <summary>
-        /// Returns an instance of BaseChannelWriter.
-        /// If the Etw is not supported by the platform it will return NullWriter.Instance
-        ///
-        /// A Task and a set of Keywords can be specified in the GetTraceSource method (See overloads).
-        ///    The supplied task and keywords are used to pass to the Etw provider in case they are
-        /// not defined in the manifest file.
-        /// </summary>
+        
         public static PowerShellTraceSource GetTraceSource()
         {
             return new PowerShellTraceSource(PowerShellTraceTask.None, PowerShellTraceKeywords.None);
         }
 
-        /// <summary>
-        /// Returns an instance of BaseChannelWriter.
-        /// If the Etw is not supported by the platform it will return NullWriter.Instance
-        ///
-        /// A Task and a set of Keywords can be specified in the GetTraceSource method (See overloads).
-        ///    The supplied task and keywords are used to pass to the Etw provider in case they are
-        /// not defined in the manifest file.
-        /// </summary>
+        
         public static PowerShellTraceSource GetTraceSource(PowerShellTraceTask task)
         {
             return new PowerShellTraceSource(task, PowerShellTraceKeywords.None);
         }
 
-        /// <summary>
-        /// Returns an instance of BaseChannelWriter.
-        /// If the Etw is not supported by the platform it will return NullWriter.Instance
-        ///
-        /// A Task and a set of Keywords can be specified in the GetTraceSource method (See overloads).
-        ///    The supplied task and keywords are used to pass to the Etw provider in case they are
-        /// not defined in the manifest file.
-        /// </summary>
+        
         public static PowerShellTraceSource GetTraceSource(PowerShellTraceTask task, PowerShellTraceKeywords keywords)
         {
             return new PowerShellTraceSource(task, keywords);

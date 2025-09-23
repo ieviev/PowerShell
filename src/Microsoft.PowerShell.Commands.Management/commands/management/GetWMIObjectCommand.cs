@@ -11,33 +11,25 @@ using System.Threading;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// A command to get WMI Objects.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Get, "WmiObject", DefaultParameterSetName = "query",
         HelpUri = "https://go.microsoft.com/fwlink/?LinkID=113337", RemotingCapability = RemotingCapability.OwnedByCommand)]
     public class GetWmiObjectCommand : WmiBaseCmdlet
     {
         #region Parameters
 
-        /// <summary>
-        /// The WMI class to query.
-        /// </summary>
+        
         [Alias("ClassName")]
         [Parameter(Position = 0, Mandatory = true, ParameterSetName = "query")]
         [Parameter(Position = 1, ParameterSetName = "list")]
         [ValidateNotNullOrEmpty]
         public string Class { get; set; }
 
-        /// <summary>
-        /// To specify whether to get the results recursively.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "list")]
         public SwitchParameter Recurse { get; set; } = false;
 
-        /// <summary>
-        /// The WMI properties to retrieve.
-        /// </summary>
+        
         [Parameter(Position = 1, ParameterSetName = "query")]
         [ValidateNotNullOrEmpty]
         public string[] Property
@@ -47,34 +39,24 @@ namespace Microsoft.PowerShell.Commands
             set { _property = value; }
         }
 
-        /// <summary>
-        /// The filter to be used in the search.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "query")]
         public string Filter { get; set; }
 
-        /// <summary>
-        /// If Amended qualifier to use.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter Amended { get; set; }
 
-        /// <summary>
-        /// If Enumerate Deep flag to use. When 'list' parameter is specified 'EnumerateDeep' parameter is ignored.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "WQLQuery")]
         [Parameter(ParameterSetName = "query")]
         public SwitchParameter DirectRead { get; set; }
 
-        /// <summary>
-        /// The list of classes.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "list")]
         public SwitchParameter List { get; set; } = false;
 
-        /// <summary>
-        /// The query string to search for objects.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ParameterSetName = "WQLQuery")]
         public string Query { get; set; }
 
@@ -88,9 +70,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Command code
 
-        /// <summary>
-        /// Uses this.filter, this.wmiClass and this.property to retrieve the filter.
-        /// </summary>
+        
         internal string GetQueryString()
         {
             StringBuilder returnValue = new StringBuilder("select ");
@@ -105,17 +85,7 @@ namespace Microsoft.PowerShell.Commands
 
             return returnValue.ToString();
         }
-        /// <summary>
-        /// Uses filter table to convert the class into WMI understandable language.
-        ///            Character   Description Example Match   Comment
-        ///             *   Matches zero or more characters starting at the specified position  A*  A,ag,Apple  Supported by PowerShell.
-        ///              ?   Matches any character at the specified position ?n  An,in,on (does not match ran)   Supported by PowerShell.
-        ///              _   Matches any character at the specified position    _n  An,in,on (does not match ran)   Supported by WMI
-        ///             %   Matches zero or more characters starting at the specified position   A%  A,ag,Apple  Supported by WMI
-        ///             []  Matches a range of characters  [a-l]ook    Book,cook,look (does not match took)    Supported by WMI and powershell
-        ///              []  Matches specified characters   [bc]ook Book,cook, (does not match look)    Supported by WMI and powershell
-        ///              ^   Does not Match specified characters. [^bc]ook    Look, took (does not match book, cook)  Supported by WMI.
-        /// </summary>
+        
 
         internal string GetFilterClassName()
         {
@@ -169,9 +139,7 @@ namespace Microsoft.PowerShell.Commands
             return true;
         }
 
-        /// <summary>
-        /// Gets the ManagementObjectSearcher object.
-        /// </summary>
+        
         internal ManagementObjectSearcher GetObjectList(ManagementScope scope)
         {
             StringBuilder queryStringBuilder = new StringBuilder();
@@ -197,9 +165,7 @@ namespace Microsoft.PowerShell.Commands
             var searcher = new ManagementObjectSearcher(scope, classQuery, enumOptions);
             return searcher;
         }
-        /// <summary>
-        /// Gets the properties of an item at the specified path.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             ConnectionOptions options = GetConnectionOption();
@@ -414,9 +380,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Get the class name from a query string.
-        /// </summary>
+        
         /// <param name="query"></param>
         /// <returns></returns>
         private string GetClassNameFromQuery(string query)

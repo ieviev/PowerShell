@@ -43,10 +43,7 @@ namespace System.Management.Automation.Language
     {
         internal Ast _ast;
         internal ScopeType _scopeType;
-        /// <summary>
-        /// TypeTable maps namespace (currently it's module name) to the types under this namespace.
-        /// For the types defined in the current namespace (module) we use CURRENT_NAMESPACE as a namespace.
-        /// </summary>
+        
         private readonly Dictionary<string, TypeLookupResult> _typeTable;
         private readonly Dictionary<string, Ast> _variableTable;
 
@@ -203,18 +200,14 @@ namespace System.Management.Automation.Language
             _scopes.RemoveAt(_scopes.Count - 1);
         }
 
-        /// <summary>
-        /// Add Type to the symbol Table.
-        /// </summary>
+        
         /// <param name="typeDefinitionAst"></param>
         public void AddType(TypeDefinitionAst typeDefinitionAst)
         {
             _scopes[_scopes.Count - 1].AddType(_parser, typeDefinitionAst);
         }
 
-        /// <summary>
-        /// Add Type from the different module to the symbol Table.
-        /// </summary>
+        
         /// <param name="typeDefinitionAst"></param>
         /// <param name="moduleInfo"></param>
         public void AddTypeFromUsingModule(TypeDefinitionAst typeDefinitionAst, PSModuleInfo moduleInfo)
@@ -248,9 +241,7 @@ namespace System.Management.Automation.Language
             return result;
         }
 
-        /// <summary>
-        /// Return the most deep typeDefinitionAst in the current context.
-        /// </summary>
+        
         /// <returns>TypeDefinitionAst or null, if currently not in type definition.</returns>
         public TypeDefinitionAst GetCurrentTypeDefinitionAst()
         {
@@ -440,11 +431,7 @@ namespace System.Management.Automation.Language
             return AstVisitAction.Continue;
         }
 
-        /// <summary>
-        /// Resolves using module to a collection of PSModuleInfos. Doesn't throw.
-        /// PSModuleInfo objects are returned in the right order: i.e. if multiply versions of the module
-        /// is presented on the system and user didn't specify version, we will return all of them, but newer one would go first.
-        /// </summary>
+        
         /// <param name="usingStatementAst">Using statement.</param>
         /// <param name="exception">If exception happens, return exception object.</param>
         /// <param name="wildcardCharactersUsed">

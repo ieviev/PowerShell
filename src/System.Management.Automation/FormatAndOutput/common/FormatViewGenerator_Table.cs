@@ -76,10 +76,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             this.activeAssociationList = new List<MshResolvedExpressionParameterAssociation>();
         }
 
-        /// <summary>
-        /// Let the view prepare itself for RemoteObjects. This will add "ComputerName" to the
-        /// table columns.
-        /// </summary>
+        
         /// <param name="so"></param>
         internal override void PrepareForRemoteObjects(PSObject so)
         {
@@ -123,12 +120,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             return startFormat;
         }
 
-        /// <summary>
-        /// Method to filter resolved expressions as per table view needs.
-        /// For v1.0, table view supports only 10 properties.
-        ///
-        /// This method filters and updates "activeAssociationList" instance property.
-        /// </summary>
+        
         /// <returns>None.</returns>
         /// <remarks>This method updates "activeAssociationList" instance property.</remarks>
         private void FilterActiveAssociationList()

@@ -7,37 +7,24 @@ using System.Windows.Media;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <summary>
-    /// Moves through search highlights built in a ParagraphBuilder
-    /// changing the color of the current highlight.
-    /// </summary>
+    
     internal class ParagraphSearcher
     {
-        /// <summary>
-        /// Highlight for all matches except the current.
-        /// </summary>
+        
         internal static readonly Brush HighlightBrush = Brushes.Yellow;
 
-        /// <summary>
-        /// Highlight for the current match.
-        /// </summary>
+        
         private static readonly Brush CurrentHighlightBrush = Brushes.Cyan;
 
-        /// <summary>
-        /// Current match being highlighted in search.
-        /// </summary>
+        
         private Run currentHighlightedMatch;
 
-        /// <summary>
-        /// Initializes a new instance of the ParagraphSearcher class.
-        /// </summary>
+        
         internal ParagraphSearcher()
         {
         }
 
-        /// <summary>
-        /// Move to the next highlight starting at the <paramref name="caretPosition"/>.
-        /// </summary>
+        
         /// <param name="forward">True for next false for previous.</param>
         /// <param name="caretPosition">Caret position.</param>
         /// <returns>The next highlight starting at the <paramref name="caretPosition"/>.</returns>
@@ -93,17 +80,13 @@ namespace Microsoft.Management.UI.Internal
             return currentRun;
         }
 
-        /// <summary>
-        /// Resets the search for fresh calls to MoveAndHighlightNextNextMatch.
-        /// </summary>
+        
         internal void ResetSearch()
         {
             this.currentHighlightedMatch = null;
         }
 
-        /// <summary>
-        /// Returns true if <paramref name="run"/> is highlighted.
-        /// </summary>
+        
         /// <param name="run">Run to check if is highlighted.</param>
         /// <returns>True if <paramref name="run"/> is highlighted.</returns>
         private static bool Ishighlighted(Run run)
@@ -122,9 +105,7 @@ namespace Microsoft.Management.UI.Internal
             return false;
         }
 
-        /// <summary>
-        /// Get the next or previous run according to <paramref name="forward"/>.
-        /// </summary>
+        
         /// <param name="currentRun">The current run.</param>
         /// <param name="forward">True for next false for previous.</param>
         /// <returns>The next or previous run according to <paramref name="forward"/>.</returns>
@@ -146,10 +127,7 @@ namespace Microsoft.Management.UI.Internal
             return GetRun(nextInline);
         }
 
-        /// <summary>
-        /// Gets the run of an inline. Inlines in a ParagrahBuilder are either a Run or a Bold
-        /// which contains a Run.
-        /// </summary>
+        
         /// <param name="inline">Inline to get the run from.</param>
         /// <returns>The run of the inline.</returns>
         private static Run GetRun(Inline inline)
@@ -163,10 +141,7 @@ namespace Microsoft.Management.UI.Internal
             return (Run)inline;
         }
 
-        /// <summary>
-        /// Gets the next highlighted run starting and including <paramref name="currentRun"/>
-        /// according to the direction specified in <paramref name="forward"/>.
-        /// </summary>
+        
         /// <param name="currentRun">The current run.</param>
         /// <param name="forward">True for next false for previous.</param>
         /// <returns>
@@ -188,9 +163,7 @@ namespace Microsoft.Management.UI.Internal
             return currentRun;
         }
 
-        /// <summary>
-        /// Gets the run's paragraph.
-        /// </summary>
+        
         /// <param name="run">Run to get the paragraph from.</param>
         /// <returns>The run's paragraph.</returns>
         private static Paragraph GetParagraph(Run run)
@@ -201,9 +174,7 @@ namespace Microsoft.Management.UI.Internal
             return parentParagraph;
         }
 
-        /// <summary>
-        /// Returns true if the run is the first run of the paragraph.
-        /// </summary>
+        
         /// <param name="run">Run to check.</param>
         /// <returns>True if the run is the first run of the paragraph.</returns>
         private static bool IsFirstRun(Run run)
@@ -213,9 +184,7 @@ namespace Microsoft.Management.UI.Internal
             return run == firstRun;
         }
 
-        /// <summary>
-        /// Gets the first or lasr run in the paragraph containing <paramref name="caretRun"/>.
-        /// </summary>
+        
         /// <param name="caretRun">Run containing the caret.</param>
         /// <param name="forward">True for first false for last.</param>
         /// <returns>The first or last run in the paragraph containing <paramref name="caretRun"/>.</returns>

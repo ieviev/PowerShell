@@ -115,9 +115,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             return null;
         }
 
-        /// <summary>
-        /// Get a reference to an assembly object by looking up the currently loaded assemblies.
-        /// </summary>
+        
         /// <param name="resourceReference">the string resource reference object containing
         /// the name of the assembly to load</param>
         /// <param name="foundInGac"> true if assembly was found in the GAC. NOTE: the current
@@ -138,15 +136,10 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             internal AssemblyBindingStatus status;
         }
 
-        /// <summary>
-        /// Helper class to resolve an assembly name to an assembly reference
-        /// The class caches previous results for faster lookup.
-        /// </summary>
+        
         private sealed class AssemblyNameResolver
         {
-            /// <summary>
-            /// Resolve the assembly name against the set of loaded assemblies.
-            /// </summary>
+            
             /// <param name="assemblyName"></param>
             /// <returns></returns>
             internal Assembly ResolveAssemblyName(string assemblyName)

@@ -12,18 +12,12 @@ using Dbg = System.Management.Automation.Diagnostics;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// This is the interface between the NativeCommandProcessor and the
-    /// parameter binders required to bind parameters to a minishell.
-    /// </summary>
+    
     internal class MinishellParameterBinderController : NativeCommandParameterBinderController
     {
         #region ctor
 
-        /// <summary>
-        /// Initializes the parameter binder controller for
-        /// the specified native command and engine context.
-        /// </summary>
+        
         /// <param name="command">
         /// The command that the parameters will be bound to.
         /// </param>
@@ -37,24 +31,16 @@ namespace System.Management.Automation
 
         #endregion ctor
 
-        /// <summary>
-        /// Value of input format. This property should be read after binding of parameters.
-        /// </summary>
+        
         internal NativeCommandIOFormat InputFormat { get; private set; }
 
-        /// <summary>
-        /// Value of output format. This property should be read after binding of parameters.
-        /// </summary>
+        
         internal NativeCommandIOFormat OutputFormat { get; private set; }
 
-        /// <summary>
-        /// IF true, child minishell is invoked with no-window.
-        /// </summary>
+        
         internal bool NonInteractive { get; private set; }
 
-        /// <summary>
-        /// Binds the specified parameters to the native command.
-        /// </summary>
+        
         /// <param name="parameters">
         /// The parameters to bind.
         /// </param>
@@ -256,9 +242,7 @@ namespace System.Management.Automation
             OutputFormat = 0x08
         }
 
-        /// <summary>
-        /// Handles error handling if some parameter is specified more than once.
-        /// </summary>
+        
         private void HandleSeenParameter(ref MinishellParameters seen, MinishellParameters parameter, string parameterName)
         {
             if ((seen & parameter) == parameter)
@@ -275,9 +259,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// This function processes the value for -inputFormat and -outputFormat parameter of minishell.
-        /// </summary>
+        
         /// <param name="parameterName">Name of the parameter for error messages. Value should be -inputFormat or -outputFormat.</param>
         /// <param name="value">Value to process.</param>
         /// <returns>Processed value.</returns>
@@ -314,9 +296,7 @@ namespace System.Management.Automation
                 fpValue, parameterName);
         }
 
-        /// <summary>
-        /// Converts value of args parameter in to an encoded string.
-        /// </summary>
+        
         private static string ConvertArgsValueToEncodedString(object value)
         {
             ArrayList list = ConvertArgsValueToArrayList(value);
@@ -335,10 +315,7 @@ namespace System.Management.Automation
             return StringToBase64Converter.StringToBase64String(result);
         }
 
-        /// <summary>
-        /// Converts the value of -args parameter received from
-        /// parser in to an arraylist.
-        /// </summary>
+        
         private static ArrayList ConvertArgsValueToArrayList(object value)
         {
             ArrayList results = new ArrayList();

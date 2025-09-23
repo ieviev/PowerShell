@@ -8,9 +8,7 @@ namespace System.Management.Automation.Provider
 {
     #region IPropertyCmdletProvider
 
-    /// <summary>
-    /// An interface that can be implemented by a Cmdlet provider to expose properties of an item.
-    /// </summary>
+    
     /// <remarks>
     /// An IPropertyCmdletProvider provider implements a set of methods that allows
     /// the use of a set of core commands against the data store that the provider
@@ -28,9 +26,7 @@ namespace System.Management.Automation.Provider
     /// </remarks>
     public interface IPropertyCmdletProvider
     {
-        /// <summary>
-        /// Gets the properties of the item specified by the path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to retrieve properties from.
         /// </param>
@@ -61,10 +57,7 @@ namespace System.Management.Automation.Provider
             string path,
             Collection<string>? providerSpecificPickList);
 
-        /// <summary>
-        /// Gives the provider an opportunity to attach additional parameters to the
-        /// get-itemproperty cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// If the path was specified on the command line, this is the path
         /// to the item to get the dynamic parameters for.
@@ -84,9 +77,7 @@ namespace System.Management.Automation.Provider
             string path,
             Collection<string>? providerSpecificPickList);
 
-        /// <summary>
-        /// Sets the specified properties of the item at the specified path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item to set the properties on.
         /// </param>
@@ -119,10 +110,7 @@ namespace System.Management.Automation.Provider
             string path,
             PSObject propertyValue);
 
-        /// <summary>
-        /// Gives the provider an opportunity to attach additional parameters to the
-        /// get-itemproperty cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// If the path was specified on the command line, this is the path
         /// to the item to get the dynamic parameters for.
@@ -142,9 +130,7 @@ namespace System.Management.Automation.Provider
             string path,
             PSObject propertyValue);
 
-        /// <summary>
-        /// Clears a property of the item at the specified path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the item on which to clear the property.
         /// </param>
@@ -174,10 +160,7 @@ namespace System.Management.Automation.Provider
             string path,
             Collection<string> propertyToClear);
 
-        /// <summary>
-        /// Gives the provider an opportunity to attach additional parameters to the
-        /// clear-itemproperty cmdlet.
-        /// </summary>
+        
         /// <param name="path">
         /// If the path was specified on the command line, this is the path
         /// to the item to get the dynamic parameters for.

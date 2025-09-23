@@ -7,16 +7,12 @@ using Dbg = System.Management.Automation;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Holds the state of a Monad Shell session.
-    /// </summary>
+    
     internal sealed partial class SessionStateInternal
     {
         #region cmdlets
 
-        /// <summary>
-        /// Gets the value of the specified cmdlet from the cmdlet table.
-        /// </summary>
+        
         /// <param name="cmdletName">
         /// The name of the cmdlet value to retrieve.
         /// </param>
@@ -28,9 +24,7 @@ namespace System.Management.Automation
             return GetCmdlet(cmdletName, CommandOrigin.Internal);
         }
 
-        /// <summary>
-        /// Gets the value of the specified cmdlet from the cmdlet table.
-        /// </summary>
+        
         /// <param name="cmdletName">
         /// The name of the cmdlet value to retrieve.
         /// </param>
@@ -81,9 +75,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Gets the value of the specified cmdlet from the cmdlet table.
-        /// </summary>
+        
         /// <param name="cmdletName">
         /// The name of the cmdlet value to retrieve.
         /// </param>
@@ -127,9 +119,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Gets an IEnumerable for the cmdlet table.
-        /// </summary>
+        
         internal IDictionary<string, List<CmdletInfo>> GetCmdletTable()
         {
             Dictionary<string, List<CmdletInfo>> result =
@@ -165,9 +155,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Gets an IEnumerable for the cmdlet table for a given scope.
-        /// </summary>
+        
         /// <param name="scopeID">
         /// A scope identifier that is either one of the "special" scopes like
         /// "global", "script", "local", or "private, or a numeric ID of a relative scope
@@ -213,9 +201,7 @@ namespace System.Management.Automation
             RemoveCmdlet(name, index, force, CommandOrigin.Internal);
         }
 
-        /// <summary>
-        /// Removes a cmdlet from the function table.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the cmdlet to remove.
         /// </param>
@@ -270,9 +256,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Removes a cmdlet entry from the cmdlet table.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the cmdlet entry to remove.
         /// </param>

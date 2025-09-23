@@ -356,9 +356,7 @@ namespace System.Management.Automation.Language
             throw PSTraceSource.NewArgumentException(nameof(ast));
         }
 
-        /// <summary>
-        /// This field needs to be thread-static to make 'GetSafeValue' thread safe.
-        /// </summary>
+        
         [ThreadStatic]
         private static ExecutionContext t_context;
 

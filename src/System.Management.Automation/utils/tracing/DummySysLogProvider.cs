@@ -18,9 +18,7 @@ internal class DummySysLogProvider : LogProvider
     {
     }
 
-    /// <summary>
-    /// Determines whether any session is requesting the specified event from the provider.
-    /// </summary>
+    
     /// <param name="level"></param>
     /// <param name="keywords"></param>
     /// <returns></returns>
@@ -35,9 +33,7 @@ internal class DummySysLogProvider : LogProvider
         return false;
     }
 
-    /// <summary>
-    /// Provider interface function for logging health event.
-    /// </summary>
+    
     /// <param name="logContext"></param>
     /// <param name="eventId"></param>
     /// <param name="exception"></param>
@@ -47,18 +43,14 @@ internal class DummySysLogProvider : LogProvider
     {
     }
 
-    /// <summary>
-    /// Provider interface function for logging provider health event.
-    /// </summary>
+    
     /// <param name="state">This the action performed in AmsiUtil class, like init, scan, etc</param>
     /// <param name="context">The amsiContext handled - Session pair</param>
     internal override void LogAmsiUtilStateEvent(string state, string context)
     {
     }
 
-    /// <summary>
-    /// Provider interface function for logging WDAC query event.
-    /// </summary>
+    
     /// <param name="queryName">Name of the WDAC query.</param>
     /// <param name="fileName">Name of script file for policy query. Can be null value.</param>
     /// <param name="querySuccess">Query call succeed code.</param>
@@ -71,9 +63,7 @@ internal class DummySysLogProvider : LogProvider
     {
     }
 
-    /// <summary>
-    /// Provider interface function for logging WDAC audit event.
-    /// </summary>
+    
     /// <param name="title">Title of WDAC audit event.</param>
     /// <param name="message">WDAC audit event message.</param>
     /// <param name="fqid">FullyQualifiedId of WDAC audit event.</param>
@@ -86,9 +76,7 @@ internal class DummySysLogProvider : LogProvider
             (PSKeyword)0x0, title, message, fqid);
     }
 
-    /// <summary>
-    /// Provider interface function for logging engine lifecycle event.
-    /// </summary>
+    
     /// <param name="logContext"></param>
     /// <param name="newState"></param>
     /// <param name="previousState"></param>
@@ -97,18 +85,14 @@ internal class DummySysLogProvider : LogProvider
     {
     }
 
-    /// <summary>
-    /// Provider interface function for logging command health event.
-    /// </summary>
+    
     /// <param name="logContext"></param>
     /// <param name="exception"></param>
     internal override void LogCommandHealthEvent(LogContext logContext, Exception exception)
     {
     }
 
-    /// <summary>
-    /// Provider interface function for logging command lifecycle event.
-    /// </summary>
+    
     /// <param name="getLogContext"></param>
     /// <param name="newState"></param>
     internal override void LogCommandLifecycleEvent(Func<LogContext> getLogContext, CommandState newState)
@@ -116,18 +100,14 @@ internal class DummySysLogProvider : LogProvider
       
     }
 
-    /// <summary>
-    /// Provider interface function for logging pipeline execution detail.
-    /// </summary>
+    
     /// <param name="logContext"></param>
     /// <param name="pipelineExecutionDetail"></param>
     internal override void LogPipelineExecutionDetailEvent(LogContext logContext, List<string> pipelineExecutionDetail)
     {
     }
 
-    /// <summary>
-    /// Provider interface function for logging provider health event.
-    /// </summary>
+    
     /// <param name="logContext"></param>
     /// <param name="providerName"></param>
     /// <param name="exception"></param>
@@ -135,9 +115,7 @@ internal class DummySysLogProvider : LogProvider
     {
     }
 
-    /// <summary>
-    /// Provider interface function for logging provider lifecycle event.
-    /// </summary>
+    
     /// <param name="logContext"></param>
     /// <param name="providerName"></param>
     /// <param name="newState"></param>
@@ -145,9 +123,7 @@ internal class DummySysLogProvider : LogProvider
     {
     }
 
-    /// <summary>
-    /// Provider interface function for logging settings event.
-    /// </summary>
+    
     /// <param name="logContext"></param>
     /// <param name="variableName"></param>
     /// <param name="value"></param>
@@ -157,18 +133,14 @@ internal class DummySysLogProvider : LogProvider
     {
     }
 
-    /// <summary>
-    /// The SysLog provider does not use logging variables.
-    /// </summary>
+    
     /// <returns></returns>
     internal override bool UseLoggingVariables()
     {
         return false;
     }
 
-    /// <summary>
-    /// Writes a single event.
-    /// </summary>
+    
     /// <param name="id">Event id.</param>
     /// <param name="channel"></param>
     /// <param name="opcode"></param>
@@ -180,9 +152,7 @@ internal class DummySysLogProvider : LogProvider
     {
     }
 
-    /// <summary>
-    /// Writes an event.
-    /// </summary>
+    
     /// <param name="id"></param>
     /// <param name="channel"></param>
     /// <param name="opcode"></param>
@@ -195,16 +165,12 @@ internal class DummySysLogProvider : LogProvider
     {
     }
 
-    /// <summary>
-    /// Writes an activity transfer event.
-    /// </summary>
+    
     internal void WriteTransferEvent(Guid parentActivityId)
     {
     }
 
-    /// <summary>
-    /// Sets the activity id for the current thread.
-    /// </summary>
+    
     /// <param name="newActivityId">The GUID identifying the activity.</param>
     internal void SetActivityIdForCurrentThread(Guid newActivityId)
     {

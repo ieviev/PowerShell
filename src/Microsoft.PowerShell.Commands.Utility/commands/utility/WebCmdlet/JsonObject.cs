@@ -19,52 +19,34 @@ using Newtonsoft.Json.Linq;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// JsonObject class.
-    /// </summary>
+    
     [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", Justification = "Preferring Json over JSON")]
     public static class JsonObject
     {
         #region HelperTypes
 
-        /// <summary>
-        /// Context for convert-to-json operation.
-        /// </summary>
+        
         public readonly struct ConvertToJsonContext
         {
-            /// <summary>
-            /// Gets the maximum depth for walking the object graph.
-            /// </summary>
+            
             public readonly int MaxDepth;
 
-            /// <summary>
-            /// Gets the cancellation token.
-            /// </summary>
+            
             public readonly CancellationToken CancellationToken;
 
-            /// <summary>
-            /// Gets the StringEscapeHandling setting.
-            /// </summary>
+            
             public readonly StringEscapeHandling StringEscapeHandling;
 
-            /// <summary>
-            /// Gets the EnumsAsStrings setting.
-            /// </summary>
+            
             public readonly bool EnumsAsStrings;
 
-            /// <summary>
-            /// Gets the CompressOutput setting.
-            /// </summary>
+            
             public readonly bool CompressOutput;
 
-            /// <summary>
-            /// Gets the target cmdlet that is doing the convert-to-json operation.
-            /// </summary>
+            
             public readonly PSCmdlet Cmdlet;
 
-            /// <summary>
-            /// Initializes a new instance of the <see cref="ConvertToJsonContext"/> struct.
-            /// </summary>
+            
             /// <param name="maxDepth">The maximum depth to visit the object.</param>
             /// <param name="enumsAsStrings">Indicates whether to use enum names for the JSON conversion.</param>
             /// <param name="compressOutput">Indicates whether to get the compressed output.</param>
@@ -73,9 +55,7 @@ namespace Microsoft.PowerShell.Commands
             {
             }
 
-            /// <summary>
-            /// Initializes a new instance of the <see cref="ConvertToJsonContext"/> struct.
-            /// </summary>
+            
             /// <param name="maxDepth">The maximum depth to visit the object.</param>
             /// <param name="enumsAsStrings">Indicates whether to use enum names for the JSON conversion.</param>
             /// <param name="compressOutput">Indicates whether to get the compressed output.</param>
@@ -111,9 +91,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region ConvertFromJson
 
-        /// <summary>
-        /// Convert a Json string back to an object of type PSObject.
-        /// </summary>
+        
         /// <param name="input">The json text to convert.</param>
         /// <param name="error">An error record if the conversion failed.</param>
         /// <returns>A PSObject.</returns>
@@ -123,10 +101,7 @@ namespace Microsoft.PowerShell.Commands
             return ConvertFromJson(input, returnHashtable: false, out error);
         }
 
-        /// <summary>
-        /// Convert a Json string back to an object of type <see cref="System.Management.Automation.PSObject"/> or
-        /// <see cref="System.Collections.Hashtable"/> depending on parameter <paramref name="returnHashtable"/>.
-        /// </summary>
+        
         /// <param name="input">The json text to convert.</param>
         /// <param name="returnHashtable">True if the result should be returned as a <see cref="System.Collections.Hashtable"/>
         /// instead of a <see cref="System.Management.Automation.PSObject"/></param>
@@ -139,10 +114,7 @@ namespace Microsoft.PowerShell.Commands
             return ConvertFromJson(input, returnHashtable, maxDepth: 1024, out error);
         }
 
-        /// <summary>
-        /// Convert a JSON string back to an object of type <see cref="System.Management.Automation.PSObject"/> or
-        /// <see cref="System.Collections.Hashtable"/> depending on parameter <paramref name="returnHashtable"/>.
-        /// </summary>
+        
         /// <param name="input">The JSON text to convert.</param>
         /// <param name="returnHashtable">True if the result should be returned as a <see cref="System.Collections.Hashtable"/>
         /// instead of a <see cref="System.Management.Automation.PSObject"/>.</param>
@@ -154,10 +126,7 @@ namespace Microsoft.PowerShell.Commands
         public static object ConvertFromJson(string input, bool returnHashtable, int? maxDepth, out ErrorRecord error)
             => ConvertFromJson(input, returnHashtable, maxDepth, jsonDateKind: JsonDateKind.Default, out error);
 
-        /// <summary>
-        /// Convert a JSON string back to an object of type <see cref="System.Management.Automation.PSObject"/> or
-        /// <see cref="System.Collections.Hashtable"/> depending on parameter <paramref name="returnHashtable"/>.
-        /// </summary>
+        
         /// <param name="input">The JSON text to convert.</param>
         /// <param name="returnHashtable">True if the result should be returned as a <see cref="System.Collections.Hashtable"/>
         /// instead of a <see cref="System.Management.Automation.PSObject"/>.</param>
@@ -482,9 +451,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region ConvertToJson
 
-        /// <summary>
-        /// Convert an object to JSON string.
-        /// </summary>
+        
         public static string ConvertToJson(object objectToProcess, in ConvertToJsonContext context)
         {
             try
@@ -521,11 +488,7 @@ namespace Microsoft.PowerShell.Commands
 
         private static bool _maxDepthWarningWritten;
 
-        /// <summary>
-        /// Return an alternate representation of the specified object that serializes the same JSON, except
-        /// that properties that cannot be evaluated are treated as having the value null.
-        /// Primitive types are returned verbatim.  Aggregate types are processed recursively.
-        /// </summary>
+        
         /// <param name="obj">The object to be processed.</param>
         /// <param name="currentDepth">The current depth into the object graph.</param>
         /// <param name="context">The context to use for the convert-to-json operation.</param>
@@ -650,9 +613,7 @@ namespace Microsoft.PowerShell.Commands
             return rv;
         }
 
-        /// <summary>
-        /// Add to a base object any properties that might have been added to an object (via PSObject) through the Add-Member cmdlet.
-        /// </summary>
+        
         /// <param name="psObj">The containing PSObject, or null if the base object was not contained in a PSObject.</param>
         /// <param name="obj">The base object that might have been decorated with additional properties.</param>
         /// <param name="depth">The current depth into the object graph.</param>
@@ -696,13 +657,7 @@ namespace Microsoft.PowerShell.Commands
             return dict;
         }
 
-        /// <summary>
-        /// Append to a dictionary any properties that might have been added to an object (via PSObject) through the Add-Member cmdlet.
-        /// If the passed in object is a custom object (not a simple object, not a dictionary, not a list, get processed in ProcessCustomObject method),
-        /// we also take Adapted properties into account. Otherwise, we only consider the Extended properties.
-        /// When the object is a pure PSObject, it also gets processed in "ProcessCustomObject" before reaching this method, so we will
-        /// iterate both extended and adapted properties for it. Since it's a pure PSObject, there will be no adapted properties.
-        /// </summary>
+        
         /// <param name="psObj">The containing PSObject, or null if the base object was not contained in a PSObject.</param>
         /// <param name="receiver">The dictionary to which any additional properties will be appended.</param>
         /// <param name="depth">The current depth into the object graph.</param>
@@ -740,10 +695,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Return an alternate representation of the specified dictionary that serializes the same JSON, except
-        /// that any contained properties that cannot be evaluated are treated as having the value null.
-        /// </summary>
+        
         private static object ProcessDictionary(IDictionary dict, int depth, in ConvertToJsonContext context)
         {
             Dictionary<string, object> result = new(dict.Count);
@@ -777,10 +729,7 @@ namespace Microsoft.PowerShell.Commands
             return result;
         }
 
-        /// <summary>
-        /// Return an alternate representation of the specified collection that serializes the same JSON, except
-        /// that any contained properties that cannot be evaluated are treated as having the value null.
-        /// </summary>
+        
         private static object ProcessEnumerable(IEnumerable enumerable, int depth, in ConvertToJsonContext context)
         {
             List<object> result = new();
@@ -793,14 +742,7 @@ namespace Microsoft.PowerShell.Commands
             return result;
         }
 
-        /// <summary>
-        /// Return an alternate representation of the specified aggregate object that serializes the same JSON, except
-        /// that any contained properties that cannot be evaluated are treated as having the value null.
-        ///
-        /// The result is a dictionary in which all public fields and public gettable properties of the original object
-        /// are represented.  If any exception occurs while retrieving the value of a field or property, that entity
-        /// is included in the output dictionary with a value of null.
-        /// </summary>
+        
         private static object ProcessCustomObject<T>(object o, int depth, in ConvertToJsonContext context)
         {
             Dictionary<string, object> result = new();

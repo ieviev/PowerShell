@@ -8,27 +8,16 @@ using Dbg = System.Management.Automation;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Holds the state of a Monad Shell session.
-    /// </summary>
+    
     internal sealed partial class SessionStateInternal
     {
-        /// <summary>
-        /// The current scope. It is either the global scope or
-        /// a nested scope within the global scope. The current
-        /// scope is implied or can be accessed using $local in
-        /// the shell.
-        /// </summary>
+        
         private SessionStateScope _currentScope;
 
-        /// <summary>
-        /// Cmdlet parameter name to return in the error message instead of "scopeID".
-        /// </summary>
+        
         internal const string ScopeParameterName = "Scope";
 
-        /// <summary>
-        /// Given a scope identifier, returns the proper session state scope.
-        /// </summary>
+        
         /// <param name="scopeID">
         /// A scope identifier that is either one of the "special" scopes like
         /// "global", "local", or "private, or a numeric ID of a relative scope
@@ -111,9 +100,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Given a scope ID, walks the scope list to the appropriate scope and returns it.
-        /// </summary>
+        
         /// <param name="scopeID">
         /// The numeric indexer to the scope relative to the current scope.
         /// </param>
@@ -150,21 +137,13 @@ namespace System.Management.Automation
             return processingScope;
         }
 
-        /// <summary>
-        /// The global scope of session state.  Can be accessed
-        /// using $global in the shell.
-        /// </summary>
+        
         internal SessionStateScope GlobalScope { get; }
 
-        /// <summary>
-        /// The module scope of a session state. This is only used internally
-        /// by the engine. There is no module scope qualifier.
-        /// </summary>
+        
         internal SessionStateScope ModuleScope { get; }
 
-        /// <summary>
-        /// Gets the session state current scope.
-        /// </summary>
+        
         internal SessionStateScope CurrentScope
         {
             get
@@ -208,15 +187,10 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the session state current script scope.
-        /// </summary>
+        
         internal SessionStateScope ScriptScope { get { return _currentScope.ScriptScope; } }
 
-        /// <summary>
-        /// Creates a new scope in the scope tree and assigns the parent
-        /// and child scopes appropriately.
-        /// </summary>
+        
         /// <param name="isScriptScope">
         /// If true, the new scope is pushed on to the script scope stack and
         /// can be referenced using $script:
@@ -242,10 +216,7 @@ namespace System.Management.Automation
             return newScope;
         }
 
-        /// <summary>
-        /// Removes the current scope from the scope tree and
-        /// changes the current scope to the parent scope.
-        /// </summary>
+        
         /// <param name="scope">
         /// The scope to cleanup and remove.
         /// </param>

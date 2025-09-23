@@ -7,9 +7,7 @@ using Dbg = System.Management.Automation.Diagnostics;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Defines a data structure used to represent the status of an ongoing operation at a point in time.
-    /// </summary>
+    
     /// <remarks>
     /// ProgressRecords are passed to <see cref="System.Management.Automation.Cmdlet.WriteProgress(ProgressRecord)"/>,
     /// which, according to user preference, forwards that information on to the host for rendering to the user.
@@ -21,10 +19,7 @@ namespace System.Management.Automation
     {
         #region Public API
 
-        /// <summary>
-        /// Initializes a new instance of the ProgressRecord class and defines the activity Id,
-        /// activity description, and status description.
-        /// </summary>
+        
         /// <param name="activityId">
         /// A unique numeric key that identifies the activity to which this record applies.
         /// </param>
@@ -59,9 +54,7 @@ namespace System.Management.Automation
             this.status = statusDescription;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the ProgressRecord class and defines the activity Id.
-        /// </summary>
+        
         /// <param name="activityId">
         /// A unique numeric key that identifies the activity to which this record applies.
         /// </param>
@@ -78,9 +71,7 @@ namespace System.Management.Automation
             this.id = activityId;
         }
 
-        /// <summary>
-        /// Cloning constructor (all fields are value types - can treat our implementation of cloning as "deep" copy)
-        /// </summary>
+        
         /// <param name="other"></param>
         internal ProgressRecord(ProgressRecord other)
         {
@@ -94,10 +85,7 @@ namespace System.Management.Automation
             this.type = other.type;
         }
 
-        /// <summary>
-        /// Gets the Id of the activity to which this record corresponds.  Used as a 'key' for the
-        /// linking of subordinate activities.
-        /// </summary>
+        
         public
         int
         ActivityId
@@ -108,9 +96,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets and sets the Id of the activity for which this record is a subordinate.
-        /// </summary>
+        
         /// <remarks>
         /// Used to allow chaining of progress records (such as when one installation invokes a child installation). UI:
         /// normally not directly visible except as already displayed as its own activity. Usually a sub-activity will be
@@ -141,9 +127,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets and sets the description of the activity for which progress is being reported.
-        /// </summary>
+        
         /// <remarks>
         /// States the overall intent of whats being accomplished, such as "Recursively removing item c:\temp." Typically
         /// displayed in conjunction with a progress bar.
@@ -168,9 +152,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets and sets the current status of the operation, e.g., "35 of 50 items Copied." or "95% completed." or "100 files purged."
-        /// </summary>
+        
         public
         string
         StatusDescription
@@ -191,11 +173,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets and sets the current operation of the many required to accomplish the activity (such as "copying foo.txt"). Normally displayed
-        /// below its associated progress bar, e.g., "deleting file foo.bar"
-        /// Set to null or empty in the case a sub-activity will be used to show the current operation.
-        /// </summary>
+        
         public
         string
         CurrentOperation
@@ -213,10 +191,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets and sets the estimate of the percentage of total work for the activity that is completed.  Typically displayed as a progress bar.
-        /// Set to a negative value to indicate that the percentage completed should not be displayed.
-        /// </summary>
+        
         public
         int
         PercentComplete
@@ -241,12 +216,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets and sets the estimate of time remaining until this activity is completed.  This can be based upon a measurement of time since
-        /// started and the percent complete or another approach deemed appropriate by the caller.
-        ///
-        /// Normally displayed beside the progress bar, as "N seconds remaining."
-        /// </summary>
+        
         /// <remarks>
         /// A value less than 0 means "don't display a time remaining."
         /// </remarks>
@@ -267,9 +237,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets and sets the type of record represented by this instance.
-        /// </summary>
+        
         public
         ProgressRecordType
         RecordType
@@ -290,9 +258,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Overrides <see cref="System.Object.ToString"/>
-        /// </summary>
+        
         /// <returns>
         /// "parent = a id = b act = c stat = d cur = e pct = f sec = g type = h" where
         /// a, b, c, d, e, f, and g are the values of ParentActivityId, ActivityId, Activity, StatusDescription,
@@ -356,11 +322,7 @@ namespace System.Management.Automation
             return (int)(remainingTime.TotalSeconds);
         }
 
-        /// <summary>
-        /// Returns percentage complete when it is impossible to predict how long an operation might take.
-        /// The percentage complete will slowly converge toward 100%.
-        /// At the <paramref name="expectedDuration"/> the percentage complete will be 90%.
-        /// </summary>
+        
         /// <param name="startTime">When did the operation start.</param>
         /// <param name="expectedDuration">How long does the operation usually take.</param>
         /// <returns>Estimated percentage complete of the operation (always between 0 and 99% - never returns 100%).</returns>
@@ -422,10 +384,7 @@ namespace System.Management.Automation
 
         #region Serialization / deserialization for remoting
 
-        /// <summary>
-        /// Creates a ProgressRecord object from a PSObject property bag.
-        /// PSObject has to be in the format returned by ToPSObjectForRemoting method.
-        /// </summary>
+        
         /// <param name="progressAsPSObject">PSObject to rehydrate.</param>
         /// <returns>
         /// ProgressRecord rehydrated from a PSObject property bag
@@ -458,10 +417,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Returns this object as a PSObject property bag
-        /// that can be used in a remoting protocol data object.
-        /// </summary>
+        
         /// <returns>This object as a PSObject property bag.</returns>
         internal PSObject ToPSObjectForRemoting()
         {
@@ -487,41 +443,14 @@ namespace System.Management.Automation
         #endregion
     }
 
-    /// <summary>
-    /// Defines two types of progress record that refer to the beginning (or middle) and end of an operation.
-    /// </summary>
+    
     public
     enum ProgressRecordType
     {
-        /// <summary>
-        /// <para>
-        /// Operation just started or is not yet complete.
-        /// </para>
-        /// <para>
-        /// A cmdlet can call WriteProgress with ProgressRecordType.Processing
-        /// as many times as it wishes.  However, at the end of the operation,
-        /// it should call once more with ProgressRecordType.Completed.
-        ///
-        /// The first time that a host receives a progress record
-        /// for a given activity, it will typically display a progress
-        /// indicator for that activity.  For each subsequent record
-        /// of the same Id, the host will update that display.
-        /// Finally, when the host receives a 'completed' record
-        /// for that activity, it will remove the progress indicator.
-        /// </para>
-        /// </summary>
+        
         Processing,
 
-        /// <summary>
-        /// <para>
-        /// Operation is complete.
-        /// </para>
-        /// <para>
-        /// If a cmdlet uses WriteProgress, it should use
-        /// ProgressRecordType.Completed exactly once, in the last call
-        /// to WriteProgress.
-        /// </para>
-        /// </summary>
+        
         Completed
     }
 }

@@ -5,17 +5,12 @@ using System.Management.Automation;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// The base class for the */content commands that also take
-    /// a passthrough parameter.
-    /// </summary>
+    
     public class PassThroughContentCommandBase : ContentCommandBase
     {
         #region Parameters
 
-        /// <summary>
-        /// Gets or sets the passthrough parameter to the command.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter PassThru
         {
@@ -30,9 +25,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Determines if the provider for the specified path supports ShouldProcess.
-        /// </summary>
+        
         /// <value></value>
         protected override bool ProviderSupportsShouldProcess
         {
@@ -46,20 +39,14 @@ namespace Microsoft.PowerShell.Commands
 
         #region parameter data
 
-        /// <summary>
-        /// Determines if the content returned from the provider should
-        /// be passed through to the pipeline.
-        /// </summary>
+        
         private bool _passThrough;
 
         #endregion parameter data
 
         #region protected members
 
-        /// <summary>
-        /// Initializes a CmdletProviderContext instance to the current context of
-        /// the command.
-        /// </summary>
+        
         /// <returns>
         /// A CmdletProviderContext instance initialized to the context of the current
         /// command.

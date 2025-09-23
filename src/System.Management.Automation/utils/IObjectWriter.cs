@@ -6,24 +6,17 @@ using System.Threading;
 
 namespace System.Management.Automation.Runspaces
 {
-    /// <summary>
-    /// PipelineWriter allows the caller to provide an asynchronous stream of objects
-    /// as input to a <see cref="System.Management.Automation.Runspaces.Pipeline"/>.
-    /// </summary>
+    
     /// <seealso cref="System.Management.Automation.Runspaces.Pipeline.Input"/>
     public abstract class PipelineWriter
     {
-        /// <summary>
-        /// Signaled when buffer space is available in the underlying stream.
-        /// </summary>
+        
         public abstract WaitHandle WaitHandle
         {
             get;
         }
 
-        /// <summary>
-        /// Check if the stream is open for further writes.
-        /// </summary>
+        
         /// <value>true if the underlying stream is open, otherwise false</value>
         /// <remarks>
         /// Attempting to write to the underlying stream if IsOpen is false throws
@@ -34,17 +27,13 @@ namespace System.Management.Automation.Runspaces
             get;
         }
 
-        /// <summary>
-        /// Returns the number of objects currently in the underlying stream.
-        /// </summary>
+        
         public abstract int Count
         {
             get;
         }
 
-        /// <summary>
-        /// Get the capacity of the stream.
-        /// </summary>
+        
         /// <value>
         /// The capacity of the stream.
         /// </value>
@@ -58,9 +47,7 @@ namespace System.Management.Automation.Runspaces
             get;
         }
 
-        /// <summary>
-        /// Close the stream.
-        /// </summary>
+        
         /// <remarks>
         /// Causes subsequent calls to IsOpen to return false and calls to
         /// a write operation to throw an ObjectDisposedException.
@@ -71,18 +58,13 @@ namespace System.Management.Automation.Runspaces
         /// </exception>
         public abstract void Close();
 
-        /// <summary>
-        /// Flush the buffered data from the stream.  Closed streams may be flushed,
-        /// but disposed streams may not.
-        /// </summary>
+        
         /// <exception cref="ObjectDisposedException">
         /// The stream is already disposed
         /// </exception>
         public abstract void Flush();
 
-        /// <summary>
-        /// Write a single object into the underlying stream.
-        /// </summary>
+        
         /// <param name="obj">The object to add to the stream.</param>
         /// <returns>
         /// One, if the write was successful, otherwise;
@@ -97,9 +79,7 @@ namespace System.Management.Automation.Runspaces
         /// </remarks>
         public abstract int Write(object obj);
 
-        /// <summary>
-        /// Write multiple objects to the underlying stream.
-        /// </summary>
+        
         /// <param name="obj">Object or enumeration to read from.</param>
         /// <param name="enumerateCollection">
         /// If enumerateCollection is true, and <paramref name="obj"/>

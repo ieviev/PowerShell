@@ -5,9 +5,7 @@
 
 namespace System.Management.Automation.Subsystem
 {
-    /// <summary>
-    /// Implementation of 'Get-PSSubsystem' cmdlet.
-    /// </summary>
+    
     [Experimental("PSSubsystemPluginModel", ExperimentAction.Show)]
     [Cmdlet(VerbsCommon.Get, "PSSubsystem", DefaultParameterSetName = AllSet)]
     [OutputType(typeof(SubsystemInfo))]
@@ -17,21 +15,15 @@ namespace System.Management.Automation.Subsystem
         private const string TypeSet = "GetByTypeSet";
         private const string KindSet = "GetByKindSet";
 
-        /// <summary>
-        /// Gets or sets a concrete subsystem kind.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ParameterSetName = KindSet, ValueFromPipeline = true)]
         public SubsystemKind Kind { get; set; }
 
-        /// <summary>
-        /// Gets or sets the interface or abstract class type of a concrete subsystem.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ParameterSetName = TypeSet, ValueFromPipeline = true)]
         public Type? SubsystemType { get; set; }
 
-        /// <summary>
-        /// ProcessRecord implementation.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             switch (ParameterSetName)

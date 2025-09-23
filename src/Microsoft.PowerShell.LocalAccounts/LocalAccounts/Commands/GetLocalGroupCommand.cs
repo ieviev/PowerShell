@@ -13,10 +13,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// The Get-LocalGroup cmdlet gets local groups from the Windows Security
-    /// Accounts manager.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Get, "LocalGroup",
             DefaultParameterSetName = "Default",
             HelpUri = "https://go.microsoft.com/fwlink/?LinkId=717974")]
@@ -28,10 +25,7 @@ namespace Microsoft.PowerShell.Commands
         #endregion Instance Data
 
         #region Parameter Properties
-        /// <summary>
-        /// The following is the definition of the input parameter "Name".
-        /// Specifies the local groups to get from the local Security Accounts Manager.
-        /// </summary>
+        
         [Parameter(Position = 0,
                    ValueFromPipeline = true,
                    ValueFromPipelineByPropertyName = true,
@@ -47,10 +41,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string[] name;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "SID".
-        /// Specifies a local group from the local Security Accounts Manager.
-        /// </summary>
+        
         [Parameter(Position = 0,
                    ValueFromPipeline = true,
                    ValueFromPipelineByPropertyName = true,
@@ -68,17 +59,13 @@ namespace Microsoft.PowerShell.Commands
         #endregion Parameter Properties
 
         #region Cmdlet Overrides
-        /// <summary>
-        /// BeginProcessing method.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             sam = new Sam();
         }
 
-        /// <summary>
-        /// ProcessRecord method.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             if (Name == null && SID == null)
@@ -93,9 +80,7 @@ namespace Microsoft.PowerShell.Commands
             ProcessSids();
         }
 
-        /// <summary>
-        /// EndProcessing method.
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             if (sam != null)
@@ -107,9 +92,7 @@ namespace Microsoft.PowerShell.Commands
         #endregion Cmdlet Overrides
 
         #region Private Methods
-        /// <summary>
-        /// Process groups requested by -Name.
-        /// </summary>
+        
         /// <remarks>
         /// All arguments to -Name will be treated as names,
         /// even if a name looks like a SID.
@@ -144,9 +127,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Process groups requested by -SID.
-        /// </summary>
+        
         private void ProcessSids()
         {
             if (SID != null)

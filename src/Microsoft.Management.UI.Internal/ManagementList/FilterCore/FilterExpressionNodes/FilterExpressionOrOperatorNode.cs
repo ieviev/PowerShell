@@ -7,10 +7,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <summary>
-    /// The FilterExpressionOrOperatorNode class is responsible for containing children
-    /// FilterExpressionNodes which will be OR'ed together during evaluation.
-    /// </summary>
+    
     [SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public class FilterExpressionOrOperatorNode : FilterExpressionNode
     {
@@ -18,9 +15,7 @@ namespace Microsoft.Management.UI.Internal
 
         private List<FilterExpressionNode> children = new List<FilterExpressionNode>();
 
-        /// <summary>
-        /// Gets a collection FilterExpressionNode children used during evaluation.
-        /// </summary>
+        
         public ICollection<FilterExpressionNode> Children
         {
             get
@@ -33,19 +28,13 @@ namespace Microsoft.Management.UI.Internal
 
         #region Ctor
 
-        /// <summary>
-        /// Initializes a new instance of the FilterExpressionOrOperatorNode
-        /// class.
-        /// </summary>
+        
         public FilterExpressionOrOperatorNode()
         {
             // empty
         }
 
-        /// <summary>
-        /// Initializes a new instance of the FilterExpressionOrOperatorNode
-        /// class.
-        /// </summary>
+        
         /// <param name="children">
         /// A collection of children which will be added to the
         /// FilterExpressionOrOperatorNode's Children collection.
@@ -61,10 +50,7 @@ namespace Microsoft.Management.UI.Internal
 
         #region Public Methods
 
-        /// <summary>
-        /// Evaluates the children FilterExpressionNodes and returns
-        /// the OR'ed result of their results.
-        /// </summary>
+        
         /// <param name="item">
         /// The item to evaluate against.
         /// </param>

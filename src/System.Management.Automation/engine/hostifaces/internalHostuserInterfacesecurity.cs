@@ -11,9 +11,7 @@ namespace System.Management.Automation.Internal.Host
     internal partial
     class InternalHostUserInterface : PSHostUserInterface
     {
-        /// <summary>
-        /// See base class.
-        /// </summary>
+        
         public override
         PSCredential
         PromptForCredential
@@ -30,9 +28,7 @@ namespace System.Management.Automation.Internal.Host
                                          PSCredentialUIOptions.Default);
         }
 
-        /// <summary>
-        /// See base class.
-        /// </summary>
+        
         public override
         PSCredential
         PromptForCredential

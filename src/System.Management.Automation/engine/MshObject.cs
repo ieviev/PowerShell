@@ -34,11 +34,7 @@ using System.Management;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Wraps an object providing alternate views of the available members
-    /// and ways to extend them. Members can be methods, properties,
-    /// parameterized properties, etc.
-    /// </summary>
+    
     /// <remarks>
     /// It is permitted to subclass <see cref="PSObject"/>
     /// but there is no established scenario for doing this, nor has it been tested.
@@ -234,10 +230,7 @@ namespace System.Management.Automation
             return msjObj.InternalBaseDotNetAdapter?.BaseGetFirstMemberOrDefault<T>(msjObj._immediateBaseObject, predicate);
         }
 
-        /// <summary>
-        /// A collection of delegates to get Extended/Adapted/Dotnet members based on the
-        /// <paramref name="viewType"/>
-        /// </summary>
+        
         /// <param name="viewType">
         /// A filter to select Extended/Adapted/Dotnet view of the object
         /// </param>
@@ -247,10 +240,7 @@ namespace System.Management.Automation
             return GetMemberCollection(viewType, null);
         }
 
-        /// <summary>
-        /// A collection of delegates to get Extended/Adapted/Dotnet members based on the
-        /// <paramref name="viewType"/>
-        /// </summary>
+        
         /// <param name="viewType">
         /// A filter to select Extended/Adapted/Dotnet view of the object
         /// </param>
@@ -337,10 +327,7 @@ namespace System.Management.Automation
             return returnValue;
         }
 
-        /// <summary>
-        /// A collection of delegates to get Extended/Adapted/Dotnet properties based on the
-        /// <paramref name="viewType"/>
-        /// </summary>
+        
         /// <param name="viewType">
         /// A filter to select Extended/Adapted/Dotnet view of the object
         /// </param>
@@ -351,10 +338,7 @@ namespace System.Management.Automation
             return GetPropertyCollection(viewType, null);
         }
 
-        /// <summary>
-        /// A collection of delegates to get Extended/Adapted/Dotnet properties based on the
-        /// <paramref name="viewType"/>
-        /// </summary>
+        
         /// <param name="viewType">
         /// A filter to select Extended/Adapted/Dotnet view of the object
         /// </param>
@@ -453,9 +437,7 @@ namespace System.Management.Automation
             return null;
         }
 
-        /// <summary>
-        /// Returns the adapter corresponding to obj.GetType()
-        /// </summary>
+        
         /// <returns>The adapter set corresponding to obj.GetType().</returns>
         internal static AdapterSet GetMappedAdapter(object obj, TypeTable typeTable)
         {
@@ -546,27 +528,20 @@ namespace System.Management.Automation
 
         #endregion private to the constructors
 
-        /// <summary>
-        /// Initializes a new instance of PSObject with an PSCustomObject BaseObject.
-        /// </summary>
+        
         public PSObject()
         {
             CommonInitialization(PSCustomObject.SelfInstance);
         }
 
-        /// <summary>
-        /// Initializes a new instance of PSObject with an PSCustomObject BaseObject
-        /// with an initial capacity for members.
-        /// </summary>
+        
         /// <param name="instanceMemberCapacity">The initial capacity for the instance member collection.</param>
         public PSObject(int instanceMemberCapacity) : this()
         {
             _instanceMembers = new PSMemberInfoInternalCollection<PSMemberInfo>(instanceMemberCapacity);
         }
 
-        /// <summary>
-        /// Initializes a new instance of PSObject wrapping obj (accessible through BaseObject).
-        /// </summary>
+        
         /// <param name="obj">Object we are wrapping.</param>
         /// <exception cref="ArgumentNullException">If <paramref name="obj"/> is null.</exception>
         [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", MessageId = "obj", Justification = "This is shipped as part of V1. Retaining this for backward compatibility.")]
@@ -580,9 +555,7 @@ namespace System.Management.Automation
             CommonInitialization(obj);
         }
 
-        /// <summary>
-        /// Creates a PSObject from an ISerializable context.
-        /// </summary>
+        
         /// <param name="info">Serialization information for this instance.</param>
         /// <param name="context">The streaming context for this instance.</param>
         protected PSObject(SerializationInfo info, StreamingContext context)
@@ -618,10 +591,7 @@ namespace System.Management.Automation
 
         private ConsolidatedString _typeNames;
 
-        /// <summary>
-        /// This is the main field in the class representing
-        /// the System.Object we are encapsulating.
-        /// </summary>
+        
         private object _immediateBaseObject;
 
         private WeakReference<TypeTable> _typeTable;
@@ -690,15 +660,10 @@ namespace System.Management.Automation
             set => _instanceMembers = value;
         }
 
-        /// <summary>
-        /// This is the adapter that will depend on the type of baseObject.
-        /// </summary>
+        
         internal Adapter InternalAdapter => InternalAdapterSet.OriginalAdapter;
 
-        /// <summary>
-        /// This is the adapter that is used to resolve the base dotnet members for an
-        /// adapted object. If an object is not adapted, this will be null.
-        /// </summary>
+        
         /// <remarks>
         /// If an object is not adapted, InternalAdapter will use the dotnet adapter.
         /// So there is no point falling back to the same dotnet adapter.
@@ -708,11 +673,7 @@ namespace System.Management.Automation
         /// </remarks>
         internal Adapter InternalBaseDotNetAdapter => InternalAdapterSet.DotNetAdapter;
 
-        /// <summary>
-        /// This is the adapter set that will contain the adapter of the baseObject
-        /// and the ultimate .net member lookup adapter.
-        /// See <see cref="PSObject.AdapterSet"/> for explanation.
-        /// </summary>
+        
         private AdapterSet InternalAdapterSet
         {
             get
@@ -729,9 +690,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the member collection.
-        /// </summary>
+        
         public PSMemberInfoCollection<PSMemberInfo> Members
         {
             get
@@ -748,9 +707,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the Property collection, or the members that are actually properties.
-        /// </summary>
+        
         public PSMemberInfoCollection<PSPropertyInfo> Properties
         {
             get
@@ -767,9 +724,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the Method collection, or the members that are actually methods.
-        /// </summary>
+        
         public PSMemberInfoCollection<PSMethodInfo> Methods
         {
             get
@@ -786,16 +741,12 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the object we are directly wrapping.
-        /// </summary>
+        
         /// <remarks>If the ImmediateBaseObject is another PSObject,
         /// that PSObject will be returned.</remarks>
         public object ImmediateBaseObject => _immediateBaseObject;
 
-        /// <summary>
-        /// Gets the object we are wrapping.
-        /// </summary>
+        
         /// <remarks>If the ImmediateBaseObject is another PSObject, this property
         /// will return its BaseObject.</remarks>
         public object BaseObject
@@ -814,9 +765,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the type names collection initially containing the object type hierarchy.
-        /// </summary>
+        
         public Collection<string> TypeNames
         {
             get
@@ -928,8 +877,7 @@ namespace System.Management.Automation
         private static readonly ConditionalWeakTable<object, PSMemberInfoInternalCollection<PSMemberInfo>> s_instanceMembersResurrectionTable =
             new ConditionalWeakTable<object, PSMemberInfoInternalCollection<PSMemberInfo>>();
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="valueToConvert"></param>
         /// <returns></returns>
         public static implicit operator PSObject(int valueToConvert)
@@ -937,8 +885,7 @@ namespace System.Management.Automation
             return PSObject.AsPSObject(valueToConvert);
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="valueToConvert"></param>
         /// <returns></returns>
         public static implicit operator PSObject(string valueToConvert)
@@ -946,8 +893,7 @@ namespace System.Management.Automation
             return PSObject.AsPSObject(valueToConvert);
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="valueToConvert"></param>
         /// <returns></returns>
         public static implicit operator PSObject(Hashtable valueToConvert)
@@ -955,8 +901,7 @@ namespace System.Management.Automation
             return PSObject.AsPSObject(valueToConvert);
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="valueToConvert"></param>
         /// <returns></returns>
         public static implicit operator PSObject(double valueToConvert)
@@ -964,8 +909,7 @@ namespace System.Management.Automation
             return PSObject.AsPSObject(valueToConvert);
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="valueToConvert"></param>
         /// <returns></returns>
         public static implicit operator PSObject(bool valueToConvert)
@@ -973,11 +917,7 @@ namespace System.Management.Automation
             return PSObject.AsPSObject(valueToConvert);
         }
 
-        /// <summary>
-        /// If obj is not an PSObject, it is returned. Otherwise, retrieves
-        /// the first non PSObject or PSObject with CustomBaseObject
-        /// in the PSObject - BaseObject chain.
-        /// </summary>
+        
         internal static object Base(object obj)
         {
             if (!(obj is PSObject mshObj))
@@ -1014,10 +954,7 @@ namespace System.Management.Automation
             return DotNetStaticAdapter.BaseGetMember<PSMemberInfo>(objType, methodName);
         }
 
-        /// <summary>
-        /// If obj is an PSObject it will be returned as is, otherwise
-        /// a new PSObject will be created based on obj.
-        /// </summary>
+        
         /// <param name="obj">Object to be wrapped.</param>
         /// <returns>
         /// obj or a new PSObject whose BaseObject is obj
@@ -1029,12 +966,7 @@ namespace System.Management.Automation
             return AsPSObject(obj, false);
         }
 
-        /// <summary>
-        /// If obj is a PSObject, it will be returned as is, otherwise a new
-        /// PSObject will be created on obj. Its InstanceMembers and TypeNames
-        /// will be initialized if we are not going to use the ResurrectionTables
-        /// for this PSObject instance.
-        /// </summary>
+        
         /// <param name="obj"></param>
         /// <param name="storeTypeNameAndInstanceMembersLocally"></param>
         /// <returns></returns>
@@ -1054,13 +986,7 @@ namespace System.Management.Automation
             return new PSObject(obj) { StoreTypeNameAndInstanceMembersLocally = storeTypeNameAndInstanceMembersLocally };
         }
 
-        /// <summary>
-        /// Returns an object that should be used as a key for getting 1) instance members and 2) type names
-        /// - If base object is a PSCustomObject or a string or a type
-        ///   then the most nested wrapping PSObject is returned (the PSObject where immediateBaseObject=PSCustomObject/string/type)
-        /// - Otherwise the base object is returned
-        /// This is a temporary fix for Win8 : 254345 - Job Failed By Throwing ExtendedTypeSystemException.
-        /// </summary>
+        
         /// <returns></returns>
         internal static object GetKeyForResurrectionTables(object obj)
         {
@@ -1182,9 +1108,7 @@ namespace System.Management.Automation
             return returnValue.ToString();
         }
 
-        /// <summary>
-        /// Returns the string representation of obj.
-        /// </summary>
+        
         /// <param name="context">ExecutionContext used to fetch the separator.</param>
         /// <param name="obj">
         /// object we are trying to call ToString on. If this is not an PSObject we try
@@ -1202,9 +1126,7 @@ namespace System.Management.Automation
             return ToStringParser(context, obj, CultureInfo.InvariantCulture);
         }
 
-        /// <summary>
-        /// Returns the string representation of obj.
-        /// </summary>
+        
         /// <param name="context">ExecutionContext used to fetch the separator.</param>
         /// <param name="obj">
         /// object we are trying to call ToString on. If this is not an PSObject we try
@@ -1231,9 +1153,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Called from an PSObject instance ToString to provide a string representation for an object.
-        /// </summary>
+        
         /// <param name="context">
         /// ExecutionContext used to fetch the separator.
         /// Typically either this or separator will be null.
@@ -1506,11 +1426,7 @@ namespace System.Management.Automation
             #endregion PSObject
         }
 
-        /// <summary>
-        /// Returns the string representation for this object. A ToString
-        /// CodeMethod or ScriptMethod will be used, if available. Enumerations items are
-        /// concatenated using $ofs.
-        /// </summary>
+        
         /// <returns>The string representation for baseObject.</returns>
         /// <exception cref="ExtendedTypeSystemException">If an exception was thrown by the BaseObject's ToString.</exception>
         public override string ToString()
@@ -1525,11 +1441,7 @@ namespace System.Management.Automation
             return PSObject.ToString(null, this, null, null, null, true, false);
         }
 
-        /// <summary>
-        /// Returns the string representation for this object. A ToString
-        /// CodeMethod or ScriptMethod will be used, if available. Enumerations items are
-        /// concatenated using $ofs.
-        /// </summary>
+        
         /// <param name="format">Repassed to baseObject's IFormattable if present.</param>
         /// <param name="formatProvider">Repassed to baseObject's IFormattable if present.</param>
         /// <returns>The string representation for baseObject.</returns>
@@ -1564,11 +1476,7 @@ namespace System.Management.Automation
         #endregion ToString
         #region Clone
 
-        /// <summary>
-        /// Returns a copy of this PSObject. This will copy the BaseObject if
-        /// it is a value type, and use BaseObject.Clone() for the new PSObject,
-        /// if the BaseObject is ICloneable.
-        /// </summary>
+        
         /// <returns>A copy of this object.</returns>
         public virtual PSObject Copy()
         {
@@ -1646,9 +1554,7 @@ namespace System.Management.Automation
 
         #endregion Clone
         #region IComparable
-        /// <summary>
-        /// Compares the current instance with another object of the same type.
-        /// </summary>
+        
         /// <param name="obj">An object to compare with this instance.</param>
         /// <returns>A 32-bit signed integer that indicates the relative order of the comparands.
         /// The return value has these meanings:
@@ -1684,9 +1590,7 @@ namespace System.Management.Automation
         }
         #endregion IComparable
         #region Equals and GetHashCode
-        /// <summary>
-        /// Determines whether the specified Object is equal to the current Object.
-        /// </summary>
+        
         /// <param name="obj">The Object to compare with the current Object.</param>
         /// <returns>True if the specified Object is equal to the current Object; otherwise, false.</returns>
         public override bool Equals(object obj)
@@ -1714,9 +1618,7 @@ namespace System.Management.Automation
             return LanguagePrimitives.Equals(this.BaseObject, obj);
         }
 
-        /// <summary>
-        /// Serves as a hash function for a particular type, suitable for use in hashing algorithms and data structures like a hash table.
-        /// </summary>
+        
         /// <returns>A hash code for the current Object.</returns>
         public override int GetHashCode()
         {
@@ -1753,41 +1655,31 @@ namespace System.Management.Automation
 
         #region public const strings
 
-        /// <summary>
-        /// The name of the member set for adapted members.
-        /// </summary>
+        
         /// <remarks>
         /// This needs to be Lower cased as it saves some comparison time elsewhere.
         /// </remarks>
         public const string AdaptedMemberSetName = "psadapted";
 
-        /// <summary>
-        /// The name of the member set for extended members.
-        /// </summary>
+        
         /// <remarks>
         /// This needs to be Lower cased as it saves some comparison time elsewhere.
         /// </remarks>
         public const string ExtendedMemberSetName = "psextended";
 
-        /// <summary>
-        /// The name of the member set for the BaseObject's members.
-        /// </summary>
+        
         /// <remarks>
         /// This needs to be Lower cased as it saves some comparison time elsewhere.
         /// </remarks>
         public const string BaseObjectMemberSetName = "psbase";
 
-        /// <summary>
-        /// The PSObject's properties.
-        /// </summary>
+        
         /// <remarks>
         /// This needs to be Lower cased as it saves some comparison time elsewhere.
         /// </remarks>
         internal const string PSObjectMemberSetName = "psobject";
 
-        /// <summary>
-        /// A shortcut to .PSObject.TypeNames.
-        /// </summary>
+        
         /// <remarks>
         /// This needs to be Lower cased as it saves some comparison time elsewhere.
         /// </remarks>
@@ -1797,9 +1689,7 @@ namespace System.Management.Automation
 
         #region serialization
 
-        /// <summary>
-        /// Implements the ISerializable contract for serializing a PSObject.
-        /// </summary>
+        
         /// <param name="info">Serialization information for this instance.</param>
         /// <param name="context">The streaming context for this instance.</param>
         public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
@@ -1824,8 +1714,7 @@ namespace System.Management.Automation
             info.AddValue("CliXml", serializedContent);
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="settings"></param>
         /// <param name="noteName"></param>
         /// <param name="defaultValue"></param>
@@ -1880,8 +1769,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="backupTypeTable">
         /// TypeTable to use if this PSObject.GetTypeTable() returns null. This will happen
         /// in the remoting scenario on the client/server side (where a LocalRunspace may not be
@@ -1894,8 +1782,7 @@ namespace System.Management.Automation
             return result as PSPropertyInfo;
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="backupTypeTable">
         /// TypeTable to use if this PSObject.GetTypeTable() returns null. This will happen
         /// in the remoting scenario on the client/server side (where a LocalRunspace may not be
@@ -1958,10 +1845,7 @@ namespace System.Management.Automation
             return result ?? InstanceMembers[TypeTable.PSStandardMembers] as PSMemberSet;
         }
 
-        /// <summary>
-        /// Used by Deserializer to deserialize a serialized object to a given type
-        /// (as specified in the a types.ps1xml file)
-        /// </summary>
+        
         /// <param name="backupTypeTable">
         /// TypeTable to use if this PSObject.GetTypeTable() returns null. This will happen
         /// in the remoting scenario on the client/server side (where a LocalRunspace may not be
@@ -1973,9 +1857,7 @@ namespace System.Management.Automation
             return targetType?.Value as Type;
         }
 
-        /// <summary>
-        /// This is only going to be called if SerializationMethod is SpecificProperties.
-        /// </summary>
+        
         /// <param name="backupTypeTable">
         /// TypeTable to use if this PSObject.GetTypeTable() returns null. This will happen
         /// in the remoting scenario on the client side (where a LocalRunspace may not be
@@ -2042,9 +1924,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Set base object.
-        /// </summary>
+        
         /// <param name="value">Object which is set as core.</param>
         /// <param name="overrideTypeInfo">If true, overwrite the type information.</param>
         /// <remarks>This method is to be used only by Serialization code</remarks>
@@ -2063,23 +1943,7 @@ namespace System.Management.Automation
 
         #endregion serialization
 
-        /// <summary>
-        /// This class is solely used by PSObject to support .net member lookup for all the
-        /// adapters except for dotNetInstanceAdapter, mshMemberSetAdapter and mshObjectAdapter.
-        /// If the original adapter is not one of those, then .net members are also exposed
-        /// on the PSObject. This will have the following effect:
-        ///
-        /// 1. Every adapted object like xml, wmi, adsi will show adapted members as well as
-        ///    .net members.
-        /// 2. Users will not need to access PSBase to access original .net members.
-        /// 3. This will fix v1.0 ADSI adapter where most of the complaints were about
-        ///    discovering original .net members.
-        ///
-        /// Use of this class will allow us to customize the ultimate .net member lookup.
-        /// For example, XML adapter already exposes .net methods.
-        /// Using this class you can choose exact .net adapter to support .net
-        /// member lookup and avoid lookup duplication.
-        /// </summary>
+        
         /// <remarks>
         /// This class is intended for internal use only.
         /// </remarks>
@@ -2094,10 +1958,7 @@ namespace System.Management.Automation
 
             #region Properties
 
-            /// <summary>
-            /// This property can be accessed only internally and hence
-            /// no checks are performed on input.
-            /// </summary>
+            
             internal Adapter OriginalAdapter { get; set; }
 
             internal DotNetAdapter DotNetAdapter { get; }
@@ -2363,42 +2224,28 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// If 'this' is non-null, return this string as the ToString() for this wrapped object.
-        /// </summary>
+        
         internal string TokenText { get; set; }
 
-        /// <summary>
-        /// Sets the 'ToString' value on deserialization.
-        /// </summary>
+        
         internal string ToStringFromDeserialization { get; set; }
 
-        /// <summary>
-        /// This property contains a stream type used by the formatting system.
-        /// </summary>
+        
         internal WriteStreamType WriteStream { get; set; }
 
-        /// <summary>
-        /// Members from the adapter of the object before it was serialized
-        /// Null for live objects but not null for deserialized objects.
-        /// </summary>
+        
         internal PSMemberInfoInternalCollection<PSPropertyInfo> AdaptedMembers { get; set; }
 
         internal static DotNetAdapter DotNetStaticAdapter => s_dotNetStaticAdapter;
 
         internal static PSTraceSource MemberResolution => s_memberResolution;
 
-        /// <summary>
-        /// Members from the adapter of the object before it was serialized
-        /// Null for live objects but not null for deserialized objects.
-        /// </summary>
+        
         internal PSMemberInfoInternalCollection<PSPropertyInfo> ClrMembers { get; set; }
 
         internal static DotNetAdapter DotNetInstanceAdapter => s_dotNetInstanceAdapter;
 
-        /// <summary>
-        /// Gets an instance member if it's name matches the predicate. Otherwise null.
-        /// </summary>
+        
         internal PSPropertyInfo GetFirstPropertyOrDefault(MemberNamePredicate predicate)
         {
             return Properties.FirstOrDefault(predicate);
@@ -2409,29 +2256,20 @@ namespace System.Management.Automation
         {
             None = 0,
 
-            /// <summary>
-            /// This flag is set in deserialized shellobject.
-            /// </summary>
+            
             IsDeserialized = 0b00000001,
 
-            /// <summary>
-            /// Set to true when the BaseObject is PSCustomObject.
-            /// </summary>
+            
             HasGeneratedReservedMembers = 0b00000010,
             ImmediateBaseObjectIsEmpty = 0b00000100,
             IsHelpObject = 0b00001000,
 
-            /// <summary>
-            /// Indicate whether we store the instance members and type names locally
-            /// for this PSObject instance.
-            /// </summary>
+            
             StoreTypeNameAndInstanceMembersLocally = 0b00010000,
         }
     }
 
-    /// <summary>
-    /// Specifies special stream write processing.
-    /// </summary>
+    
     internal enum WriteStreamType : byte
     {
         None,
@@ -2443,30 +2281,22 @@ namespace System.Management.Automation
         Information
     }
 
-    /// <summary>
-    /// Serves as a placeholder BaseObject when PSObject's
-    /// constructor with no parameters is used.
-    /// </summary>
+    
     public class PSCustomObject
     {
-        /// <summary>
-        /// To prevent other instances than SelfInstance.
-        /// </summary>
+        
         private PSCustomObject() { }
 
         internal static readonly PSCustomObject SelfInstance = new PSCustomObject();
 
-        /// <summary>
-        /// Returns an empty string.
-        /// </summary>
+        
         public override string ToString()
         {
             return string.Empty;
         }
     }
 
-    /// <summary>
-    /// </summary>
+    
     /// <remarks>
     /// Please keep in sync with SerializationMethod from
     /// C:\e\win7_powershell\admin\monad\nttargets\assemblies\logging\ETW\Manifests\Microsoft-Windows-PowerShell-Instrumentation.man
@@ -2483,9 +2313,7 @@ namespace System.Management.Automation
 
 namespace Microsoft.PowerShell
 {
-    /// <summary>
-    /// Contains auxiliary ToString CodeMethod implementations for some types.
-    /// </summary>
+    
     public static partial class ToStringCodeMethods
     {
         private static void AddGenericArguments(StringBuilder sb, Type[] genericArguments, bool dropNamespaces)
@@ -2586,9 +2414,7 @@ namespace Microsoft.PowerShell
             return result;
         }
 
-        /// <summary>
-        /// ToString implementation for Type.
-        /// </summary>
+        
         /// <param name="instance">Instance of PSObject wrapping a Type.</param>
         public static string Type(PSObject instance)
         {
@@ -2600,9 +2426,7 @@ namespace Microsoft.PowerShell
             return Type((Type)instance.BaseObject);
         }
 
-        /// <summary>
-        /// ToString implementation for XmlNode.
-        /// </summary>
+        
         /// <param name="instance">Instance of PSObject wrapping an XmlNode.</param>
         public static string XmlNode(PSObject instance)
         {
@@ -2615,9 +2439,7 @@ namespace Microsoft.PowerShell
             return node.LocalName;
         }
 
-        /// <summary>
-        /// ToString implementation for XmlNodeList.
-        /// </summary>
+        
         /// <param name="instance">Instance of PSObject wrapping an XmlNodeList.</param>
         public static string XmlNodeList(PSObject instance)
         {

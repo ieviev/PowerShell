@@ -12,14 +12,10 @@ using System.Security.Permissions;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// The exception that is thrown when there is no help found for a topic.
-    /// </summary>
+    
     public class HelpNotFoundException : SystemException, IContainsErrorRecord
     {
-        /// <summary>
-        /// Initializes a new instance of the HelpNotFoundException class with the give help topic.
-        /// </summary>
+        
         /// <param name="helpTopic">The help topic for which help is not found.</param>
         public HelpNotFoundException(string helpTopic)
             : base()
@@ -28,19 +24,14 @@ namespace Microsoft.PowerShell.Commands
             CreateErrorRecord();
         }
 
-        /// <summary>
-        /// Initializes a new instance of the HelpNotFoundException class.
-        /// </summary>
+        
         public HelpNotFoundException()
             : base()
         {
             CreateErrorRecord();
         }
 
-        /// <summary>
-        /// Initializes a new instance of the HelpNotFoundException class with the given help topic
-        /// and associated exception.
-        /// </summary>
+        
         /// <param name="helpTopic">The help topic for which help is not found.</param>
         /// <param name="innerException">The inner exception.</param>
         public HelpNotFoundException(string helpTopic, Exception innerException)
@@ -52,10 +43,7 @@ namespace Microsoft.PowerShell.Commands
             CreateErrorRecord();
         }
 
-        /// <summary>
-        /// Creates an internal error record based on helpTopic.
-        /// The ErrorRecord created will be stored in the _errorRecord member.
-        /// </summary>
+        
         private void CreateErrorRecord()
         {
             string errMessage = string.Format(HelpErrors.HelpNotFound, _helpTopic);
@@ -68,9 +56,7 @@ namespace Microsoft.PowerShell.Commands
 
         private ErrorRecord _errorRecord;
 
-        /// <summary>
-        /// Gets ErrorRecord embedded in this exception.
-        /// </summary>
+        
         /// <value>ErrorRecord instance.</value>
         public ErrorRecord ErrorRecord
         {
@@ -82,9 +68,7 @@ namespace Microsoft.PowerShell.Commands
 
         private readonly string _helpTopic = string.Empty;
 
-        /// <summary>
-        /// Gets help topic for which help is not found.
-        /// </summary>
+        
         /// <value>Help topic.</value>
         public string HelpTopic
         {
@@ -94,9 +78,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets exception message for this exception.
-        /// </summary>
+        
         /// <value>Error message.</value>
         public override string Message
         {
@@ -113,9 +95,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Serialization
 
-        /// <summary>
-        /// Initializes a new instance of the HelpNotFoundException class.
-        /// </summary>
+        
         /// <param name="info">Serialization information.</param>
         /// <param name="context">Streaming context.</param>
         [Obsolete("Legacy serialization support is deprecated since .NET 8", DiagnosticId = "SYSLIB0051")] 

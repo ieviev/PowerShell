@@ -12,9 +12,7 @@ using System.Windows.Input;
 namespace Microsoft.Management.UI.Internal
 {
 
-    /// <summary>
-    /// This control provides basic functionality for Picker-like controls.
-    /// </summary>
+    
     /// <remarks>
     ///
     ///
@@ -38,9 +36,7 @@ namespace Microsoft.Management.UI.Internal
         //
         // CloseDropDown routed command
         //
-        /// <summary>
-        /// Informs the PickerBase that it should close the dropdown.
-        /// </summary>
+        
         public static readonly RoutedCommand CloseDropDownCommand = new RoutedCommand("CloseDropDown",typeof(PickerBase));
 
         static private void CloseDropDownCommand_CommandExecuted(object sender, ExecutedRoutedEventArgs e)
@@ -49,9 +45,7 @@ namespace Microsoft.Management.UI.Internal
             obj.OnCloseDropDownExecuted( e );
         }
 
-        /// <summary>
-        /// Called when CloseDropDown executes.
-        /// </summary>
+        
         /// <remarks>
         /// Informs the PickerBase that it should close the dropdown.
         /// </remarks>
@@ -65,14 +59,10 @@ namespace Microsoft.Management.UI.Internal
         //
         // DropDownButtonTemplate dependency property
         //
-        /// <summary>
-        /// Identifies the DropDownButtonTemplate dependency property.
-        /// </summary>
+        
         public static readonly DependencyProperty DropDownButtonTemplateProperty = DependencyProperty.Register( "DropDownButtonTemplate", typeof(ControlTemplate), typeof(PickerBase), new PropertyMetadata( null, DropDownButtonTemplateProperty_PropertyChanged) );
 
-        /// <summary>
-        /// Gets or sets a value that controls the visual tree of the DropDown button.
-        /// </summary>
+        
         [Bindable(true)]
         [Category("Common Properties")]
         [Description("Gets or sets a value that controls the visual tree of the DropDown button.")]
@@ -95,14 +85,10 @@ namespace Microsoft.Management.UI.Internal
             obj.OnDropDownButtonTemplateChanged( new PropertyChangedEventArgs<ControlTemplate>((ControlTemplate)e.OldValue, (ControlTemplate)e.NewValue) );
         }
 
-        /// <summary>
-        /// Occurs when DropDownButtonTemplate property changes.
-        /// </summary>
+        
         public event EventHandler<PropertyChangedEventArgs<ControlTemplate>> DropDownButtonTemplateChanged;
 
-        /// <summary>
-        /// Called when DropDownButtonTemplate property changes.
-        /// </summary>
+        
         protected virtual void OnDropDownButtonTemplateChanged(PropertyChangedEventArgs<ControlTemplate> e)
         {
             OnDropDownButtonTemplateChangedImplementation(e);
@@ -114,14 +100,10 @@ namespace Microsoft.Management.UI.Internal
         //
         // DropDownStyle dependency property
         //
-        /// <summary>
-        /// Identifies the DropDownStyle dependency property.
-        /// </summary>
+        
         public static readonly DependencyProperty DropDownStyleProperty = DependencyProperty.Register( "DropDownStyle", typeof(Style), typeof(PickerBase), new PropertyMetadata( null, DropDownStyleProperty_PropertyChanged) );
 
-        /// <summary>
-        /// Gets or sets the style of the drop-down.
-        /// </summary>
+        
         [Bindable(true)]
         [Category("Common Properties")]
         [Description("Gets or sets the style of the drop-down.")]
@@ -144,14 +126,10 @@ namespace Microsoft.Management.UI.Internal
             obj.OnDropDownStyleChanged( new PropertyChangedEventArgs<Style>((Style)e.OldValue, (Style)e.NewValue) );
         }
 
-        /// <summary>
-        /// Occurs when DropDownStyle property changes.
-        /// </summary>
+        
         public event EventHandler<PropertyChangedEventArgs<Style>> DropDownStyleChanged;
 
-        /// <summary>
-        /// Called when DropDownStyle property changes.
-        /// </summary>
+        
         protected virtual void OnDropDownStyleChanged(PropertyChangedEventArgs<Style> e)
         {
             OnDropDownStyleChangedImplementation(e);
@@ -163,14 +141,10 @@ namespace Microsoft.Management.UI.Internal
         //
         // IsOpen dependency property
         //
-        /// <summary>
-        /// Identifies the IsOpen dependency property.
-        /// </summary>
+        
         public static readonly DependencyProperty IsOpenProperty = DependencyProperty.Register( "IsOpen", typeof(bool), typeof(PickerBase), new PropertyMetadata( BooleanBoxes.FalseBox, IsOpenProperty_PropertyChanged) );
 
-        /// <summary>
-        /// Gets or sets a value indicating whether the Popup is visible.
-        /// </summary>
+        
         [Bindable(true)]
         [Category("Common Properties")]
         [Description("Gets or sets a value indicating whether the Popup is visible.")]
@@ -193,14 +167,10 @@ namespace Microsoft.Management.UI.Internal
             obj.OnIsOpenChanged( new PropertyChangedEventArgs<bool>((bool)e.OldValue, (bool)e.NewValue) );
         }
 
-        /// <summary>
-        /// Occurs when IsOpen property changes.
-        /// </summary>
+        
         public event EventHandler<PropertyChangedEventArgs<bool>> IsOpenChanged;
 
-        /// <summary>
-        /// Called when IsOpen property changes.
-        /// </summary>
+        
         protected virtual void OnIsOpenChanged(PropertyChangedEventArgs<bool> e)
         {
             OnIsOpenChangedImplementation(e);
@@ -209,9 +179,7 @@ namespace Microsoft.Management.UI.Internal
 
         partial void OnIsOpenChangedImplementation(PropertyChangedEventArgs<bool> e);
 
-        /// <summary>
-        /// Called when a property changes.
-        /// </summary>
+        
         private void RaisePropertyChangedEvent<T>(EventHandler<PropertyChangedEventArgs<T>> eh, PropertyChangedEventArgs<T> e)
         {
             if (eh != null)
@@ -224,9 +192,7 @@ namespace Microsoft.Management.UI.Internal
         // OnApplyTemplate
         //
 
-        /// <summary>
-        /// Called when ApplyTemplate is called.
-        /// </summary>
+        
         public override void OnApplyTemplate()
         {
             PreOnApplyTemplate();
@@ -244,9 +210,7 @@ namespace Microsoft.Management.UI.Internal
         // Static constructor
         //
 
-        /// <summary>
-        /// Called when the type is initialized.
-        /// </summary>
+        
         static PickerBase()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(PickerBase), new FrameworkPropertyMetadata(typeof(PickerBase)));

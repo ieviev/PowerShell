@@ -125,9 +125,7 @@ DUPLICATE key '{fullName}' from '{strongAssemblyName}' (IsObsolete? {isTypeObsol
             WritePowerShellAssemblyLoadContextPartialClass(targetFilePath, typeNameToAssemblyMap);
         }
 
-        /// <summary>
-        /// Check if the type is obsolete.
-        /// </summary>
+        
         private static bool IsTypeObsolete(MetadataReader reader, TypeDefinition typeDefinition)
         {
             const string obsoleteFullTypeName = "System.ObsoleteAttribute";
@@ -144,9 +142,7 @@ DUPLICATE key '{fullName}' from '{strongAssemblyName}' (IsObsolete? {isTypeObsol
             return false;
         }
 
-        /// <summary>
-        /// Check if the attribute type name is what we expected.
-        /// </summary>
+        
         private static bool IsAttributeOfType(MetadataReader reader, CustomAttribute customAttribute, string expectedTypeName)
         {
             string attributeFullName = null;
@@ -194,9 +190,7 @@ DUPLICATE key '{fullName}' from '{strongAssemblyName}' (IsObsolete? {isTypeObsol
             return string.Equals(attributeFullName, expectedTypeName, StringComparison.Ordinal);
         }
 
-        /// <summary>
-        /// Get the strong name of a reference assembly represented by the 'metadataReader'
-        /// </summary>
+        
         private static string GetAssemblyStrongName(MetadataReader metadataReader)
         {
             AssemblyDefinition assemblyDefinition = metadataReader.GetAssemblyDefinition();
@@ -244,9 +238,7 @@ DUPLICATE key '{fullName}' from '{strongAssemblyName}' (IsObsolete? {isTypeObsol
             return strongAssemblyName;
         }
 
-        /// <summary>
-        /// Get the full name of a Type reference.
-        /// </summary>
+        
         private static string GetTypeFullName(MetadataReader metadataReader, TypeReference typeReference)
         {
             string fullName;
@@ -285,9 +277,7 @@ DUPLICATE key '{fullName}' from '{strongAssemblyName}' (IsObsolete? {isTypeObsol
             return fullName;
         }
 
-        /// <summary>
-        /// Get the full name of a Type definition.
-        /// </summary>
+        
         private static string GetTypeFullName(MetadataReader metadataReader, TypeDefinition typeDefinition)
         {
             string fullName;
@@ -326,9 +316,7 @@ DUPLICATE key '{fullName}' from '{strongAssemblyName}' (IsObsolete? {isTypeObsol
             return fullName;
         }
 
-        /// <summary>
-        /// Resolve the target file path.
-        /// </summary>
+        
         private static string ResolveTargetFilePath(string path)
         {
             if (string.IsNullOrWhiteSpace(path))
@@ -347,9 +335,7 @@ DUPLICATE key '{fullName}' from '{strongAssemblyName}' (IsObsolete? {isTypeObsol
             return targetPath;
         }
 
-        /// <summary>
-        /// Resolve the reference assembly file paths.
-        /// </summary>
+        
         private static List<string> ResolveReferenceAssemblies(string path)
         {
             if (string.IsNullOrWhiteSpace(path))
@@ -391,9 +377,7 @@ DUPLICATE key '{fullName}' from '{strongAssemblyName}' (IsObsolete? {isTypeObsol
             return refAssemblyFiles;
         }
 
-        /// <summary>
-        /// Generate the CSharp source code that initialize the type catalog.
-        /// </summary>
+        
         private static void WritePowerShellAssemblyLoadContextPartialClass(string targetFilePath, Dictionary<string, TypeMetadata> typeNameToAssemblyMap)
         {
             const string SourceFormat = "{2}                {{\"{0}\", \"{1}\"}},";
@@ -436,9 +420,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Helper class to keep the metadata of a type.
-        /// </summary>
+        
         private sealed class TypeMetadata
         {
             internal readonly string AssemblyName;

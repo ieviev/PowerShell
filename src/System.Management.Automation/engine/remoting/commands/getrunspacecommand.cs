@@ -14,34 +14,7 @@ using Dbg = System.Management.Automation.Diagnostics;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// This cmdlet is used to retrieve runspaces from the global cache
-    /// and write it to the pipeline. The runspaces are wrapped and
-    /// returned as PSSession objects.
-    ///
-    /// The cmdlet can be used in the following ways:
-    ///
-    /// List all the available runspaces
-    ///     get-pssession
-    ///
-    /// Get the PSSession from session name
-    ///     get-pssession -Name sessionName
-    ///
-    /// Get the PSSession for the specified ID
-    ///     get-pssession -Id sessionId
-    ///
-    /// Get the PSSession for the specified instance Guid
-    ///     get-pssession -InstanceId sessionGuid
-    ///
-    /// Get PSSessions from remote computer.  Optionally filter on state, session instanceid or session name.
-    ///     get-psession -ComputerName computerName -StateFilter Disconnected
-    ///
-    /// Get PSSessions from virtual machine. Optionally filter on state, session instanceid or session name.
-    ///     get-psession -VMName vmName -Name sessionName
-    ///
-    /// Get PSSessions from container. Optionally filter on state, session instanceid or session name.
-    ///     get-psession -ContainerId containerId -InstanceId instanceId.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Get, "PSSession", DefaultParameterSetName = PSRunspaceCmdlet.NameParameterSet,
         HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096697", RemotingCapability = RemotingCapability.OwnedByCommand)]
     [OutputType(typeof(PSSession))]
@@ -52,9 +25,7 @@ namespace Microsoft.PowerShell.Commands
         private const string ConnectionUriParameterSet = "ConnectionUri";
         private const string ConnectionUriInstanceIdParameterSet = "ConnectionUriInstanceId";
 
-        /// <summary>
-        /// Computer names to connect to.
-        /// </summary>
+        
         [Parameter(Position = 0,
                    Mandatory = true,
                    ValueFromPipelineByPropertyName = true,
@@ -67,12 +38,7 @@ namespace Microsoft.PowerShell.Commands
         [Alias("Cn")]
         public override string[] ComputerName { get; set; }
 
-        /// <summary>
-        /// This parameters specifies the appname which identifies the connection
-        /// end point on the remote machine. If this parameter is not specified
-        /// then the value specified in DEFAULTREMOTEAPPNAME will be used. If that's
-        /// not specified as well, then "WSMAN" will be used.
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true,
                    ParameterSetName = GetPSSessionCommand.ComputerNameParameterSet)]
         [Parameter(ValueFromPipelineByPropertyName = true,
@@ -92,10 +58,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string _appName;
 
-        /// <summary>
-        /// A complete URI(s) specified for the remote computer and shell to
-        /// connect to and create a runspace for.
-        /// </summary>
+        
         [Parameter(Position = 0, Mandatory = true,
                    ValueFromPipelineByPropertyName = true,
                    ParameterSetName = GetPSSessionCommand.ConnectionUriParameterSet)]
@@ -107,15 +70,7 @@ namespace Microsoft.PowerShell.Commands
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
         public Uri[] ConnectionUri { get; set; }
 
-        /// <summary>
-        /// For WSMan sessions:
-        /// If this parameter is not specified then the value specified in
-        /// the environment variable DEFAULTREMOTESHELLNAME will be used. If
-        /// this is not set as well, then Microsoft.PowerShell is used.
-        ///
-        /// For VM/Container sessions:
-        /// If this parameter is not specified then all sessions that match other filters are returned.
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true,
                            ParameterSetName = GetPSSessionCommand.ComputerNameParameterSet)]
         [Parameter(ValueFromPipelineByPropertyName = true,
@@ -138,9 +93,7 @@ namespace Microsoft.PowerShell.Commands
                            ParameterSetName = GetPSSessionCommand.VMNameInstanceIdParameterSet)]
         public string ConfigurationName { get; set; }
 
-        /// <summary>
-        /// The AllowRedirection parameter enables the implicit redirection functionality.
-        /// </summary>
+        
         [Parameter(ParameterSetName = GetPSSessionCommand.ConnectionUriParameterSet)]
         [Parameter(ParameterSetName = GetPSSessionCommand.ConnectionUriInstanceIdParameterSet)]
         public SwitchParameter AllowRedirection
@@ -152,9 +105,7 @@ namespace Microsoft.PowerShell.Commands
 
         private bool _allowRedirection = false;
 
-        /// <summary>
-        /// Session names to filter on.
-        /// </summary>
+        
         [Parameter(ParameterSetName = GetPSSessionCommand.ComputerNameParameterSet)]
         [Parameter(ParameterSetName = GetPSSessionCommand.ConnectionUriParameterSet)]
         [Parameter(ValueFromPipelineByPropertyName = true,
@@ -170,9 +121,7 @@ namespace Microsoft.PowerShell.Commands
             set { base.Name = value; }
         }
 
-        /// <summary>
-        /// Instance Ids to filter on.
-        /// </summary>
+        
         [Parameter(ParameterSetName = GetPSSessionCommand.ComputerInstanceIdParameterSet,
                    Mandatory = true)]
         [Parameter(ParameterSetName = GetPSSessionCommand.ConnectionUriInstanceIdParameterSet,
@@ -194,11 +143,7 @@ namespace Microsoft.PowerShell.Commands
             set { base.InstanceId = value; }
         }
 
-        /// <summary>
-        /// Specifies the credentials of the user to impersonate in the
-        /// remote machine. If this parameter is not specified then the
-        /// credentials of the current user process will be assumed.
-        /// </summary>
+        
         [Parameter(ParameterSetName = GetPSSessionCommand.ComputerNameParameterSet)]
         [Parameter(ParameterSetName = GetPSSessionCommand.ComputerInstanceIdParameterSet)]
         [Parameter(ParameterSetName = GetPSSessionCommand.ConnectionUriParameterSet)]
@@ -221,9 +166,7 @@ namespace Microsoft.PowerShell.Commands
 
         private PSCredential _psCredential;
 
-        /// <summary>
-        /// Use basic authentication to authenticate the user.
-        /// </summary>
+        
         [Parameter(ParameterSetName = GetPSSessionCommand.ComputerNameParameterSet)]
         [Parameter(ParameterSetName = GetPSSessionCommand.ComputerInstanceIdParameterSet)]
         [Parameter(ParameterSetName = GetPSSessionCommand.ConnectionUriParameterSet)]
@@ -245,10 +188,7 @@ namespace Microsoft.PowerShell.Commands
 
         private AuthenticationMechanism _authentication;
 
-        /// <summary>
-        /// Specifies the certificate thumbprint to be used to impersonate the user on the
-        /// remote machine.
-        /// </summary>
+        
         [Parameter(ParameterSetName = GetPSSessionCommand.ComputerNameParameterSet)]
         [Parameter(ParameterSetName = GetPSSessionCommand.ComputerInstanceIdParameterSet)]
         [Parameter(ParameterSetName = GetPSSessionCommand.ConnectionUriParameterSet)]
@@ -270,11 +210,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string _thumbprint;
 
-        /// <summary>
-        /// Port specifies the alternate port to be used in case the
-        /// default ports are not used for the transport mechanism
-        /// (port 80 for http and port 443 for useSSL)
-        /// </summary>
+        
         /// <remarks>
         /// Currently this is being accepted as a parameter. But in future
         /// support will be added to make this a part of a policy setting.
@@ -286,32 +222,20 @@ namespace Microsoft.PowerShell.Commands
         [ValidateRange((int)1, (int)UInt16.MaxValue)]
         public int Port { get; set; }
 
-        /// <summary>
-        /// This parameter suggests that the transport scheme to be used for
-        /// remote connections is useSSL instead of the default http.Since
-        /// there are only two possible transport schemes that are possible
-        /// at this point, a SwitchParameter is being used to switch between
-        /// the two.
-        /// </summary>
+        
         [Parameter(ParameterSetName = GetPSSessionCommand.ComputerNameParameterSet)]
         [Parameter(ParameterSetName = GetPSSessionCommand.ComputerInstanceIdParameterSet)]
         [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "SSL")]
         public SwitchParameter UseSSL { get; set; }
 
-        /// <summary>
-        /// Allows the user of the cmdlet to specify a throttling value
-        /// for throttling the number of remote operations that can
-        /// be executed simultaneously.
-        /// </summary>
+        
         [Parameter(ParameterSetName = GetPSSessionCommand.ComputerNameParameterSet)]
         [Parameter(ParameterSetName = GetPSSessionCommand.ComputerInstanceIdParameterSet)]
         [Parameter(ParameterSetName = GetPSSessionCommand.ConnectionUriParameterSet)]
         [Parameter(ParameterSetName = GetPSSessionCommand.ConnectionUriInstanceIdParameterSet)]
         public int ThrottleLimit { get; set; } = 0;
 
-        /// <summary>
-        /// Filters returned remote runspaces based on runspace state.
-        /// </summary>
+        
         [Parameter(ParameterSetName = GetPSSessionCommand.ComputerNameParameterSet)]
         [Parameter(ParameterSetName = GetPSSessionCommand.ComputerInstanceIdParameterSet)]
         [Parameter(ParameterSetName = GetPSSessionCommand.ConnectionUriParameterSet)]
@@ -324,9 +248,7 @@ namespace Microsoft.PowerShell.Commands
         [Parameter(ParameterSetName = GetPSSessionCommand.VMNameInstanceIdParameterSet)]
         public SessionFilterState State { get; set; }
 
-        /// <summary>
-        /// Session options.
-        /// </summary>
+        
         [Parameter(ParameterSetName = GetPSSessionCommand.ComputerNameParameterSet)]
         [Parameter(ParameterSetName = GetPSSessionCommand.ComputerInstanceIdParameterSet)]
         [Parameter(ParameterSetName = GetPSSessionCommand.ConnectionUriParameterSet)]
@@ -337,9 +259,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Overrides
 
-        /// <summary>
-        /// Resolves shellname.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
 #if UNIX
@@ -361,11 +281,7 @@ namespace Microsoft.PowerShell.Commands
             ConfigurationName ??= string.Empty;
         }
 
-        /// <summary>
-        /// Get the list of runspaces from the global cache and write them
-        /// down. If no computername or instance id is specified then
-        /// list all runspaces.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             if ((ParameterSetName == GetPSSessionCommand.NameParameterSet) && ((Name == null) || (Name.Length == 0)))
@@ -387,17 +303,13 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// End processing clean up.
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             _stream.ObjectWriter.Close();
         }
 
-        /// <summary>
-        /// User has signaled a stop for this cmdlet.
-        /// </summary>
+        
         protected override void StopProcessing()
         {
             _queryRunspaces.StopAllOperations();
@@ -407,10 +319,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Private Methods
 
-        /// <summary>
-        /// Creates a connectionInfo object for each computer name and performs a remote
-        /// session query for each computer filtered by the filterState parameter.
-        /// </summary>
+        
         private void QueryForRemoteSessions()
         {
             // Get collection of connection objects for each computer name or
@@ -505,9 +414,7 @@ namespace Microsoft.PowerShell.Commands
             return connectionInfos;
         }
 
-        /// <summary>
-        /// Updates connection info with the data read from cmdlet's parameters.
-        /// </summary>
+        
         /// <param name="connectionInfo"></param>
         private void UpdateConnectionInfo(WSManConnectionInfo connectionInfo)
         {
@@ -535,9 +442,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region IDisposable
 
-        /// <summary>
-        /// Dispose method of IDisposable.
-        /// </summary>
+        
         public void Dispose()
         {
             _stream.Dispose();

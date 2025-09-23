@@ -11,10 +11,7 @@ using System.Management.Automation;
 
 namespace Microsoft.PowerShell.Cmdletization
 {
-    /// <summary>
-    /// Provides common code for processing session-based object models.  The common code
-    /// Session, ThrottleLimit, AsJob parameters and delegates creation of jobs to derived classes.
-    /// </summary>
+    
     /// <typeparam name="TObjectInstance">Type that represents instances of objects from the wrapped object model</typeparam>
     /// <typeparam name="TSession">Type representing remote sessions</typeparam>
     [SuppressMessage("Microsoft.Design", "CA1005:AvoidExcessiveParametersOnGenericTypes")]
@@ -36,18 +33,14 @@ namespace Microsoft.PowerShell.Cmdletization
 
         private bool _disposed;
 
-        /// <summary>
-        /// Releases resources associated with this object.
-        /// </summary>
+        
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
 
-        /// <summary>
-        /// Releases resources associated with this object.
-        /// </summary>
+        
         protected virtual void Dispose(bool disposing)
         {
             if (!_disposed)
@@ -69,9 +62,7 @@ namespace Microsoft.PowerShell.Cmdletization
 
         #region Common parameters (AsJob, ThrottleLimit, Session)
 
-        /// <summary>
-        /// Session to operate on.
-        /// </summary>
+        
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
         protected TSession[] Session
         {
@@ -91,9 +82,7 @@ namespace Microsoft.PowerShell.Cmdletization
         private TSession[] _session;
         private bool _sessionWasSpecified;
 
-        /// <summary>
-        /// Whether to wrap and emit the whole operation as a background job.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter AsJob
         {
@@ -104,9 +93,7 @@ namespace Microsoft.PowerShell.Cmdletization
 
         private bool _asJob;
 
-        /// <summary>
-        /// Maximum number of remote connections that can remain active at any given time.
-        /// </summary>
+        
         [Parameter]
         public virtual int ThrottleLimit { get; set; }
 
@@ -114,9 +101,7 @@ namespace Microsoft.PowerShell.Cmdletization
 
         #region Abstract methods to be overridden in derived classes
 
-        /// <summary>
-        /// Creates a <see cref="System.Management.Automation.Job"/> object that performs a query against the wrapped object model.
-        /// </summary>
+        
         /// <param name="session">Remote session to query.</param>
         /// <param name="query">Query parameters.</param>
         /// <remarks>
@@ -164,9 +149,7 @@ namespace Microsoft.PowerShell.Cmdletization
             return queryJob;
         }
 
-        /// <summary>
-        /// Creates a <see cref="System.Management.Automation.Job"/> object that invokes an instance method in the wrapped object model.
-        /// </summary>
+        
         /// <param name="session">Remote session to invoke the method in.</param>
         /// <param name="objectInstance">The object on which to invoke the method.</param>
         /// <param name="methodInvocationInfo">Method invocation details.</param>
@@ -201,9 +184,7 @@ namespace Microsoft.PowerShell.Cmdletization
             return methodInvocationJob;
         }
 
-        /// <summary>
-        /// Creates a <see cref="System.Management.Automation.Job"/> object that invokes a static method in the wrapped object model.
-        /// </summary>
+        
         /// <param name="session">Remote session to invoke the method in.</param>
         /// <param name="methodInvocationInfo">Method invocation details.</param>
         /// <remarks>
@@ -282,15 +263,11 @@ namespace Microsoft.PowerShell.Cmdletization
             return null;
         }
 
-        /// <summary>
-        /// Returns default sessions to use when the user doesn't specify the -Session cmdlet parameter.
-        /// </summary>
+        
         /// <returns>Default sessions to use when the user doesn't specify the -Session cmdlet parameter.</returns>
         protected abstract TSession DefaultSession { get; }
 
-        /// <summary>
-        /// A new job name to use for the parent job that handles throttling of the child jobs that actually perform querying and method invocation.
-        /// </summary>
+        
         protected abstract string GenerateParentJobName();
 
         #endregion
@@ -366,9 +343,7 @@ namespace Microsoft.PowerShell.Cmdletization
 
         private ThrottlingJob _parentJob;
 
-        /// <summary>
-        /// Queries for object instances in the object model.
-        /// </summary>
+        
         /// <param name="query">Query parameters.</param>
         /// <returns>A lazy evaluated collection of object instances.</returns>
         public override void ProcessRecord(QueryBuilder query)
@@ -391,9 +366,7 @@ namespace Microsoft.PowerShell.Cmdletization
             }
         }
 
-        /// <summary>
-        /// Queries for instance and invokes an instance method.
-        /// </summary>
+        
         /// <param name="query">Query parameters.</param>
         /// <param name="methodInvocationInfo">Method invocation details.</param>
         /// <param name="passThru"><see langword="true"/> if successful method invocations should emit downstream the object instance being operated on.</param>
@@ -569,9 +542,7 @@ namespace Microsoft.PowerShell.Cmdletization
             return this.DefaultSession;
         }
 
-        /// <summary>
-        /// Invokes an instance method in the object model.
-        /// </summary>
+        
         /// <param name="objectInstance">The object on which to invoke the method.</param>
         /// <param name="methodInvocationInfo">Method invocation details.</param>
         /// <param name="passThru"><see langword="true"/> if successful method invocations should emit downstream the <paramref name="objectInstance"/> being operated on.</param>
@@ -598,9 +569,7 @@ namespace Microsoft.PowerShell.Cmdletization
             }
         }
 
-        /// <summary>
-        /// Invokes a static method in the object model.
-        /// </summary>
+        
         /// <param name="methodInvocationInfo">Method invocation details.</param>
         public override void ProcessRecord(MethodInvocationInfo methodInvocationInfo)
         {
@@ -623,9 +592,7 @@ namespace Microsoft.PowerShell.Cmdletization
             }
         }
 
-        /// <summary>
-        /// Performs initialization of cmdlet execution.
-        /// </summary>
+        
         public override void BeginProcessing()
         {
             if (this.AsJob.IsPresent)
@@ -659,9 +626,7 @@ namespace Microsoft.PowerShell.Cmdletization
                 cmdletMode: !this.AsJob.IsPresent);
         }
 
-        /// <summary>
-        /// Performs cleanup after cmdlet execution.
-        /// </summary>
+        
         public override void EndProcessing()
         {
             _parentJob.EndOfChildJobs();
@@ -678,9 +643,7 @@ namespace Microsoft.PowerShell.Cmdletization
             }
         }
 
-        /// <summary>
-        /// Stops the parent job when called.
-        /// </summary>
+        
         public override void StopProcessing()
         {
             Job jobToStop = _parentJob;

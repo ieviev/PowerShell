@@ -30,14 +30,10 @@ using TypeTable = System.Management.Automation.Runspaces.TypeTable;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Helper fns.
-    /// </summary>
+    
     internal static class Utils
     {
-        /// <summary>
-        /// Converts a given double value to BigInteger via Math.Round().
-        /// </summary>
+        
         /// <param name="d">The value to convert.</param>
         /// <returns>Returns a BigInteger value equivalent to the input value rounded to nearest integer.</returns>
         internal static BigInteger AsBigInt(this double d) => new BigInteger(Math.Round(d));
@@ -162,10 +158,7 @@ namespace System.Management.Automation
             return true;
         }
 
-        /// <summary>
-        /// Parses a given string or ReadOnlySpan&lt;char&gt; to calculate its value as a binary number.
-        /// Assumes input has already been sanitized and only contains zeroes (0) or ones (1).
-        /// </summary>
+        
         /// <param name="digits">Span or string of binary digits. Assumes all digits are either 1 or 0.</param>
         /// <param name="unsigned">
         /// Whether to treat the number as unsigned. When false, respects established conventions
@@ -294,14 +287,10 @@ namespace System.Management.Automation
             return CombineHashCodes(CombineHashCodes(h1, h2, h3, h4), CombineHashCodes(h5, h6, h7, h8));
         }
 
-        /// <summary>
-        /// Allowed PowerShell Editions.
-        /// </summary>
+        
         internal static readonly string[] AllowedEditionValues = { "Desktop", "Core" };
 
-        /// <summary>
-        /// Helper fn to check byte[] arg for null.
-        /// </summary>
+        
         /// <param name="arg"> arg to check </param>
         /// <param name="argName"> name of the arg </param>
         /// <returns> Does not return a value.</returns>
@@ -325,10 +314,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Helper fn to check arg for empty or null.
-        /// Throws ArgumentNullException on either condition.
-        /// </summary>
+        
         /// <param name="arg"> arg to check </param>
         /// <param name="argName"> name of the arg </param>
         /// <returns> Does not return a value.</returns>
@@ -344,10 +330,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Helper fn to check arg for null.
-        /// Throws ArgumentNullException on either condition.
-        /// </summary>
+        
         /// <param name="arg"> arg to check </param>
         /// <param name="argName"> name of the arg </param>
         /// <returns> Does not return a value.</returns>
@@ -359,9 +342,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Helper fn to check arg for null.
-        /// </summary>
+        
         /// <param name="arg"> arg to check </param>
         /// <param name="argName"> name of the arg </param>
         /// <returns> Does not return a value.</returns>
@@ -394,11 +375,7 @@ namespace System.Management.Automation
             return s;
         }
 
-        /// <summary>
-        /// Gets TypeTable by querying the ExecutionContext stored in
-        /// Thread-Local-Storage. This will return null if ExecutionContext
-        /// is not available.
-        /// </summary>
+        
         /// <returns></returns>
         internal static TypeTable GetTypeTableFromExecutionContextTLS()
         {
@@ -414,9 +391,7 @@ namespace System.Management.Automation
 #if !UNIX
         private static string s_pshome = null;
 
-        /// <summary>
-        /// Get the application base path of the shell from registry.
-        /// </summary>
+        
         internal static string GetApplicationBaseFromRegistry(string shellId)
         {
             bool wantPsHome = (object)shellId == (object)DefaultPowerShellShellID;
@@ -444,9 +419,7 @@ namespace System.Management.Automation
 
         private static string s_windowsPowerShellVersion = null;
 
-        /// <summary>
-        /// Get the Windows PowerShell version from registry.
-        /// </summary>
+        
         /// <returns>
         /// String of Windows PowerShell version from registry.
         /// </returns>
@@ -523,11 +496,7 @@ namespace System.Management.Automation
             return s_productFolderDirectories;
         }
 
-        /// <summary>
-        /// Checks if the filePath represents a file under product folder
-        /// ie., PowerShell ApplicationBase or $env:windir\system32 or
-        /// $env:windir\syswow64.
-        /// </summary>
+        
         /// <returns>
         /// true: if the filePath is under product folder
         /// false: otherwise
@@ -548,17 +517,13 @@ namespace System.Management.Automation
             return false;
         }
 
-        /// <summary>
-        /// Checks if the current process is using WOW.
-        /// </summary>
+        
         internal static bool IsRunningFromSysWOW64()
         {
             return DefaultPowerShellAppBase.Contains("SysWOW64");
         }
 
-        /// <summary>
-        /// Checks if host machine is WinPE.
-        /// </summary>
+        
         internal static bool IsWinPEHost()
         {
 #if !UNIX
@@ -585,10 +550,7 @@ namespace System.Management.Automation
 
         #region Versioning related methods
 
-        /// <summary>
-        /// Returns current major version of monad ( that is running ) in a string
-        /// format.
-        /// </summary>
+        
         /// <returns>String.</returns>
         /// <remarks>
         /// Cannot return a Version object as minor number is a requirement for
@@ -599,13 +561,7 @@ namespace System.Management.Automation
             return PSVersionInfo.PSVersion.Major.ToString(CultureInfo.InvariantCulture);
         }
 
-        /// <summary>
-        /// Coverts a string to version format.
-        /// If the string is of the format x (ie., no dots), then ".0" is appended
-        /// to the string.
-        /// Version.TryParse will be used to convert the string to a Version
-        /// object.
-        /// </summary>
+        
         /// <param name="versionString">String representing version.</param>
         /// <returns>A Version Object.</returns>
         internal static Version StringToVersion(string versionString)
@@ -643,10 +599,7 @@ namespace System.Management.Automation
             return null;
         }
 
-        /// <summary>
-        /// Checks whether current PowerShell session supports edition specified
-        /// by checkEdition.
-        /// </summary>
+        
         /// <param name="checkEdition">Edition to check.</param>
         /// <returns>True if supported, false otherwise.</returns>
         internal static bool IsPSEditionSupported(string checkEdition)
@@ -654,9 +607,7 @@ namespace System.Management.Automation
             return PSVersionInfo.PSEditionValue.Equals(checkEdition, StringComparison.OrdinalIgnoreCase);
         }
 
-        /// <summary>
-        /// Check whether the current PowerShell session supports any of the specified editions.
-        /// </summary>
+        
         /// <param name="editions">The PowerShell editions to check compatibility with.</param>
         /// <returns>True if the edition is supported by this runtime, false otherwise.</returns>
         internal static bool IsPSEditionSupported(IEnumerable<string> editions)
@@ -673,9 +624,7 @@ namespace System.Management.Automation
             return false;
         }
 
-        /// <summary>
-        /// Checks whether the specified edition value is allowed.
-        /// </summary>
+        
         /// <param name="editionValue">Edition value to check.</param>
         /// <returns>True if allowed, false otherwise.</returns>
         internal static bool IsValidPSEditionValue(string editionValue)
@@ -685,25 +634,16 @@ namespace System.Management.Automation
 
         #endregion
 
-        /// <summary>
-        /// String representing the Default shellID.
-        /// </summary>
+        
         internal const string DefaultPowerShellShellID = "Microsoft.PowerShell";
 
-        /// <summary>
-        /// This is used to construct the profile path.
-        /// </summary>
+        
         internal const string ProductNameForDirectory = "PowerShell";
 
-        /// <summary>
-        /// WSL introduces a new filesystem path to access the Linux filesystem from Windows, like '\\wsl$\ubuntu'.
-        /// </summary>
+        
         internal const string WslRootPath = @"\\wsl$";
 
-        /// <summary>
-        /// The subdirectory of module paths
-        /// e.g. ~\Documents\WindowsPowerShell\Modules and %ProgramFiles%\WindowsPowerShell\Modules.
-        /// </summary>
+        
         internal static readonly string ModuleDirectory = Path.Combine(ProductNameForDirectory, "Modules");
 
         internal static readonly ConfigScope[] SystemWideOnlyConfig = new[] { ConfigScope.AllUsers };
@@ -714,9 +654,7 @@ namespace System.Management.Automation
         private static readonly ConcurrentDictionary<ConfigScope, PowerShellPolicies> s_cachedPoliciesFromConfigFile =
             new ConcurrentDictionary<ConfigScope, PowerShellPolicies>();
 
-        /// <summary>
-        /// Get a specific kind of policy setting from the configuration file.
-        /// </summary>
+        
         private static T GetPolicySettingFromConfigFile<T>(ConfigScope[] preferenceOrder) where T : PolicyBase, new()
         {
             foreach (ConfigScope scope in preferenceOrder)
@@ -802,9 +740,7 @@ namespace System.Management.Automation
         private static readonly Func<ConfigScope, ConcurrentDictionary<string, PolicyBase>> s_subCacheCreationDelegate =
             key => new ConcurrentDictionary<string, PolicyBase>(StringComparer.Ordinal);
 
-        /// <summary>
-        /// Read policy settings from a registry key into a policy object.
-        /// </summary>
+        
         /// <param name="instance">Policy object that will be filled with values from registry.</param>
         /// <param name="instanceType">Type of policy object used.</param>
         /// <param name="gpoKey">Registry key that has policy settings.</param>
@@ -901,9 +837,7 @@ namespace System.Management.Automation
             return isAnyPropertySet;
         }
 
-        /// <summary>
-        /// The implementation of fetching a specific kind of policy setting from the given configuration scope.
-        /// </summary>
+        
         private static T GetPolicySettingFromGPOImpl<T>(ConfigScope scope) where T : PolicyBase, new()
         {
             Type tType = typeof(T);
@@ -946,9 +880,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Get a specific kind of policy setting from the group policy registry key.
-        /// </summary>
+        
         private static T GetPolicySettingFromGPO<T>(ConfigScope[] preferenceOrder) where T : PolicyBase, new()
         {
             PolicyBase policy = null;
@@ -976,9 +908,7 @@ namespace System.Management.Automation
         }
 #endif
 
-        /// <summary>
-        /// Scheduled job module name.
-        /// </summary>
+        
         internal const string ScheduledJobModuleName = "PSScheduledJob";
 
         internal static void EnsureModuleLoaded(string module, ExecutionContext context)
@@ -1025,10 +955,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Returns modules (either loaded or in available) that match pattern <paramref name="module"/>.
-        /// Uses Get-Module -ListAvailable cmdlet.
-        /// </summary>
+        
         /// <param name="module"></param>
         /// <param name="context"></param>
         /// <returns>
@@ -1082,10 +1009,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Returns modules (either loaded or in available) that match FullyQualifiedName <paramref name="fullyQualifiedName"/>.
-        /// Uses Get-Module -ListAvailable cmdlet.
-        /// </summary>
+        
         /// <param name="fullyQualifiedName"></param>
         /// <param name="context"></param>
         /// <returns>
@@ -1155,9 +1079,7 @@ namespace System.Management.Automation
             return (currentIdentity != null);
         }
 
-        /// <summary>
-        /// Gets the current impersonating Windows identity, if any.
-        /// </summary>
+        
         /// <param name="impersonatedIdentity">Current impersonated Windows identity or null.</param>
         /// <returns>True if current identity is impersonated.</returns>
         internal static bool TryGetWindowsImpersonatedIdentity(out WindowsIdentity impersonatedIdentity)
@@ -1308,9 +1230,7 @@ namespace System.Management.Automation
             return assemblyName;
         }
 
-        /// <summary>
-        /// If a mutex is abandoned, in our case, it is ok to proceed.
-        /// </summary>
+        
         /// <param name="mutex">The mutex to wait on. If it is null, a new one will be created.</param>
         /// <param name="initializer">The initializer to use to recreate the mutex.</param>
         /// <returns>A working mutex. If the mutex was abandoned, a new one is created to replace it.</returns>
@@ -1349,9 +1269,7 @@ namespace System.Management.Automation
         //     Format-Table -Auto
 
 #if !UNIX
-        /// <summary>
-        /// Queues a CLR worker thread with impersonation of provided Windows identity.
-        /// </summary>
+        
         /// <param name="identityToImpersonate">Windows identity to impersonate or null.</param>
         /// <param name="threadProc">Thread procedure for thread.</param>
         /// <param name="state">Optional state for thread procedure.</param>
@@ -1386,10 +1304,7 @@ namespace System.Management.Automation
         }
 #endif
 
-        /// <summary>
-        /// If the command name is fully qualified then it is split into its component parts
-        /// E.g., moduleName\commandName.
-        /// </summary>
+        
         /// <param name="commandName"></param>
         /// <param name="moduleName"></param>
         /// <returns>Command name and as appropriate Module name in out parameter.</returns>
@@ -1431,20 +1346,7 @@ namespace System.Management.Automation
             internal static readonly char[] PathSearchTrimEnd = { (char)0x9, (char)0xA, (char)0xB, (char)0xC, (char)0xD, (char)0x20, (char)0x85, (char)0xA0 };
         }
 
-        /// <summary>
-        /// A COM object could be directly of the type 'System.__ComObject', or it could be a strongly typed RWC,
-        /// whose specific type derives from 'System.__ComObject'.
-        /// A strongly typed RWC can be created via the 'new' operation with a Primary Interop Assembly (PIA).
-        /// For example, with the PIA 'Microsoft.Office.Interop.Excel', you can write the following code:
-        ///    var excelApp = new Microsoft.Office.Interop.Excel.Application();
-        ///    Type type = excelApp.GetType();
-        ///    Type comObjectType = typeof(object).Assembly.GetType("System.__ComObject");
-        ///    Console.WriteLine("excelApp type: {0}", type.FullName);
-        ///    Console.WriteLine("Is __ComObject assignable from? {0}", comObjectType.IsAssignableFrom(type));
-        /// and the results are:
-        ///    excelApp type: Microsoft.Office.Interop.Excel.ApplicationClass
-        ///    Is __ComObject assignable from? True.
-        /// </summary>
+        
         internal static bool IsComObject(object obj)
         {
 #if UNIX
@@ -1454,13 +1356,7 @@ namespace System.Management.Automation
 #endif
         }
 
-        /// <summary>
-        /// EnforceSystemLockDownLanguageMode
-        ///     FullLangauge        ->  ConstrainedLanguage
-        ///     RestrictedLanguage  ->  NoLanguage
-        ///     ConstrainedLanguage ->  ConstrainedLanguage
-        ///     NoLanguage          ->  NoLanguage.
-        /// </summary>
+        
         /// <param name="context">ExecutionContext.</param>
         /// <returns>The current ExecutionContext language mode.</returns>
         internal static PSLanguageMode EnforceSystemLockDownLanguageMode(ExecutionContext context)
@@ -1519,9 +1415,7 @@ namespace System.Management.Automation
             };
         }
 
-        /// <summary>
-        /// Returns true if the current session is restricted (JEA or similar sessions)
-        /// </summary>
+        
         /// <param name="context">ExecutionContext.</param>
         /// <returns>True if the session is restricted.</returns>
         internal static bool IsSessionRestricted(ExecutionContext context)
@@ -1540,7 +1434,7 @@ namespace System.Management.Automation
 
 namespace System.Management.Automation.Internal
 {
-    /// <summary>This class is used for internal test purposes.</summary>
+    
     [SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes", Justification = "Needed Internal use only")]
     public static class InternalTestHooks
     {
@@ -1599,19 +1493,14 @@ namespace System.Management.Automation.Internal
         // Test out smaller connection buffer size when calling WNetGetConnection.
         internal static int WNetGetConnectionBufferSize = -1;
 
-        /// <summary>This member is used for internal test purposes.</summary>
+        
         public static void SetTestHook(string property, object value)
         {
             var fieldInfo = typeof(InternalTestHooks).GetField(property, BindingFlags.Static | BindingFlags.NonPublic);
             fieldInfo?.SetValue(null, value);
         }
 
-        /// <summary>
-        /// Constructs a custom PSSenderInfo instance that can be assigned to $PSSenderInfo
-        /// in order to simulate a remoting session with respect to the $PSSenderInfo.ConnectionString (connection URL)
-        /// and $PSSenderInfo.ApplicationArguments.PSVersionTable.PSVersion (the remoting client's PowerShell version).
-        /// See Get-FormatDataTest.ps1.
-        /// </summary>
+        
         /// <param name="url">The connection URL to reflect in the returned instance's ConnectionString property.</param>
         /// <param name="clientVersion">The version number to report as the remoting client's PowerShell version.</param>
         /// <returns>The newly constructed custom PSSenderInfo instance.</returns>
@@ -1626,9 +1515,7 @@ namespace System.Management.Automation.Internal
         }
     }
 
-    /// <summary>
-    /// Provides undo/redo functionality by using 2 instances of <seealso cref="BoundedStack{T}"/>.
-    /// </summary>
+    
     internal class HistoryStack<T>
     {
         private readonly BoundedStack<T> _boundedUndoStack;
@@ -1649,9 +1536,7 @@ namespace System.Management.Automation.Internal
             }
         }
 
-        /// <summary>
-        /// Handles bounded history stacks by pushing the current item to the redoStack and returning the item from the popped undoStack.
-        /// </summary>
+        
         internal T Undo(T currentItem)
         {
             T previousItem = _boundedUndoStack.Pop();
@@ -1659,9 +1544,7 @@ namespace System.Management.Automation.Internal
             return previousItem;
         }
 
-        /// <summary>
-        /// Handles bounded history stacks by pushing the current item to the undoStack and returning the item from the popped redoStack.
-        /// </summary>
+        
         internal T Redo(T currentItem)
         {
             var nextItem = _boundedRedoStack.Pop();
@@ -1674,25 +1557,19 @@ namespace System.Management.Automation.Internal
         internal int RedoCount => _boundedRedoStack.Count;
     }
 
-    /// <summary>
-    /// A bounded stack based on a linked list.
-    /// </summary>
+    
     internal class BoundedStack<T> : LinkedList<T>
     {
         private readonly int _capacity;
 
-        /// <summary>
-        /// Lazy initialisation, i.e. it sets only its limit but does not allocate the memory for the given capacity.
-        /// </summary>
+        
         /// <param name="capacity"></param>
         internal BoundedStack(int capacity)
         {
             _capacity = capacity;
         }
 
-        /// <summary>
-        /// Push item.
-        /// </summary>
+        
         /// <param name="item"></param>
         internal void Push(T item)
         {
@@ -1704,9 +1581,7 @@ namespace System.Management.Automation.Internal
             }
         }
 
-        /// <summary>
-        /// Pop item.
-        /// </summary>
+        
         /// <returns></returns>
         internal T Pop()
         {
@@ -1729,16 +1604,12 @@ namespace System.Management.Automation.Internal
         }
     }
 
-    /// <summary>
-    /// A readonly Hashset.
-    /// </summary>
+    
     internal sealed class ReadOnlyBag<T> : IEnumerable
     {
         private readonly HashSet<T> _hashset;
 
-        /// <summary>
-        /// Constructor for the readonly Hashset.
-        /// </summary>
+        
         internal ReadOnlyBag(HashSet<T> hashset)
         {
             ArgumentNullException.ThrowIfNull(hashset);
@@ -1746,35 +1617,23 @@ namespace System.Management.Automation.Internal
             _hashset = hashset;
         }
 
-        /// <summary>
-        /// Get the count of the Hashset.
-        /// </summary>
+        
         public int Count => _hashset.Count;
 
-        /// <summary>
-        /// Indicate if it's a readonly Hashset.
-        /// </summary>
+        
         public bool IsReadOnly => true;
 
-        /// <summary>
-        /// Check if the set contains an item.
-        /// </summary>
+        
         public bool Contains(T item) => _hashset.Contains(item);
 
-        /// <summary>
-        /// GetEnumerator method.
-        /// </summary>
+        
         public IEnumerator GetEnumerator() => _hashset.GetEnumerator();
 
-        /// <summary>
-        /// Get an empty singleton.
-        /// </summary>
+        
         internal static readonly ReadOnlyBag<T> Empty = new ReadOnlyBag<T>(new HashSet<T>(capacity: 0));
     }
 
-    /// <summary>
-    /// Helper class for simple argument validations.
-    /// </summary>
+    
     internal static class Requires
     {
         internal static void NotNullOrEmpty(ICollection value, string paramName)

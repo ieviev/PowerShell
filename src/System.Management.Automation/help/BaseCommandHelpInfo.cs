@@ -11,10 +11,7 @@ using Dbg = System.Management.Automation.Diagnostics;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Class BaseCommandHelpInfo provides common functionality for
-    /// extracting information from FullHelp property.
-    /// </summary>
+    
     internal abstract class BaseCommandHelpInfo : HelpInfo
     {
         internal BaseCommandHelpInfo(HelpCategory helpCategory)
@@ -42,9 +39,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Name of command.
-        /// </summary>
+        
         /// <value>Name of command</value>
         internal override string Name
         {
@@ -70,9 +65,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Synopsis for this command help.
-        /// </summary>
+        
         /// <value>Synopsis for this command help</value>
         internal override string Synopsis
         {
@@ -117,17 +110,11 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Help category for this command help, which is constantly HelpCategory.Command.
-        /// </summary>
+        
         /// <value>Help category for this command help</value>
         internal override HelpCategory HelpCategory { get; }
 
-        /// <summary>
-        /// Returns the Uri used by get-help cmdlet to show help
-        /// online. Returns only the first uri found under
-        /// RelatedLinks.
-        /// </summary>
+        
         /// <returns>
         /// Null if no Uri is specified by the helpinfo or a
         /// valid Uri.
@@ -338,14 +325,7 @@ namespace System.Management.Automation
             return null;
         }
 
-        /// <summary>
-        /// Returns true if help content in help info matches the
-        /// pattern contained in <paramref name="pattern"/>.
-        /// The underlying code will usually run pattern.IsMatch() on
-        /// content it wants to search.
-        /// Cmdlet help info looks for pattern in Synopsis and
-        /// DetailedDescription.
-        /// </summary>
+        
         /// <param name="pattern"></param>
         /// <returns></returns>
         internal override bool MatchPatternInContent(WildcardPattern pattern)
@@ -362,9 +342,7 @@ namespace System.Management.Automation
             return pattern.IsMatch(synopsis) || pattern.IsMatch(detailedDescription);
         }
 
-        /// <summary>
-        /// Returns help information for a parameter(s) identified by pattern.
-        /// </summary>
+        
         /// <param name="pattern">Pattern to search for parameters.</param>
         /// <returns>A collection of parameters that match pattern.</returns>
         internal override PSObject[] GetParameter(string pattern)
@@ -430,9 +408,7 @@ namespace System.Management.Automation
 
         #region Cmdlet Help specific Properties
 
-        /// <summary>
-        /// Detailed Description string of this cmdlet help info.
-        /// </summary>
+        
         internal string DetailedDescription
         {
             get

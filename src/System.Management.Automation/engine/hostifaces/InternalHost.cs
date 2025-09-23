@@ -13,29 +13,10 @@ using Dbg = System.Management.Automation.Diagnostics;
 
 namespace System.Management.Automation.Internal.Host
 {
-    /// <summary>
-    /// Wraps PSHost instances to provide a shim layer
-    /// between InternalCommand and the host-supplied PSHost instance.
-    ///
-    /// This class exists for the purpose of ensuring that an externally-supplied PSHost meets the minimum proper required
-    /// implementation, and also to provide a leverage point at which the monad engine can hook the interaction between the engine,
-    /// cmdlets, and that external host.
-    ///
-    /// That leverage may be necessary to manage concurrent access between multiple pipelines sharing the same instance of
-    /// PSHost.
-    /// </summary>
+    
     internal class InternalHost : PSHost, IHostSupportsInteractiveSession
     {
-        /// <summary>
-        /// There should only be one instance of InternalHost per runspace (i.e. per engine), and all engine use of the host
-        /// should be through that single instance.  If we ever accidentally create more than one instance of InternalHost per
-        /// runspace, then some of the internal state checks that InternalHost makes, like checking the nestedPromptCounter, can
-        /// be messed up.
-        ///
-        /// To ensure that this constraint is met, I wanted to make this class a singleton.  However, Hitesh rightly pointed out
-        /// that a singleton would be appdomain-global, which would prevent having multiple runspaces per appdomain. So we will
-        /// just have to be careful not to create extra instances of InternalHost per runspace.
-        /// </summary>
+        
         internal InternalHost(PSHost externalHost, ExecutionContext executionContext)
         {
             Dbg.Assert(externalHost != null, "must supply an PSHost");
@@ -53,9 +34,7 @@ namespace System.Management.Automation.Internal.Host
             _idResult = _zeroGuid;
         }
 
-        /// <summary>
-        /// See base class.
-        /// </summary>
+        
         /// <value></value>
         /// <exception cref="NotImplementedException">
         ///  when the external host's Name is null or empty.
@@ -80,9 +59,7 @@ namespace System.Management.Automation.Internal.Host
             }
         }
 
-        /// <summary>
-        /// See base class.
-        /// </summary>
+        
         /// <value></value>
         /// <exception cref="NotImplementedException">
         ///  when the external host's Version is null.
@@ -107,9 +84,7 @@ namespace System.Management.Automation.Internal.Host
             }
         }
 
-        /// <summary>
-        /// See base class.
-        /// </summary>
+        
         /// <value></value>
         /// <exception cref="NotImplementedException">
         ///  when the external host's InstanceId is a zero Guid.
@@ -134,9 +109,7 @@ namespace System.Management.Automation.Internal.Host
             }
         }
 
-        /// <summary>
-        /// See base class.
-        /// </summary>
+        
         /// <value>
         /// </value>
         public override System.Management.Automation.Host.PSHostUserInterface UI
@@ -147,12 +120,7 @@ namespace System.Management.Automation.Internal.Host
             }
         }
 
-        /// <summary>
-        /// Interface to be used for interaction with internal
-        /// host UI. InternalHostUserInterface wraps the host UI
-        /// supplied during construction. Use this wrapper to access
-        /// functionality specific to InternalHost.
-        /// </summary>
+        
         internal InternalHostUserInterface InternalUI
         {
             get
@@ -161,9 +129,7 @@ namespace System.Management.Automation.Internal.Host
             }
         }
 
-        /// <summary>
-        /// See base class.
-        /// </summary>
+        
         /// <value>
         /// </value>
         /// <exception cref="NotImplementedException">
@@ -179,9 +145,7 @@ namespace System.Management.Automation.Internal.Host
             }
         }
 
-        /// <summary>
-        /// See base class.
-        /// </summary>
+        
         /// <value>
         /// </value>
         /// <exception cref="NotImplementedException">
@@ -196,19 +160,14 @@ namespace System.Management.Automation.Internal.Host
             }
         }
 
-        /// <summary>
-        /// See base class.
-        /// </summary>
+        
         /// <param name="exitCode"></param>
         public override void SetShouldExit(int exitCode)
         {
             _externalHostRef.Value.SetShouldExit(exitCode);
         }
 
-        /// <summary>
-        /// See base class
-        /// <seealso cref="ExitNestedPrompt"/>
-        /// </summary>
+        
         public override void EnterNestedPrompt()
         {
             EnterNestedPrompt(null);
@@ -223,9 +182,7 @@ namespace System.Management.Automation.Internal.Host
             public PSLanguageMode LanguageMode;
         }
 
-        /// <summary>
-        /// Internal proxy for EnterNestedPrompt.
-        /// </summary>
+        
         /// <param name="callingCommand"></param>
         internal void EnterNestedPrompt(InternalCommand callingCommand)
         {
@@ -383,10 +340,7 @@ namespace System.Management.Automation.Internal.Host
             Dbg.Assert(_contextStack.Count == NestedPromptCount, "number of saved contexts should equal nesting count");
         }
 
-        /// <summary>
-        /// See base class
-        /// <seealso cref="EnterNestedPrompt()"/>
-        /// </summary>
+        
         public override void ExitNestedPrompt()
         {
             Dbg.Assert(NestedPromptCount >= 0, "nestedPromptCounter should be greater than or equal to 0");
@@ -407,9 +361,7 @@ namespace System.Management.Automation.Internal.Host
             throw enpe;
         }
 
-        /// <summary>
-        /// See base class.
-        /// </summary>
+        
         public override PSObject PrivateData
         {
             get
@@ -419,33 +371,22 @@ namespace System.Management.Automation.Internal.Host
             }
         }
 
-        /// <summary>
-        /// See base class
-        /// <seealso cref="NotifyEndApplication"/>
-        /// </summary>
+        
         public override void NotifyBeginApplication()
         {
             _externalHostRef.Value.NotifyBeginApplication();
         }
 
-        /// <summary>
-        /// Called by the engine to notify the host that the execution of a legacy command has completed.
-        /// <seealso cref="NotifyBeginApplication"/>
-        /// </summary>
+        
         public override void NotifyEndApplication()
         {
             _externalHostRef.Value.NotifyEndApplication();
         }
 
-        /// <summary>
-        /// This property enables and disables the host debugger if debugging is supported.
-        /// </summary>
+        
         public override bool DebuggerEnabled { get; set; } = true;
 
-        /// <summary>
-        /// Gets the external host as an IHostSupportsInteractiveSession if it implements this interface;
-        /// throws an exception otherwise.
-        /// </summary>
+        
         private IHostSupportsInteractiveSession GetIHostSupportsInteractiveSession()
         {
             if (!(_externalHostRef.Value is IHostSupportsInteractiveSession host))
@@ -456,9 +397,7 @@ namespace System.Management.Automation.Internal.Host
             return host;
         }
 
-        /// <summary>
-        /// Called by the engine to notify the host that a runspace push has been requested.
-        /// </summary>
+        
         /// <seealso cref="PopRunspace"/>
         public void PushRunspace(System.Management.Automation.Runspaces.Runspace runspace)
         {
@@ -466,9 +405,7 @@ namespace System.Management.Automation.Internal.Host
             host.PushRunspace(runspace);
         }
 
-        /// <summary>
-        /// Called by the engine to notify the host that a runspace pop has been requested.
-        /// </summary>
+        
         /// <seealso cref="PushRunspace"/>
         public void PopRunspace()
         {
@@ -476,9 +413,7 @@ namespace System.Management.Automation.Internal.Host
             host.PopRunspace();
         }
 
-        /// <summary>
-        /// True if a runspace is pushed; false otherwise.
-        /// </summary>
+        
         public bool IsRunspacePushed
         {
             get
@@ -488,9 +423,7 @@ namespace System.Management.Automation.Internal.Host
             }
         }
 
-        /// <summary>
-        /// Returns the current runspace associated with this host.
-        /// </summary>
+        
         public Runspace Runspace
         {
             get
@@ -500,9 +433,7 @@ namespace System.Management.Automation.Internal.Host
             }
         }
 
-        /// <summary>
-        /// Checks if the host is in a nested prompt.
-        /// </summary>
+        
         /// <returns>True, if host in nested prompt
         /// false, otherwise.</returns>
         internal bool HostInNestedPrompt()
@@ -517,12 +448,7 @@ namespace System.Management.Automation.Internal.Host
             }
         }
 
-        /// <summary>
-        /// Sets the reference to the external host and the internal UI to a temporary
-        /// new host and its UI. This exists so that if the PowerShell/Pipeline
-        /// object has a different host from the runspace it can set it's host during its
-        /// invocation, and then revert it after the invocation is completed.
-        /// </summary>
+        
         /// <seealso cref="RevertHostRef"/> and
         internal void SetHostRef(PSHost psHost)
         {
@@ -530,9 +456,7 @@ namespace System.Management.Automation.Internal.Host
             _internalUIRef.Override(new InternalHostUserInterface(psHost.UI, this));
         }
 
-        /// <summary>
-        /// Reverts the temporary host set by SetHost. If no host was temporarily set, this has no effect.
-        /// </summary>
+        
         /// <seealso cref="SetHostRef"/> and
         internal void RevertHostRef()
         {
@@ -546,9 +470,7 @@ namespace System.Management.Automation.Internal.Host
             _internalUIRef.Revert();
         }
 
-        /// <summary>
-        /// Returns true if the external host reference is temporarily set to another host, masking the original host.
-        /// </summary>
+        
         internal bool IsHostRefSet
         {
             get { return _externalHostRef.IsOverridden; }

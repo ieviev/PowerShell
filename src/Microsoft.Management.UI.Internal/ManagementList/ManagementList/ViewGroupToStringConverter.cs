@@ -12,15 +12,11 @@ using System.Windows.Data;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <summary>
-    /// Converter from ViewGroup to group title string.
-    /// </summary>
+    
     [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
     internal class ViewGroupToStringConverter : IValueConverter
     {
-        /// <summary>
-        /// Convert each ViewGroup into its name and its count.
-        /// </summary>
+        
         /// <param name="value">Value to be converted.</param>
         /// <param name="targetType">Type to convert the value to.</param>
         /// <param name="parameter">The conversion parameter.</param>
@@ -40,9 +36,7 @@ namespace Microsoft.Management.UI.Internal
             return display;
         }
 
-        /// <summary>
-        /// ConvertBack is not supported.
-        /// </summary>
+        
         /// <param name="value">Value to be converted.</param>
         /// <param name="targetType">Type to convert the value to.</param>
         /// <param name="parameter">The conversion parameter.</param>

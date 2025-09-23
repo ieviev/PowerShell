@@ -14,9 +14,7 @@ using System.Windows.Input;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <summary>
-    /// The FilterRulePanel allows users to construct and display a complex query built using <see cref="FilterRule"/>s.
-    /// </summary>
+    
     /// <remarks>
     /// <para>
     /// The FilterRulePanel manages two primary entities: <see cref="FilterRulePanelItem"/>s and DataTemplates.
@@ -37,10 +35,7 @@ namespace Microsoft.Management.UI.Internal
 
         #region Filter Rule Panel Items
 
-        /// <summary>
-        /// Gets the collection of FilterRulePanelItems that are currently
-        /// displayed in the panel.
-        /// </summary>
+        
         public ReadOnlyCollection<FilterRulePanelItem> FilterRulePanelItems
         {
             get
@@ -53,10 +48,7 @@ namespace Microsoft.Management.UI.Internal
 
         #region Filter Expression
 
-        /// <summary>
-        /// Gets a FilterExpression representing the current
-        /// relational organization of FilterRules for this provider.
-        /// </summary>
+        
         public FilterExpressionNode FilterExpression
         {
             get
@@ -71,9 +63,7 @@ namespace Microsoft.Management.UI.Internal
 
         private FilterRulePanelController controller = new FilterRulePanelController();
 
-        /// <summary>
-        /// Gets the FilterRulePanelController associated with this FilterRulePanel.
-        /// </summary>
+        
         public FilterRulePanelController Controller
         {
             get
@@ -88,10 +78,7 @@ namespace Microsoft.Management.UI.Internal
 
         private FilterRuleTemplateSelector filterRuleTemplateSelector;
 
-        /// <summary>
-        /// Gets a FilterRuleTemplateSelector that stores
-        /// the templates used for items in the panel.
-        /// </summary>
+        
         public DataTemplateSelector FilterRuleTemplateSelector
         {
             get
@@ -102,9 +89,7 @@ namespace Microsoft.Management.UI.Internal
 
         #endregion Filter Rule Template Selector
 
-        /// <summary>
-        /// Gets a value indicating whether this provider currently has a non-empty filter expression.
-        /// </summary>
+        
         public bool HasFilterExpression
         {
             get
@@ -117,18 +102,14 @@ namespace Microsoft.Management.UI.Internal
 
         #region Events
 
-        /// <summary>
-        /// Raised when a FilterRulePanelItem has been added or removed.
-        /// </summary>
+        
         public event EventHandler FilterExpressionChanged;
 
         #endregion
 
         #region Ctor
 
-        /// <summary>
-        /// Initializes a new instance of the FilterRulePanel class.
-        /// </summary>
+        
         public FilterRulePanel()
         {
             this.InitializeTemplates();
@@ -142,10 +123,7 @@ namespace Microsoft.Management.UI.Internal
 
         #region Content Templates
 
-        /// <summary>
-        /// Associates a DataTemplate with a Type so that objects of that Type
-        /// that are displayed in FilterRulePanel use the specified DataTemplate.
-        /// </summary>
+        
         /// <param name="type">
         /// The type to associate the DataTemplate with.
         /// </param>
@@ -161,10 +139,7 @@ namespace Microsoft.Management.UI.Internal
             this.filterRuleTemplateSelector.TemplateDictionary.Add(new KeyValuePair<Type, DataTemplate>(type, dataTemplate));
         }
 
-        /// <summary>
-        /// Removes the Type and associated DataTemplate from usage when displaying objects
-        /// of that type in the FilterRulePanel.
-        /// </summary>
+        
         /// <param name="type">
         /// The type to remove.
         /// </param>
@@ -175,9 +150,7 @@ namespace Microsoft.Management.UI.Internal
             this.filterRuleTemplateSelector.TemplateDictionary.Remove(type);
         }
 
-        /// <summary>
-        /// Gets a DataTemplate associated with a type.
-        /// </summary>
+        
         /// <param name="type">A Type whose DataTemplate will be returned.</param>
         /// <param name="dataTemplate">A DataTemplate registered for type.</param>
         /// <returns>Returns true if there is a DataTemplate registered for type, false otherwise.</returns>
@@ -187,9 +160,7 @@ namespace Microsoft.Management.UI.Internal
             return this.filterRuleTemplateSelector.TemplateDictionary.TryGetValue(type, out dataTemplate);
         }
 
-        /// <summary>
-        /// Removes all the registered content templates.
-        /// </summary>
+        
         public void ClearContentTemplates()
         {
             this.filterRuleTemplateSelector.TemplateDictionary.Clear();
@@ -199,9 +170,7 @@ namespace Microsoft.Management.UI.Internal
 
         #region Notify Filter Expression Changed
 
-        /// <summary>
-        /// Notifies any listeners that the filter expression has changed.
-        /// </summary>
+        
         protected virtual void NotifyFilterExpressionChanged()
         {
             EventHandler eh = this.FilterExpressionChanged;

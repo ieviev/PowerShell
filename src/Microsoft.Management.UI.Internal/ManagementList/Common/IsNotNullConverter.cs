@@ -6,18 +6,13 @@ using System.Windows.Data;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <summary>
-    /// The IsNotNullConverter is responsible for converting a value into
-    /// a boolean indicting whether the value is not null.
-    /// </summary>
+    
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public class IsNotNullConverter : IValueConverter
     {
         #region IValueConverter Members
 
-        /// <summary>
-        /// Determines if value is not null.
-        /// </summary>
+        
         /// <param name="value">The object to check.</param>
         /// <param name="targetType">The parameter is not used.</param>
         /// <param name="parameter">The parameter is not used.</param>
@@ -28,9 +23,7 @@ namespace Microsoft.Management.UI.Internal
             return value != null;
         }
 
-        /// <summary>
-        /// This method is not used.
-        /// </summary>
+        
         /// <param name="value">The parameter is not used.</param>
         /// <param name="targetType">The parameter is not used.</param>
         /// <param name="parameter">The parameter is not used.</param>

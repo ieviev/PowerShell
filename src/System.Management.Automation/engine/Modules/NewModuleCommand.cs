@@ -15,16 +15,12 @@ namespace Microsoft.PowerShell.Commands
 {
     #region New-Module
 
-    /// <summary>
-    /// Implements a cmdlet that creates a dynamic module from a scriptblock..
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.New, "Module", DefaultParameterSetName = "ScriptBlock", HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096698")]
     [OutputType(typeof(PSModuleInfo))]
     public sealed class NewModuleCommand : ModuleCmdletBase
     {
-        /// <summary>
-        /// This parameter specifies the name to assign to the dynamic module.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "Name", Mandatory = true, ValueFromPipeline = true, Position = 0)]
         public string Name
         {
@@ -35,9 +31,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string _name;
 
-        /// <summary>
-        /// Specify a scriptblock to use for the module body...
-        /// </summary>
+        
         [Parameter(ParameterSetName = "Name", Mandatory = true, Position = 1)]
         [Parameter(ParameterSetName = "ScriptBlock", Mandatory = true, Position = 0)]
         [ValidateNotNull]
@@ -56,9 +50,7 @@ namespace Microsoft.PowerShell.Commands
 
         private ScriptBlock _scriptBlock;
 
-        /// <summary>
-        /// This parameter specifies the patterns matching the functions to import from the module...
-        /// </summary>
+        
         [Parameter]
         [ValidateNotNull]
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays", Justification = "Cmdlets use arrays for parameters.")]
@@ -87,9 +79,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string[] _functionImportList = Array.Empty<string>();
 
-        /// <summary>
-        /// This parameter specifies the patterns matching the cmdlets to import from the module...
-        /// </summary>
+        
         [Parameter]
         [ValidateNotNull]
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays", Justification = "Cmdlets use arrays for parameters.")]
@@ -118,9 +108,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string[] _cmdletImportList = Array.Empty<string>();
 
-        /// <summary>
-        /// This parameter causes the session state instance to be written...
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter ReturnResult
         {
@@ -131,9 +119,7 @@ namespace Microsoft.PowerShell.Commands
 
         private bool _returnResult;
 
-        /// <summary>
-        /// This parameter causes the session state instance to be written...
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter AsCustomObject
         {
@@ -144,9 +130,7 @@ namespace Microsoft.PowerShell.Commands
 
         private bool _asCustomObject;
 
-        /// <summary>
-        /// The arguments to pass to the scriptblock used to create the module.
-        /// </summary>
+        
         [Parameter(ValueFromRemainingArguments = true)]
         [Alias("Args")]
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays", Justification = "Cmdlets use arrays for parameters.")]
@@ -159,9 +143,7 @@ namespace Microsoft.PowerShell.Commands
 
         private object[] _arguments;
 
-        /// <summary>
-        /// Create the new module...
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             // Create a module from a scriptblock...

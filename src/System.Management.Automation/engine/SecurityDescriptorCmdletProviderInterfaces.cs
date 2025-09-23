@@ -8,16 +8,12 @@ using Dbg = System.Management.Automation;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Provides the *-SecurityDescriptor noun for the cmdlet providers.
-    /// </summary>
+    
     public sealed class SecurityDescriptorCmdletProviderIntrinsics
     {
         #region Constructors
 
-        /// <summary>
-        /// Hide the default constructor since we always require an instance of SessionState.
-        /// </summary>
+        
         private SecurityDescriptorCmdletProviderIntrinsics()
         {
             Dbg.Diagnostics.Assert(
@@ -25,10 +21,7 @@ namespace System.Management.Automation
                 "This constructor should never be called. Only the constructor that takes an instance of SessionState should be called.");
         }
 
-        /// <summary>
-        /// Initializes a new instance of the SecurityDescriptorCmdletProviderIntrinsics
-        /// class, using the Cmdlet parameter to obtain access to the SessionState APIs.
-        /// </summary>
+        
         /// <param name="cmdlet">
         /// An instance of the cmdlet.
         /// </param>
@@ -43,10 +36,7 @@ namespace System.Management.Automation
             _sessionState = cmdlet.Context.EngineSessionState;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the SecurityDescriptorCmdletProviderIntrinsics
-        /// class, using the sessionState parameter to obtain access to the SessionState APIs.
-        /// </summary>
+        
         /// <param name="sessionState">
         /// An instance of the real session state class.
         /// </param>
@@ -66,10 +56,7 @@ namespace System.Management.Automation
 
         #region GetSecurityDescriptor
 
-        /// <summary>
-        /// Gets the SecurityDescriptor at the specified path, including only the specified
-        /// AccessControlSections.
-        /// </summary>
+        
         /// <param name="path">
         /// The path of the item to retrieve. It may be a drive or provider-qualified path and may include.
         /// glob characters.
@@ -90,10 +77,7 @@ namespace System.Management.Automation
             return _sessionState.GetSecurityDescriptor(path, includeSections);
         }
 
-        /// <summary>
-        /// Gets the SecurityDescriptor at the specified path, including only the specified
-        /// AccessControlSections, using the provided Context.
-        /// </summary>
+        
         /// <param name="path">
         /// The path of the item to retrieve. It may be a drive or provider-qualified path and may include
         /// glob characters.
@@ -123,9 +107,7 @@ namespace System.Management.Automation
 
         #region SetSecurityDescriptor
 
-        /// <summary>
-        /// Sets the provided SecurityDescriptor at the specified path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path of the item to set. It may be a drive or provider-qualified path and may include
         /// glob characters.
@@ -148,9 +130,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Sets the SecurityDescriptor at the specified path, using the provided Context.
-        /// </summary>
+        
         /// <param name="path">
         /// The path of the item to set. It may be a drive or provider-qualified path and may include
         /// glob characters.
@@ -179,10 +159,7 @@ namespace System.Management.Automation
 
         #region NewSecurityDescriptor
 
-        /// <summary>
-        /// Creates a new SecurityDescriptor from the item at the specified path, including only the specified
-        /// AccessControlSections.
-        /// </summary>
+        
         /// <param name="path">
         /// The path of the item to retrieve. It may be a drive or provider-qualified path and may include
         /// glob characters.
@@ -203,10 +180,7 @@ namespace System.Management.Automation
             return _sessionState.NewSecurityDescriptorFromPath(path, includeSections);
         }
 
-        /// <summary>
-        /// Creates a new SecurityDescriptor from the specified provider and of the given type,
-        /// including only the specified AccessControlSections.
-        /// </summary>
+        
         /// <param name="providerId">
         /// The name of the provider.
         /// </param>

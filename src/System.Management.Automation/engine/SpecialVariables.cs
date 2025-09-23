@@ -274,17 +274,12 @@ namespace System.Management.Automation
 
         internal static readonly VariablePath ErrorViewVarPath = new VariablePath(ErrorView);
 
-        /// <summary>
-        /// Shell environment variable.
-        /// </summary>
+        
         internal const string PSSessionConfigurationName = "PSSessionConfigurationName";
 
         internal static readonly VariablePath PSSessionConfigurationNameVarPath = new VariablePath("global:" + PSSessionConfigurationName);
 
-        /// <summary>
-        /// Environment variable that will define the default
-        /// application name for the connection uri.
-        /// </summary>
+        
         internal const string PSSessionApplicationName = "PSSessionApplicationName";
 
         internal static readonly VariablePath PSSessionApplicationNameVarPath = new VariablePath("global:" + PSSessionApplicationName);

@@ -11,14 +11,7 @@ namespace System.Management.Automation
 {
     internal class MergedCommandParameterMetadata
     {
-        /// <summary>
-        /// Replaces any existing metadata in this object with the metadata specified.
-        ///
-        /// Note that this method should NOT be called after a MergedCommandParameterMetadata
-        /// instance is made read only by calling MakeReadOnly(). This is because MakeReadOnly()
-        /// will turn 'bindableParameters', 'aliasedParameters' and 'parameterSetMap' into
-        /// ReadOnlyDictionary and ReadOnlyCollection.
-        /// </summary>
+        
         /// <param name="metadata">
         /// The metadata to replace in this object.
         /// </param>
@@ -57,10 +50,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Merges the specified metadata with the other metadata already defined
-        /// in this object.
-        /// </summary>
+        
         /// <param name="parameterMetadata">
         /// The compiled metadata for the type to be merged.
         /// </param>
@@ -156,23 +146,13 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// The next available parameter set bit. This number increments but the parameter
-        /// set bit is really 1 shifted left this number of times. This number also acts
-        /// as the index for the parameter set map.
-        /// </summary>
+        
         private uint _nextAvailableParameterSetIndex;
 
-        /// <summary>
-        /// The maximum number of parameter sets allowed. Limit is set by the use
-        /// of a uint bitmask to store which parameter sets a parameter is included in.
-        /// See <see cref="ParameterSetSpecificMetadata.ParameterSetFlag"/>.
-        /// </summary>
+        
         private const uint MaxParameterSetCount = 32;
 
-        /// <summary>
-        /// Gets the number of parameter sets that were declared for the command.
-        /// </summary>
+        
         internal int ParameterSetCount
         {
             get
@@ -181,9 +161,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Gets a bit-field representing all valid parameter sets.
-        /// </summary>
+        
         internal uint AllParameterSetFlags
         {
             get
@@ -192,24 +170,13 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// This is the parameter set map. The index is the number of times 1 gets shifted
-        /// left to specify the bit field marker for the parameter set.
-        /// The value is the parameter set name.
-        /// New parameter sets are added at the nextAvailableParameterSetIndex.
-        /// </summary>
+        
         private IList<string> _parameterSetMap = new List<string>();
 
-        /// <summary>
-        /// The name of the default parameter set.
-        /// </summary>
+        
         private string _defaultParameterSetName;
 
-        /// <summary>
-        /// Adds the parameter set name to the parameter set map and returns the
-        /// index. If the parameter set name was already in the map, the index to
-        /// the existing parameter set name is returned.
-        /// </summary>
+        
         /// <param name="parameterSetName">
         /// The name of the parameter set to add.
         /// </param>
@@ -261,11 +228,7 @@ namespace System.Management.Automation
             return index;
         }
 
-        /// <summary>
-        /// Loops through all the parameters and retrieves the parameter set names.  In the process
-        /// it generates a mapping of parameter set names to the bits in the bit-field and sets
-        /// the parameter set flags for the parameter.
-        /// </summary>
+        
         /// <param name="defaultParameterSetName">
         /// The default parameter set name.
         /// </param>
@@ -340,9 +303,7 @@ namespace System.Management.Automation
             return defaultParameterSetFlag;
         }
 
-        /// <summary>
-        /// Gets the parameter set name for the specified parameter set.
-        /// </summary>
+        
         /// <param name="parameterSet">
         /// The parameter set to get the name for.
         /// </param>
@@ -393,10 +354,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Helper function to retrieve the name of the parameter
-        /// which defined an alias.
-        /// </summary>
+        
         /// <param name="key"></param>
         /// <param name="dict"></param>
         /// <returns></returns>
@@ -418,9 +376,7 @@ namespace System.Management.Automation
             return string.Empty;
         }
 
-        /// <summary>
-        /// Gets the parameters by matching its name.
-        /// </summary>
+        
         /// <param name="name">
         /// The name of the parameter.
         /// </param>
@@ -577,9 +533,7 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Gets a collection of all the parameters that are allowed in the parameter set.
-        /// </summary>
+        
         /// <param name="parameterSetFlag">
         /// The bit representing the parameter set from which the parameters should be retrieved.
         /// </param>
@@ -603,20 +557,13 @@ namespace System.Management.Automation
             return result;
         }
 
-        /// <summary>
-        /// Gets a dictionary of the compiled parameter metadata for this Type.
-        /// The dictionary keys are the names of the parameters and
-        /// the values are the compiled parameter metadata.
-        /// </summary>
+        
         internal IDictionary<string, MergedCompiledCommandParameter> BindableParameters { get { return _bindableParameters; } }
 
         private IDictionary<string, MergedCompiledCommandParameter> _bindableParameters =
             new Dictionary<string, MergedCompiledCommandParameter>(StringComparer.OrdinalIgnoreCase);
 
-        /// <summary>
-        /// Gets a dictionary of the parameters that have been aliased to other names. The key is
-        /// the alias name and the value is the MergedCompiledCommandParameter metadata.
-        /// </summary>
+        
         internal IDictionary<string, MergedCompiledCommandParameter> AliasedParameters { get { return _aliasedParameters; } }
 
         private IDictionary<string, MergedCompiledCommandParameter> _aliasedParameters =
@@ -636,16 +583,10 @@ namespace System.Management.Automation
         }
     }
 
-    /// <summary>
-    /// Makes an association between a CompiledCommandParameter and the type
-    /// of the parameter binder used to bind the parameter.
-    /// </summary>
+    
     internal class MergedCompiledCommandParameter
     {
-        /// <summary>
-        /// Constructs an association between the CompiledCommandParameter and the
-        /// binder that should be used to bind it.
-        /// </summary>
+        
         /// <param name="parameter">
         /// The metadata for a parameter.
         /// </param>
@@ -661,14 +602,10 @@ namespace System.Management.Automation
             this.BinderAssociation = binderAssociation;
         }
 
-        /// <summary>
-        /// Gets the compiled command parameter for the association.
-        /// </summary>
+        
         internal CompiledCommandParameter Parameter { get; }
 
-        /// <summary>
-        /// Gets the type of binder that the compiled command parameter should be bound with.
-        /// </summary>
+        
         internal ParameterBinderAssociation BinderAssociation { get; }
 
         public override string ToString()
@@ -677,41 +614,25 @@ namespace System.Management.Automation
         }
     }
 
-    /// <summary>
-    /// This enum is used in the MergedCompiledCommandParameter class
-    /// to associate a particular CompiledCommandParameter with the
-    /// appropriate ParameterBinder.
-    /// </summary>
+    
     internal enum ParameterBinderAssociation
     {
-        /// <summary>
-        /// The parameter was declared as a formal parameter in the command type.
-        /// </summary>
+        
         DeclaredFormalParameters,
 
-        /// <summary>
-        /// The parameter was declared as a dynamic parameter for the command.
-        /// </summary>
+        
         DynamicParameters,
 
-        /// <summary>
-        /// The parameter is a common parameter found in the CommonParameters class.
-        /// </summary>
+        
         CommonParameters,
 
-        /// <summary>
-        /// The parameter is a ShouldProcess parameter found in the ShouldProcessParameters class.
-        /// </summary>
+        
         ShouldProcessParameters,
 
-        /// <summary>
-        /// The parameter is a transactions parameter found in the TransactionParameters class.
-        /// </summary>
+        
         TransactionParameters,
 
-        /// <summary>
-        /// The parameter is a Paging parameter found in the PagingParameters class.
-        /// </summary>
+        
         PagingParameters,
     }
 }

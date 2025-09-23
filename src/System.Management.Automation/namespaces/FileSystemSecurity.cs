@@ -10,18 +10,12 @@ using System.Security.AccessControl;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// The FileSystemProvider provides stateless namespace navigation
-    /// of the file system.
-    /// </summary>
+    
     public sealed partial class FileSystemProvider : NavigationCmdletProvider, IContentCmdletProvider, IPropertyCmdletProvider, ISecurityDescriptorCmdletProvider
     {
         #region ISecurityDescriptorCmdletProvider members
 
-        /// <summary>
-        /// Gets the SecurityDescriptor at the specified path, including only the specified
-        /// AccessControlSections.
-        /// </summary>
+        
         /// <param name="path">
         /// The path of the item to retrieve. It may be a drive or provider-qualified path and may include.
         /// glob characters.
@@ -80,9 +74,7 @@ namespace Microsoft.PowerShell.Commands
             WriteSecurityDescriptorObject(sd, path);
         }
 
-        /// <summary>
-        /// Sets the SecurityDescriptor at the specified path.
-        /// </summary>
+        
         /// <param name="path">
         /// The path of the item to set the security descriptor on.
         /// It may be a drive or provider-qualified path and may include.
@@ -247,11 +239,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Creates a new empty security descriptor of the same type as
-        /// the item specified by the path.  If "path" points to a file system directory,
-        /// then the descriptor returned will be of type DirectorySecurity.
-        /// </summary>
+        
         /// <param name="path">
         /// Path of the item to use to determine the type of resulting
         /// SecurityDescriptor.
@@ -281,9 +269,7 @@ namespace Microsoft.PowerShell.Commands
             return NewSecurityDescriptor(itemType);
         }
 
-        /// <summary>
-        /// Creates a new empty security descriptor of the specified type.
-        /// </summary>
+        
         /// <param name="type">
         /// The type of Security Descriptor to create. Valid types are
         /// "file", "directory," and "container."

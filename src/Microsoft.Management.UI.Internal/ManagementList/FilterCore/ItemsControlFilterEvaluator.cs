@@ -7,10 +7,7 @@ using System.Windows.Controls;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <summary>
-    /// The ItemsControlFilterEvaluator class provides functionality to
-    /// apply a filter against an ItemsControl.
-    /// </summary>
+    
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public class ItemsControlFilterEvaluator : FilterEvaluator
     {
@@ -18,10 +15,7 @@ namespace Microsoft.Management.UI.Internal
 
         private ItemsControl filterTarget;
 
-        /// <summary>
-        /// Gets or sets an ItemsControl which is
-        /// the target for filtering.
-        /// </summary>
+        
         public ItemsControl FilterTarget
         {
             get
@@ -50,19 +44,14 @@ namespace Microsoft.Management.UI.Internal
 
         #region Events
 
-        /// <summary>
-        /// Used to notify listeners that an unhandled exception has occurred while
-        /// evaluating the filter.
-        /// </summary>
+        
         public event EventHandler<FilterExceptionEventArgs> FilterExceptionOccurred;
 
         #endregion Events
 
         #region Public Methods
 
-        /// <summary>
-        /// Applies the filter.
-        /// </summary>
+        
         public override void StartFilter()
         {
             if (this.FilterTarget == null)
@@ -84,9 +73,7 @@ namespace Microsoft.Management.UI.Internal
             }
         }
 
-        /// <summary>
-        /// Stops the filter.
-        /// </summary>
+        
         public override void StopFilter()
         {
             if (this.FilterTarget == null)

@@ -5,15 +5,10 @@ using System.IO;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Class HelpFileHelpInfo keeps track of help information to be returned by
-    /// command help provider.
-    /// </summary>
+    
     internal sealed class HelpFileHelpInfo : HelpInfo
     {
-        /// <summary>
-        /// Constructor for HelpFileHelpInfo.
-        /// </summary>
+        
         /// <remarks>
         /// This is made private intentionally so that the only way to create object of this type
         /// is through
@@ -44,17 +39,13 @@ namespace System.Management.Automation
             _filename = filename;
         }
 
-        /// <summary>
-        /// Name for the help info.
-        /// </summary>
+        
         /// <value>Name for the help info</value>
         internal override string Name { get; } = string.Empty;
 
         private readonly string _filename = string.Empty;
         private readonly string _synopsis = string.Empty;
-        /// <summary>
-        /// Synopsis for the help info.
-        /// </summary>
+        
         /// <value>Synopsis for the help info</value>
         internal override string Synopsis
         {
@@ -64,9 +55,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Help category for the help info.
-        /// </summary>
+        
         /// <value>Help category for the help info</value>
         internal override HelpCategory HelpCategory
         {
@@ -76,15 +65,11 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Full help object for this help info.
-        /// </summary>
+        
         /// <value>Full help object for this help info</value>
         internal override PSObject FullHelp { get; }
 
-        /// <summary>
-        /// Get help info based on name, text and filename.
-        /// </summary>
+        
         /// <param name="name">Help topic name.</param>
         /// <param name="text">Help text.</param>
         /// <param name="filename">File name that contains the help text.</param>
@@ -104,9 +89,7 @@ namespace System.Management.Automation
             return helpfileHelpInfo;
         }
 
-        /// <summary>
-        /// Get the text corresponding to a line in input text.
-        /// </summary>
+        
         /// <param name="text">Text to get the line for.</param>
         /// <param name="line">Line number.</param>
         /// <returns>The part of string in text that is in specified line.</returns>

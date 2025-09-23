@@ -9,18 +9,14 @@ using System.Management.Automation.Language;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// A command to create a new property on an object.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.New, "ItemProperty", DefaultParameterSetName = "Path", SupportsShouldProcess = true, SupportsTransactions = true,
         HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096813")]
     public class NewItemPropertyCommand : ItemPropertyCommandBase
     {
         #region Parameters
 
-        /// <summary>
-        /// Gets or sets the path parameter to the command.
-        /// </summary>
+        
         [Parameter(Position = 0, ParameterSetName = "Path", Mandatory = true)]
         public string[] Path
         {
@@ -35,9 +31,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets or sets the literal path parameter to the command.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "LiteralPath",
                    Mandatory = true, ValueFromPipeline = false, ValueFromPipelineByPropertyName = true)]
         [Alias("PSPath", "LP")]
@@ -55,16 +49,12 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// The name of the property to create on the item.
-        /// </summary>
+        
         [Parameter(Mandatory = true, Position = 1, ValueFromPipelineByPropertyName = true)]
         [Alias("PSProperty")]
         public string Name { get; set; }
 
-        /// <summary>
-        /// The type of the property to create on the item.
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true)]
         [Alias("Type")]
 #if !UNIX
@@ -72,15 +62,11 @@ namespace Microsoft.PowerShell.Commands
 #endif
         public string PropertyType { get; set; }
 
-        /// <summary>
-        /// The value of the property to create on the item.
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true)]
         public object Value { get; set; }
 
-        /// <summary>
-        /// Gets or sets the force property.
-        /// </summary>
+        
         /// <remarks>
         /// Gives the provider guidance on how vigorous it should be about performing
         /// the operation. If true, the provider should do everything possible to perform
@@ -104,11 +90,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// A virtual method for retrieving the dynamic parameters for a cmdlet. Derived cmdlets
-        /// that require dynamic parameters should override this method and return the
-        /// dynamic parameter object.
-        /// </summary>
+        
         /// <param name="context">
         /// The context under which the command is running.
         /// </param>
@@ -134,9 +116,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Command code
 
-        /// <summary>
-        /// Creates the property on the item.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             foreach (string path in Path)
@@ -184,9 +164,7 @@ namespace Microsoft.PowerShell.Commands
     }
 
 #if !UNIX
-    /// <summary>
-    /// Provides argument completion for PropertyType parameter.
-    /// </summary>
+    
     public class PropertyTypeArgumentCompleter : IArgumentCompleter
     {
         private static readonly CompletionHelpers.CompletionDisplayInfoMapper RegistryPropertyTypeDisplayInfoMapper = registryPropertyType => registryPropertyType switch
@@ -225,9 +203,7 @@ namespace Microsoft.PowerShell.Commands
             "Unknown"
         };
 
-        /// <summary>
-        /// Returns completion results for PropertyType parameter.
-        /// </summary>
+        
         /// <param name="commandName">The command name.</param>
         /// <param name="parameterName">The parameter name.</param>
         /// <param name="wordToComplete">The word to complete.</param>
@@ -248,9 +224,7 @@ namespace Microsoft.PowerShell.Commands
                         resultType: CompletionResultType.ParameterValue)
                     : [];
 
-        /// <summary>
-        /// Checks if parameter paths are from Registry provider.
-        /// </summary>
+        
         /// <param name="fakeBoundParameters">The fake bound parameters.</param>
         /// <returns>Boolean indicating if paths are from Registry Provider.</returns>
         private static bool IsRegistryProvider(IDictionary fakeBoundParameters)
@@ -273,9 +247,7 @@ namespace Microsoft.PowerShell.Commands
             return paths.Count > 0 && paths[0].Provider.NameEquals("Registry");
         }
 
-        /// <summary>
-        /// Resolve path or literal path using Resolve-Path.
-        /// </summary>
+        
         /// <param name="path">The path to resolve.</param>
         /// <param name="isLiteralPath">Specifies if path is literal path.</param>
         /// <returns>Collection of Pathinfo objects.</returns>

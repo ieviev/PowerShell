@@ -14,18 +14,14 @@ using System.Management.Automation.Internal;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// This class implements the Save-Help cmdlet.
-    /// </summary>
+    
     [Cmdlet(VerbsData.Save, "Help", DefaultParameterSetName = SaveHelpCommand.PathParameterSetName,
         HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096794")]
     public sealed class SaveHelpCommand : UpdatableHelpCommandBase
     {
         #region Constructor
 
-        /// <summary>
-        /// Class constructor.
-        /// </summary>
+        
         public SaveHelpCommand() : base(UpdatableHelpCommandType.SaveHelpCommand)
         {
         }
@@ -36,9 +32,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Parameters
 
-        /// <summary>
-        /// Specifies the paths to save updates to.
-        /// </summary>
+        
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = PathParameterSetName)]
         [ValidateNotNull]
         [Alias("Path")]
@@ -58,9 +52,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string[] _path;
 
-        /// <summary>
-        /// Specifies the literal path to save updates to.
-        /// </summary>
+        
         [Parameter(Mandatory = true, ParameterSetName = LiteralPathParameterSetName)]
         [Alias("PSPath", "LP")]
         [ValidateNotNull]
@@ -81,9 +73,7 @@ namespace Microsoft.PowerShell.Commands
 
         private bool _isLiteralPath = false;
 
-        /// <summary>
-        /// Specifies the modules to update.
-        /// </summary>
+        
         [Parameter(Position = 1, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, ParameterSetName = PathParameterSetName)]
         [Parameter(Position = 1, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, ParameterSetName = LiteralPathParameterSetName)]
         [Alias("Name")]
@@ -92,9 +82,7 @@ namespace Microsoft.PowerShell.Commands
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
         public PSModuleInfo[] Module { get; set; }
 
-        /// <summary>
-        /// Specifies the Module Specifications to update.
-        /// </summary>
+        
         [Parameter(ParameterSetName = PathParameterSetName, ValueFromPipelineByPropertyName = true)]
         [Parameter(ParameterSetName = LiteralPathParameterSetName, ValueFromPipelineByPropertyName = true)]
         [ValidateNotNull]
@@ -105,8 +93,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Implementation
 
-        /// <summary>
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             try
@@ -160,9 +147,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Process a single module with a given culture.
-        /// </summary>
+        
         /// <param name="module">Module to process.</param>
         /// <param name="culture">Culture to use.</param>
         /// <returns>True if the module has been processed, false if not.</returns>

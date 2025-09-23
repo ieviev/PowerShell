@@ -6,17 +6,13 @@ using System.Management.Automation;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// Unregisters from an event on an object.
-    /// </summary>
+    
     [Cmdlet(VerbsLifecycle.Unregister, "Event", SupportsShouldProcess = true, DefaultParameterSetName = "BySource", HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097037")]
     public class UnregisterEventCommand : PSCmdlet
     {
         #region parameters
 
-        /// <summary>
-        /// An identifier for this event subscription.
-        /// </summary>
+        
         [Parameter(Mandatory = true, Position = 0, ValueFromPipelineByPropertyName = true, ParameterSetName = "BySource")]
         public string SourceIdentifier
         {
@@ -38,15 +34,11 @@ namespace Microsoft.PowerShell.Commands
 
         private string _sourceIdentifier = null;
 
-        /// <summary>
-        /// An identifier for this event subscription.
-        /// </summary>
+        
         [Parameter(Mandatory = true, Position = 0, ValueFromPipelineByPropertyName = true, ParameterSetName = "ById")]
         public int SubscriptionId { get; set; } = -1;
 
-        /// <summary>
-        /// Flag that determines if we should include subscriptions used to support other subscriptions.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter Force { get; set; }
 
@@ -55,9 +47,7 @@ namespace Microsoft.PowerShell.Commands
         private WildcardPattern _matchPattern;
         private bool _foundMatch = false;
 
-        /// <summary>
-        /// Unsubscribe from the event.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             // Go through all the received events and write them to the output

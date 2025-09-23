@@ -14,14 +14,10 @@ using Microsoft.PowerShell.Telemetry.Internal;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// Provides a set of possible completions for given input.
-    /// </summary>
+    
     public class CommandCompletion
     {
-        /// <summary>
-        /// Construct the result CompleteInput or TabExpansion2.
-        /// </summary>
+        
         public CommandCompletion(Collection<CompletionResult> matches, int currentMatchIndex, int replacementIndex, int replacementLength)
         {
             this.CompletionMatches = matches;
@@ -32,24 +28,16 @@ namespace System.Management.Automation
 
         #region Fields and Properties
 
-        /// <summary>
-        /// Current index in <see cref="CompletionMatches"/>.
-        /// </summary>
+        
         public int CurrentMatchIndex { get; set; }
 
-        /// <summary>
-        /// Returns the starting replacement index from the original input.
-        /// </summary>
+        
         public int ReplacementIndex { get; set; }
 
-        /// <summary>
-        /// Returns the length of the text to replace from the original input.
-        /// </summary>
+        
         public int ReplacementLength { get; set; }
 
-        /// <summary>
-        /// Gets all the completion results.
-        /// </summary>
+        
         [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public Collection<CompletionResult> CompletionMatches { get; set; }
 
@@ -62,8 +50,7 @@ namespace System.Management.Automation
 
         #region public methods
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="input"></param>
         /// <param name="cursorIndex"></param>
         /// <returns></returns>
@@ -83,8 +70,7 @@ namespace System.Management.Automation
             return Tuple.Create<Ast, Token[], IScriptPosition>(ast, tokens, cursorPosition);
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="input">The input to complete.</param>
         /// <param name="cursorIndex">The index of the cursor in the input.</param>
         /// <param name="options">Optional options to configure how completion is performed.</param>
@@ -100,8 +86,7 @@ namespace System.Management.Automation
             return CompleteInputImpl(parsedInput.Item1, parsedInput.Item2, parsedInput.Item3, options);
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="ast">Ast for pre-parsed input.</param>
         /// <param name="tokens">Tokens for pre-parsed input.</param>
         /// <param name="positionOfCursor"></param>
@@ -132,9 +117,7 @@ namespace System.Management.Automation
             return CompleteInputImpl(ast, tokens, positionOfCursor, options);
         }
 
-        /// <summary>
-        /// Invokes the script function TabExpansion2.
-        /// </summary>
+        
         /// <param name="input">The input script to complete.</param>
         /// <param name="cursorIndex">The offset in <paramref name="input"/> where completion is requested.</param>
         /// <param name="options">Optional parameter that specifies configurable options for completion.</param>
@@ -194,9 +177,7 @@ namespace System.Management.Automation
             return CallScriptWithStringParameterSet(input, cursorIndex, options, powershell);
         }
 
-        /// <summary>
-        /// Invokes the script function TabExpansion2.
-        /// </summary>
+        
         /// <param name="ast">The ast for pre-parsed input.</param>
         /// <param name="tokens"></param>
         /// <param name="cursorPosition"></param>
@@ -268,10 +249,7 @@ namespace System.Management.Automation
             return CallScriptWithAstParameterSet(ast, tokens, cursorPosition, options, powershell);
         }
 
-        /// <summary>
-        /// Get the next result, moving forward or backward.  Supports wraparound, so if there are any results at all,
-        /// this method will never fail and never return null.
-        /// </summary>
+        
         /// <param name="forward">True if we should move forward through the list, false if backwards.</param>
         /// <returns>The next completion result, or null if no results.</returns>
         public CompletionResult GetNextResult(bool forward)
@@ -300,9 +278,7 @@ namespace System.Management.Automation
 
         #region Internal methods
 
-        /// <summary>
-        /// Command completion while in debug break mode.
-        /// </summary>
+        
         /// <param name="input">The input script to complete.</param>
         /// <param name="cursorIndex">The offset in <paramref name="input"/> where completion is requested.</param>
         /// <param name="options">Optional parameter that specifies configurable options for completion.</param>
@@ -333,9 +309,7 @@ namespace System.Management.Automation
             return ProcessCompleteInputCommand(cmd, debugger);
         }
 
-        /// <summary>
-        /// Command completion while in debug break mode.
-        /// </summary>
+        
         /// <param name="ast">The ast for pre-parsed input.</param>
         /// <param name="tokens"></param>
         /// <param name="cursorPosition"></param>

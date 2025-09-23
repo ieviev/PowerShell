@@ -19,28 +19,15 @@ namespace Microsoft.PowerShell.Commands
 {
     #region Module Specification class
 
-    /// <summary>
-    /// Represents module specification written in a module manifest (i.e. in RequiredModules member/field).
-    ///
-    /// Module manifest allows 2 forms of module specification:
-    /// 1. string - module name
-    /// 2. hashtable - [string]ModuleName (required) + [Version]ModuleVersion/RequiredVersion (required) + [Guid]GUID (optional)
-    ///
-    /// so we have a constructor that takes a string and a constructor that takes a hashtable
-    /// (so that LanguagePrimitives.ConvertTo can cast a string or a hashtable to this type)
-    /// </summary>
+    
     public class ModuleSpecification
     {
-        /// <summary>
-        /// Default constructor.
-        /// </summary>
+        
         public ModuleSpecification()
         {
         }
 
-        /// <summary>
-        /// Construct a module specification from the module name.
-        /// </summary>
+        
         /// <param name="moduleName">The module name.</param>
         public ModuleSpecification(string moduleName)
         {
@@ -55,13 +42,7 @@ namespace Microsoft.PowerShell.Commands
             this.Guid = null;
         }
 
-        /// <summary>
-        /// Construct a module specification from a hashtable.
-        /// Keys can be ModuleName, ModuleVersion, and Guid.
-        /// ModuleName must be convertible to <see cref="string"/>.
-        /// ModuleVersion must be convertible to <see cref="Version"/>.
-        /// Guid must be convertible to <see cref="Guid"/>.
-        /// </summary>
+        
         /// <param name="moduleSpecification">The module specification as a hashtable.</param>
         public ModuleSpecification(Hashtable moduleSpecification)
         {
@@ -74,10 +55,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Initialize moduleSpecification from hashtable. Return exception object, if hashtable cannot be converted.
-        /// Return null, in the success case.
-        /// </summary>
+        
         /// <param name="moduleSpecification">Object to initialize.</param>
         /// <param name="hashtable">Contains info about object to initialize.</param>
         /// <returns></returns>
@@ -217,11 +195,7 @@ namespace Microsoft.PowerShell.Commands
             this.Guid = moduleInfo.Guid;
         }
 
-        /// <summary>
-        /// Implements ToString() for a module specification. If the specification
-        /// just contains a Name, then that is returned as is. Otherwise, the object is
-        /// formatted as a PowerSHell hashtable.
-        /// </summary>
+        
         /// <returns></returns>
         public override string ToString()
         {
@@ -261,9 +235,7 @@ namespace Microsoft.PowerShell.Commands
             return moduleSpecBuilder.ToString();
         }
 
-        /// <summary>
-        /// Parse the specified string into a ModuleSpecification object.
-        /// </summary>
+        
         /// <param name="input">The module specification string.</param>
         /// <param name="result">The ModuleSpecification object.</param>
         /// <returns></returns>
@@ -287,10 +259,7 @@ namespace Microsoft.PowerShell.Commands
             return false;
         }
 
-        /// <summary>
-        /// Copy the module specification while normalizing the name
-        /// so that paths become absolute and use the right directory separators.
-        /// </summary>
+        
         /// <param name="context">The current execution context. Used for path normalization.</param>
         /// <param name="basePath">The base path where a relative path should be interpreted with respect to.</param>
         /// <returns>A fresh module specification object with the name normalized for use internally.</returns>
@@ -312,40 +281,26 @@ namespace Microsoft.PowerShell.Commands
             };
         }
 
-        /// <summary>
-        /// The module name.
-        /// </summary>
+        
         public string Name { get; internal set; }
 
-        /// <summary>
-        /// The module GUID, if specified.
-        /// </summary>
+        
         public Guid? Guid { get; internal set; }
 
-        /// <summary>
-        /// The module version number if specified, otherwise null.
-        /// </summary>
+        
         public Version Version { get; internal set; }
 
-        /// <summary>
-        /// The module maxVersion number if specified, otherwise null.
-        /// </summary>
+        
         public string MaximumVersion { get; internal set; }
 
-        /// <summary>
-        /// The exact version of the module if specified, otherwise null.
-        /// </summary>
+        
         public Version RequiredVersion { get; internal set; }
     }
 
-    /// <summary>
-    /// Compares two ModuleSpecification objects for equality.
-    /// </summary>
+    
     internal class ModuleSpecificationComparer : IEqualityComparer<ModuleSpecification>
     {
-        /// <summary>
-        /// Check if two module specifications are property-wise equal.
-        /// </summary>
+        
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns>True if the specifications are equal, false otherwise.</returns>
@@ -364,9 +319,7 @@ namespace Microsoft.PowerShell.Commands
                 && string.Equals(x.MaximumVersion, y.MaximumVersion);
         }
 
-        /// <summary>
-        /// Get a property-based hashcode for a ModuleSpecification object.
-        /// </summary>
+        
         /// <param name="obj">The module specification for the object.</param>
         /// <returns>A hashcode that is always the same for any module specification with the same properties.</returns>
         public int GetHashCode(ModuleSpecification obj)

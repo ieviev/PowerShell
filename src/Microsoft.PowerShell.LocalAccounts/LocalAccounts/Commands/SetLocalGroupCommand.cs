@@ -13,10 +13,7 @@ using Microsoft.PowerShell.LocalAccounts;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// The Set-LocalGroup cmdlet modifies the properties of a local security group
-    /// in the Windows Security Accounts Manager.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Set, "LocalGroup",
             SupportsShouldProcess = true,
             HelpUri = "https://go.microsoft.com/fwlink/?LinkId=717979")]
@@ -28,10 +25,7 @@ namespace Microsoft.PowerShell.Commands
         #endregion Instance Data
 
         #region Parameter Properties
-        /// <summary>
-        /// The following is the definition of the input parameter "Description".
-        /// A descriptive comment.
-        /// </summary>
+        
         [Parameter(Mandatory = true)]
         [ValidateNotNull]
         public string Description
@@ -43,11 +37,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string description;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "InputObject".
-        /// Specifies the local group account to modify in the local Security
-        /// Accounts Manager.
-        /// </summary>
+        
         [Parameter(Mandatory = true,
                    Position = 0,
                    ValueFromPipeline = true,
@@ -63,11 +53,7 @@ namespace Microsoft.PowerShell.Commands
 
         private Microsoft.PowerShell.Commands.LocalGroup inputobject;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "Name".
-        /// Specifies the local group to be renamed in the local Security Accounts
-        /// Manager.
-        /// </summary>
+        
         [Parameter(Mandatory = true,
                    Position = 0,
                    ValueFromPipeline = true,
@@ -83,10 +69,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string name;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "SID".
-        /// Specifies a security group from the local Security Accounts Manager.
-        /// </summary>
+        
         [Parameter(Mandatory = true,
                    Position = 0,
                    ValueFromPipeline = true,
@@ -104,17 +87,13 @@ namespace Microsoft.PowerShell.Commands
         #endregion Parameter Properties
 
         #region Cmdlet Overrides
-        /// <summary>
-        /// BeginProcessing method.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             sam = new Sam();
         }
 
-        /// <summary>
-        /// ProcessRecord method.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             try
@@ -155,9 +134,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// EndProcessing method.
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             if (sam != null)

@@ -15,11 +15,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// The Disable-LocalUser cmdlet disables local user accounts. When a user
-    /// account is disabled, the user is not permitted to log on. When a user
-    /// account is enabled, the user is permitted to log on normally.
-    /// </summary>
+    
     [Cmdlet(VerbsLifecycle.Disable, "LocalUser",
             SupportsShouldProcess = true,
             HelpUri = "https://go.microsoft.com/fwlink/?LinkId=717986")]
@@ -35,11 +31,7 @@ namespace Microsoft.PowerShell.Commands
         #endregion Instance Data
 
         #region Parameter Properties
-        /// <summary>
-        /// The following is the definition of the input parameter "InputObject".
-        /// Specifies the of the local user accounts to disable in the local Security
-        /// Accounts Manager.
-        /// </summary>
+        
         [Parameter(Mandatory = true,
                    Position = 0,
                    ValueFromPipeline = true,
@@ -56,11 +48,7 @@ namespace Microsoft.PowerShell.Commands
 
         private Microsoft.PowerShell.Commands.LocalUser[] inputobject;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "Name".
-        /// Specifies the names of the local user accounts to disable in the local
-        /// Security Accounts Manager.
-        /// </summary>
+        
         [Parameter(Mandatory = true,
                    Position = 0,
                    ValueFromPipeline = true,
@@ -77,11 +65,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string[] name;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "SID".
-        /// Specifies the LocalUser accounts to disable by
-        /// System.Security.Principal.SecurityIdentifier.
-        /// </summary>
+        
         [Parameter(Mandatory = true,
                    Position = 0,
                    ValueFromPipeline = true,
@@ -100,17 +84,13 @@ namespace Microsoft.PowerShell.Commands
         #endregion Parameter Properties
 
         #region Cmdlet Overrides
-        /// <summary>
-        /// BeginProcessing method.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             sam = new Sam();
         }
 
-        /// <summary>
-        /// ProcessRecord method.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             try
@@ -125,9 +105,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// EndProcessing method.
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             if (sam != null)
@@ -139,9 +117,7 @@ namespace Microsoft.PowerShell.Commands
         #endregion Cmdlet Overrides
 
         #region Private Methods
-        /// <summary>
-        /// Process users requested by -Name.
-        /// </summary>
+        
         /// <remarks>
         /// All arguments to -Name will be treated as names,
         /// even if a name looks like a SID.
@@ -165,9 +141,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Process users requested by -SID.
-        /// </summary>
+        
         private void ProcessSids()
         {
             if (SID != null)
@@ -187,9 +161,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Process users requested by -InputObject.
-        /// </summary>
+        
         private void ProcessUsers()
         {
             if (InputObject != null)

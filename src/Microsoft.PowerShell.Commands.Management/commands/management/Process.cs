@@ -26,37 +26,23 @@ using Microsoft.Win32.SafeHandles;
 namespace Microsoft.PowerShell.Commands
 {
     #region ProcessBaseCommand
-    /// <summary>
-    /// This class implements the base for process commands.
-    /// </summary>
+    
     public abstract class ProcessBaseCommand : Cmdlet
     {
         #region Parameters
-        /// <summary>
-        /// The various process selection modes.
-        /// </summary>
+        
         internal enum MatchMode
         {
-            /// <summary>
-            /// Select all processes.
-            /// </summary>
+            
             All,
-            /// <summary>
-            /// Select processes matching the supplied names.
-            /// </summary>
+            
             ByName,
-            /// <summary>
-            /// Select the processes matching the id.
-            /// </summary>
+            
             ById,
-            /// <summary>
-            /// Select the processes specified as input.
-            /// </summary>
+            
             ByInput
         }
-        /// <summary>
-        /// The current process selection mode.
-        /// </summary>
+        
         internal MatchMode myMode = MatchMode.All;
 
         /// <remarks>
@@ -69,13 +55,7 @@ namespace Microsoft.PowerShell.Commands
         // since it is positional for StopProcess but not for GetProcess.
         internal int[] processIds = null;
 
-        /// <summary>
-        /// If the input is a stream of [collections of]
-        /// Process objects, we bypass the Name and
-        /// Id parameters and read the Process objects
-        /// directly.  This allows us to deal with processes which
-        /// have wildcard characters in their name.
-        /// </summary>
+        
         /// <value>Process objects</value>
         [Parameter(
             ParameterSetName = "InputObject",
@@ -105,10 +85,7 @@ namespace Microsoft.PowerShell.Commands
         private List<Process> _matchingProcesses = new();
         private readonly Dictionary<int, Process> _keys = new();
 
-        /// <summary>
-        /// Retrieve the list of all processes matching the Name, Id
-        /// and InputObject parameters, sorted by Id.
-        /// </summary>
+        
         /// <returns></returns>
         internal List<Process> MatchingProcesses()
         {
@@ -133,9 +110,7 @@ namespace Microsoft.PowerShell.Commands
             return _matchingProcesses;
         }
 
-        /// <summary>
-        /// Sort function to sort by Name first, then Id.
-        /// </summary>
+        
         /// <param name="x">First Process object.</param>
         /// <param name="y">Second Process object.</param>
         /// <returns>
@@ -153,13 +128,7 @@ namespace Microsoft.PowerShell.Commands
             return SafeGetProcessId(x) - SafeGetProcessId(y);
         }
 
-        /// <summary>
-        /// Retrieves the list of all processes matching the Name
-        /// parameter.
-        /// Generates a non-terminating error for each specified
-        /// process name which is not found even though it contains
-        /// no wildcards.
-        /// </summary>
+        
         /// <returns></returns>
         private void RetrieveMatchingProcessesByProcessName()
         {
@@ -206,12 +175,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Retrieves the list of all processes matching the Id
-        /// parameter.
-        /// Generates a non-terminating error for each specified
-        /// process ID which is not found.
-        /// </summary>
+        
         /// <returns></returns>
         private void RetrieveMatchingProcessesById()
         {
@@ -244,10 +208,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Retrieves the list of all processes matching the InputObject
-        /// parameter.
-        /// </summary>
+        
         /// <returns></returns>
         private void RetrieveProcessesByInput()
         {
@@ -264,9 +225,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets an array of all processes.
-        /// </summary>
+        
         /// <value>An array of <see cref="Process"/> components that represents all the process resources.</value>
         /// <exception cref="System.Security.SecurityException">
         /// MSDN does not document the list of exceptions,
@@ -277,12 +236,7 @@ namespace Microsoft.PowerShell.Commands
 
         private Process[] _allProcesses;
 
-        /// <summary>
-        /// Add <paramref name="process"/> to <see cref="_matchingProcesses"/>,
-        /// but only if it is not already on  <see cref="_matchingProcesses"/>.
-        /// We use a Dictionary to optimize the check whether the object
-        /// is already in the list.
-        /// </summary>
+        
         /// <param name="process">Process to add to list.</param>
         private void AddIdempotent(
             Process process)
@@ -296,9 +250,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Writes a non-terminating error.
-        /// </summary>
+        
         /// <param name="process"></param>
         /// <param name="innerException"></param>
         /// <param name="resourceId"></param>
@@ -320,9 +272,7 @@ namespace Microsoft.PowerShell.Commands
                 category);
         }
 
-        /// <summary>
-        /// Writes a non-terminating error.
-        /// </summary>
+        
         /// <param name="processName"></param>
         /// <param name="processId"></param>
         /// <param name="targetObject"></param>
@@ -400,9 +350,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// TryHasExited is a helper function used to detect if the process has aready exited or not.
-        /// </summary>
+        
         /// <param name="process">
         /// Process whose exit status has to be checked.
         /// </param>
@@ -432,9 +380,7 @@ namespace Microsoft.PowerShell.Commands
     #endregion ProcessBaseCommand
 
     #region GetProcessCommand
-    /// <summary>
-    /// This class implements the get-process command.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Get, "Process", DefaultParameterSetName = NameParameterSet,
         HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096814", RemotingCapability = RemotingCapability.SupportedByCommand)]
     [OutputType(typeof(ProcessModule), typeof(FileVersionInfo), typeof(Process))]
@@ -453,9 +399,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Parameters
 
-        /// <summary>
-        /// Has the list of process names on which to this command will work.
-        /// </summary>
+        
         [Parameter(Position = 0, ParameterSetName = NameParameterSet, ValueFromPipelineByPropertyName = true)]
         [Parameter(Position = 0, ParameterSetName = NameWithUserNameParameterSet, ValueFromPipelineByPropertyName = true)]
         [Alias("ProcessName")]
@@ -474,9 +418,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets/sets an array of process IDs.
-        /// </summary>
+        
         [Parameter(ParameterSetName = IdParameterSet, Mandatory = true, ValueFromPipelineByPropertyName = true)]
         [Parameter(ParameterSetName = IdWithUserNameParameterSet, Mandatory = true, ValueFromPipelineByPropertyName = true)]
         [Alias("PID")]
@@ -494,9 +436,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Input is a stream of [collections of] Process objects.
-        /// </summary>
+        
         [Parameter(ParameterSetName = InputObjectParameterSet, Mandatory = true, ValueFromPipeline = true)]
         [Parameter(ParameterSetName = InputObjectWithUserNameParameterSet, Mandatory = true, ValueFromPipeline = true)]
         public override Process[] InputObject
@@ -512,26 +452,20 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Include the UserName.
-        /// </summary>
+        
         [Parameter(ParameterSetName = NameWithUserNameParameterSet, Mandatory = true)]
         [Parameter(ParameterSetName = IdWithUserNameParameterSet, Mandatory = true)]
         [Parameter(ParameterSetName = InputObjectWithUserNameParameterSet, Mandatory = true)]
         public SwitchParameter IncludeUserName { get; set; }
 
-        /// <summary>
-        /// To display the modules of a process.
-        /// </summary>
+        
         [Parameter(ParameterSetName = NameParameterSet)]
         [Parameter(ParameterSetName = IdParameterSet)]
         [Parameter(ParameterSetName = InputObjectParameterSet)]
         [ValidateNotNull]
         public SwitchParameter Module { get; set; }
 
-        /// <summary>
-        /// To display the fileversioninfo of the main module of a process.
-        /// </summary>
+        
         [Parameter(ParameterSetName = NameParameterSet)]
         [Parameter(ParameterSetName = IdParameterSet)]
         [Parameter(ParameterSetName = InputObjectParameterSet)]
@@ -543,9 +477,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Overrides
 
-        /// <summary>
-        /// Write the process objects.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             foreach (Process process in MatchingProcesses())
@@ -679,14 +611,10 @@ namespace Microsoft.PowerShell.Commands
 
         #region Privates
 
-        /// <summary>
-        /// New PSTypeName added to the process object.
-        /// </summary>
+        
         private const string TypeNameForProcessWithUserName = "System.Diagnostics.Process#IncludeUserName";
 
-        /// <summary>
-        /// Add the 'UserName' NoteProperty to the Process object.
-        /// </summary>
+        
         /// <param name="process"></param>
         /// <returns></returns>
         private static PSObject AddUserNameToProcess(Process process)
@@ -703,9 +631,7 @@ namespace Microsoft.PowerShell.Commands
             return processAsPsobj;
         }
 
-        /// <summary>
-        /// Retrieve the UserName through PInvoke.
-        /// </summary>
+        
         /// <param name="process"></param>
         /// <returns></returns>
         private static string RetrieveProcessUserName(Process process)
@@ -794,18 +720,14 @@ namespace Microsoft.PowerShell.Commands
     #endregion GetProcessCommand
 
     #region WaitProcessCommand
-    /// <summary>
-    /// This class implements the Wait-process command.
-    /// </summary>
+    
     [Cmdlet(VerbsLifecycle.Wait, "Process", DefaultParameterSetName = "Name", HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097146")]
     [OutputType(typeof(Process))]
     public sealed class WaitProcessCommand : ProcessBaseCommand
     {
         #region Parameters
 
-        /// <summary>
-        /// Specifies the process IDs of the processes to be waited on.
-        /// </summary>
+        
         [Parameter(
             ParameterSetName = "Id",
             Position = 0,
@@ -828,9 +750,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Name of the processes to wait on for termination.
-        /// </summary>
+        
         [Parameter(
             ParameterSetName = "Name",
             Position = 0,
@@ -852,9 +772,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// If specified, wait for this number of seconds.
-        /// </summary>
+        
         [Parameter(Position = 1)]
         [Alias("TimeoutSec")]
         [ValidateNotNullOrEmpty]
@@ -873,15 +791,11 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets or sets a value indicating whether to return after any one process exits.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter Any { get; set; }
 
-        /// <summary>
-        /// Gets or sets a value indicating whether to return the Process objects after waiting.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter PassThru { get; set; }
 
@@ -893,9 +807,7 @@ namespace Microsoft.PowerShell.Commands
         private bool _disposed = false;
 
         #region IDisposable
-        /// <summary>
-        /// Dispose method of IDisposable interface.
-        /// </summary>
+        
         public void Dispose()
         {
             if (!_disposed)
@@ -932,9 +844,7 @@ namespace Microsoft.PowerShell.Commands
         private ManualResetEvent _waitHandle;
         private int _numberOfProcessesToWaitFor;
 
-        /// <summary>
-        /// Gets the list of process.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             // adding the processes into the list
@@ -958,9 +868,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Wait for the process to terminate.
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             _waitHandle = new ManualResetEvent(false);
@@ -1028,9 +936,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// StopProcessing.
-        /// </summary>
+        
         protected override void StopProcessing() => _waitHandle?.Set();
 
         #endregion Overrides
@@ -1039,9 +945,7 @@ namespace Microsoft.PowerShell.Commands
     #endregion WaitProcessCommand
 
     #region StopProcessCommand
-    /// <summary>
-    /// This class implements the stop-process command.
-    /// </summary>
+    
     /// <remarks>
     /// Processes will be sorted before being stopped.  PM confirms
     /// that this should be fine.
@@ -1053,9 +957,7 @@ namespace Microsoft.PowerShell.Commands
     public sealed class StopProcessCommand : ProcessBaseCommand
     {
         #region Parameters
-        /// <summary>
-        /// Has the list of process names on which to this command will work.
-        /// </summary>
+        
         [Parameter(
             ParameterSetName = "Name",
             Mandatory = true,
@@ -1075,9 +977,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets/sets an array of process IDs.
-        /// </summary>
+        
         [Parameter(
            Position = 0,
            ParameterSetName = "Id",
@@ -1097,9 +997,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets/sets an array of objects.
-        /// </summary>
+        
         [Parameter(
             Position = 0,
             ParameterSetName = "InputObject",
@@ -1120,9 +1018,7 @@ namespace Microsoft.PowerShell.Commands
         }
 
         private bool _passThru;
-        /// <summary>
-        /// The updated process object should be passed down the pipeline.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter PassThru
         {
@@ -1131,10 +1027,7 @@ namespace Microsoft.PowerShell.Commands
             set { _passThru = value; }
         }
 
-        /// <summary>
-        /// Specifies whether to force a process to kill
-        /// even if it has dependent services.
-        /// </summary>
+        
         /// <value></value>
         [Parameter]
         [ValidateNotNullOrEmpty]
@@ -1143,10 +1036,7 @@ namespace Microsoft.PowerShell.Commands
         #endregion Parameters
 
         #region Overrides
-        /// <summary>
-        /// Kill the processes.
-        /// It is a non-terminating error if the Process.Kill() operation fails.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             if (myMode == MatchMode.All || (myMode == MatchMode.ByName && processNames == null))
@@ -1258,9 +1148,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Kill the current process here.
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             if (_shouldKillCurrentProcess)
@@ -1272,24 +1160,16 @@ namespace Microsoft.PowerShell.Commands
         #endregion Overrides
 
         #region Private
-        /// <summary>
-        /// Should the current powershell process to be killed.
-        /// </summary>
+        
         private bool _shouldKillCurrentProcess;
 
-        /// <summary>
-        /// Boolean variables to display the warning using ShouldContinue.
-        /// </summary>
+        
         private bool _yesToAll, _noToAll;
 
-        /// <summary>
-        /// Current windows user name.
-        /// </summary>
+        
         private string _currentUserName;
 
-        /// <summary>
-        /// Gets the owner of the process.
-        /// </summary>
+        
         /// <param name="process"></param>
         /// <returns>Returns the owner.</returns>
         private bool IsProcessOwnedByCurrentUser(Process process)
@@ -1335,9 +1215,7 @@ namespace Microsoft.PowerShell.Commands
             return false;
         }
 
-        /// <summary>
-        /// Stop the service that depends on the process and its child services.
-        /// </summary>
+        
         /// <param name="process"></param>
         private void StopDependentService(Process process)
         {
@@ -1374,9 +1252,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Stops the given process throws non terminating error if can't.
-        /// </summary>
+        
         /// <param name="process">Process to be stopped.</param>
         /// <returns>True if process stopped successfully else false.</returns>
         private void StopProcess(Process process)
@@ -1416,17 +1292,13 @@ namespace Microsoft.PowerShell.Commands
     #endregion StopProcessCommand
 
     #region DebugProcessCommand
-    /// <summary>
-    /// This class implements the Debug-process command.
-    /// </summary>
+    
     [Cmdlet(VerbsDiagnostic.Debug, "Process", DefaultParameterSetName = "Name", SupportsShouldProcess = true, HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096809")]
     public sealed class DebugProcessCommand : ProcessBaseCommand
     {
         #region Parameters
 
-        /// <summary>
-        /// Specifies the process IDs of the processes to be waited on.
-        /// </summary>
+        
         [Parameter(
             ParameterSetName = "Id",
             Position = 0,
@@ -1449,9 +1321,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Name of the processes to wait on for termination.
-        /// </summary>
+        
         [Parameter(
             ParameterSetName = "Name",
             Position = 0,
@@ -1477,9 +1347,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Overrides
 
-        /// <summary>
-        /// Gets the list of process and attach the debugger to the processes.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             foreach (Process process in MatchingProcesses())
@@ -1534,9 +1402,7 @@ namespace Microsoft.PowerShell.Commands
 
         #endregion Overrides
 
-        /// <summary>
-        /// Attach debugger to the process.
-        /// </summary>
+        
         private void AttachDebuggerToProcess(Process process)
         {
             string searchQuery = "Select * From Win32_Process Where ProcessId=" + SafeGetProcessId(process);
@@ -1572,9 +1438,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Map the return code from 'AttachDebugger' to error message.
-        /// </summary>
+        
         private static string MapReturnCodeToErrorMessage(int returnCode)
         {
             string errorMessage = returnCode switch
@@ -1596,9 +1460,7 @@ namespace Microsoft.PowerShell.Commands
 
     #region StartProcessCommand
 
-    /// <summary>
-    /// This class implements the Start-process command.
-    /// </summary>
+    
     [Cmdlet(VerbsLifecycle.Start, "Process", DefaultParameterSetName = "Default", SupportsShouldProcess = true, HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097141")]
     [OutputType(typeof(Process))]
     public sealed class StartProcessCommand : PSCmdlet, IDisposable
@@ -1608,25 +1470,19 @@ namespace Microsoft.PowerShell.Commands
 
         #region Parameters
 
-        /// <summary>
-        /// Path/FileName of the process to start.
-        /// </summary>
+        
         [Parameter(Mandatory = true, Position = 0)]
         [ValidateNotNullOrEmpty]
         [Alias("PSPath", "Path")]
         public string FilePath { get; set; }
 
-        /// <summary>
-        /// Arguments for the process.
-        /// </summary>
+        
         [Parameter(Position = 1)]
         [Alias("Args")]
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
         public string[] ArgumentList { get; set; }
 
-        /// <summary>
-        /// Credentials for the process.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "Default")]
         [Alias("RunAs")]
         [ValidateNotNullOrEmpty]
@@ -1647,16 +1503,12 @@ namespace Microsoft.PowerShell.Commands
 
         private PSCredential _credential;
 
-        /// <summary>
-        /// Working directory of the process.
-        /// </summary>
+        
         [Parameter]
         [ValidateNotNullOrEmpty]
         public string WorkingDirectory { get; set; }
 
-        /// <summary>
-        /// Load user profile from registry.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "Default")]
         [Alias("Lup")]
         public SwitchParameter LoadUserProfile
@@ -1675,9 +1527,7 @@ namespace Microsoft.PowerShell.Commands
 
         private SwitchParameter _loaduserprofile = SwitchParameter.Present;
 
-        /// <summary>
-        /// Starts process in the current console window.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "Default")]
         [Alias("nnw")]
         public SwitchParameter NoNewWindow
@@ -1696,15 +1546,11 @@ namespace Microsoft.PowerShell.Commands
 
         private SwitchParameter _nonewwindow;
 
-        /// <summary>
-        /// PassThru parameter.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter PassThru { get; set; }
 
-        /// <summary>
-        /// Redirect error.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "Default")]
         [Alias("RSE")]
         [ValidateNotNullOrEmpty]
@@ -1724,9 +1570,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string _redirectstandarderror;
 
-        /// <summary>
-        /// Redirect input.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "Default")]
         [Alias("RSI")]
         [ValidateNotNullOrEmpty]
@@ -1746,9 +1590,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string _redirectstandardinput;
 
-        /// <summary>
-        /// Redirect output.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "Default")]
         [Alias("RSO")]
         [ValidateNotNullOrEmpty]
@@ -1768,9 +1610,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string _redirectstandardoutput;
 
-        /// <summary>
-        /// Verb.
-        /// </summary>
+        
         /// <remarks>
         /// The 'Verb' parameter is only supported on Windows Desktop.
         /// </remarks>
@@ -1779,9 +1619,7 @@ namespace Microsoft.PowerShell.Commands
         [ArgumentCompleter(typeof(VerbArgumentCompleter))]
         public string Verb { get; set; }
 
-        /// <summary>
-        /// Window style of the process window.
-        /// </summary>
+        
         [Parameter]
         [ValidateNotNullOrEmpty]
         public ProcessWindowStyle WindowStyle
@@ -1801,15 +1639,11 @@ namespace Microsoft.PowerShell.Commands
         private ProcessWindowStyle _windowstyle = ProcessWindowStyle.Normal;
         private bool _windowstyleSpecified = false;
 
-        /// <summary>
-        /// Wait for the process to terminate.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter Wait { get; set; }
 
-        /// <summary>
-        /// Default Environment.
-        /// </summary>
+        
         [Parameter(ParameterSetName = "Default")]
         public SwitchParameter UseNewEnvironment
         {
@@ -1827,9 +1661,7 @@ namespace Microsoft.PowerShell.Commands
 
         private SwitchParameter _UseNewEnvironment;
 
-        /// <summary>
-        /// Gets or sets the environment variables for the process.
-        /// </summary>
+        
         [Parameter]
         public Hashtable Environment
         {
@@ -1851,9 +1683,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region overrides
 
-        /// <summary>
-        /// BeginProcessing.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             string message = string.Empty;
@@ -2178,18 +2008,14 @@ namespace Microsoft.PowerShell.Commands
                 }
             }
         }
-        /// <summary>
-        /// Implements ^c, after creating a process.
-        /// </summary>
+        
         protected override void StopProcessing() => _cancellationTokenSource.Cancel();
 
         #endregion
 
         #region IDisposable Overrides
 
-        /// <summary>
-        /// Dispose WaitHandle used to honor -Wait parameter.
-        /// </summary>
+        
         public void Dispose()
         {
             Dispose(true);
@@ -2507,9 +2333,7 @@ namespace Microsoft.PowerShell.Commands
             creationFlags |= 0x00000004;
         }
 
-        /// <summary>
-        /// This method will be used on all windows platforms, both full desktop and headless SKUs.
-        /// </summary>
+        
         private ProcessInformation StartWithCreateProcess(ProcessStartInfo startinfo)
         {
             ProcessNativeMethods.STARTUPINFO lpStartupInfo = new();
@@ -2647,9 +2471,7 @@ namespace Microsoft.PowerShell.Commands
         }
 #endif
 
-        /// <summary>
-        /// This method will be used only on Windows full desktop.
-        /// </summary>
+        
         private Process StartWithShellExecute(ProcessStartInfo startInfo)
         {
             Process result = null;
@@ -2669,14 +2491,10 @@ namespace Microsoft.PowerShell.Commands
         #endregion
     }
 
-    /// <summary>
-    /// Provides argument completion for Verb parameter.
-    /// </summary>
+    
     public class VerbArgumentCompleter : IArgumentCompleter
     {
-        /// <summary>
-        /// Returns completion results for verb parameter.
-        /// </summary>
+        
         /// <param name="commandName">The command name.</param>
         /// <param name="parameterName">The parameter name.</param>
         /// <param name="wordToComplete">The word to complete.</param>
@@ -2730,9 +2548,7 @@ namespace Microsoft.PowerShell.Commands
             return Array.Empty<CompletionResult>();
         }
 
-        /// <summary>
-        /// Completes file verbs.
-        /// </summary>
+        
         /// <param name="wordToComplete">The word to complete.</param>
         /// <param name="filePath">The file path to get verbs.</param>
         /// <returns>List of file verbs to complete.</returns>
@@ -2743,11 +2559,7 @@ namespace Microsoft.PowerShell.Commands
     }
 
 #if !UNIX
-    /// <summary>
-    /// ProcessInformation is a helper class that wraps the native PROCESS_INFORMATION structure
-    /// returned by CreateProcess or CreateProcessWithLogon. It ensures the process and thread
-    /// HANDLEs are disposed once it's not needed.
-    /// </summary>
+    
     internal sealed class ProcessInformation : IDisposable
     {
         public SafeProcessHandle Process { get; }
@@ -2946,33 +2758,25 @@ namespace Microsoft.PowerShell.Commands
     #endregion
 
     #region ProcessCommandException
-    /// <summary>
-    /// Non-terminating errors occurring in the process noun commands.
-    /// </summary>
+    
     public class ProcessCommandException : SystemException
     {
         #region ctors
-        /// <summary>
-        /// Unimplemented standard constructor.
-        /// </summary>
+        
         /// <returns>Doesn't return.</returns>
         public ProcessCommandException() : base()
         {
             throw new NotImplementedException();
         }
 
-        /// <summary>
-        /// Standard constructor.
-        /// </summary>
+        
         /// <param name="message"></param>
         /// <returns>Constructed object.</returns>
         public ProcessCommandException(string message) : base(message)
         {
         }
 
-        /// <summary>
-        /// Standard constructor.
-        /// </summary>
+        
         /// <param name="message"></param>
         /// <param name="innerException"></param>
         public ProcessCommandException(string message, Exception innerException)
@@ -2982,9 +2786,7 @@ namespace Microsoft.PowerShell.Commands
         #endregion ctors
 
         #region Serialization
-        /// <summary>
-        /// Serialization constructor.
-        /// </summary>
+        
         /// <param name="info"></param>
         /// <param name="context"></param>
         /// <returns>Constructed object.</returns>
@@ -2999,9 +2801,7 @@ namespace Microsoft.PowerShell.Commands
         #endregion Serialization
 
         #region Properties
-        /// <summary>
-        /// Name of the process which could not be found or operated upon.
-        /// </summary>
+        
         /// <value></value>
         public string ProcessName
         {

@@ -15,19 +15,10 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 {
     #region class ErrorToErrorRecord
 
-    /// <summary>
-    /// <para>
-    /// Convert error or exception to <see cref="System.Management.Automation.ErrorRecord"/>
-    /// </para>
-    /// </summary>
+    
     internal sealed class ErrorToErrorRecord
     {
-        /// <summary>
-        /// <para>
-        /// Convert ErrorRecord from exception object, <see cref="Exception"/>
-        /// can be either <see cref="CimException"/> or general <see cref="Exception"/>.
-        /// </para>
-        /// </summary>
+        
         /// <param name="inner"></param>
         /// <param name="context">The context starting the operation, which generated the error.</param>
         /// <param name="cimResultContext">The CimResultContext used to provide ErrorSource, etc. info.</param>
@@ -63,9 +54,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         #region Helper functions
-        /// <summary>
-        /// Create <see cref="ErrorRecord"/> from <see cref="CimException"/> object.
-        /// </summary>
+        
         /// <param name="context"></param>
         /// <param name="cimException"></param>
         /// <param name="cimResultContext">The CimResultContext used to provide ErrorSource, etc. info.</param>
@@ -80,9 +69,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             return InitializeErrorRecord(context, cimException, cimResultContext);
         }
 
-        /// <summary>
-        /// Create <see cref="ErrorRecord"/> from <see cref="Exception"/> object.
-        /// </summary>
+        
         /// <param name="context"></param>
         /// <param name="exception"></param>
         /// <param name="errorId"></param>
@@ -104,9 +91,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
                 cimResultContext: cimResultContext);
         }
 
-        /// <summary>
-        /// Create <see cref="ErrorRecord"/> from <see cref="CimException"/> object.
-        /// </summary>
+        
         /// <param name="context"></param>
         /// <param name="cimException"></param>
         /// <param name="cimResultContext">The CimResultContext used to provide ErrorSource, etc. info.</param>
@@ -131,9 +116,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             return errorRecord;
         }
 
-        /// <summary>
-        /// Create <see cref="ErrorRecord"/> from <see cref="Exception"/> object.
-        /// </summary>
+        
         /// <param name="context"></param>
         /// <param name="exception"></param>
         /// <param name="errorId"></param>
@@ -187,9 +170,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             return errorRecord;
         }
 
-        /// <summary>
-        /// Convert <see cref="CimException"/> to <see cref="ErrorCategory"/>.
-        /// </summary>
+        
         /// <param name="cimException"></param>
         /// <returns></returns>
         internal static ErrorCategory ConvertCimExceptionToErrorCategory(CimException cimException)
@@ -209,9 +190,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             return result;
         }
 
-        /// <summary>
-        /// Convert <see cref="NativeErrorCode"/> to <see cref="ErrorCategory"/>.
-        /// </summary>
+        
         /// <param name="nativeErrorCode"></param>
         /// <returns></returns>
         internal static ErrorCategory ConvertCimNativeErrorCodeToErrorCategory(NativeErrorCode nativeErrorCode)
@@ -275,9 +254,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             }
         }
 
-        /// <summary>
-        /// Convert <see cref="cimError"/> to <see cref="ErrorCategory"/>.
-        /// </summary>
+        
         /// <param name="cimError"></param>
         /// <returns></returns>
         internal static ErrorCategory ConvertCimErrorToErrorCategory(CimInstance cimError)
@@ -307,17 +284,10 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
     #endregion
 
-    /// <summary>
-    /// <para>
-    /// Write error to pipeline
-    /// </para>
-    /// </summary>
+    
     internal sealed class CimWriteError : CimSyncAction
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CimWriteError"/> class
-        /// with the specified <see cref="CimInstance"/>.
-        /// </summary>
+        
         /// <param name="error"></param>
         public CimWriteError(CimInstance error, InvocationContext context)
         {
@@ -325,10 +295,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             this.CimInvocationContext = context;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CimWriteError"/> class
-        /// with the specified <see cref="Exception"/>.
-        /// </summary>
+        
         /// <param name="exception"></param>
         public CimWriteError(Exception exception, InvocationContext context, CimResultContext cimResultContext)
         {
@@ -337,11 +304,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             this.ResultContext = cimResultContext;
         }
 
-        /// <summary>
-        /// <para>
-        /// Write error to pipeline
-        /// </para>
-        /// </summary>
+        
         /// <param name="cmdlet"></param>
         public override void Execute(CmdletOperationBase cmdlet)
         {
@@ -370,19 +333,11 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         #region members
 
-        /// <summary>
-        /// <para>
-        /// Error instance
-        /// </para>
-        /// </summary>
+        
 
         internal CimInstance Error { get; }
 
-        /// <summary>
-        /// <para>
-        /// Exception object
-        /// </para>
-        /// </summary>
+        
         internal Exception Exception { get; }
 
         internal InvocationContext CimInvocationContext { get; }

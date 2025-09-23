@@ -10,10 +10,7 @@ using System.Management.Automation;
 
 namespace Microsoft.Management.Infrastructure.CimCmdlets
 {
-    /// <summary>
-    /// The command returns zero, one or more CimSession objects that represent
-    /// connections with remote computers established from the current PS Session.
-    /// </summary>
+    
     [Alias("gcms")]
     [Cmdlet(VerbsCommon.Get, "CimSession", DefaultParameterSetName = ComputerNameSet, HelpUri = "https://go.microsoft.com/fwlink/?LinkId=227966")]
     [OutputType(typeof(CimSession))]
@@ -21,9 +18,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
     {
         #region constructor
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GetCimSessionCommand"/> class.
-        /// </summary>
+        
         public GetCimSessionCommand()
             : base(parameters, parameterSets)
         {
@@ -34,23 +29,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         #region parameters
 
-        /// <summary>
-        /// <para>
-        /// The following is the definition of the input parameter "ComputerName".
-        /// Specifies one or more connections by providing their ComputerName(s). The
-        /// Cmdlet then gets CimSession(s) opened with those connections. This parameter
-        /// is an alternative to using CimSession(s) that also identifies the remote
-        /// computer(s).
-        /// </para>
-        /// <para>
-        /// This is the only optional parameter of the Cmdlet. If not provided, the
-        /// Cmdlet returns all CimSession(s) live/active in the runspace.
-        /// </para>
-        /// <para>
-        /// If an instance of CimSession is pipelined to Get-CimSession, the
-        /// ComputerName property of the instance is bound by name with this parameter.
-        /// </para>
-        /// </summary>
+        
         [Alias(AliasCN, AliasServerName)]
         [Parameter(Position = 0,
             ValueFromPipelineByPropertyName = true,
@@ -72,10 +51,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         private string[] computername;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "Id".
-        /// Specifies one or more numeric Id(s) for which to get CimSession(s).
-        /// </summary>
+        
         [Parameter(Mandatory = true,
             Position = 0,
             ValueFromPipelineByPropertyName = true,
@@ -97,10 +73,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         private uint[] id;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "InstanceID".
-        /// Specifies one or Session Instance IDs.
-        /// </summary>
+        
         [Parameter(Mandatory = true,
             ValueFromPipelineByPropertyName = true,
             ParameterSetName = InstanceIdSet)]
@@ -121,11 +94,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         private Guid[] instanceid;
 
-        /// <summary>
-        /// The following is the definition of the input parameter "Name".
-        /// Specifies one or more session Name(s)  for which to get CimSession(s). The
-        /// argument may contain wildcard characters.
-        /// </summary>
+        
         [Parameter(Mandatory = true,
             ValueFromPipelineByPropertyName = true,
             ParameterSetName = NameSet)]
@@ -149,18 +118,14 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         #endregion
 
         #region cmdlet processing methods
-        /// <summary>
-        /// BeginProcessing method.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             cimGetSession = new CimGetSession();
             this.AtBeginProcess = false;
         }
 
-        /// <summary>
-        /// ProcessRecord method.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             base.CheckParameterSet();
@@ -170,9 +135,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         #endregion
 
         #region private members
-        /// <summary>
-        /// <see cref="CimGetSession"/> object used to search CimSession from cache.
-        /// </summary>
+        
         private CimGetSession cimGetSession;
 
         #region const string of parameter names
@@ -182,9 +145,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         internal const string nameName = "Name";
         #endregion
 
-        /// <summary>
-        /// Static parameter definition entries.
-        /// </summary>
+        
         private static readonly Dictionary<string, HashSet<ParameterDefinitionEntry>> parameters = new()
         {
             {
@@ -209,9 +170,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             },
         };
 
-        /// <summary>
-        /// Static parameter set entries.
-        /// </summary>
+        
         private static readonly Dictionary<string, ParameterSetEntry> parameterSets = new()
         {
             {   CimBaseCommand.ComputerNameSet, new ParameterSetEntry(0, true)     },

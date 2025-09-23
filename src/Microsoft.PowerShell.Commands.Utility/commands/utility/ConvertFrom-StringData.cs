@@ -8,19 +8,14 @@ using System.Text.RegularExpressions;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// Class comment.
-    /// </summary>
+    
     [Cmdlet(VerbsData.ConvertFrom, "StringData", HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096602", RemotingCapability = RemotingCapability.None)]
     [OutputType(typeof(Hashtable))]
     public sealed class ConvertFromStringDataCommand : PSCmdlet
     {
         private string _stringData;
 
-        /// <summary>
-        /// The list of properties to display.
-        /// These take the form of an PSPropertyExpression.
-        /// </summary>
+        
         /// <value></value>
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
         [AllowEmptyString]
@@ -37,14 +32,11 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Gets or sets the delimiter.
-        /// </summary>
+        
         [Parameter(Position = 1)]
         public char Delimiter { get; set; } = '=';
 
-        /// <summary>
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             Hashtable result = new(StringComparer.OrdinalIgnoreCase);

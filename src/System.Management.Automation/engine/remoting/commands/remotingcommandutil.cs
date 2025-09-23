@@ -11,25 +11,16 @@ using Microsoft.Win32;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// This enum is used to distinguish two sets of parameters on some of the remoting cmdlets.
-    /// </summary>
+    
     internal enum RunspaceParameterSet
     {
-        /// <summary>
-        /// Use ComputerName parameter set.
-        /// </summary>
+        
         ComputerName,
-        /// <summary>
-        /// Use Runspace Parameter set.
-        /// </summary>
+        
         Runspace
     }
 
-    /// <summary>
-    /// This is a static utility class that performs some of the common chore work for the
-    /// the remoting cmdlets.
-    /// </summary>
+    
     internal static class RemotingCommandUtil
     {
         internal static bool HasRepeatingRunspaces(PSSession[] runspaceInfos)
@@ -76,10 +67,7 @@ namespace Microsoft.PowerShell.Commands
             return false;
         }
 
-        /// <summary>
-        /// Checks the prerequisites for a cmdlet and terminates if the cmdlet
-        /// is not valid.
-        /// </summary>
+        
         internal static void CheckRemotingCmdletPrerequisites()
         {
 #if UNIX
@@ -142,10 +130,7 @@ namespace Microsoft.PowerShell.Commands
 #endif
         }
 
-        /// <summary>
-        /// Facilitates to check if remoting is supported on the host machine.
-        /// PowerShell remoting is supported on all Windows SQU's except WinPE.
-        /// </summary>
+        
         /// <exception cref="InvalidOperationException">
         /// When PowerShell is hosted on a WinPE machine, the execution
         /// of this API would result in an InvalidOperationException being

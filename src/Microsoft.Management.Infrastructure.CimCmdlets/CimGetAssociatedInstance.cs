@@ -9,26 +9,16 @@ using System.Collections.Generic;
 
 namespace Microsoft.Management.Infrastructure.CimCmdlets
 {
-    /// <summary>
-    /// <para>
-    /// Implements operations of get-AssociatedInstance cmdlet.
-    /// </para>
-    /// </summary>
+    
     internal sealed class CimGetAssociatedInstance : CimAsyncOperation
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CimGetAssociatedInstance"/> class.
-        /// </summary>
+        
         public CimGetAssociatedInstance()
             : base()
         {
         }
 
-        /// <summary>
-        /// <para>
-        /// Base on parametersetName to retrieve associated ciminstances
-        /// </para>
-        /// </summary>
+        
         /// <param name="cmdlet"><see cref="GetCimInstanceCommand"/> object.</param>
         public void GetCimAssociatedInstance(GetCimAssociatedInstanceCommand cmdlet)
         {
@@ -78,11 +68,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         #region private methods
 
-        /// <summary>
-        /// <para>
-        /// Set <see cref="CimSessionProxy"/> properties
-        /// </para>
-        /// </summary>
+        
         /// <param name="proxy"></param>
         /// <param name="cmdlet"></param>
         private static void SetSessionProxyProperties(
@@ -97,11 +83,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             }
         }
 
-        /// <summary>
-        /// <para>
-        /// Create <see cref="CimSessionProxy"/> and set properties
-        /// </para>
-        /// </summary>
+        
         /// <param name="computerName"></param>
         /// <param name="cimInstance"></param>
         /// <param name="cmdlet"></param>
@@ -116,9 +98,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             return proxy;
         }
 
-        /// <summary>
-        /// Create <see cref="CimSessionProxy"/> and set properties.
-        /// </summary>
+        
         /// <param name="session"></param>
         /// <param name="cmdlet"></param>
         /// <returns></returns>

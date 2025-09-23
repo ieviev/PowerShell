@@ -18,10 +18,7 @@ using Dbg = System.Management.Automation;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// The content stream class for the file system provider. It implements both
-    /// the IContentReader and IContentWriter interfaces.
-    /// </summary>
+    
     /// <remarks>
     /// Note, this class does no specific error handling. All errors are allowed to
     /// propagate to the caller so that they can be written to the error pipeline
@@ -31,10 +28,7 @@ namespace Microsoft.PowerShell.Commands
     {
         #region tracer
 
-        /// <summary>
-        /// An instance of the PSTraceSource class used for trace output
-        /// using "FileSystemContentStream" as the category.
-        /// </summary>
+        
         [Dbg.TraceSource(
             "FileSystemContentStream",
             "The provider content reader and writer for the file system")]
@@ -77,9 +71,7 @@ namespace Microsoft.PowerShell.Commands
         // False to add a newline to the end of the output string, true if not.
         private readonly bool _suppressNewline = false;
 
-        /// <summary>
-        /// Constructor for the content stream.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the file to get the content from.
         /// </param>
@@ -132,9 +124,7 @@ namespace Microsoft.PowerShell.Commands
         {
         }
 
-        /// <summary>
-        /// Constructor for the content stream.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the file to get the content from.
         /// </param>
@@ -198,9 +188,7 @@ namespace Microsoft.PowerShell.Commands
             CreateStreams(path, streamName, mode, access, share, encoding);
         }
 
-        /// <summary>
-        /// Constructor for the content stream.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the file to get the content from.
         /// </param>
@@ -245,9 +233,7 @@ namespace Microsoft.PowerShell.Commands
             _suppressNewline = suppressNewline;
         }
 
-        /// <summary>
-        /// Constructor for the content stream.
-        /// </summary>
+        
         /// <param name="path">
         /// The path to the file to get the content from.
         /// </param>
@@ -339,9 +325,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Reads the specified number of characters or a lines from the file.
-        /// </summary>
+        
         /// <param name="readCount">
         /// If less than 1, then the entire file is read at once. If 1 or greater, then
         /// readCount is used to determine how many items (ie: lines, bytes, delimited tokens)
@@ -424,9 +408,7 @@ namespace Microsoft.PowerShell.Commands
             return blocks.ToArray();
         }
 
-        /// <summary>
-        /// Read the content regardless of the 'waitForChanges' flag.
-        /// </summary>
+        
         /// <param name="readCount"></param>
         /// <returns></returns>
         internal IList ReadWithoutWaitingChanges(long readCount)
@@ -443,10 +425,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Move the pointer of the stream to the position where there are 'backCount' number
-        /// of items (depends on what we are using: delimiter? line? byts?) to the end of the file.
-        /// </summary>
+        
         /// <param name="backCount"></param>
         internal void SeekItemsBackward(int backCount)
         {
@@ -892,11 +871,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Waits for changes to the specified file.  To do this, it closes the file
-        /// and then monitors for changes.  Once a change appears, it reopens the streams
-        /// and seeks to the last read position.
-        /// </summary>
+        
         /// <param name="filePath">The path of the file to read / monitor.</param>
         /// <param name="fileMode">The FileMode of the file (ie: Open / Append).</param>
         /// <param name="fileAccess">The access properties of the file (ie: Read / Write).</param>
@@ -991,9 +966,7 @@ namespace Microsoft.PowerShell.Commands
             _backReader?.DiscardBufferedData();
         }
 
-        /// <summary>
-        /// Moves the current stream position in the file.
-        /// </summary>
+        
         /// <param name="offset">
         /// The offset from the origin to move the position to.
         /// </param>
@@ -1011,9 +984,7 @@ namespace Microsoft.PowerShell.Commands
             _backReader?.DiscardBufferedData();
         }
 
-        /// <summary>
-        /// Closes the file.
-        /// </summary>
+        
         public void Close()
         {
             bool streamClosed = false;
@@ -1056,9 +1027,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Writes the specified object to the file.
-        /// </summary>
+        
         /// <param name="content">
         /// The objects to write to the file
         /// </param>
@@ -1119,9 +1088,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Closes the file stream.
-        /// </summary>
+        
         public void Dispose()
         {
             Dispose(true);
@@ -1176,9 +1143,7 @@ namespace Microsoft.PowerShell.Commands
         private const byte BothTopBitsSet = 0xC0;
         private const byte TopBitUnset = 0x80;
 
-        /// <summary>
-        /// We don't support this method because it is not used by the ReadBackward method in FileStreamContentReaderWriter.
-        /// </summary>
+        
         /// <param name="buffer"></param>
         /// <param name="index"></param>
         /// <param name="count"></param>
@@ -1189,9 +1154,7 @@ namespace Microsoft.PowerShell.Commands
             throw PSTraceSource.NewNotSupportedException();
         }
 
-        /// <summary>
-        /// We don't support this method because it is not used by the ReadBackward method in FileStreamContentReaderWriter.
-        /// </summary>
+        
         /// <returns></returns>
         public override string ReadToEnd()
         {
@@ -1199,11 +1162,7 @@ namespace Microsoft.PowerShell.Commands
             throw PSTraceSource.NewNotSupportedException();
         }
 
-        /// <summary>
-        /// Reset the internal character buffer. Use it only when the position of the internal buffer and
-        /// the base stream do not match. These positions can become mismatch when the user read the data
-        /// into the buffer and then seek a new position in the underlying stream.
-        /// </summary>
+        
         internal new void DiscardBufferedData()
         {
             base.DiscardBufferedData();
@@ -1212,9 +1171,7 @@ namespace Microsoft.PowerShell.Commands
             _byteCount = 0;
         }
 
-        /// <summary>
-        /// Return the current actual stream position.
-        /// </summary>
+        
         /// <returns></returns>
         internal long GetCurrentPosition()
         {
@@ -1226,10 +1183,7 @@ namespace Microsoft.PowerShell.Commands
             return (_currentPosition + byteCount);
         }
 
-        /// <summary>
-        /// Get the number of bytes the delimiter will
-        /// be encoded to.
-        /// </summary>
+        
         /// <param name="delimiter"></param>
         /// <returns></returns>
         internal int GetByteCount(string delimiter)
@@ -1238,9 +1192,7 @@ namespace Microsoft.PowerShell.Commands
             return _currentEncoding.GetByteCount(chars, 0, chars.Length);
         }
 
-        /// <summary>
-        /// Peek the next character.
-        /// </summary>
+        
         /// <returns>Return -1 if we reach the head of the file.</returns>
         public override int Peek()
         {
@@ -1256,9 +1208,7 @@ namespace Microsoft.PowerShell.Commands
             return (int)_charBuff[_charCount - 1];
         }
 
-        /// <summary>
-        /// Read the next character.
-        /// </summary>
+        
         /// <returns>Return -1 if we reach the head of the file.</returns>
         public override int Read()
         {
@@ -1274,9 +1224,7 @@ namespace Microsoft.PowerShell.Commands
             return _charBuff[_charCount];
         }
 
-        /// <summary>
-        /// Read a specific maximum of characters from the current stream into a buffer.
-        /// </summary>
+        
         /// <param name="buffer">Output buffer.</param>
         /// <param name="index">Start position to write with.</param>
         /// <param name="count">Number of bytes to read.</param>
@@ -1287,9 +1235,7 @@ namespace Microsoft.PowerShell.Commands
             return ReadSpan(new Span<char>(buffer, index, count));
         }
 
-        /// <summary>
-        /// Read characters from the current stream into a Span buffer.
-        /// </summary>
+        
         /// <param name="buffer">Output buffer.</param>
         /// <returns>Return the number of characters read, or -1 if we reach the head of the file.</returns>
         public override int Read(Span<char> buffer)
@@ -1326,9 +1272,7 @@ namespace Microsoft.PowerShell.Commands
             return charRead;
         }
 
-        /// <summary>
-        /// Read a line from the current stream.
-        /// </summary>
+        
         /// <returns>Return null if we reach the head of the file.</returns>
         public override string ReadLine()
         {
@@ -1385,9 +1329,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Refill the internal character buffer.
-        /// </summary>
+        
         /// <returns></returns>
         private int RefillCharBuffer()
         {
@@ -1400,9 +1342,7 @@ namespace Microsoft.PowerShell.Commands
             return _charCount;
         }
 
-        /// <summary>
-        /// Refill the internal byte buffer.
-        /// </summary>
+        
         /// <returns></returns>
         private int RefillByteBuff()
         {
@@ -1497,9 +1437,7 @@ namespace Microsoft.PowerShell.Commands
         }
     }
 
-    /// <summary>
-    /// The exception that indicates the encoding is not supported when reading backward.
-    /// </summary>
+    
     [SuppressMessage("Microsoft.Usage", "CA2237:MarkISerializableTypesWithSerializable", Justification = "This exception is internal and never thrown by any public API")]
     [SuppressMessage("Microsoft.Design", "CA1032:ImplementStandardExceptionConstructors", Justification = "This exception is internal and never thrown by any public API")]
     internal sealed class BackReaderEncodingNotSupportedException : NotSupportedException
@@ -1515,9 +1453,7 @@ namespace Microsoft.PowerShell.Commands
             EncodingName = encodingName;
         }
 
-        /// <summary>
-        /// Get the encoding name.
-        /// </summary>
+        
         internal string EncodingName { get; }
     }
 }

@@ -7,11 +7,7 @@ using System.Diagnostics;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <summary>
-    /// The PropertyValueSelectorFilterRule class supports filtering against a
-    /// property of an object. Based on the type of the property a collection of
-    /// filter rules are available to be used.
-    /// </summary>
+    
     /// <typeparam name="T">
     /// The generic parameter.
     /// </typeparam>
@@ -20,10 +16,7 @@ namespace Microsoft.Management.UI.Internal
     {
         #region Properties
 
-        /// <summary>
-        /// Gets the name of the property on the item to evaluate which holds
-        /// the real value which should be evaluated.
-        /// </summary>
+        
         public string PropertyName
         {
             get;
@@ -34,9 +27,7 @@ namespace Microsoft.Management.UI.Internal
 
         #region Ctor
 
-        /// <summary>
-        /// Creates a new PropertyValueSelectorFilterRule instance.
-        /// </summary>
+        
         /// <param name="propertyName">
         /// Gets the name of the property on the item to evaluate which holds
         /// the real value which should be evaluated.
@@ -50,9 +41,7 @@ namespace Microsoft.Management.UI.Internal
             // Empty
         }
 
-        /// <summary>
-        /// Creates a new PropertyValueSelectorFilterRule instance.
-        /// </summary>
+        
         /// <param name="propertyName">
         /// The propertyName on the item to evaluate which holds the real
         /// value which should be evaluated.
@@ -81,9 +70,7 @@ namespace Microsoft.Management.UI.Internal
             this.AvailableRules.DisplayNameConverter = new FilterRuleToDisplayNameConverter();
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PropertyValueSelectorFilterRule{T}"/> class.
-        /// </summary>
+        
         /// <param name="source">The source to initialize from.</param>
         public PropertyValueSelectorFilterRule(PropertyValueSelectorFilterRule<T> source)
             : base(source)
@@ -96,9 +83,7 @@ namespace Microsoft.Management.UI.Internal
 
         #region Public Methods
 
-        /// <summary>
-        /// Evaluates whether the item is inclusive.
-        /// </summary>
+        
         /// <param name="item">
         /// The item to evaluate.
         /// </param>

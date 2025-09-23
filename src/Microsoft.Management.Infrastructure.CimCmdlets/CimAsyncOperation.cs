@@ -13,21 +13,12 @@ using System.Threading;
 
 namespace Microsoft.Management.Infrastructure.CimCmdlets
 {
-    /// <summary>
-    /// <para>
-    /// Async operation base class, it will issue async operation through
-    /// 1...* CimSession object(s), processing the async results, extended
-    /// pssemantics operations, and manage the lifecycle of created
-    /// CimSession object(s).
-    /// </para>
-    /// </summary>
+    
     internal abstract class CimAsyncOperation : IDisposable
     {
         #region Constructor
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CimAsyncOperation"/> class.
-        /// </summary>
+        
         protected CimAsyncOperation()
         {
             this.moreActionEvent = new ManualResetEventSlim(false);
@@ -40,12 +31,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         #region Event handler
 
-        /// <summary>
-        /// <para>
-        /// Handler used to handle new action event from
-        /// <seealso cref="CimSessionProxy"/> object.
-        /// </para>
-        /// </summary>
+        
         /// <param name="cimSession">
         /// <seealso cref="CimSession"/> object raised the event
         /// </param>
@@ -73,12 +59,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             }
         }
 
-        /// <summary>
-        /// <para>
-        /// Handler used to handle new operation event from
-        /// <seealso cref="CimSessionProxy"/> object.
-        /// </para>
-        /// </summary>
+        
         /// <param name="cimSession">
         /// <seealso cref="CimSession"/> object raised the event.
         /// </param>
@@ -93,12 +74,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             }
         }
 
-        /// <summary>
-        /// <para>
-        /// Handler used to handle operation deletion event from
-        /// <seealso cref="CimSessionProxy"/> object.
-        /// </para>
-        /// </summary>
+        
         /// <param name="cimSession">
         /// <seealso cref="CimSession"/> object raised the event.
         /// </param>
@@ -119,11 +95,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         #endregion
 
-        /// <summary>
-        /// <para>
-        /// process all actions in the action queue
-        /// </para>
-        /// </summary>
+        
         /// <param name="cmdletOperation">
         /// Wrapper of cmdlet, <seealso cref="CmdletOperationBase"/> for details.
         /// </param>
@@ -143,12 +115,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             }
         }
 
-        /// <summary>
-        /// <para>
-        /// Process remaining actions until all operations are completed or
-        /// current cmdlet is terminated by user.
-        /// </para>
-        /// </summary>
+        
         /// <param name="cmdletOperation">
         /// Wrapper of cmdlet, <seealso cref="CmdletOperationBase"/> for details.
         /// </param>
@@ -184,11 +151,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         #region helper methods
 
-        /// <summary>
-        /// <para>
-        /// Get action object from action queue.
-        /// </para>
-        /// </summary>
+        
         /// <param name="action">Next action to execute.</param>
         /// <returns>True indicates there is an valid action, otherwise false.</returns>
         protected bool GetActionAndRemove(out CimBaseAction action)
@@ -196,11 +159,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             return this.actionQueue.TryDequeue(out action);
         }
 
-        /// <summary>
-        /// <para>
-        /// Add temporary <seealso cref="CimSessionProxy"/> object to cache.
-        /// </para>
-        /// </summary>
+        
         /// <param name="sessionproxy">Cimsession wrapper object.</param>
         protected void AddCimSessionProxy(CimSessionProxy sessionproxy)
         {
@@ -215,11 +174,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             }
         }
 
-        /// <summary>
-        /// <para>
-        /// Are there active operations?
-        /// </para>
-        /// </summary>
+        
         /// <returns>True for having active operations, otherwise false.</returns>
         protected bool IsActive()
         {
@@ -228,9 +183,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             return isActive;
         }
 
-        /// <summary>
-        /// Create <see cref="CimSessionProxy"/> object.
-        /// </summary>
+        
         /// <param name="session"></param>
         protected CimSessionProxy CreateCimSessionProxy(CimSessionProxy originalProxy)
         {
@@ -239,9 +192,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             return proxy;
         }
 
-        /// <summary>
-        /// Create <see cref="CimSessionProxy"/> object.
-        /// </summary>
+        
         /// <param name="session"></param>
         protected CimSessionProxy CreateCimSessionProxy(CimSessionProxy originalProxy, bool passThru)
         {
@@ -250,9 +201,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             return proxy;
         }
 
-        /// <summary>
-        /// Create <see cref="CimSessionProxy"/> object.
-        /// </summary>
+        
         /// <param name="session"></param>
         protected CimSessionProxy CreateCimSessionProxy(CimSession session)
         {
@@ -261,9 +210,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             return proxy;
         }
 
-        /// <summary>
-        /// Create <see cref="CimSessionProxy"/> object.
-        /// </summary>
+        
         /// <param name="session"></param>
         protected CimSessionProxy CreateCimSessionProxy(CimSession session, bool passThru)
         {
@@ -272,10 +219,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             return proxy;
         }
 
-        /// <summary>
-        /// Create <see cref="CimSessionProxy"/> object, and
-        /// add the proxy into cache.
-        /// </summary>
+        
         /// <param name="computerName"></param>
         protected CimSessionProxy CreateCimSessionProxy(string computerName)
         {
@@ -284,10 +228,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             return proxy;
         }
 
-        /// <summary>
-        /// Create <see cref="CimSessionProxy"/> object, and
-        /// add the proxy into cache.
-        /// </summary>
+        
         /// <param name="computerName"></param>
         /// <param name="cimInstance"></param>
         /// <returns></returns>
@@ -298,10 +239,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             return proxy;
         }
 
-        /// <summary>
-        /// Create <see cref="CimSessionProxy"/> object, and
-        /// add the proxy into cache.
-        /// </summary>
+        
         /// <param name="computerName"></param>
         /// <param name="cimInstance"></param>
         /// <param name="passThru"></param>
@@ -312,9 +250,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             return proxy;
         }
 
-        /// <summary>
-        /// Subscribe event from proxy and add proxy to cache.
-        /// </summary>
+        
         /// <param name="proxy"></param>
         protected void SubscribeEventAndAddProxytoCache(CimSessionProxy proxy)
         {
@@ -322,11 +258,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             SubscribeToCimSessionProxyEvent(proxy);
         }
 
-        /// <summary>
-        /// <para>
-        /// Subscribe to the events issued by <see cref="CimSessionProxy"/>.
-        /// </para>
-        /// </summary>
+        
         /// <param name="proxy"></param>
         protected virtual void SubscribeToCimSessionProxyEvent(CimSessionProxy proxy)
         {
@@ -337,9 +269,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             proxy.OnOperationDeleted += this.OperationDeletedHandler;
         }
 
-        /// <summary>
-        /// Retrieve the base object out if wrapped in psobject.
-        /// </summary>
+        
         /// <param name="value"></param>
         /// <returns></returns>
         protected object GetBaseObject(object value)
@@ -368,11 +298,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             }
         }
 
-        /// <summary>
-        /// Retrieve the reference object or reference array object.
-        /// The returned object has to be either CimInstance or CImInstance[] type,
-        /// if not thrown exception.
-        /// </summary>
+        
         /// <param name="value"></param>
         /// <param name="referenceType">Output the cimtype of the value, either Reference or ReferenceArray.</param>
         /// <returns>The object.</returns>
@@ -424,11 +350,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         #region IDisposable
 
-        /// <summary>
-        /// <para>
-        /// Indicates whether this object was disposed or not
-        /// </para>
-        /// </summary>
+        
         protected bool Disposed
         {
             get
@@ -439,13 +361,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         private int _disposed;
 
-        /// <summary>
-        /// <para>
-        /// Dispose() calls Dispose(true).
-        /// Implement IDisposable. Do not make this method virtual.
-        /// A derived class should not be able to override this method.
-        /// </para>
-        /// </summary>
+        
         public void Dispose()
         {
             Dispose(true);
@@ -458,17 +374,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             GC.SuppressFinalize(this);
         }
 
-        /// <summary>
-        /// <para>
-        /// Dispose(bool disposing) executes in two distinct scenarios.
-        /// If disposing equals true, the method has been called directly
-        /// or indirectly by a user's code. Managed and unmanaged resources
-        /// can be disposed.
-        /// If disposing equals false, the method has been called by the
-        /// runtime from inside the finalizer and you should not reference
-        /// other objects. Only unmanaged resources can be disposed.
-        /// </para>
-        /// </summary>
+        
         /// <param name="disposing">Whether it is directly called.</param>
         protected virtual void Dispose(bool disposing)
         {
@@ -483,11 +389,7 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             }
         }
 
-        /// <summary>
-        /// <para>
-        /// Clean up managed resources.
-        /// </para>
-        /// </summary>
+        
         private void Cleanup()
         {
             DebugHelper.WriteLogEx();
@@ -533,47 +435,28 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         #region private members
 
-        /// <summary>
-        /// Lock object.
-        /// </summary>
+        
         private readonly object a_lock = new();
 
-        /// <summary>
-        /// Number of active operations.
-        /// </summary>
+        
         private uint operationCount;
 
-        /// <summary>
-        /// Event to notify ps thread that more action is available.
-        /// </summary>
+        
         private readonly ManualResetEventSlim moreActionEvent;
 
-        /// <summary>
-        /// The following is the definition of action queue.
-        /// The queue holding all actions to be executed in the context of either
-        /// ProcessRecord or EndProcessing.
-        /// </summary>
+        
         private readonly ConcurrentQueue<CimBaseAction> actionQueue;
 
-        /// <summary>
-        /// Lock object.
-        /// </summary>
+        
         private readonly object cimSessionProxyCacheLock = new();
 
-        /// <summary>
-        /// Cache all <see cref="CimSessionProxy"/> objects related to
-        /// the current operation.
-        /// </summary>
+        
         private List<CimSessionProxy> cimSessionProxyCache;
 
         #endregion
 
         #region protected members
-        /// <summary>
-        /// Event to notify ps thread that either a ACK message sent back
-        /// or a error happened. Currently only used by
-        /// <see cref="CimRegisterCimIndication"/>.
-        /// </summary>
+        
         protected ManualResetEventSlim ackedEvent;
         #endregion
 

@@ -11,27 +11,13 @@ using Dbg = System.Management.Automation.Diagnostics;
 
 namespace Microsoft.PowerShell
 {
-    /// <summary>
-    /// Represents all of the outstanding progress activities received by the host, and includes methods to update that state
-    /// upon receipt of new ProgressRecords, and to render that state into an array of strings such that ProgressPane can
-    /// display it.
-    ///
-    /// The set of activities that we're tracking is logically a binary tree, with siblings in one branch and children in
-    /// another.  For ease of implementation, this tree is represented as lists of lists.  We use ArrayList as out list type,
-    /// although List1 (generic List) would also have worked. I suspect that ArrayList is faster because there are fewer links
-    /// to twiddle, though I have not measured that.
-    ///
-    /// This class uses lots of nearly identical helper functions to recursively traverse the tree. If I weren't so pressed
-    /// for time, I would see if generic methods could be used to collapse the number of traversers.
-    /// </summary>
+    
     internal
     class PendingProgress
     {
         #region Updating Code
 
-        /// <summary>
-        /// Update the data structures that represent the outstanding progress records reported so far.
-        /// </summary>
+        
         /// <param name="sourceId">
         /// Identifier of the source of the event.  This is used as part of the "key" for matching newly received records with
         /// records that have already been received. For a record to match (meaning that they refer to the same activity), both
@@ -165,9 +151,7 @@ namespace Microsoft.PowerShell
             }
         }
 
-        /// <summary>
-        /// Removes a node from the tree.
-        /// </summary>
+        
         /// <param name="nodes">
         /// List in the tree from which the node is to be removed.
         /// </param>
@@ -240,9 +224,7 @@ namespace Microsoft.PowerShell
             }
         }
 
-        /// <summary>
-        /// Adds a node to the tree, first removing the oldest node if the tree is too large.
-        /// </summary>
+        
         /// <param name="nodes">
         /// List in the tree where the node is to be added.
         /// </param>
@@ -349,9 +331,7 @@ namespace Microsoft.PowerShell
             return result;
         }
 
-        /// <summary>
-        /// Convenience overload.
-        /// </summary>
+        
         private
         ProgressNode
         FindNodeById(long sourceId, int activityId)
@@ -402,9 +382,7 @@ namespace Microsoft.PowerShell
             private readonly long _sourceIdToFind;
         }
 
-        /// <summary>
-        /// Finds a node with a given ActivityId in provided set of nodes. Recursively walks the set of nodes and their children.
-        /// </summary>
+        
         /// <param name="sourceId">
         /// Identifier of the source of the record.
         /// </param>
@@ -444,9 +422,7 @@ namespace Microsoft.PowerShell
             return v.FoundNode;
         }
 
-        /// <summary>
-        /// Finds the oldest node with a given rendering style that is at least as old as a given age.
-        /// </summary>
+        
         /// <param name="nodes">
         /// List of nodes to search. Child lists of each node in this list will also be searched.
         /// </param>
@@ -517,12 +493,7 @@ namespace Microsoft.PowerShell
             }
         }
 
-        /// <summary>
-        /// Increments the age of each of the nodes in the given list, and all their children.  Also sets the rendering
-        /// style of each node to "full."
-        ///
-        /// All nodes are aged every time a new ProgressRecord is received.
-        /// </summary>
+        
         private
         void
         AgeNodesAndResetStyle()
@@ -535,12 +506,7 @@ namespace Microsoft.PowerShell
 
         #region Rendering Code
 
-        /// <summary>
-        /// Generates an array of strings representing as much of the outstanding progress activities as possible within the given
-        /// space.  As more outstanding activities are collected, nodes are "compressed" (i.e. rendered in an increasing terse
-        /// fashion) in order to display as many as possible.  Ultimately, some nodes may be compressed to the point of
-        /// invisibility. The oldest nodes are compressed first.
-        /// </summary>
+        
         /// <param name="maxWidth">
         /// The maximum width (in BufferCells) that the rendering may consume.
         /// </param>
@@ -611,9 +577,7 @@ namespace Microsoft.PowerShell
             return (string[])result.ToArray(typeof(string));
         }
 
-        /// <summary>
-        /// Helper function for Render().  Recursively renders nodes.
-        /// </summary>
+        
         /// <param name="strings">
         /// The rendered strings so far.  Additional rendering will be appended.
         /// </param>
@@ -687,10 +651,7 @@ namespace Microsoft.PowerShell
             internal int Tally;
         }
 
-        /// <summary>
-        /// Tallies up the number of BufferCells vertically that will be required to show all the ProgressNodes in the given
-        /// list, and all of their children.
-        /// </summary>
+        
         /// <param name="maxHeight">
         /// The maximum height (in BufferCells) that the rendering may consume.
         /// </param>
@@ -711,9 +672,7 @@ namespace Microsoft.PowerShell
 
 #if DEBUG || ASSERTIONS_TRACE
 
-        /// <summary>
-        /// Debugging code.  Verifies that all of the nodes in the given list have the given style.
-        /// </summary>
+        
         /// <param name="nodes"></param>
         /// <param name="style"></param>
         /// <returns></returns>
@@ -746,9 +705,7 @@ namespace Microsoft.PowerShell
             return true;
         }
 
-        /// <summary>
-        /// Debugging code. NodeVisitor that counts up the number of nodes in the tree.
-        /// </summary>
+        
         private
         class
         CountingNodeVisitor : NodeVisitor
@@ -766,9 +723,7 @@ namespace Microsoft.PowerShell
             Count;
         }
 
-        /// <summary>
-        /// Debugging code.  Counts the number of nodes in the tree of nodes.
-        /// </summary>
+        
         /// <returns>
         /// The number of nodes in the tree.
         /// </returns>
@@ -783,9 +738,7 @@ namespace Microsoft.PowerShell
 
 #endif
 
-        /// <summary>
-        /// Helper function to CompressToFit.  Considers compressing nodes from one level to another.
-        /// </summary>
+        
         /// <param name="rawUi">
         /// The PSHostRawUserInterface used to gauge string widths in the rendering.
         /// </param>
@@ -845,15 +798,7 @@ namespace Microsoft.PowerShell
             return false;
         }
 
-        /// <summary>
-        /// "Compresses" the nodes representing the outstanding progress activities until their rendering will fit within a
-        /// "given height, or until they are compressed to a given level.  The oldest nodes are compressed first.
-        ///
-        /// This is a 4-stage process -- from least compressed to "invisible".  At each stage we find the oldest nodes in the
-        /// tree and change their rendering style to a more compact style.  As soon as the rendering of the nodes will fit within
-        /// the maxHeight, we stop.  The result is that the most recent nodes will be the least compressed, the idea being that
-        /// the rendering should show the most recently updated activities with the most complete rendering for them possible.
-        /// </summary>
+        
         /// <param name="rawUi">
         /// The PSHostRawUserInterface used to gauge string widths in the rendering.
         /// </param>
@@ -938,9 +883,7 @@ namespace Microsoft.PowerShell
         private abstract
         class NodeVisitor
         {
-            /// <summary>
-            /// Called for each node in the tree.
-            /// </summary>
+            
             /// <param name="node">
             /// The node being visited.
             /// </param>

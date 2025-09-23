@@ -9,17 +9,12 @@ using System.Management.Automation.Internal;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// Base class for all variable commands.
-    /// Because -Scope is defined in VariableCommandBase, all derived commands must implement -Scope.
-    /// </summary>
+    
     public abstract class VariableCommandBase : PSCmdlet
     {
         #region Parameters
 
-        /// <summary>
-        /// Selects active scope to work with; used for all variable commands.
-        /// </summary>
+        
         [Parameter]
         [ValidateNotNullOrEmpty]
         [ArgumentCompleter(typeof(ScopeArgumentCompleter))]
@@ -27,9 +22,7 @@ namespace Microsoft.PowerShell.Commands
 
         #endregion parameters
 
-        /// <summary>
-        /// The Include parameter for all the variable commands.
-        /// </summary>
+        
         protected string[] IncludeFilters
         {
             get
@@ -47,9 +40,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string[] _include = Array.Empty<string>();
 
-        /// <summary>
-        /// The Exclude parameter for all the variable commands.
-        /// </summary>
+        
         protected string[] ExcludeFilters
         {
             get
@@ -69,10 +60,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region helpers
 
-        /// <summary>
-        /// Gets the matching variable for the specified name, using the
-        /// Include, Exclude, and Scope parameters defined in the base class.
-        /// </summary>
+        
         /// <param name="name">
         /// The name or pattern of the variables to retrieve.
         /// </param>
@@ -230,18 +218,14 @@ namespace Microsoft.PowerShell.Commands
 
     }
 
-    /// <summary>
-    /// Implements get-variable command.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Get, "Variable", HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096711")]
     [OutputType(typeof(PSVariable))]
     public class GetVariableCommand : VariableCommandBase
     {
         #region parameters
 
-        /// <summary>
-        /// Name of the PSVariable.
-        /// </summary>
+        
         [Parameter(Position = 0, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty()]
         public string[] Name
@@ -261,9 +245,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string[] _name = new string[] { "*" };
 
-        /// <summary>
-        /// Output only the value(s) of the requested variable(s).
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter ValueOnly
         {
@@ -280,9 +262,7 @@ namespace Microsoft.PowerShell.Commands
 
         private bool _valueOnly;
 
-        /// <summary>
-        /// The Include parameter for all the variable commands.
-        /// </summary>
+        
         [Parameter]
         public string[] Include
         {
@@ -297,9 +277,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// The Exclude parameter for all the variable commands.
-        /// </summary>
+        
         [Parameter]
         public string[] Exclude
         {
@@ -316,9 +294,7 @@ namespace Microsoft.PowerShell.Commands
 
         #endregion parameters
 
-        /// <summary>
-        /// Implements ProcessRecord() method for get-variable's command.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             foreach (string varName in _name)
@@ -361,9 +337,7 @@ namespace Microsoft.PowerShell.Commands
         }
     }
 
-    /// <summary>
-    /// Class implementing new-variable command.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.New, "Variable", SupportsShouldProcess = true, ConfirmImpact = ConfirmImpact.Low,
         HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097121")]
     [OutputType(typeof(PSVariable))]
@@ -371,34 +345,23 @@ namespace Microsoft.PowerShell.Commands
     {
         #region parameters
 
-        /// <summary>
-        /// Name of the PSVariable.
-        /// </summary>
+        
         [Parameter(Position = 0, ValueFromPipelineByPropertyName = true, Mandatory = true)]
         public string Name { get; set; }
 
-        /// <summary>
-        /// Value of the PSVariable.
-        /// </summary>
+        
         [Parameter(Position = 1, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true)]
         public object Value { get; set; }
 
-        /// <summary>
-        /// Description of the variable.
-        /// </summary>
+        
         [Parameter]
         public string Description { get; set; }
 
-        /// <summary>
-        /// The options for the variable to specify if the variable should
-        /// be ReadOnly, Constant, and/or Private.
-        /// </summary>
+        
         [Parameter]
         public ScopedItemOptions Option { get; set; } = ScopedItemOptions.None;
 
-        /// <summary>
-        /// Specifies the visibility of the new variable...
-        /// </summary>
+        
         [Parameter]
         public SessionStateEntryVisibility Visibility
         {
@@ -415,9 +378,7 @@ namespace Microsoft.PowerShell.Commands
 
         private SessionStateEntryVisibility? _visibility;
 
-        /// <summary>
-        /// Force the operation to make the best attempt at setting the variable.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter Force
         {
@@ -434,9 +395,7 @@ namespace Microsoft.PowerShell.Commands
 
         private bool _force;
 
-        /// <summary>
-        /// The variable object should be passed down the pipeline.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter PassThru
         {
@@ -455,11 +414,7 @@ namespace Microsoft.PowerShell.Commands
 
         #endregion parameters
 
-        /// <summary>
-        /// Add objects received on the pipeline to an ArrayList of values, to
-        /// take the place of the Value parameter if none was specified on the
-        /// command line.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             // If Force is not specified, see if the variable already exists
@@ -555,30 +510,22 @@ namespace Microsoft.PowerShell.Commands
         }
     }
 
-    /// <summary>
-    /// This class implements set-variable command.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Set, "Variable", SupportsShouldProcess = true, HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096624")]
     [OutputType(typeof(PSVariable))]
     public sealed class SetVariableCommand : VariableCommandBase
     {
         #region parameters
 
-        /// <summary>
-        /// Name of the PSVariable(s) to set.
-        /// </summary>
+        
         [Parameter(Position = 0, ValueFromPipelineByPropertyName = true, Mandatory = true)]
         public string[] Name { get; set; }
 
-        /// <summary>
-        /// Value of the PSVariable.
-        /// </summary>
+        
         [Parameter(Position = 1, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true)]
         public object Value { get; set; } = AutomationNull.Value;
 
-        /// <summary>
-        /// The Include parameter for all the variable commands.
-        /// </summary>
+        
         [Parameter]
         public string[] Include
         {
@@ -593,9 +540,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// The Exclude parameter for all the variable commands.
-        /// </summary>
+        
         [Parameter]
         public string[] Exclude
         {
@@ -610,16 +555,11 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Description of the variable.
-        /// </summary>
+        
         [Parameter]
         public string Description { get; set; }
 
-        /// <summary>
-        /// The options for the variable to specify if the variable should
-        /// be ReadOnly, Constant, and/or Private.
-        /// </summary>
+        
         [Parameter]
         public ScopedItemOptions Option
         {
@@ -636,9 +576,7 @@ namespace Microsoft.PowerShell.Commands
 
         private ScopedItemOptions? _options;
 
-        /// <summary>
-        /// Force the operation to make the best attempt at setting the variable.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter Force
         {
@@ -655,9 +593,7 @@ namespace Microsoft.PowerShell.Commands
 
         private bool _force;
 
-        /// <summary>
-        /// Sets the visibility of the variable...
-        /// </summary>
+        
         [Parameter]
         public SessionStateEntryVisibility Visibility
         {
@@ -674,9 +610,7 @@ namespace Microsoft.PowerShell.Commands
 
         private SessionStateEntryVisibility? _visibility;
 
-        /// <summary>
-        /// The variable object should be passed down the pipeline.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter PassThru
         {
@@ -693,9 +627,7 @@ namespace Microsoft.PowerShell.Commands
 
         private bool _passThru;
 
-        /// <summary>
-        /// Gets whether we will append to the variable if it exists.
-        /// </summary>
+        
         [Parameter]
         [Experimental(ExperimentalFeature.PSRedirectToVariable, ExperimentAction.Show)]
         public SwitchParameter Append { get; set; }
@@ -704,9 +636,7 @@ namespace Microsoft.PowerShell.Commands
         private bool _valueIsFormalParameter;
         #endregion parameters
 
-        /// <summary>
-        /// Checks to see if the name and value parameters were bound as formal parameters.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             if (Name != null && Name.Length > 0)
@@ -747,15 +677,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// If name and value are both specified as a formal parameters, then
-        /// just ignore the incoming objects in ProcessRecord.
-        /// If name is a formal parameter but the value is coming from the pipeline,
-        /// then accumulate the values in the valueList and set the variable during
-        /// EndProcessing().
-        /// If name is not a formal parameter, then set
-        /// the variable each time ProcessRecord is called.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             if (_nameIsFormalParameter && _valueIsFormalParameter)
@@ -790,10 +712,7 @@ namespace Microsoft.PowerShell.Commands
 
         private List<object> _valueList;
 
-        /// <summary>
-        /// Sets the variable if the name was specified as a formal parameter
-        /// but the value came from the pipeline.
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             if (_nameIsFormalParameter)
@@ -834,9 +753,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Sets the variables of the given names to the specified value.
-        /// </summary>
+        
         /// <param name="varNames">
         /// The name(s) of the variables to set.
         /// </param>
@@ -1063,23 +980,17 @@ namespace Microsoft.PowerShell.Commands
         }
     }
 
-    /// <summary>
-    /// The Remove-Variable cmdlet implementation.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Remove, "Variable", SupportsShouldProcess = true, HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097123")]
     public sealed class RemoveVariableCommand : VariableCommandBase
     {
         #region parameters
 
-        /// <summary>
-        /// Name of the PSVariable(s) to set.
-        /// </summary>
+        
         [Parameter(Position = 0, ValueFromPipelineByPropertyName = true, Mandatory = true)]
         public string[] Name { get; set; }
 
-        /// <summary>
-        /// The Include parameter for all the variable commands.
-        /// </summary>
+        
         [Parameter]
         public string[] Include
         {
@@ -1094,9 +1005,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// The Exclude parameter for all the variable commands.
-        /// </summary>
+        
         [Parameter]
         public string[] Exclude
         {
@@ -1111,9 +1020,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// If true, the variable is removed even if it is ReadOnly.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter Force
         {
@@ -1132,9 +1039,7 @@ namespace Microsoft.PowerShell.Commands
 
         #endregion parameters
 
-        /// <summary>
-        /// Removes the matching variables from the specified scope.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             // Removal of variables only happens in the local scope if the
@@ -1211,24 +1116,18 @@ namespace Microsoft.PowerShell.Commands
         }
     }
 
-    /// <summary>
-    /// This class implements set-variable command.
-    /// </summary>
+    
     [Cmdlet(VerbsCommon.Clear, "Variable", SupportsShouldProcess = true, HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096923")]
     [OutputType(typeof(PSVariable))]
     public sealed class ClearVariableCommand : VariableCommandBase
     {
         #region parameters
 
-        /// <summary>
-        /// Name of the PSVariable(s) to set.
-        /// </summary>
+        
         [Parameter(Position = 0, ValueFromPipelineByPropertyName = true, Mandatory = true)]
         public string[] Name { get; set; }
 
-        /// <summary>
-        /// The Include parameter for all the variable commands.
-        /// </summary>
+        
         [Parameter]
         public string[] Include
         {
@@ -1243,9 +1142,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// The Exclude parameter for all the variable commands.
-        /// </summary>
+        
         [Parameter]
         public string[] Exclude
         {
@@ -1260,9 +1157,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Force the operation to make the best attempt at clearing the variable.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter Force
         {
@@ -1279,9 +1174,7 @@ namespace Microsoft.PowerShell.Commands
 
         private bool _force;
 
-        /// <summary>
-        /// The variable object should be passed down the pipeline.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter PassThru
         {
@@ -1300,9 +1193,7 @@ namespace Microsoft.PowerShell.Commands
 
         #endregion parameters
 
-        /// <summary>
-        /// The implementation of the Clear-Variable command.
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             foreach (string varName in Name)
@@ -1388,10 +1279,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Clears the value of the variable using the PSVariable instance if the scope
-        /// was specified or using standard variable lookup if the scope was not specified.
-        /// </summary>
+        
         /// <param name="matchingVariable">
         /// The variable that matched the name parameter(s).
         /// </param>

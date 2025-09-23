@@ -24,35 +24,23 @@ namespace Microsoft.PowerShell.Commands
 {
     using PowerShell = System.Management.Automation.PowerShell;
 
-    /// <summary>
-    /// This class implements Export-PSSession cmdlet.
-    /// Spec: TBD.
-    /// </summary>
+    
     [Cmdlet(VerbsData.Export, "PSSession", HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096604")]
     [OutputType(typeof(FileInfo))]
     public sealed class ExportPSSessionCommand : ImplicitRemotingCommandBase
     {
-        /// <summary>
-        /// Version of the script generator used (by this Export-PSSession cmdlet) to generate psm1 and psd1 files.
-        /// Generated script checks this version to see if it needs to be regenerated.  There are 2 situations where this is needed
-        /// 1. the script needs to be regenerated because a bug fix made previous versions incompatible with the rest of the system (i.e. with ObjectModelWrapper).
-        /// 2. ths script needs to be regenerated because a security vulnerability was found inside generated code (there is no way to service generated code, but we can service the dll that reports the version that the generated script checks against).
-        /// </summary>
+        
         public static Version VersionOfScriptGenerator { get { return ImplicitRemotingCodeGenerator.VersionOfScriptWriter; } }
 
         #region Parameters
 
-        /// <summary>
-        /// Mandatory file name to write to.
-        /// </summary>
+        
         [Parameter(Mandatory = true, Position = 1)]
         [ValidateNotNullOrEmpty]
         [Alias("PSPath", "ModuleName")]
         public string OutputModule { get; set; }
 
-        /// <summary>
-        /// Property that sets force parameter.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter Force
         {
@@ -69,9 +57,7 @@ namespace Microsoft.PowerShell.Commands
 
         private bool _force;
 
-        /// <summary>
-        /// Encoding optional flag.
-        /// </summary>
+        
         [Parameter]
         [ArgumentToEncodingTransformation]
         [ArgumentEncodingCompletions]
@@ -117,9 +103,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Performs initialization of cmdlet execution.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             // Module and FullyQualifiedModule should not be specified at the same time.
@@ -161,10 +145,7 @@ namespace Microsoft.PowerShell.Commands
         #endregion Methods
     }
 
-    /// <summary>
-    /// This class implements Import-PSSession cmdlet.
-    /// Spec: http://cmdletdesigner/SpecViewer/Default.aspx?Project=PowerShell&amp;Cmdlet=Import-Command .
-    /// </summary>
+    
     [Cmdlet(VerbsData.Import, "PSSession", HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096712")]
     [OutputType(typeof(PSModuleInfo))]
     public sealed class ImportPSSessionCommand : ImplicitRemotingCommandBase
@@ -250,9 +231,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Extra parameters
 
-        /// <summary>
-        /// This parameter specified a prefix used to modify names of imported commands.
-        /// </summary>
+        
         [Parameter]
         [ValidateNotNullOrEmpty]
         public new string Prefix
@@ -262,11 +241,7 @@ namespace Microsoft.PowerShell.Commands
             set { base.Prefix = value; }
         }
 
-        /// <summary>
-        /// Disable warnings on cmdlet and function names that have non-standard verbs
-        /// or non-standard characters in the noun.
-        /// Also disable security related checks against command and parameter names.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter DisableNameChecking
         {
@@ -279,9 +254,7 @@ namespace Microsoft.PowerShell.Commands
 
         #endregion
 
-        /// <summary>
-        /// Performs initialization of cmdlet execution.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             // Module and FullyQualifiedModule should not be specified at the same time.
@@ -326,9 +299,7 @@ namespace Microsoft.PowerShell.Commands
         }
     }
 
-    /// <summary>
-    /// Base class for implicit remoting cmdlets.
-    /// </summary>
+    
     public class ImplicitRemotingCommandBase : PSCmdlet
     {
         internal const string ImplicitRemotingKey = "ImplicitRemoting";
@@ -352,9 +323,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region related to Get-Command
 
-        /// <summary>
-        /// Gets or sets the path(s) or name(s) of the commands to retrieve.
-        /// </summary>
+        
         [Parameter(Position = 2)]
         [Alias("Name")]
         public string[] CommandName
@@ -377,16 +346,11 @@ namespace Microsoft.PowerShell.Commands
         private string[] _commandNameParameter;
         private Collection<WildcardPattern> _commandNamePatterns; // initialized to default value in the constructor
 
-        /// <summary>
-        /// Allows shadowing and/or overwriting of existing local/client commands.
-        /// </summary>
+        
         [Parameter]
         public SwitchParameter AllowClobber { get; set; } = new SwitchParameter(false);
 
-        /// <summary>
-        /// The parameter that all additional arguments get bound to. These arguments are used
-        /// when retrieving dynamic parameters from cmdlets that support them.
-        /// </summary>
+        
         [Parameter]
         [AllowNull]
         [AllowEmptyCollection]
@@ -407,9 +371,7 @@ namespace Microsoft.PowerShell.Commands
 
         private object[] _commandArgs;
 
-        /// <summary>
-        /// Gets or sets the type of the command to get.
-        /// </summary>
+        
         [Parameter]
         [Alias("Type")]
         public CommandTypes CommandType
@@ -428,9 +390,7 @@ namespace Microsoft.PowerShell.Commands
 
         private CommandTypes _commandType = CommandTypes.All & (~(CommandTypes.Application | CommandTypes.Script | CommandTypes.ExternalScript));
 
-        /// <summary>
-        /// Gets or sets the PSSnapin parameter to the cmdlet.
-        /// </summary>
+        
         [Parameter]
         [Alias("PSSnapin")]
         [ValidateNotNull]
@@ -453,9 +413,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string[] _PSSnapins = Array.Empty<string>();
         internal bool IsModuleSpecified = false;
-        /// <summary>
-        /// Gets or sets the FullyQualifiedModule parameter to the cmdlet.
-        /// </summary>
+        
         [Parameter]
         [ValidateNotNull]
         public ModuleSpecification[] FullyQualifiedModule
@@ -486,9 +444,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region related to F&O
 
-        /// <summary>
-        /// Gets or sets the types for which we should get formatting and output data.
-        /// </summary>
+        
         [Parameter(Position = 3)]
         public string[] FormatTypeName
         {
@@ -515,23 +471,16 @@ namespace Microsoft.PowerShell.Commands
 
         #region Related to modules
 
-        /// <summary>
-        /// This parameter specified a prefix used to modify names of imported commands.
-        /// </summary>
+        
         internal string Prefix { get; set; } = string.Empty;
 
-        /// <summary>
-        /// Gets or sets the certificate with which to sign the format file and psm1 file.
-        /// </summary>
+        
         [Parameter]
         public X509Certificate2 Certificate { get; set; }
 
         #endregion
 
-        /// <summary>
-        /// The PSSession object describing the remote runspace
-        /// using which the specified cmdlet operation will be performed.
-        /// </summary>
+        
         [Parameter(Mandatory = true, Position = 0)]
         [ValidateNotNull]
         public PSSession Session { get; set; }
@@ -874,9 +823,7 @@ namespace Microsoft.PowerShell.Commands
             return false;
         }
 
-        /// <summary>
-        /// Returns true if command doesn't shadow OR is in the -AllowShadowing parameter.
-        /// </summary>
+        
         /// <param name="commandName"></param>
         /// <returns></returns>
         private bool IsCommandNameAllowedForImport(string commandName)
@@ -1096,10 +1043,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region CommandInfo-specific rehydration helpers
 
-        /// <summary>
-        /// Validates that a name or identifier is safe to use in generated code
-        /// (i.e. it can't be used for code injection attacks).
-        /// </summary>
+        
         /// <param name="name">Name to validate.</param>
         /// <returns><see langword="true"/> if the name is safe; <see langword="false"/> otherwise.</returns>
         private static bool IsSafeNameOrIdentifier(string name)
@@ -1114,10 +1058,7 @@ namespace Microsoft.PowerShell.Commands
                 RegexOptions.CultureInvariant | RegexOptions.Singleline);
         }
 
-        /// <summary>
-        /// Validates that a parameter name is safe to use in generated code
-        /// (i.e. it can't be used for code injection attacks).
-        /// </summary>
+        
         /// <param name="parameterName">Parameter name to validate.</param>
         /// <returns><see langword="true"/> if the name is safe; <see langword="false"/> otherwise.</returns>
         private static bool IsSafeParameterName(string parameterName)
@@ -1125,10 +1066,7 @@ namespace Microsoft.PowerShell.Commands
             return IsSafeNameOrIdentifier(parameterName) && !parameterName.Contains(':');
         }
 
-        /// <summary>
-        /// Validates that a type can be safely used as a type constraint
-        /// (i.e. it doesn't introduce any side effects on the client).
-        /// </summary>
+        
         /// <param name="type">Type to validate.</param>
         /// <returns><see langword="true"/> if the type is safe; <see langword="false"/> otherwise.</returns>
         private static bool IsSafeTypeConstraint(Type type)
@@ -1168,10 +1106,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Validates that command metadata returned from the (potentially malicious) server is safe.
-        /// Writes error messages if necessary.  Modifies command metadata to make it safe if necessary.
-        /// </summary>
+        
         /// <param name="commandMetadata">Command metadata to verify.</param>
         /// <returns><see langword="true"/> if the command metadata is safe; <see langword="false"/> otherwise.</returns>
         private bool IsSafeCommandMetadata(CommandMetadata commandMetadata)
@@ -1396,9 +1331,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Converts remote (deserialized) CommandInfo objects into CommandMetadata equivalents.
-        /// </summary>
+        
         /// <param name="name2commandMetadata">Dictionary where rehydrated CommandMetadata are going to be stored.</param>
         /// <param name="alias2resolvedCommandName">Dictionary mapping alias names to resolved command names.</param>
         /// <param name="remoteCommandInfo">Remote (deserialized) CommandInfo object.</param>
@@ -1595,9 +1528,7 @@ namespace Microsoft.PowerShell.Commands
             return powerShell;
         }
 
-        /// <summary>
-        /// Gets CommandMetadata objects from remote runspace.
-        /// </summary>
+        
         /// <returns>(rehydrated) CommandMetadata objects.</returns>
         internal List<ExtendedTypeDefinition> GetRemoteFormatData()
         {
@@ -1689,8 +1620,7 @@ namespace Microsoft.PowerShell.Commands
             return powerShell;
         }
 
-        /// <summary>
-        /// </summary>
+        
         /// <param name="sender"></param>
         /// <param name="eventArgs"></param>
         private void HandleHostCallReceived(object sender, RemoteDataEventArgs<RemoteHostCall> eventArgs)
@@ -1698,9 +1628,7 @@ namespace Microsoft.PowerShell.Commands
             System.Management.Automation.Runspaces.Internal.ClientRemotePowerShell.ExitHandler(sender, eventArgs);
         }
 
-        /// <summary>
-        /// Gets CommandMetadata objects from remote runspace.
-        /// </summary>
+        
         /// <returns>(rehydrated) CommandMetadata objects.</returns>
         internal List<CommandMetadata> GetRemoteCommandMetadata(out Dictionary<string, string> alias2resolvedCommandName)
         {
@@ -1862,9 +1790,7 @@ namespace Microsoft.PowerShell.Commands
 
         internal Guid ModuleGuid { get; } = Guid.NewGuid();
 
-        /// <summary>
-        /// Generates a proxy module in the given directory.
-        /// </summary>
+        
         /// <param name="moduleRootDirectory">Base directory for the module.</param>
         /// <param name="moduleNamePrefix">FileName prefix for module files.</param>
         /// <param name="encoding">Encoding of generated files.</param>
@@ -1944,9 +1870,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Code generation helpers
 
-        /// <summary>
-        /// Gets a connection URI associated with the remote runspace.
-        /// </summary>
+        
         /// <returns>Connection URI associated with the remote runspace.</returns>
         private string GetConnectionString()
         {
@@ -2562,14 +2486,7 @@ function Get-PSImplicitRemotingSession
         private const string VMIdParameterTemplate = @"-VMId '{0}' ";
         private const string ContainerIdParameterTemplate = @"-ContainerId '{0}' ";
 
-        /// <summary>
-        /// This is needed to work with Default Port DCR change from WSMan. See BUG
-        /// 542726. If http/https is specified in the connectionURI and no port is
-        /// specified then defaults for http/https (80/443) are applied. But WSMan
-        /// by default listens on 5985/5986. To overcome this, this function
-        /// creates a -ComputerName parameter set or -ConnectionUri parameter
-        /// set depending on the situation.
-        /// </summary>
+        
         /// <returns></returns>
         private string GenerateConnectionStringForNewRunspace()
         {
@@ -3008,9 +2925,7 @@ function Get-PSImplicitRemotingClientSideParameters
 
         #endregion
 
-        /// <summary>
-        /// Generates a proxy module in the given directory.
-        /// </summary>
+        
         /// <param name="moduleRootDirectory">Base directory for the module.</param>
         /// <param name="fileNamePrefix">Filename prefix for module files.</param>
         /// <param name="encoding">Encoding of generated files.</param>

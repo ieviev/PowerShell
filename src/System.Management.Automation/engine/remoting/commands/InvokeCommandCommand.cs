@@ -18,121 +18,14 @@ using Dbg = System.Management.Automation.Diagnostics;
 
 namespace Microsoft.PowerShell.Commands
 {
-    /// <summary>
-    /// This cmdlet executes a specified script block on one or more
-    /// remote machines. The expression or command, as they will be
-    /// interchangeably called, need to be contained in a script
-    /// block. This is to ensure two things:
-    ///       1. The expression that the user has entered is
-    ///          syntactically correct (its compiled)
-    ///       2. The scriptblock can be converted to a powershell
-    ///          object before transmitting it to the remote end
-    ///          so that it can be run on constrained runspaces in
-    ///          the no language mode
-    ///
-    /// In general, the command script block is executed as if
-    /// the user had typed it at the command line. The output of the
-    /// command is the output of the cmdlet. However, since
-    /// invoke-command is a cmdlet, it will unravel its output:
-    ///     - if the command outputs an empty array, invoke-command
-    ///     will output $null
-    ///     - if the command outputs a single-element array, invoke-command
-    ///     will output that single element.
-    ///
-    ///     Additionally, the command will be run on a remote system.
-    ///
-    /// This cmdlet can be called in the following different ways:
-    ///
-    /// Execute a command in a remote machine by specifying the command
-    /// and machine name
-    ///     invoke-command -Command {get-process} -computername "server1"
-    ///
-    /// Execute a command in a set of remote machines by specifying the
-    /// command and the list of machines
-    ///     $servers = 1..10 | ForEach-Object {"Server${_}"}
-    ///     invoke-command -command {get-process} -computername $servers
-    ///
-    /// Create a new runspace and use it to execute a command on a remote machine
-    ///     $runspace = New-PSSession -computername "Server1"
-    ///     $credential = get-credential "user01"
-    ///     invoke-command -command {get-process} -Session $runspace -credential $credential
-    ///
-    /// Execute a command in a set of remote machines by specifying the
-    /// complete uri for the machines
-    ///     $uri = "http://hostedservices.microsoft.com/someservice"
-    ///     invoke-command -command { get-mail } - uri $uri
-    ///
-    /// Create a collection of runspaces and use it to execute a command on a set
-    /// of remote machines
-    ///
-    ///     $serveruris = 1..8 | ForEach-Object {"http://Server${_}/"}
-    ///     $runspaces = New-PSSession -URI $serveruris
-    ///     invoke-command -command {get-process} -Session $runspaces
-    ///
-    /// The cmdlet can also be invoked in the asynchronous mode.
-    ///
-    ///     invoke-command -command {get-process} -computername $servers -asjob
-    ///
-    /// When the -AsJob switch is used, the cmdlet will emit an PSJob Object.
-    /// The user can then use the other job cmdlets to work with this object
-    ///
-    /// Note there are two types of errors:
-    ///     1. Remote invocation errors
-    ///     2. Local errors.
-    ///
-    /// Both types of errors will be available when the user invokes
-    /// a receive operation.
-    ///
-    /// The PSJob object has its own throttling mechanism.
-    /// The result object will be stored in a global cache. If a user wants to
-    /// retrieve data from the result object the user should be able to do so
-    /// using the Receive-PSJob cmdlet
-    ///
-    /// The following needs to be noted about exception/error reporting in this
-    /// cmdlet:
-    ///     The exception objects that are thrown by underlying layers will be
-    ///     written as errors, to avoid stopping the entire cmdlet in case of
-    ///     multi-computername or multi-Session usage (for consistency, this
-    ///     is true even when done using one computername or runspace)
-    ///
-    /// Only one expression may be executed at a time in any single runspace.
-    /// Attempts to invoke an expression on a runspace that is already executing
-    /// an expression shall return an error with ErrorCategory ResourceNotAvailable
-    /// and notify the user that the runspace is currently busy.
-    ///
-    /// Some additional notes:
-    /// - invoke-command issues a single scriptblock to the computer or
-    /// runspace. If a runspace is specified and a command is already running
-    /// in that runspace, then the second command will fail
-    /// - The files necessary to execute the command (cmdlets, scripts, data
-    /// files, etc) must be present on the remote system; the cmdlet is not
-    /// responsible for copying them over
-    /// - The entire input stream is collected and sent to the remote system
-    /// before execution of the command begins (no input streaming)
-    /// - Input shall be available as $input.  Remote Runspaces must reference
-    /// $input explicitly (input will not automatically be available)
-    /// - Output from the command streams back to the client as it is
-    /// available
-    /// - Ctrl-C and pause/resume are supported; the client will send a
-    /// message to the remote powershell instance.
-    /// - By default if no -credential is specified, the host will impersonate
-    /// the current user on the client when executing the command
-    /// - The standard output of invoke-command is the output of the
-    /// last element of the remote pipeline, with some extra properties added
-    /// - If -Shell is not specified, then the value of the environment
-    /// variable DEFAULTREMOTESHELLNAME is used. If this is not set, then
-    /// "Microsoft.PowerShell" is used.
-    /// </summary>
+    
     [Cmdlet(VerbsLifecycle.Invoke, "Command", DefaultParameterSetName = InvokeCommandCommand.InProcParameterSet,
         HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096789", RemotingCapability = RemotingCapability.OwnedByCommand)]
     public class InvokeCommandCommand : PSExecutionCmdlet, IDisposable
     {
         #region Parameters
 
-        /// <summary>
-        /// The PSSession object describing the remote runspace
-        /// using which the specified cmdlet operation will be performed.
-        /// </summary>
+        
         [Parameter(Position = 0,
                    ParameterSetName = InvokeCommandCommand.SessionParameterSet)]
         [Parameter(Position = 0,
@@ -151,13 +44,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// This parameter represents the address(es) of the remote
-        /// computer(s). The following formats are supported:
-        ///      (a) Computer name
-        ///      (b) IPv4 address : 132.3.4.5
-        ///      (c) IPv6 address: 3ffe:8311:ffff:f70f:0:5efe:172.30.162.18.
-        /// </summary>
+        
         [Parameter(Position = 0,
                    ParameterSetName = InvokeCommandCommand.ComputerNameParameterSet)]
         [Parameter(Position = 0,
@@ -177,11 +64,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Specifies the credentials of the user to impersonate in the
-        /// remote machine. If this parameter is not specified then the
-        /// credentials of the current user process will be assumed.
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true,
                    ParameterSetName = InvokeCommandCommand.ComputerNameParameterSet)]
         [Parameter(ValueFromPipelineByPropertyName = true,
@@ -212,11 +95,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Port specifies the alternate port to be used in case the
-        /// default ports are not used for the transport mechanism
-        /// (port 80 for http and port 443 for useSSL)
-        /// </summary>
+        
         /// <remarks>
         /// Currently this is being accepted as a parameter. But in future
         /// support will be added to make this a part of a policy setting.
@@ -240,13 +119,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// This parameter suggests that the transport scheme to be used for
-        /// remote connections is useSSL instead of the default http.Since
-        /// there are only two possible transport schemes that are possible
-        /// at this point, a SwitchParameter is being used to switch between
-        /// the two.
-        /// </summary>
+        
         [Parameter(ParameterSetName = InvokeCommandCommand.ComputerNameParameterSet)]
         [Parameter(ParameterSetName = InvokeCommandCommand.FilePathComputerNameParameterSet)]
         [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "SSL")]
@@ -263,15 +136,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// For WSMan session:
-        /// If this parameter is not specified then the value specified in
-        /// the environment variable DEFAULTREMOTESHELLNAME will be used. If
-        /// this is not set as well, then Microsoft.PowerShell is used.
-        ///
-        /// For VM/Container sessions:
-        /// If this parameter is not specified then no configuration is used.
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true,
                    ParameterSetName = InvokeCommandCommand.ComputerNameParameterSet)]
         [Parameter(ValueFromPipelineByPropertyName = true,
@@ -305,12 +170,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// This parameters specifies the appname which identifies the connection
-        /// end point on the remote machine. If this parameter is not specified
-        /// then the value specified in DEFAULTREMOTEAPPNAME will be used. If that's
-        /// not specified as well, then "WSMAN" will be used.
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true,
                    ParameterSetName = InvokeCommandCommand.ComputerNameParameterSet)]
         [Parameter(ValueFromPipelineByPropertyName = true,
@@ -328,11 +188,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Allows the user of the cmdlet to specify a throttling value
-        /// for throttling the number of remote operations that can
-        /// be executed simultaneously.
-        /// </summary>
+        
         [Parameter(ParameterSetName = InvokeCommandCommand.ComputerNameParameterSet)]
         [Parameter(ParameterSetName = InvokeCommandCommand.SessionParameterSet)]
         [Parameter(ParameterSetName = InvokeCommandCommand.UriParameterSet)]
@@ -358,10 +214,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// A complete URI(s) specified for the remote computer and shell to
-        /// connect to and create runspace for.
-        /// </summary>
+        
         [Parameter(Position = 0,
                    ParameterSetName = InvokeCommandCommand.UriParameterSet)]
         [Parameter(Position = 0,
@@ -381,9 +234,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Specifies if the cmdlet needs to be run asynchronously.
-        /// </summary>
+        
         [Parameter(ParameterSetName = InvokeCommandCommand.ComputerNameParameterSet)]
         [Parameter(ParameterSetName = InvokeCommandCommand.SessionParameterSet)]
         [Parameter(ParameterSetName = InvokeCommandCommand.UriParameterSet)]
@@ -415,10 +266,7 @@ namespace Microsoft.PowerShell.Commands
 
         private bool _asjob = false;
 
-        /// <summary>
-        /// Specifies that after the command is invoked on a remote computer the
-        /// remote session should be disconnected.
-        /// </summary>
+        
         [Parameter(ParameterSetName = InvokeCommandCommand.ComputerNameParameterSet)]
         [Parameter(ParameterSetName = InvokeCommandCommand.FilePathComputerNameParameterSet)]
         [Parameter(ParameterSetName = InvokeCommandCommand.UriParameterSet)]
@@ -431,10 +279,7 @@ namespace Microsoft.PowerShell.Commands
             set { InvokeAndDisconnect = value; }
         }
 
-        /// <summary>
-        /// Specifies the name of the returned session when the InDisconnectedSession switch
-        /// is used.
-        /// </summary>
+        
         [Parameter(ParameterSetName = InvokeCommandCommand.ComputerNameParameterSet)]
         [Parameter(ParameterSetName = InvokeCommandCommand.FilePathComputerNameParameterSet)]
         [ValidateNotNullOrEmpty]
@@ -446,9 +291,7 @@ namespace Microsoft.PowerShell.Commands
             set { DisconnectedSessionName = value; }
         }
 
-        /// <summary>
-        /// Hide/Show computername of the remote objects.
-        /// </summary>
+        
         [Parameter(ParameterSetName = InvokeCommandCommand.ComputerNameParameterSet)]
         [Parameter(ParameterSetName = InvokeCommandCommand.SessionParameterSet)]
         [Parameter(ParameterSetName = InvokeCommandCommand.UriParameterSet)]
@@ -475,9 +318,7 @@ namespace Microsoft.PowerShell.Commands
 
         private bool _hideComputerName;
 
-        /// <summary>
-        /// Friendly name for the job object if AsJob is used.
-        /// </summary>
+        
         [Parameter(ParameterSetName = InvokeCommandCommand.ComputerNameParameterSet)]
         [Parameter(ParameterSetName = InvokeCommandCommand.SessionParameterSet)]
         [Parameter(ParameterSetName = InvokeCommandCommand.UriParameterSet)]
@@ -507,11 +348,7 @@ namespace Microsoft.PowerShell.Commands
 
         private string _name = string.Empty;
 
-        /// <summary>
-        /// The script block that the user has specified in the
-        /// cmdlet. This will be converted to a powershell before
-        /// its actually sent to the remote end.
-        /// </summary>
+        
         [Parameter(Position = 1,
                    Mandatory = true,
                    ParameterSetName = InvokeCommandCommand.ComputerNameParameterSet)]
@@ -554,17 +391,11 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// When executing a scriptblock in the current session, tell the cmdlet not to create a new scope.
-        /// </summary>
+        
         [Parameter(ParameterSetName = InvokeCommandCommand.InProcParameterSet)]
         public SwitchParameter NoNewScope { get; set; }
 
-        /// <summary>
-        /// The script block that the user has specified in the
-        /// cmdlet. This will be converted to a powershell before
-        /// its actually sent to the remote end.
-        /// </summary>
+        
         [Parameter(Position = 1,
                    Mandatory = true,
                    ParameterSetName = FilePathComputerNameParameterSet)]
@@ -602,9 +433,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// The AllowRedirection parameter enables the implicit redirection functionality.
-        /// </summary>
+        
         [Parameter(ParameterSetName = InvokeCommandCommand.UriParameterSet)]
         [Parameter(ParameterSetName = InvokeCommandCommand.FilePathUriParameterSet)]
         public override SwitchParameter AllowRedirection
@@ -620,10 +449,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Extended Session Options for controlling the session creation. Use
-        /// "New-WSManSessionOption" cmdlet to supply value for this parameter.
-        /// </summary>
+        
         [Parameter(ParameterSetName = InvokeCommandCommand.ComputerNameParameterSet)]
         [Parameter(ParameterSetName = InvokeCommandCommand.UriParameterSet)]
         [Parameter(ParameterSetName = InvokeCommandCommand.FilePathComputerNameParameterSet)]
@@ -641,9 +467,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Authentication mechanism to authenticate the user.
-        /// </summary>
+        
         [Parameter(ParameterSetName = InvokeCommandCommand.ComputerNameParameterSet)]
         [Parameter(ParameterSetName = InvokeCommandCommand.FilePathComputerNameParameterSet)]
         [Parameter(ParameterSetName = InvokeCommandCommand.UriParameterSet)]
@@ -661,12 +485,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// When set and in loopback scenario (localhost) this enables creation of WSMan
-        /// host process with the user interactive token, allowing PowerShell script network access,
-        /// i.e., allows going off box.  When this property is true and a PSSession is disconnected,
-        /// reconnection is allowed only if reconnecting from a PowerShell session on the same box.
-        /// </summary>
+        
         [Parameter(ParameterSetName = InvokeCommandCommand.ComputerNameParameterSet)]
         [Parameter(ParameterSetName = InvokeCommandCommand.FilePathComputerNameParameterSet)]
         [Parameter(ParameterSetName = InvokeCommandCommand.UriParameterSet)]
@@ -678,12 +497,7 @@ namespace Microsoft.PowerShell.Commands
             set { base.EnableNetworkAccess = value; }
         }
 
-        /// <summary>
-        /// When set, PowerShell process inside container will be launched with
-        /// high privileged account.
-        /// Otherwise (default case), PowerShell process inside container will be launched
-        /// with low privileged account.
-        /// </summary>
+        
         [Parameter(ParameterSetName = InvokeCommandCommand.ContainerIdParameterSet)]
         [Parameter(ParameterSetName = InvokeCommandCommand.FilePathContainerIdParameterSet)]
         public override SwitchParameter RunAsAdministrator
@@ -695,9 +509,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region SSH Parameters
 
-        /// <summary>
-        /// Host name for an SSH remote connection.
-        /// </summary>
+        
         [Parameter(Mandatory = true,
             ParameterSetName = InvokeCommandCommand.SSHHostParameterSet)]
         [Parameter(Mandatory = true,
@@ -710,9 +522,7 @@ namespace Microsoft.PowerShell.Commands
             set { base.HostName = value; }
         }
 
-        /// <summary>
-        /// User Name.
-        /// </summary>
+        
         [Parameter(ParameterSetName = InvokeCommandCommand.SSHHostParameterSet)]
         [Parameter(ParameterSetName = InvokeCommandCommand.FilePathSSHHostParameterSet)]
         [ValidateNotNullOrEmpty]
@@ -723,9 +533,7 @@ namespace Microsoft.PowerShell.Commands
             set { base.UserName = value; }
         }
 
-        /// <summary>
-        /// Key Path.
-        /// </summary>
+        
         [Parameter(ParameterSetName = InvokeCommandCommand.SSHHostParameterSet)]
         [Parameter(ParameterSetName = InvokeCommandCommand.FilePathSSHHostParameterSet)]
         [ValidateNotNullOrEmpty]
@@ -737,9 +545,7 @@ namespace Microsoft.PowerShell.Commands
             set { base.KeyFilePath = value; }
         }
 
-        /// <summary>
-        /// Gets and sets a value for the SSH subsystem to use for the remote connection.
-        /// </summary>
+        
         [Parameter(ParameterSetName = InvokeCommandCommand.SSHHostParameterSet)]
         [Parameter(ParameterSetName = InvokeCommandCommand.FilePathSSHHostParameterSet)]
         public override string Subsystem
@@ -749,9 +555,7 @@ namespace Microsoft.PowerShell.Commands
             set { base.Subsystem = value; }
         }
 
-        /// <summary>
-        /// Gets and sets a value in milliseconds that limits the time allowed for an SSH connection to be established.
-        /// </summary>
+        
         [Parameter(ParameterSetName = InvokeCommandCommand.SSHHostParameterSet)]
         [Parameter(ParameterSetName = InvokeCommandCommand.FilePathSSHHostParameterSet)]
         public override int ConnectingTimeout
@@ -761,12 +565,7 @@ namespace Microsoft.PowerShell.Commands
             set { base.ConnectingTimeout = value; }
         }
 
-        /// <summary>
-        /// This parameter specifies that SSH is used to establish the remote
-        /// connection and act as the remoting transport.  By default WinRM is used
-        /// as the remoting transport.  Using the SSH transport requires that SSH is
-        /// installed and PowerShell remoting is enabled on both client and remote machines.
-        /// </summary>
+        
         [Parameter(ParameterSetName = PSRemotingBaseCmdlet.SSHHostParameterSet)]
         [Parameter(ParameterSetName = InvokeCommandCommand.FilePathSSHHostParameterSet)]
         [ValidateSet("true")]
@@ -777,12 +576,7 @@ namespace Microsoft.PowerShell.Commands
             set { base.SSHTransport = value; }
         }
 
-        /// <summary>
-        /// Hashtable array containing SSH connection parameters for each remote target
-        ///   ComputerName  (Alias: HostName)           (required)
-        ///   UserName                                  (optional)
-        ///   KeyFilePath   (Alias: IdentityFilePath)   (optional)
-        /// </summary>
+        
         [Parameter(ParameterSetName = PSRemotingBaseCmdlet.SSHHostHashParameterSet, Mandatory = true)]
         [Parameter(ParameterSetName = InvokeCommandCommand.FilePathSSHHostHashParameterSet, Mandatory = true)]
         [ValidateNotNullOrEmpty]
@@ -792,9 +586,7 @@ namespace Microsoft.PowerShell.Commands
             set;
         }
 
-        /// <summary>
-        /// Hashtable containing options to be passed to OpenSSH.
-        /// </summary>
+        
         [Parameter(ParameterSetName = InvokeCommandCommand.SSHHostParameterSet)]
         [Parameter(ParameterSetName = InvokeCommandCommand.FilePathSSHHostParameterSet)]
         [ValidateNotNullOrEmpty]
@@ -815,9 +607,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Remote Debug Parameters
 
-        /// <summary>
-        /// When selected this parameter causes a debugger Step-Into action for each running remote session.
-        /// </summary>
+        
         [Parameter(ParameterSetName = InvokeCommandCommand.ComputerNameParameterSet)]
         [Parameter(ParameterSetName = InvokeCommandCommand.SessionParameterSet)]
         [Parameter(ParameterSetName = InvokeCommandCommand.UriParameterSet)]
@@ -846,10 +636,7 @@ namespace Microsoft.PowerShell.Commands
 
         #region Overrides
 
-        /// <summary>
-        /// Creates the helper classes for the specified
-        /// parameter set.
-        /// </summary>
+        
         protected override void BeginProcessing()
         {
             if (this.InvokeAndDisconnect && _asjob)
@@ -1071,10 +858,7 @@ namespace Microsoft.PowerShell.Commands
             DetermineThrowStatementBehavior();
         }
 
-        /// <summary>
-        /// The expression will be executed in the remote computer if a
-        /// remote runspace parameter or computer name or uri is specified.
-        /// </summary>
+        
         /// <remarks>
         /// 1. Identify if the command belongs to the same pipeline
         /// 2. If so, use the same GUID to create Pipeline/PowerShell
@@ -1196,10 +980,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// InvokeAsync would have been called in ProcessRecord. Wait here
-        /// for all the results to become available.
-        /// </summary>
+        
         protected override void EndProcessing()
         {
             // close the input stream on all the pipelines
@@ -1317,13 +1098,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// This method is called when the user sends a stop signal to the
-        /// cmdlet. The cmdlet will not exit until it has completed
-        /// executing the command on all the runspaces. However, when a stop
-        /// signal is sent, execution needs to be stopped on the pipelines
-        /// corresponding to these runspaces.
-        /// </summary>
+        
         /// <remarks>This is called from a separate thread so need to worry
         /// about concurrency issues
         /// </remarks>
@@ -1392,10 +1167,7 @@ namespace Microsoft.PowerShell.Commands
             return hostDebugger;
         }
 
-        /// <summary>
-        /// Handle event from the throttle manager indicating that all
-        /// operations are complete.
-        /// </summary>
+        
         /// <param name="sender"></param>
         /// <param name="eventArgs"></param>
         private void HandleThrottleComplete(object sender, EventArgs eventArgs)
@@ -1404,10 +1176,7 @@ namespace Microsoft.PowerShell.Commands
             _throttleManager.ThrottleComplete -= HandleThrottleComplete;
         }
 
-        /// <summary>
-        /// Clears the internal invoke command instance on all
-        /// remote runspaces.
-        /// </summary>
+        
         private void ClearInvokeCommandOnRunspaces()
         {
             if (ParameterSetName.Equals(InvokeCommandCommand.SessionParameterSet))
@@ -1420,10 +1189,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Sets the throttle limit, creates the invoke expression
-        /// sync job and executes the same.
-        /// </summary>
+        
         private void CreateAndRunSyncJob()
         {
             lock (_jobSyncObject)
@@ -1539,10 +1305,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Waits for the disconnectComplete event and then disposes the job
-        /// object.
-        /// </summary>
+        
         private void WaitForDisconnectAndDisposeJob()
         {
             if (_disconnectComplete != null)
@@ -1567,10 +1330,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Creates a disconnected session for each disconnected PowerShell object in
-        /// PSInvokeExpressionSyncJob.
-        /// </summary>
+        
         /// <param name="job"></param>
         /// <returns></returns>
         private List<PSSession> GetDisconnectedSessions(PSInvokeExpressionSyncJob job)
@@ -1655,9 +1415,7 @@ namespace Microsoft.PowerShell.Commands
             return discSessions;
         }
 
-        /// <summary>
-        /// Writes an input value to the pipeline.
-        /// </summary>
+        
         /// <param name="inputValue">Input value to write.</param>
         private void WriteInput(object inputValue)
         {
@@ -1696,9 +1454,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Writes the results in the job object.
-        /// </summary>
+        
         /// <param name="nonblocking">Write in a non-blocking manner.</param>
         private void WriteJobResults(bool nonblocking)
         {
@@ -1918,9 +1674,7 @@ namespace Microsoft.PowerShell.Commands
             s_RCProgress.StopProgress(sourceId);
         }
 
-        /// <summary>
-        /// Writes the stream objects in the specified collection.
-        /// </summary>
+        
         /// <param name="results">Collection to read from.</param>
         private void WriteStreamObjectsFromCollection(IEnumerable<PSStreamObject> results)
         {
@@ -1934,11 +1688,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Determine if we have to throw for a
-        /// "throw" statement from scripts
-        ///  This means that the local pipeline will be terminated as well.
-        /// </summary>
+        
         /// <remarks>
         /// This is valid when only one pipeline is
         /// existing. Which means, there can be only one of the following:
@@ -1987,9 +1737,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// <summary>
-        /// Process the stream object before writing it in the specified collection.
-        /// </summary>
+        
         /// <param name="streamObject">Stream object to process.</param>
         private static void PreProcessStreamObject(PSStreamObject streamObject)
         {
@@ -2056,18 +1804,14 @@ namespace Microsoft.PowerShell.Commands
 
         #region IDisposable Overrides
 
-        /// <summary>
-        /// Dispose the cmdlet.
-        /// </summary>
+        
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
 
-        /// <summary>
-        /// Internal dispose method which does the actual disposing.
-        /// </summary>
+        
         /// <param name="disposing">Whether called from dispose or finalize.</param>
         private void Dispose(bool disposing)
         {
@@ -2119,9 +1863,7 @@ namespace System.Management.Automation.Internal
 {
     #region RobustConnectionProgress class
 
-    /// <summary>
-    /// Encapsulates the Robust Connection retry progress bar.
-    /// </summary>
+    
     internal class RobustConnectionProgress
     {
         private System.Management.Automation.Host.PSHost _psHost;
@@ -2135,18 +1877,14 @@ namespace System.Management.Automation.Internal
         private readonly object _syncObject;
         private Timer _updateTimer;
 
-        /// <summary>
-        /// Constructor.
-        /// </summary>
+        
         public RobustConnectionProgress()
         {
             _syncObject = new object();
             _activity = RemotingErrorIdStrings.RCProgressActivity;
         }
 
-        /// <summary>
-        /// Starts progress bar.
-        /// </summary>
+        
         /// <param name="sourceId"></param>
         /// <param name="computerName"></param>
         /// <param name="secondsTotal"></param>
@@ -2189,9 +1927,7 @@ namespace System.Management.Automation.Internal
             }
         }
 
-        /// <summary>
-        /// Stops progress bar.
-        /// </summary>
+        
         public void StopProgress(
             long sourceId)
         {

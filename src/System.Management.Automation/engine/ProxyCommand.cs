@@ -6,16 +6,12 @@ using System.Text;
 
 namespace System.Management.Automation
 {
-    /// <summary>
-    /// A ProxyCommand class used to represent a Command constructed Dynamically.
-    /// </summary>
+    
     public sealed class ProxyCommand
     {
         #region Private Constructor
 
-        /// <summary>
-        /// Private Constructor to restrict inheritance.
-        /// </summary>
+        
         private ProxyCommand()
         {
         }
@@ -24,10 +20,7 @@ namespace System.Management.Automation
 
         #region Public Static Methods
 
-        /// <summary>
-        /// This method constructs a string representing the command specified by <paramref name="commandMetadata"/>.
-        /// The returned string is a ScriptBlock which can be used to configure a Cmdlet/Function in a Runspace.
-        /// </summary>
+        
         /// <param name="commandMetadata">
         /// An instance of CommandMetadata representing a command.
         /// </param>
@@ -47,10 +40,7 @@ namespace System.Management.Automation
             return commandMetadata.GetProxyCommand(string.Empty, true);
         }
 
-        /// <summary>
-        /// This method constructs a string representing the command specified by <paramref name="commandMetadata"/>.
-        /// The returned string is a ScriptBlock which can be used to configure a Cmdlet/Function in a Runspace.
-        /// </summary>
+        
         /// <param name="commandMetadata">
         /// An instance of CommandMetadata representing a command.
         /// </param>
@@ -73,10 +63,7 @@ namespace System.Management.Automation
             return commandMetadata.GetProxyCommand(helpComment, true);
         }
 
-        /// <summary>
-        /// This method constructs a string representing the command specified by <paramref name="commandMetadata"/>.
-        /// The returned string is a ScriptBlock which can be used to configure a Cmdlet/Function in a Runspace.
-        /// </summary>
+        
         /// <param name="commandMetadata">
         /// An instance of CommandMetadata representing a command.
         /// </param>
@@ -103,10 +90,7 @@ namespace System.Management.Automation
             return commandMetadata.GetProxyCommand(helpComment, generateDynamicParameters);
         }
 
-        /// <summary>
-        /// This method constructs a string representing the CmdletBinding attribute of the command
-        /// specified by <paramref name="commandMetadata"/>.
-        /// </summary>
+        
         /// <param name="commandMetadata">
         /// An instance of CommandMetadata representing a command.
         /// </param>
@@ -126,11 +110,7 @@ namespace System.Management.Automation
             return commandMetadata.GetDecl();
         }
 
-        /// <summary>
-        /// This method constructs a string representing the param block of the command
-        /// specified by <paramref name="commandMetadata"/>.  The returned string only contains the
-        /// parameters, it is not enclosed in "param()".
-        /// </summary>
+        
         /// <param name="commandMetadata">
         /// An instance of CommandMetadata representing a command.
         /// </param>
@@ -151,11 +131,7 @@ namespace System.Management.Automation
             return commandMetadata.GetParamBlock();
         }
 
-        /// <summary>
-        /// This method constructs a string representing the begin block of the command
-        /// specified by <paramref name="commandMetadata"/>.  The returned string only contains the
-        /// script, it is not enclosed in "begin { }".
-        /// </summary>
+        
         /// <param name="commandMetadata">
         /// An instance of CommandMetadata representing a command.
         /// </param>
@@ -175,11 +151,7 @@ namespace System.Management.Automation
             return commandMetadata.GetBeginBlock();
         }
 
-        /// <summary>
-        /// This method constructs a string representing the process block of the command
-        /// specified by <paramref name="commandMetadata"/>.  The returned string only contains the
-        /// script, it is not enclosed in "process { }".
-        /// </summary>
+        
         /// <param name="commandMetadata">
         /// An instance of CommandMetadata representing a command.
         /// </param>
@@ -199,11 +171,7 @@ namespace System.Management.Automation
             return commandMetadata.GetProcessBlock();
         }
 
-        /// <summary>
-        /// This method constructs a string representing the dynamic parameter block of the command
-        /// specified by <paramref name="commandMetadata"/>.  The returned string only contains the
-        /// script, it is not enclosed in "dynamicparam { }".
-        /// </summary>
+        
         /// <param name="commandMetadata">
         /// An instance of CommandMetadata representing a command.
         /// </param>
@@ -223,11 +191,7 @@ namespace System.Management.Automation
             return commandMetadata.GetDynamicParamBlock();
         }
 
-        /// <summary>
-        /// This method constructs a string representing the end block of the command
-        /// specified by <paramref name="commandMetadata"/>.  The returned string only contains the
-        /// script, it is not enclosed in "end { }".
-        /// </summary>
+        
         /// <param name="commandMetadata">
         /// An instance of CommandMetadata representing a command.
         /// </param>
@@ -247,11 +211,7 @@ namespace System.Management.Automation
             return commandMetadata.GetEndBlock();
         }
 
-        /// <summary>
-        /// This method constructs a string representing the clean block of the command
-        /// specified by <paramref name="commandMetadata"/>. The returned string only contains the
-        /// script, it is not enclosed in "clean { }".
-        /// </summary>
+        
         /// <param name="commandMetadata">
         /// An instance of CommandMetadata representing a command.
         /// </param>
@@ -367,9 +327,7 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary>
-        /// Construct the text that can be used in a multi-line comment for get-help.
-        /// </summary>
+        
         /// <param name="help">A custom PSObject created by Get-Help.</param>
         /// <returns>A string that can be used as the help comment for script for the input HelpInfo object.</returns>
         /// <exception cref="System.ArgumentNullException">When the help argument is null.</exception>

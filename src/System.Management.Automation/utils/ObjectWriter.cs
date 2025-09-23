@@ -8,17 +8,13 @@ namespace System.Management.Automation.Internal
     using System.Runtime.InteropServices;
     using System.Management.Automation.Runspaces;
 
-    /// <summary>
-    /// A ObjectWriter for an ObjectStream.
-    /// </summary>
+    
     /// <remarks>
     /// This class is not safe for multi-threaded operations.
     /// </remarks>
     internal class ObjectWriter : PipelineWriter
     {
-        /// <summary>
-        /// Construct with an existing ObjectStream.
-        /// </summary>
+        
         /// <param name="stream">The stream to write.</param>
         /// <exception cref="ArgumentNullException">Thrown if the specified stream is null.</exception>
         public ObjectWriter([In, Out] ObjectStreamBase stream)
@@ -33,9 +29,7 @@ namespace System.Management.Automation.Internal
 
         #region Properties
 
-        /// <summary>
-        /// Waitable handle for caller's to block until buffer space is available in the underlying stream.
-        /// </summary>
+        
         public override WaitHandle WaitHandle
         {
             get
@@ -44,9 +38,7 @@ namespace System.Management.Automation.Internal
             }
         }
 
-        /// <summary>
-        /// Check if the stream is open for further writes.
-        /// </summary>
+        
         /// <value>true if the underlying stream is open, otherwise; false.</value>
         /// <remarks>
         /// Attempting to write to the underlying stream if IsOpen is false throws
@@ -60,9 +52,7 @@ namespace System.Management.Automation.Internal
             }
         }
 
-        /// <summary>
-        /// Returns the number of objects in the underlying stream.
-        /// </summary>
+        
         public override int Count
         {
             get
@@ -71,9 +61,7 @@ namespace System.Management.Automation.Internal
             }
         }
 
-        /// <summary>
-        /// Get the capacity of the stream.
-        /// </summary>
+        
         /// <value>
         /// The capacity of the stream.
         /// </value>
@@ -94,9 +82,7 @@ namespace System.Management.Automation.Internal
 
         #region Methods
 
-        /// <summary>
-        /// Close the stream.
-        /// </summary>
+        
         /// <remarks>
         /// Causes subsequent calls to IsOpen to return false and calls to
         /// a write operation to throw an ObjectDisposedException.
@@ -112,10 +98,7 @@ namespace System.Management.Automation.Internal
             // to null, now all of the tests for null can come out.
         }
 
-        /// <summary>
-        /// Flush the data from the stream.  Closed streams may be flushed,
-        /// but disposed streams may not.
-        /// </summary>
+        
         /// <exception cref="ObjectDisposedException">
         /// The underlying stream is disposed
         /// </exception>
@@ -124,9 +107,7 @@ namespace System.Management.Automation.Internal
             _stream.Flush();
         }
 
-        /// <summary>
-        /// Write a single object into the underlying stream.
-        /// </summary>
+        
         /// <param name="obj">The object to add to the stream.</param>
         /// <returns>
         /// One, if the write was successful, otherwise;
@@ -144,9 +125,7 @@ namespace System.Management.Automation.Internal
             return _stream.Write(obj);
         }
 
-        /// <summary>
-        /// Write objects to the underlying stream.
-        /// </summary>
+        
         /// <param name="obj">Object or enumeration to read from.</param>
         /// <param name="enumerateCollection">
         /// If enumerateCollection is true, and <paramref name="obj"/>
@@ -171,9 +150,7 @@ namespace System.Management.Automation.Internal
         }
 
 #if (false)
-        /// <summary>
-        /// Handle WriteReady events from the underlying stream.
-        /// </summary>
+        
         /// <param name="sender">The stream raising the event.</param>
         /// <param name="args">Standard event args.</param>
         private void OnWriteReady (object sender, EventArgs args)
@@ -192,18 +169,14 @@ namespace System.Management.Automation.Internal
 
         #region Private fields
 
-        /// <summary>
-        /// The underlying stream.
-        /// </summary>
+        
         /// <remarks>Can never be null</remarks>
         private readonly ObjectStreamBase _stream;
 
         #endregion Private Fields
     }
 
-    /// <summary>
-    /// A ObjectWriter for a PSDataCollection ObjectStream.
-    /// </summary>
+    
     /// <remarks>
     /// PSDataCollection is introduced after 1.0. PSDataCollection
     /// is used to store data from the last command in
@@ -214,9 +187,7 @@ namespace System.Management.Automation.Internal
     {
         #region Constructors
 
-        /// <summary>
-        /// Construct with an existing PSDataCollectionStream.
-        /// </summary>
+        
         /// <param name="stream">The stream to write.</param>
         /// <exception cref="ArgumentNullException">
         /// Thrown if the specified stream is null

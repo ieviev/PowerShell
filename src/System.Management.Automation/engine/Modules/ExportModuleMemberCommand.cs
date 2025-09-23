@@ -15,15 +15,11 @@ using System.Management.Automation.Security;
 namespace Microsoft.PowerShell.Commands
 {
     #region Export-ModuleMember
-    /// <summary>
-    /// Implements a cmdlet that loads a module.
-    /// </summary>
+    
     [Cmdlet(VerbsData.Export, "ModuleMember", HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096578")]
     public sealed class ExportModuleMemberCommand : PSCmdlet
     {
-        /// <summary>
-        /// This parameter specifies the functions to import from the module...
-        /// </summary>
+        
         [Parameter(ValueFromPipeline = true, ValueFromPipelineByPropertyName = true, Position = 0)]
         [AllowEmptyCollection]
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays", Justification = "Cmdlets use arrays for parameters.")]
@@ -53,9 +49,7 @@ namespace Microsoft.PowerShell.Commands
         private string[] _functionList;
         private List<WildcardPattern> _functionPatterns;
 
-        /// <summary>
-        /// This parameter specifies the functions to import from the module...
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true)]
         [AllowEmptyCollection]
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays", Justification = "Cmdlets use arrays for parameters.")]
@@ -85,9 +79,7 @@ namespace Microsoft.PowerShell.Commands
         private string[] _cmdletList;
         private List<WildcardPattern> _cmdletPatterns;
 
-        /// <summary>
-        /// This parameter specifies the variables to import from the module...
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true)]
         [ValidateNotNull]
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays", Justification = "Cmdlets use arrays for parameters.")]
@@ -117,9 +109,7 @@ namespace Microsoft.PowerShell.Commands
         private string[] _variableExportList;
         private List<WildcardPattern> _variablePatterns;
 
-        /// <summary>
-        /// This parameter specifies the aliases to import from the module...
-        /// </summary>
+        
         [Parameter(ValueFromPipelineByPropertyName = true)]
         [ValidateNotNull]
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays", Justification = "Cmdlets use arrays for parameters.")]
@@ -149,9 +139,7 @@ namespace Microsoft.PowerShell.Commands
         private string[] _aliasExportList;
         private List<WildcardPattern> _aliasPatterns;
 
-        /// <summary>
-        /// Export the specified functions...
-        /// </summary>
+        
         protected override void ProcessRecord()
         {
             if (Context.EngineSessionState == Context.TopLevelSessionState)

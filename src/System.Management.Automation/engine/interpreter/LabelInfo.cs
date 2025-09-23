@@ -12,10 +12,7 @@ using System.Diagnostics;
 
 namespace System.Management.Automation.Interpreter
 {
-    /// <summary>
-    /// Contains compiler state corresponding to a LabelTarget
-    /// See also LabelScopeInfo.
-    /// </summary>
+    
     internal sealed class LabelInfo
     {
         // The tree node representing this label
@@ -298,9 +295,7 @@ namespace System.Management.Automation.Interpreter
             Kind = kind;
         }
 
-        /// <summary>
-        /// Returns true if we can jump into this node.
-        /// </summary>
+        
         internal bool CanJumpInto
         {
             get

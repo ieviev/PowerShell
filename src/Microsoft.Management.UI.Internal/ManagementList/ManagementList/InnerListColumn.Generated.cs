@@ -9,23 +9,17 @@ using System.Windows;
 namespace Microsoft.Management.UI.Internal
 {
 
-    /// <summary>
-    /// Derives and extends GridViewColumn to add concepts such as column visibility..
-    /// </summary>
+    
     [Localizability(LocalizationCategory.None)]
     partial class InnerListColumn
     {
         //
         // DataDescription dependency property
         //
-        /// <summary>
-        /// Identifies the DataDescription dependency property.
-        /// </summary>
+        
         public static readonly DependencyProperty DataDescriptionProperty = DependencyProperty.Register( "DataDescription", typeof(UIPropertyGroupDescription), typeof(InnerListColumn), new PropertyMetadata( null, DataDescriptionProperty_PropertyChanged) );
 
-        /// <summary>
-        /// Gets or sets the data description.
-        /// </summary>
+        
         [Bindable(true)]
         [Category("Common Properties")]
         [Description("Gets or sets the data description.")]
@@ -48,9 +42,7 @@ namespace Microsoft.Management.UI.Internal
             obj.OnDataDescriptionChanged( new PropertyChangedEventArgs<UIPropertyGroupDescription>((UIPropertyGroupDescription)e.OldValue, (UIPropertyGroupDescription)e.NewValue) );
         }
 
-        /// <summary>
-        /// Called when DataDescription property changes.
-        /// </summary>
+        
         protected virtual void OnDataDescriptionChanged(PropertyChangedEventArgs<UIPropertyGroupDescription> e)
         {
             OnDataDescriptionChangedImplementation(e);
@@ -62,14 +54,10 @@ namespace Microsoft.Management.UI.Internal
         //
         // MinWidth dependency property
         //
-        /// <summary>
-        /// Identifies the MinWidth dependency property.
-        /// </summary>
+        
         public static readonly DependencyProperty MinWidthProperty = DependencyProperty.Register( "MinWidth", typeof(double), typeof(InnerListColumn), new PropertyMetadata( 20.0, MinWidthProperty_PropertyChanged), MinWidthProperty_ValidateProperty );
 
-        /// <summary>
-        /// Gets or sets a value that dictates the minimum allowable width of the column.
-        /// </summary>
+        
         [Bindable(true)]
         [Category("Common Properties")]
         [Description("Gets or sets a value that dictates the minimum allowable width of the column.")]
@@ -92,9 +80,7 @@ namespace Microsoft.Management.UI.Internal
             obj.OnMinWidthChanged( new PropertyChangedEventArgs<double>((double)e.OldValue, (double)e.NewValue) );
         }
 
-        /// <summary>
-        /// Called when MinWidth property changes.
-        /// </summary>
+        
         protected virtual void OnMinWidthChanged(PropertyChangedEventArgs<double> e)
         {
             OnMinWidthChangedImplementation(e);
@@ -115,14 +101,10 @@ namespace Microsoft.Management.UI.Internal
         //
         // Required dependency property
         //
-        /// <summary>
-        /// Identifies the Required dependency property.
-        /// </summary>
+        
         public static readonly DependencyProperty RequiredProperty = DependencyProperty.Register( "Required", typeof(bool), typeof(InnerListColumn), new PropertyMetadata( BooleanBoxes.FalseBox, RequiredProperty_PropertyChanged) );
 
-        /// <summary>
-        /// Gets or sets a value indicating whether the column may not be removed.
-        /// </summary>
+        
         [Bindable(true)]
         [Category("Common Properties")]
         [Description("Gets or sets a value indicating whether the column may not be removed.")]
@@ -145,9 +127,7 @@ namespace Microsoft.Management.UI.Internal
             obj.OnRequiredChanged( new PropertyChangedEventArgs<bool>((bool)e.OldValue, (bool)e.NewValue) );
         }
 
-        /// <summary>
-        /// Called when Required property changes.
-        /// </summary>
+        
         protected virtual void OnRequiredChanged(PropertyChangedEventArgs<bool> e)
         {
             OnRequiredChangedImplementation(e);
@@ -159,14 +139,10 @@ namespace Microsoft.Management.UI.Internal
         //
         // Visible dependency property
         //
-        /// <summary>
-        /// Identifies the Visible dependency property.
-        /// </summary>
+        
         public static readonly DependencyProperty VisibleProperty = DependencyProperty.Register( "Visible", typeof(bool), typeof(InnerListColumn), new PropertyMetadata( BooleanBoxes.TrueBox, VisibleProperty_PropertyChanged) );
 
-        /// <summary>
-        /// Gets or sets a value indicating whether the columns we want to have available in the list.
-        /// </summary>
+        
         /// <remarks>
         /// Modifying the Visible property does not in itself make the column visible or not visible.  This should always be kept in sync with the Columns property.
         /// </remarks>
@@ -192,9 +168,7 @@ namespace Microsoft.Management.UI.Internal
             obj.OnVisibleChanged( new PropertyChangedEventArgs<bool>((bool)e.OldValue, (bool)e.NewValue) );
         }
 
-        /// <summary>
-        /// Called when Visible property changes.
-        /// </summary>
+        
         protected virtual void OnVisibleChanged(PropertyChangedEventArgs<bool> e)
         {
             OnVisibleChangedImplementation(e);
