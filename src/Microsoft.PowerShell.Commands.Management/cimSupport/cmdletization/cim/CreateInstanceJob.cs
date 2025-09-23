@@ -26,7 +26,7 @@ namespace Microsoft.PowerShell.Cmdletization.Cim
         }
 
         internal CreateInstanceJob(CimJobContext jobContext, MethodInvocationInfo methodInvocationInfo)
-                : base(jobContext, true /* passThru */, GetEmptyInstance(jobContext), methodInvocationInfo)
+                : base(jobContext, true , GetEmptyInstance(jobContext), methodInvocationInfo)
         {
         }
 

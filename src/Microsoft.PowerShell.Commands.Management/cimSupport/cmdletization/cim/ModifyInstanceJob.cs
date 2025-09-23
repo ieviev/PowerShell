@@ -53,7 +53,7 @@ namespace Microsoft.PowerShell.Cmdletization.Cim
         public override void OnCompleted()
         {
             Dbg.Assert(_resultFromModifyInstance != null, "ModifyInstance should return an instance over DCOM and WSMan");
-            ModifyLocalCimInstance(_originalInstance); /* modify input CimInstance only upon success (fix for bug WinBlue #) */
+            ModifyLocalCimInstance(_originalInstance); 
             base.OnCompleted();
         }
 

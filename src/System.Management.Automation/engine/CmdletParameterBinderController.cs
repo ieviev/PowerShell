@@ -423,8 +423,8 @@ namespace System.Management.Automation
 
                     CommandParameterInternal bindableArgument =
                         CommandParameterInternal.CreateParameterWithArgument(
-                           /*parameterAst*/null, parameterName, "-" + parameterName + ":",
-                           /*argumentAst*/null, argumentValue, false);
+                           null, parameterName, "-" + parameterName + ":",
+                           null, argumentValue, false);
 
                     bool bindResult =
                             BindParameter(
@@ -1542,7 +1542,7 @@ namespace System.Management.Automation
                         // may be disjoint, as in 'echo a -verbose b', we have 'a' and 'b' in UnboundArguments.
                         var argumentAst = UnboundArguments.Count == 1 ? UnboundArguments[0].ArgumentAst : null;
                         var cpi = CommandParameterInternal.CreateParameterWithArgument(
-                            /*parameterAst*/null, varargsParameter.Parameter.Name, "-" + varargsParameter.Parameter.Name + ":",
+                            null, varargsParameter.Parameter.Name, "-" + varargsParameter.Parameter.Name + ":",
                             argumentAst, valueFromRemainingArguments, false);
 
                         // To make all of the following work similarly (the first is handled elsewhere, but second and third are
@@ -2876,8 +2876,8 @@ namespace System.Management.Automation
                         {
                             var argument =
                                 CommandParameterInternal.CreateParameterWithArgument(
-                                /*parameterAst*/null, entry.Key, "-" + entry.Key + ":",
-                                /*argumentAst*/null, entry.Value,
+                                null, entry.Key, "-" + entry.Key + ":",
+                                null, entry.Value,
                                 false);
 
                             // Ignore the result since any failure should cause an exception
@@ -4112,8 +4112,8 @@ namespace System.Management.Automation
 
                 // Now bind the new value
                 CommandParameterInternal param = CommandParameterInternal.CreateParameterWithArgument(
-                    /*parameterAst*/null, parameter.Parameter.Name, "-" + parameter.Parameter.Name + ":",
-                    /*argumentAst*/null, parameterValue,
+                    null, parameter.Parameter.Name, "-" + parameter.Parameter.Name + ":",
+                    null, parameterValue,
                     false);
 
                 flags &= ~ParameterBindingFlags.DelayBindScriptBlock;
@@ -4134,8 +4134,8 @@ namespace System.Management.Automation
         {
             _defaultParameterValues.Add(name,
                 CommandParameterInternal.CreateParameterWithArgument(
-                    /*parameterAst*/null, name, "-" + name + ":",
-                    /*argumentAst*/null, value,
+                    null, name, "-" + name + ":",
+                    null, value,
                     false));
         }
 
@@ -4157,8 +4157,8 @@ namespace System.Management.Automation
                 _defaultParameterValues.Add(
                     parameter.Parameter.Name,
                     CommandParameterInternal.CreateParameterWithArgument(
-                        /*parameterAst*/null, parameter.Parameter.Name, "-" + parameter.Parameter.Name + ":",
-                        /*argumentAst*/null, defaultParameterValue,
+                        null, parameter.Parameter.Name, "-" + parameter.Parameter.Name + ":",
+                        null, defaultParameterValue,
                         false));
             }
         }

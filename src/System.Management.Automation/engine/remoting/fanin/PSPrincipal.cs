@@ -1,11 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/*
- * Contains definition for PSSenderInfo, PSPrincipal, PSIdentity which are
- * used to provide remote user information to different plugin snapins
- * like Exchange.
- */
+
 
 using System;
 using System.Security.Principal;

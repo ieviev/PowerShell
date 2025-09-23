@@ -76,15 +76,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
 
         internal T Value
         {
-        /*
-            set
-            {
-                if (_value == null)
-                {
-                    this._value = value;
-                }
-            }
-        */
+        
             get
             {
                 if (_value != null)

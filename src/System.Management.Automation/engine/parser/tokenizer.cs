@@ -623,73 +623,73 @@ namespace System.Management.Automation.Language
         #region Tables for initialization
 
         private static readonly string[] s_keywordText = new string[] {
-        /*1*/    "elseif",                  "if",               "else",             "switch",                     /*1*/
-        /*2*/    "foreach",                 "from",             "in",               "for",                        /*2*/
-        /*3*/    "while",                   "until",            "do",               "try",                        /*3*/
-        /*4*/    "catch",                   "finally",          "trap",             "data",                       /*4*/
-        /*5*/    "return",                  "continue",         "break",            "exit",                       /*5*/
-        /*6*/    "throw",                   "begin",            "process",          "end",                        /*6*/
-        /*7*/    "dynamicparam",            "function",         "filter",           "param",                      /*7*/
-        /*8*/    "class",                   "define",           "var",              "using",                      /*8*/
-        /*9*/    "workflow",                "parallel",         "sequence",         "inlinescript",               /*9*/
-        /*A*/    "configuration",           "public",           "private",          "static",                     /*A*/
-        /*B*/    "interface",               "enum",             "namespace",        "module",                     /*B*/
-        /*C*/    "type",                    "assembly",         "command",          "hidden",                     /*C*/
-        /*D*/    "base",                    "default",          "clean",                                          /*D*/
+            "elseif",                  "if",               "else",             "switch",                     
+            "foreach",                 "from",             "in",               "for",                        
+            "while",                   "until",            "do",               "try",                        
+            "catch",                   "finally",          "trap",             "data",                       
+            "return",                  "continue",         "break",            "exit",                       
+            "throw",                   "begin",            "process",          "end",                        
+            "dynamicparam",            "function",         "filter",           "param",                      
+            "class",                   "define",           "var",              "using",                      
+            "workflow",                "parallel",         "sequence",         "inlinescript",               
+            "configuration",           "public",           "private",          "static",                     
+            "interface",               "enum",             "namespace",        "module",                     
+            "type",                    "assembly",         "command",          "hidden",                     
+            "base",                    "default",          "clean",                                          
         };
 
         private static readonly TokenKind[] s_keywordTokenKind = new TokenKind[] {
-        /*1*/    TokenKind.ElseIf,          TokenKind.If,       TokenKind.Else,      TokenKind.Switch,             /*1*/
-        /*2*/    TokenKind.Foreach,         TokenKind.From,     TokenKind.In,        TokenKind.For,                /*2*/
-        /*3*/    TokenKind.While,           TokenKind.Until,    TokenKind.Do,        TokenKind.Try,                /*3*/
-        /*4*/    TokenKind.Catch,           TokenKind.Finally,  TokenKind.Trap,      TokenKind.Data,               /*4*/
-        /*5*/    TokenKind.Return,          TokenKind.Continue, TokenKind.Break,     TokenKind.Exit,               /*5*/
-        /*6*/    TokenKind.Throw,           TokenKind.Begin,    TokenKind.Process,   TokenKind.End,                /*6*/
-        /*7*/    TokenKind.Dynamicparam,    TokenKind.Function, TokenKind.Filter,    TokenKind.Param,              /*7*/
-        /*8*/    TokenKind.Class,           TokenKind.Define,   TokenKind.Var,       TokenKind.Using,              /*8*/
-        /*9*/    TokenKind.Workflow,        TokenKind.Parallel, TokenKind.Sequence,  TokenKind.InlineScript,       /*9*/
-        /*A*/    TokenKind.Configuration,   TokenKind.Public,   TokenKind.Private,   TokenKind.Static,             /*A*/
-        /*B*/    TokenKind.Interface,       TokenKind.Enum,     TokenKind.Namespace, TokenKind.Module,             /*B*/
-        /*C*/    TokenKind.Type,            TokenKind.Assembly, TokenKind.Command,   TokenKind.Hidden,             /*C*/
-        /*D*/    TokenKind.Base,            TokenKind.Default,  TokenKind.Clean,                                   /*D*/
+            TokenKind.ElseIf,          TokenKind.If,       TokenKind.Else,      TokenKind.Switch,             
+            TokenKind.Foreach,         TokenKind.From,     TokenKind.In,        TokenKind.For,                
+            TokenKind.While,           TokenKind.Until,    TokenKind.Do,        TokenKind.Try,                
+            TokenKind.Catch,           TokenKind.Finally,  TokenKind.Trap,      TokenKind.Data,               
+            TokenKind.Return,          TokenKind.Continue, TokenKind.Break,     TokenKind.Exit,               
+            TokenKind.Throw,           TokenKind.Begin,    TokenKind.Process,   TokenKind.End,                
+            TokenKind.Dynamicparam,    TokenKind.Function, TokenKind.Filter,    TokenKind.Param,              
+            TokenKind.Class,           TokenKind.Define,   TokenKind.Var,       TokenKind.Using,              
+            TokenKind.Workflow,        TokenKind.Parallel, TokenKind.Sequence,  TokenKind.InlineScript,       
+            TokenKind.Configuration,   TokenKind.Public,   TokenKind.Private,   TokenKind.Static,             
+            TokenKind.Interface,       TokenKind.Enum,     TokenKind.Namespace, TokenKind.Module,             
+            TokenKind.Type,            TokenKind.Assembly, TokenKind.Command,   TokenKind.Hidden,             
+            TokenKind.Base,            TokenKind.Default,  TokenKind.Clean,                                   
         };
 
         internal static readonly string[] _operatorText = new string[] {
-        /*1*/   "bnot",                 "not",                  "eq",                   "ieq",                    /*1*/
-        /*2*/   "ceq",                  "ne",                   "ine",                  "cne",                    /*2*/
-        /*3*/   "ge",                   "ige",                  "cge",                  "gt",                     /*3*/
-        /*4*/   "igt",                  "cgt",                  "lt",                   "ilt",                    /*4*/
-        /*5*/   "clt",                  "le",                   "ile",                  "cle",                    /*5*/
-        /*6*/   "like",                 "ilike",                "clike",                "notlike",                /*6*/
-        /*7*/   "inotlike",             "cnotlike",             "match",                "imatch",                 /*7*/
-        /*8*/   "cmatch",               "notmatch",             "inotmatch",            "cnotmatch",              /*8*/
-        /*9*/   "replace",              "ireplace",             "creplace",             "contains",               /*9*/
-        /*10*/  "icontains",            "ccontains",            "notcontains",          "inotcontains",           /*10*/
-        /*11*/  "cnotcontains",         "in",                   "iin",                  "cin",                    /*11*/
-        /*12*/  "notin",                "inotin",               "cnotin",               "split",                  /*12*/
-        /*13*/  "isplit",               "csplit",               "isnot",                "is",                     /*13*/
-        /*14*/  "as",                   "f",                    "and",                  "band",                   /*14*/
-        /*15*/  "or",                   "bor",                  "xor",                  "bxor",                   /*15*/
-        /*16*/  "join",                 "shl",                  "shr",                                            /*16*/
+           "bnot",                 "not",                  "eq",                   "ieq",                    
+           "ceq",                  "ne",                   "ine",                  "cne",                    
+           "ge",                   "ige",                  "cge",                  "gt",                     
+           "igt",                  "cgt",                  "lt",                   "ilt",                    
+           "clt",                  "le",                   "ile",                  "cle",                    
+           "like",                 "ilike",                "clike",                "notlike",                
+           "inotlike",             "cnotlike",             "match",                "imatch",                 
+           "cmatch",               "notmatch",             "inotmatch",            "cnotmatch",              
+           "replace",              "ireplace",             "creplace",             "contains",               
+          "icontains",            "ccontains",            "notcontains",          "inotcontains",           
+          "cnotcontains",         "in",                   "iin",                  "cin",                    
+          "notin",                "inotin",               "cnotin",               "split",                  
+          "isplit",               "csplit",               "isnot",                "is",                     
+          "as",                   "f",                    "and",                  "band",                   
+          "or",                   "bor",                  "xor",                  "bxor",                   
+          "join",                 "shl",                  "shr",                                            
         };
 
         private static readonly TokenKind[] s_operatorTokenKind = new TokenKind[] {
-        /*1*/   TokenKind.Bnot,         TokenKind.Not,          TokenKind.Ieq,          TokenKind.Ieq,            /*1*/
-        /*2*/   TokenKind.Ceq,          TokenKind.Ine,          TokenKind.Ine,          TokenKind.Cne,            /*2*/
-        /*3*/   TokenKind.Ige,          TokenKind.Ige,          TokenKind.Cge,          TokenKind.Igt,            /*3*/
-        /*4*/   TokenKind.Igt,          TokenKind.Cgt,          TokenKind.Ilt,          TokenKind.Ilt,            /*4*/
-        /*5*/   TokenKind.Clt,          TokenKind.Ile,          TokenKind.Ile,          TokenKind.Cle,            /*5*/
-        /*6*/   TokenKind.Ilike,        TokenKind.Ilike,        TokenKind.Clike,        TokenKind.Inotlike,       /*6*/
-        /*7*/   TokenKind.Inotlike,     TokenKind.Cnotlike,     TokenKind.Imatch,       TokenKind.Imatch,         /*7*/
-        /*8*/   TokenKind.Cmatch,       TokenKind.Inotmatch,    TokenKind.Inotmatch,    TokenKind.Cnotmatch,      /*8*/
-        /*9*/   TokenKind.Ireplace,     TokenKind.Ireplace,     TokenKind.Creplace,     TokenKind.Icontains,      /*9*/
-        /*10*/  TokenKind.Icontains,    TokenKind.Ccontains,    TokenKind.Inotcontains, TokenKind.Inotcontains,   /*10*/
-        /*11*/  TokenKind.Cnotcontains, TokenKind.Iin,          TokenKind.Iin,          TokenKind.Cin,            /*11*/
-        /*12*/  TokenKind.Inotin,       TokenKind.Inotin,       TokenKind.Cnotin,       TokenKind.Isplit,         /*12*/
-        /*13*/  TokenKind.Isplit,       TokenKind.Csplit,       TokenKind.IsNot,        TokenKind.Is,             /*13*/
-        /*14*/  TokenKind.As,           TokenKind.Format,       TokenKind.And,          TokenKind.Band,           /*14*/
-        /*15*/  TokenKind.Or,           TokenKind.Bor,          TokenKind.Xor,          TokenKind.Bxor,           /*15*/
-        /*16*/  TokenKind.Join,         TokenKind.Shl,          TokenKind.Shr,                                    /*16*/
+           TokenKind.Bnot,         TokenKind.Not,          TokenKind.Ieq,          TokenKind.Ieq,            
+           TokenKind.Ceq,          TokenKind.Ine,          TokenKind.Ine,          TokenKind.Cne,            
+           TokenKind.Ige,          TokenKind.Ige,          TokenKind.Cge,          TokenKind.Igt,            
+           TokenKind.Igt,          TokenKind.Cgt,          TokenKind.Ilt,          TokenKind.Ilt,            
+           TokenKind.Clt,          TokenKind.Ile,          TokenKind.Ile,          TokenKind.Cle,            
+           TokenKind.Ilike,        TokenKind.Ilike,        TokenKind.Clike,        TokenKind.Inotlike,       
+           TokenKind.Inotlike,     TokenKind.Cnotlike,     TokenKind.Imatch,       TokenKind.Imatch,         
+           TokenKind.Cmatch,       TokenKind.Inotmatch,    TokenKind.Inotmatch,    TokenKind.Cnotmatch,      
+           TokenKind.Ireplace,     TokenKind.Ireplace,     TokenKind.Creplace,     TokenKind.Icontains,      
+          TokenKind.Icontains,    TokenKind.Ccontains,    TokenKind.Inotcontains, TokenKind.Inotcontains,   
+          TokenKind.Cnotcontains, TokenKind.Iin,          TokenKind.Iin,          TokenKind.Cin,            
+          TokenKind.Inotin,       TokenKind.Inotin,       TokenKind.Cnotin,       TokenKind.Isplit,         
+          TokenKind.Isplit,       TokenKind.Csplit,       TokenKind.IsNot,        TokenKind.Is,             
+          TokenKind.As,           TokenKind.Format,       TokenKind.And,          TokenKind.Band,           
+          TokenKind.Or,           TokenKind.Bor,          TokenKind.Xor,          TokenKind.Bxor,           
+          TokenKind.Join,         TokenKind.Shl,          TokenKind.Shr,                                    
         };
 
         #endregion Tables for initialization

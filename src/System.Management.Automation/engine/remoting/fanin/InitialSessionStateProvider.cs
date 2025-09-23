@@ -215,28 +215,8 @@ namespace System.Management.Automation.Remoting
         /// <exception cref="ArgumentException">
         /// 1. "optionName" is already defined
         /// </exception>
-        /*
-                  <InitializationParameters>
-                    <Param Name="PSVersion" Value="2.0" />
-                    <Param Name="ApplicationBase" Value="<folder path>" />
-                    ...
-                  </InitializationParameters>
-        */
-        /* The following extensions have been added in V3 providing the user
-         * the ability to pass data to the session configuration for initialization
-         *
-                <Param Name="SessionConfigurationData" Value="<SessionConfigurationData with XML escaping>" />
-         *
-         * The session configuration data blob can be defined as under
-                    <SessionConfigurationData>
-                        <Param Name="ModulesToImport" Value="<folder path>" />
-                        <Param Name="PrivateData" />
-                            <PrivateData>
-                            ...
-                            </PrivateData>
-                        </Param>
-                    </SessionConfigurationData>
-         */
+        
+        
         internal static ConfigurationDataFromXML Create(string initializationParameters)
         {
             ConfigurationDataFromXML result = new ConfigurationDataFromXML();
@@ -447,13 +427,7 @@ namespace System.Management.Automation.Remoting
         /// <exception cref="InvalidOperationException">
         /// 1. Non existent InitialSessionState provider for the shellID
         /// </exception>
-        /*
-                  <InitializationParameters>
-                    <Param Name="PSVersion" Value="2.0" />
-                    <Param Name="ApplicationBase" Value="<folder path>" />
-                    ...
-                  </InitializationParameters>
-         */
+        
         internal static ConfigurationDataFromXML LoadEndPointConfiguration(
             string shellId,
             string initializationParameters)

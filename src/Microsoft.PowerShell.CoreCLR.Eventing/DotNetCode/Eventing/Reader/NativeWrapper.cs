@@ -1,18 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/*============================================================
-**
-**
-** Purpose:
-** This internal class contains wrapper methods over the Native
-** Methods of the Eventlog API.   Unlike the raw Native Methods,
-** these methods throw EventLogExceptions, check platform
-** availability and perform additional helper functionality
-** specific to function.  Also, all methods of this class expose
-** the Link Demand for Unmanaged Permission to callers.
-**
-============================================================*/
+
 
 using System.Collections.Generic;
 using System.ComponentModel;

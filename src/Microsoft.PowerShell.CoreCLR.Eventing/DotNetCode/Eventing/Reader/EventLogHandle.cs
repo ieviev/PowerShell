@@ -1,14 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/*============================================================
-**
-**
-** Purpose:
-** This internal class is a SafeHandle implementation over a
-** native EVT_HANDLE - obtained from EventLog Native Methods.
-**
-============================================================*/
+
 
 using System.Runtime.InteropServices;
 

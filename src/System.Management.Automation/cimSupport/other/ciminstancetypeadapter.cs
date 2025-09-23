@@ -318,11 +318,7 @@ namespace Microsoft.PowerShell.Cim
         /// <returns></returns>
         public override bool IsGettable(PSAdaptedProperty adaptedProperty)
         {
-            /* I was explicitly asked to only use MI_FLAG_READONLY for now
-            // based on DSP0004, version 2.6.0, section "5.5.3.41 Read" (page 85, lines 2881-2884)
-            bool readQualifierValue = this.GetPropertyQualifierValue(adaptedProperty, "Read", defaultValue: true);
-            return readQualifierValue;
-            */
+            
             return true;
         }
 
@@ -332,11 +328,7 @@ namespace Microsoft.PowerShell.Cim
         /// <returns></returns>
         public override bool IsSettable(PSAdaptedProperty adaptedProperty)
         {
-            /* I was explicitly asked to only use MI_FLAG_READONLY for now
-            // based on DSP0004, version 2.6.0, section "5.5.3.55 Write" (pages 89-90, lines 3056-3061)
-            bool writeQualifierValue = this.GetPropertyQualifierValue(adaptedProperty, "Write", defaultValue: false);
-            return writeQualifierValue;
-            */
+            
 
             if (adaptedProperty == null)
             {

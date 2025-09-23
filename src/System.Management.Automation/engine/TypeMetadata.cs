@@ -865,8 +865,7 @@ namespace System.Management.Automation
                 result.AppendFormat(CultureInfo.InvariantCulture, ParameterTypeFormat, prefix, ToStringCodeMethods.Type(_parameterType));
             }
 
-            /* 1. CredentialAttribute needs to go after the type
-             * 2. To avoid risk, I don't want to move other attributes to go here / after the type */
+            
             CredentialAttribute credentialAttrib = _attributes.OfType<CredentialAttribute>().FirstOrDefault();
             if (credentialAttrib != null)
             {
@@ -980,31 +979,12 @@ namespace System.Management.Automation
             ValidatePatternAttribute patternAttrib = attrib as ValidatePatternAttribute;
             if (patternAttrib != null)
             {
-                /* TODO: Validate Pattern dont support Options in ScriptCmdletText.
-                StringBuilder regexOps = new System.Text.StringBuilder();
-                string or = string.Empty;
-                string[] regexOptionEnumValues = Enum.GetNames<System.Text.RegularExpressions.RegexOptions>();
-
-                foreach (string regexOption in regexOptionEnumValues)
-                {
-                    System.Text.RegularExpressions.RegexOptions option = (System.Text.RegularExpressions.RegexOptions) Enum.Parse(
-                        typeof(System.Text.RegularExpressions.RegexOptions),
-                        regexOption, true);
-                    if ((option & patternAttrib.Options) == option)
-                    {
-                        tracer.WriteLine("Regex option {0} found", regexOption);
-                        regexOps.AppendFormat(CultureInfo.InvariantCulture,
-                            "{0}[System.Text.RegularExpressions.RegexOptions]::{1}", or,
-                            option.ToString()
-                            );
-                        or = "|";
-                    }
-                }*/
+                
 
                 result = string.Format(CultureInfo.InvariantCulture,
                     ValidatePatternFormat, prefix,
                     CodeGeneration.EscapeSingleQuotedStringContent(patternAttrib.RegexPattern)
-                    /*,regexOps.ToString()*/);
+                    );
                 return result;
             }
 
@@ -1056,7 +1036,7 @@ namespace System.Management.Automation
                 }
 
                 result = string.Format(CultureInfo.InvariantCulture,
-                    ValidateSetFormat, prefix, values.ToString()/*, setAttrib.IgnoreCase*/);
+                    ValidateSetFormat, prefix, values.ToString());
                 return result;
             }
 

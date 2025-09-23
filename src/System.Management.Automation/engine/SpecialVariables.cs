@@ -318,15 +318,15 @@ namespace System.Management.Automation
                                                                };
 
         internal static readonly Type[] AutomaticVariableTypes = {
-                                                                   /* Underbar */          typeof(object),
-                                                                   /* Args */              typeof(object[]),
-                                                                   /* This */              typeof(object),
-                                                                   /* Input */             typeof(object),
-                                                                   /* PSCmdlet */          typeof(PSScriptCmdlet),
-                                                                   /* PSBoundParameters */ typeof(PSBoundParametersDictionary),
-                                                                   /* MyInvocation */      typeof(InvocationInfo),
-                                                                   /* PSScriptRoot */      typeof(string),
-                                                                   /* PSCommandPath */     typeof(string),
+                                                                             typeof(object),
+                                                                                 typeof(object[]),
+                                                                                 typeof(object),
+                                                                                typeof(object),
+                                                                             typeof(PSScriptCmdlet),
+                                                                    typeof(PSBoundParametersDictionary),
+                                                                         typeof(InvocationInfo),
+                                                                         typeof(string),
+                                                                        typeof(string),
                                                                  };
 
         // This array and the one below it exist to optimize the way common parameters work in advanced functions.
@@ -346,14 +346,14 @@ namespace System.Management.Automation
 
         internal static readonly Type[] PreferenceVariableTypes =
         {
-            /* DebugPreference */                         typeof(ActionPreference),
-            /* VerbosePreference */                       typeof(ActionPreference),
-            /* ErrorPreference */                         typeof(ActionPreference),
-            /* WhatIfPreference */                        typeof(SwitchParameter),
-            /* WarningPreference */                       typeof(ActionPreference),
-            /* InformationPreference */                   typeof(ActionPreference),
-            /* ConfirmPreference */                       typeof(ConfirmImpact),
-            /* ProgressPreference */                      typeof(ActionPreference),
+                                     typeof(ActionPreference),
+                                   typeof(ActionPreference),
+                                     typeof(ActionPreference),
+                                    typeof(SwitchParameter),
+                                   typeof(ActionPreference),
+                               typeof(ActionPreference),
+                                   typeof(ConfirmImpact),
+                                  typeof(ActionPreference),
         };
 
         // The following variables are created in every session w/ AllScope.  We avoid creating local slots when we

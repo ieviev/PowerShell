@@ -110,7 +110,7 @@ namespace Microsoft.PowerShell.Commands
                     _writer.WriteElementString("TypeName", definition.TypeName);
                 }
 
-                _writer.WriteEndElement(/*</ViewSelectedBy>*/);
+                _writer.WriteEndElement();
 
                 var groupBy = formatdef.Control.GroupBy;
                 if (groupBy != null)
@@ -127,7 +127,7 @@ namespace Microsoft.PowerShell.Commands
                         WriteCustomControl(groupBy.CustomControl);
                     }
 
-                    _writer.WriteEndElement(/*</GroupBy>*/);
+                    _writer.WriteEndElement();
                 }
 
                 if (formatdef.Control.OutOfBand)
@@ -136,12 +136,12 @@ namespace Microsoft.PowerShell.Commands
                 }
 
                 formatdef.Control.WriteToXml(this);
-                _writer.WriteEndElement(/*</View>*/);
+                _writer.WriteEndElement();
             }
 
-            _writer.WriteEndElement(/*</ViewDefinitions>*/);
+            _writer.WriteEndElement();
 
-            _writer.WriteEndElement(/*</Configuration>*/);
+            _writer.WriteEndElement();
         }
 
         internal void WriteTableControl(TableControl tableControl)
@@ -176,10 +176,10 @@ namespace Microsoft.PowerShell.Commands
                     _writer.WriteElementString("Alignment", columnheader.Alignment.ToString());
                 }
 
-                _writer.WriteEndElement(/*</TableColumnHeader>*/);
+                _writer.WriteEndElement();
             }
 
-            _writer.WriteEndElement(/*</TableHeaders>*/);
+            _writer.WriteEndElement();
 
             _writer.WriteStartElement("TableRowEntries");
             foreach (TableControlRow row in tableControl.Rows)
@@ -188,7 +188,7 @@ namespace Microsoft.PowerShell.Commands
                 if (row.Wrap)
                 {
                     _writer.WriteStartElement("Wrap");
-                    _writer.WriteEndElement(/*</Wrap>*/);
+                    _writer.WriteEndElement();
                 }
 
                 if (row.SelectedBy != null)
@@ -211,16 +211,16 @@ namespace Microsoft.PowerShell.Commands
                     }
 
                     WriteDisplayEntry(coldefn.DisplayEntry);
-                    _writer.WriteEndElement(/*</TableColumnItem>*/);
+                    _writer.WriteEndElement();
                 }
 
-                _writer.WriteEndElement(/*<TableColumnItems>*/);
-                _writer.WriteEndElement(/*<TableRowEntry>*/);
+                _writer.WriteEndElement();
+                _writer.WriteEndElement();
             }
 
-            _writer.WriteEndElement(/*</TableRowEntries>*/);
+            _writer.WriteEndElement();
 
-            _writer.WriteEndElement(/*</TableControl>*/);
+            _writer.WriteEndElement();
         }
 
         internal void WriteListControl(ListControl listControl)
@@ -259,23 +259,23 @@ namespace Microsoft.PowerShell.Commands
                         {
                             _writer.WriteStartElement("ItemSelectionCondition");
                             WriteDisplayEntry(item.ItemSelectionCondition);
-                            _writer.WriteEndElement(/*</ItemSelectionCondition>*/);
+                            _writer.WriteEndElement();
                         }
 
                         // write the entry
                         WriteDisplayEntry(item.DisplayEntry);
 
-                        _writer.WriteEndElement(/*</ListItem>*/);
+                        _writer.WriteEndElement();
                     }
 
-                    _writer.WriteEndElement(/*</ListItems>*/);
+                    _writer.WriteEndElement();
                 }
 
-                _writer.WriteEndElement(/*</ListEntry>*/);
+                _writer.WriteEndElement();
             }
 
-            _writer.WriteEndElement(/*</ListEntries>*/);
-            _writer.WriteEndElement(/*</ListControl>*/);
+            _writer.WriteEndElement();
+            _writer.WriteEndElement();
         }
 
         private void WriteEntrySelectedBy(EntrySelectedBy entrySelectedBy)
@@ -300,11 +300,11 @@ namespace Microsoft.PowerShell.Commands
                     {
                         _writer.WriteStartElement("SelectionCondition");
                         WriteDisplayEntry(condition);
-                        _writer.WriteEndElement(/*</SelectionCondition>*/);
+                        _writer.WriteEndElement();
                     }
                 }
 
-                _writer.WriteEndElement(/*</EntrySelectedBy>*/);
+                _writer.WriteEndElement();
             }
         }
 
@@ -336,14 +336,14 @@ namespace Microsoft.PowerShell.Commands
                     _writer.WriteElementString("FormatString", entry.FormatString);
                 }
 
-                _writer.WriteEndElement(/*</WideItem>*/);
+                _writer.WriteEndElement();
 
-                _writer.WriteEndElement(/*</WideEntry>*/);
+                _writer.WriteEndElement();
             }
 
-            _writer.WriteEndElement(/*</WideEntries>*/);
+            _writer.WriteEndElement();
 
-            _writer.WriteEndElement(/*</WideControl>*/);
+            _writer.WriteEndElement();
         }
 
         internal void WriteDisplayEntry(DisplayEntry displayEntry)
@@ -356,7 +356,7 @@ namespace Microsoft.PowerShell.Commands
             {
                 _writer.WriteStartElement("ScriptBlock");
                 _writer.WriteValue(_exportScriptBlock ? displayEntry.Value : ";");
-                _writer.WriteEndElement(/*</ScriptBlock>*/);
+                _writer.WriteEndElement();
             }
         }
 
@@ -375,12 +375,12 @@ namespace Microsoft.PowerShell.Commands
                     WriteCustomItem(item);
                 }
 
-                _writer.WriteEndElement(/*</CustomItem>*/);
-                _writer.WriteEndElement(/*</CustomEntry>*/);
+                _writer.WriteEndElement();
+                _writer.WriteEndElement();
             }
 
-            _writer.WriteEndElement(/*</CustomEntries>*/);
-            _writer.WriteEndElement(/*</CustomControl>*/);
+            _writer.WriteEndElement();
+            _writer.WriteEndElement();
         }
 
         internal void WriteCustomItem(CustomItemBase item)
@@ -413,7 +413,7 @@ namespace Microsoft.PowerShell.Commands
                 {
                     _writer.WriteStartElement("ItemSelectionCondition");
                     WriteDisplayEntry(expr.ItemSelectionCondition);
-                    _writer.WriteEndElement(/*</ItemSelectionCondition>*/);
+                    _writer.WriteEndElement();
                 }
 
                 if (expr.Expression != null)
@@ -426,7 +426,7 @@ namespace Microsoft.PowerShell.Commands
                     WriteCustomControl(expr.CustomControl);
                 }
 
-                _writer.WriteEndElement(/*</ExpressionBinding>*/);
+                _writer.WriteEndElement();
                 return;
             }
 
@@ -447,8 +447,8 @@ namespace Microsoft.PowerShell.Commands
                 WriteCustomItem(frameItem);
             }
 
-            _writer.WriteEndElement(/*</CustomItem>*/);
-            _writer.WriteEndElement(/*</Frame>*/);
+            _writer.WriteEndElement();
+            _writer.WriteEndElement();
         }
     }
 }

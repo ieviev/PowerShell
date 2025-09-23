@@ -41,7 +41,7 @@ namespace Microsoft.PowerShell.Cmdletization.Cim
         private readonly CimJobContext _jobContext;
 
         internal CimChildJobBase(CimJobContext jobContext)
-            : base(Job.GetCommandTextFromInvocationInfo(jobContext.CmdletInvocationInfo), " " /* temporary name - reset below */)
+            : base(Job.GetCommandTextFromInvocationInfo(jobContext.CmdletInvocationInfo), " " )
         {
             _jobContext = jobContext;
             this.PSJobTypeName = CIMJobType;

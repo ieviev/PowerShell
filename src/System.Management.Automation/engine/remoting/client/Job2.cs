@@ -469,26 +469,7 @@ namespace System.Management.Automation
         UseNewThread = 2,
     }
 
-    /*/// <summary>
-    /// This job will provide asynchronous behavior by running
-    /// the user specified script block in a separate process.
-    /// There will be options for running the scriptblock
-    /// in a new process or an existing process.
-    /// </summary>
-    /// <remarks>Jobs for the out-of-process activity manager
-    /// can be implemented using this interface</remarks>
-    public abstract class ProcessBasedJob : Job2
-    {
-        public override void Start()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void StartAsync()
-        {
-            throw new NotImplementedException();
-        }
-    }*/
+    
 
     /// <summary>
     /// Top level container job.
@@ -872,16 +853,7 @@ namespace System.Management.Automation
                 job.StartJobCompleted -= eventHandler;
             }
 
-            /*
-            if (ExecutionError.Count > 0)
-            {
-                // Check to see expected behavior if one child job fails to start.
-            }
-
-            if (ExecutionError.Count == 1)
-            {
-                throw ExecutionError[0];
-            } */
+            
             _tracer.WriteMessage(TraceClassName, "StartJob", Guid.Empty, this, "Exiting method", null);
         }
 

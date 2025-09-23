@@ -1030,18 +1030,7 @@ namespace System.Management.Automation.Remoting.Client
                         {
                             idsArray[i] = Marshal.PtrToStringUni(ptrs[i]); // Marshal the string pointers into strings
                         }
-                        /*
-                         * // TODO: Why didn't this work? It looks more efficient
-                        idsArray = new string[resultInternal.streamIDsCount];
-                        int sizeInBytes = Marshal.SizeOf<IntPtr>();
-                        IntPtr perElementPtr = resultInternal.streamIDs;
-
-                        for (int i = 0; i < resultInternal.streamIDsCount; i++)
-                        {
-                            IntPtr p = IntPtr.Add(perElementPtr, (i * sizeInBytes));
-                            idsArray[i] = Marshal.PtrToStringUni(p);
-                        }
-                         */
+                        
                     }
 
                     result.streamIDs = idsArray;

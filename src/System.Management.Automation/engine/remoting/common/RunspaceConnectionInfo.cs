@@ -1704,7 +1704,7 @@ namespace System.Management.Automation.Runspaces
         private AuthenticationMechanism _authMechanism;
         private string _appDomainName = string.Empty;
 
-        private const int _defaultOpenTimeout = 60000;      /* 60 seconds. */
+        private const int _defaultOpenTimeout = 60000;      
 
         #endregion
 
@@ -2891,7 +2891,7 @@ namespace System.Management.Automation.Runspaces
         private AuthenticationMechanism _authMechanism;
         private PSCredential _credential;
 
-        private const int _defaultOpenTimeout = 20000; /* 20 seconds. */
+        private const int _defaultOpenTimeout = 20000; 
 
         #endregion
 
@@ -3030,7 +3030,7 @@ namespace System.Management.Automation.Runspaces
         private AuthenticationMechanism _authMechanism;
         private PSCredential _credential;
 
-        private const int _defaultOpenTimeout = 20000; /* 20 seconds. */
+        private const int _defaultOpenTimeout = 20000; 
 
         #endregion
 

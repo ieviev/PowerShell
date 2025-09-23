@@ -15,12 +15,7 @@ namespace Microsoft.PowerShell.Commands.Internal
     using System.Runtime.Versioning;
     using System.Diagnostics.CodeAnalysis;
 
-    /**
-     * Registry encapsulation. Contains members representing all top level system
-     * keys.
-     *
-     * @security(checkClassLinking=on)
-     */
+    
     // This class contains only static members and does not need to be serializable.
     [ComVisible(true)]
     // Suppressed because these objects need to be accessed from CmdLets.
@@ -28,11 +23,7 @@ namespace Microsoft.PowerShell.Commands.Internal
     internal static class TransactedRegistry
     {
         private const string resBaseName = "RegistryProviderStrings";
-        /**
-         * Current User Key.
-         *
-         * This key should be used as the root for all user specific settings.
-         */
+        
         /// <summary>TransactedRegistry.CurrentUser
         /// <para>This static method returns a TransactedRegistryKey object that represents the base
         /// key HKEY_CURRENT_USER. Because it is a base key, there is no transaction associated with
@@ -46,11 +37,7 @@ namespace Microsoft.PowerShell.Commands.Internal
         [SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes")]
         internal static readonly TransactedRegistryKey CurrentUser = TransactedRegistryKey.GetBaseKey(BaseRegistryKeys.HKEY_CURRENT_USER);
 
-        /**
-         * Local Machine Key.
-         *
-         * This key should be used as the root for all machine specific settings.
-         */
+        
         /// <summary>TransactedRegistry.LocalMachine
         /// <para>This static method returns a TransactedRegistryKey object that represents the base
         /// key HKEY_LOCAL_MACHINE. Because it is a base key, there is no transaction associated with
@@ -64,11 +51,7 @@ namespace Microsoft.PowerShell.Commands.Internal
         [SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes")]
         internal static readonly TransactedRegistryKey LocalMachine = TransactedRegistryKey.GetBaseKey(BaseRegistryKeys.HKEY_LOCAL_MACHINE);
 
-        /**
-         * Classes Root Key.
-         *
-         * This is the root key of class information.
-         */
+        
         /// <summary>TransactedRegistry.ClassesRoot
         /// <para>This static method returns a TransactedRegistryKey object that represents the base
         /// key HKEY_CLASSES_ROOT. Because it is a base key, there is no transaction associated with
@@ -82,11 +65,7 @@ namespace Microsoft.PowerShell.Commands.Internal
         [SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes")]
         internal static readonly TransactedRegistryKey ClassesRoot = TransactedRegistryKey.GetBaseKey(BaseRegistryKeys.HKEY_CLASSES_ROOT);
 
-        /**
-         * Users Root Key.
-         *
-         * This is the root of users.
-         */
+        
         /// <summary>TransactedRegistry.Users
         /// <para>This static method returns a TransactedRegistryKey object that represents the base
         /// key HKEY_USERS. Because it is a base key, there is no transaction associated with
@@ -100,11 +79,7 @@ namespace Microsoft.PowerShell.Commands.Internal
         [SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes")]
         internal static readonly TransactedRegistryKey Users = TransactedRegistryKey.GetBaseKey(BaseRegistryKeys.HKEY_USERS);
 
-        /**
-         * Current Config Root Key.
-         *
-         * This is where current configuration information is stored.
-         */
+        
         /// <summary>TransactedRegistry.CurrentConfig
         /// <para>This static method returns a TransactedRegistryKey object that represents the base
         /// key HKEY_CURRENT_CONFIG. Because it is a base key, there is no transaction associated with

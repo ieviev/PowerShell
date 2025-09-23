@@ -1233,8 +1233,8 @@ namespace System.Management.Automation
                 commandProcessor = context.CreateCommand("Set-Variable", false);
                 Diagnostics.Assert(commandProcessor != null, "CreateCommand returned null");
                 var cpi = CommandParameterInternal.CreateParameterWithArgument(
-                    /*parameterAst*/null, "Name", "-Name:",
-                    /*argumentAst*/null, name,
+                    null, "Name", "-Name:",
+                    null, name,
                     false);
                 commandProcessor.AddParameter(cpi);
 
@@ -1253,16 +1253,16 @@ namespace System.Management.Automation
                 // Unicode is still the default, but now may be overridden
 
                 var cpi = CommandParameterInternal.CreateParameterWithArgument(
-                    /*parameterAst*/null, "Filepath", "-Filepath:",
-                    /*argumentAst*/null, File,
+                    null, "Filepath", "-Filepath:",
+                    null, File,
                     false);
                 commandProcessor.AddParameter(cpi);
 
                 if (this.Appending)
                 {
                     cpi = CommandParameterInternal.CreateParameterWithArgument(
-                        /*parameterAst*/null, "Append", "-Append:",
-                        /*argumentAst*/null, true,
+                        null, "Append", "-Append:",
+                        null, true,
                         false);
                     commandProcessor.AddParameter(cpi);
                 }

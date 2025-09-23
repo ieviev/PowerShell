@@ -229,7 +229,7 @@ namespace System.Management.Automation
         /// <param name="entry"></param>
         internal void AddSessionStateCmdletEntryToCache(SessionStateCmdletEntry entry)
         {
-            AddSessionStateCmdletEntryToCache(entry, /*local*/false);
+            AddSessionStateCmdletEntryToCache(entry, false);
         }
 
         /// <summary>
@@ -794,34 +794,7 @@ namespace System.Management.Automation
 
         internal static void AutoloadModulesWithJobSourceAdapters(System.Management.Automation.ExecutionContext context, CommandOrigin commandOrigin)
         {
-            /* This function is used by *-Job cmdlets (JobCmdletBase.BeginProcessing(), StartJobCommand.BeginProcessing())
-            It attempts to load modules from a fixed ModulesWithJobSourceAdapters list that currently has only `PSScheduledJob` module that is not PS-Core compatible.
-            Because this function does not check the result of a (currently failing) `PSScheduledJob` module autoload, it provides no value.
-            After discussion it was decided to comment out this code as it may be useful if ModulesWithJobSourceAdapters list changes in the future.
-
-            if (!context.IsModuleWithJobSourceAdapterLoaded)
-            {
-                PSModuleAutoLoadingPreference moduleAutoLoadingPreference = GetCommandDiscoveryPreference(context, SpecialVariables.PSModuleAutoLoadingPreferenceVarPath, "PSModuleAutoLoadingPreference");
-                if (moduleAutoLoadingPreference != PSModuleAutoLoadingPreference.None)
-                {
-                    CmdletInfo cmdletInfo = context.SessionState.InvokeCommand.GetCmdlet("Microsoft.PowerShell.Core\\Import-Module");
-                    if ((commandOrigin == CommandOrigin.Internal) ||
-                        ((cmdletInfo != null) && (cmdletInfo.Visibility == SessionStateEntryVisibility.Public)))
-                    {
-                        foreach (var module in System.Management.Automation.ExecutionContext.ModulesWithJobSourceAdapters)
-                        {
-                            List<PSModuleInfo> existingModule = context.Modules.GetModules(new string[] { module }, false);
-                            if (existingModule == null || existingModule.Count == 0)
-                            {
-                                Exception unUsedException = null;
-                                AutoloadSpecifiedModule(module, context, cmdletInfo.Visibility, out unUsedException);
-                            }
-                        }
-
-                        context.IsModuleWithJobSourceAdapterLoaded = true;
-                    }
-                }
-            }*/
+            
         }
 
         internal static Collection<PSModuleInfo> AutoloadSpecifiedModule(string moduleName, ExecutionContext context, SessionStateEntryVisibility visibility, out Exception exception)

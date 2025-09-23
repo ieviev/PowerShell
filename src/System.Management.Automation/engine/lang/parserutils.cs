@@ -387,8 +387,8 @@ namespace System.Management.Automation
             return CallMethod(
                 errorPosition,
                 opType,
-                op, /* methodName */
-                null, /* invocationConstraints */
+                op, 
+                null, 
                 parms,
                 true,
                 AutomationNull.Value);
@@ -1006,7 +1006,7 @@ namespace System.Management.Automation
                 return match =>
                 {
                     var result = sb.DoInvokeReturnAsIs(
-                        useLocalScope: false, /* Use current scope to be consistent with 'ForEach/Where-Object {}' and 'collection.ForEach{}/Where{}' */
+                        useLocalScope: false, 
                         errorHandlingBehavior: ScriptBlock.ErrorHandlingBehavior.WriteToCurrentErrorPipe,
                         dollarUnder: match,
                         input: AutomationNull.Value,

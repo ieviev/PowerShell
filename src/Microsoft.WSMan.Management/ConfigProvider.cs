@@ -395,15 +395,7 @@ namespace Microsoft.WSMan.Management
                 object sessionobj;
                 SessionObjCache.TryGetValue(host, out sessionobj);
 
-                /*
-                WsMan Config Can be divided in to Four Fixed Regions to Check Whether it has Child Items.
-
-                 * 1. Branch in to Listeners (winrm/config/listener)
-                 * 2. Branch in to CertMapping (winrm/config/service/certmapping)
-                 * 3. Branch in to Plugin (winrm/config/plugin) - Plugin is subdivided in Resources,Security & InitParams
-                 * 4. Rest all the branches like Client, Shell(WinRS) ,Service
-
-                */
+                
 
                 // 1. Listener Checks
                 strPathCheck = host + WSManStringLiterals.DefaultPathSeparator;
@@ -859,8 +851,8 @@ namespace Microsoft.WSMan.Management
                             }
                         }
                     }
-                    catch (PSArgumentNullException) { return; /*Leaving this known exception for no value found. Not Throwing error.*/}
-                    catch (NullReferenceException) { return; /*Leaving this known exception for no value found. Not Throwing error.*/}
+                    catch (PSArgumentNullException) { return; }
+                    catch (NullReferenceException) { return; }
                 }
             }
         }
@@ -1456,15 +1448,7 @@ namespace Microsoft.WSMan.Management
                 object sessionobj;
                 SessionObjCache.TryGetValue(host, out sessionobj);
 
-                /*
-                WsMan Config Can be divided in to Four Fixed Regions to Check Whether Item is Container
-
-                 * 1. Branch in to Listeners (winrm/config/listener)
-                 * 2. Branch in to CertMapping (winrm/config/service/certmapping)
-                 * 3. Branch in to Plugin (winrm/config/plugin) - Plugin is subdivided in Resources,Security & InitParams
-                 * 4. Rest all the branches like Client, Shell(WinRS) ,Service
-
-                */
+                
 
                 // 1. Listener Checks
                 strPathCheck = host + WSManStringLiterals.DefaultPathSeparator;

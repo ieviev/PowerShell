@@ -4068,17 +4068,7 @@ namespace System.Management.Automation.Runspaces
                 return null;
             }
 
-            /*
-             * BUGBUG: This should be a look-up based on Type.IsAssignableFrom instead of a
-             *         strict match on the type name. The look-up should be similar to the
-             *         code below, except that child classes must override base classes
-             *         in the same hierarchy.
-             *
-             *         The same applies to TypeConverters
-             *
-             *         The matching for both converters and adapters should be revisited in
-             *         the M3 milestone.
-             */
+            
 #if true
             PSObject.AdapterSet result;
             _typeAdapters.TryGetValue(type.FullName, out result);

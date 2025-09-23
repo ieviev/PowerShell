@@ -1004,8 +1004,8 @@ namespace Microsoft.PowerShell.Commands
             {
                 XmlDocument xmlDocument = InternalDeserializer.LoadUnsafeXmlDocument(
                     new FileInfo(filePath),
-                    true, /* preserve whitespace, comments, etc. */
-                    null); /* default maxCharactersInDocument */
+                    true, 
+                    null); 
 
                 this.ProcessXmlNode(xmlDocument, filePath);
             }

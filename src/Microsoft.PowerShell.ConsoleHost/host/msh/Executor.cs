@@ -193,7 +193,7 @@ namespace Microsoft.PowerShell
                     }
 
                     // then add out-default to the pipeline to render everything...
-                    Command outDefault = new Command("Out-Default", /* isScript */false, /* useLocalScope */ true);
+                    Command outDefault = new Command("Out-Default", false,  true);
                     tempPipeline.Commands.Add(outDefault);
                 }
 

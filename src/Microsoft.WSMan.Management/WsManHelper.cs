@@ -424,11 +424,7 @@ namespace Microsoft.WSMan.Management
                     {
                         foreach (DictionaryEntry entry in valueset)
                         {
-                            xpathString = @"/*/*[local-name()=""" + entry.Key + @"""]";
-                            if (entry.Key.ToString().Equals("location", StringComparison.OrdinalIgnoreCase))
-                            {
-                                // 'Ignore cim:Location
-                                xpathString = @"/*/*[local-name()=""" + entry.Key + @""" and namespace-uri() != """ + NS_CIMBASE + @"""]";
+                            xpathString = @"*[local-name()=""" + entry.Key + @""" and namespace-uri() != """ + NS_CIMBASE + @"""]";
                             }
 
                             XmlNodeList nodes = xmlfile.SelectNodes(xpathString);

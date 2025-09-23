@@ -271,26 +271,7 @@ namespace System.Diagnostics.Eventing
 
         [System.Security.SecurityCritical]
         private static unsafe string EncodeObject(ref object data, EventData* dataDescriptor, byte* dataBuffer)
-        /*++
-
-        Routine Description:
-
-           This routine is used by WriteEvent to unbox the object type and
-           to fill the passed in ETW data descriptor.
-
-        Arguments:
-
-           data - argument to be decoded
-
-           dataDescriptor - pointer to the descriptor to be filled
-
-           dataBuffer - storage buffer for storing user data, needed because cant get the address of the object
-
-        Return Value:
-
-           null if the object is a basic type other than string. String otherwise
-
-        --*/
+        
         {
             dataDescriptor->Reserved = 0;
 

@@ -312,13 +312,13 @@ namespace System.Management.Automation
 
             CommandProcessorBase helpCommandProcessor = context.CreateCommand("get-help", false);
             var cpi = CommandParameterInternal.CreateParameterWithArgument(
-                /*parameterAst*/null, "Name", "-Name:",
-                /*argumentAst*/null, helpTarget,
+                null, "Name", "-Name:",
+                null, helpTarget,
                 false);
             helpCommandProcessor.AddParameter(cpi);
             cpi = CommandParameterInternal.CreateParameterWithArgument(
-                /*parameterAst*/null, "Category", "-Category:",
-                /*argumentAst*/null, helpCategory.ToString(),
+                null, "Category", "-Category:",
+                null, helpCategory.ToString(),
                 false);
             helpCommandProcessor.AddParameter(cpi);
             return helpCommandProcessor;

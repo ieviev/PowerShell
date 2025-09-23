@@ -74,7 +74,7 @@ namespace PSTests.Sequential
 
             // NOTE: instantiate custom host myHost for the next line to capture stdout and stderr output
             //       in addition to just the PSObjects
-            using (Runspace runspace = RunspaceFactory.CreateRunspace(/*myHost,*/iss))
+            using (Runspace runspace = RunspaceFactory.CreateRunspace(iss))
             {
                 runspace.Open();
                 using (PowerShell powerShell = PowerShell.Create())

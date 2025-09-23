@@ -254,7 +254,7 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        private bool _asString /* = false */;
+        private bool _asString ;
         #endregion Parameters
 
         #region Overrides

@@ -130,7 +130,7 @@ namespace System.Management.Automation.Language
         /// <returns>The <see cref="ScriptBlockAst"/> that represents the input script file.</returns>
         public static ScriptBlockAst ParseInput(string input, out Token[] tokens, out ParseError[] errors)
         {
-            return ParseInput(input, null /* fileName */, out tokens, out errors);
+            return ParseInput(input, null , out tokens, out errors);
         }
 
         /// <summary>
@@ -4006,7 +4006,7 @@ namespace System.Management.Automation.Language
                     {
                         if (isScriptResource)
                             DynamicKeyword.Push();
-                        body = HashExpressionRule(lCurly, true /* parsingSchemaElement */);
+                        body = HashExpressionRule(lCurly, true );
                     }
                     finally
                     {
@@ -5303,7 +5303,7 @@ namespace System.Management.Automation.Language
                 SetTokenizerMode(TokenizerMode.Command);
                 ScriptBlockAst scriptBlock = ScriptBlockRule(lCurly, false, baseCtorCallStatement);
                 var result = new FunctionDefinitionAst(ExtentOf(functionNameToken, scriptBlock),
-                    /*isFilter:*/false, /*isWorkflow:*/false, functionNameToken, parameters, scriptBlock);
+                    false, false, functionNameToken, parameters, scriptBlock);
 
                 return result;
             }
@@ -7278,7 +7278,7 @@ namespace System.Management.Automation.Language
                     break;
 
                 case TokenKind.AtCurly:
-                    expr = HashExpressionRule(token, false /* parsingSchemaElement */ );
+                    expr = HashExpressionRule(token, false  );
                     break;
 
                 case TokenKind.LCurly:

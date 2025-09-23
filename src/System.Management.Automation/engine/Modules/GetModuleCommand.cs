@@ -226,7 +226,7 @@ namespace Microsoft.PowerShell.Commands
                         null, // scriptInfo
                         mainData,
                         localizedData,
-                        0 /* - don't write errors, don't load elements, don't return null on first error */,
+                        0 ,
                         this.BaseMinimumVersion,
                         this.BaseMaximumVersion,
                         this.BaseRequiredVersion,
@@ -259,7 +259,7 @@ namespace Microsoft.PowerShell.Commands
                 resourceUri,
                 cimNamespace,
                 moduleNames,
-                true /* onlyManifests */,
+                true ,
                 this,
                 this.CancellationToken);
 

@@ -6,33 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Management.Automation.Internal;
 
-/*
- *
- * This visitor makes a determination as to whether an operation is safe in a GetPowerShell API Context.
- * It is modeled on the ConstantValueVisitor with changes which allow those
- * operations which are deemed safe, rather than constant. The following are differences from
- * ConstantValueVisitor:
- *  o Because we are going to call for values in ScriptBlockToPowerShell, the
- *    Get*ValueVisitor class is removed
- *  o IsGetPowerShellSafeValueVisitor only needs to determine whether it is safe, we won't return
- *    anything but that determination (vs actually returning a value in the out constantValue parameter
- *    as is found in the ConstantValueVisitor).
- *  o the internal bool members (Checking* members in ConstantValues) aren't needed as those checks are not germane
- *  o VisitExpandableStringExpression may be safe under the proper circumstances
- *  o VisitIndexExpression may be safe under the proper circumstances
- *  o VisitStatementBlock is safe if its component statements are safe
- *  o VisitBinaryExpression is not safe as it allows for a DOS attack
- *  o VisitVariableExpression is generally safe, there are checks outside of this code for ensuring variables actually
- *    have provided references. Those other checks ensure that the variable isn't something like $PID or $HOME, etc.,
- *    otherwise it's a safe operation, such as reference to a variable such as $true, or passed parameters.
- *  o VisitTypeExpression is not safe as it enables determining what types are available on the system which
- *    can imply what software has been installed on the system.
- *  o VisitMemberExpression is not safe as allows for the same attack as VisitTypeExpression
- *  o VisitArrayExpression may be safe if its components are safe
- *  o VisitArrayLiteral may be safe if its components are safe
- *  o VisitHashtable may be safe if its components are safe
- *  o VisitTernaryExpression may be safe if its components are safe
- */
+
 
 namespace System.Management.Automation.Language
 {
@@ -351,11 +325,7 @@ namespace System.Management.Automation.Language
         }
     }
 
-    /*
-     * This implementation retrieves the safe value without directly calling the compiler
-     * except in the case of handling the unary operator
-     * ExecutionContext is provided to ensure we can resolve variables
-     */
+    
     internal sealed class GetSafeValueVisitor : ICustomAstVisitor2
     {
         internal enum SafeValueContext

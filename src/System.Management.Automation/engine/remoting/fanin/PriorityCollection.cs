@@ -159,11 +159,7 @@ namespace System.Management.Automation.Remoting
         /// </summary>
         internal void Clear()
         {
-            /*
-                NOTE: Error paths during initialization can cause _dataSyncObjects to be null
-                causing an unhandled exception in finalize and a process crash.
-                Verify arrays and dataToBeSent objects before referencing.
-            */
+            
             if (_dataSyncObjects != null && _dataToBeSent != null)
             {
                 const int promptResponseIndex = (int)DataPriorityType.PromptResponse;

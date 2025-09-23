@@ -456,7 +456,7 @@ namespace Microsoft.PowerShell.Commands
                         foundModule = LoadUsingExtensions(null, moduleBase, qualifiedPathWithVersion,
                                                             StringLiterals.PowerShellDataFileExtension,
                                                             null,
-                                                            this.BasePrefix, /*SessionState*/ null,
+                                                            this.BasePrefix,  null,
                                                             importModuleOptions,
                                                             manifestProcessingFlags,
                                                             out found);
@@ -758,7 +758,7 @@ namespace Microsoft.PowerShell.Commands
                 {
                     // No extension so we'll have to search using the extensions
                     //
-                    if (VerifyIfNestedModuleIsAvailable(moduleSpecification, rootedPath, /*extension*/null, out tempModuleInfoFromVerification))
+                    if (VerifyIfNestedModuleIsAvailable(moduleSpecification, rootedPath, null, out tempModuleInfoFromVerification))
                     {
                         module = LoadUsingExtensions(
                             parentModule,
@@ -782,7 +782,7 @@ namespace Microsoft.PowerShell.Commands
                     {
                         string newRootedPath = Path.Combine(rootedPath, moduleSpecification.Name);
                         string newModuleBase = Path.Combine(moduleBase, moduleSpecification.Name);
-                        if (VerifyIfNestedModuleIsAvailable(moduleSpecification, newRootedPath, /*extension*/null, out tempModuleInfoFromVerification))
+                        if (VerifyIfNestedModuleIsAvailable(moduleSpecification, newRootedPath, null, out tempModuleInfoFromVerification))
                         {
                             module = LoadUsingExtensions(
                                 parentModule,
@@ -1268,7 +1268,7 @@ namespace Microsoft.PowerShell.Commands
                     // So, removing that logic.
                     moduleInfo = LoadModuleManifest(
                             scriptInfo,
-                            flags /* - don't write errors, don't load elements */,
+                            flags ,
                             minimumVersion: null,
                             maximumVersion: null,
                             requiredVersion: null,
@@ -4812,7 +4812,7 @@ namespace Microsoft.PowerShell.Commands
             {
                 try
                 {
-                    filePaths = context.SessionState.Path.GetResolvedProviderPathFromPSPath(filePath, true /* allowNonExistentPaths */, out provider);
+                    filePaths = context.SessionState.Path.GetResolvedProviderPathFromPSPath(filePath, true , out provider);
                 }
                 catch (Exception)
                 {
@@ -4849,7 +4849,7 @@ namespace Microsoft.PowerShell.Commands
             {
                 try
                 {
-                    filePaths = context.SessionState.Path.GetResolvedProviderPathFromPSPath(filePath, true /* allowNonExistentPaths */, out provider);
+                    filePaths = context.SessionState.Path.GetResolvedProviderPathFromPSPath(filePath, true , out provider);
                 }
                 catch (Exception)
                 {

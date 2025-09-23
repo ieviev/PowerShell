@@ -10,10 +10,7 @@ using System.Management.Automation;
 
 #endregion
 
-/******************************************************************************
- * warning 28750: Banned usage of lstrlen and its variants: lstrlenW is a
- * banned API for improved error handling purposes.
- *****************************************************************************/
+
 namespace Microsoft.Management.Infrastructure.CimCmdlets
 {
     /// <summary>

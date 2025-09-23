@@ -255,7 +255,7 @@ namespace System.Management.Automation
         /// <param name="entry">The entry to add.</param>
         internal void AddSessionStateEntry(SessionStateCmdletEntry entry)
         {
-            AddSessionStateEntry(entry, /*local*/false);
+            AddSessionStateEntry(entry, false);
         }
 
         /// <summary>

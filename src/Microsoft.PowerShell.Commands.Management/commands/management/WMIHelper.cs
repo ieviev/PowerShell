@@ -1900,8 +1900,7 @@ namespace Microsoft.PowerShell.Commands
                 // Two cases where _bFinished should be set to false.
                 // 1) Invalid class or some other condition so that after making a connection WMI is throwing an error
                 // 2) We could not get any instance for the class.
-                /*if(bAtLeastOneObject )
-                    _bFinished = true;*/
+                
                 _helper.RaiseOperationCompleteEvent(null, OperationState.StopComplete);
                 if (!_bJobFailed)
                 {

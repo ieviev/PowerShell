@@ -94,7 +94,7 @@ namespace Microsoft.PowerShell.Commands
 
                 return rv;
             }
-            catch (Exception /*ex*/)
+            catch (Exception )
             {
                 // on any error fall through to the null return below
             }
@@ -157,7 +157,7 @@ namespace Microsoft.PowerShell.Commands
                     }
                 }
             }
-            catch (Exception /*ex*/)
+            catch (Exception )
             {
                 // on any error we'll just fall through to the return below
             }
@@ -282,7 +282,7 @@ namespace Extensions
                 if (enumerator.MoveNext())
                     return enumerator.Current;
             }
-            catch (Exception /*ex*/)
+            catch (Exception )
             {
                 // on any error, fall through to the null return below
             }

@@ -353,11 +353,7 @@ namespace Microsoft.PowerShell.Cmdletization.Cim
                 ushort perceivedSeverityValue = (ushort)perceivedSeverityProperty.Value;
                 if (perceivedSeverityValue != 7)
                 {
-                    /* from CIM Schema: Interop\CIM_Error.mof:
-                         "7 - Fatal/NonRecoverable should be used to indicate an "
-                          "error occurred, but it\'s too late to take remedial "
-                          "action. \n"
-                     */
+                    
                     return false;
                 }
 

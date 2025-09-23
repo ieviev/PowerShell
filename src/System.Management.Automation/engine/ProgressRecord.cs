@@ -380,40 +380,7 @@ namespace System.Management.Automation
             ArgumentOutOfRangeException.ThrowIfGreaterThan(startTime, now);
             ArgumentOutOfRangeException.ThrowIfLessThanOrEqual(expectedDuration, TimeSpan.Zero);
 
-            /*
-             * According to the spec of Checkpoint-Computer
-             * (http://cmdletdesigner/SpecViewer/Default.aspx?Project=PowerShell&Cmdlet=Checkpoint-Computer)
-             * we have percentage remaining = f(t) where
-             * f(inf) = 0%
-             * f(0) = 100%
-             * f(90) = <something small> = 10%
-             *
-             * The spec talks about exponential decay, but function based on 1/x seems better:
-             * f(t) = a / (T + b)
-             *
-             * This by definition has f(inf) = 0, so we have to find a and b for the last 2 cases:
-             * E1: f(0) = a / (0 + b) = 100
-             * E2: f(T = 90) = a / (T + b) = 10
-             *
-             * From E1 we have a = 100 * b, which we can use in E2:
-             * (100 * b) / (T + b) = 10
-             * 100 * b = 10 * T + 10 * b
-             * 90 * b = 10 * T
-             * b = T / 9
-             *
-             * Some sample values (for T=90):
-             * t   | %rem
-             * -----------
-             * 0   | 100.0%
-             * 5   |  66.6%
-             * 10  |  50.0%
-             * 30  |  25.0%
-             * 70  |  12.5%
-             * 90  |  10.0%
-             * 300 |   3.2%
-             * 600 |   1.6%
-             * 3600|   0.2%
-             */
+            
             TimeSpan timeElapsed = now - startTime;
             double b = expectedDuration.TotalSeconds / 9.0;
             double a = 100.0 * b;

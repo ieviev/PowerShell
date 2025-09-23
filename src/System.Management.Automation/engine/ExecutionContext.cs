@@ -393,7 +393,7 @@ namespace System.Management.Automation
                         MarkObjectAsUntrusted(psRef.Value);
                     }
                 }
-                catch { /* psRef.Value may call PSVariable.Value under the hood, which may throw arbitrary exception */ }
+                catch {  }
             }
         }
 

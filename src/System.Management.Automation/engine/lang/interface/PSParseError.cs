@@ -1,15 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/********************************************************************++
 
-    Project:     PowerShell
-
-    Contents:    PowerShell error interface for syntax editors
-
-    Classes:     System.Management.Automation.PSParseError
-
---********************************************************************/
 
 using Dbg = System.Management.Automation.Diagnostics;
 

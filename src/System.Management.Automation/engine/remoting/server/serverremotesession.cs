@@ -186,13 +186,7 @@ namespace System.Management.Automation.Remoting
         /// InitialSessionState provider with <paramref name="configurationProviderId"/> does
         /// not exist on the remote server.
         /// </exception>
-        /*
-                  <InitializationParameters>
-                    <Param Name="PSVersion" Value="2.0" />
-                    <Param Name="ApplicationBase" Value="<folder path>" />
-                    ...
-                  </InitializationParameters>
-        */
+        
         internal static ServerRemoteSession CreateServerRemoteSession(
             PSSenderInfo senderInfo,
             string configurationProviderId,

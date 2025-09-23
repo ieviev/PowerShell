@@ -1,12 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/*
- * The registry wrapper provides a common interface to both the transacted
- * and non-transacted registry APIs.  It is used exclusively by the registry provider
- * to perform registry operations.  In most cases, the wrapper simply forwards the
- * call to the appropriate registry API.
- */
+
 
 using System;
 using System.Globalization;

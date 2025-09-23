@@ -910,19 +910,7 @@ namespace System.Management.Automation.Language
 
     internal class PseudoParameterBinder
     {
-        /*
-        /// <summary>
-        /// Get the parameter binding metadata.
-        /// </summary>
-        /// <param name="possibleParameterSets"></param>
-        /// <returns></returns>
-        public Dictionary<ParameterMetadata, ExpressionAst> GetPseudoParameterBinding(out Collection<ParameterSetMetadata> possibleParameterSets)
-        {
-            ExecutionContext contextFromTls =
-                System.Management.Automation.Runspaces.LocalPipeline.GetExecutionContextFromTLS();
-            return GetPseudoParameterBinding(out possibleParameterSets, contextFromTls, null);
-        }
-        */
+        
 
         internal enum BindingType
         {

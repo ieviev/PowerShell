@@ -1,15 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/********************************************************************++
 
-    Project:     PowerShell
-
-    Contents:    PowerShell parser interface for syntax editors
-
-    Classes:     System.Management.Automation.PSParser
-
---********************************************************************/
 
 using System.Text;
 using System.Collections.Generic;

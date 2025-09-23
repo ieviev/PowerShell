@@ -155,8 +155,8 @@ namespace System.Management.Automation
             // process the MAML content only if it is non-empty.
             XmlDocument mamlDoc = InternalDeserializer.LoadUnsafeXmlDocument(
                 mamlXmlString,
-                false, /* ignore whitespace, comments, etc. */
-                null); /* default maxCharactersInDocument */
+                false, 
+                null); 
             MamlCommandHelpInfo providerSpecificHelpInfo = MamlCommandHelpInfo.Load(mamlDoc.DocumentElement, HelpCategory.Provider);
             return providerSpecificHelpInfo;
         }

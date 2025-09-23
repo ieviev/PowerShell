@@ -280,14 +280,7 @@ namespace Microsoft.PowerShell.Commands
                     "HostInNestedPrompt", ErrorCategory.InvalidOperation, chost));
             }
 
-            /*Microsoft.Windows.PowerShell.Gui.Internal.GPSHost ghost = this.Host as Microsoft.Windows.PowerShell.Gui.Internal.GPSHost;
-
-            if (ghost != null && ghost.HostInNestedPrompt())
-            {
-                ThrowTerminatingError(new ErrorRecord(
-                    new InvalidOperationException(PSRemotingErrorInvariants.FormatResourceString(PSRemotingErrorId.HostInNestedPrompt)),
-                    "HostInNestedPrompt", ErrorCategory.InvalidOperation, wpshost));
-            }*/
+            
 
             // Get the remote runspace.
             RemoteRunspace remoteRunspace = null;

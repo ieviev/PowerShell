@@ -224,11 +224,11 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
 
             if (_forceNewLine)
             {
-                _writeLineHelper = new WriteLineHelper(/*lineWrap*/false, wl, null, this.DisplayCells);
+                _writeLineHelper = new WriteLineHelper(false, wl, null, this.DisplayCells);
             }
             else
             {
-                _writeLineHelper = new WriteLineHelper(/*lineWrap*/false, wl, w, this.DisplayCells);
+                _writeLineHelper = new WriteLineHelper(false, wl, w, this.DisplayCells);
             }
         }
 

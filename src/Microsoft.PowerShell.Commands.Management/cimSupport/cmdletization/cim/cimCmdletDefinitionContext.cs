@@ -63,16 +63,7 @@ namespace Microsoft.PowerShell.Cmdletization.Cim
         }
 
         private const int FallbackDefaultThrottleLimit = 15;
-        /* PS> dir 'WSMan:\localhost\Plugin\WMI Provider\Quotas' | ft -auto
-
-               WSManConfig: Microsoft.WSMan.Management\WSMan::localhost\Plugin\WMI Provider\Quotas
-
-            Name                           Value   Type
-            ----                           -----   ----
-            MaxConcurrentUsers             100     System.String
-            MaxConcurrentOperationsPerUser 15      System.String
-            MaxConcurrentOperations        1500    System.String
-        */
+        
 
         public int DefaultThrottleLimit
         {

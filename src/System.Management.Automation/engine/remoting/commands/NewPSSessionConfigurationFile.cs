@@ -232,16 +232,7 @@ namespace Microsoft.PowerShell.Commands
         public long UserDriveMaximumSize { get; set; }
 
         // Temporarily removed until script input parameter validation is implemented.
-        /*
-        /// <summary>
-        /// Optional parameter that enforces script input parameter validation.  When specified all scripts
-        /// run in the PSSession must have validation attributes to validate input data or an error is generated.
-        /// If a MountUserDrive is specified for the PSSession then input parameter validation will be
-        /// enabled automatically.
-        /// </summary>
-        [Parameter]
-        public SwitchParameter EnforceInputParameterValidation { get; set; }
-        */
+        
 
         /// <summary>
         /// Optional parameter that specifies a Group Managed Service Account name in which the configuration
@@ -663,10 +654,10 @@ namespace Microsoft.PowerShell.Commands
                 this,
                 filePath,
                 EncodingConversion.Unicode,
-                /* defaultEncoding */ false,
-                /* Append */ false,
-                /* Force */ false,
-                /* NoClobber */ false,
+                 false,
+                 false,
+                 false,
+                 false,
                 out fileStream,
                 out streamWriter,
                 out readOnlyFileInfo,
@@ -765,11 +756,7 @@ namespace Microsoft.PowerShell.Commands
                 }
 
                 // Temporarily removed until script input parameter validation is implemented.
-                /*
-                // Enforce input parameter validation
-                result.Append(SessionConfigurationUtils.ConfigFragment(ConfigFileConstants.EnforceInputParameterValidation, RemotingErrorIdStrings.DISCEnforceInputParameterValidation,
-                    SessionConfigurationUtils.WriteBoolean(true), streamWriter, EnforceInputParameterValidation == false));
-                */
+                
 
                 // Group Managed Service Account Name
                 if (ShouldGenerateConfigurationSnippet("GroupManagedServiceAccount"))
@@ -1564,10 +1551,10 @@ namespace Microsoft.PowerShell.Commands
                 this,
                 filePath,
                 EncodingConversion.Unicode,
-                /* defaultEncoding */ false,
-                /* Append */ false,
-                /* Force */ false,
-                /* NoClobber */ false,
+                 false,
+                 false,
+                 false,
+                 false,
                 out fileStream,
                 out streamWriter,
                 out readOnlyFileInfo,

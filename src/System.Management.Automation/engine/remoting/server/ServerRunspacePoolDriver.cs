@@ -798,15 +798,15 @@ namespace System.Management.Automation
                 ServerPowerShellDriver driver = new ServerPowerShellDriver(
                     countingPipeline,
                     mainPipeline,
-                    true /* no input */,
+                    true ,
                     data.PowerShellId,
                     data.RunspacePoolId,
                     this,
                     ApartmentState.Unknown,
                     useRunspaceHost,
-                    0 /* stream options */,
-                    false /* addToHistory */,
-                    null /* use default rsPool runspace */);
+                    0 ,
+                    false ,
+                    null );
 
                 driver.Start();
             }

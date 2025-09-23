@@ -252,7 +252,7 @@ namespace System.Management.Automation.Language
                 exception = null;
                 var currentScope = context?.EngineSessionState.CurrentScope;
                 Type result = ResolveTypeNameWorker(typeName, currentScope, typeResolutionState.assemblies, t_searchedAssemblies, typeResolutionState,
-                                                    /*onlySearchInGivenAssemblies*/ false, /* reportAmbiguousException */ true, out exception);
+                                                     false,  true, out exception);
                 if (exception == null && result == null)
                 {
                     if (context != null && !isAssembliesExplicitlyPassedIn)
@@ -261,14 +261,14 @@ namespace System.Management.Automation.Language
                         // then we search our assembly cache first, so as to give preference to resolving the type against
                         // assemblies explicitly loaded by powershell, for example, via importing module/snapin.
                         result = ResolveTypeNameWorker(typeName, currentScope, context.AssemblyCache.Values, t_searchedAssemblies, typeResolutionState,
-                                                    /*onlySearchInGivenAssemblies*/ true, /* reportAmbiguousException */ false, out exception);
+                                                     true,  false, out exception);
                     }
 
                     if (result == null)
                     {
                         // Search from the assembly list passed in.
                         result = ResolveTypeNameWorker(typeName, currentScope, assemblies, t_searchedAssemblies, typeResolutionState,
-                                                    /*onlySearchInGivenAssemblies*/ true, /* reportAmbiguousException */ false, out exception);
+                                                     true,  false, out exception);
                     }
                 }
 

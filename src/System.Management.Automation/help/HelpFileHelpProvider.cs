@@ -302,7 +302,7 @@ namespace System.Management.Automation
             if (!path.EndsWith(".help.txt", StringComparison.OrdinalIgnoreCase))
                 return null;
 
-            string name = fileName.Substring(0, fileName.Length - 9 /* ".help.txt".Length */);
+            string name = fileName.Substring(0, fileName.Length - 9 );
 
             if (string.IsNullOrEmpty(name))
                 return null;

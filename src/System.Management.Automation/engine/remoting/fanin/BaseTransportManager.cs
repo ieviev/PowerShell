@@ -1,11 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/*
- * Common file that contains interface definitions for generic server and client
- * transport managers.
- *
- */
+
 
 using System.Management.Automation.Tracing;
 using System.Text;

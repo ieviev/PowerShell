@@ -1,11 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/*
- * Common file that contains implementation for both server and client transport
- * managers based on WSMan protocol.
- *
- */
+
 
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -191,54 +187,7 @@ namespace System.Management.Automation.Remoting.Client
             string result = errorMessage.Replace("@{", "'@{").Replace("}", "}'");
             return result;
 
-            /*
-             * Use this pattern if we need to escape other characters.
-             *
-            try
-            {
-                StringBuilder msgSB = new StringBuilder(errorMessage);
-
-                Collection<PSParseError> parserErrors = new Collection<PSParseError>();
-                Collection<PSToken> tokens = PSParser.Tokenize(errorMessage, out parserErrors);
-                if (parserErrors.Count > 0)
-                {
-                    tracer.WriteLine(string.Create(CultureInfo.InvariantCulture, $"There were errors parsing string '{errorMessage}'");
-                    return errorMessage;
-                }
-
-                for (int index = tokens.Count - 1; index > 0; index--)
-                {
-                    PSToken currentToken = tokens[index];
-                    switch(currentToken.Type)
-                    {
-                        case PSTokenType.GroupStart:
-                            msgSB.Insert(currentToken.StartColumn - 1, "'", 1);
-                            break;
-                        case PSTokenType.GroupEnd:
-                            if (msgSB.Length <= currentToken.EndColumn)
-                            {
-                                msgSB.Append("'");
-                            }
-                            else
-                            {
-                                msgSB.Insert(currentToken.EndColumn - 1, ",", 1);
-                            }
-
-                            break;
-                    }
-                }
-
-                return msgSB.ToString();
-            }
-            // ignore possible exceptions manipulating the string.
-            catch(ArgumentOutOfRangeException)
-            {
-            }
-            catch(RuntimeException)
-            {
-            }
-
-            return errorMessage;*/
+            
         }
 
         internal enum tmStartModes

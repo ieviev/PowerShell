@@ -295,8 +295,8 @@ namespace System.Management.Automation
 
         // Variables needed to generate a unique SourceId for
         // WriteProgress(ProgressRecord).
-        private static Int64 s_lastUsedSourceId /* = 0 */;
-        private Int64 _sourceId /* = 0 */;
+        private static Int64 s_lastUsedSourceId ;
+        private Int64 _sourceId ;
 
         /// <summary>
         /// Display progress information.
@@ -3261,7 +3261,7 @@ namespace System.Management.Automation
         internal bool IsDebugFlagSet { get; private set; } = false;
 
         private bool _whatIfFlag = InitialSessionState.DefaultWhatIfPreference;
-        private bool _isWhatIfPreferenceCached /* = false */;
+        private bool _isWhatIfPreferenceCached ;
         /// <summary>
         /// WhatIf indicates that the command should not
         /// perform any changes to persistent state outside Monad.

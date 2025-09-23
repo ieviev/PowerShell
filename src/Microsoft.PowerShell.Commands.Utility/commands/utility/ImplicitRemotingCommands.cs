@@ -1965,13 +1965,7 @@ namespace Microsoft.PowerShell.Commands
                 return containerConnectionInfo.ComputerName;
             }
 
-            /*
-               wsman will also work with something that Uri.IsWellFormedUriString fails on:
-               http://[0000:0000:0000:0000:0000:0000:0000:0001]/wsman
-            Dbg.Assert(
-                Uri.IsWellFormedUriString(connectionString, UriKind.Absolute),
-                "GetConnectionString() should return only well formed uri strings");
-             */
+            
             return null;
         }
 
@@ -2345,10 +2339,10 @@ function Get-PSImplicitRemotingSessionOption
                 return string.Format(
                     CultureInfo.InvariantCulture,
                     ProxyCredentialParameterTemplate,
-                    /* 0 */ CodeGeneration.EscapeSingleQuotedStringContent(StringUtil.Format(ImplicitRemotingStrings.CredentialRequestTitle)),
-                    /* 1 */ CodeGeneration.EscapeSingleQuotedStringContent(StringUtil.Format(ImplicitRemotingStrings.ProxyCredentialRequestBody, this.GetConnectionString())),
-                    /* 2 */ CodeGeneration.EscapeSingleQuotedStringContent(wsmanConnectionInfo.ProxyCredential.UserName),
-                    /* 3 */ CodeGeneration.EscapeSingleQuotedStringContent(_remoteRunspaceInfo.ComputerName + @"\httpproxy"));
+                     CodeGeneration.EscapeSingleQuotedStringContent(StringUtil.Format(ImplicitRemotingStrings.CredentialRequestTitle)),
+                     CodeGeneration.EscapeSingleQuotedStringContent(StringUtil.Format(ImplicitRemotingStrings.ProxyCredentialRequestBody, this.GetConnectionString())),
+                     CodeGeneration.EscapeSingleQuotedStringContent(wsmanConnectionInfo.ProxyCredential.UserName),
+                     CodeGeneration.EscapeSingleQuotedStringContent(_remoteRunspaceInfo.ComputerName + @"\httpproxy"));
             }
         }
 
@@ -2438,15 +2432,15 @@ function Get-PSImplicitRemotingSession
 
             writer.Write(
                 HelperFunctionsGetImplicitRunspaceTemplate,
-                /* 0 */ _remoteRunspaceInfo.InstanceId,
-                /* 1 */ CodeGeneration.EscapeSingleQuotedStringContent(StringUtil.Format(ImplicitRemotingStrings.CreateNewRunspaceMessageTemplate)),
-                /* 2 */ this.GenerateNewRunspaceExpression(),
-                /* 3 */ CodeGeneration.EscapeSingleQuotedStringContent(StringUtil.Format(ImplicitRemotingStrings.ErrorNoRunspaceForThisModule)),
-                /* 4 */ CodeGeneration.EscapeSingleQuotedStringContent(hashString),
-                /* 5 */ CodeGeneration.EscapeSingleQuotedStringContent(StringUtil.Format(ImplicitRemotingStrings.WarningMismatchedImplicitRemotingHash)),
-                /* 6 */ ImplicitRemotingCommandBase.ImplicitRemotingKey,
-                /* 7 */ ImplicitRemotingCommandBase.ImplicitRemotingHashKey,
-                /* 8 */ this.GenerateReimportingOfModules());
+                 _remoteRunspaceInfo.InstanceId,
+                 CodeGeneration.EscapeSingleQuotedStringContent(StringUtil.Format(ImplicitRemotingStrings.CreateNewRunspaceMessageTemplate)),
+                 this.GenerateNewRunspaceExpression(),
+                 CodeGeneration.EscapeSingleQuotedStringContent(StringUtil.Format(ImplicitRemotingStrings.ErrorNoRunspaceForThisModule)),
+                 CodeGeneration.EscapeSingleQuotedStringContent(hashString),
+                 CodeGeneration.EscapeSingleQuotedStringContent(StringUtil.Format(ImplicitRemotingStrings.WarningMismatchedImplicitRemotingHash)),
+                 ImplicitRemotingCommandBase.ImplicitRemotingKey,
+                 ImplicitRemotingCommandBase.ImplicitRemotingHashKey,
+                 this.GenerateReimportingOfModules());
         }
 
         private const string ReimportTemplate = @"
@@ -2531,9 +2525,9 @@ function Get-PSImplicitRemotingSession
                 return string.Format(
                     CultureInfo.InvariantCulture,
                     NewVMRunspaceTemplate,
-                    /* 0 */ this.GenerateConnectionStringForNewRunspace(),
-                    /* 1 */ this.GenerateCredentialParameter(),
-                    /* 2 */ string.IsNullOrEmpty(vmConfigurationName) ? string.Empty : string.Concat("-ConfigurationName ", vmConfigurationName));
+                     this.GenerateConnectionStringForNewRunspace(),
+                     this.GenerateCredentialParameter(),
+                     string.IsNullOrEmpty(vmConfigurationName) ? string.Empty : string.Concat("-ConfigurationName ", vmConfigurationName));
             }
             else
             {
@@ -2543,21 +2537,21 @@ function Get-PSImplicitRemotingSession
                     return string.Format(
                         CultureInfo.InvariantCulture,
                         NewContainerRunspaceTemplate,
-                        /* 0 */ this.GenerateConnectionStringForNewRunspace(),
-                        /* 1 */ containerConnectionInfo.ContainerProc.RunAsAdmin ? "-RunAsAdministrator" : string.Empty,
-                        /* 2 */ string.IsNullOrEmpty(containerConfigurationName) ? string.Empty : string.Concat("-ConfigurationName ", containerConfigurationName));
+                         this.GenerateConnectionStringForNewRunspace(),
+                         containerConnectionInfo.ContainerProc.RunAsAdmin ? "-RunAsAdministrator" : string.Empty,
+                         string.IsNullOrEmpty(containerConfigurationName) ? string.Empty : string.Concat("-ConfigurationName ", containerConfigurationName));
                 }
                 else
                 {
                     return string.Format(
                         CultureInfo.InvariantCulture,
                         NewRunspaceTemplate,
-                        /* 0 */ this.GenerateConnectionStringForNewRunspace(),
-                        /* 1 */ CodeGeneration.EscapeSingleQuotedStringContent(_remoteRunspaceInfo.ConfigurationName),
-                        /* 2 */ this.GenerateCredentialParameter(),
-                        /* 3 */ this.GenerateCertificateThumbprintParameter(),
-                        /* 4 */ this.GenerateAuthenticationMechanismParameter(),
-                        /* 5 */ this.GenerateAllowRedirectionParameter());
+                         this.GenerateConnectionStringForNewRunspace(),
+                         CodeGeneration.EscapeSingleQuotedStringContent(_remoteRunspaceInfo.ConfigurationName),
+                         this.GenerateCredentialParameter(),
+                         this.GenerateCertificateThumbprintParameter(),
+                         this.GenerateAuthenticationMechanismParameter(),
+                         this.GenerateAllowRedirectionParameter());
                 }
             }
         }
@@ -2675,10 +2669,10 @@ function Get-PSImplicitRemotingSession
                 return string.Format(
                     CultureInfo.InvariantCulture,
                     CredentialParameterTemplate,
-                    /* 0 */ CodeGeneration.EscapeSingleQuotedStringContent(StringUtil.Format(ImplicitRemotingStrings.CredentialRequestTitle)),
-                    /* 1 */ CodeGeneration.EscapeSingleQuotedStringContent(StringUtil.Format(ImplicitRemotingStrings.CredentialRequestBody, this.GetConnectionString())),
-                    /* 2 */ CodeGeneration.EscapeSingleQuotedStringContent(_remoteRunspaceInfo.Runspace.ConnectionInfo.Credential.UserName),
-                    /* 3 */ CodeGeneration.EscapeSingleQuotedStringContent(_remoteRunspaceInfo.ComputerName));
+                     CodeGeneration.EscapeSingleQuotedStringContent(StringUtil.Format(ImplicitRemotingStrings.CredentialRequestTitle)),
+                     CodeGeneration.EscapeSingleQuotedStringContent(StringUtil.Format(ImplicitRemotingStrings.CredentialRequestBody, this.GetConnectionString())),
+                     CodeGeneration.EscapeSingleQuotedStringContent(_remoteRunspaceInfo.Runspace.ConnectionInfo.Credential.UserName),
+                     CodeGeneration.EscapeSingleQuotedStringContent(_remoteRunspaceInfo.ComputerName));
             }
         }
 
@@ -2855,15 +2849,15 @@ function Get-PSImplicitRemotingClientSideParameters
             string functionNameForHelp = EscapeFunctionNameForRemoteHelp(commandMetadata.Name);
             writer.Write(
                 CommandProxyTemplate,
-                /* 0 */ functionNameForString,
-                /* 1 */ functionNameForHelp,
-                /* 2 */ commandMetadata.GetDecl(),
-                /* 3 */ commandMetadata.GetParamBlock(),
-                /* 4 */ null /* not used */,
-                /* 5 */ commandMetadata.WrappedCommandType,
-                /* 6 */ ProxyCommand.GetProcess(commandMetadata),
-                /* 7 */ ProxyCommand.GetEnd(commandMetadata),
-                /* 8 */ commandMetadata.WrappedAnyCmdlet);
+                 functionNameForString,
+                 functionNameForHelp,
+                 commandMetadata.GetDecl(),
+                 commandMetadata.GetParamBlock(),
+                 null ,
+                 commandMetadata.WrappedCommandType,
+                 ProxyCommand.GetProcess(commandMetadata),
+                 ProxyCommand.GetEnd(commandMetadata),
+                 commandMetadata.WrappedAnyCmdlet);
         }
 
         private static void GenerateCommandProxy(TextWriter writer, IEnumerable<CommandMetadata> listOfCommandMetadata)

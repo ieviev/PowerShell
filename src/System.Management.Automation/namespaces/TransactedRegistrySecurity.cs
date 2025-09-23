@@ -6,14 +6,7 @@
 // ndp\clr\src\BCL\System\Security\AccessControl\RegistrySecurity.cs.
 // Namespace: System.Security.AccessControl
 //
-/*============================================================
-**
-**
-**
-** Purpose: Managed ACL wrapper for registry keys.
-**
-**
-===========================================================*/
+
 
 using System;
 using System.Security.Permissions;
@@ -186,16 +179,7 @@ namespace Microsoft.PowerShell.Commands.Internal
         {
         }
 
-        /*
-        // The name of registry key must start with a predefined string,
-        // like CLASSES_ROOT, CURRENT_USER, MACHINE, and USERS.  See
-        // MSDN's help for SetNamedSecurityInfo for details.
-        internal TransactedRegistrySecurity(string name, AccessControlSections includeSections)
-            : base(true, ResourceType.RegistryKey, HKeyNameToWindowsName(name), includeSections)
-        {
-            new RegistryPermission(RegistryPermissionAccess.NoAccess, AccessControlActions.View, name).Demand();
-        }
-        */
+        
 
         // Suppressed because the passed name and hkey won't change.
         [SuppressMessage("Microsoft.Security", "CA2103:ReviewImperativeSecurity")]

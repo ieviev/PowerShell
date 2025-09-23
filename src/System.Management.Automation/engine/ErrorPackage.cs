@@ -385,10 +385,7 @@ namespace System.Management.Automation
         /// </remarks>
         public string GetMessage()
         {
-            /* Remoting not in E12
-            if (!string.IsNullOrEmpty (_errorRecord._serializedErrorCategoryMessageOverride))
-                return _errorRecord._serializedErrorCategoryMessageOverride;
-            */
+            
 
             return GetMessage(CultureInfo.CurrentUICulture);
         }
@@ -791,7 +788,7 @@ namespace System.Management.Automation
             set { _textLookupError = value; }
         }
 
-        private Exception _textLookupError /* = null */;
+        private Exception _textLookupError ;
         #endregion Internal Properties
 
         #region ToString
@@ -1458,7 +1455,7 @@ namespace System.Management.Automation
             }
         }
 
-        private Exception _error /* = null */;
+        private Exception _error ;
 
         /// <summary>
         /// The object against which the error occurred.
@@ -1466,7 +1463,7 @@ namespace System.Management.Automation
         /// <value>may be null</value>
         public object TargetObject { get => _target; }
 
-        private object _target /* = null */;
+        private object _target ;
 
         internal void SetTargetObject(object target)
         {
@@ -1530,7 +1527,7 @@ namespace System.Management.Automation
         /// <value>may be null</value>
         public InvocationInfo InvocationInfo { get => _invocationInfo; }
 
-        private InvocationInfo _invocationInfo /* = null */;
+        private InvocationInfo _invocationInfo ;
 
         internal void SetInvocationInfo(InvocationInfo invocationInfo)
         {

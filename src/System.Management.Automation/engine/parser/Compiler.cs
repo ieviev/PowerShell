@@ -4557,12 +4557,12 @@ namespace System.Management.Automation.Language
                            {
                                var call = Expression.Call(Expression.Constant(constValue),
                                                            CachedReflectionInfo.ScriptBlock_DoInvokeReturnAsIs,
-                               /*useLocalScope=*/         ExpressionCache.Constant(true),
-                               /*errorHandlingBehavior=*/ Expression.Constant(ScriptBlock.ErrorHandlingBehavior.WriteToExternalErrorPipe),
-                               /*dollarUnder=*/           GetLocal((int)AutomaticVariable.Underbar).Convert(typeof(object)),
-                               /*input=*/                 ExpressionCache.AutomationNullConstant,
-                               /*scriptThis=*/            ExpressionCache.AutomationNullConstant,
-                               /*args=*/                  ExpressionCache.NullObjectArray);
+                                        ExpressionCache.Constant(true),
+                                Expression.Constant(ScriptBlock.ErrorHandlingBehavior.WriteToExternalErrorPipe),
+                                          GetLocal((int)AutomaticVariable.Underbar).Convert(typeof(object)),
+                                                ExpressionCache.AutomationNullConstant,
+                                           ExpressionCache.AutomationNullConstant,
+                                                 ExpressionCache.NullObjectArray);
                                test = DynamicExpression.Dynamic(PSConvertBinder.Get(typeof(bool)), typeof(bool), call);
                            }
                            else if (constValue != null)
@@ -4583,21 +4583,21 @@ namespace System.Management.Automation.Language
                                if ((flags & SwitchFlags.Regex) != 0 || constValue is Regex)
                                {
                                    test = Expression.Call(CachedReflectionInfo.SwitchOps_ConditionSatisfiedRegex,
-                                       /*caseSensitive=*/ ExpressionCache.Constant((flags & SwitchFlags.CaseSensitive) != 0),
-                                       /*condition=*/     conditionExpr,
-                                       /*errorPosition=*/ Expression.Constant(clause.Item1.Extent),
-                                       /*str=*/           currentAsString,
-                                       /*context=*/       s_executionContextParameter);
+                                        ExpressionCache.Constant((flags & SwitchFlags.CaseSensitive) != 0),
+                                            conditionExpr,
+                                        Expression.Constant(clause.Item1.Extent),
+                                                  currentAsString,
+                                              s_executionContextParameter);
                                }
                                else if ((flags & SwitchFlags.Wildcard) != 0 || constValue is WildcardPattern)
                                {
                                    // It would be a little better to just build the wildcard at compile time, but
                                    // the runtime method must exist when variable cases are involved.
                                    test = Expression.Call(CachedReflectionInfo.SwitchOps_ConditionSatisfiedWildcard,
-                                       /*caseSensitive=*/ ExpressionCache.Constant((flags & SwitchFlags.CaseSensitive) != 0),
-                                       /*condition=*/     conditionExpr,
-                                       /*str=*/           currentAsString,
-                                       /*context=*/       s_executionContextParameter);
+                                        ExpressionCache.Constant((flags & SwitchFlags.CaseSensitive) != 0),
+                                            conditionExpr,
+                                                  currentAsString,
+                                              s_executionContextParameter);
                                }
                                else
                                {
@@ -5315,15 +5315,15 @@ namespace System.Management.Automation.Language
                 //             switch (ExceptionHandlingOps.FindMatchingHandler(re, types))
                 //             {
                 //             case 0:
-                //                  /* first handler */
+                //                  
                 //                  break;
                 //             case 1:
                 //             case 2:
-                //                  /* second handler (we do allow a single handler for multiple types) */
+                //                  
                 //                  break;
                 //             default:
-                //                  /* no matching handler, but could be a trap or user might want prompting */
-                //                  /* will rethrow the exception if that's what we need to do */
+                //                  
+                //                  
                 //                  ExceptionHandlingOps.CheckActionPreference(functionContext, exception);
                 //             }
                 //         } finally {

@@ -1555,12 +1555,12 @@ namespace System.Management.Automation.Language
             {
                 var call = Expression.Call(target.Expression.Cast(typeof(ScriptBlock)),
                                                CachedReflectionInfo.ScriptBlock_DoInvokeReturnAsIs,
-                    /*useLocalScope=*/         ExpressionCache.Constant(true),
-                    /*errorHandlingBehavior=*/ Expression.Constant(ScriptBlock.ErrorHandlingBehavior.WriteToExternalErrorPipe),
-                    /*dollarUnder=*/           args[0].CastOrConvert(typeof(object)),
-                    /*input=*/                 ExpressionCache.AutomationNullConstant,
-                    /*scriptThis=*/            ExpressionCache.AutomationNullConstant,
-                    /*args=*/                  ExpressionCache.NullObjectArray);
+                             ExpressionCache.Constant(true),
+                     Expression.Constant(ScriptBlock.ErrorHandlingBehavior.WriteToExternalErrorPipe),
+                               args[0].CastOrConvert(typeof(object)),
+                                     ExpressionCache.AutomationNullConstant,
+                                ExpressionCache.AutomationNullConstant,
+                                      ExpressionCache.NullObjectArray);
 
                 return (new DynamicMetaObject(
                     DynamicExpression.Dynamic(PSConvertBinder.Get(typeof(bool)), typeof(bool), call),
@@ -1575,11 +1575,11 @@ namespace System.Management.Automation.Language
             if (target.Value is Regex || (_flags & SwitchFlags.Regex) != 0)
             {
                 var call = Expression.Call(CachedReflectionInfo.SwitchOps_ConditionSatisfiedRegex,
-                    /*caseSensitive=*/ ExpressionCache.Constant((_flags & SwitchFlags.CaseSensitive) != 0),
-                    /*condition=*/     target.Expression.Cast(typeof(object)),
-                    /*errorPosition=*/ ExpressionCache.NullExtent,
-                    /*str=*/           argAsString,
-                    /*context=*/       executionContext);
+                     ExpressionCache.Constant((_flags & SwitchFlags.CaseSensitive) != 0),
+                         target.Expression.Cast(typeof(object)),
+                     ExpressionCache.NullExtent,
+                               argAsString,
+                           executionContext);
 
                 return (new DynamicMetaObject(call, targetRestrictions)).WriteToDebugLog(this);
             }
@@ -1587,10 +1587,10 @@ namespace System.Management.Automation.Language
             if (target.Value is WildcardPattern || (_flags & SwitchFlags.Wildcard) != 0)
             {
                 var call = Expression.Call(CachedReflectionInfo.SwitchOps_ConditionSatisfiedWildcard,
-                    /*caseSensitive=*/ ExpressionCache.Constant((_flags & SwitchFlags.CaseSensitive) != 0),
-                    /*condition=*/     target.Expression.Cast(typeof(object)),
-                    /*str=*/           argAsString,
-                    /*context=*/       executionContext);
+                     ExpressionCache.Constant((_flags & SwitchFlags.CaseSensitive) != 0),
+                         target.Expression.Cast(typeof(object)),
+                               argAsString,
+                           executionContext);
 
                 // Binding restrictions must test the target, even if the switch is in -regex mode.
                 // If we didn't add restrictions on the target, we'd incorrectly use this rule when the target
@@ -2547,7 +2547,7 @@ namespace System.Management.Automation.Language
             //     dynamic op target tmp
             // For equality comparison operators, if the conversion fails, we shouldn't raise
             // an exception, so those must be wrapped in try/catch, like:
-            //     try { /* as above */ }
+            //     try {  }
             //     catch (InvalidCastException) { true or false (depending on Operation type) }
 
             List<ParameterExpression> temps = new List<ParameterExpression>();
@@ -3762,7 +3762,7 @@ namespace System.Management.Automation.Language
         }
 
         private PSConvertBinder(Type type)
-            : base(type, /*explicit=*/false)
+            : base(type, false)
         {
             this._version = 0;
             if (type == typeof(string))
@@ -3911,12 +3911,12 @@ namespace System.Management.Automation.Language
                 conv = Expression.Call(
                     Expression.Constant(conversion.Converter),
                     conversion.Converter.GetType().GetMethod("Invoke"),
-                    /*valueToConvert=*/         valueToConvert,
-                    /*resultType=*/             Expression.Constant(resultType, typeof(Type)),
-                    /*recurse=*/                ExpressionCache.Constant(true),
-                    /*originalValueToConvert=*/ valueAsPSObject,
-                    /*formatProvider=*/         formatProvider,
-                    /*backupTable=*/            ExpressionCache.NullTypeTable);
+                             valueToConvert,
+                                 Expression.Constant(resultType, typeof(Type)),
+                                    ExpressionCache.Constant(true),
+                     valueAsPSObject,
+                             formatProvider,
+                                ExpressionCache.NullTypeTable);
             }
 
             // Skip adding the Convert if unnecessary (same type), or impossible (InternalPSCustomObject)

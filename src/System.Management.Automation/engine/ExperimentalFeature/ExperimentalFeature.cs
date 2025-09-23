@@ -102,11 +102,7 @@ namespace System.Management.Automation
         {
             // Initialize the readonly collection 'EngineExperimentalFeatures'.
             var engineFeatures = new ExperimentalFeature[] {
-                /* Register engine experimental features here. Follow the same pattern as the example:
-                new ExperimentalFeature(
-                    name: "PSFileSystemProviderV2",
-                    description: "Replace the old FileSystemProvider with cleaner design and faster code"),
-                */
+                
                 new ExperimentalFeature(
                     name: "PSSubsystemPluginModel",
                     description: "A plugin model for registering and un-registering PowerShell subsystems"),

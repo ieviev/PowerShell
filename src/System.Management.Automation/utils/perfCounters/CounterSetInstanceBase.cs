@@ -176,30 +176,7 @@ namespace System.Management.Automation.PerformanceData
         /// </summary>
         public abstract void Dispose();
 
-        /*
-        /// <summary>
-        /// Resets the target counter 'counterId' to 0. If the given
-        /// counter has both numerator and denominator components, then
-        /// they both are set to 0.
-        /// </summary>
-        public bool ResetCounter(
-            int counterId)
-        {
-            this.SetCounterValue(counterId, 0, true);
-            this.SetCounterValue(counterId, 0, false);
-        }
-
-        /// <summary>
-        /// Resets the target counter 'counterName' to 0. If the given
-        /// counter has both numerator and denominator components, then
-        /// they both are set to 0.
-        /// </summary>
-        public void ResetCounter(string counterName)
-        {
-            this.SetCounterValue(counterName, 0, true);
-            this.SetCounterValue(counterName, 0, false);
-        }
-        */
+        
         #endregion
     }
 

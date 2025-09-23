@@ -2260,7 +2260,7 @@ namespace System.Management.Automation
                     {
                         if (parameterName.Equals("Module", StringComparison.OrdinalIgnoreCase))
                         {
-                            NativeCompletionGetCommand(context, /* moduleName: */ null, parameterName, result);
+                            NativeCompletionGetCommand(context,  null, parameterName, result);
                             break;
                         }
 
@@ -2283,7 +2283,7 @@ namespace System.Management.Automation
                             }
                             else
                             {
-                                NativeCompletionGetCommand(context, /* moduleName: */ null, parameterName, result);
+                                NativeCompletionGetCommand(context,  null, parameterName, result);
                             }
 
                             break;
@@ -2299,13 +2299,13 @@ namespace System.Management.Automation
                     }
                 case "Show-Command":
                     {
-                        NativeCompletionGetHelpCommand(context, parameterName, /* isHelpRelated: */ false, result);
+                        NativeCompletionGetHelpCommand(context, parameterName,  false, result);
                         break;
                     }
                 case "help":
                 case "Get-Help":
                     {
-                        NativeCompletionGetHelpCommand(context, parameterName, /* isHelpRelated: */ true, result);
+                        NativeCompletionGetHelpCommand(context, parameterName,  true, result);
                         break;
                     }
                 case "Save-Help":
@@ -2409,7 +2409,7 @@ namespace System.Management.Automation
                             }
                             else
                             {
-                                NativeCompletionDriveCommands(context, /* psProvider: */ null, parameterName, result);
+                                NativeCompletionDriveCommands(context,  null, parameterName, result);
                             }
                         }
 
@@ -3168,7 +3168,7 @@ namespace System.Management.Automation
                     // ps1 files and directories. We only complete the files with .ps1 extension for Get-Command, because the -Syntax
                     // may only works on files with .ps1 extension
                     var ps1Extension = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { StringLiterals.PowerShellScriptFileExtension };
-                    var moduleFilesResults = new List<CompletionResult>(CompleteFilename(context, /* containerOnly: */ false, ps1Extension));
+                    var moduleFilesResults = new List<CompletionResult>(CompleteFilename(context,  false, ps1Extension));
                     if (moduleFilesResults.Count > 0)
                         result.AddRange(moduleFilesResults);
                 }
@@ -3225,13 +3225,13 @@ namespace System.Management.Automation
 
                 // Available commands
                 const CommandTypes commandTypes = CommandTypes.Cmdlet | CommandTypes.Function | CommandTypes.Alias | CommandTypes.ExternalScript | CommandTypes.Configuration;
-                var commandResults = CompleteCommand(context, /* moduleName: */ null, commandTypes);
+                var commandResults = CompleteCommand(context,  null, commandTypes);
                 if (commandResults != null)
                     result.AddRange(commandResults);
 
                 // ps1 files and directories
                 var ps1Extension = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { StringLiterals.PowerShellScriptFileExtension };
-                var fileResults = new List<CompletionResult>(CompleteFilename(context, /* containerOnly: */ false, ps1Extension));
+                var fileResults = new List<CompletionResult>(CompleteFilename(context,  false, ps1Extension));
                 if (fileResults.Count > 0)
                     result.AddRange(fileResults);
 
@@ -3482,7 +3482,7 @@ namespace System.Management.Automation
                 RemoveLastNullCompletionResult(result);
 
                 var moduleExtensions = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { ".dll" };
-                var moduleFilesResults = new List<CompletionResult>(CompleteFilename(context, /* containerOnly: */ false, moduleExtensions));
+                var moduleFilesResults = new List<CompletionResult>(CompleteFilename(context,  false, moduleExtensions));
                 if (moduleFilesResults.Count > 0)
                     result.AddRange(moduleFilesResults);
 
@@ -3802,7 +3802,7 @@ namespace System.Management.Automation
                 // Complete for the parameter Definition
                 // Available commands
                 const CommandTypes commandTypes = CommandTypes.Cmdlet | CommandTypes.Function | CommandTypes.ExternalScript | CommandTypes.Configuration;
-                var commandResults = CompleteCommand(context, /* moduleName: */ null, commandTypes);
+                var commandResults = CompleteCommand(context,  null, commandTypes);
                 if (commandResults != null && commandResults.Count > 0)
                     result.AddRange(commandResults);
 

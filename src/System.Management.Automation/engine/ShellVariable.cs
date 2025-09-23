@@ -858,7 +858,7 @@ namespace System.Management.Automation
         {
             get { return _description ??= SessionStateStrings.DollarNullDescription; }
 
-            set { /* Do nothing */ }
+            set {  }
         }
 
         private string _description;
@@ -870,7 +870,7 @@ namespace System.Management.Automation
         {
             get { return ScopedItemOptions.None; }
 
-            set { /* Do nothing */ }
+            set {  }
         }
     }
 

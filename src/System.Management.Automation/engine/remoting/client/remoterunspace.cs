@@ -1552,11 +1552,11 @@ namespace System.Management.Automation
             ClientMethodExecutor.Dispatch(
                 RunspacePool.RemoteRunspacePoolInternal.DataStructureHandler.TransportManager,
                 RunspacePool.RemoteRunspacePoolInternal.Host,
-                null,       /* error stream */
-                null,       /* method executor stream */
-                false,      /* is method stream enabled */
+                null,       
+                null,       
+                false,      
                 RunspacePool.RemoteRunspacePoolInternal,
-                Guid.Empty, /* powershell id */
+                Guid.Empty, 
                 eventArgs.Data);
         }
 

@@ -41,10 +41,7 @@ namespace Microsoft.PowerShell.Cim
                     string.IsInterned(_string) == null,
                     "We will overwrite string contents - we can't / shouldn't do this for interned strings.");
 
-                /* The string is pinned (while still being filled with insignificant data)
-                 * to prevent copying of sensitive data by garbage collection.
-                 * This allows the sensitive data to be cleaned-up from SensitiveString.Dispose method.
-                 */
+                
                 _gcHandle = GCHandle.Alloc(_string, GCHandleType.Pinned);
             }
 
@@ -114,10 +111,10 @@ namespace Microsoft.PowerShell.Cim
                     return;
                 }
 
-                /* this clobbers sensitive data */
+                
                 Copy(new string('\0', _string.Length), 0);
 
-                /* this allows garbage collector to move and/or free the string */
+                
                 _gcHandle.Free();
                 _string = null;
             }
@@ -317,7 +314,7 @@ namespace Microsoft.PowerShell.Cim
 
             // unrecognized type = throw invalid cast exception
             throw CimValueConverter.GetInvalidCastException(
-                null, /* inner exception */
+                null, 
                 "InvalidDotNetToCimCast",
                 dotNetObject,
                 CmdletizationResources.CimConversion_CimIntrinsicValue);
@@ -450,15 +447,15 @@ namespace Microsoft.PowerShell.Cim
                                                {
                                                    XmlDocument doc = InternalDeserializer.LoadUnsafeXmlDocument(
                                                        cimIntrinsicValue,
-                                                       true, /* preserve non elements: whitespace, processing instructions, comments, etc. */
-                                                       null); /* default maxCharactersInDocument */
+                                                       true, 
+                                                       null); 
                                                    return doc;
                                                });
             }
 
             // unrecognized type = throw invalid cast exception
             throw CimValueConverter.GetInvalidCastException(
-                null, /* inner exception */
+                null, 
                 "InvalidCimToDotNetCast",
                 cimObject,
                 expectedDotNetType.FullName);

@@ -250,12 +250,7 @@ namespace Microsoft.PowerShell.Commands
         [Parameter]
         public string RecommendedAction { get; set; } = string.Empty;
 
-        /* 2005/01/25 removing throw-error
-        /// <summary>
-        /// If true, this is throw-error.  Otherwise, this is write-error.
-        /// </summary>
-        internal bool _terminating = false;
-        */
+        
 
         /// <summary>
         /// ErrorRecord.CategoryInfo.Activity.
@@ -338,14 +333,7 @@ namespace Microsoft.PowerShell.Commands
             if (!string.IsNullOrEmpty(CategoryTargetType))
                 errorRecord.CategoryInfo.TargetType = CategoryTargetType;
 
-            /* 2005/01/25 removing throw-error
-            if (_terminating)
-            {
-                ThrowTerminatingError(errorRecord);
-            }
-            else
-            {
-            */
+            
 
             // 2005/07/14-913791 "write-error output is confusing and misleading"
             // set InvocationInfo to the script not the command
@@ -360,9 +348,7 @@ namespace Microsoft.PowerShell.Commands
             }
 
             WriteError(errorRecord);
-            /*
-            }
-            */
+            
         }
     }
 
@@ -381,25 +367,7 @@ namespace Microsoft.PowerShell.Commands
         }
     }
 
-    /* 2005/01/25 removing throw-error
-        /// <summary>
-        /// This class implements Write-Error command.
-        /// </summary>
-        [Cmdlet("Throw", "Error", DefaultParameterSetName = "NoException")]
-        public sealed class ThrowErrorCommand : WriteOrThrowErrorCommand
-        {
-            /// <summary>
-            /// Constructor.
-            /// </summary>
-            public ThrowErrorCommand()
-            {
-                using (tracer.TraceConstructor(this))
-                {
-                    _terminating = true;
-                }
-            }
-        }
-    */
+    
 
     #endregion WriteOrThrowErrorCommand
 

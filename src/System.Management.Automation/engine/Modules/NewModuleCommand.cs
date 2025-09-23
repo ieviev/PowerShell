@@ -230,7 +230,7 @@ namespace Microsoft.PowerShell.Commands
                         if (_returnResult)
                         {
                             // import the specified members...
-                            ImportModuleMembers(localModule, string.Empty /* no -Prefix for New-Module cmdlet */);
+                            ImportModuleMembers(localModule, string.Empty );
                             WriteObject(results, true);
                         }
                         else if (_asCustomObject)
@@ -240,7 +240,7 @@ namespace Microsoft.PowerShell.Commands
                         else
                         {
                             // import the specified members...
-                            ImportModuleMembers(localModule, string.Empty /* no -Prefix for New-Module cmdlet */);
+                            ImportModuleMembers(localModule, string.Empty );
                             WriteObject(localModule);
                         }
                     }

@@ -590,12 +590,7 @@ namespace System.Diagnostics.Eventing
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool EvtClose(IntPtr handle);
 
-        /*
-        [DllImport(WEVTAPI, EntryPoint = "EvtClose", SetLastError = true)]
-        public static extern bool EvtClose(
-                            IntPtr eventHandle
-                                           );
-         */
+        
 
         [DllImport(WEVTAPI, CharSet = CharSet.Unicode, SetLastError = true)]
         [SecurityCritical]

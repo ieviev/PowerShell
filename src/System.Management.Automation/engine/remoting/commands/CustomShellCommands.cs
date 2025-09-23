@@ -1218,19 +1218,19 @@ else
 
             string result = string.Format(CultureInfo.InvariantCulture,
                 pluginXmlFormat,
-                shellName, /* {0} */
-                psPluginDllPath, /* {1} */
-                architectureParameter, /* {2} */
-                initParameters.ToString(), /* {3} */
-                WSManNativeApi.ResourceURIPrefix + shellName, /* {4} */
-                securityParameters, /* {5} */
-                sharedHostParameter, /* {6} */
-                runAsVirtualAccountParameter, /* {7} */
-                runAsVirtualAccountGroupsParameter, /* {8} */
-                allowRemoteShellAccessParameter, /* {9} */
-                transportOption.ConstructOptionsAsXmlAttributes(), /* {10} */
-                transportOption.ConstructQuotas(), /* {11} */
-                (psVersion.Major < 3) ? 1 : 2 /* {12} - Pass in SDK version. */
+                shellName, 
+                psPluginDllPath, 
+                architectureParameter, 
+                initParameters.ToString(), 
+                WSManNativeApi.ResourceURIPrefix + shellName, 
+                securityParameters, 
+                sharedHostParameter, 
+                runAsVirtualAccountParameter, 
+                runAsVirtualAccountGroupsParameter, 
+                allowRemoteShellAccessParameter, 
+                transportOption.ConstructOptionsAsXmlAttributes(), 
+                transportOption.ConstructQuotas(), 
+                (psVersion.Major < 3) ? 1 : 2 
             );
 
             return result;

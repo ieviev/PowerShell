@@ -10,11 +10,7 @@ using System.Reflection;
 
 namespace System.Management.Automation.Language
 {
-    /*
-     * The IsGetPowerShellSafeValueVisitor class in SafeValues.cs used this class as the basis for implementation.
-     * There is a number of similarities between these two classes, and changes (fixes) in this code
-     * may need to be reflected in that class and vice versa
-     */
+    
     internal class IsConstantValueVisitor : ICustomAstVisitor2
     {
         public static bool IsConstant(Ast ast, out object constantValue, bool forAttribute = false, bool forRequires = false)

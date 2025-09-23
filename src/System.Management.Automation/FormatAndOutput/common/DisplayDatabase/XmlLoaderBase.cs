@@ -10,14 +10,7 @@ using System.Management.Automation.Internal;
 using System.Text;
 using System.Xml;
 
-/*
- SUMMARY: this file contains a general purpose, reusable framework for
-    loading XML files, and do data validation.
-    It provides the capability of:
-    * logging errors, warnings and traces to a file or in memory
-    * managing the XML dom traversal using an add hoc stack frame management scheme
-    * validating common error conditions (e.g. missing node or unknown node)
-*/
+
 
 namespace Microsoft.PowerShell.Commands.Internal.Format
 {
@@ -630,7 +623,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
                 catch (PSSecurityException reason)
                 {
                     string errorMessage = StringUtil.Format(TypesXmlStrings.ValidationException,
-                        string.Empty /* TODO/FIXME snapin */,
+                        string.Empty ,
                         FilePath,
                         reason.Message);
                     ReportLogEntryHelper(errorMessage, XmlLoaderLoggerEntry.EntryType.Error, failToLoadFile: true);
@@ -643,8 +636,8 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             {
                 XmlDocument doc = InternalDeserializer.LoadUnsafeXmlDocument(
                     fileContents,
-                    true, /* preserve whitespace, comments, etc. */
-                    null); /* default maxCharacters */
+                    true, 
+                    null); 
                 this.ReportTrace("XmlDocument loaded OK");
                 return doc;
             }

@@ -413,14 +413,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
                 {
                     cpt.control = controlMatch.Control;
                 }
-                /*
-                if (cpt.control == null)
-                {
-                    this.ReportMissingNodes (
-                            new string[] { XmlTags.FieldControlNode, XmlTags.ComplexControlNode, XmlTags.ComplexControlNameNode });
-                    return null;
-                }
-                */
+                
                 return cpt;
             }
         }

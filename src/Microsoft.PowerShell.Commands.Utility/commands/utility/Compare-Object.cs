@@ -41,19 +41,7 @@ namespace Microsoft.PowerShell.Commands
         [Parameter]
         public object[] Property { get; set; }
 
-        /* not implemented
-        /// <summary>
-        /// </summary>
-        [Parameter]
-        public SwitchParameter IgnoreWhiteSpace
-        {
-            get { return _ignoreWhiteSpace; }
-
-            set { _ignoreWhiteSpace = value; }
-        }
-
-        private bool _ignoreWhiteSpace = false;
-        */
+        
 
         /// <summary>
         /// </summary>
@@ -65,7 +53,7 @@ namespace Microsoft.PowerShell.Commands
             set { _excludeDifferent = value; }
         }
 
-        private bool _excludeDifferent /*=false*/;
+        private bool _excludeDifferent ;
 
         /// <summary>
         /// </summary>
@@ -84,8 +72,8 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        private bool _includeEqual /* = false */;
-        private bool _isIncludeEqualSpecified /* = false */;
+        private bool _includeEqual ;
+        private bool _isIncludeEqualSpecified ;
 
         /// <summary>
         /// </summary>
@@ -97,7 +85,7 @@ namespace Microsoft.PowerShell.Commands
             set { _passThru = value; }
         }
 
-        private bool _passThru /* = false */;
+        private bool _passThru ;
         #endregion Parameters
 
         #region Internal
@@ -112,7 +100,7 @@ namespace Microsoft.PowerShell.Commands
         private OrderByProperty _orderByProperty = null;
         private OrderByPropertyComparer _comparer = null;
 
-        private int _referenceObjectIndex /* = 0 */;
+        private int _referenceObjectIndex ;
 
         // These are programmatic strings, not subject to INTL
         private const string SideIndicatorPropertyName = "SideIndicator";

@@ -393,7 +393,7 @@ namespace Microsoft.WSMan.Management
     [OutputType(typeof(XmlElement))]
     [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Cred")]
     [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "SSP")]
-    public class EnableWSManCredSSPCommand : WSManCredSSPCommandBase, IDisposable/*, IDynamicParameters*/
+    public class EnableWSManCredSSPCommand : WSManCredSSPCommandBase, IDisposable
     {
         /// <summary>
         /// Delegate parameter.

@@ -1,14 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/*============================================================
-**
-**
-** Purpose:
-** This internal class is a SafeHandle implementation over a
-** native CoTaskMem allocated via StringToCoTaskMemAuto.
-**
-============================================================*/
+
 
 using System.Runtime.InteropServices;
 

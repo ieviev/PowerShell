@@ -1427,7 +1427,7 @@ namespace System.Management.Automation
                 // also Directory.Exists (if the file system provider isn't actually loaded.)
                 if (trimmedenvPath.StartsWith("filesystem::", StringComparison.OrdinalIgnoreCase))
                 {
-                    trimmedenvPath = trimmedenvPath.Remove(0, 12 /*"filesystem::".Length*/);
+                    trimmedenvPath = trimmedenvPath.Remove(0, 12 );
                 }
 
                 isUnc = Utils.PathIsUnc(trimmedenvPath);

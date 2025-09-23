@@ -325,7 +325,7 @@ namespace Microsoft.PowerShell.Commands
             {
                 bool wasFiltered = false;
                 List<PSVariable> matchingVariables =
-                    GetMatchingVariables(varName, Scope, out wasFiltered, /*quiet*/ false);
+                    GetMatchingVariables(varName, Scope, out wasFiltered,  false);
 
                 matchingVariables.Sort(
                     static (PSVariable left, PSVariable right) => StringComparer.CurrentCultureIgnoreCase.Compare(left.Name, right.Name));
@@ -862,7 +862,7 @@ namespace Microsoft.PowerShell.Commands
                     // variable in the local scope.
 
                     matchingVariables =
-                        GetMatchingVariables(varName, Scope, out wasFiltered, /* quiet */ false);
+                        GetMatchingVariables(varName, Scope, out wasFiltered,  false);
                 }
                 else
                 {
@@ -1148,7 +1148,7 @@ namespace Microsoft.PowerShell.Commands
                 bool wasFiltered = false;
 
                 List<PSVariable> matchingVariables =
-                    GetMatchingVariables(varName, Scope, out wasFiltered, /* quiet */ false);
+                    GetMatchingVariables(varName, Scope, out wasFiltered,  false);
 
                 if (matchingVariables.Count == 0 && !wasFiltered)
                 {
@@ -1310,7 +1310,7 @@ namespace Microsoft.PowerShell.Commands
                 bool wasFiltered = false;
 
                 List<PSVariable> matchingVariables =
-                    GetMatchingVariables(varName, Scope, out wasFiltered, /* quiet */ false);
+                    GetMatchingVariables(varName, Scope, out wasFiltered,  false);
 
                 if (matchingVariables.Count == 0 && !wasFiltered)
                 {

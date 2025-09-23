@@ -946,7 +946,7 @@ namespace System.Management.Automation
                 if (entries > 20 * 1024)
                     throw new Exception(PossibleCorruptionErrorMessage);
 
-                result.Entries = new ConcurrentDictionary<string, ModuleCacheEntry>(/*concurrency*/3, entries, StringComparer.OrdinalIgnoreCase);
+                result.Entries = new ConcurrentDictionary<string, ModuleCacheEntry>(3, entries, StringComparer.OrdinalIgnoreCase);
 
                 // entries  (?? bytes) -> all entries
                 while (entries > 0)
@@ -963,7 +963,7 @@ namespace System.Management.Automation
                     if (countItems > 20 * 1024)
                         throw new Exception(PossibleCorruptionErrorMessage);
 
-                    var commands = new ConcurrentDictionary<string, CommandTypes>(/*concurrency*/3, countItems, StringComparer.OrdinalIgnoreCase);
+                    var commands = new ConcurrentDictionary<string, CommandTypes>(3, countItems, StringComparer.OrdinalIgnoreCase);
 
                     //   commands (?? bytes) -> all commands
                     while (countItems > 0)
@@ -1067,7 +1067,7 @@ namespace System.Management.Automation
                 LastReadTime = DateTime.Now,
                 // Capacity set to 100 - a bit bigger than the # of modules on a default Win10 client machine
                 // Concurrency=3 to not create too many locks, contention is unclear, but the old code had a single lock
-                Entries = new ConcurrentDictionary<string, ModuleCacheEntry>(/*concurrency*/3, /*capacity*/100, StringComparer.OrdinalIgnoreCase)
+                Entries = new ConcurrentDictionary<string, ModuleCacheEntry>(3, 100, StringComparer.OrdinalIgnoreCase)
             };
         }
 

@@ -123,7 +123,7 @@ namespace Microsoft.PowerShell.Commands
                 {
                     module = LoadModuleManifest(
                     scriptInfo,
-                    ManifestProcessingFlags.WriteErrors | ManifestProcessingFlags.WriteWarnings /* but don't stop on first error and don't load elements */,
+                    ManifestProcessingFlags.WriteErrors | ManifestProcessingFlags.WriteWarnings ,
                     null,
                     null,
                     null,

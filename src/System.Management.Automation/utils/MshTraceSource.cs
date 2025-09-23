@@ -158,17 +158,7 @@ namespace System.Management.Automation
             // uniform output
 
             string fullName = name;
-            /*
-                            // This is here to ensure all the trace category names are 16 characters,
-                            // the problem is that the app-config file would need to contain the same
-                            // trailing spaces if this actually does pad the name.
-
-                            name =
-                                string.Format(
-                                    System.Globalization.CultureInfo.InvariantCulture,
-                                    "{0,-16}",
-                                    name);
-            */
+            
             PSTraceSource result =
                 new PSTraceSource(
                     fullName,

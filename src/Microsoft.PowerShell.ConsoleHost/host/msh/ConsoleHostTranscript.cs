@@ -27,38 +27,7 @@ namespace Microsoft.PowerShell
 
         private bool _isTranscribing;
 
-        /*
-        internal void StartTranscribing(string transcriptFilename, bool shouldAppend)
-        {
-            // lock so as not to contend with IsTranscribing and StopTranscribing
-
-            lock (transcriptionStateLock)
-            {
-                Dbg.Assert(transcriptionWriter == null, "writer should not exist");
-                this.transcriptFileName = transcriptFilename;
-
-                transcriptionWriter = new StreamWriter(transcriptFilename, shouldAppend, new System.Text.UnicodeEncoding());
-
-                transcriptionWriter.AutoFlush = true;
-
-                string format = ConsoleHostStrings.TranscriptPrologue;
-                string line =
-                    StringUtil.Format(
-                        format,
-                        DateTime.Now,
-                        Environment.UserDomainName,
-                        Environment.UserName,
-                        Environment.MachineName,
-                        Environment.OSVersion.VersionString);
-
-                transcriptionWriter.WriteLine(line);
-
-                // record that we are transcribing...
-                isTranscribing = true;
-
-            }
-        }
-        */
+        
         private readonly string _transcriptFileName = string.Empty;
 
         internal string StopTranscribing()

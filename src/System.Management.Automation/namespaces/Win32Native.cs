@@ -4,13 +4,7 @@
 // NOTE: A vast majority of this code was copied from BCL in
 // Namespace: Microsoft.Win32
 //
-/*
- * Notes to PInvoke users:  Getting the syntax exactly correct is crucial, and
- * more than a little confusing.  Here's some guidelines.
- *
- * For handles, you should use a SafeHandle subclass specific to your handle
- * type.
-*/
+
 
 namespace Microsoft.PowerShell.Commands.Internal
 {
@@ -21,9 +15,7 @@ namespace Microsoft.PowerShell.Commands.Internal
     using System.Management.Automation;
     using System.Diagnostics.CodeAnalysis;
 
-    /**
-     * Win32 encapsulation for MSCORLIB.
-     */
+    
     // Remove the default demands for all N/Direct methods with this
     // global declaration on the class.
     //

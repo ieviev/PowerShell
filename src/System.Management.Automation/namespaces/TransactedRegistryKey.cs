@@ -6,50 +6,9 @@
 // ndp\clr\src\BCL\Microsoft\Win32\RegistryKey.cs.
 // Namespace: Microsoft.Win32
 //
-/*
-  Note on transaction support:
-  Eventually we will want to add support for NT's transactions to our
-  TransactedRegistryKey API's (possibly Whidbey M3?).  When we do this, here's
-  the list of API's we need to make transaction-aware:
 
-  RegCreateKeyEx
-  RegDeleteKey
-  RegDeleteValue
-  RegEnumKeyEx
-  RegEnumValue
-  RegOpenKeyEx
-  RegQueryInfoKey
-  RegQueryValueEx
-  RegSetValueEx
 
-  We can ignore RegConnectRegistry (remote registry access doesn't yet have
-  transaction support) and RegFlushKey.  RegCloseKey doesn't require any
-  additional work.  .
- */
 
-/*
-  Note on ACL support:
-  The key thing to note about ACL's is you set them on a kernel object like a
-  registry key, then the ACL only gets checked when you construct handles to
-  them.  So if you set an ACL to deny read access to yourself, you'll still be
-  able to read with that handle, but not with new handles.
-
-  Another peculiarity is a Terminal Server app compatibility hack.  The OS
-  will second guess your attempt to open a handle sometimes.  If a certain
-  combination of Terminal Server app compat registry keys are set, then the
-  OS will try to reopen your handle with lesser permissions if you couldn't
-  open it in the specified mode.  So on some machines, we will see handles that
-  may not be able to read or write to a registry key.  It's very strange.  But
-  the real test of these handles is attempting to read or set a value in an
-  affected registry key.
-
-  For reference, at least two registry keys must be set to particular values
-  for this behavior:
-  HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Terminal Server\RegistryExtensionFlags, the least significant bit must be 1.
-  HKLM\SYSTEM\CurrentControlSet\Control\TerminalServer\TSAppCompat must be 1
-  There might possibly be an interaction with yet a third registry key as well.
-
-*/
 
 using BCLDebug = System.Diagnostics.Debug;
 
@@ -198,13 +157,7 @@ namespace Microsoft.PowerShell.Commands.Internal
             return error;
         }
 
-        /**
-         * Creates a TransactedRegistryKey.
-         *
-         * This key is bound to hkey, if writable is <b>false</b> then no write operations
-         * will be allowed. If systemkey is set then the hkey won't be released
-         * when the object is GC'ed.
-         */
+        
         private TransactedRegistryKey(SafeRegistryHandle hkey, bool writable, bool systemkey,
                                       System.Transactions.Transaction transaction, SafeTransactionHandle txHandle)
         {
@@ -696,22 +649,7 @@ namespace Microsoft.PowerShell.Commands.Internal
             }
         }
 
-        /**
-         * Retrieves a new TransactedRegistryKey that represents the requested key. Valid
-         * values are:
-         *
-         * HKEY_CLASSES_ROOT,
-         * HKEY_CURRENT_USER,
-         * HKEY_LOCAL_MACHINE,
-         * HKEY_USERS,
-         * HKEY_PERFORMANCE_DATA,
-         * HKEY_CURRENT_CONFIG,
-         * HKEY_DYN_DATA.
-         *
-         * @param hKey HKEY_* to open.
-         *
-         * @return the TransactedRegistryKey requested.
-         */
+        
         internal static TransactedRegistryKey GetBaseKey(IntPtr hKey)
         {
             int index = ((int)hKey) & 0x0FFFFFFF;
@@ -1299,14 +1237,7 @@ namespace Microsoft.PowerShell.Commands.Internal
                 return (RegistryValueKind)type;
         }
 
-        /**
-         * Retrieves the current state of the dirty property.
-         *
-         * A key is marked as dirty if any operation has occurred that modifies the
-         * contents of the key.
-         *
-         * @return <b>true</b> if the key has been modified.
-         */
+        
         private bool IsDirty()
         {
             return (_state & STATE_DIRTY) != 0;
@@ -1562,11 +1493,7 @@ namespace Microsoft.PowerShell.Commands.Internal
                 return RegistryValueKind.String;
         }
 
-        /**
-         * Retrieves a string representation of this key.
-         *
-         * @return a string representing the key.
-         */
+        
         /// <summary>
         /// <para>Retrieves a string representation of this key.</para>
         /// </summary>
@@ -1617,13 +1544,7 @@ namespace Microsoft.PowerShell.Commands.Internal
             registrySecurity.Persist(_hkey, _keyName);
         }
 
-        /**
-         * After calling GetLastWin32Error(), it clears the last error field,
-         * so you must save the HResult and pass it to this method.  This method
-         * will determine the appropriate exception to throw dependent on your
-         * error, and depending on the error, insert a string into the message
-         * gotten from the ResourceManager.
-         */
+        
         internal void Win32Error(int errorCode, string str)
         {
             switch (errorCode)

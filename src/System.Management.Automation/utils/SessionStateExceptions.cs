@@ -314,7 +314,7 @@ namespace System.Management.Automation
         }
 
         [NonSerialized]
-        private readonly string _message /* = null */;
+        private readonly string _message ;
 
         #endregion Private/Internal
     }

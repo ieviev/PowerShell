@@ -121,7 +121,7 @@ namespace Microsoft.PowerShell.Commands
             set { _force = value; }
         }
 
-        private bool _passThru /* = false */;
+        private bool _passThru ;
 
         /// <summary>
         /// Gets or sets the parameter -passThru which states output from the command should be placed in the pipeline.

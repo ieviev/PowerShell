@@ -683,8 +683,8 @@ namespace System.Management.Automation
         {
             XmlDocument doc = InternalDeserializer.LoadUnsafeXmlDocument(
                 new FileInfo(helpFile),
-                false, /* ignore whitespace, comments, etc. */
-                null); /* default maxCharactersInDocument */
+                false, 
+                null); 
 
             // Add this file into _helpFiles hashtable to prevent it to be loaded again.
             _helpFiles[helpFile] = 0;

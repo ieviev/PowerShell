@@ -350,8 +350,8 @@ namespace System.Management.Automation
                     foreach (KeyValuePair<string, object> boundParameter in boundParameters)
                     {
                         CommandParameterInternal param = CommandParameterInternal.CreateParameterWithArgument(
-                            /*parameterAst*/null, boundParameter.Key, boundParameter.Key,
-                            /*argumentAst*/null, boundParameter.Value, false);
+                            null, boundParameter.Key, boundParameter.Key,
+                            null, boundParameter.Value, false);
                         commandProcessor.AddParameter(param);
                     }
                 }
@@ -372,8 +372,8 @@ namespace System.Management.Automation
                             if (colonIndex != -1 && colonIndex != paramText.Length - 1)
                             {
                                 param = CommandParameterInternal.CreateParameterWithArgument(
-                                    /*parameterAst*/null, paramText.Substring(1, colonIndex - 1), paramText,
-                                    /*argumentAst*/null, paramText.AsSpan(colonIndex + 1).Trim().ToString(),
+                                    null, paramText.Substring(1, colonIndex - 1), paramText,
+                                    null, paramText.AsSpan(colonIndex + 1).Trim().ToString(),
                                     false);
                             }
                             else if (argIndex == arguments.Length - 1 || paramText[paramText.Length - 1] != ':')
@@ -384,8 +384,8 @@ namespace System.Management.Automation
                             else
                             {
                                 param = CommandParameterInternal.CreateParameterWithArgument(
-                                    /*parameterAst*/null, paramText.Substring(1, paramText.Length - 2), paramText,
-                                    /*argumentAst*/null, arguments[argIndex + 1],
+                                    null, paramText.Substring(1, paramText.Length - 2), paramText,
+                                    null, arguments[argIndex + 1],
                                     false);
                                 argIndex++;
                             }
@@ -947,7 +947,7 @@ namespace System.Management.Automation
                     {
                         CommandParameterInternal bindableArgument =
                             CommandParameterInternal.CreateParameterWithArgument(
-                                /*parameterAst*/null, parameterName, "-" + parameterName + ":",
+                                null, parameterName, "-" + parameterName + ":",
                                 argument.ArgumentAst, argument.ArgumentValue,
                                 false);
 
@@ -1279,8 +1279,8 @@ namespace System.Management.Automation
                     object result = spb.GetDefaultScriptParameterValue(runtimeDefinedParameter, implicitUsingParameters);
                     SaveDefaultScriptParameterValue(parameter.Parameter.Name, result);
                     CommandParameterInternal argument = CommandParameterInternal.CreateParameterWithArgument(
-                        /*parameterAst*/null, parameter.Parameter.Name, "-" + parameter.Parameter.Name + ":",
-                        /*argumentAst*/null, result,
+                        null, parameter.Parameter.Name, "-" + parameter.Parameter.Name + ":",
+                        null, result,
                         false);
                     ParameterBindingFlags flags = ParameterBindingFlags.IsDefaultValue;
                     // Only coerce explicit values.  We default to null, which isn't always convertible.

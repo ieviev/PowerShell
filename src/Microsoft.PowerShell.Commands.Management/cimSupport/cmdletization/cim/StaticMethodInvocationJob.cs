@@ -14,7 +14,7 @@ namespace Microsoft.PowerShell.Cmdletization.Cim
     internal sealed class StaticMethodInvocationJob : ExtrinsicMethodInvocationJob
     {
         internal StaticMethodInvocationJob(CimJobContext jobContext, MethodInvocationInfo methodInvocationInfo)
-                : base(jobContext, false /* passThru */, jobContext.CmdletizationClassName, methodInvocationInfo)
+                : base(jobContext, false , jobContext.CmdletizationClassName, methodInvocationInfo)
         {
         }
 

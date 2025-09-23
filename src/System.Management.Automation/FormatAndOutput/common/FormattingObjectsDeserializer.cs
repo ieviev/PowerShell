@@ -261,7 +261,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         /// <returns>String out of the MsObject.</returns>
         internal string DeserializeStringMemberVariableRaw(PSObject so, string property)
         {
-            return (string)DeserializeMemberVariable(so, property, typeof(string), false /* cannotBeNull */);
+            return (string)DeserializeMemberVariable(so, property, typeof(string), false );
         }
 
         /// <summary>
@@ -272,7 +272,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         /// <returns>String out of the MsObject.</returns>
         internal string DeserializeStringMemberVariable(PSObject so, string property)
         {
-            string val = (string)DeserializeMemberVariable(so, property, typeof(string), false /* cannotBeNull */);
+            string val = (string)DeserializeMemberVariable(so, property, typeof(string), false );
 
             // expand TAB's
             if (string.IsNullOrEmpty(val))
@@ -282,7 +282,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
 
         internal int DeserializeIntMemberVariable(PSObject so, string property)
         {
-            return (int)DeserializeMemberVariable(so, property, typeof(int), true /* cannotBeNull */);
+            return (int)DeserializeMemberVariable(so, property, typeof(int), true );
         }
 
         internal bool DeserializeBoolMemberVariable(PSObject so, string property, bool cannotBeNull = true)

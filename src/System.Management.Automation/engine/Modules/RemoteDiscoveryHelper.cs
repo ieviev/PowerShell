@@ -389,7 +389,7 @@ namespace System.Management.Automation
                 errorMessageTemplate,
                 innerErrorMessage);
 
-            ErrorRecord outerErrorRecord = new ErrorRecord(innerErrorRecord, null /* null means: do not replace the exception */);
+            ErrorRecord outerErrorRecord = new ErrorRecord(innerErrorRecord, null );
             ErrorDetails outerErrorDetails = new ErrorDetails(errorMessage);
             outerErrorRecord.ErrorDetails = outerErrorDetails;
 
@@ -1025,7 +1025,7 @@ namespace System.Management.Automation
                     temporaryModuleManifestPath,
                     scriptBlock,
                     ModuleCmdletBase.ModuleManifestMembers,
-                    0 /* - don't write errors, don't load elements, don't return null on first error */,
+                    0 ,
                     ref containedErrors);
             }
 

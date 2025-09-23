@@ -804,9 +804,7 @@ namespace System.Management.Automation.Tracing
     {
         private readonly PowerShellTraceChannel _traceChannel;
 
-        /*
-         * Making the provider static to reduce the number of buffers needed to 1.
-         * */
+        
         private static readonly EventProvider _provider = new EventProvider(
 
         private bool disposed;
@@ -851,9 +849,7 @@ namespace System.Management.Automation.Tracing
             EventDescriptor ed = new EventDescriptor((int)traceEvent, 1, (byte)_traceChannel, (byte)level,
                                                      (byte)operationCode, (int)task, (long)_keywords);
 
-            /*
-             * Not using locks because the _provider is thread safe itself.
-             **/
+            
 
             if (args != null)
             {

@@ -734,7 +734,7 @@ function __cmdletization_BindCommonParameters
                 objectModelParameterName,
                 parameterType,
                 parameterCmdletization,
-                false, /* isValueFromPipeline */
+                false, 
                 parameterCmdletization != null && parameterCmdletization.ValueFromPipelineByPropertyNameSpecified && parameterCmdletization.ValueFromPipelineByPropertyName);
         }
 
@@ -1952,11 +1952,11 @@ Microsoft.PowerShell.Core\Export-ModuleMember -Function '{1}' -Alias '*'
                 "Command name doesn't need escaping - validated via xsd");
             output.WriteLine(
                 CmdletBeginBlockTemplate,
-                /* 0 */ commandMetadata.Name,
-                /* 1 */ ProxyCommand.GetCmdletBindingAttribute(commandMetadata),
-                /* 2 */ attributeString,
-                /* 3 */ outputTypeAttributeDeclaration,
-                /* 4 */ ProxyCommand.GetParamBlock(commandMetadata));
+                 commandMetadata.Name,
+                 ProxyCommand.GetCmdletBindingAttribute(commandMetadata),
+                 attributeString,
+                 outputTypeAttributeDeclaration,
+                 ProxyCommand.GetParamBlock(commandMetadata));
 
             output.WriteLine(
                 CmdletProcessBlockTemplate,
@@ -1964,8 +1964,8 @@ Microsoft.PowerShell.Core\Export-ModuleMember -Function '{1}' -Alias '*'
 
             output.WriteLine(
                 CmdletEndBlockTemplate,
-                /* 0 */ this.GetHelpDirectiveForExternalHelp(),
-                /* 1 */ CodeGeneration.EscapeSingleQuotedStringContent(commandMetadata.Name));
+                 this.GetHelpDirectiveForExternalHelp(),
+                 CodeGeneration.EscapeSingleQuotedStringContent(commandMetadata.Name));
         }
 
         private static void AddPassThruParameter(IDictionary<string, ParameterMetadata> commonParameters, InstanceCmdletMetadata instanceCmdletMetadata)
@@ -2048,11 +2048,11 @@ Microsoft.PowerShell.Core\Export-ModuleMember -Function '{1}' -Alias '*'
                 "Command name doesn't need escaping - validated via xsd");
             output.WriteLine(
                 CmdletBeginBlockTemplate,
-                /* 0 */ commandMetadata.Name,
-                /* 1 */ ProxyCommand.GetCmdletBindingAttribute(commandMetadata),
-                /* 2 */ attributeString,
-                /* 3 */ outputTypeAttributeDeclaration,
-                /* 4 */ ProxyCommand.GetParamBlock(commandMetadata));
+                 commandMetadata.Name,
+                 ProxyCommand.GetCmdletBindingAttribute(commandMetadata),
+                 attributeString,
+                 outputTypeAttributeDeclaration,
+                 ProxyCommand.GetParamBlock(commandMetadata));
 
             output.WriteLine(
                 CmdletProcessBlockTemplate,
@@ -2060,8 +2060,8 @@ Microsoft.PowerShell.Core\Export-ModuleMember -Function '{1}' -Alias '*'
 
             output.WriteLine(
                 CmdletEndBlockTemplate,
-                /* 0 */ this.GetHelpDirectiveForExternalHelp(),
-                /* 1 */ CodeGeneration.EscapeSingleQuotedStringContent(commandMetadata.Name));
+                 this.GetHelpDirectiveForExternalHelp(),
+                 CodeGeneration.EscapeSingleQuotedStringContent(commandMetadata.Name));
         }
 
         private string GetOutputAttributeForGetCmdlet()
@@ -2133,11 +2133,11 @@ Microsoft.PowerShell.Core\Export-ModuleMember -Function '{1}' -Alias '*'
                 "Command name doesn't need escaping - validated via xsd");
             output.WriteLine(
                 CmdletBeginBlockTemplate,
-                /* 0 */ commandMetadata.Name,
-                /* 1 */ ProxyCommand.GetCmdletBindingAttribute(commandMetadata),
-                /* 2 */ attributeString,
-                /* 3 */ this.GetOutputAttributeForGetCmdlet(),
-                /* 4 */ ProxyCommand.GetParamBlock(commandMetadata));
+                 commandMetadata.Name,
+                 ProxyCommand.GetCmdletBindingAttribute(commandMetadata),
+                 attributeString,
+                 this.GetOutputAttributeForGetCmdlet(),
+                 ProxyCommand.GetParamBlock(commandMetadata));
 
             output.WriteLine(
                 CmdletProcessBlockTemplate,
@@ -2145,8 +2145,8 @@ Microsoft.PowerShell.Core\Export-ModuleMember -Function '{1}' -Alias '*'
 
             output.WriteLine(
                 CmdletEndBlockTemplate,
-                /* 0 */ this.GetHelpDirectiveForExternalHelp(),
-                /* 1 */ CodeGeneration.EscapeSingleQuotedStringContent(commandMetadata.Name));
+                 this.GetHelpDirectiveForExternalHelp(),
+                 CodeGeneration.EscapeSingleQuotedStringContent(commandMetadata.Name));
         }
 
         private static readonly object s_enumCompilationLock = new();

@@ -1262,7 +1262,7 @@ namespace System.Management.Automation.Runspaces
 
             foreach (string nameToRemove in namesToRemove)
             {
-                list.Remove(nameToRemove, null /* remove any type with this name */);
+                list.Remove(nameToRemove, null );
             }
         }
 

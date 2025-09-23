@@ -202,32 +202,7 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         {
             // set the default handler
             RegisterCommandDefault(context, "out-lineoutput", typeof(OutLineOutputCommand));
-            /*
-            NOTE:
-            This is the spot where we could add new specialized handlers for
-            additional types. Adding a handler here would cause a new sub-pipeline
-            to be created.
-
-            For example, the following line would add a new handler named "out-example"
-            to be invoked when the incoming object type is "MyNamespace.Whatever.Example"
-
-            RegisterCommandForTypes (context, "out-example", new string[] { "MyNamespace.Whatever.Example" });
-
-            And the method can be like this:
-            private void RegisterCommandForTypes (ExecutionContext context, string commandName, Type commandType, string[] types)
-            {
-                CommandEntry ce = new CommandEntry ();
-
-                ce.command.Initialize (context, commandName, commandType);
-                ce.command.AddNamedParameter ("LineOutput", this.lo);
-                for (int k = 0; k < types.Length; k++)
-                {
-                    ce.AddApplicableType (types[k]);
-                }
-
-                this.commandEntryList.Add (ce);
-            }
-            */
+            
         }
 
         /// <summary>

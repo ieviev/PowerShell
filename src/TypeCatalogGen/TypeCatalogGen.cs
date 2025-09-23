@@ -1,20 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/*
- * This is the source code for the tool 'TypeCatalogGen.exe', which has been checked in %SDXROOT%\tools\managed\v4.0\TypeCatalogGen.
- * The tool 'TypeCatalogGen.exe' is used when building 'Microsoft.PowerShell.CoreCLR.AssemblyLoadContext.dll' for OneCore powershell
- * to generate the CoreCLR type catalog initialization code, which will then be compiled into the same DLL.
- *
- * See files 'makefile.inc' and 'sources' under directory 'PSAssemblyLoadContext' to learn how the tool and the auto-generated CSharp
- * file is used.
- *
- * Compilation Note:
- *    .NET Fx Version    - 4.5
- *    Special Dependency - System.Reflection.Metadata.dll, System.Collections.Immutable.dll (Available as nuget package: https://www.nuget.org/packages/System.Reflection.Metadata)
- * To compile the code, create a VS project and get the 'System.Reflection.Metadata' package from nuget. Then add this file to the VS
- * project and compile it.
-*/
+
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -51,13 +38,7 @@ Usage: TypeCatalogGen.exe <{0}> <{1}> [{2}]
         private const string Format_SingleLevelNestedType = "{0}.{1}+{2}";
         private const string Format_MultiLevelNestedType = "{0}+{1}";
 
-        /*
-         * Go through all reference assemblies of .NET Core and generate the type catalog -> Dictionary<NamespaceQualifiedTypeName, TPAStrongName>
-         * Then auto-generate the partial class 'PowerShellAssemblyLoadContext' that has the code to initialize the type catalog cache.
-         *
-         * In CoreCLR, there is no way to get all loaded TPA assemblies (.NET Framework Assemblies). In order to get type based on type name, powershell needs to know what .NET
-         * types are available and in which TPA assemblies. So we have to generate the type catalog based on the reference assemblies of .NET Core.
-         */
+        
         public static void Main(string[] args)
         {
             if (args.Length < 2 || args.Length > 3)

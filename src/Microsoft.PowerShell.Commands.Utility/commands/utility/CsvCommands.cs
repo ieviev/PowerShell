@@ -378,7 +378,7 @@ namespace Microsoft.PowerShell.Commands
                 using (StreamReader streamReader = PathUtils.OpenStreamReader(this, this.Path, Encoding, _isLiteralPath))
                 {
                     ImportCsvHelper readingHelper = new(
-                        this, this.Delimiter, null /* header */, null /* typeName */, streamReader);
+                        this, this.Delimiter, null , null , streamReader);
                     readingHelper.ReadHeader();
                     _preexistingPropertyNames = readingHelper.Header;
 
@@ -657,7 +657,7 @@ namespace Microsoft.PowerShell.Commands
                 {
                     using (StreamReader streamReader = PathUtils.OpenStreamReader(this, path, this.Encoding, _isLiteralPath))
                     {
-                        ImportCsvHelper helper = new(this, Delimiter, Header, null /* typeName */, streamReader);
+                        ImportCsvHelper helper = new(this, Delimiter, Header, null , streamReader);
 
                         try
                         {

@@ -102,7 +102,7 @@ namespace Microsoft.PowerShell.Cmdletization.Cim
             }
 
             throw CimValueConverter.GetInvalidCastException(
-                null, /* inner exception */
+                null, 
                 "InvalidCimQueryCast",
                 o,
                 CmdletizationResources.CimConversion_WqlQuery);

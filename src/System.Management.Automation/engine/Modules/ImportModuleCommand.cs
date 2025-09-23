@@ -503,7 +503,7 @@ namespace Microsoft.PowerShell.Commands
                             if (File.Exists(module.Path))
                             {
                                 bool found;
-                                moduleToProcess = LoadModule(module.Path, null, this.BasePrefix, /*SessionState*/ null,
+                                moduleToProcess = LoadModule(module.Path, null, this.BasePrefix,  null,
                                                              ref importModuleOptions,
                                                              ManifestProcessingFlags.LoadElements | ManifestProcessingFlags.WriteErrors | ManifestProcessingFlags.NullOnFirstError,
                                                              out found);
@@ -723,7 +723,7 @@ namespace Microsoft.PowerShell.Commands
                                 fileName: rootedPath,
                                 moduleBase: null,
                                 prefix: BasePrefix,
-                                ss: null, /*SessionState*/
+                                ss: null, 
                                 ref importModuleOptions,
                                 manifestProcessingFlags,
                                 out found);
@@ -751,7 +751,7 @@ namespace Microsoft.PowerShell.Commands
                                     extension: null,
                                     moduleBase: null,
                                     prefix: BasePrefix,
-                                    ss: null, /*SessionState*/
+                                    ss: null, 
                                     importModuleOptions,
                                     manifestProcessingFlags,
                                     out found);
@@ -792,7 +792,7 @@ namespace Microsoft.PowerShell.Commands
                                 fileName: name,
                                 moduleBase: null,
                                 prefix: BasePrefix,
-                                ss: null, /*SessionState*/
+                                ss: null, 
                                 ref importModuleOptions,
                                 manifestProcessingFlags,
                                 out found);
@@ -806,7 +806,7 @@ namespace Microsoft.PowerShell.Commands
                                 extension: null,
                                 moduleBase: null,
                                 prefix: BasePrefix,
-                                ss: null, /*SessionState*/
+                                ss: null, 
                                 importModuleOptions,
                                 manifestProcessingFlags,
                                 out found);
@@ -824,7 +824,7 @@ namespace Microsoft.PowerShell.Commands
                         found = LoadUsingModulePath(
                             modulePath,
                             name,
-                            ss: null, /* SessionState*/
+                            ss: null, 
                             importModuleOptions,
                             manifestProcessingFlags,
                             out foundModule);
@@ -1322,7 +1322,7 @@ namespace Microsoft.PowerShell.Commands
                 resourceUri,
                 cimNamespace,
                 moduleNames,
-                false /* onlyManifests */,
+                false ,
                 this,
                 this.CancellationToken).ToList();
 
@@ -1546,7 +1546,7 @@ namespace Microsoft.PowerShell.Commands
                         temporaryModuleManifestPath,
                         scriptBlock,
                         ModuleManifestMembers,
-                        ManifestProcessingFlags.NullOnFirstError | ManifestProcessingFlags.WriteErrors, /* - don't load elements */
+                        ManifestProcessingFlags.NullOnFirstError | ManifestProcessingFlags.WriteErrors, 
                         ref containedErrors);
 
                     if ((data == null) || containedErrors)
