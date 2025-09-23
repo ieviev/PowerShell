@@ -112,141 +112,6 @@ namespace Microsoft.PowerShell.Commands
 
         #endregion Cmdlet parameters
 
-        #region Remote discovery
-
-        private IEnumerable<PSModuleInfo> GetAvailableViaPsrpSessionCore(string[] moduleNames, Runspace remoteRunspace)
-        {
-            Dbg.Assert(remoteRunspace != null, "Caller should verify remoteRunspace != null");
-
-            using (var powerShell = System.Management.Automation.PowerShell.Create())
-            {
-                powerShell.Runspace = remoteRunspace;
-                powerShell.AddCommand("Get-Module");
-                powerShell.AddParameter("ListAvailable", true);
-
-                if (Refresh.IsPresent)
-                {
-                    powerShell.AddParameter("Refresh", true);
-                }
-
-                if (moduleNames != null)
-                {
-                    powerShell.AddParameter("Name", moduleNames);
-                }
-
-                string errorMessageTemplate = string.Format(
-                    CultureInfo.InvariantCulture,
-                    Modules.RemoteDiscoveryRemotePsrpCommandFailed,
-                    "Get-Module");
-                foreach (
-                    PSObject outputObject in
-                        RemoteDiscoveryHelper.InvokePowerShell(powerShell, this, errorMessageTemplate,
-                                                               this.CancellationToken))
-                {
-                    PSModuleInfo moduleInfo = RemoteDiscoveryHelper.RehydratePSModuleInfo(outputObject);
-                    yield return moduleInfo;
-                }
-            }
-        }
-
-        private static PSModuleInfo GetModuleInfoForRemoteModuleWithoutManifest(RemoteDiscoveryHelper.CimModule cimModule)
-        {
-            return new PSModuleInfo(cimModule.ModuleName, null, null);
-        }
-
-        private PSModuleInfo ConvertCimModuleInfoToPSModuleInfo(RemoteDiscoveryHelper.CimModule cimModule,
-                                                                string computerName)
-        {
-            try
-            {
-                bool containedErrors = false;
-
-                if (cimModule.MainManifest == null)
-                {
-                    return GetModuleInfoForRemoteModuleWithoutManifest(cimModule);
-                }
-
-                string temporaryModuleManifestPath = Path.Combine(
-                    RemoteDiscoveryHelper.GetModulePath(cimModule.ModuleName, null, computerName,
-                                                        this.Context.CurrentRunspace),
-                    Path.GetFileName(cimModule.ModuleName));
-
-                Hashtable mainData = null;
-                if (!containedErrors)
-                {
-                    mainData = RemoteDiscoveryHelper.ConvertCimModuleFileToManifestHashtable(
-                        cimModule.MainManifest,
-                        temporaryModuleManifestPath,
-                        this,
-                        ref containedErrors);
-                    if (mainData == null)
-                    {
-                        return GetModuleInfoForRemoteModuleWithoutManifest(cimModule);
-                    }
-                }
-
-                if (!containedErrors)
-                {
-                    mainData = RemoteDiscoveryHelper.RewriteManifest(mainData);
-                }
-
-                Hashtable localizedData = mainData; // TODO/FIXME - this needs full path support from the provider
-
-                PSModuleInfo moduleInfo = null;
-                if (!containedErrors)
-                {
-                    ImportModuleOptions throwAwayOptions = new ImportModuleOptions();
-                    moduleInfo = LoadModuleManifest(
-                        temporaryModuleManifestPath,
-                        null, // scriptInfo
-                        mainData,
-                        localizedData,
-                        0 ,
-                        this.BaseMinimumVersion,
-                        this.BaseMaximumVersion,
-                        this.BaseRequiredVersion,
-                        this.BaseGuid,
-                        ref throwAwayOptions,
-                        ref containedErrors);
-                }
-
-                if ((moduleInfo == null) || containedErrors)
-                {
-                    moduleInfo = GetModuleInfoForRemoteModuleWithoutManifest(cimModule);
-                }
-
-                return moduleInfo;
-            }
-            catch (Exception e)
-            {
-                ErrorRecord errorRecord = RemoteDiscoveryHelper.GetErrorRecordForProcessingOfCimModule(e, cimModule.ModuleName);
-                this.WriteError(errorRecord);
-                return null;
-            }
-        }
-
-        private IEnumerable<PSModuleInfo> GetAvailableViaCimSessionCore(IEnumerable<string> moduleNames,
-                                                                        CimSession cimSession, Uri resourceUri,
-                                                                        string cimNamespace)
-        {
-            IEnumerable<RemoteDiscoveryHelper.CimModule> remoteModules = RemoteDiscoveryHelper.GetCimModules(
-                cimSession,
-                resourceUri,
-                cimNamespace,
-                moduleNames,
-                true ,
-                this,
-                this.CancellationToken);
-
-            IEnumerable<PSModuleInfo> remoteModuleInfos = remoteModules
-                .Select(cimModule => this.ConvertCimModuleInfoToPSModuleInfo(cimModule, cimSession.ComputerName))
-                .Where(static moduleInfo => moduleInfo != null);
-
-            return remoteModuleInfos;
-        }
-
-        #endregion Remote discovery
-
         #region Cancellation support
 
         private readonly CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
@@ -422,25 +287,11 @@ namespace Microsoft.PowerShell.Commands
         private void GetAvailableViaCimSession(IEnumerable<string> names, IDictionary<string, ModuleSpecification> moduleSpecTable,
                                                CimSession cimSession, Uri resourceUri, string cimNamespace)
         {
-            IEnumerable<PSModuleInfo> remoteModules = GetAvailableViaCimSessionCore(names, cimSession, resourceUri, cimNamespace);
-
-            foreach (PSModuleInfo remoteModule in FilterModulesForEditionAndSpecification(remoteModules, moduleSpecTable))
-            {
-                RemoteDiscoveryHelper.AssociatePSModuleInfoWithSession(remoteModule, cimSession, resourceUri,
-                                                                       cimNamespace);
-                this.WriteObject(remoteModule);
-            }
+            
         }
 
         private void GetAvailableViaPsrpSession(string[] names, IDictionary<string, ModuleSpecification> moduleSpecTable, PSSession session)
         {
-            IEnumerable<PSModuleInfo> remoteModules = GetAvailableViaPsrpSessionCore(names, session.Runspace);
-
-            foreach (PSModuleInfo remoteModule in FilterModulesForEditionAndSpecification(remoteModules, moduleSpecTable))
-            {
-                RemoteDiscoveryHelper.AssociatePSModuleInfoWithSession(remoteModule, session);
-                this.WriteObject(remoteModule);
-            }
         }
 
         private void GetAvailableLocallyModules(string[] names, IDictionary<string, ModuleSpecification> moduleSpecTable, bool all)
