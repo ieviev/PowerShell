@@ -290,26 +290,6 @@ namespace Microsoft.PowerShell.Cim
                 return cimIntrinsicValue;
             }
 
-            if (typeof(ObjectSecurity).IsAssignableFrom(dotNetType))
-            {
-                string cimIntrinsicValue = Microsoft.PowerShell.Commands.SecurityDescriptorCommandsBase.GetSddl(psObject);
-                return cimIntrinsicValue;
-            }
-
-            if (typeof(X509Certificate2).IsAssignableFrom(dotNetType))
-            {
-                var cert = (X509Certificate2)(psObject.BaseObject);
-                byte[] cimIntrinsicValue = cert.RawData;
-                return cimIntrinsicValue;
-            }
-
-            if (typeof(X500DistinguishedName).IsAssignableFrom(dotNetType))
-            {
-                var x500name = (X500DistinguishedName)(psObject.BaseObject);
-                byte[] cimIntrinsicValue = x500name.RawData;
-                return cimIntrinsicValue;
-            }
-
             if (typeof(PhysicalAddress).IsAssignableFrom(dotNetType))
             {
                 object cimIntrinsicValue = LanguagePrimitives.ConvertTo(dotNetObject, typeof(string), CultureInfo.InvariantCulture);

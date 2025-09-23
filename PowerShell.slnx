@@ -4,7 +4,7 @@
     <Project Path="src/Microsoft.PowerShell.Commands.Utility/Microsoft.PowerShell.Commands.Utility.csproj" />
     <Project Path="src/Microsoft.PowerShell.ConsoleHost/Microsoft.PowerShell.ConsoleHost.csproj" />
     <Project Path="src/Microsoft.PowerShell.SDK/Microsoft.PowerShell.SDK.csproj" />
-    <Project Path="src/Microsoft.PowerShell.Security/Microsoft.PowerShell.Security.csproj" />
+    <!-- <Project Path="src/Microsoft.PowerShell.Security/Microsoft.PowerShell.Security.csproj" /> -->
     <Project Path="src/powershell-unix/powershell-unix.csproj" />
     <Project Path="src/System.Management.Automation/System.Management.Automation.csproj" />
   </Folder>
