@@ -131,8 +131,6 @@ namespace Microsoft.PowerShell
 
             uint exitCode = ExitCodeSuccess;
 
-            Thread.CurrentThread.Name = "ConsoleHost main thread";
-
             try
             {
                 // We might be able to ignore console host creation error if we are running in
@@ -961,7 +959,7 @@ namespace Microsoft.PowerShell
         private int _interactiveCommandCount;
 #endif
 
-        private double _profileLoadTimeInMS;
+        // private double _profileLoadTimeInMS;
 
         #endregion overrides
 
@@ -1601,7 +1599,7 @@ namespace Microsoft.PowerShell
             }
             else
             {
-                const string shellId = "Microsoft.PowerShell";
+                // const string shellId = "Microsoft.PowerShell";
 
                 // If the system lockdown policy says "Enforce", do so. Do this after types / formatting, default functions, etc
                 // are loaded so that they are trusted. (Validation of their signatures is done in F&O).
@@ -1636,20 +1634,12 @@ namespace Microsoft.PowerShell
                     }
                 }
 
-                string allUsersProfile = HostUtilities.GetFullProfileFileName(null, false);
-                string allUsersHostSpecificProfile = HostUtilities.GetFullProfileFileName(shellId, false);
-                string currentUserProfile = HostUtilities.GetFullProfileFileName(null, true);
-                string currentUserHostSpecificProfile = HostUtilities.GetFullProfileFileName(shellId, true);
+                string currentUserProfile = Platform.ConfigDirectory + "/profile.ps1";
 
                 // $PROFILE has to be set from the host
                 // Should be "per-user,host-specific profile.ps1"
                 // This should be set even if -noprofile is specified
-                _runspaceRef.Runspace.SessionStateProxy.SetVariable("PROFILE",
-                    HostUtilities.GetDollarProfile(
-                        allUsersProfile,
-                        allUsersHostSpecificProfile,
-                        currentUserProfile,
-                        currentUserHostSpecificProfile));
+                _runspaceRef.Runspace.SessionStateProxy.SetVariable("PROFILE", currentUserProfile);
 
                 if (!args.SkipProfiles)
                 {
@@ -1660,21 +1650,21 @@ namespace Microsoft.PowerShell
                     // 3. host independent profile of the current user
                     // 4. host specific profile of the current user
 
-                    var sw = new Stopwatch();
-                    sw.Start();
-                    RunProfile(allUsersProfile, exec);
-                    RunProfile(allUsersHostSpecificProfile, exec);
+                    // var sw = new Stopwatch();
+                    // sw.Start();
+                    // RunProfile(allUsersProfile, exec);
+                    // RunProfile(allUsersHostSpecificProfile, exec);
                     RunProfile(currentUserProfile, exec);
-                    RunProfile(currentUserHostSpecificProfile, exec);
-                    sw.Stop();
+                    // RunProfile(currentUserHostSpecificProfile, exec);
+                    // sw.Stop();
 
-                    var profileLoadTimeInMs = sw.ElapsedMilliseconds;
-                    if (s_cpp.ShowBanner && !s_cpp.NoProfileLoadTime && profileLoadTimeInMs > 500)
-                    {
-                        Console.Error.WriteLine(ConsoleHostStrings.SlowProfileLoadingMessage, profileLoadTimeInMs);
-                    }
+                    // var profileLoadTimeInMs = sw.ElapsedMilliseconds;
+                    // if (s_cpp.ShowBanner && !s_cpp.NoProfileLoadTime && profileLoadTimeInMs > 500)
+                    // {
+                    //     Console.Error.WriteLine(ConsoleHostStrings.SlowProfileLoadingMessage, profileLoadTimeInMs);
+                    // }
 
-                    _profileLoadTimeInMS = profileLoadTimeInMs;
+                    // _profileLoadTimeInMS = profileLoadTimeInMs;
                 }
                 else
                 {
