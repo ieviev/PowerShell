@@ -36,11 +36,7 @@ namespace Microsoft.PowerShell
     internal sealed partial class ConsoleHost
         :
         PSHost,
-        IDisposable,
-#if LEGACYTELEMETRY
-        IHostProvidesTelemetryData,
-#endif
-        IHostSupportsInteractiveSession
+        IDisposable
     {
         #region static methods
 
@@ -295,130 +291,6 @@ namespace Microsoft.PowerShell
             }
         }
 
-        
-        public void PushRunspace(Runspace runspace)
-        {
-            if (_runspaceRef == null)
-            {
-                return;
-            }
-
-            if (runspace is not RemoteRunspace remoteRunspace)
-            {
-                throw new ArgumentException(ConsoleHostStrings.PushRunspaceNotRemote, nameof(runspace));
-            }
-
-            remoteRunspace.StateChanged += HandleRemoteRunspaceStateChanged;
-
-            // Unsubscribe the local session debugger.
-            if (_runspaceRef.Runspace.Debugger != null)
-            {
-                _runspaceRef.Runspace.Debugger.DebuggerStop -= OnExecutionSuspended;
-            }
-
-            // Subscribe to debugger stop event.
-            if (remoteRunspace.Debugger != null)
-            {
-                remoteRunspace.Debugger.DebuggerStop += OnExecutionSuspended;
-            }
-
-            // Connect a disconnected command.
-            this.runningCmd = EnterPSSessionCommand.ConnectRunningPipeline(remoteRunspace);
-
-            // Push runspace.
-            _runspaceRef.Override(remoteRunspace, hostGlobalLock, out _isRunspacePushed);
-            RunspacePushed.SafeInvoke(this, EventArgs.Empty);
-
-            if (this.runningCmd != null)
-            {
-                EnterPSSessionCommand.ContinueCommand(
-                    remoteRunspace,
-                    this.runningCmd,
-                    this,
-                    InDebugMode,
-                    _runspaceRef.OldRunspace.ExecutionContext);
-            }
-
-            this.runningCmd = null;
-        }
-
-        
-        private void HandleRemoteRunspaceStateChanged(object sender, RunspaceStateEventArgs eventArgs)
-        {
-            RunspaceState state = eventArgs.RunspaceStateInfo.State;
-
-            switch (state)
-            {
-                case RunspaceState.Opening:
-                case RunspaceState.Opened:
-                    {
-                        return;
-                    }
-                case RunspaceState.Closing:
-                case RunspaceState.Closed:
-                case RunspaceState.Broken:
-                case RunspaceState.Disconnected:
-                    {
-                        PopRunspace();
-                    }
-
-                    break;
-            }
-        }
-
-        
-        public void PopRunspace()
-        {
-            if (_runspaceRef == null ||
-                !_runspaceRef.IsRunspaceOverridden)
-            {
-                return;
-            }
-
-            if (_inPushedConfiguredSession)
-            {
-                // For configured endpoint sessions, end session when configured runspace is popped.
-                this.ShouldEndSession = true;
-            }
-
-            if (_runspaceRef.Runspace.Debugger != null)
-            {
-                // Unsubscribe pushed runspace debugger.
-                _runspaceRef.Runspace.Debugger.DebuggerStop -= OnExecutionSuspended;
-
-                StopPipeline(this.runningCmd);
-
-                if (this.InDebugMode)
-                {
-                    ExitDebugMode(DebuggerResumeAction.Continue);
-                }
-            }
-
-            this.runningCmd = null;
-
-            lock (hostGlobalLock)
-            {
-                _runspaceRef.Revert();
-                _isRunspacePushed = false;
-            }
-
-            // Re-subscribe local runspace debugger.
-            _runspaceRef.Runspace.Debugger.DebuggerStop += OnExecutionSuspended;
-
-            // raise events outside the lock
-            RunspacePopped.SafeInvoke(this, EventArgs.Empty);
-        }
-
-        
-        public bool IsRunspacePushed
-        {
-            get
-            {
-                return _isRunspacePushed;
-            }
-        }
-
-        private bool _isRunspacePushed = false;
 
         
         public Runspace Runspace
@@ -438,11 +310,6 @@ namespace Microsoft.PowerShell
         {
             get
             {
-                if (_isRunspacePushed)
-                {
-                    return RunspaceRef.OldRunspace as LocalRunspace;
-                }
-
                 if (RunspaceRef == null)
                 {
                     return null;
@@ -688,12 +555,7 @@ namespace Microsoft.PowerShell
         {
             lock (hostGlobalLock)
             {
-                // Check for the pushed runspace scenario.
-                if (this.IsRunspacePushed)
-                {
-                    this.PopRunspace();
-                }
-                else if (InDebugMode)
+                if (InDebugMode)
                 {
                     ExitDebugMode(DebuggerResumeAction.Continue);
                 }
@@ -1402,25 +1264,6 @@ namespace Microsoft.PowerShell
                 }
             }
 
-            if (!string.IsNullOrEmpty(args.ConfigurationName))
-            {
-                // If an endpoint configuration is specified then create a loop-back remote runspace targeting
-                // the endpoint and push onto runspace ref stack.  Ignore profile and configuration scripts.
-                try
-                {
-                    RemoteRunspace remoteRunspace = HostUtilities.CreateConfiguredRunspace(args.ConfigurationName, this);
-                    remoteRunspace.ShouldCloseOnPop = true;
-                    PushRunspace(remoteRunspace);
-
-                    // Ensure that session ends when configured remote runspace is popped.
-                    _inPushedConfiguredSession = true;
-                }
-                catch (Exception e)
-                {
-                    throw new ConsoleHostStartupException(ConsoleHostStrings.ShellCannotBeStarted, e);
-                }
-            }
-            else
             {
                 string currentUserProfile = Platform.ConfigDirectory + "/profile.ps1";
                 if (!args.SkipProfiles)
@@ -1686,15 +1529,6 @@ namespace Microsoft.PowerShell
 
             try
             {
-                if (this.IsRunspacePushed)
-                {
-                    // For remote debugging block data coming from the main (not-nested)
-                    // running command.
-                    baseLoop = InputLoop.GetNonNestedLoop();
-                    baseLoop?.BlockCommandOutput();
-                }
-
-                //
                 // Display the banner only once per session
                 //
                 if (_displayDebuggerBanner)
@@ -1869,32 +1703,11 @@ namespace Microsoft.PowerShell
             {
                 _parent = parent;
                 _isNested = isNested;
-                _isRunspacePushed = parent.IsRunspacePushed;
-                parent.RunspacePopped += HandleRunspacePopped;
-                parent.RunspacePushed += HandleRunspacePushed;
                 _exec = new Executor(parent, isNested, false);
                 _promptExec = new Executor(parent, isNested, true);
             }
 
-            private void HandleRunspacePushed(object sender, EventArgs e)
-            {
-                lock (_syncObject)
-                {
-                    _isRunspacePushed = true;
-                    _runspacePopped = false;
-                }
-            }
-
-            
-            private void HandleRunspacePopped(object sender, EventArgs eventArgs)
-            {
-                lock (_syncObject)
-                {
-                    _isRunspacePushed = false;
-                    _runspacePopped = true;
-                }
-            }
-
+     
             // NTRAID#Windows Out Of Band Releases-915506-2005/09/09
             // Removed HandleUnexpectedExceptions infrastructure
             
@@ -2053,13 +1866,6 @@ namespace Microsoft.PowerShell
                             continue;
                         }
 
-                        if (_runspacePopped)
-                        {
-                            string msg = StringUtil.Format(ConsoleHostStrings.CommandNotExecuted, line);
-                            ui.WriteErrorLine(msg);
-                            _runspacePopped = false;
-                        }
-                        else
                         {
                             if (c.SupportsVirtualTerminal)
                             {
@@ -2094,15 +1900,6 @@ namespace Microsoft.PowerShell
                             {
                                 // Handle incomplete parse and other errors.
                                 inBlockMode = HandleErrors(e, line, inBlockMode, ref inputBlock);
-
-                                // If a remote runspace is pushed and it is not in a good state
-                                // then pop it.
-                                if (_isRunspacePushed && (_parent.Runspace != null) &&
-                                    ((_parent.Runspace.RunspaceStateInfo.State != RunspaceState.Opened) ||
-                                     (_parent.Runspace.RunspaceAvailability != RunspaceAvailability.Available)))
-                                {
-                                    _parent.PopRunspace();
-                                }
                             }
 
                         }
@@ -2300,22 +2097,6 @@ namespace Microsoft.PowerShell
                     promptString = ConsoleHostStrings.DefaultPrompt;
                 }
 
-                // Check for the pushed runspace scenario.
-                if (_isRunspacePushed)
-                {
-                    if (_parent.Runspace is RemoteRunspace remoteRunspace)
-                    {
-                        promptString = HostUtilities.GetRemotePrompt(remoteRunspace, promptString, _parent._inPushedConfiguredSession);
-                    }
-                }
-                else
-                {
-                    if (_runspacePopped)
-                    {
-                        _runspacePopped = false;
-                    }
-                }
-
                 // Return composed prompt string.
                 return promptString;
             }
@@ -2337,11 +2118,6 @@ namespace Microsoft.PowerShell
 
                 PSObject prompt = output.ReadAndRemoveAt0();
                 string promptString = (prompt != null) ? (prompt.BaseObject as string) : null;
-                if (promptString != null && _parent.Runspace is RemoteRunspace remoteRunspace)
-                {
-                    promptString = HostUtilities.GetRemotePrompt(remoteRunspace, promptString, _parent._inPushedConfiguredSession);
-                }
-
                 return promptString;
             }
 
@@ -2351,8 +2127,6 @@ namespace Microsoft.PowerShell
             private readonly Executor _exec;
             private readonly Executor _promptExec;
             private readonly Lock _syncObject = new();
-            private bool _isRunspacePushed;
-            private bool _runspacePopped;
 
             // The instance stack is used to keep track of which InputLoop instance should be told to exit
             // when PSHost.ExitNestedPrompt is called.
@@ -2420,7 +2194,6 @@ namespace Microsoft.PowerShell
         private WrappedSerializer _errorSerializer;
         private bool _displayDebuggerBanner;
         private DebuggerStopEventArgs _debuggerStopEventArgs;
-        private bool _inPushedConfiguredSession;
         internal Pipeline runningCmd;
 
         // The ConsoleHost class is a singleton.  Note that there is not a thread-safety issue with these statics as there can
