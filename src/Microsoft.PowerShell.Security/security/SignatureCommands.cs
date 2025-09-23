@@ -56,11 +56,8 @@ namespace Microsoft.PowerShell.Commands
             set
             {
                 _path = value;
-                _isLiteralPath = true;
             }
         }
-
-        private bool _isLiteralPath = false;
 
         /// <summary>
         /// Gets or sets the digital signature to be written to
@@ -160,28 +157,6 @@ namespace Microsoft.PowerShell.Commands
                 {
                     Collection<string> paths = new();
 
-                    // Expand wildcard characters
-                    if (_isLiteralPath)
-                    {
-                        paths.Add(SessionState.Path.GetUnresolvedProviderPathFromPSPath(p));
-                    }
-                    else
-                    {
-                        try
-                        {
-                            foreach (PathInfo tempPath in SessionState.Path.GetResolvedPSPathFromPSPath(p))
-                            {
-                                paths.Add(tempPath.ProviderPath);
-                            }
-                        }
-                        catch (ItemNotFoundException)
-                        {
-                            WriteError(
-                                SecurityUtils.CreateFileNotFoundErrorRecord(
-                                    SignatureCommands.FileNotFound,
-                                    "SignatureCommandsBaseFileNotFound", p));
-                        }
-                    }
 
                     if (paths.Count == 0)
                         continue;

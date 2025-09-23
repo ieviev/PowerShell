@@ -24,7 +24,7 @@ $dotnetAzureFeed = if ([string]::IsNullOrWhiteSpace($env:__DOTNET_RUNTIME_FEED))
 $dotnetAzureFeedSecret = $env:__DOTNET_RUNTIME_FEED_KEY
 $dotnetSDKVersionOveride = $dotnetMetadata.Sdk.sdkImageOverride
 $dotnetCLIRequiredVersion = $(Get-Content $PSScriptRoot/global.json | ConvertFrom-Json).Sdk.Version
-
+$Version = '10'
 # Track if tags have been sync'ed
 $tagsUpToDate = $false
 
@@ -2022,6 +2022,7 @@ function Start-PSxUnit {
             $requiredDependencies = @(
                 $nativeLib,
                 "$Content/Microsoft.Management.Infrastructure.dll",
+                "$Content/System.Text.Encoding.CodePages.dll"
             )
 
             if((Test-Path $requiredDependencies) -notcontains $false)
