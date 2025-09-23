@@ -1177,8 +1177,6 @@ namespace Microsoft.PowerShell
             Dbg.Assert(!string.IsNullOrEmpty(command), "command should have a value");
             Dbg.Assert(exec != null, "non-null Executor instance needed");
 
-            s_runspaceInitTracer.WriteLine("running command {0}", command);
-
             Exception e = null;
 
             if (IsRunningAsync)
@@ -1255,7 +1253,6 @@ namespace Microsoft.PowerShell
         {
             Dbg.Assert(_runspaceRef == null, "_runspaceRef field should be null");
             Dbg.Assert(DefaultInitialSessionState != null, "DefaultInitialSessionState should not be null");
-            s_runspaceInitTracer.WriteLine("Calling RunspaceFactory.CreateRunspace");
 
             // Use session configuration file if provided.
             bool customConfigurationProvided = false;
@@ -1367,7 +1364,6 @@ namespace Microsoft.PowerShell
             runspace.ThreadOptions = PSThreadOptions.ReuseThread;
             runspace.EngineActivityId = EtwActivity.GetActivityId();
 
-            s_runspaceInitTracer.WriteLine("Calling Runspace.Open");
             runspace.Open();
         }
 
@@ -1426,94 +1422,22 @@ namespace Microsoft.PowerShell
             }
             else
             {
-                // const string shellId = "Microsoft.PowerShell";
-
-                // If the system lockdown policy says "Enforce", do so. Do this after types / formatting, default functions, etc
-                // are loaded so that they are trusted. (Validation of their signatures is done in F&O).
-                var languageMode = Utils.EnforceSystemLockDownLanguageMode(_runspaceRef.Runspace.ExecutionContext);
-                // When displaying banner, also display the language mode if running in any restricted mode.
-                if (s_cpp.ShowBanner)
-                {
-                    switch (languageMode)
-                    {
-                        case PSLanguageMode.ConstrainedLanguage:
-                            if (SystemPolicy.GetSystemLockdownPolicy() != SystemEnforcementMode.Audit)
-                            {
-                                s_theConsoleHost.UI.WriteLine(ManagedEntranceStrings.ShellBannerCLMode);
-                            }
-                            else
-                            {
-                                s_theConsoleHost.UI.WriteLine(ManagedEntranceStrings.ShellBannerCLAuditMode);
-                            }
-
-                            break;
-
-                        case PSLanguageMode.NoLanguage:
-                            s_theConsoleHost.UI.WriteLine(ManagedEntranceStrings.ShellBannerNLMode);
-                            break;
-
-                        case PSLanguageMode.RestrictedLanguage:
-                            s_theConsoleHost.UI.WriteLine(ManagedEntranceStrings.ShellBannerRLMode);
-                            break;
-
-                        default:
-                            break;
-                    }
-                }
-
                 string currentUserProfile = Platform.ConfigDirectory + "/profile.ps1";
-
-                // $PROFILE has to be set from the host
-                // Should be "per-user,host-specific profile.ps1"
-                // This should be set even if -noprofile is specified
-                _runspaceRef.Runspace.SessionStateProxy.SetVariable("PROFILE", currentUserProfile);
-
                 if (!args.SkipProfiles)
                 {
-                    // Run the profiles.
-                    // Profiles are run in the following order:
-                    // 1. host independent profile meant for all users
-                    // 2. host specific profile meant for all users
-                    // 3. host independent profile of the current user
-                    // 4. host specific profile of the current user
-
-                    // var sw = new Stopwatch();
-                    // sw.Start();
-                    // RunProfile(allUsersProfile, exec);
-                    // RunProfile(allUsersHostSpecificProfile, exec);
-                    RunProfile(currentUserProfile, exec);
-                    // RunProfile(currentUserHostSpecificProfile, exec);
-                    // sw.Stop();
-
-                    // var profileLoadTimeInMs = sw.ElapsedMilliseconds;
-                    // if (s_cpp.ShowBanner && !s_cpp.NoProfileLoadTime && profileLoadTimeInMs > 500)
-                    // {
-                    //     Console.Error.WriteLine(ConsoleHostStrings.SlowProfileLoadingMessage, profileLoadTimeInMs);
-                    // }
-
-                    // _profileLoadTimeInMS = profileLoadTimeInMs;
-                }
-                else
-                {
-                    s_tracer.WriteLine("-noprofile option specified: skipping profiles");
+                    InitializeRunspaceHelper(
+                            $". {currentUserProfile}",
+                            exec,
+                            Executor.ExecutionOptions.AddOutputter);
                 }
             }
-#if LEGACYTELEMETRY
-            // Startup is reported after possibly running the profile, but before running the initial command (or file)
-            // if one is specified.
-            TelemetryAPI.ReportStartupTelemetry(this);
-#endif
-
             // If a file was specified as the argument to run, then run it...
             if (s_cpp != null && s_cpp.File != null)
             {
                 string filePath = s_cpp.File;
 
-                s_tracer.WriteLine("running -file '{0}'", filePath);
-
                 Pipeline tempPipeline = exec.CreatePipeline();
                 Command c;
-#if UNIX
                 // if file doesn't have .ps1 extension, we read the contents and treat it as a script to support shebang with no .ps1 extension usage
                 if (!filePath.EndsWith(".ps1", StringComparison.OrdinalIgnoreCase))
                 {
@@ -1521,7 +1445,6 @@ namespace Microsoft.PowerShell
                     c = new Command(script, isScript: true, useLocalScope: false);
                 }
                 else
-#endif
                 {
                     c = new Command(filePath, false, false);
                 }
@@ -1540,9 +1463,9 @@ namespace Microsoft.PowerShell
 
                 // If we're not going to continue, then get the exit code out of the runspace and
                 // and indicate that it should be returned...
-                if (!_noExit && this.Runspace is not RemoteRunspace)
+                if (!_noExit && Runspace is not RemoteRunspace)
                 {
-                    this.Runspace.ExecutionContext.ScriptCommandProcessorShouldRethrowExit = true;
+                    Runspace.ExecutionContext.ScriptCommandProcessorShouldRethrowExit = true;
                 }
 
                 Exception e1;
@@ -1593,7 +1516,6 @@ namespace Microsoft.PowerShell
             {
                 // Run the command passed on the command line
 
-                s_tracer.WriteLine("running initial command");
 
                 Pipeline tempPipeline = exec.CreatePipeline(args.InitialCommand, true);
 
@@ -1640,57 +1562,6 @@ namespace Microsoft.PowerShell
                     ReportException(e1, exec);
                 }
             }
-        }
-
-        private void RunProfile(string profileFileName, Executor exec)
-        {
-            if (!string.IsNullOrEmpty(profileFileName))
-            {
-                s_runspaceInitTracer.WriteLine("checking profile" + profileFileName);
-
-                try
-                {
-                    if (File.Exists(profileFileName))
-                    {
-                        InitializeRunspaceHelper(
-                            ". '" + EscapeSingleQuotes(profileFileName) + "'",
-                            exec,
-                            Executor.ExecutionOptions.AddOutputter);
-                    }
-                    else
-                    {
-                        s_runspaceInitTracer.WriteLine("profile file not found");
-                    }
-                }
-                catch (Exception e) // Catch-all OK, 3rd party callout
-                {
-                    ReportException(e, exec);
-
-                    s_runspaceInitTracer.WriteLine("Could not load profile.");
-                }
-            }
-        }
-
-        
-        internal static string EscapeSingleQuotes(string str)
-        {
-            // worst case we have to escape every character, so capacity is twice as large as input length
-            StringBuilder sb = new StringBuilder(str.Length * 2);
-
-            for (int i = 0; i < str.Length; ++i)
-            {
-                char c = str[i];
-                if (c == '\'')
-                {
-                    sb.Append(c);
-                }
-
-                sb.Append(c);
-            }
-
-            string result = sb.ToString();
-
-            return result;
         }
 
         private void WriteErrorLine(string line)
@@ -2100,7 +1971,6 @@ namespace Microsoft.PowerShell
                         {
                             previousResponseWasEmpty = true;
 
-                            s_tracer.WriteLine("line is null");
                             if (!ui.ReadFromStdin)
                             {
                                 // If we're not reading from stdin, the we probably got here
@@ -2127,7 +1997,6 @@ namespace Microsoft.PowerShell
                             {
                                 // end block mode and execute the block accumulated block
 
-                                s_tracer.WriteLine("exiting block mode");
                                 line = inputBlock.ToString();
                                 inBlockMode = false;
                             }
@@ -2141,7 +2010,6 @@ namespace Microsoft.PowerShell
                         {
                             if (inBlockMode)
                             {
-                                s_tracer.WriteLine("adding line to block");
                                 inputBlock.Append('\n');
                                 inputBlock.Append(line);
                                 continue;
@@ -2193,13 +2061,11 @@ namespace Microsoft.PowerShell
                         }
                         else
                         {
-#if UNIX
                             if (c.SupportsVirtualTerminal)
                             {
                                 // disable DECCKM to standard mode as applications may not expect VT for cursor keys
                                 c.Write(DECCKM_OFF);
                             }
-#endif
 
                             if (_parent.IsRunningAsync && !_parent.IsNested)
                             {
@@ -2239,10 +2105,6 @@ namespace Microsoft.PowerShell
                                 }
                             }
 
-#if LEGACYTELEMETRY
-                            if (!inBlockMode)
-                                s_theConsoleHost._interactiveCommandCount += 1;
-#endif
                         }
                     }
 
@@ -2488,20 +2350,18 @@ namespace Microsoft.PowerShell
             private bool _shouldExit;
             private readonly Executor _exec;
             private readonly Executor _promptExec;
-            private readonly object _syncObject = new object();
-            private bool _isRunspacePushed = false;
-            private bool _runspacePopped = false;
+            private readonly Lock _syncObject = new();
+            private bool _isRunspacePushed;
+            private bool _runspacePopped;
 
             // The instance stack is used to keep track of which InputLoop instance should be told to exit
             // when PSHost.ExitNestedPrompt is called.
 
             // threadsafety guaranteed by enclosing class
 
-            private static readonly Stack<InputLoop> s_instanceStack = new Stack<InputLoop>();
+            private static readonly Stack<InputLoop> s_instanceStack = new();
         }
 
-        [SuppressMessage("Microsoft.Design", "CA1064:ExceptionsShouldBePublic", Justification =
-            "This exception cannot be used outside of the console host application. It is not thrown by a library routine, only by an application.")]
         private sealed class ConsoleHostStartupException : Exception
         {
             internal
@@ -2528,13 +2388,6 @@ namespace Microsoft.PowerShell
         
         private RunspaceRef _runspaceRef;
 
-#if !UNIX
-        private GCHandle breakHandlerGcHandle;
-
-        // Set to Unknown so that we avoid saving/restoring the console mode if we don't have a console.
-        private ConsoleControl.ConsoleModes _savedConsoleMode = ConsoleControl.ConsoleModes.Unknown;
-        private readonly ConsoleControl.ConsoleModes _initialConsoleMode = ConsoleControl.ConsoleModes.Unknown;
-#endif
         private Thread _breakHandlerThread;
         private bool _isDisposed;
         internal ConsoleHostUserInterface ui;
@@ -2554,7 +2407,7 @@ namespace Microsoft.PowerShell
         // state that persists across method calls, like progress data. It's internal because the ui object also
         // uses this same object.
 
-        internal object hostGlobalLock = new object();
+        internal object hostGlobalLock = new();
 
         // These members are possibly accessed from multiple threads (the break handler thread, a pipeline thread, or the main
         // thread). We use hostGlobalLock to sync access to them.
@@ -2576,13 +2429,6 @@ namespace Microsoft.PowerShell
         private static ConsoleHost s_theConsoleHost;
 
         internal static InitialSessionState DefaultInitialSessionState;
-
-        [TraceSource("ConsoleHost", "ConsoleHost subclass of S.M.A.PSHost")]
-        private static readonly PSTraceSource s_tracer = PSTraceSource.GetTracer("ConsoleHost", "ConsoleHost subclass of S.M.A.PSHost");
-
-        [TraceSource("ConsoleHostRunspaceInit", "Initialization code for ConsoleHost's Runspace")]
-        private static readonly PSTraceSource s_runspaceInitTracer =
-            PSTraceSource.GetTracer("ConsoleHostRunspaceInit", "Initialization code for ConsoleHost's Runspace", false);
     }
 
     
@@ -2617,4 +2463,4 @@ namespace Microsoft.PowerShell
 
         internal Collection<CommandParameter> InitialCommandArgs { get; set; }
     }
-}   // namespace
+} 
