@@ -14,9 +14,7 @@ using System.Management.Automation.Host;
 using System.Management.Automation.Internal;
 using System.Management.Automation.Language;
 using System.Management.Automation.Remoting;
-using System.Management.Automation.Remoting.Server;
 using System.Management.Automation.Runspaces;
-using System.Management.Automation.Security;
 using System.Management.Automation.Subsystem.Feedback;
 using System.Management.Automation.Tracing;
 using System.Reflection;
@@ -25,9 +23,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using Microsoft.PowerShell.Commands;
-using ConsoleHandle = Microsoft.Win32.SafeHandles.SafeFileHandle;
 using Dbg = System.Management.Automation.Diagnostics;
-using Debugger = System.Management.Automation.Debugger;
 
 namespace Microsoft.PowerShell
 {
@@ -50,11 +46,6 @@ namespace Microsoft.PowerShell
         internal const string DECCKM_OFF = "\x1b[?1l";
 #endif
 
-        [DllImport("user32.dll", SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool SystemParametersInfo(uint uiAction, uint uiParam, ref bool pvParam, uint fWinIni);
-
-        
         internal static int Start(
             string bannerText,
             string helpText,
@@ -1081,18 +1072,6 @@ namespace Microsoft.PowerShell
             }
 
             _screenReaderActive = false;
-            if (Platform.IsWindowsDesktop)
-            {
-                // Note: this API can detect if a third-party screen reader is active, such as NVDA, but not the in-box Windows Narrator.
-                // Quoted from https://learn.microsoft.com/windows/win32/api/winuser/nf-winuser-systemparametersinfoa about the
-                // accessibility parameter 'SPI_GETSCREENREADER':
-                // "Narrator, the screen reader that is included with Windows, does not set the SPI_SETSCREENREADER or SPI_GETSCREENREADER flags."
-                bool enabled = false;
-                if (SystemParametersInfo(SPI_GETSCREENREADER, 0, ref enabled, 0))
-                {
-                    _screenReaderActive = enabled;
-                }
-            }
 
             return _screenReaderActive.Value;
         }

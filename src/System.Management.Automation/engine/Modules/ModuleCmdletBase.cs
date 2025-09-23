@@ -4530,80 +4530,6 @@ namespace Microsoft.PowerShell.Commands
             return filePaths;
         }
 
-        internal static PSSession GetWindowsPowerShellCompatRemotingSession()
-        {
-            PSSession result = null;
-            var commandInfo = new CmdletInfo("Get-PSSession", typeof(GetPSSessionCommand));
-            using var ps = System.Management.Automation.PowerShell.Create(RunspaceMode.CurrentRunspace);
-            ps.AddCommand(commandInfo);
-            ps.AddParameter("Name", WindowsPowerShellCompatRemotingSessionName);
-            ps.AddParameter("ErrorAction", ActionPreference.Ignore);
-            var results = ps.Invoke<PSSession>();
-            if (results.Count > 0)
-            {
-                result = results[0];
-            }
-            return result;
-        }
-
-        internal static PSSession CreateWindowsPowerShellCompatResources()
-        {
-            PSSession compatSession = null;
-            lock (s_WindowsPowerShellCompatSyncObject)
-            {
-                compatSession = GetWindowsPowerShellCompatRemotingSession();
-                if (compatSession == null)
-                {
-                    var commandInfo = new CmdletInfo("New-PSSession", typeof(NewPSSessionCommand));
-                    using var ps = System.Management.Automation.PowerShell.Create(RunspaceMode.CurrentRunspace);
-                    ps.AddCommand(commandInfo);
-                    ps.AddParameter("UseWindowsPowerShell", true);
-                    ps.AddParameter("Name", WindowsPowerShellCompatRemotingSessionName);
-                    var results = ps.Invoke<PSSession>();
-                    if (results.Count > 0)
-                    {
-                        compatSession = results[0];
-                        System.Threading.Interlocked.Exchange(ref s_WindowsPowerShellCompatUsageCounter, 0);
-                    }
-                }
-            }
-
-            return compatSession;
-        }
-
-        internal static void CleanupWindowsPowerShellCompatResources(SessionState sessionState)
-        {
-            lock (s_WindowsPowerShellCompatSyncObject)
-            {
-                var compatSession = GetWindowsPowerShellCompatRemotingSession();
-                if (compatSession != null)
-                {
-                    if (sessionState?.InvokeCommand.LocationChangedAction != null)
-                    {
-                        sessionState.InvokeCommand.LocationChangedAction -= SyncCurrentLocationDelegate;
-                    }
-
-                    var commandInfo = new CmdletInfo("Remove-PSSession", typeof(RemovePSSessionCommand));
-                    using var ps = System.Management.Automation.PowerShell.Create(RunspaceMode.CurrentRunspace);
-                    ps.AddCommand(commandInfo);
-                    ps.AddParameter("Session", compatSession);
-                    ps.Invoke();
-                }
-            }
-        }
-
-        internal static void SyncCurrentLocationHandler(object sender, LocationChangedEventArgs args)
-        {
-            PSSession compatSession = GetWindowsPowerShellCompatRemotingSession();
-            if (compatSession?.Runspace.RunspaceStateInfo.State == RunspaceState.Opened)
-            {
-                using var ps = System.Management.Automation.PowerShell.Create(RunspaceMode.CurrentRunspace);
-                ps.AddCommand(new CmdletInfo("Invoke-Command", typeof(InvokeCommandCommand)));
-                ps.AddParameter("Session", compatSession);
-                ps.AddParameter("ScriptBlock", ScriptBlock.Create(string.Create(CultureInfo.InvariantCulture, $"Set-Location -Path '{args.NewPath.Path}'")));
-                ps.Invoke();
-            }
-        }
 
         internal static EventHandler<LocationChangedEventArgs> SyncCurrentLocationDelegate;
 
@@ -4689,10 +4615,6 @@ namespace Microsoft.PowerShell.Commands
                         }
                     }
 
-                    if (module.IsWindowsPowerShellCompatModule && (System.Threading.Interlocked.Decrement(ref s_WindowsPowerShellCompatUsageCounter) == 0))
-                    {
-                        CleanupWindowsPowerShellCompatResources(this.SessionState);
-                    }
 
                     // First remove cmdlets from the session state
                     // (can't just go through module.ExportedCmdlets
