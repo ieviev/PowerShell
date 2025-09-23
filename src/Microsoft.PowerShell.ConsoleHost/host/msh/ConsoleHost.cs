@@ -216,7 +216,6 @@ namespace Microsoft.PowerShell
 
         private static readonly CommandLineParameterParser s_cpp = new CommandLineParameterParser();
 
-#if UNIX
         /// <summary>
         /// The break handler for the program.  Dispatches a break event to the current Executor.
         /// </summary>
@@ -244,54 +243,6 @@ namespace Microsoft.PowerShell
                     return;
             }
         }
-#else
-        /// <summary>
-        /// The break handler for the program.  Dispatches a break event to the current Executor.
-        /// </summary>
-        /// <param name="signal"></param>
-        /// <returns></returns>
-        private static bool MyBreakHandler(ConsoleControl.ConsoleBreakSignal signal)
-        {
-            switch (signal)
-            {
-                case ConsoleControl.ConsoleBreakSignal.CtrlBreak:
-                    if (s_cpp.NonInteractive)
-                    {
-                        // ControlBreak mimics ControlC in Noninteractive shells
-                        SpinUpBreakHandlerThread(shouldEndSession: true);
-                    }
-                    else
-                    {
-                        // Break into script debugger.
-                        BreakIntoDebugger();
-                    }
-
-                    return true;
-
-                // Run the break handler...
-                case ConsoleControl.ConsoleBreakSignal.CtrlC:
-                    SpinUpBreakHandlerThread(shouldEndSession: false);
-                    return true;
-
-                case ConsoleControl.ConsoleBreakSignal.Logoff:
-                    // Just ignore the logoff signal. This signal is sent to console
-                    // apps running as service anytime *any* user logs off which means
-                    // that PowerShell couldn't be used in services/tasks if we didn't
-                    // suppress this signal...
-                    return true;
-
-                case ConsoleControl.ConsoleBreakSignal.Close:
-                case ConsoleControl.ConsoleBreakSignal.Shutdown:
-                    SpinUpBreakHandlerThread(shouldEndSession: true);
-                    return false;
-
-                default:
-                    // Log as much sqm data as possible before we exit.
-                    SpinUpBreakHandlerThread(shouldEndSession: true);
-                    return false;
-            }
-        }
-#endif
 
         private static bool BreakIntoDebugger()
         {

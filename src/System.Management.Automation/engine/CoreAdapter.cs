@@ -22,7 +22,6 @@ using System.Xml;
 
 using System.Management.Automation.Internal;
 using Microsoft.PowerShell;
-using Dbg = System.Management.Automation.Diagnostics;
 
 #pragma warning disable 1634, 1691 // Stops compiler from warning about unknown warnings
 
@@ -1028,7 +1027,7 @@ namespace System.Management.Automation
 
         private static OverloadCandidate FindBestCandidate(List<OverloadCandidate> candidates, object[] arguments)
         {
-            Dbg.Assert(candidates != null, "Caller should verify candidates != null");
+            
 
             OverloadCandidate bestCandidateSoFar = null;
             bool multipleBestCandidates = false;
@@ -1054,9 +1053,7 @@ namespace System.Management.Automation
                 }
             }
 
-            Dbg.Assert(
-                !candidates.Any(otherCandidate => otherCandidate != bestCandidateSoFar && CompareOverloadCandidates(otherCandidate, bestCandidateSoFar, arguments) > 0),
-                "No other candidates are better than bestCandidateSoFar");
+            
 
             return multipleBestCandidates ? null : bestCandidateSoFar;
         }
@@ -1093,15 +1090,15 @@ namespace System.Management.Automation
 
             if (type1.IsArray)
             {
-                Dbg.Assert(type2.IsArray, "Caller should verify that both overload candidates have the same parameter types");
-                Dbg.Assert(type1.GetArrayRank() == type2.GetArrayRank(), "Caller should verify that both overload candidates have the same parameter types");
+                
+                
                 return CompareTypeSpecificity(type1.GetElementType(), type2.GetElementType());
             }
 
             if (type1.IsGenericType)
             {
-                Dbg.Assert(type2.IsGenericType, "Caller should verify that both overload candidates have the same parameter types");
-                Dbg.Assert(type1.GetGenericTypeDefinition() == type2.GetGenericTypeDefinition(), "Caller should verify that both overload candidates have the same parameter types");
+                
+                
                 return CompareTypeSpecificity(type1.GetGenericArguments(), type2.GetGenericArguments());
             }
 
@@ -1110,7 +1107,7 @@ namespace System.Management.Automation
 
         private static int CompareTypeSpecificity(Type[] params1, Type[] params2)
         {
-            Dbg.Assert(params1.Length == params2.Length, "Caller should verify that both overload candidates have the same number of parameters");
+            
 
             bool candidate1hasAtLeastOneMoreSpecificParameter = false;
             bool candidate2hasAtLeastOneMoreSpecificParameter = false;
@@ -1194,7 +1191,7 @@ namespace System.Management.Automation
 
         private static bool IsInvocationTargetConstraintSatisfied(MethodInformation method, PSMethodInvocationConstraints invocationConstraints)
         {
-            Dbg.Assert(method != null, "Caller should verify method != null");
+            
 
             if (method.method == null)
             {
@@ -1281,7 +1278,7 @@ namespace System.Management.Automation
 
         private static bool IsInvocationConstraintSatisfied(OverloadCandidate overloadCandidate, PSMethodInvocationConstraints invocationConstraints)
         {
-            Dbg.Assert(overloadCandidate != null, "Caller should verify overloadCandidate != null");
+            
 
             if (invocationConstraints == null)
             {
@@ -5891,8 +5888,8 @@ namespace System.Management.Automation
 
         internal static MethodInformation Infer(MethodInformation genericMethod, Type[] argumentTypes)
         {
-            Dbg.Assert(genericMethod != null, "Caller should verify that genericMethod != null");
-            Dbg.Assert(argumentTypes != null, "Caller should verify that arguments != null");
+            
+            
 
             // the cast is safe, because
             // 1) only ConstructorInfo and MethodInfo derive from MethodBase
@@ -5912,8 +5909,8 @@ namespace System.Management.Automation
 
         private static MethodInfo Infer(MethodInfo genericMethod, Type[] typesOfMethodArguments, bool hasVarArgs)
         {
-            Dbg.Assert(genericMethod != null, "Caller should verify that genericMethod != null");
-            Dbg.Assert(typesOfMethodArguments != null, "Caller should verify that arguments != null");
+            
+            
 
             if (!genericMethod.ContainsGenericParameters)
             {
@@ -5951,10 +5948,10 @@ namespace System.Management.Automation
 
         private static MethodInfo Infer(MethodInfo genericMethod, ICollection<Type> typeParameters, IEnumerable<Type> typesOfMethodParameters, IEnumerable<Type> typesOfMethodArguments)
         {
-            Dbg.Assert(genericMethod != null, "Caller should verify that genericMethod != null");
-            Dbg.Assert(typeParameters != null, "Caller should verify that typeParameters != null");
-            Dbg.Assert(typesOfMethodParameters != null, "Caller should verify that typesOfMethodParameters != null");
-            Dbg.Assert(typesOfMethodArguments != null, "Caller should verify that typesOfMethodArguments != null");
+            
+            
+            
+            
 
             using (s_tracer.TraceScope("Inferring type parameters for the following method: {0}", genericMethod))
             {
@@ -6001,24 +5998,16 @@ namespace System.Management.Automation
         internal TypeInference(ICollection<Type> typeParameters)
         {
 #if DEBUG
-            Dbg.Assert(typeParameters != null, "Caller should verify that typeParameters != null");
-            Dbg.Assert(
-                typeParameters.All(t => t.IsGenericParameter),
-                "Caller should verify that typeParameters are really generic type parameters");
+            
+            
 #endif
             _typeParameterIndexToSetOfInferenceCandidates = new HashSet<Type>[typeParameters.Count];
 #if DEBUG
             List<int> listOfTypeParameterPositions = typeParameters.Select(static t => t.GenericParameterPosition).ToList();
             listOfTypeParameterPositions.Sort();
-            Dbg.Assert(
-                listOfTypeParameterPositions.Count == listOfTypeParameterPositions.Distinct().Count(),
-                "No type parameters should occupy the same position");
-            Dbg.Assert(
-                listOfTypeParameterPositions.All(p => p >= 0),
-                "Type parameter positions should be between 0 and #ofParams");
-            Dbg.Assert(
-                listOfTypeParameterPositions.All(p => p < _typeParameterIndexToSetOfInferenceCandidates.Length),
-                "Type parameter positions should be between 0 and #ofParams");
+            
+            
+            
 
             _typeParametersOfTheMethod = new HashSet<Type>();
             foreach (Type t in typeParameters)
@@ -6031,10 +6020,8 @@ namespace System.Management.Automation
         internal Type GetInferredType(Type typeParameter)
         {
 #if DEBUG
-            Dbg.Assert(typeParameter != null, "Caller should verify typeParameter != null");
-            Dbg.Assert(
-                _typeParametersOfTheMethod.Contains(typeParameter),
-                "Caller should verify that typeParameter is actually a generic type parameter of the method");
+            
+            
 #endif
 
             ICollection<Type> inferenceCandidates =
@@ -6090,7 +6077,7 @@ namespace System.Management.Automation
             }
             else
             {
-                Dbg.Assert(inferenceCandidates.Count == 1, "inferenceCandidates should contain exactly 1 element at this point");
+                
                 return inferenceCandidates.Single();
             }
         }
@@ -6128,9 +6115,7 @@ namespace System.Management.Automation
             if (parameterType.IsGenericParameter)
             {
 #if DEBUG
-                Dbg.Assert(
-                    _typeParametersOfTheMethod.Contains(parameterType),
-                    "Only uninstantiated generic type parameters encountered in real life, should be the ones coming from the method");
+                
 #endif
 
                 HashSet<Type> inferenceCandidates = _typeParameterIndexToSetOfInferenceCandidates[parameterType.GenericParameterPosition];
@@ -6204,14 +6189,14 @@ namespace System.Management.Automation
                 return this.UnifyConstructedType(parameterType, argumentType);
             }
 
-            Dbg.Assert(false, "Unrecognized kind of type");
+            
             s_tracer.WriteLine("Unrecognized kind of type: {0}", parameterType);
             return false;
         }
 
         private bool UnifyConstructedType(Type parameterType, Type argumentType)
         {
-            Dbg.Assert(parameterType.IsGenericType, "Caller should verify parameterType.IsGenericType before calling this method");
+            
 
             if (IsEqualGenericTypeDefinition(parameterType, argumentType))
             {
@@ -6246,7 +6231,7 @@ namespace System.Management.Automation
 
         private static bool IsEqualGenericTypeDefinition(Type parameterType, Type argumentType)
         {
-            Dbg.Assert(parameterType.IsGenericType, "Caller should verify parameterType.IsGenericType before calling this method");
+            
 
             if (!argumentType.IsGenericType)
             {

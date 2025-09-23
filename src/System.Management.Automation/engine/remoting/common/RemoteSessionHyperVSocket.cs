@@ -181,64 +181,7 @@ namespace System.Management.Automation.Remoting
 
         public RemoteSessionHyperVSocketServer(bool LoopbackMode)
         {
-            _syncObject = new object();
-
-            Exception ex = null;
-
-            try
-            {
-                Guid serviceId = new Guid("a5201c21-2770-4c11-a68e-f182edb29220"); // HV_GUID_VM_SESSION_SERVICE_ID_2
-                Guid loopbackId = new Guid("e0e16197-dd56-4a10-9195-5ee7a155a838"); // HV_GUID_LOOPBACK
-                Guid parentId = new Guid("a42e7cda-d03f-480c-9cc2-a4de20abb878"); // HV_GUID_PARENT
-                Guid vmId = LoopbackMode ? loopbackId : parentId;
-                HyperVSocketEndPoint endpoint = new HyperVSocketEndPoint(HyperVSocketEndPoint.AF_HYPERV, vmId, serviceId);
-
-                Socket listenSocket = new Socket(endpoint.AddressFamily, SocketType.Stream, (System.Net.Sockets.ProtocolType)1);
-                listenSocket.Bind(endpoint);
-
-                listenSocket.Listen(1);
-                HyperVSocket = listenSocket.Accept();
-
-                Stream = new NetworkStream(HyperVSocket, true);
-
-                // Create reader/writer streams.
-                TextReader = new StreamReader(Stream);
-                TextWriter = new StreamWriter(Stream);
-                TextWriter.AutoFlush = true;
-
-                //
-                // listenSocket is not closed when it goes out of scope here. Sometimes it is
-                // closed later in this thread, while other times it is not closed at all. This will
-                // cause problem when we set up a second PowerShell Direct session. Let's
-                // explicitly close listenSocket here for safe.
-                //
-                if (listenSocket != null)
-                {
-                    try { listenSocket.Dispose(); }
-                    catch (ObjectDisposedException) { }
-                }
-            }
-            catch (Exception e)
-            {
-                ex = e;
-            }
-
-            if (ex != null)
-            {
-                Dbg.Fail("Unexpected error in RemoteSessionHyperVSocketServer.");
-
-                // Unexpected error.
-                string errorMessage = !string.IsNullOrEmpty(ex.Message) ? ex.Message : string.Empty;
-                _tracer.WriteMessage("RemoteSessionHyperVSocketServer", "RemoteSessionHyperVSocketServer", Guid.Empty,
-                    "Unexpected error in constructor: {0}", errorMessage);
-
-                throw new PSInvalidOperationException(
-                    PSRemotingErrorInvariants.FormatResourceString(RemotingErrorIdStrings.RemoteSessionHyperVSocketServerConstructorFailure),
-                    ex,
-                    nameof(PSRemotingErrorId.RemoteSessionHyperVSocketServerConstructorFailure),
-                    ErrorCategory.InvalidOperation,
-                    null);
-            }
+            
         }
 
         public RemoteSessionHyperVSocketServer(bool LoopbackMode, string token, DateTimeOffset tokenCreationTime)
