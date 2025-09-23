@@ -711,21 +711,6 @@ namespace System.Management.Automation
         internal static readonly ConfigScope[] SystemWideThenCurrentUserConfig = new[] { ConfigScope.AllUsers, ConfigScope.CurrentUser };
         internal static readonly ConfigScope[] CurrentUserThenSystemWideConfig = new[] { ConfigScope.CurrentUser, ConfigScope.AllUsers };
 
-        internal static T GetPolicySetting<T>(ConfigScope[] preferenceOrder) where T : PolicyBase, new()
-        {
-            // dont use policies just return null 
-            return null;
-//             T policy = null;
-// #if !UNIX
-//             // On Windows, group policy settings from registry take precedence.
-//             // If the requested policy is not defined in registry, we query the configuration file.
-//             policy = GetPolicySettingFromGPO<T>(preferenceOrder);
-//             if (policy != null) { return policy; }
-// #endif
-//             policy = GetPolicySettingFromConfigFile<T>(preferenceOrder);
-//             return policy;
-        }
-
         private static readonly ConcurrentDictionary<ConfigScope, PowerShellPolicies> s_cachedPoliciesFromConfigFile =
             new ConcurrentDictionary<ConfigScope, PowerShellPolicies>();
 

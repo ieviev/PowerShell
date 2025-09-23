@@ -447,21 +447,6 @@ namespace System.Management.Automation.Internal
                     break;
             }
 
-            var scriptExecutionSetting = Utils.GetPolicySetting<ScriptExecution>(scopeKey);
-            if (scriptExecutionSetting != null)
-            {
-                if (scriptExecutionSetting.EnableScripts == false)
-                {
-                    // Script execution is explicitly disabled
-                    return "Restricted";
-                }
-                else if (scriptExecutionSetting.EnableScripts == true)
-                {
-                    // Script execution is explicitly enabled
-                    return scriptExecutionSetting.ExecutionPolicy;
-                }
-            }
-
             return null;
         }
 

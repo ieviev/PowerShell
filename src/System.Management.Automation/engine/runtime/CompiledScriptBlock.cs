@@ -1479,77 +1479,6 @@ namespace System.Management.Automation
 
         private static bool WriteScriptBlockToLog(ScriptBlock scriptBlock, int segment, int segments, string textToLog)
         {
-            // See if we need to encrypt the event log message. This info is all cached by Utils.GetPolicySetting(),
-            // so we're not hitting the configuration file for every script block we compile.
-            ProtectedEventLogging logSetting =
-                Utils.GetPolicySetting<ProtectedEventLogging>(Utils.SystemWideOnlyConfig);
-            bool wasEncoded = false;
-            if (logSetting != null)
-            {
-                lock (s_syncObject)
-                {
-                    // Populates the encryptionRecipients list from the Group Policy, if possible. If not possible,
-                    // does all appropriate logging and encryptionRecipients is 'null'. 'CouldLog' being false
-                    // implies the engine wasn't ready for logging yet.
-                    bool couldLog = GetAndValidateEncryptionRecipients(scriptBlock, logSetting);
-                    if (!couldLog)
-                    {
-                        return false;
-                    }
-
-                    // If we have recipients to encrypt to, then do so.
-                    // Otherwise, we'll just log the plain text version.
-                    if (s_encryptionRecipients != null)
-                    {
-                        // Encrypt the raw text from the scriptblock.
-                        // The user may have to deal with any control characters in the data.
-                        ExecutionContext executionContext = LocalPipeline.GetExecutionContextFromTLS();
-                        ErrorRecord error = null;
-                        byte[] contentBytes = System.Text.Encoding.UTF8.GetBytes(textToLog);
-                        string encodedContent = CmsUtils.Encrypt(
-                            contentBytes,
-                            s_encryptionRecipients,
-                            executionContext.SessionState,
-                            out error);
-
-                        // Can't cache the reporting of encryption errors, as they are likely content-based.
-                        if (error != null)
-                        {
-                            // If we got an error encrypting the content, log an error and continue
-                            // logging the (unencrypted) message anyways. Logging trumps protected logging -
-                            // being able to detect that an attacker has compromised a box outweighs the danger of the
-                            // attacker seeing potentially sensitive data. Because if they aren't detected, then
-                            // they can just wait on the compromised box and see the sensitive data eventually anyways.
-
-                            string errorMessage = StringUtil.Format(
-                                SecuritySupportStrings.CouldNotEncryptContent,
-                                textToLog,
-                                error.ToString());
-                            
-                        }
-                        else
-                        {
-                            textToLog = encodedContent;
-                            wasEncoded = true;
-                        }
-                    }
-                }
-            }
-
-            if (!wasEncoded)
-            {
-                textToLog = FormatLogString(textToLog);
-            }
-
-            if (scriptBlock._scriptBlockData.HasSuspiciousContent)
-            {
-                
-            }
-            else
-            {
-                
-            }
-
             return true;
         }
 
@@ -1701,7 +1630,7 @@ namespace System.Management.Automation
         private static CmsMessageRecipient[] s_encryptionRecipients = null;
 
         private static readonly Lazy<ScriptBlockLogging> s_sbLoggingSettingCache = new Lazy<ScriptBlockLogging>(
-            static () => Utils.GetPolicySetting<ScriptBlockLogging>(Utils.SystemWideThenCurrentUserConfig),
+            static () => null,
             isThreadSafe: true);
 
         // Reset any static caches if the certificate has changed
@@ -1719,7 +1648,7 @@ namespace System.Management.Automation
         {
             if (InternalTestHooks.BypassGroupPolicyCaching)
             {
-                return Utils.GetPolicySetting<ScriptBlockLogging>(Utils.SystemWideThenCurrentUserConfig);
+                return null;
             }
 
             return s_sbLoggingSettingCache.Value;

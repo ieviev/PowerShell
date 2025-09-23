@@ -107,35 +107,8 @@ namespace Microsoft.PowerShell
             string helpText,
             bool issProvidedExternally)
         {
-#if DEBUG
-            if (Environment.GetEnvironmentVariable("POWERSHELL_DEBUG_STARTUP") != null)
-            {
-                while (!System.Diagnostics.Debugger.IsAttached)
-                {
-                    Thread.Sleep(1000);
-                }
-            }
-#endif
-
-            // Check for external InitialSessionState configuration conflict with '-ConfigurationFile' argument.
-            if (issProvidedExternally && !string.IsNullOrEmpty(s_cpp.ConfigurationFile))
-            {
-                throw new ConsoleHostStartupException(ConsoleHostStrings.ShellCannotBeStartedWithConfigConflict);
-            }
-
-            // Put PSHOME in front of PATH so that calling `pwsh` within `pwsh` always starts the same running version.
             string path = Environment.GetEnvironmentVariable("PATH");
             string pshome = Utils.DefaultPowerShellAppBase;
-            string dotnetToolsPathSegment = $"{Path.DirectorySeparatorChar}.store{Path.DirectorySeparatorChar}powershell{Path.DirectorySeparatorChar}";
-
-            int index = pshome.IndexOf(dotnetToolsPathSegment, StringComparison.Ordinal);
-            if (index > 0)
-            {
-                // We're running PowerShell global tool. In this case the real entry executable should be the 'pwsh'
-                // or 'pwsh.exe' within the tool folder which should be the path right before the '\.store', not what
-                // PSHome is pointing to.
-                pshome = pshome[0..index];
-            }
 
             pshome += Path.PathSeparator;
 
@@ -153,13 +126,6 @@ namespace Microsoft.PowerShell
             try
             {
                 string profileDir = Platform.CacheDirectory;
-#if !UNIX
-                if (!Directory.Exists(profileDir))
-                {
-                    Directory.CreateDirectory(profileDir);
-                }
-#endif
-                ProfileOptimization.SetProfileRoot(profileDir);
             }
             catch
             {
@@ -196,99 +162,6 @@ namespace Microsoft.PowerShell
                     s_theConsoleHost.UI.WriteLine($"PowerShell {PSVersionInfo.GitCommitId}");
                     return 0;
                 }
-
-                // Servermode parameter validation check.
-                int serverModeCount = 0;
-                if (s_cpp.ServerMode)
-                {
-                    serverModeCount++;
-                }
-                if (s_cpp.NamedPipeServerMode)
-                {
-                    serverModeCount++;
-                }
-                if (s_cpp.SocketServerMode)
-                {
-                    serverModeCount++;
-                }
-#if !UNIX
-                if (s_cpp.V2SocketServerMode)
-                {
-                    serverModeCount++;
-                }
-#endif
-                if (serverModeCount > 1)
-                {
-                    s_tracer.TraceError("Conflicting server mode parameters, parameters must be used exclusively.");
-                    s_theConsoleHost?.ui.WriteErrorLine(ConsoleHostStrings.ConflictingServerModeParameters);
-
-                    return ExitCodeBadCommandLineParameter;
-                }
-
-#if !UNIX
-                TaskbarJumpList.CreateRunAsAdministratorJumpList();
-#endif
-                // First check for and handle PowerShell running in a server mode.
-                if (s_cpp.ServerMode)
-                {
-                    ApplicationInsightsTelemetry.SendPSCoreStartupTelemetry("ServerMode", s_cpp.ParametersUsedAsDouble);
-                    ProfileOptimization.StartProfile("StartupProfileData-ServerMode");
-                    StdIOProcessMediator.Run(
-                        initialCommand: s_cpp.InitialCommand,
-                        workingDirectory: s_cpp.WorkingDirectory,
-                        configurationName: null,
-                        configurationFile: s_cpp.ConfigurationFile,
-                        combineErrOutStream: false);
-                    exitCode = 0;
-                }
-                else if (s_cpp.SSHServerMode)
-                {
-                    ApplicationInsightsTelemetry.SendPSCoreStartupTelemetry("SSHServer", s_cpp.ParametersUsedAsDouble);
-                    ProfileOptimization.StartProfile("StartupProfileData-SSHServerMode");
-                    StdIOProcessMediator.Run(
-                        initialCommand: s_cpp.InitialCommand,
-                        workingDirectory: null,
-                        configurationName: null,
-                        configurationFile: s_cpp.ConfigurationFile,
-                        combineErrOutStream: true);
-                    exitCode = 0;
-                }
-                else if (s_cpp.NamedPipeServerMode)
-                {
-                    ApplicationInsightsTelemetry.SendPSCoreStartupTelemetry("NamedPipe", s_cpp.ParametersUsedAsDouble);
-                    ProfileOptimization.StartProfile("StartupProfileData-NamedPipeServerMode");
-                    RemoteSessionNamedPipeServer.RunServerMode(
-                        configurationName: s_cpp.ConfigurationName);
-                    exitCode = 0;
-                }
-#if !UNIX
-                else if (s_cpp.V2SocketServerMode)
-                {
-                    if (s_cpp.Token == null)
-                    {
-                        s_tracer.TraceError("Token is required for V2SocketServerMode.");
-                        s_theConsoleHost?.ui.WriteErrorLine(string.Format(CultureInfo.CurrentCulture, ConsoleHostStrings.MissingMandatoryParameter, "-Token", "-V2SocketServerMode"));
-                        return ExitCodeBadCommandLineParameter;
-                    }
-
-                    if (s_cpp.UTCTimestamp == null)
-                    {
-                        s_tracer.TraceError("UTCTimestamp is required for V2SocketServerMode.");
-                        s_theConsoleHost?.ui.WriteErrorLine(string.Format(CultureInfo.CurrentCulture, ConsoleHostStrings.MissingMandatoryParameter, "-UTCTimestamp", "-v2socketservermode"));
-                        return ExitCodeBadCommandLineParameter;
-                    }
-
-                    ApplicationInsightsTelemetry.SendPSCoreStartupTelemetry("V2SocketServerMode", s_cpp.ParametersUsedAsDouble);
-                    ProfileOptimization.StartProfile("StartupProfileData-V2SocketServerMode");
-                    HyperVSocketMediator.Run(
-                        initialCommand: s_cpp.InitialCommand,
-                        configurationName: s_cpp.ConfigurationName,
-                        token: s_cpp.Token,
-                        tokenCreationTime: s_cpp.UTCTimestamp.Value);
-
-                    exitCode = 0;
-                }
-#endif
                 else
                 {
                     // Run PowerShell in normal console mode.
@@ -298,20 +171,7 @@ namespace Microsoft.PowerShell
                         throw hostException;
                     }
 
-                    if (LoadPSReadline())
-                    {
-                        ProfileOptimization.StartProfile("StartupProfileData-Interactive");
-
-                        if (UpdatesNotification.CanNotifyUpdates)
-                        {
-                            // Start a task in the background to check for the update release.
-                            _ = UpdatesNotification.CheckForUpdates();
-                        }
-                    }
-                    else
-                    {
-                        ProfileOptimization.StartProfile("StartupProfileData-NonInteractive");
-                    }
+                    LoadPSReadline();
 
                     s_theConsoleHost.BindBreakHandler();
                     PSHost.IsStdOutputRedirected = Console.IsOutputRedirected;
@@ -327,17 +187,12 @@ namespace Microsoft.PowerShell
 #pragma warning disable IDE0031
                 if (s_theConsoleHost != null)
                 {
-#if LEGACYTELEMETRY
-                    TelemetryAPI.ReportExitTelemetry(s_theConsoleHost);
-#endif
-#if UNIX
                     if (s_theConsoleHost.IsInteractive && s_theConsoleHost.UI.SupportsVirtualTerminal)
                     {
                         // https://github.com/dotnet/runtime/issues/27626 leaves terminal in application mode
                         // for now, we explicitly emit DECRST 1 sequence
                         s_theConsoleHost.UI.Write(DECCKM_OFF);
                     }
-#endif
                     s_theConsoleHost.Dispose();
                 }
 #pragma warning restore IDE0031
@@ -352,18 +207,6 @@ namespace Microsoft.PowerShell
         internal static void ParseCommandLine(string[] args)
         {
             s_cpp.Parse(args);
-
-#if !UNIX
-            if (s_cpp.WindowStyle.HasValue)
-            {
-                ConsoleControl.SetConsoleMode(s_cpp.WindowStyle.Value);
-            }
-#endif
-
-            if (s_cpp.SettingsFile is not null)
-            {
-                PowerShellConfig.Instance.SetSystemConfigFilePath(s_cpp.SettingsFile);
-            }
 
             // Check registry setting for a Group Policy ConfigurationName entry,
             // and use it to override anything set by the user on the command line.
@@ -1534,22 +1377,6 @@ namespace Microsoft.PowerShell
                 ui.NoPrompt = cpp.NoPrompt;
                 ui.ThrowOnReadAndPrompt = cpp.ThrowOnReadAndPrompt;
                 _noExit = cpp.NoExit;
-
-#if !UNIX
-                // See if we need to change the process-wide execution
-                // policy
-                if (!string.IsNullOrEmpty(cpp.ExecutionPolicy))
-                {
-                    ExecutionPolicy executionPolicy = SecuritySupport.ParseExecutionPolicy(cpp.ExecutionPolicy);
-                    SecuritySupport.SetExecutionPolicy(ExecutionPolicyScope.Process, executionPolicy, null);
-                }
-#endif
-
-                // If the debug pipe name was specified, create the custom IPC channel.
-                if (!string.IsNullOrEmpty(cpp.CustomPipeName))
-                {
-                    RemoteSessionNamedPipeServer.CreateCustomNamedPipeServer(cpp.CustomPipeName);
-                }
 
                 // NTRAID#Windows Out Of Band Releases-915506-2005/09/09
                 // Removed HandleUnexpectedExceptions infrastructure

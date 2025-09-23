@@ -1078,22 +1078,6 @@ namespace System.Management.Automation.Host
         /// </summary>
         internal static TranscriptionOption GetSystemTranscriptOption(TranscriptionOption currentTranscript)
         {
-            var transcription = InternalTestHooks.BypassGroupPolicyCaching
-                ? Utils.GetPolicySetting<Transcription>(Utils.SystemWideThenCurrentUserConfig)
-                : s_transcriptionSettingCache.Value;
-
-            if (transcription != null)
-            {
-                // If we have an existing system transcript for this process, use that.
-                // Otherwise, populate the static variable with the result of the group policy setting.
-                //
-                // This way, multiple runspaces opened by the same process will share the same transcript.
-                lock (s_systemTranscriptLock)
-                {
-                    systemTranscript ??= PSHostUserInterface.GetTranscriptOptionFromSettings(transcription, currentTranscript);
-                }
-            }
-
             return systemTranscript;
         }
 
@@ -1101,7 +1085,7 @@ namespace System.Management.Automation.Host
         private static readonly object s_systemTranscriptLock = new object();
 
         private static readonly Lazy<Transcription> s_transcriptionSettingCache = new Lazy<Transcription>(
-            static () => Utils.GetPolicySetting<Transcription>(Utils.SystemWideThenCurrentUserConfig),
+            static () => null,
             isThreadSafe: true);
 
         private static TranscriptionOption GetTranscriptOptionFromSettings(Transcription transcriptConfig, TranscriptionOption currentTranscript)

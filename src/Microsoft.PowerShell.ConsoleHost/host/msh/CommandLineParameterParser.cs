@@ -681,11 +681,7 @@ namespace Microsoft.PowerShell
 
         internal static string GetConfigurationNameFromGroupPolicy()
         {
-            // Current user policy takes precedence.
-            var consoleSessionSetting = Utils.GetPolicySetting<ConsoleSessionConfiguration>(Utils.CurrentUserThenSystemWideConfig);
-
-            return (consoleSessionSetting?.EnableConsoleSessionConfiguration == true && !string.IsNullOrEmpty(consoleSessionSetting?.ConsoleSessionConfigurationName)) ?
-                    consoleSessionSetting.ConsoleSessionConfigurationName : string.Empty;
+            return string.Empty;
         }
 
         /// <summary>

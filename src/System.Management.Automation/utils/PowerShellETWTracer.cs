@@ -942,19 +942,6 @@ namespace System.Management.Automation.Tracing
         /// </summary>
         internal PowerShellTraceSource(PowerShellTraceTask task, PowerShellTraceKeywords keywords)
         {
-            if (IsEtwSupported)
-            {
-                DebugChannel = new PowerShellChannelWriter(PowerShellTraceChannel.Debug,
-                                                           keywords | PowerShellTraceKeywords.UseAlwaysDebug);
-                AnalyticChannel = new PowerShellChannelWriter(PowerShellTraceChannel.Analytic,
-                                                              keywords | PowerShellTraceKeywords.UseAlwaysAnalytic);
-                OperationalChannel = new PowerShellChannelWriter(PowerShellTraceChannel.Operational,
-                                                                keywords | PowerShellTraceKeywords.UseAlwaysOperational);
-
-                this.Task = task;
-                this.Keywords = keywords;
-            }
-            else
             {
                 DebugChannel = NullWriter.Instance;
                 AnalyticChannel = NullWriter.Instance;
@@ -1001,36 +988,7 @@ namespace System.Management.Automation.Tracing
         /// </summary>
         public bool TraceErrorRecord(ErrorRecord errorRecord)
         {
-            if (errorRecord != null)
-            {
-                Exception exception = errorRecord.Exception;
-                string innerException = "None";
-                if (exception.InnerException != null)
-                {
-                    innerException = exception.InnerException.Message;
-                }
-
-                ErrorCategoryInfo cinfo = errorRecord.CategoryInfo;
-                string message = "None";
-
-                if (errorRecord.ErrorDetails != null)
-                {
-                    message = errorRecord.ErrorDetails.Message;
-                }
-
-                return DebugChannel.TraceError(PowerShellTraceEvent.ErrorRecord,
-                                               PowerShellTraceOperationCode.Exception, PowerShellTraceTask.None,
-                                               message,
-                                               cinfo.Category.ToString(), cinfo.Reason, cinfo.TargetName,
-                                               errorRecord.FullyQualifiedErrorId,
-                                               exception.Message, exception.StackTrace, innerException);
-            }
-            else
-            {
-                return DebugChannel.TraceError(PowerShellTraceEvent.ErrorRecord,
-                                               PowerShellTraceOperationCode.Exception, PowerShellTraceTask.None,
-                                               "NULL errorRecord");
-            }
+            
         }
 
         /// <summary>
@@ -1038,24 +996,7 @@ namespace System.Management.Automation.Tracing
         /// </summary>
         public bool TraceException(Exception exception)
         {
-            if (exception != null)
-            {
-                string innerException = "None";
-                if (exception.InnerException != null)
-                {
-                    innerException = exception.InnerException.Message;
-                }
-
-                return DebugChannel.TraceError(PowerShellTraceEvent.Exception,
-                                               PowerShellTraceOperationCode.Exception, PowerShellTraceTask.None,
-                                           exception.Message, exception.StackTrace, innerException);
-            }
-            else
-            {
-                return DebugChannel.TraceError(PowerShellTraceEvent.Exception,
-                                               PowerShellTraceOperationCode.Exception, PowerShellTraceTask.None,
-                                           "NULL exception");
-            }
+            
         }
 
         /// <summary>
@@ -1063,8 +1004,6 @@ namespace System.Management.Automation.Tracing
         /// </summary>
         public bool TracePowerShellObject(PSObject powerShellObject)
         {
-            return this.DebugChannel.TraceDebug(PowerShellTraceEvent.PowerShellObject,
-                                                PowerShellTraceOperationCode.Method, PowerShellTraceTask.None);
         }
 
         /// <summary>
@@ -1072,20 +1011,7 @@ namespace System.Management.Automation.Tracing
         /// </summary>
         public bool TraceJob(Job job)
         {
-            if (job != null)
-            {
-                return DebugChannel.TraceDebug(PowerShellTraceEvent.Job,
-                                               PowerShellTraceOperationCode.Method, PowerShellTraceTask.None,
-                                               job.Id.ToString(CultureInfo.InvariantCulture), job.InstanceId.ToString(), job.Name,
-                                               job.Location, job.JobStateInfo.State.ToString(),
-                                               job.Command);
-            }
-            else
-            {
-                return DebugChannel.TraceDebug(PowerShellTraceEvent.Job,
-                                               PowerShellTraceOperationCode.Method, PowerShellTraceTask.None,
-                                               string.Empty, string.Empty, "NULL job");
-            }
+            
         }
 
         /// <summary>
@@ -1094,9 +1020,7 @@ namespace System.Management.Automation.Tracing
         /// <returns></returns>
         public bool WriteMessage(string message)
         {
-            return DebugChannel.TraceInformational(PowerShellTraceEvent.TraceMessage,
-                                            PowerShellTraceOperationCode.None,
-                                            PowerShellTraceTask.None, message);
+           
         }
 
         /// <summary>
@@ -1106,9 +1030,7 @@ namespace System.Management.Automation.Tracing
         /// <returns></returns>
         public bool WriteMessage(string message1, string message2)
         {
-            return DebugChannel.TraceInformational(PowerShellTraceEvent.TraceMessage2,
-                                            PowerShellTraceOperationCode.None,
-                                            PowerShellTraceTask.None, message1, message2);
+            
         }
 
         /// <summary>
@@ -1118,9 +1040,7 @@ namespace System.Management.Automation.Tracing
         /// <returns></returns>
         public bool WriteMessage(string message, Guid instanceId)
         {
-            return DebugChannel.TraceInformational(PowerShellTraceEvent.TraceMessageGuid,
-                                            PowerShellTraceOperationCode.None,
-                                            PowerShellTraceTask.None, message, instanceId);
+            
         }
 
         /// <summary>
@@ -1147,36 +1067,6 @@ namespace System.Management.Automation.Tracing
         /// <returns></returns>
         public void WriteMessage(string className, string methodName, Guid workflowId, Job job, string message, params string[] parameters)
         {
-            StringBuilder sb = new StringBuilder();
-
-            if (job != null)
-            {
-                try
-                {
-                    sb.AppendLine(StringUtil.Format(EtwLoggingStrings.JobName, job.Name));
-                    sb.AppendLine(StringUtil.Format(EtwLoggingStrings.JobId, job.Id.ToString(CultureInfo.InvariantCulture)));
-                    sb.AppendLine(StringUtil.Format(EtwLoggingStrings.JobInstanceId, job.InstanceId.ToString()));
-                    sb.AppendLine(StringUtil.Format(EtwLoggingStrings.JobLocation, job.Location));
-                    sb.AppendLine(StringUtil.Format(EtwLoggingStrings.JobState, job.JobStateInfo.State.ToString()));
-                    sb.AppendLine(StringUtil.Format(EtwLoggingStrings.JobCommand, job.Command));
-                }
-                catch (Exception e)
-                {
-                    // Exception in 3rd party code should never cause a crash due to tracing. The
-                    // Implementation of the property getters could throw.
-                    TraceException(e);
-
-                    // If an exception is thrown, make sure the message is not partially formed.
-                    sb.Clear();
-                    sb.AppendLine(StringUtil.Format(EtwLoggingStrings.JobName, EtwLoggingStrings.NullJobName));
-                }
-            }
-            else
-            {
-                sb.AppendLine(StringUtil.Format(EtwLoggingStrings.JobName, EtwLoggingStrings.NullJobName));
-            }
-
-            
         }
 
         /// <summary>

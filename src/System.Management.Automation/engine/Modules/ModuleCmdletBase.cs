@@ -4543,21 +4543,6 @@ namespace Microsoft.PowerShell.Commands
         {
             moduleNames = null;
             ModuleLoggingGroupPolicyStatus status = ModuleLoggingGroupPolicyStatus.Undefined;
-
-            var moduleLogging = Utils.GetPolicySetting<ModuleLogging>(Utils.SystemWideThenCurrentUserConfig);
-            if (moduleLogging != null)
-            {
-                if (moduleLogging.EnableModuleLogging == false)
-                {
-                    status = ModuleLoggingGroupPolicyStatus.Disabled;
-                }
-                else if (moduleLogging.EnableModuleLogging == true)
-                {
-                    status = ModuleLoggingGroupPolicyStatus.Enabled;
-                    moduleNames = moduleLogging.ModuleNames;
-                }
-            }
-
             return status;
         }
 

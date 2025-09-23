@@ -5427,7 +5427,6 @@ end {
             }
         }
 
-        [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1001:CommasMustBeSpacedCorrectly", Justification = "Reviewed.")]
         private static void InitializeCoreCmdletsAndProviders(
             PSSnapInInfo psSnapInInfo,
             out Dictionary<string, SessionStateCmdletEntry> cmdlets,

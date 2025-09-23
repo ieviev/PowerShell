@@ -7,6 +7,7 @@
     <NoWarn>$(NoWarn);CS0168</NoWarn>
     <NoWarn>$(NoWarn);CS0169</NoWarn>
     <NoWarn>$(NoWarn);CA1822</NoWarn>
+    <NoWarn>$(NoWarn);SA1001</NoWarn>
     <AssemblyName>System.Management.Automation</AssemblyName>
   </PropertyGroup>
 
