@@ -211,34 +211,18 @@ namespace System.Management.Automation.Language
     public static class StaticParameterBinder
     {
         
-        /// <param name="commandAst">The CommandAst that represents the command invocation.</param>
-        /// <returns>The StaticBindingResult that represents the binding.</returns>
         public static StaticBindingResult BindCommand(CommandAst commandAst)
         {
             return BindCommand(commandAst, resolve: true);
         }
 
         
-        /// <param name="commandAst">The CommandAst that represents the command invocation.</param>
-        /// <param name="resolve">Boolean to determine whether binding should be syntactic, or should attempt
-        /// to resolve against an existing command.
-        /// </param>
-        /// <returns>The StaticBindingResult that represents the binding.</returns>
         public static StaticBindingResult BindCommand(CommandAst commandAst, bool resolve)
         {
             return BindCommand(commandAst, resolve, null);
         }
 
         
-        /// <param name="commandAst">The CommandAst that represents the command invocation.</param>
-        /// <param name="resolve">Boolean to determine whether binding should be syntactic, or should attempt
-        /// to resolve against an existing command.
-        /// </param>
-        /// <param name="desiredParameters">
-        ///     A string array that represents parameter names of interest. If any of these are specified,
-        ///     then full binding is done.
-        /// </param>
-        /// <returns>The StaticBindingResult that represents the binding.</returns>
         public static StaticBindingResult BindCommand(CommandAst commandAst, bool resolve, string[] desiredParameters)
         {
             // If they specified any desired parameters, first quickly check if they are found
@@ -713,8 +697,6 @@ namespace System.Management.Automation.Language
     public class StaticBindingError
     {
         
-        /// <param name="commandElement">The element associated with the exception.</param>
-        /// <param name="exception">The parameter binding exception that got raised.</param>
         internal StaticBindingError(CommandElementAst commandElement, ParameterBindingException exception)
         {
             this.CommandElement = commandElement;
@@ -739,19 +721,6 @@ namespace System.Management.Automation.Language
     internal sealed class PseudoBindingInfo
     {
         
-        /// <param name="commandInfo"></param>
-        /// <param name="validParameterSetsFlags"></param>
-        /// <param name="defaultParameterSetFlag"></param>
-        /// <param name="boundParameters"></param>
-        /// <param name="unboundParameters"></param>
-        /// <param name="boundArguments"></param>
-        /// <param name="boundPositionalParameter"></param>
-        /// <param name="allParsedArguments"></param>
-        /// <param name="parametersNotFound"></param>
-        /// <param name="ambiguousParameters"></param>
-        /// <param name="bindingExceptions"></param>
-        /// <param name="duplicateParameters"></param>
-        /// <param name="unboundArguments"></param>
         internal PseudoBindingInfo(
             CommandInfo commandInfo,
             uint validParameterSetsFlags,
@@ -784,10 +753,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="commandInfo"></param>
-        /// <param name="defaultParameterSetFlag"></param>
-        /// <param name="allParsedArguments"></param>
-        /// <param name="unboundParameters"></param>
         internal PseudoBindingInfo(
             CommandInfo commandInfo,
             uint defaultParameterSetFlag,
@@ -854,12 +819,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="command"></param>
-        /// <param name="pipeArgumentType">Indicate the type of the piped-in argument.</param>
-        /// <param name="paramAstAtCursor">The CommandParameterAst the cursor is pointing at.</param>
-        /// <param name="bindingType">Indicates whether pseudo binding is for argument binding, argument completion, or parameter completion.</param>
-        /// <param name="bindPositional">Indicates if the pseudo binding should bind positional parameters</param>
-        /// <returns>PseudoBindingInfo.</returns>
         internal PseudoBindingInfo DoPseudoParameterBinding(CommandAst command, Type pipeArgumentType, CommandParameterAst paramAstAtCursor, BindingType bindingType, bool bindPositional = true)
         {
             if (command == null)
@@ -989,7 +948,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="executionContext">ExecutionContext.</param>
         private void SetTemporaryDefaultHost(ExecutionContext executionContext)
         {
             if (executionContext.EngineHostInterface.IsHostRefSet)
@@ -1009,7 +967,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="executionContext">ExecutionContext.</param>
         private void RestoreHost(ExecutionContext executionContext)
         {
             // Remove temporary host and revert to original.
@@ -1337,16 +1294,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="paramAstAtCursor">
-        /// For parameter completion, if the cursor is pointing at a CommandParameterAst, we
-        /// should not try exact matching for that CommandParameterAst. This is to handle the
-        /// following case:
-        ///     Add-Computer -domain(tab)
-        /// Add-Computer has an alias "Domain" that can exactly match this partial input, but
-        /// since the user is typing 'tab', the partial input 'domain' should not be considered
-        /// as an exact match. In this case, we don't try exact matching when calling
-        /// GetMatchingParameter(..) so as to preserve other possibilities.
-        /// </param>
         private bool ParseParameterArguments(CommandParameterAst paramAstAtCursor)
         {
             if (!_bindingEffective)

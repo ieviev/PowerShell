@@ -12,9 +12,6 @@ namespace Microsoft.PowerShell.Commands.ShowCommandExtension
     public class ShowCommandParameterInfo
     {
         
-        /// <param name="other">
-        /// The object to wrap.
-        /// </param>
         public ShowCommandParameterInfo(CommandParameterInfo other)
         {
             ArgumentNullException.ThrowIfNull(other);
@@ -34,9 +31,6 @@ namespace Microsoft.PowerShell.Commands.ShowCommandExtension
         }
 
         
-        /// <param name="other">
-        /// The object to wrap.
-        /// </param>
         public ShowCommandParameterInfo(PSObject other)
         {
             ArgumentNullException.ThrowIfNull(other);
@@ -56,9 +50,6 @@ namespace Microsoft.PowerShell.Commands.ShowCommandExtension
         
         public string Name { get; }
 
-        /// <remarks>
-        /// True if the parameter is dynamic, or false otherwise.
-        /// </remarks>
         public bool IsMandatory { get; }
 
         

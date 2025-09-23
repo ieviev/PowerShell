@@ -14,9 +14,6 @@ namespace Microsoft.PowerShell
     class ProgressPane
     {
         
-        /// <param name="ui">
-        /// An implementation of the PSHostRawUserInterface with which the pane will be shown and hidden.
-        /// </param>
         internal
         ProgressPane(ConsoleHostUserInterface ui)
         {
@@ -26,10 +23,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <value>
-        /// true if the pane is visible, false if not.
-        ///
-        /// </value>
         internal
         bool
         IsShowing
@@ -190,9 +183,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="pendingProgress">
-        /// A PendingProgress instance that represents the outstanding activities that should be shown.
-        /// </param>
         internal
         void
         Show(PendingProgress pendingProgress)

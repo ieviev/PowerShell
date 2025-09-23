@@ -9,13 +9,6 @@ using System.Text;
 namespace Microsoft.PowerShell.Cmdletization.Cim
 {
     
-    /// <remarks>
-    /// Documentation on MSDN (https://msdn.microsoft.com/library/aa392263(VS.85).aspx) is
-    /// 1) rather slim / incomplete
-    /// 2) sometimes incorrect (i.e. says that '=' is used for character ranges, when it should have said '-')
-    ///
-    /// The code below is therefore mainly based on reverse engineering of admin\wmi\wbem\winmgmt\wbecomn\like.cpp
-    /// </remarks>
     internal class WildcardPatternToCimQueryParser : WildcardPatternParser
     {
         private readonly StringBuilder _result = new();

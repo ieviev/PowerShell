@@ -97,13 +97,6 @@ namespace Microsoft.PowerShell.Commands
         public SwitchParameter IsValid { get; set; } = new SwitchParameter();
 
         
-        /// <param name="context">
-        /// The context under which the command is running.
-        /// </param>
-        /// <returns>
-        /// An object representing the dynamic parameters for the cmdlet or null if there
-        /// are none.
-        /// </returns>
         internal override object GetDynamicParameters(CmdletProviderContext context)
         {
             object result = null;

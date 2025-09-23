@@ -27,9 +27,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         private readonly StringBuilder _cachedBuilder = new();
 
         
-        /// <param name="propertyNames">Names of the properties to display.</param>
-        /// <param name="screenColumnWidth">Column width of the screen.</param>
-        /// <param name="dc">Instance of the DisplayCells helper object.</param>
         internal void Initialize(string[] propertyNames, int screenColumnWidth, DisplayCells dc)
         {
             _columnWidth = screenColumnWidth;
@@ -106,8 +103,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="values">Array with the values in form of formatted strings.</param>
-        /// <param name="lo">LineOutput interface to write to.</param>
         internal void WriteProperties(string[] values, LineOutput lo)
         {
             if (_disabled)
@@ -155,9 +150,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="k">Index of property to write.</param>
-        /// <param name="propertyValue">String value of the property to write.</param>
-        /// <param name="lo">LineOutput interface to write to.</param>
         private void WriteProperty(int k, string propertyValue, LineOutput lo)
         {
             propertyValue ??= string.Empty;
@@ -186,9 +178,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="prependString">String to add to the left.</param>
-        /// <param name="line">Line to print.</param>
-        /// <param name="lo">LineOutput to write to.</param>
         private void WriteSingleLineHelper(string prependString, string line, LineOutput lo)
         {
             line ??= string.Empty;

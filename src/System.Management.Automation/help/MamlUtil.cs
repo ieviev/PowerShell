@@ -10,8 +10,6 @@ namespace System.Management.Automation
     internal static class MamlUtil
     {
         
-        /// <param name="maml1"></param>
-        /// <param name="maml2"></param>
         internal static void OverrideName(PSObject maml1, PSObject maml2)
         {
             PrependPropertyValue(maml1, maml2, new string[] { "Name" }, true);
@@ -19,8 +17,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="maml1"></param>
-        /// <param name="maml2"></param>
         internal static void OverridePSTypeNames(PSObject maml1, PSObject maml2)
         {
             foreach (var typename in maml2.TypeNames)
@@ -41,8 +37,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="maml1"></param>
-        /// <param name="maml2"></param>
         internal static void AddCommonProperties(PSObject maml1, PSObject maml2)
         {
             if (maml1.Properties["PSSnapIn"] == null)
@@ -200,15 +194,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="maml1">
-        /// </param>
-        /// <param name="maml2">
-        /// </param>
-        /// <param name="path">
-        /// </param>
-        /// <param name="shouldOverride">
-        /// Should Override the maml1 value from maml2 instead of prepend.
-        /// </param>
         internal static void PrependPropertyValue(PSObject maml1, PSObject maml2, string[] path, bool shouldOverride)
         {
             // Final collection of PSObjects.

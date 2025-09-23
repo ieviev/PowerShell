@@ -57,9 +57,6 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
         #endregion
 
         
-        /// <param name="parameterViewModel">DataContext object.</param>
-        /// <param name="rowNumber">Row number.</param>
-        /// <returns>a CheckBox for switch parameters.</returns>
         private static CheckBox CreateCheckBox(ParameterViewModel parameterViewModel, int rowNumber)
         {
             CheckBox checkBox = new CheckBox();
@@ -77,7 +74,6 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
             Binding valueBinding = new Binding("Value");
             checkBox.SetBinding(CheckBox.IsCheckedProperty, valueBinding);
 
-            //// Add AutomationProperties.AutomationId for Ui Automation test.
             checkBox.SetValue(
                 System.Windows.Automation.AutomationProperties.AutomationIdProperty,
                 string.Create(CultureInfo.CurrentCulture, $"chk{parameterViewModel.Name}"));
@@ -90,10 +86,6 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
         }
 
         
-        /// <param name="parameterViewModel">DataContext object.</param>
-        /// <param name="rowNumber">Row number.</param>
-        /// <param name="itemsSource">Control data source.</param>
-        /// <returns>Return a ComboBox control.</returns>
         private static ComboBox CreateComboBoxControl(ParameterViewModel parameterViewModel, int rowNumber, IEnumerable itemsSource)
         {
             ComboBox comboBox = new ComboBox();
@@ -110,7 +102,6 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
 
             string automationId = string.Create(CultureInfo.CurrentCulture, $"combox{parameterViewModel.Name}");
 
-            //// Add AutomationProperties.AutomationId for Ui Automation test.
             comboBox.SetValue(
                 System.Windows.Automation.AutomationProperties.AutomationIdProperty,
                 automationId);
@@ -123,10 +114,6 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
         }
 
         
-        /// <param name="parameterViewModel">DataContext object.</param>
-        /// <param name="rowNumber">Row number.</param>
-        /// <param name="itemsSource">Control data source.</param>
-        /// <returns>Return a MultiSelectCombo control.</returns>
         private static MultipleSelectionControl CreateMultiSelectComboControl(ParameterViewModel parameterViewModel, int rowNumber, IEnumerable itemsSource)
         {
             MultipleSelectionControl multiControls = new MultipleSelectionControl();
@@ -163,9 +150,6 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
         }
 
         
-        /// <param name="parameterViewModel">DataContext object.</param>
-        /// <param name="rowNumber">Row number.</param>
-        /// <returns>Return a TextBox control.</returns>
         private static TextBox CreateTextBoxControl(ParameterViewModel parameterViewModel, int rowNumber)
         {
             TextBox textBox = new TextBox();
@@ -180,7 +164,6 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
             valueBinding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
             textBox.SetBinding(TextBox.TextProperty, valueBinding);
 
-            //// Add AutomationProperties.AutomationId for UI Automation test.
             textBox.SetValue(
                 System.Windows.Automation.AutomationProperties.AutomationIdProperty,
                 string.Create(CultureInfo.CurrentCulture, $"txt{parameterViewModel.Name}"));
@@ -208,8 +191,6 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
         }
 
         
-        /// <param name="sender">Event sender.</param>
-        /// <param name="e">Event arguments.</param>
         private static void MultiLineTextBox_Loaded(object sender, RoutedEventArgs e)
         {
             TextBox senderTextBox = (TextBox)sender;
@@ -223,8 +204,6 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
         #region Event Methods
 
         
-        /// <param name="sender">Event sender.</param>
-        /// <param name="e">Event args.</param>
         private void ParameterSetControl_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             this.firstFocusableElement = null;
@@ -298,8 +277,6 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
         }
 
         
-        /// <param name="sender">Event sender.</param>
-        /// <param name="e">Event args.</param>
         private void CheckBox_Click(object sender, RoutedEventArgs e)
         {
             CheckBox senderCheck = (CheckBox)sender;
@@ -311,7 +288,6 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
         #region Private Method
 
         
-        /// <returns>Return a RowDefinition object.</returns>
         private RowDefinition CreateNewRow()
         {
             RowDefinition row = new RowDefinition();
@@ -320,7 +296,6 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
         }
 
         
-        /// <param name="uiControl">Will adding UIControl.</param>
         private void AddControlToMainGrid(UIElement uiControl)
         {
             if (this.firstFocusableElement == null && uiControl is not Label)
@@ -332,8 +307,6 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
         }
 
         
-        /// <param name="parameterViewModel">DataContext object.</param>
-        /// <param name="rowNumber">Row number.</param>
         private void CreateAndAddLabel(ParameterViewModel parameterViewModel, int rowNumber)
         {
             Label label = this.CreateLabel(parameterViewModel, rowNumber);
@@ -341,9 +314,6 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
         }
 
         
-        /// <param name="parameterViewModel">DataContext object.</param>
-        /// <param name="rowNumber">Row number.</param>
-        /// <returns>Return a Label control.</returns>
         private Label CreateLabel(ParameterViewModel parameterViewModel, int rowNumber)
         {
             Label label = new Label();
@@ -356,7 +326,6 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
             label.Margin = new Thickness(2);
             label.SetBinding(Label.ToolTipProperty, new Binding("ToolTip"));
 
-            //// Add AutomationProperties.AutomationId for Ui Automation test.
             label.SetValue(
                 System.Windows.Automation.AutomationProperties.AutomationIdProperty,
                 string.Create(CultureInfo.CurrentCulture, $"lbl{parameterViewModel.Name}"));

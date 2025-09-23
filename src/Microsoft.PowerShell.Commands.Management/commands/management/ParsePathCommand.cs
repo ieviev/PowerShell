@@ -77,53 +77,30 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <value>
-        /// If true the qualifier of the path will be returned.
-        /// The qualifier is the drive or provider that is qualifying
-        /// the PowerShell path.
-        /// </value>
         [Parameter(ParameterSetName = qualifierSet, Mandatory = true, ValueFromPipelineByPropertyName = true)]
         public SwitchParameter Qualifier { get; set; }
 
         
-        /// <value>
-        /// If true the qualifier of the path will be returned.
-        /// The qualifier is the drive or provider that is qualifying
-        /// the PowerShell path.
-        /// </value>
         [Parameter(ParameterSetName = noQualifierSet, Mandatory = true, ValueFromPipelineByPropertyName = true)]
         public SwitchParameter NoQualifier { get; set; }
 
         
-        /// <value>
-        /// If true the parent of the path will be returned.
-        /// </value>
         [Parameter(ParameterSetName = parentSet, Mandatory = false, ValueFromPipelineByPropertyName = true)]
         public SwitchParameter Parent { get; set; } = true;
 
         
-        /// <value>
-        /// If true the leaf name of the path will be returned.
-        /// </value>
         [Parameter(ParameterSetName = leafSet, Mandatory = true, ValueFromPipelineByPropertyName = true)]
         public SwitchParameter Leaf { get; set; }
 
         
-        /// <value>
-        /// If true the leaf base name of the path will be returned.
-        /// </value>
         [Parameter(ParameterSetName = leafBaseSet, Mandatory = true, ValueFromPipelineByPropertyName = true)]
         public SwitchParameter LeafBase { get; set; }
 
         
-        /// <value>
-        /// If true the extension of the path will be returned.
-        /// </value>
         [Parameter(ParameterSetName = extensionSet, Mandatory = true, ValueFromPipelineByPropertyName = true)]
         public SwitchParameter Extension { get; set; }
 
         
-        /// <value></value>
         [Parameter]
         public SwitchParameter Resolve { get; set; }
 
@@ -389,12 +366,6 @@ namespace Microsoft.PowerShell.Commands
         #endregion Command code
 
         
-        /// <param name="path">
-        /// The path to strip the provider qualifier from.
-        /// </param>
-        /// <returns>
-        /// The path without the qualifier.
-        /// </returns>
         private string RemoveQualifier(string path)
         {
             Dbg.Diagnostics.Assert(

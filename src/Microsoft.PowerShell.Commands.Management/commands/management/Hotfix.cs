@@ -199,7 +199,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="disposing"></param>
         public void Dispose(bool disposing)
         {
             if (disposing)

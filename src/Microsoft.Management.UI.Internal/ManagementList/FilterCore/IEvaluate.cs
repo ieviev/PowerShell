@@ -8,12 +8,6 @@ namespace Microsoft.Management.UI.Internal
     public interface IEvaluate
     {
         
-        /// <param name="item">
-        /// The item to evaluate.
-        /// </param>
-        /// <returns>
-        /// Returns true if the item meets the criteria. False otherwise.
-        /// </returns>
         bool Evaluate(object item);
     }
 }

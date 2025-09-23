@@ -24,18 +24,6 @@ namespace System.Management.Automation.Configuration
     }
 
     
-    /// <remarks>
-    /// The config file access APIs are designed to avoid hitting the disk as much as possible.
-    /// - For the first read request targeting a config file, the config data is read from the file and then cached as a 'JObject' instance;
-    ///     * the first read request happens very early during the startup of 'pwsh'.
-    /// - For the subsequent read requests targeting the same config file, they will then work with that 'JObject' instance;
-    /// - For the write request targeting a config file, the cached config data corresponding to that config file will be refreshed after the write operation is successfully done.
-    ///
-    /// To summarize the expected behavior:
-    /// Once a 'pwsh' process starts up -
-    ///   1. any changes made to the config file from outside this 'pwsh' process is not guaranteed to be seen by it (most likely won't be seen).
-    ///   2. any changes to the config file by this 'pwsh' process via the config file access APIs will be seen by it, if it chooses to read those changes afterwards.
-    /// </remarks>
     internal sealed class PowerShellConfig
     {
         private const string ConfigFileName = "powershell.config.json";
@@ -91,11 +79,6 @@ namespace System.Management.Automation.Configuration
         }
 
         
-        /// <param name="value">A fully qualified path to the system wide configuration file.</param>
-        /// <exception cref="FileNotFoundException"><paramref name="value"/> is a null reference or the associated file does not exist.</exception>
-        /// <remarks>
-        /// This method is for use when processing the -SettingsFile configuration setting and should not be used for any other purpose.
-        /// </remarks>
         internal void SetSystemConfigFilePath(string value)
         {
             if (!string.IsNullOrEmpty(value) && !File.Exists(value))
@@ -109,8 +92,6 @@ namespace System.Management.Automation.Configuration
         }
 
         
-        /// <param name="scope">Whether this is a system-wide or per-user setting.</param>
-        /// <returns>Value if found, null otherwise. The behavior matches ModuleIntrinsics.GetExpandedEnvironmentVariable().</returns>
         internal string GetModulePath(ConfigScope scope)
         {
             string modulePath = ReadValueFromFile<string>(scope, Constants.PSModulePathEnvVar);
@@ -123,9 +104,6 @@ namespace System.Management.Automation.Configuration
         }
 
         
-        /// <param name="scope">Whether this is a system-wide or per-user setting.</param>
-        /// <param name="shellId">The shell associated with this policy. Typically, it is "Microsoft.PowerShell".</param>
-        /// <returns>The execution policy if found. Null otherwise.</returns>
         internal string GetExecutionPolicy(ConfigScope scope, string shellId)
         {
             string key = GetExecutionPolicySettingKey(shellId);
@@ -166,9 +144,6 @@ namespace System.Management.Automation.Configuration
         }
 
         
-        /// <param name="scope">The ConfigScope of the configuration file to update.</param>
-        /// <param name="featureName">The name of the experimental feature to change in the configuration.</param>
-        /// <param name="setEnabled">If true, add to configuration; otherwise, remove from configuration.</param>
         internal void SetExperimentalFeatures(ConfigScope scope, string featureName, bool setEnabled)
         {
             var features = new List<string>(GetExperimentalFeatures());
@@ -214,9 +189,6 @@ namespace System.Management.Automation.Configuration
 
 #if UNIX
         
-        /// <returns>
-        /// The string identity to use for writing to syslog. The default value is 'powershell'.
-        /// </returns>
         internal string GetSysLogIdentity()
         {
             string identity = ReadValueFromFile<string>(ConfigScope.AllUsers, "LogIdentity");
@@ -231,9 +203,6 @@ namespace System.Management.Automation.Configuration
         }
 
         
-        /// <returns>
-        /// One of the PSLevel values indicating the level to log. The default value is PSLevel.Informational.
-        /// </returns>
         internal PSLevel GetLogLevel()
         {
             string levelName = ReadValueFromFile<string>(ConfigScope.AllUsers, "LogLevel");
@@ -256,9 +225,6 @@ namespace System.Management.Automation.Configuration
         private const string LogDefaultValue = "default";
 
         
-        /// <returns>
-        /// A bitmask of PSChannel.Operational and/or PSChannel.Analytic. The default value is PSChannel.Operational.
-        /// </returns>
         internal PSChannel GetLogChannels()
         {
             string values = ReadValueFromFile<string>(ConfigScope.AllUsers, "LogChannels");
@@ -293,9 +259,6 @@ namespace System.Management.Automation.Configuration
         }
 
         
-        /// <returns>
-        /// A bitmask of PSKeyword values. The default value is all keywords other than UseAlwaysAnalytic.
-        /// </returns>
         internal PSKeyword GetLogKeywords()
         {
             string values = ReadValueFromFile<string>(ConfigScope.AllUsers, "LogKeywords");
@@ -331,10 +294,6 @@ namespace System.Management.Automation.Configuration
 #endif // UNIX
 
         
-        /// <typeparam name="T">The type of the value</typeparam>
-        /// <param name="scope">The ConfigScope of the configuration file to update.</param>
-        /// <param name="key">The string key of the value.</param>
-        /// <param name="defaultValue">The default value to return if the key is not present.</param>
         private T ReadValueFromFile<T>(ConfigScope scope, string key, T defaultValue = default)
         {
             string fileName = GetConfigFilePath(scope);
@@ -408,11 +367,6 @@ namespace System.Management.Automation.Configuration
         }
 
         
-        /// <typeparam name="T">The type of the value</typeparam>
-        /// <param name="scope">The ConfigScope of the configuration file to update.</param>
-        /// <param name="key">The string key of the value.</param>
-        /// <param name="value">The value to set.</param>
-        /// <param name="addValue">Whether the key-value pair should be added to or removed from the file.</param>
         private void UpdateValueInFile<T>(ConfigScope scope, string key, T value, bool addValue)
         {
             try
@@ -508,10 +462,6 @@ namespace System.Management.Automation.Configuration
         }
 
         
-        /// <typeparam name="T">The type of value to write.</typeparam>
-        /// <param name="scope">The ConfigScope of the file to update.</param>
-        /// <param name="key">The string key of the value.</param>
-        /// <param name="value">The value to write.</param>
         private void WriteValueToFile<T>(ConfigScope scope, string key, T value)
         {
             if (scope == ConfigScope.CurrentUser && !Directory.Exists(perUserConfigDirectory))
@@ -523,9 +473,6 @@ namespace System.Management.Automation.Configuration
         }
 
         
-        /// <typeparam name="T">The type of value to remove.</typeparam>
-        /// <param name="scope">The ConfigScope of the file to update.</param>
-        /// <param name="key">The string key of the value.</param>
         private void RemoveValueFromFile<T>(ConfigScope scope, string key)
         {
             string fileName = GetConfigFilePath(scope);

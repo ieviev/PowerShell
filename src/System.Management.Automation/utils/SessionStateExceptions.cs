@@ -17,12 +17,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="info">
-        /// serialization information
-        /// </param>
-        /// <param name="context">
-        /// streaming context
-        /// </param>
         [Obsolete("Legacy serialization support is deprecated since .NET 8", DiagnosticId = "SYSLIB0051")]
         protected ProviderInvocationException(
             SerializationInfo info,
@@ -32,9 +26,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="message">
-        /// The message for the exception.
-        /// </param>
         public ProviderInvocationException(string message)
             : base(message)
         {
@@ -42,12 +33,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="provider">
-        /// Information about the provider to be used in formatting the message.
-        /// </param>
-        /// <param name="innerException">
-        /// The inner exception for this exception.
-        /// </param>
         internal ProviderInvocationException(ProviderInfo provider, Exception innerException)
             : base(RuntimeException.RetrieveMessage(innerException), innerException)
         {
@@ -69,12 +54,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="provider">
-        /// Information about the provider to be used in formatting the message.
-        /// </param>
-        /// <param name="errorRecord">
-        /// Detailed error information
-        /// </param>
         internal ProviderInvocationException(ProviderInfo provider, ErrorRecord errorRecord)
             : base(RuntimeException.RetrieveMessage(errorRecord),
                     RuntimeException.RetrieveException(errorRecord))
@@ -87,12 +66,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="message">
-        /// The message for the exception.
-        /// </param>
-        /// <param name="innerException">
-        /// The inner exception for this exception.
-        /// </param>
         public ProviderInvocationException(string message, Exception innerException)
             : base(message, innerException)
         {
@@ -100,24 +73,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="errorId">
-        /// This string will be used to construct the FullyQualifiedErrorId,
-        /// which is a global identifier of the error condition.  Pass a
-        /// non-empty string which is specific to this error condition in
-        /// this context.
-        /// </param>
-        /// <param name="resourceStr">
-        /// This string is the message template string.
-        /// </param>
-        /// <param name="provider">
-        /// The provider information used to format into the message.
-        /// </param>
-        /// <param name="path">
-        /// The path that was being processed when the exception occurred.
-        /// </param>
-        /// <param name="innerException">
-        /// The exception that was thrown by the provider.
-        /// </param>
         internal ProviderInvocationException(
             string errorId,
             string resourceStr,
@@ -129,28 +84,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="errorId">
-        /// This string will be used to construct the FullyQualifiedErrorId,
-        /// which is a global identifier of the error condition.  Pass a
-        /// non-empty string which is specific to this error condition in
-        /// this context.
-        /// </param>
-        /// <param name="resourceStr">
-        /// This is the message template string
-        /// </param>
-        /// <param name="provider">
-        /// The provider information used to format into the message.
-        /// </param>
-        /// <param name="path">
-        /// The path that was being processed when the exception occurred.
-        /// </param>
-        /// <param name="innerException">
-        /// The exception that was thrown by the provider.
-        /// </param>
-        /// <param name="useInnerExceptionMessage">
-        /// If true, the message from the inner exception will be used if the exception contains
-        /// an ErrorRecord. If false, the error message retrieved using the errorId will be used.
-        /// </param>
         internal ProviderInvocationException(
             string errorId,
             string resourceStr,
@@ -330,19 +263,6 @@ namespace System.Management.Automation
     {
         #region ctor
         
-        /// <param name="itemName">Name of session state object.</param>
-        /// <param name="sessionStateCategory">Category of session state object.</param>
-        /// <param name="resourceStr">This string is the message template string.</param>
-        /// <param name="errorIdAndResourceId">
-        /// This string is the ErrorId passed to the ErrorRecord, and is also
-        /// the resourceId used to look up the message template string in
-        /// SessionStateStrings.txt.
-        /// </param>
-        /// <param name="errorCategory">ErrorRecord.CategoryInfo.Category.</param>
-        /// <param name="messageArgs">
-        /// Additional insertion strings used to construct the message.
-        /// Note that itemName is always the first insertion string.
-        /// </param>
         internal SessionStateException(
             string itemName,
             SessionStateCategory sessionStateCategory,
@@ -365,21 +285,12 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="message">
-        /// The message used in the exception.
-        /// </param>
         public SessionStateException(string message)
             : base(message)
         {
         }
 
         
-        /// <param name="message">
-        /// The message used in the exception.
-        /// </param>
-        /// <param name="innerException">
-        /// The exception that caused the error.
-        /// </param>
         public SessionStateException(string message,
                                      Exception innerException)
                 : base(message, innerException)
@@ -387,8 +298,6 @@ namespace System.Management.Automation
         }
         #endregion ctor
 
-        /// <param name="info">Serialization information.</param>
-        /// <param name="context">Streaming context.</param>
         [Obsolete("Legacy serialization support is deprecated since .NET 8", DiagnosticId = "SYSLIB0051")]
         protected SessionStateException(SerializationInfo info,
                                         StreamingContext context)
@@ -463,22 +372,6 @@ namespace System.Management.Automation
     {
         #region ctor
         
-        /// <param name="itemName">
-        /// The name of the session state object the error occurred on.
-        /// </param>
-        /// <param name="sessionStateCategory">
-        /// The category of session state object.
-        /// </param>
-        /// <param name="errorIdAndResourceId">
-        /// This string is the ErrorId passed to the ErrorRecord, and is also
-        /// the resourceId used to look up the message template string in
-        /// SessionStateStrings.txt.
-        /// </param>
-        /// <param name="resourceStr">
-        /// This string is the ErrorId passed to the ErrorRecord, and is also
-        /// the resourceId used to look up the message template string in
-        /// SessionStateStrings.txt.
-        /// </param>
         internal SessionStateUnauthorizedAccessException(
             string itemName,
             SessionStateCategory sessionStateCategory,
@@ -491,8 +384,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="info">Serialization information.</param>
-        /// <param name="context">Streaming context.</param>
         [Obsolete("Legacy serialization support is deprecated since .NET 8", DiagnosticId = "SYSLIB0051")]
         protected SessionStateUnauthorizedAccessException(
             SerializationInfo info,
@@ -508,21 +399,12 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="message">
-        /// The message used by the exception.
-        /// </param>
         public SessionStateUnauthorizedAccessException(string message)
             : base(message)
         {
         }
 
         
-        /// <param name="message">
-        /// The message used by the exception.
-        /// </param>
-        /// <param name="innerException">
-        /// The exception that caused the error.
-        /// </param>
         public SessionStateUnauthorizedAccessException(string message,
                                              Exception innerException)
                 : base(message, innerException)
@@ -536,23 +418,6 @@ namespace System.Management.Automation
     {
         #region ctor
         
-        /// <param name="itemName">
-        /// The name of provider that could not be found.
-        /// </param>
-        /// <param name="sessionStateCategory">
-        /// The category of session state object
-        /// </param>
-        /// <param name="errorIdAndResourceId">
-        /// This string is the ErrorId passed to the ErrorRecord, and is also
-        /// the resourceId used to look up the message template string in
-        /// SessionStateStrings.txt.
-        /// </param>
-        /// <param name="resourceStr">
-        /// This string is the message template string
-        /// </param>
-        /// <param name="messageArgs">
-        /// Additional arguments to build the message from.
-        /// </param>
         internal ProviderNotFoundException(
             string itemName,
             SessionStateCategory sessionStateCategory,
@@ -576,21 +441,12 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="message">
-        /// The messaged used by the exception.
-        /// </param>
         public ProviderNotFoundException(string message)
             : base(message)
         {
         }
 
         
-        /// <param name="message">
-        /// The message used by the exception.
-        /// </param>
-        /// <param name="innerException">
-        /// The exception that caused the error.
-        /// </param>
         public ProviderNotFoundException(string message,
                                          Exception innerException)
                 : base(message, innerException)
@@ -604,24 +460,6 @@ namespace System.Management.Automation
     {
         #region ctor
         
-        /// <param name="providerName">
-        /// The name of provider that was ambiguous.
-        /// </param>
-        /// <param name="errorIdAndResourceId">
-        /// This string is the ErrorId passed to the ErrorRecord, and is also
-        /// the resourceId used to look up the message template string in
-        /// SessionStateStrings.txt.
-        /// </param>
-        /// <param name="resourceStr">
-        /// This string is the message template string
-        /// </param>
-        /// <param name="possibleMatches">
-        /// The provider information for the providers that match the specified
-        /// name.
-        /// </param>
-        /// <param name="messageArgs">
-        /// Additional arguments to build the message from.
-        /// </param>
         internal ProviderNameAmbiguousException(
             string providerName,
             string errorIdAndResourceId,
@@ -645,21 +483,12 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="message">
-        /// The messaged used by the exception.
-        /// </param>
         public ProviderNameAmbiguousException(string message)
             : base(message)
         {
         }
 
         
-        /// <param name="message">
-        /// The message used by the exception.
-        /// </param>
-        /// <param name="innerException">
-        /// The exception that caused the error.
-        /// </param>
         public ProviderNameAmbiguousException(string message,
                                          Exception innerException)
             : base(message, innerException)
@@ -668,8 +497,6 @@ namespace System.Management.Automation
         #endregion ctor
 
         
-        /// <param name="info">Serialization information.</param>
-        /// <param name="context">Streaming context.</param>
         [Obsolete("Legacy serialization support is deprecated since .NET 8", DiagnosticId = "SYSLIB0051")]
         protected ProviderNameAmbiguousException(
             SerializationInfo info,
@@ -699,17 +526,6 @@ namespace System.Management.Automation
     {
         #region ctor
         
-        /// <param name="itemName">
-        /// The name of the drive that could not be found.
-        /// </param>
-        /// <param name="errorIdAndResourceId">
-        /// This string is the ErrorId passed to the ErrorRecord, and is also
-        /// the resourceId used to look up the message template string in
-        /// SessionStateStrings.txt.
-        /// </param>
-        /// <param name="resourceStr">
-        /// This string is the message template string
-        /// </param>
         internal DriveNotFoundException(
             string itemName,
             string errorIdAndResourceId,
@@ -727,21 +543,12 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="message">
-        /// The message that will be used by the exception.
-        /// </param>
         public DriveNotFoundException(string message)
             : base(message)
         {
         }
 
         
-        /// <param name="message">
-        /// The message that will be used by the exception.
-        /// </param>
-        /// <param name="innerException">
-        /// The exception that caused the error.
-        /// </param>
         public DriveNotFoundException(string message,
                                       Exception innerException)
                 : base(message, innerException)
@@ -750,8 +557,6 @@ namespace System.Management.Automation
         #endregion ctor
 
         
-        /// <param name="info">Serialization information.</param>
-        /// <param name="context">Streaming context.</param>
         [Obsolete("Legacy serialization support is deprecated since .NET 8", DiagnosticId = "SYSLIB0051")]
         protected DriveNotFoundException(
             SerializationInfo info,
@@ -766,19 +571,6 @@ namespace System.Management.Automation
     {
         #region ctor
         
-        /// <param name="path">
-        /// The path that was not found.
-        /// </param>
-        /// <param name="errorIdAndResourceId">
-        /// This string is the ErrorId passed to the ErrorRecord, and is also
-        /// the resourceId used to look up the message template string in
-        /// SessionStateStrings.txt.
-        /// </param>
-        /// <param name="resourceStr">
-        /// This string is the ErrorId passed to the ErrorRecord, and is also
-        /// the resourceId used to look up the message template string in
-        /// SessionStateStrings.txt.
-        /// </param>
         internal ItemNotFoundException(
             string path,
             string errorIdAndResourceId,
@@ -796,21 +588,12 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="message">
-        /// The message used by the exception.
-        /// </param>
         public ItemNotFoundException(string message)
             : base(message)
         {
         }
 
         
-        /// <param name="message">
-        /// The message used by the exception.
-        /// </param>
-        /// <param name="innerException">
-        /// The exception that caused the error.
-        /// </param>
         public ItemNotFoundException(string message,
                                       Exception innerException)
                 : base(message, innerException)
@@ -819,8 +602,6 @@ namespace System.Management.Automation
         #endregion ctor
 
         
-        /// <param name="info">Serialization information.</param>
-        /// <param name="context">Streaming context.</param>
         [Obsolete("Legacy serialization support is deprecated since .NET 8", DiagnosticId = "SYSLIB0051")]
         protected ItemNotFoundException(
             SerializationInfo info,

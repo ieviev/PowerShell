@@ -257,9 +257,6 @@ namespace System.Management.Automation
     }
 
     
-    /// <remarks>
-    /// This class is used to expose a simplified version of the type adapter API
-    /// </remarks>
     public abstract class PSPropertyAdapter
     {
         
@@ -302,7 +299,6 @@ namespace System.Management.Automation
         public abstract string GetPropertyTypeName(PSAdaptedProperty adaptedProperty);
 
         
-        /// <returns>An adapted property if the predicate matches, or <see langword="null"/>.</returns>
         public virtual PSAdaptedProperty GetFirstPropertyOrDefault(object baseObject, MemberNamePredicate predicate)
         {
             foreach (var property in GetProperties(baseObject))

@@ -21,12 +21,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="cmdlet">
-        /// An instance of the cmdlet.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="cmdlet"/> is null.
-        /// </exception>
         internal ProviderIntrinsics(Cmdlet cmdlet)
         {
             if (cmdlet == null)
@@ -43,9 +37,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="sessionState">
-        /// An instance of the cmdlet.
-        /// </param>
         internal ProviderIntrinsics(SessionStateInternal sessionState)
         {
             if (sessionState == null)

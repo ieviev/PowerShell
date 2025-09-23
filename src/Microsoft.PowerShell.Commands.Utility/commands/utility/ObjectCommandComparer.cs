@@ -26,9 +26,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="propVal">Property Value.</param>
-        /// <param name="isCaseSensitive">Indicates if the Property value comparison has to be case sensitive or not.</param>
-        /// <param name="cultureInfo">Culture Info of the Property Value.</param>
         internal ObjectCommandPropertyValue(object propVal, bool isCaseSensitive, CultureInfo cultureInfo)
             : this(propVal)
         {
@@ -61,8 +58,6 @@ namespace Microsoft.PowerShell.Commands
         internal CultureInfo cultureInfo = null;
 
         
-        /// <param name="inputObject">Input Object.</param>
-        /// <returns>True if both the objects are same or else returns false.</returns>
         public override bool Equals(object inputObject)
         {
             if (!(inputObject is ObjectCommandPropertyValue objectCommandPropertyValueObject))
@@ -94,7 +89,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <returns>Hashcode in the form of an integer.</returns>
         public override int GetHashCode()
         {
             if (PropertyValue == null)
@@ -159,15 +153,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="first">
-        /// First object to extract value.
-        /// </param>
-        /// <param name="second">
-        /// Second object to extract value.
-        /// </param>
-        /// <returns>
-        /// 0 if they are the same, less than 0 if first is smaller, more than 0 if first is greater.
-        /// </returns>
         public int Compare(object first, object second)
         {
             // This method will never throw exceptions, two null

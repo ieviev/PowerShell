@@ -20,8 +20,6 @@ using System.Windows.Threading;
 namespace Microsoft.Management.UI.Internal
 {
     
-    /// <typeparam name="T">The type of the item.</typeparam>
-    /// <param name="item">The parameter to pass to the method.</param>
     [SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     internal delegate void RetryActionCallback<T>(T item);
 
@@ -34,14 +32,6 @@ namespace Microsoft.Management.UI.Internal
             new Dictionary<FrameworkElement, RetryActionAfterLoadedDataQueue>();
 
         
-        /// <typeparam name="T">The type of the parameter to pass to the callback method.</typeparam>
-        /// <param name="element">The element whose Loaded state we are interested in.</param>
-        /// <param name="callback">The method we will call if element.IsLoaded is false.</param>
-        /// <param name="parameter">The parameter to pass to the callback method.</param>
-        /// <returns>
-        /// Returns true if the element is not loaded and the callback will be called
-        /// when the element is loaded, false otherwise.
-        /// </returns>
         public static bool RetryActionAfterLoaded<T>(FrameworkElement element, RetryActionCallback<T> callback, T parameter)
         {
             if (element.IsLoaded)
@@ -94,8 +84,6 @@ namespace Microsoft.Management.UI.Internal
             private Queue<object> parameters = new Queue<object>();
 
             
-            /// <param name="callback">The callback to invoke.</param>
-            /// <param name="parameter">The parameter to pass to the callback.</param>
             public void Enqueue(Delegate callback, object parameter)
             {
                 this.callbacks.Enqueue(callback);
@@ -103,8 +91,6 @@ namespace Microsoft.Management.UI.Internal
             }
 
             
-            /// <param name="callback">The callback to invoke.</param>
-            /// <param name="parameter">The parameter to pass to the callback.</param>
             public void Dequeue(out Delegate callback, out object parameter)
             {
                 callback = null;
@@ -132,9 +118,6 @@ namespace Microsoft.Management.UI.Internal
 
         #region RemoveFromParent/AddChild
         
-        /// <param name="element">The element to remove.</param>
-        /// <exception cref="ArgumentNullException">The specified value is a null reference.</exception>
-        /// <exception cref="NotSupportedException">The specified value does not have a parent that supports removal.</exception>
         public static void RemoveFromParent(FrameworkElement element)
         {
             ArgumentNullException.ThrowIfNull(element);
@@ -189,9 +172,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="parent">The parent element.</param>
-        /// <param name="element">The element to add.</param>
-        /// <exception cref="NotSupportedException">The specified value does not have a parent that supports removal.</exception>
         public static void AddChild(FrameworkElement parent, FrameworkElement element)
         {
             ArgumentNullException.ThrowIfNull(element);
@@ -236,9 +216,6 @@ namespace Microsoft.Management.UI.Internal
 
         #region VisualChild
         
-        /// <typeparam name="T">The type of the child to find.</typeparam>
-        /// <param name="obj">The object with a visual tree.</param>
-        /// <returns>Returns an object of type T if found, otherwise null.</returns>
         public static T GetVisualChild<T>(DependencyObject obj) where T : DependencyObject
         {
             if (obj == null)
@@ -270,10 +247,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <typeparam name="T">The type of the child to find.</typeparam>
-        /// <param name="obj">The object with a visual tree.</param>
-        /// <returns>All children of the specified object matching the specified type.</returns>
-        /// <exception cref="ArgumentNullException">The specified value is a null reference.</exception>
         public static List<T> FindVisualChildren<T>(DependencyObject obj)
             where T : DependencyObject
         {
@@ -305,10 +278,6 @@ namespace Microsoft.Management.UI.Internal
         #endregion VisualChild
 
         
-        /// <typeparam name="T">The type of the data to find.</typeparam>
-        /// <param name="obj">The visual whose ancestors are searched.</param>
-        /// <returns>The data of the specified type; or if not found, <c>null</c>.</returns>
-        /// <exception cref="ArgumentNullException">The specified value is a null reference.</exception>
         public static T FindVisualAncestorData<T>(this DependencyObject obj)
             where T : class
         {
@@ -334,10 +303,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <typeparam name="T">The type to look for.</typeparam>
-        /// <param name="object">The object to start from.</param>
-        /// <returns>The parent of the right type, or null.</returns>
-        /// <exception cref="ArgumentNullException">The specified value is a null reference.</exception>
         public static T FindVisualAncestor<T>(this DependencyObject @object) where T : class
         {
             ArgumentNullException.ThrowIfNull(@object, nameof(@object));
@@ -360,11 +325,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="command">The routed command.</param>
-        /// <param name="parameter">A user defined data type.</param>
-        /// <param name="target">The command target.</param>
-        /// <returns><c>true</c> if the command could execute; otherwise, <c>false</c>.</returns>
-        /// <exception cref="ArgumentNullException">The specified value is a null reference.</exception>
         public static bool TryExecute(this RoutedCommand command, object parameter, IInputElement target)
         {
             ArgumentNullException.ThrowIfNull(command);
@@ -380,10 +340,6 @@ namespace Microsoft.Management.UI.Internal
 
         #region TemplateChild
         
-        /// <typeparam name="T">The type of the child.</typeparam>
-        /// <param name="templateParent">The parent of the control.</param>
-        /// <param name="childName">The name of the child.</param>
-        /// <returns>The reference to the child, or null if the template part wasn't found.</returns>
         public static T GetOptionalTemplateChild<T>(Control templateParent, string childName) where T : FrameworkElement
         {
             ArgumentNullException.ThrowIfNull(templateParent);
@@ -401,10 +357,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <typeparam name="T">The type of the child.</typeparam>
-        /// <param name="templateParent">The parent of the control.</param>
-        /// <param name="childName">The name of the child.</param>
-        /// <returns>The reference to the child.</returns>
         public static T GetTemplateChild<T>(Control templateParent, string childName) where T : FrameworkElement
         {
             T item = GetOptionalTemplateChild<T>(templateParent, childName);
@@ -418,8 +370,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <typeparam name="T">The type of the expected template part.</typeparam>
-        /// <param name="name">The name of the expected template part.</param>
         private static void HandleWrongTemplatePartType<T>(string name)
         {
             throw new ApplicationException(string.Format(
@@ -430,8 +380,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <typeparam name="T">The type of the expected template part.</typeparam>
-        /// <param name="name">The name of the expected template part.</param>
         public static void HandleMissingTemplatePart<T>(string name)
         {
             throw new ApplicationException(string.Format(
@@ -444,9 +392,6 @@ namespace Microsoft.Management.UI.Internal
 
         #region SetComponentResourceStyle
         
-        /// <typeparam name="T">Type in which Component Resource Style is Defined.</typeparam>
-        /// <param name="element">Element whose style need to be set.</param>
-        /// <param name="keyName">Component Resource Key for Style.</param>
         public static void SetComponentResourceStyle<T>(FrameworkElement element, string keyName) where T : FrameworkElement
         {
             ComponentResourceKey styleKey = new ComponentResourceKey(typeof(T), keyName);
@@ -456,9 +401,6 @@ namespace Microsoft.Management.UI.Internal
 
         #region CreateRoutedPropertyChangedEventArgs
         
-        /// <typeparam name="T">The type for the RoutedPropertyChangedEventArgs.</typeparam>
-        /// <param name="propertyEventArgs">The DependencyPropertyChangedEventArgs data source.</param>
-        /// <returns>The created event args, configured from the parameter.</returns>
         public static RoutedPropertyChangedEventArgs<T> CreateRoutedPropertyChangedEventArgs<T>(DependencyPropertyChangedEventArgs propertyEventArgs)
         {
             RoutedPropertyChangedEventArgs<T> eventArgs = new RoutedPropertyChangedEventArgs<T>(
@@ -469,10 +411,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <typeparam name="T">The type for the RoutedPropertyChangedEventArgs.</typeparam>
-        /// <param name="propertyEventArgs">The DependencyPropertyChangedEventArgs data source.</param>
-        /// <param name="routedEvent">The routed event the property change is associated with.</param>
-        /// <returns>The created event args, configured from the parameter.</returns>
         public static RoutedPropertyChangedEventArgs<T> CreateRoutedPropertyChangedEventArgs<T>(DependencyPropertyChangedEventArgs propertyEventArgs, RoutedEvent routedEvent)
         {
             RoutedPropertyChangedEventArgs<T> eventArgs = new RoutedPropertyChangedEventArgs<T>(
@@ -486,12 +424,6 @@ namespace Microsoft.Management.UI.Internal
 
         #region ChangeIndex
         
-        /// <param name="items">The collection to move the item in.</param>
-        /// <param name="item">The item to move.</param>
-        /// <param name="newIndex">The new index of the item.</param>
-        /// <exception cref="ArgumentException">The specified item is not in the specified collection.</exception>
-        /// <exception cref="ArgumentNullException">The specified value is a null reference.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">The specified index is not valid for the specified collection.</exception>
         public static void ChangeIndex(ItemCollection items, object item, int newIndex)
         {
             ArgumentNullException.ThrowIfNull(items);

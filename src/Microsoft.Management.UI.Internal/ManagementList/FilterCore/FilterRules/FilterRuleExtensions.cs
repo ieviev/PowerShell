@@ -10,12 +10,6 @@ namespace Microsoft.Management.UI.Internal
     public static class FilterRuleExtensions
     {
         
-        /// <param name="rule">
-        /// The FilterRule to clone.
-        /// </param>
-        /// <returns>
-        /// Returns a deep copy of the passed in rule.
-        /// </returns>
         public static FilterRule DeepCopy(this FilterRule rule)
         {
             ArgumentNullException.ThrowIfNull(rule);

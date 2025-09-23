@@ -65,7 +65,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <returns>True if exportable, false otherwise.</returns>
         internal override bool SafeForExport()
         {
             if (!base.SafeForExport())
@@ -222,7 +221,6 @@ namespace System.Management.Automation
         }
     }
 
-    /// <summary/>
     public sealed class WideControlBuilder
     {
         private readonly WideControl _control;
@@ -256,7 +254,6 @@ namespace System.Management.Automation
             return this;
         }
 
-        /// <summary/>
         public WideControlBuilder AddScriptBlockEntry(string scriptBlock, string format = null, IEnumerable<string> entrySelectedByType = null, IEnumerable<DisplayEntry> entrySelectedByCondition = null)
         {
             var entry = new WideControlEntryItem(new DisplayEntry(scriptBlock, DisplayEntryValueType.ScriptBlock))
@@ -267,7 +264,6 @@ namespace System.Management.Automation
             return this;
         }
 
-        /// <summary/>
         public WideControlBuilder AddPropertyEntry(string propertyName, string format = null, IEnumerable<string> entrySelectedByType = null, IEnumerable<DisplayEntry> entrySelectedByCondition = null)
         {
             var entry = new WideControlEntryItem(new DisplayEntry(propertyName, DisplayEntryValueType.Property))
@@ -278,7 +274,6 @@ namespace System.Management.Automation
             return this;
         }
 
-        /// <summary/>
         public WideControl EndWideControl()
         {
             return _control;

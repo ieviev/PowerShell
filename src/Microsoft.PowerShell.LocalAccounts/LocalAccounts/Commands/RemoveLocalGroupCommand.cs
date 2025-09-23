@@ -113,10 +113,6 @@ namespace Microsoft.PowerShell.Commands
 
         #region Private Methods
         
-        /// <remarks>
-        /// All arguments to -Name will be treated as names,
-        /// even if a name looks like a SID.
-        /// </remarks>
         private void ProcessNames()
         {
             if (Name != null)

@@ -160,9 +160,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="modulePath">The path to the module.</param>
-        /// <param name="moduleManifestProperties">The properties of the module's manifest.</param>
-        /// <returns></returns>
         internal static bool ModuleIsEditionIncompatible(string modulePath, Hashtable moduleManifestProperties)
         {
 #if UNIX
@@ -443,9 +440,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="modulePath">Path to the module to get exported types from.</param>
-        /// <param name="context">Current Context.</param>
-        /// <returns></returns>
         internal static ConcurrentDictionary<string, TypeAttributes> GetExportedClasses(string modulePath, ExecutionContext context)
         {
             DateTime lastWriteTime;

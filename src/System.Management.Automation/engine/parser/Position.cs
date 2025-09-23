@@ -12,124 +12,54 @@ namespace System.Management.Automation.Language
 {
     #region Public Interfaces
 
-    /// <summary>
-    /// Represents a single point in a script.  The script may come from a file or interactive input.
-    /// </summary>
 #nullable enable
     public interface IScriptPosition
     {
-        /// <summary>
-        /// The name of the file, or if the script did not come from a file, then null.
-        /// </summary>
         string? File { get; }
 
-        /// <summary>
-        /// The line number of the position, with the value 1 being the first line.
-        /// </summary>
         int LineNumber { get; }
 
-        /// <summary>
-        /// The column number of the position, with the value 1 being the first column.
-        /// </summary>
         int ColumnNumber { get; }
 
-        /// <summary>
-        /// The offset from the beginning of the script.
-        /// </summary>
         int Offset { get; }
 
-        /// <summary>
-        /// The complete text of the line that this position is included on.
-        /// </summary>
         string Line { get; }
 
-        /// <summary>
-        /// The complete script that this position is included in.
-        /// </summary>
         string? GetFullScript();
     }
 #nullable restore
 
-    /// <summary>
-    /// Represents the a span of text in a script.
-    /// </summary>
 #nullable enable
     public interface IScriptExtent
     {
-        /// <summary>
-        /// The filename the extent includes, or null if the extent is not included in any file.
-        /// </summary>
         string? File { get; }
 
-        /// <summary>
-        /// The starting position of the extent.
-        /// </summary>
         IScriptPosition StartScriptPosition { get; }
 
-        /// <summary>
-        /// The end position of the extent.  This position is actually 1 character past the end of the extent.
-        /// </summary>
         IScriptPosition EndScriptPosition { get; }
 
-        /// <summary>
-        /// The line number at the beginning of the extent, with the value 1 being the first line.
-        /// </summary>
         int StartLineNumber { get; }
 
-        /// <summary>
-        /// The column number at the beginning of the extent, with the value 1 being the first column.
-        /// </summary>
         int StartColumnNumber { get; }
 
-        /// <summary>
-        /// The line number at the end of the extent, with the value 1 being the first line.
-        /// </summary>
         int EndLineNumber { get; }
 
-        /// <summary>
-        /// The column number at the end of the extent, with the value 1 being the first column.
-        /// </summary>
         int EndColumnNumber { get; }
 
-        /// <summary>
-        /// The script text that the extent includes.
-        /// </summary>
         string Text { get; }
 
-        /// <summary>
-        /// The starting offset of the extent.
-        /// </summary>
         int StartOffset { get; }
 
-        /// <summary>
-        /// The ending offset of the extent.
-        /// </summary>
         int EndOffset { get; }
     }
 #nullable restore
 
-    /// <summary>
-    /// A few utility functions for script positions.
-    /// </summary>
     internal static class PositionUtilities
     {
-        /// <summary>
-        /// Return a unique position representing an empty or missing position.
-        /// </summary>
         public static IScriptPosition EmptyPosition { get; } = new EmptyScriptPosition();
 
-        /// <summary>
-        /// Return a unique extent representing an empty or missing extent.
-        /// </summary>
         public static IScriptExtent EmptyExtent { get; } = new EmptyScriptExtent();
 
-        /// <summary>
-        /// Return a message that looks like:
-        ///
-        ///     At {filename}:{line} char:{column}
-        ///     + $x + @y
-        ///     +    ~
-        /// </summary>
         internal static string VerboseMessage(IScriptExtent position)
         {
             if (PositionUtilities.EmptyExtent.Equals(position))
@@ -262,10 +192,6 @@ namespace System.Management.Automation.Language
                 message);
         }
 
-        /// <summary>
-        /// Return a message that looks like:
-        ///     12+ $x + &lt;&lt;&lt;&lt; $b.
-        /// </summary>
         internal static string BriefMessage(IScriptPosition position)
         {
             StringBuilder message = new StringBuilder(position.Line);
@@ -608,20 +534,10 @@ namespace System.Management.Automation.Language
 
     #endregion "Empty" Positions
 
-    /// <summary>
-    /// Represents a single point in a script.  The script may come from a file or interactive input.
-    /// </summary>
     public sealed class ScriptPosition : IScriptPosition
     {
         private readonly string _fullScript;
 
-        /// <summary>
-        /// Creates a new script position, which represents a point in a script.
-        /// </summary>
-        /// <param name="scriptName">The name of the file, or if the script did not come from a file, then null.</param>
-        /// <param name="scriptLineNumber">The line number of the position, with the value 1 being the first line.</param>
-        /// <param name="offsetInLine">The column number of the position, with the value 1 being the first column.</param>
-        /// <param name="line">The complete text of the line that this position is included on.</param>
         [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
         public ScriptPosition(string scriptName, int scriptLineNumber, int offsetInLine, string line)
         {
@@ -639,14 +555,6 @@ namespace System.Management.Automation.Language
             }
         }
 
-        /// <summary>
-        /// Creates a new script position, which represents a point in a script.
-        /// </summary>
-        /// <param name="scriptName">The name of the file, or if the script did not come from a file, then null.</param>
-        /// <param name="scriptLineNumber">The line number of the position, with the value 1 being the first line.</param>
-        /// <param name="offsetInLine">The column number of the position, with the value 1 being the first column.</param>
-        /// <param name="line">The complete text of the line that this position is included on.</param>
-        /// <param name="fullScript">The complete script text.  Optional, can be null.</param>
         [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
         public ScriptPosition(
             string scriptName,
@@ -659,40 +567,19 @@ namespace System.Management.Automation.Language
             _fullScript = fullScript;
         }
 
-        /// <summary>
-        /// The name of the file, or if the script did not come from a file, then null.
-        /// </summary>
         public string File { get; }
 
-        /// <summary>
-        /// The line number of the position, with the value 1 being the first line.
-        /// </summary>
         public int LineNumber { get; }
 
-        /// <summary>
-        /// The column number of the position, with the value 1 being the first column.
-        /// </summary>
         public int ColumnNumber { get; }
 
-        /// <summary>
-        /// The offset from the beginning of the script, always return 0.
-        /// </summary>
         public int Offset { get { return 0; } }
 
-        /// <summary>
-        /// The complete text of the line that this position is included on.
-        /// </summary>
         public string Line { get; }
 
-        /// <summary>
-        /// The complete script that this position is included in.
-        /// </summary>
         public string GetFullScript() { return _fullScript; }
     }
 
-    /// <summary>
-    /// A script extent used to customize the display of error location information.
-    /// </summary>
     public sealed class ScriptExtent : IScriptExtent
     {
         private ScriptPosition _startPosition;
@@ -702,63 +589,30 @@ namespace System.Management.Automation.Language
         {
         }
 
-        /// <summary>
-        /// Creates a new ScriptExtent class.
-        /// </summary>
         public ScriptExtent(ScriptPosition startPosition, ScriptPosition endPosition)
         {
             _startPosition = startPosition;
             _endPosition = endPosition;
         }
 
-        /// <summary>
-        /// The name of the file, or if the script did not come from a file, then null.
-        /// </summary>
         public string File { get { return _startPosition.File; } }
 
-        /// <summary>
-        /// The starting position of the extent.
-        /// </summary>
         public IScriptPosition StartScriptPosition { get { return _startPosition; } }
 
-        /// <summary>
-        /// The end position of the extent.  This position is actually 1 character past the end of the extent.
-        /// </summary>
         public IScriptPosition EndScriptPosition { get { return _endPosition; } }
 
-        /// <summary>
-        /// The line number at the beginning of the extent, with the value 1 being the first line.
-        /// </summary>
         public int StartLineNumber { get { return _startPosition.LineNumber; } }
 
-        /// <summary>
-        /// The column number at the beginning of the extent, with the value 1 being the first column.
-        /// </summary>
         public int StartColumnNumber { get { return _startPosition.ColumnNumber; } }
 
-        /// <summary>
-        /// The line number at the end of the extent, with the value 1 being the first line.
-        /// </summary>
         public int EndLineNumber { get { return _endPosition.LineNumber; } }
 
-        /// <summary>
-        /// The column number at the end of the extent, with the value 1 being the first column.
-        /// </summary>
         public int EndColumnNumber { get { return _endPosition.ColumnNumber; } }
 
-        /// <summary>
-        /// The start offset (always returns 0)
-        /// </summary>
         public int StartOffset { get { return 0; } }
 
-        /// <summary>
-        /// The end offset (always returns 0)
-        /// </summary>
         public int EndOffset { get { return 0; } }
 
-        /// <summary>
-        /// The script text that the extent includes.
-        /// </summary>
         public string Text
         {
             get

@@ -38,17 +38,12 @@ namespace Microsoft.PowerShell.Commands
     public class PSPropertyExpression
     {
         
-        /// <param name="s">Expression.</param>
-        /// <exception cref="ArgumentNullException"></exception>
         public PSPropertyExpression(string s)
             : this(s, false)
         {
         }
 
         
-        /// <param name="s">Property name pattern to match.</param>
-        /// <param name="isResolved"><see langword="true"/> if no further attempts should be made to resolve wildcards.</param>
-        /// <exception cref="ArgumentNullException"></exception>
         public PSPropertyExpression(string s, bool isResolved)
         {
             if (string.IsNullOrEmpty(s))
@@ -61,8 +56,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="scriptBlock">ScriptBlock to evaluate when retrieving the property value from an object.</param>
-        /// <exception cref="ArgumentNullException"></exception>
         public PSPropertyExpression(ScriptBlock scriptBlock)
         {
             if (scriptBlock == null)
@@ -86,7 +79,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="target">The object to apply the expression against.</param>
         public List<PSPropertyExpression> ResolveNames(PSObject target)
         {
             return ResolveNames(target, true);
@@ -104,8 +96,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="target">The object to apply the expression against.</param>
-        /// <param name="expand">If the matched properties are property sets, expand them.</param>
         public List<PSPropertyExpression> ResolveNames(PSObject target, bool expand)
         {
             List<PSPropertyExpression> retVal = new List<PSPropertyExpression>();
@@ -235,16 +225,12 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="target">The object to match against.</param>
         public List<PSPropertyExpressionResult> GetValues(PSObject target)
         {
             return GetValues(target, true, true);
         }
 
         
-        /// <param name="target">The object to match against.</param>
-        /// <param name="expand">If the matched properties are parameter sets, expand them.</param>
-        /// <param name="eatExceptions">If true, any exceptions that occur during the match process are ignored.</param>
         public List<PSPropertyExpressionResult> GetValues(PSObject target, bool expand, bool eatExceptions)
         {
             List<PSPropertyExpressionResult> retVal = new List<PSPropertyExpressionResult>();

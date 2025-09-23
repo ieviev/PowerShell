@@ -59,18 +59,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="strCollection">
-        /// List of strings to which the node's rendering will be appended.
-        /// </param>
-        /// <param name="indentation">
-        /// The indentation level (in BufferCells) at which the node should be rendered.
-        /// </param>
-        /// <param name="maxWidth">
-        /// The maximum number of BufferCells that the rendering is allowed to consume.
-        /// </param>
-        /// <param name="rawUI">
-        /// The PSHostRawUserInterface used to gauge string widths in the rendering.
-        /// </param>
         internal
         void
         Render(ArrayList strCollection, int indentation, int maxWidth, PSHostRawUserInterface rawUI)
@@ -106,21 +94,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="strCollection">
-        /// List of strings to which the node's rendering will be appended.
-        /// </param>
-        /// <param name="indentation">
-        /// The indentation level (in BufferCells) at which the node should be rendered.
-        /// </param>
-        /// <param name="maxWidth">
-        /// The maximum number of BufferCells that the rendering is allowed to consume.
-        /// </param>
-        /// <param name="rawUI">
-        /// The PSHostRawUserInterface used to gauge string widths in the rendering.
-        /// </param>
-        /// <param name="isFullPlus">
-        /// Indicate if the full StatusDescription and CurrentOperation should be displayed.
-        /// </param>
         private
         void
         RenderFull(ArrayList strCollection, int indentation, int maxWidth, PSHostRawUserInterface rawUI, bool isFullPlus)
@@ -216,18 +189,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="strCollection">
-        /// List of strings to which the node's rendering will be appended.
-        /// </param>
-        /// <param name="indentation">
-        /// The indentation level (in BufferCells) at which the node should be rendered.
-        /// </param>
-        /// <param name="maxWidth">
-        /// The maximum number of BufferCells that the rendering is allowed to consume.
-        /// </param>
-        /// <param name="rawUI">
-        /// The PSHostRawUserInterface used to gauge string widths in the rendering.
-        /// </param>
         private
         void
         RenderCompact(ArrayList strCollection, int indentation, int maxWidth, PSHostRawUserInterface rawUI)
@@ -282,18 +243,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="strCollection">
-        /// List of strings to which the node's rendering will be appended.
-        /// </param>
-        /// <param name="indentation">
-        /// The indentation level (in BufferCells) at which the node should be rendered.
-        /// </param>
-        /// <param name="maxWidth">
-        /// The maximum number of BufferCells that the rendering is allowed to consume.
-        /// </param>
-        /// <param name="rawUI">
-        /// The PSHostRawUserInterface used to gauge string widths in the rendering.
-        /// </param>
         private
         void
         RenderMinimal(ArrayList strCollection, int indentation, int maxWidth, PSHostRawUserInterface rawUI)
@@ -334,15 +283,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="strCollection">
-        /// List of strings to which the node's rendering will be appended.
-        /// </param>
-        /// <param name="indentation">
-        /// The indentation level in chars at which the node should be rendered.
-        /// </param>
-        /// <param name="maxWidth">
-        /// The maximum number of chars that the rendering is allowed to consume.
-        /// </param>
         private
         void
         RenderAnsi(ArrayList strCollection, int indentation, int maxWidth)
@@ -449,7 +389,6 @@ namespace Microsoft.PowerShell
         SourceId;
 
         
-        /// <value></value>
         internal int LinesRequiredMethod(PSHostRawUserInterface rawUi, int maxWidth)
         {
             Dbg.Assert(this.RecordType != ProgressRecordType.Completed, "should never render completed records");
@@ -483,7 +422,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <value></value>
         private int LinesRequiredInFullStyleMethod(PSHostRawUserInterface rawUi, int maxWidth, bool isFullPlus)
         {
             // Since the fields of this instance could have been changed, we compute this on-the-fly.
@@ -538,7 +476,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <value></value>
         private
         int
         LinesRequiredInCompactStyle

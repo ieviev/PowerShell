@@ -57,7 +57,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
 
         #endregion tracer
         
-        /// <param name="entry">Entry to log.</param>
         internal void LogEntry(XmlLoaderLoggerEntry entry)
         {
             if (entry.entryType == XmlLoaderLoggerEntry.EntryType.Error)
@@ -83,7 +82,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <remarks>This method calls GC.SuppressFinalize</remarks>
         public void Dispose()
         {
             Dispose(true);
@@ -163,7 +161,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <remarks>This method calls GC.SuppressFinalize</remarks>
         public void Dispose()
         {
             Dispose(true);
@@ -184,7 +181,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <value>list of entries logged during a load</value>
         internal List<XmlLoaderLoggerEntry> LogEntries
         {
             get
@@ -194,7 +190,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <value>true of the log entry list has errors</value>
         internal bool HasErrors
         {
             get
@@ -204,17 +199,12 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="n">Node to push on the stack.</param>
-        /// <returns>Object to dispose when exiting the frame.</returns>
         protected IDisposable StackFrame(XmlNode n)
         {
             return StackFrame(n, -1);
         }
 
         
-        /// <param name="n">Node to push on the stack.</param>
-        /// <param name="index">Index of the node of the same name in a collection.</param>
-        /// <returns>Object to dispose when exiting the frame.</returns>
         protected IDisposable StackFrame(XmlNode n, int index)
         {
             XmlLoaderStackFrame sf = new XmlLoaderStackFrame(this, n, index);
@@ -289,10 +279,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="n">XmlNode whose name is to compare.</param>
-        /// <param name="s">String to compare the node name to.</param>
-        /// <param name="allowAttributes">If true, accept the presence of attributes on the node.</param>
-        /// <returns>True if there is a match.</returns>
         private bool MatchNodeNameHelper(XmlNode n, string s, bool allowAttributes)
         {
             bool match = false;
@@ -415,9 +401,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="message">
-        /// trace message, non-localized string is OK.
-        /// </param>
         protected void ReportTrace(string message)
         {
             ReportLogEntryHelper(message, XmlLoaderLoggerEntry.EntryType.Trace);
@@ -475,8 +458,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="message"></param>
-        /// <param name="typeName"></param>
         protected void ReportErrorForLoadingFromObjectModel(string message, string typeName)
         {
             XmlLoaderLoggerEntry entry = new XmlLoaderLoggerEntry();

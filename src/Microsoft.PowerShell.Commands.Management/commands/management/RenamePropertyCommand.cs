@@ -56,13 +56,6 @@ namespace Microsoft.PowerShell.Commands
         public string NewName { get; set; }
 
         
-        /// <param name="context">
-        /// The context under which the command is running.
-        /// </param>
-        /// <returns>
-        /// An object representing the dynamic parameters for the cmdlet or null if there
-        /// are none.
-        /// </returns>
         internal override object GetDynamicParameters(CmdletProviderContext context)
         {
             if (Path != null)

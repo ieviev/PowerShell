@@ -15,9 +15,6 @@ namespace System.Management.Automation.Tracing
     #region Constants
 
     
-    /// <remarks>add an entry for a new event that you
-    /// add to the manifest. Set it to the same value
-    /// that was set in the manifest</remarks>
     public enum PowerShellTraceEvent : int
     {
         
@@ -684,205 +681,155 @@ namespace System.Management.Automation.Tracing
         }
 
         
-        /// <param name="message"></param>
-        /// <returns></returns>
         public bool WriteMessage(string message)
         {
            
         }
 
         
-        /// <param name="message1"></param>
-        /// <param name="message2"></param>
-        /// <returns></returns>
         public bool WriteMessage(string message1, string message2)
         {
             
         }
 
         
-        /// <param name="message"></param>
-        /// <param name="instanceId"></param>
-        /// <returns></returns>
         public bool WriteMessage(string message, Guid instanceId)
         {
             
         }
 
         
-        /// <param name="className"></param>
-        /// <param name="methodName"></param>
-        /// <param name="workflowId"></param>
-        /// <param name="message"></param>
-        /// <param name="parameters"></param>
-        /// <returns></returns>
         public void WriteMessage(string className, string methodName, Guid workflowId, string message, params string[] parameters)
         {
             
         }
 
         
-        /// <param name="className"></param>
-        /// <param name="methodName"></param>
-        /// <param name="workflowId"></param>
-        /// <param name="job"></param>
-        /// <param name="message"></param>
-        /// <param name="parameters"></param>
-        /// <returns></returns>
         public void WriteMessage(string className, string methodName, Guid workflowId, Job job, string message, params string[] parameters)
         {
         }
 
         
-        /// <param name="args"></param>
         public void WriteScheduledJobStartEvent(params object[] args)
         {
             
         }
 
         
-        /// <param name="args"></param>
         public void WriteScheduledJobCompleteEvent(params object[] args)
         {
             
         }
 
         
-        /// <param name="args"></param>
         public void WriteScheduledJobErrorEvent(params object[] args)
         {
             
         }
 
         
-        /// <param name="args"></param>
         public void WriteISEExecuteScriptEvent(params object[] args)
         {
             
         }
 
         
-        /// <param name="args"></param>
         public void WriteISEExecuteSelectionEvent(params object[] args)
         {
             
         }
 
         
-        /// <param name="args"></param>
         public void WriteISEStopCommandEvent(params object[] args)
         {
             
         }
 
         
-        /// <param name="args"></param>
         public void WriteISEResumeDebuggerEvent(params object[] args)
         {
             
         }
 
         
-        /// <param name="args"></param>
         public void WriteISEStopDebuggerEvent(params object[] args)
         {
             
         }
 
         
-        /// <param name="args"></param>
         public void WriteISEDebuggerStepIntoEvent(params object[] args)
         {
             
         }
 
         
-        /// <param name="args"></param>
         public void WriteISEDebuggerStepOverEvent(params object[] args)
         {
             
         }
 
         
-        /// <param name="args"></param>
         public void WriteISEDebuggerStepOutEvent(params object[] args)
         {
             
         }
 
         
-        /// <param name="args"></param>
         public void WriteISEEnableAllBreakpointsEvent(params object[] args)
         {
             
         }
 
         
-        /// <param name="args"></param>
         public void WriteISEDisableAllBreakpointsEvent(params object[] args)
         {
             
         }
 
         
-        /// <param name="args"></param>
         public void WriteISERemoveAllBreakpointsEvent(params object[] args)
         {
             
         }
 
         
-        /// <param name="args"></param>
         public void WriteISESetBreakpointEvent(params object[] args)
         {
             
         }
 
         
-        /// <param name="args"></param>
         public void WriteISERemoveBreakpointEvent(params object[] args)
         {
             
         }
 
         
-        /// <param name="args"></param>
         public void WriteISEEnableBreakpointEvent(params object[] args)
         {
             
         }
 
         
-        /// <param name="args"></param>
         public void WriteISEDisableBreakpointEvent(params object[] args)
         {
             
         }
 
         
-        /// <param name="args"></param>
         public void WriteISEHitBreakpointEvent(params object[] args)
         {
             
         }
 
         
-        /// <param name="className"></param>
-        /// <param name="methodName"></param>
-        /// <param name="workflowId"></param>
-        /// <param name="activityName"></param>
-        /// <param name="activityId"></param>
-        /// <param name="message"></param>
-        /// <param name="parameters"></param>
-        /// <returns></returns>
         public void WriteMessage(string className, string methodName, Guid workflowId, string activityName, Guid activityId, string message, params string[] parameters)
         {
             
         }
 
         
-        /// <param name="connectionInfo"></param>
-        /// <returns></returns>
         public bool TraceWSManConnectionInfo(WSManConnectionInfo connectionInfo)
         {
             return true;

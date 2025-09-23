@@ -11,16 +11,6 @@ namespace Microsoft.PowerShell.Commands
     public class TraceCommandBase : PSCmdlet
     {
         
-        /// <param name="patternsToMatch">
-        /// The patterns used to match the PSTraceSource name.
-        /// </param>
-        /// <param name="writeErrorIfMatchNotFound">
-        /// If true and the pattern does not contain wildcard patterns and no
-        /// match is found, then WriteError will be called.
-        /// </param>
-        /// <returns>
-        /// A collection of the matching PSTraceSource instances.
-        /// </returns>
         internal Collection<PSTraceSource> GetMatchingTraceSource(
             string[] patternsToMatch,
             bool writeErrorIfMatchNotFound)
@@ -30,19 +20,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="patternsToMatch">
-        /// The patterns used to match the PSTraceSource name.
-        /// </param>
-        /// <param name="writeErrorIfMatchNotFound">
-        /// If true and the pattern does not contain wildcard patterns and no
-        /// match is found, then WriteError will be called.
-        /// </param>
-        /// <param name="notMatched">
-        /// The patterns for which a match was not found.
-        /// </param>
-        /// <returns>
-        /// A collection of the matching PSTraceSource instances.
-        /// </returns>
         internal Collection<PSTraceSource> GetMatchingTraceSource(
             string[] patternsToMatch,
             bool writeErrorIfMatchNotFound,

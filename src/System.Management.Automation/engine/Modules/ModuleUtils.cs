@@ -47,8 +47,6 @@ namespace System.Management.Automation.Internal
         }
 
         
-        /// <param name="dir">Directory to check if it is a possible resource folder.</param>
-        /// <returns>True if the directory name matches a culture.</returns>
         internal static bool IsPossibleResourceDirectory(string dir)
         {
             // Assume locale directories do not contain modules.
@@ -120,9 +118,6 @@ namespace System.Management.Automation.Internal
         }
 
         
-        /// <param name="moduleManifestPath">The path to the module manifest being checked.</param>
-        /// <param name="compatiblePSEditions">The value of the CompatiblePSEditions field of the module manifest.</param>
-        /// <returns>True if the module is compatible with the running PowerShell edition, false otherwise.</returns>
         internal static bool IsPSEditionCompatible(
             string moduleManifestPath,
             IEnumerable<string> compatiblePSEditions)
@@ -332,8 +327,6 @@ namespace System.Management.Automation.Internal
         }
 
         
-        /// <param name="moduleBase">Module base path.</param>
-        /// <returns>Sorted list of versions.</returns>
         internal static List<Version> GetModuleVersionSubfolders(string moduleBase)
         {
             var versionFolders = new List<Version>();
@@ -410,13 +403,6 @@ namespace System.Management.Automation.Internal
         }
 
         
-        /// <param name="pattern">Command pattern.</param>
-        /// <param name="context">Execution context.</param>
-        /// <param name="commandOrigin">Command origin.</param>
-        /// <param name="fuzzyMatcher">Fuzzy matcher to use.</param>
-        /// <param name="rediscoverImportedModules">If true, rediscovers imported modules.</param>
-        /// <param name="moduleVersionRequired">Specific module version to be required.</param>
-        /// <returns>IEnumerable tuple containing the CommandInfo and the match score.</returns>
         internal static IEnumerable<CommandScore> GetFuzzyMatchingCommands(string pattern, ExecutionContext context, CommandOrigin commandOrigin, FuzzyMatcher fuzzyMatcher, bool rediscoverImportedModules = false, bool moduleVersionRequired = false)
         {
             foreach (CommandInfo command in GetMatchingCommands(pattern, context, commandOrigin, rediscoverImportedModules, moduleVersionRequired, fuzzyMatcher: fuzzyMatcher))
@@ -429,14 +415,6 @@ namespace System.Management.Automation.Internal
         }
 
         
-        /// <param name="pattern">Command pattern.</param>
-        /// <param name="context">Execution context.</param>
-        /// <param name="commandOrigin">Command origin.</param>
-        /// <param name="rediscoverImportedModules">If true, rediscovers imported modules.</param>
-        /// <param name="moduleVersionRequired">Specific module version to be required.</param>
-        /// <param name="fuzzyMatcher">Fuzzy matcher for fuzzy searching.</param>
-        /// <param name="useAbbreviationExpansion">Use abbreviation expansion for matching.</param>
-        /// <returns>Returns matching CommandInfo IEnumerable.</returns>
         internal static IEnumerable<CommandInfo> GetMatchingCommands(string pattern, ExecutionContext context, CommandOrigin commandOrigin, bool rediscoverImportedModules = false, bool moduleVersionRequired = false, FuzzyMatcher fuzzyMatcher = null, bool useAbbreviationExpansion = false)
         {
             // Otherwise, if it had wildcards, just return the "AvailableCommand"
@@ -607,8 +585,6 @@ namespace System.Management.Automation.Internal
         }
 
         
-        /// <param name="commandName">Name of the command to transform.</param>
-        /// <returns>Abbreviated version of the command name.</returns>
         internal static string AbbreviateName(string commandName)
         {
             // Use default size of 6 which represents expected average abbreviation length

@@ -32,8 +32,6 @@ namespace Microsoft.Management.UI.Internal
         private string matchesLabel;
 
         
-        /// <param name="psObj">Object containing help.</param>
-        /// <param name="documentParagraph">Paragraph in which help text is built/searched.</param>
         internal HelpViewModel(PSObject psObj, Paragraph documentParagraph)
         {
             Debug.Assert(psObj != null, "ensured by caller");
@@ -176,8 +174,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="sender">Event sender.</param>
-        /// <param name="e">Event arguments.</param>
         private void HelpBuilder_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "HighlightCount")
@@ -218,7 +214,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="propertyName">Property name.</param>
         private void OnNotifyPropertyChanged(string propertyName)
         {
             PropertyChangedEventHandler handler = this.PropertyChanged;

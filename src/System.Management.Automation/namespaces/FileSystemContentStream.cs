@@ -19,11 +19,6 @@ using Dbg = System.Management.Automation;
 namespace Microsoft.PowerShell.Commands
 {
     
-    /// <remarks>
-    /// Note, this class does no specific error handling. All errors are allowed to
-    /// propagate to the caller so that they can be written to the error pipeline
-    /// if necessary.
-    /// </remarks>
     internal class FileSystemContentReaderWriter : IContentReader, IContentWriter
     {
         #region tracer
@@ -72,34 +67,6 @@ namespace Microsoft.PowerShell.Commands
         private readonly bool _suppressNewline = false;
 
         
-        /// <param name="path">
-        /// The path to the file to get the content from.
-        /// </param>
-        /// <param name="mode">
-        /// The file mode to open the file with.
-        /// </param>
-        /// <param name="access">
-        /// The file access requested in the file.
-        /// </param>
-        /// <param name="share">
-        /// The file share to open the file with
-        /// </param>
-        /// <param name="encoding">
-        /// The encoding of the file to be read or written.
-        /// </param>
-        /// <param name="usingByteEncoding">
-        /// If true, bytes will be read from the file. If false, the specified encoding
-        /// will be used to read the file.
-        /// </param>
-        /// <param name="waitForChanges">
-        /// If true, we will perform blocking reads on the file, waiting for new content to be appended
-        /// </param>
-        /// <param name="provider">
-        /// The CmdletProvider invoking this stream
-        /// </param>
-        /// <param name="isRawStream">
-        /// Indicates raw stream.
-        /// </param>
         public FileSystemContentReaderWriter(
             string path,
             FileMode mode,
@@ -125,38 +92,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="path">
-        /// The path to the file to get the content from.
-        /// </param>
-        /// <param name="streamName">
-        /// The name of the Alternate Data Stream to get the content from. If null or empty, returns
-        /// the file's primary content.
-        /// </param>
-        /// <param name="mode">
-        /// The file mode to open the file with.
-        /// </param>
-        /// <param name="access">
-        /// The file access requested in the file.
-        /// </param>
-        /// <param name="share">
-        /// The file share to open the file with
-        /// </param>
-        /// <param name="encoding">
-        /// The encoding of the file to be read or written.
-        /// </param>
-        /// <param name="usingByteEncoding">
-        /// If true, bytes will be read from the file. If false, the specified encoding
-        /// will be used to read the file.
-        /// </param>
-        /// <param name="waitForChanges">
-        /// If true, we will perform blocking reads on the file, waiting for new content to be appended
-        /// </param>
-        /// <param name="provider">
-        /// The CmdletProvider invoking this stream
-        /// </param>
-        /// <param name="isRawStream">
-        /// Indicates raw stream.
-        /// </param>
         public FileSystemContentReaderWriter(
             string path, string streamName, FileMode mode, FileAccess access, FileShare share,
             Encoding encoding, bool usingByteEncoding, bool waitForChanges, CmdletProvider provider,
@@ -189,41 +124,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="path">
-        /// The path to the file to get the content from.
-        /// </param>
-        /// <param name="streamName">
-        /// The name of the Alternate Data Stream to get the content from. If null or empty, returns
-        /// the file's primary content.
-        /// </param>
-        /// <param name="mode">
-        /// The file mode to open the file with.
-        /// </param>
-        /// <param name="access">
-        /// The file access requested in the file.
-        /// </param>
-        /// <param name="share">
-        /// The file share to open the file with
-        /// </param>
-        /// <param name="encoding">
-        /// The encoding of the file to be read or written.
-        /// </param>
-        /// <param name="usingByteEncoding">
-        /// If true, bytes will be read from the file. If false, the specified encoding
-        /// will be used to read the file.
-        /// </param>
-        /// <param name="waitForChanges">
-        /// If true, we will perform blocking reads on the file, waiting for new content to be appended
-        /// </param>
-        /// <param name="provider">
-        /// The CmdletProvider invoking this stream
-        /// </param>
-        /// <param name="isRawStream">
-        /// Indicates raw stream.
-        /// </param>
-        /// <param name="suppressNewline">
-        /// False to add a newline to the end of the output string, true if not.
-        /// </param>
         public FileSystemContentReaderWriter(
             string path, string streamName, FileMode mode, FileAccess access, FileShare share,
             Encoding encoding, bool usingByteEncoding, bool waitForChanges, CmdletProvider provider,
@@ -234,38 +134,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="path">
-        /// The path to the file to get the content from.
-        /// </param>
-        /// <param name="streamName">
-        /// The name of the Alternate Data Stream to get the content from. If null or empty, returns
-        /// the file's primary content.
-        /// </param>
-        /// <param name="mode">
-        /// The file mode to open the file with.
-        /// </param>
-        /// <param name="access">
-        /// The file access requested in the file.
-        /// </param>
-        ///  <param name="share">
-        ///    The file share to open the file with
-        ///  </param>
-        /// <param name="delimiter">
-        /// The delimiter to use when reading strings. Each time read is called, all contents up to an including
-        /// the delimiter is read.
-        /// </param>
-        /// <param name="encoding">
-        /// The encoding of the file to be read or written.
-        /// </param>
-        /// <param name="waitForChanges">
-        /// If true, we will perform blocking reads on the file, waiting for new content to be appended
-        /// </param>
-        /// <param name="provider">
-        /// The CmdletProvider invoking this stream
-        /// </param>
-        /// <param name="isRawStream">
-        /// Indicates raw stream.
-        /// </param>
         public FileSystemContentReaderWriter(
             string path,
             string streamName,
@@ -326,15 +194,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="readCount">
-        /// If less than 1, then the entire file is read at once. If 1 or greater, then
-        /// readCount is used to determine how many items (ie: lines, bytes, delimited tokens)
-        /// to read per call.
-        /// </param>
-        /// <returns>
-        /// An array of strings representing the character(s) or line(s) read from
-        /// the file.
-        /// </returns>
         public IList Read(long readCount)
         {
             if (_isRawStream && _waitForChanges)
@@ -409,8 +268,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="readCount"></param>
-        /// <returns></returns>
         internal IList ReadWithoutWaitingChanges(long readCount)
         {
             bool oldWaitChanges = _waitForChanges;
@@ -426,7 +283,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="backCount"></param>
         internal void SeekItemsBackward(int backCount)
         {
             if (backCount < 0)
@@ -872,11 +728,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="filePath">The path of the file to read / monitor.</param>
-        /// <param name="fileMode">The FileMode of the file (ie: Open / Append).</param>
-        /// <param name="fileAccess">The access properties of the file (ie: Read / Write).</param>
-        /// <param name="fileShare">The sharing properties of the file (ie: Read / ReadWrite).</param>
-        /// <param name="fileEncoding">The encoding of the file.</param>
         private void WaitForChanges(string filePath, FileMode fileMode, FileAccess fileAccess, FileShare fileShare, Encoding fileEncoding)
         {
             // Close the old stream, and store our current position.
@@ -967,12 +818,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="offset">
-        /// The offset from the origin to move the position to.
-        /// </param>
-        /// <param name="origin">
-        /// The origin from which the offset is calculated.
-        /// </param>
         public void Seek(long offset, SeekOrigin origin)
         {
             _writer?.Flush();
@@ -1028,12 +873,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="content">
-        /// The objects to write to the file
-        /// </param>
-        /// <returns>
-        /// The objects written to the file.
-        /// </returns>
         public IList Write(IList content)
         {
             foreach (object line in content)
@@ -1144,10 +983,6 @@ namespace Microsoft.PowerShell.Commands
         private const byte TopBitUnset = 0x80;
 
         
-        /// <param name="buffer"></param>
-        /// <param name="index"></param>
-        /// <param name="count"></param>
-        /// <returns></returns>
         public override int ReadBlock(char[] buffer, int index, int count)
         {
             // This method is not supposed to be used
@@ -1155,7 +990,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <returns></returns>
         public override string ReadToEnd()
         {
             // This method is not supposed to be used
@@ -1172,7 +1006,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <returns></returns>
         internal long GetCurrentPosition()
         {
             if (_charCount == 0)
@@ -1184,8 +1017,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="delimiter"></param>
-        /// <returns></returns>
         internal int GetByteCount(string delimiter)
         {
             char[] chars = delimiter.ToCharArray();
@@ -1193,7 +1024,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <returns>Return -1 if we reach the head of the file.</returns>
         public override int Peek()
         {
             if (_charCount == 0)
@@ -1209,7 +1039,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <returns>Return -1 if we reach the head of the file.</returns>
         public override int Read()
         {
             if (_charCount == 0)
@@ -1225,19 +1054,12 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="buffer">Output buffer.</param>
-        /// <param name="index">Start position to write with.</param>
-        /// <param name="count">Number of bytes to read.</param>
-        /// <returns>Return the number of characters read, or -1 if we reach the head of the file.</returns>
-        /// <returns>Return the number of characters read, or -1 if we reach the head of the file.</returns>
         public override int Read(char[] buffer, int index, int count)
         {
             return ReadSpan(new Span<char>(buffer, index, count));
         }
 
         
-        /// <param name="buffer">Output buffer.</param>
-        /// <returns>Return the number of characters read, or -1 if we reach the head of the file.</returns>
         public override int Read(Span<char> buffer)
         {
             return ReadSpan(buffer);
@@ -1273,7 +1095,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <returns>Return null if we reach the head of the file.</returns>
         public override string ReadLine()
         {
             if (_charCount == 0 && RefillCharBuffer() == -1)
@@ -1330,7 +1151,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <returns></returns>
         private int RefillCharBuffer()
         {
             if ((RefillByteBuff()) == -1)
@@ -1343,7 +1163,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <returns></returns>
         private int RefillByteBuff()
         {
             long lengthLeft = _stream.Position;

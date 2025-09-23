@@ -28,9 +28,6 @@ using Microsoft.Powershell.Commands.GetCounter.PdhNative;
 
 namespace Microsoft.PowerShell.Commands
 {
-    ///
-    /// Class that implements the Get-Counter cmdlet.
-    ///
     [Cmdlet(VerbsData.Export, "Counter", DefaultParameterSetName = "ExportCounterSet", HelpUri = "https://go.microsoft.com/fwlink/?LinkID=138337")]
     public sealed class ExportCounterCommand : PSCmdlet
     {
@@ -216,9 +213,6 @@ namespace Microsoft.PowerShell.Commands
             _pdhHelper.Dispose();
         }
 
-        ///
-        /// Handle Control-C
-        ///
         protected override void StopProcessing()
         {
             _stopping = true;

@@ -41,10 +41,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <returns>
-        /// Null if no Uri is specified by the helpinfo or a
-        /// valid Uri.
-        /// </returns>
         internal override Uri GetUriForOnlineHelp()
         {
             return _helpInfo.GetUriForOnlineHelp();

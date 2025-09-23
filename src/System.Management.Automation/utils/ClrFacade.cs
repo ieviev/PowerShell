@@ -18,16 +18,6 @@ namespace System.Management.Automation
     internal static class ClrFacade
     {
         
-        /// <remarks>
-        /// We do this both here and during the initialization of the 'RunspaceBase' type.
-        /// This is because we want to make sure the assembly/library resolvers are:
-        ///  1. registered before any script/cmdlet can run.
-        ///  2. registered before 'ClrFacade' gets used for assembly related operations.
-        ///
-        /// The 'ClrFacade' type may be used without a Runspace created, for example, by calling type conversion methods in the 'LanguagePrimitive' type.
-        /// And at the mean time, script or cmdlet may run without the 'ClrFacade' type initialized.
-        /// That's why we attempt to create the singleton of 'PowerShellAssemblyLoadContext' at both places.
-        /// </remarks>
         static ClrFacade()
         {
             if (PowerShellAssemblyLoadContext.Instance is null)
@@ -45,10 +35,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="namespaceQualifiedTypeName">
-        /// In CoreCLR context, if it's for string-to-type conversion and the namespace qualified type name is known, pass it in so that
-        /// powershell can load the necessary TPA if the target type is from an unloaded TPA.
-        /// </param>
         internal static IEnumerable<Assembly> GetAssemblies(string namespaceQualifiedTypeName = null)
         {
             return PSAssemblyLoadContext.GetAssembly(namespaceQualifiedTypeName) ?? GetPSVisibleAssemblies();
@@ -123,39 +109,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <remarks>
-        /// The algorithm is as follows:
-        ///
-        /// 1. Alternate data stream "Zone.Identifier" is checked first. If this alternate data stream has content, then the content is parsed to determine the SecurityZone.
-        /// 2. If the alternate data stream "Zone.Identifier" doesn't exist, or its content is not expected, then the file path will be analyzed to determine the SecurityZone.
-        ///
-        /// For #1, the parsing rules are observed as follows:
-        ///   A. Read content of the data stream line by line. Each line is trimmed.
-        ///   B. Try to match the current line with '^\[ZoneTransfer\]'.
-        ///        - if matching, then do step (#C) starting from the next line
-        ///        - if not matching, then continue to do step (#B) with the next line.
-        ///   C. Try to match the current line with '^ZoneId\s*=\s*(.*)'
-        ///        - if matching, check if the ZoneId is valid. Then return the corresponding SecurityZone if the 'ZoneId' is valid, or 'NoZone' if invalid.
-        ///        - if not matching, then continue to do step (#C) with the next line.
-        ///   D. Reach EOF, then return 'NoZone'.
-        /// After #1, if the returned SecurityZone is 'NoZone', then proceed with #2. Otherwise, return it as the mapping result.
-        ///
-        /// For #2, the analysis rules are observed as follows:
-        ///   A. If the path is a UNC path, then
-        ///       - if the host name of the UNC path is IP address, then mapping it to "Internet" zone.
-        ///       - if the host name of the UNC path has dot (.) in it, then mapping it to "internet" zone.
-        ///       - otherwise, mapping it to "intranet" zone.
-        ///   B. If the path is not UNC path, then get the root drive,
-        ///       - if the drive is CDRom, mapping it to "Untrusted" zone
-        ///       - if the drive is Network, mapping it to "Intranet" zone
-        ///       - otherwise, mapping it to "MyComputer" zone.
-        ///
-        /// The above algorithm has two changes comparing to the behavior of "Zone.CreateFromUrl" I observed:
-        ///   (1) If a file downloaded from internet (ZoneId=3) is not on the local machine, "Zone.CreateFromUrl" won't respect the MOTW.
-        ///       I think it makes more sense for powershell to always check the MOTW first, even for files not on local box.
-        ///   (2) When it's a UNC path and is actually a loopback (\\127.0.0.1\c$\test.txt), "Zone.CreateFromUrl" returns "Internet", but
-        ///       the above algorithm changes it to be "MyComputer" because it's actually the same computer.
-        /// </remarks>
         private static SecurityZone MapSecurityZone(string filePath)
         {
             // WSL introduces a new filesystem path to access the Linux filesystem from Windows, like '\\wsl$\ubuntu'.

@@ -17,18 +17,12 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="nameOrId"></param>
-        /// <returns>Found element as PSObject.</returns>
         public PSObject? Find(string nameOrId) => FindById(nameOrId) ?? FindByName(nameOrId);
 
         
-        /// <param name="id"></param>
-        /// <returns>Found element as PSObject.</returns>
         public PSObject? FindById(string id) => Find(id, findById: true);
 
         
-        /// <param name="name"></param>
-        /// <returns>Found element as PSObject.</returns>
         public PSObject? FindByName(string name) => Find(name, findById: false);
 
         private PSObject? Find(string nameOrId, bool findById)

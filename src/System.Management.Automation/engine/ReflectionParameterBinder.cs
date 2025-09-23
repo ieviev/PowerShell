@@ -16,12 +16,6 @@ namespace System.Management.Automation
         #region ctor
 
         
-        /// <param name="target">
-        /// The target object that the parameter values will be bound to.
-        /// </param>
-        /// <param name="command">
-        /// An instance of the command so that attributes can access the context.
-        /// </param>
         internal ReflectionParameterBinder(
             object target,
             Cmdlet command)
@@ -30,15 +24,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="target">
-        /// The target object that the parameter values will be bound to.
-        /// </param>
-        /// <param name="command">
-        /// An instance of the command so that attributes can access the context.
-        /// </param>
-        /// <param name="commandLineParameters">
-        /// The dictionary to use to record the parameters set by this object...
-        /// </param>
         internal ReflectionParameterBinder(
             object target,
             Cmdlet command,
@@ -55,15 +40,6 @@ namespace System.Management.Automation
         #region Parameter default values
 
         
-        /// <param name="name">
-        /// The name of the parameter to get the default value of.
-        /// </param>
-        /// <returns>
-        /// The default value of the specified parameter.
-        /// </returns>
-        /// <exception cref="GetValueException">
-        /// If the ETS call to get the property value throws an exception.
-        /// </exception>
         internal override object GetDefaultParameterValue(string name)
         {
             try
@@ -92,18 +68,6 @@ namespace System.Management.Automation
         #region Parameter binding
 
         
-        /// <param name="name">
-        ///     The name of the parameter to bind the value to.
-        /// </param>
-        /// <param name="value">
-        ///     The value to bind to the parameter. It should be assumed by
-        ///     derived classes that the proper type coercion has already taken
-        ///     place and that any prerequisite metadata has been satisfied.
-        /// </param>
-        /// <param name="parameterMetadata"></param>
-        /// <exception cref="SetValueException">
-        /// If the setter raises an exception.
-        /// </exception>
         internal override void BindParameter(string name, object value, CompiledCommandParameter parameterMetadata)
         {
             Diagnostics.Assert(!string.IsNullOrEmpty(name), "caller to verify name parameter");

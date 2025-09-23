@@ -17,11 +17,6 @@ namespace System.Management.Automation.Internal
     }
 
     
-    /// <remarks>
-    /// The Pipe class is not thread-safe, so methods such as
-    /// AddItems and Retrieve should not be called simultaneously.
-    /// ExternalReader and ExternalWriter can provide thread-safe buffering.
-    /// </remarks>
     internal class Pipe
     {
         private readonly ExecutionContext _context;
@@ -68,7 +63,6 @@ namespace System.Management.Automation.Internal
         private PipelineWriter _externalWriter;
 
         
-        /// <returns></returns>
         public override string ToString()
         {
             if (_downstreamCmdlet != null)
@@ -251,16 +245,12 @@ namespace System.Management.Automation.Internal
         #region ctor
 
         
-        /// <remarks>
-        /// The initial Queue capacity is 1, but it will grow automatically.
-        /// </remarks>
         internal Pipe()
         {
             ObjectQueue = new Queue<object>();
         }
 
         
-        /// <param name="resultList"></param>
         internal Pipe(List<object> resultList)
         {
             Diagnostics.Assert(resultList != null, "resultList cannot be null");
@@ -271,7 +261,6 @@ namespace System.Management.Automation.Internal
         private readonly List<object> _resultList;
 
         
-        /// <param name="resultCollection">The collection to write into.</param>
         internal Pipe(System.Collections.ObjectModel.Collection<PSObject> resultCollection)
         {
             Diagnostics.Assert(resultCollection != null, "resultCollection cannot be null");
@@ -282,8 +271,6 @@ namespace System.Management.Automation.Internal
         private readonly System.Collections.ObjectModel.Collection<PSObject> _resultCollection;
 
         
-        /// <param name="context">The execution context object for this engine instance.</param>
-        /// <param name="outputPipeline">The pipeline to write into...</param>
         internal Pipe(ExecutionContext context, PipelineProcessor outputPipeline)
         {
             Diagnostics.Assert(outputPipeline != null, "outputPipeline cannot be null");
@@ -294,7 +281,6 @@ namespace System.Management.Automation.Internal
         }
 
         
-        /// <param name="enumeratorToProcess">The enumerator to process...</param>
         internal Pipe(IEnumerator enumeratorToProcess)
         {
             Diagnostics.Assert(enumeratorToProcess != null, "enumeratorToProcess cannot be null");
@@ -311,16 +297,6 @@ namespace System.Management.Automation.Internal
         #endregion ctor
 
         
-        /// <param name="obj">The object to add to the pipe.</param>
-        /// <remarks>
-        /// AutomationNull.Value is ignored
-        /// </remarks>
-        /// <exception cref="PipelineStoppedException">
-        /// a terminating error occurred, or the pipeline was otherwise stopped
-        /// </exception>
-        /// <exception cref="PipelineClosedException">
-        /// The ExternalWriter stream is closed
-        /// </exception>
         internal void Add(object obj)
         {
             if (obj == AutomationNull.Value)
@@ -384,16 +360,6 @@ namespace System.Management.Automation.Internal
         }
 
         
-        /// <param name="objects">
-        /// Each of the objects are added to the pipe
-        /// </param>
-        /// <exception cref="PipelineStoppedException">
-        /// The pipeline has already been stopped,
-        /// or a terminating error occurred in a downstream cmdlet.
-        /// </exception>
-        /// <exception cref="PipelineClosedException">
-        /// The ExternalWriter stream is closed
-        /// </exception>
         internal void AddItems(object objects)
         {
             // Use the extended type system to try and get an enumerator for the object being added.
@@ -446,9 +412,6 @@ namespace System.Management.Automation.Internal
         }
 
         
-        /// <returns>
-        /// object that is retrieved, or AutomationNull.Value if none
-        /// </returns>
         internal object Retrieve()
         {
             if (ObjectQueue != null && ObjectQueue.Count != 0)
@@ -515,7 +478,6 @@ namespace System.Management.Automation.Internal
         internal void Clear() => ObjectQueue?.Clear();
 
         
-        /// <returns>Possibly empty array of objects, but not null.</returns>
         internal object[] ToArray()
         {
             if (ObjectQueue == null || ObjectQueue.Count == 0)

@@ -23,11 +23,6 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
         #region IValueConverter Members
 
         
-        /// <param name="value">The ImageButtonBase we are trying to Convert.</param>
-        /// <param name="targetType"><paramref name="targetType"/> is not used.</param>
-        /// <param name="parameter"><paramref name="parameter"/> is not used.</param>
-        /// <param name="culture"><paramref name="culture"/> is not used.</param>
-        /// <returns>The resulting object obtained from retrieving the property value in <paramref name="parameter"/> (or property values if <paramref name="parameter"/> contains dots) out of <paramref name="value"/>. .</returns>
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             ImageButtonBase imageButtonBase = value as ImageButtonBase;
@@ -51,11 +46,6 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
         }
 
         
-        /// <param name="value"><paramref name="value"/> is not used.</param>
-        /// <param name="targetType"><paramref name="targetType"/> is not used.</param>
-        /// <param name="parameter"><paramref name="parameter"/> is not used.</param>
-        /// <param name="culture"><paramref name="culture"/> is not used.</param>
-        /// <returns>No value is returned.</returns>
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             throw new NotSupportedException();

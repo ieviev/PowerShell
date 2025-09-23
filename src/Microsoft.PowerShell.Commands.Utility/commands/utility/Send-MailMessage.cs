@@ -118,9 +118,6 @@ namespace Microsoft.PowerShell.Commands
         public SwitchParameter UseSsl { get; set; }
 
         
-        /// <remarks>
-        /// Value must be greater than zero.
-        /// </remarks>
         [Parameter(ValueFromPipelineByPropertyName = true)]
         [ValidateRange(0, int.MaxValue)]
         public int Port { get; set; }
@@ -135,8 +132,6 @@ namespace Microsoft.PowerShell.Commands
         private SmtpClient _mSmtpClient = null;
 
         
-        /// <param name="address"></param>
-        /// <param name="param"></param>
         private void AddAddressesToMailMessage(object address, string param)
         {
             string[] objEmailAddresses = address as string[];

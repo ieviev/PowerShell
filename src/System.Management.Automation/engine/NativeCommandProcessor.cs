@@ -27,10 +27,6 @@ using Dbg = System.Management.Automation.Diagnostics;
 namespace System.Management.Automation
 {
     
-    /// <remarks>
-    /// Most native commands only support text. Other formats
-    /// are supported by minishell
-    /// </remarks>
     internal enum NativeCommandIOFormat
     {
         Text,
@@ -103,15 +99,12 @@ namespace System.Management.Automation
     internal class ProcessOutputObject
     {
         
-        /// <value>The data</value>
         internal object Data { get; }
 
         
         internal MinishellStream Stream { get; }
 
         
-        /// <param name="data">The data to output.</param>
-        /// <param name="stream">Stream to which data belongs.</param>
         internal ProcessOutputObject(object data, MinishellStream stream)
         {
             Data = data;
@@ -134,11 +127,6 @@ namespace System.Management.Automation
         #region Constructors
 
         
-        /// <param name="path">The full path of the native command.</param>
-        /// <param name="exitCode">The exit code returned by the native command.</param>
-        /// <param name="processId">The process ID of the process before it ended.</param>
-        /// <param name="message">The error message.</param>
-        /// <param name="errorId">The PowerShell runtime error ID.</param>
         internal NativeCommandExitException(string path, int exitCode, int processId, string message, string errorId)
             : base(message)
         {
@@ -304,8 +292,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="oldUserPath">The old value of the user-scope Path retrieved from registry.</param>
-        /// <param name="oldSystemPath">The old value of the system-scope Path retrieved from registry.</param>
         private static void UpdateProcessEnvPath(string oldUserPath, string oldSystemPath)
         {
             string newUserEnvPath = Environment.GetEnvironmentVariable("Path", EnvironmentVariableTarget.User);
@@ -358,15 +344,6 @@ namespace System.Management.Automation
         private readonly ApplicationInfo _applicationInfo;
 
         
-        /// <param name="applicationInfo">
-        /// The information about the application to run.
-        /// </param>
-        /// <param name="context">
-        /// The execution context for this command.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="applicationInfo"/> or <paramref name="context"/> is null
-        /// </exception>
         internal NativeCommandProcessor(ApplicationInfo applicationInfo, ExecutionContext context)
             : base(applicationInfo)
         {
@@ -445,12 +422,6 @@ namespace System.Management.Automation
         private NativeCommandParameterBinderController _nativeParameterBinderController;
 
         
-        /// <param name="command">
-        /// The native command to be run.
-        /// </param>
-        /// <returns>
-        /// A new parameter binder controller for the specified command.
-        /// </returns>
         internal ParameterBinderController NewParameterBinderController(InternalCommand command)
         {
             if (_isMiniShell)
@@ -585,19 +556,9 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="stdout">
-        /// The stream that the pipe should represent. <see langword="true" />
-        /// for stdout, <see langword="false" /> for stdin.
-        /// </param>
-        /// <returns>A new byte pipe representing the specified stream.</returns>
         internal BytePipe CreateBytePipe(bool stdout) => new NativeCommandProcessorBytePipe(this, stdout);
 
         
-        /// <param name="stdout">
-        /// The stream that should be retrieved. <see langword="true" /> for
-        /// stdout, <see langword="false" /> for stdin.
-        /// </param>
-        /// <returns>The specified <see cref="Stream" />.</returns>
         internal Stream GetStream(bool stdout)
         {
             Debug.Assert(
@@ -610,12 +571,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <exception cref="PipelineStoppedException">
-        /// The pipeline is stopping
-        /// </exception>
-        /// <exception cref="ApplicationFailedException">
-        /// The native command could not be run
-        /// </exception>
         private void InitNativeProcess()
         {
             // Figure out if we're going to run this process "standalone" i.e. without
@@ -1139,7 +1094,6 @@ namespace System.Management.Automation
         #region Process cleanup with Child Process cleanup
 
         
-        /// <param name="processToKill">The process to kill.</param>
         private static void KillProcess(Process processToKill)
         {
             if (NativeCommandProcessor.IsServerSide)
@@ -1240,8 +1194,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="processToKill"></param>
-        /// <param name="currentlyRunningProcs"></param>
         private static void KillProcessAndChildProcesses(Process processToKill,
             ProcessWithParentId[] currentlyRunningProcs)
         {
@@ -1291,8 +1243,6 @@ namespace System.Management.Automation
         #region checkForConsoleApplication
 
         
-        /// <param name="fileName"></param>
-        /// <returns></returns>
         private static bool IsWindowsApplication(string fileName)
         {
 #if UNIX
@@ -1359,7 +1309,6 @@ namespace System.Management.Automation
         #endregion internal overrides
 
         
-        /// <param name="killBackgroundProcess">If set, also terminate background process.</param>
         private void CleanUp(bool killBackgroundProcess)
         {
             // We need to call 'NotifyEndApplication' as appropriate during cleanup
@@ -1460,7 +1409,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="filePath"></param>
         private bool UseSpecialArgumentPassing(string filePath) =>
             NativeParameterBinderController.ArgumentPassingStyle switch
             {
@@ -1470,11 +1418,6 @@ namespace System.Management.Automation
             };
 
         
-        /// <param name="redirectOutput">A boolean that indicates that, when true, output from the process is redirected to a stream, and otherwise is sent to stdout.</param>
-        /// <param name="redirectError">A boolean that indicates that, when true, error output from the process is redirected to a stream, and otherwise is sent to stderr.</param>
-        /// <param name="redirectInput">A boolean that indicates that, when true, input to the process is taken from a stream, and otherwise is taken from stdin.</param>
-        /// <param name="soloCommand">A boolean that indicates, when true, that the command to be executed is not part of a pipeline, and otherwise indicates that it is.</param>
-        /// <returns>A ProcessStartInfo object which is the base of the native invocation.</returns>
         private ProcessStartInfo GetProcessStartInfo(
             bool redirectOutput,
             bool redirectError,
@@ -1588,8 +1531,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="filePath">The file to use when checking how to pass arguments.</param>
-        /// <returns>A boolean indicating what passing style should be used.</returns>
         private static bool ShouldUseLegacyPassingStyle(string filePath)
         {
             if (string.IsNullOrEmpty(filePath))
@@ -1626,10 +1567,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="isWindowsApplication"></param>
-        /// <param name="redirectOutput"></param>
-        /// <param name="redirectError"></param>
-        /// <param name="redirectInput"></param>
         private void CalculateIORedirection(bool isWindowsApplication, out bool redirectOutput, out bool redirectError, out bool redirectInput)
         {
             redirectInput = this.Command.MyInvocation.ExpectingInput;
@@ -1796,11 +1733,6 @@ namespace System.Management.Automation
         private bool _isMiniShell = false;
 
         
-        /// <returns></returns>
-        /// <remarks>
-        /// If any of the argument supplied to native command is script block,
-        /// we assume it is minishell.
-        /// </remarks>
         private bool IsMiniShell()
         {
             for (int i = 0; i < arguments.Count; i++)
@@ -2115,7 +2047,6 @@ namespace System.Management.Automation
         private Serializer _xmlSerializer;
 
         
-        /// <param name="input"></param>
         internal void Add(object input)
         {
             if (_stopping || _streamWriter == null)
@@ -2196,11 +2127,6 @@ namespace System.Management.Automation
         private NativeCommandIOFormat _inputFormat;
 
         
-        /// <param name="process">
-        /// process to which input is written
-        /// </param>
-        /// <param name="inputFormat">
-        /// </param>
         internal void Start(Process process, NativeCommandIOFormat inputFormat)
         {
             Dbg.Assert(process != null, "caller should validate the paramter");
@@ -2302,7 +2228,6 @@ namespace System.Management.Automation
         public static bool AlwaysCaptureApplicationIO { get; set; }
 
         
-        /// <returns></returns>
         internal static bool AllocateHiddenConsole()
         {
 #if UNIX
@@ -2347,10 +2272,6 @@ namespace System.Management.Automation
     }
 
     
-    /// <remarks>
-    /// This remote instance of PowerShell can be in a separate process,
-    /// appdomain or machine.
-    /// </remarks>
     public class RemoteException : RuntimeException
     {
         
@@ -2360,34 +2281,18 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="message">
-        /// The message that describes the error.
-        /// </param>
         public RemoteException(string message)
             : base(message)
         {
         }
 
         
-        /// <param name="message">
-        /// The message that describes the error.
-        /// </param>
-        /// <param name="innerException">
-        /// The exception that is the cause of the current exception.
-        /// </param>
         public RemoteException(string message, Exception innerException)
             : base(message, innerException)
         {
         }
 
         
-        /// <param name="message">The message that describes the error.</param>
-        /// <param name="serializedRemoteException">
-        /// serialized exception from remote msh
-        /// </param>
-        /// <param name="serializedRemoteInvocationInfo">
-        /// serialized invocation info from remote msh
-        /// </param>
         internal RemoteException
         (
             string message,
@@ -2403,14 +2308,6 @@ namespace System.Management.Automation
         #region ISerializable Members
 
         
-        /// <param name="info">
-        /// The <see cref="SerializationInfo"/> that holds the serialized object
-        /// data about the exception being thrown.
-        /// </param>
-        /// <param name="context">
-        /// The <see cref="StreamingContext"/> that contains contextual information
-        /// about the source or destination.
-        /// </param>
         [Obsolete("Legacy serialization support is deprecated since .NET 8", DiagnosticId = "SYSLIB0051")]
         protected RemoteException(SerializationInfo info, StreamingContext context)
         {
@@ -2426,8 +2323,6 @@ namespace System.Management.Automation
         private readonly PSObject _serializedRemoteInvocationInfo;
 
         
-        /// <remarks>This is the exception which was thrown in remote.
-        /// </remarks>
         public PSObject SerializedRemoteException
         {
             get
@@ -2437,9 +2332,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <remarks>
-        /// This is the serialized InvocationInfo from the remote PowerShell.
-        /// </remarks>
         public PSObject SerializedRemoteInvocationInfo
         {
             get
@@ -2450,7 +2342,6 @@ namespace System.Management.Automation
 
         private ErrorRecord _remoteErrorRecord;
         
-        /// <param name="remoteError"></param>
         internal void SetRemoteErrorRecord(ErrorRecord remoteError)
         {
             _remoteErrorRecord = remoteError;

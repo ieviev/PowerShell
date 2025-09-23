@@ -290,8 +290,6 @@ namespace Microsoft.PowerShell.Commands
             .ToArray();
 
         
-        /// <param name="module">The module for which we want to check the validity of the root module.</param>
-        /// <returns>True if the root module is valid, false otherwise.</returns>
         private bool HasValidRootModule(PSModuleInfo module)
         {
             // Empty/null root modules are allowed
@@ -333,10 +331,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="path"></param>
-        /// <param name="module"></param>
-        /// <param name="verifyPathScope"></param>
-        /// <returns></returns>
         private bool IsValidFilePath(string path, PSModuleInfo module, bool verifyPathScope)
         {
             try
@@ -386,8 +380,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="assemblyName"></param>
-        /// <returns></returns>
         private static bool IsValidGacAssembly(string assemblyName)
         {
 #if UNIX

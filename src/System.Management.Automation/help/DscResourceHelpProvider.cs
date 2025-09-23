@@ -47,9 +47,6 @@ namespace System.Management.Automation
         #endregion
 
         
-        /// <param name="helpRequest">Help request.</param>
-        /// <param name="searchOnlyContent">Not used.</param>
-        /// <returns></returns>
         internal override IEnumerable<HelpInfo> SearchHelp(HelpRequest helpRequest, bool searchOnlyContent)
         {
             Debug.Assert(helpRequest != null, "helpRequest cannot be null.");
@@ -79,8 +76,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="helpRequest">Help Request for the search.</param>
-        /// <returns>Enumerable of HelpInfo objects.</returns>
         internal override IEnumerable<HelpInfo> ExactMatchHelp(HelpRequest helpRequest)
         {
             Debug.Assert(helpRequest != null, "helpRequest cannot be null.");
@@ -104,8 +99,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="searcher">Searcher for DscResources.</param>
-        /// <returns>Next HelpInfo object.</returns>
         private IEnumerable<HelpInfo> GetHelpInfo(DscResourceSearcher searcher)
         {
             while (searcher.MoveNext())
@@ -147,9 +140,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="helpFile">File name.</param>
-        /// <param name="helpItemsNode">Nodes to check.</param>
-        /// <returns></returns>
         internal static bool IsMamlHelp(string helpFile, XmlNode helpItemsNode)
         {
             Debug.Assert(!string.IsNullOrEmpty(helpFile), "helpFile cannot be null.");
@@ -199,9 +189,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="helpFileIdentifier">Help file identifier (either name of PSSnapIn or simply full path to help file).</param>
-        /// <param name="helpCategory">Help Category for search.</param>
-        /// <returns>HelpInfo object.</returns>
         private HelpInfo GetFromResourceHelpCache(string helpFileIdentifier, HelpCategory helpCategory)
         {
             Debug.Assert(!string.IsNullOrEmpty(helpFileIdentifier), "helpFileIdentifier should not be null or empty.");
@@ -259,12 +246,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <remarks>
-        /// 1. Needs to pay special attention about error handling in this function.
-        /// Common errors include: file not found and invalid xml. None of these error
-        /// should cause help search to stop.
-        /// 2. a helpfile cache is used to avoid same file got loaded again and again.
-        /// </remarks>
         private void LoadHelpFile(string helpFile, string helpFileIdentifier)
         {
             Dbg.Assert(!string.IsNullOrEmpty(helpFile), "HelpFile cannot be null or empty.");

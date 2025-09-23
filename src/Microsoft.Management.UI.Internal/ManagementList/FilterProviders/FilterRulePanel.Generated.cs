@@ -27,9 +27,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <remarks>
-        /// Adds a collection of FilterRules to the panel.
-        /// </remarks>
         protected virtual void OnAddRulesExecuted(ExecutedRoutedEventArgs e)
         {
             OnAddRulesExecutedImplementation(e);
@@ -50,9 +47,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <remarks>
-        /// Removes a FilterRulePanelItem from the panel.
-        /// </remarks>
         protected virtual void OnRemoveRuleExecuted(ExecutedRoutedEventArgs e)
         {
             OnRemoveRuleExecutedImplementation(e);
@@ -79,9 +73,6 @@ namespace Microsoft.Management.UI.Internal
         // CreateAutomationPeer
         //
         
-        /// <returns>
-        /// An instance of the AutomationPeer.
-        /// </returns>
         protected override System.Windows.Automation.Peers.AutomationPeer OnCreateAutomationPeer()
         {
             return new ExtendedFrameworkElementAutomationPeer(this,AutomationControlType.Group,true);

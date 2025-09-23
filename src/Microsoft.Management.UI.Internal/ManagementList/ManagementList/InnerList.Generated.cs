@@ -38,9 +38,6 @@ namespace Microsoft.Management.UI.Internal
         partial void OnCopyCanExecuteImplementation(CanExecuteRoutedEventArgs e);
 
         
-        /// <remarks>
-        /// When executed, the currently selected items are copied to the clipboard.
-        /// </remarks>
         protected virtual void OnCopyExecuted(ExecutedRoutedEventArgs e)
         {
             OnCopyExecutedImplementation(e);
@@ -139,18 +136,12 @@ namespace Microsoft.Management.UI.Internal
         public static readonly DependencyProperty IsPrimarySortColumnProperty = IsPrimarySortColumnPropertyKey.DependencyProperty;
 
         
-        /// <param name="element">The dependency object that the property is attached to.</param>
-        /// <returns>
-        /// The value of IsPrimarySortColumn that is attached to element.
-        /// </returns>
         static public bool GetIsPrimarySortColumn(DependencyObject element)
         {
             return (bool) element.GetValue(IsPrimarySortColumnProperty);
         }
 
         
-        /// <param name="element">The dependency object that the property will be attached to.</param>
-        /// <param name="value">The new value.</param>
         static private void SetIsPrimarySortColumn(DependencyObject element, bool value)
         {
             element.SetValue(IsPrimarySortColumnPropertyKey,BooleanBoxes.Box(value));

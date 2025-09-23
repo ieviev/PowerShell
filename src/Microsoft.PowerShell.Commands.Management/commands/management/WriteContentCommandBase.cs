@@ -16,9 +16,6 @@ namespace Microsoft.PowerShell.Commands
         #region Parameters
 
         
-        /// <value>
-        /// This value type is determined by the InvokeProvider.
-        /// </value>
         [Parameter(Mandatory = true, Position = 1, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true)]
         [AllowNull]
         [AllowEmptyCollection]
@@ -174,30 +171,17 @@ namespace Microsoft.PowerShell.Commands
         #region protected members
 
         
-        /// <param name="contentHolders">
-        /// The content holders that contain the writers to be moved.
-        /// </param>
         internal virtual void SeekContentPosition(List<ContentHolder> contentHolders)
         {
             // default does nothing.
         }
 
         
-        /// <param name="paths">
-        /// The path to the items that will be opened for writing content.
-        /// </param>
         internal virtual void BeforeOpenStreams(string[] paths)
         {
         }
 
         
-        /// <param name="context">
-        /// The context under which the command is running.
-        /// </param>
-        /// <returns>
-        /// An object representing the dynamic parameters for the cmdlet or null if there
-        /// are none.
-        /// </returns>
         internal override object GetDynamicParameters(CmdletProviderContext context)
         {
             if (Path != null && Path.Length > 0)
@@ -209,9 +193,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <returns>
-        /// An array of IContentWriters for the current path(s)
-        /// </returns>
         internal List<ContentHolder> GetContentWriters(
             string[] writerPaths,
             CmdletProviderContext currentCommandContext)
@@ -286,9 +267,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="unfilteredPaths">The list of unfiltered paths.</param>
-        /// <param name="currentContext">The current context.</param>
-        /// <returns>The list of paths accepted by the user.</returns>
         private string[] GetAcceptedPaths(string[] unfilteredPaths, CmdletProviderContext currentContext)
         {
             Collection<PathInfo> pathInfos = ResolvePaths(unfilteredPaths, true, false, currentContext);

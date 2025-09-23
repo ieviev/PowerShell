@@ -201,15 +201,12 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="typeDefinitionAst"></param>
         public void AddType(TypeDefinitionAst typeDefinitionAst)
         {
             _scopes[_scopes.Count - 1].AddType(_parser, typeDefinitionAst);
         }
 
         
-        /// <param name="typeDefinitionAst"></param>
-        /// <param name="moduleInfo"></param>
         public void AddTypeFromUsingModule(TypeDefinitionAst typeDefinitionAst, PSModuleInfo moduleInfo)
         {
             _scopes[_scopes.Count - 1].AddTypeFromUsingModule(_parser, typeDefinitionAst, moduleInfo);
@@ -242,7 +239,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <returns>TypeDefinitionAst or null, if currently not in type definition.</returns>
         public TypeDefinitionAst GetCurrentTypeDefinitionAst()
         {
             for (int i = _scopes.Count - 1; i >= 0; i--)
@@ -432,14 +428,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="usingStatementAst">Using statement.</param>
-        /// <param name="exception">If exception happens, return exception object.</param>
-        /// <param name="wildcardCharactersUsed">
-        /// True if in the module name uses wildcardCharacter.
-        /// We don't want to resolve any wild-cards in using module.
-        /// </param>
-        /// <param name="isConstant">True if module hashtable contains constant value (it's our requirement).</param>
-        /// <returns>Modules, if can resolve it. null if any problems happens.</returns>
         private Collection<PSModuleInfo> GetModulesFromUsingModule(UsingStatementAst usingStatementAst, out Exception exception, out bool wildcardCharactersUsed, out bool isConstant)
         {
             exception = null;

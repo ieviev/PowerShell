@@ -28,9 +28,6 @@ using Microsoft.Powershell.Commands.GetCounter.PdhNative;
 
 namespace Microsoft.PowerShell.Commands
 {
-    ///
-    /// Class that implements the Get-Counter cmdlet.
-    ///
     [Cmdlet(VerbsData.Import, "Counter", DefaultParameterSetName = "GetCounterSet", HelpUri = "https://go.microsoft.com/fwlink/?LinkID=138338")]
     public sealed class ImportCounterCommand : PSCmdlet
     {

@@ -14,7 +14,6 @@ namespace Microsoft.PowerShell.Commands
     public class OutLineOutputCommand : FrontEndCommandBase
     {
         
-        /// <value></value>
         [Parameter(Mandatory = true, Position = 0)]
         public object LineOutput
         {

@@ -17,9 +17,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
     internal class CimNewCimInstanceContext : XOperationContextBase
     {
         
-        /// <param name="methodName"></param>
-        /// <param name="propertyName"></param>
-        /// <param name="qualifierName"></param>
         internal CimNewCimInstanceContext(
             CimSessionProxy theProxy,
             string theNamespace)
@@ -39,7 +36,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="cmdlet"><see cref="GetCimInstanceCommand"/> object.</param>
         public void NewCimInstance(NewCimInstanceCommand cmdlet)
         {
             DebugHelper.WriteLogEx();
@@ -151,7 +147,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         #region Get CimInstance after creation (on server)
 
         
-        /// <param name="cimInstance"></param>
         internal void GetCimInstance(CimInstance cimInstance, XOperationContextBase context)
         {
             DebugHelper.WriteLogEx();
@@ -172,8 +167,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         #region private methods
 
         
-        /// <param name="proxy"></param>
-        /// <param name="cmdlet"></param>
         private static void SetSessionProxyProperties(
             ref CimSessionProxy proxy,
             NewCimInstanceCommand cmdlet)
@@ -186,9 +179,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="computerName"></param>
-        /// <param name="cmdlet"></param>
-        /// <returns></returns>
         private CimSessionProxy CreateSessionProxy(
             string computerName,
             NewCimInstanceCommand cmdlet)
@@ -200,9 +190,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="session"></param>
-        /// <param name="cmdlet"></param>
-        /// <returns></returns>
         private CimSessionProxy CreateSessionProxy(
             CimSession session,
             NewCimInstanceCommand cmdlet)
@@ -214,13 +201,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="className"></param>
-        /// <param name="key"></param>
-        /// <param name="properties"></param>
-        /// <param name="cmdlet"></param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentNullException">See CimProperty.Create.</exception>
-        /// <exception cref="ArgumentException">CimProperty.Create.</exception>
         private CimInstance CreateCimInstance(
             string className,
             string cimNamespace,
@@ -276,12 +256,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="cimClass"></param>
-        /// <param name="properties"></param>
-        /// <param name="cmdlet"></param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentNullException">See CimProperty.Create.</exception>
-        /// <exception cref="ArgumentException">CimProperty.Create.</exception>
         private CimInstance CreateCimInstance(
             CimClass cimClass,
             IDictionary properties,

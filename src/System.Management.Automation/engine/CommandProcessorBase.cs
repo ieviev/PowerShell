@@ -20,9 +20,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="commandInfo">
-        /// The metadata about the command to run.
-        /// </param>
         internal CommandProcessorBase(CommandInfo commandInfo)
         {
             if (commandInfo == null)
@@ -77,26 +74,12 @@ namespace System.Management.Automation
         internal bool _addedToPipelineAlready;
 
         
-        /// <value></value>
         internal CommandInfo CommandInfo { get; set; }
 
         
         internal bool HasCleanBlock { get; }
 
         
-        /// <remarks>
-        /// Script command processor created from a script file is special
-        /// in following two perspectives,
-        ///
-        ///     1. New scope created needs to be a 'script' scope in the
-        ///        sense that it needs to handle $script: variables.
-        ///        For normal functions or scriptblocks, script scope
-        ///        variables are not supported.
-        ///
-        ///     2. ExitException will be handled by setting lastExitCode.
-        ///        For normal functions or scriptblocks, exit command will
-        ///        kill current powershell session.
-        /// </remarks>
         public bool FromScriptFile { get { return _fromScriptFile; } }
 
         protected bool _fromScriptFile = false;
@@ -151,7 +134,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <value></value>
         internal bool UseLocalScope
         {
             get { return _useLocalScope; }
@@ -162,9 +144,6 @@ namespace System.Management.Automation
         protected bool _useLocalScope;
 
         
-        /// <param name="scriptBlock">The script block being dotted.</param>
-        /// <param name="context">The current execution context.</param>
-        /// <param name="invocationInfo">The invocation info about the command.</param>
         protected static void ValidateCompatibleLanguageMode(
             ScriptBlock scriptBlock,
             ExecutionContext context,
@@ -238,9 +217,6 @@ namespace System.Management.Automation
         #region handling of -? parameter
 
         
-        /// <param name="helpTarget">Help target to request.</param>
-        /// <param name="helpCategory">Help category to request.</param>
-        /// <returns><see langword="true"/> if user requested help; <see langword="false"/> otherwise.</returns>
         internal virtual bool IsHelpRequested(out string helpTarget, out HelpCategory helpCategory)
         {
             // by default we don't handle "-?" parameter at all
@@ -251,10 +227,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="context">Context for the command processor.</param>
-        /// <param name="helpTarget">Help target.</param>
-        /// <param name="helpCategory">Help category.</param>
-        /// <returns>Command processor for "get-help [helpTarget]".</returns>
         internal static CommandProcessorBase CreateGetHelpCommandProcessor(
             ExecutionContext context,
             string helpTarget,
@@ -287,7 +259,6 @@ namespace System.Management.Automation
         #endregion
 
         
-        /// <returns>A bool indicating whether pipeline input is expected.</returns>
         internal bool IsPipelineInputExpected()
         {
             return commandRuntime.IsPipelineInputExpected;
@@ -346,9 +317,6 @@ namespace System.Management.Automation
         internal Collection<CommandParameterInternal> arguments = new Collection<CommandParameterInternal>();
 
         
-        /// <param name="parameter">
-        /// The parameter to add to the unbound arguments list
-        /// </param>
         internal void AddParameter(CommandParameterInternal parameter)
         {
             Diagnostics.Assert(parameter != null, "Caller to verify parameter argument");
@@ -359,7 +327,6 @@ namespace System.Management.Automation
         internal abstract void Prepare(IDictionary psDefaultParameterValues);
 
         
-        /// <param name="obsoleteAttr"></param>
         private void HandleObsoleteCommand(ObsoleteAttribute obsoleteAttr)
         {
             string commandName =
@@ -414,9 +381,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <exception cref="PipelineStoppedException">
-        /// a terminating error occurred, or the pipeline was otherwise stopped
-        /// </exception>
         internal virtual void DoBegin()
         {
             // Note that DoPrepare() and DoBegin() should NOT be combined.
@@ -505,9 +469,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <exception cref="PipelineStoppedException">
-        /// A terminating error occurred, or the pipeline was otherwise stopped.
-        /// </exception>
         internal virtual void Complete()
         {
             // Call ProcessRecord once from complete. Don't call DoExecute...
@@ -677,9 +638,6 @@ namespace System.Management.Automation
         private bool _firstCallToRead = true;
 
         
-        /// <returns>
-        /// True if read succeeds.
-        /// </returns>
         internal virtual bool Read()
         {
             // Prepare the default value parameter list if this is the first call to Read
@@ -708,45 +666,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="e">
-        /// The exception to wrap in a CmdletInvocationException or
-        /// CmdletProviderInvocationException.
-        /// </param>
-        /// <returns>
-        /// Always returns PipelineStoppedException.  The caller should
-        /// throw this exception.
-        /// </returns>
-        /// <remarks>
-        /// Almost all exceptions which occur during pipeline invocation
-        /// are wrapped in CmdletInvocationException before they are stored
-        /// in the pipeline.  However, there are several exceptions:
-        ///
-        /// AccessViolationException, StackOverflowException:
-        /// These are considered to be such severe errors that we
-        /// FailFast the process immediately.
-        ///
-        /// ProviderInvocationException: In this case, we assume that the
-        /// cmdlet is get-item or the like, a thin wrapper around the
-        /// provider API.  We discard the original ProviderInvocationException
-        /// and re-wrap its InnerException (the real error) in
-        /// CmdletProviderInvocationException. This makes it easier to reach
-        /// the real error.
-        ///
-        /// CmdletInvocationException, ActionPreferenceStopException:
-        /// This indicates that the cmdlet itself ran a command which failed.
-        /// We could go ahead and wrap the original exception in multiple
-        /// layers of CmdletInvocationException, but this makes it difficult
-        /// for the caller to access the root problem, plus the serialization
-        /// layer might not communicate properties beyond some fixed depth.
-        /// Instead, we choose to not re-wrap the exception.
-        ///
-        /// PipelineStoppedException: This could mean one of two things.
-        /// It usually means that this pipeline has already stopped,
-        /// in which case the pipeline already stores the original error.
-        /// It could also mean that the cmdlet ran a command which was
-        /// stopped by CTRL-C etc, in which case we choose not to
-        /// re-wrap the exception as with CmdletInvocationException.
-        /// </remarks>
         internal PipelineStoppedException ManageInvocationException(Exception e)
         {
             try
@@ -849,14 +768,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="e">
-        /// The exception which occurred during script execution
-        /// </param>
-        /// <exception cref="PipelineStoppedException">
-        /// ManageScriptException throws PipelineStoppedException if-and-only-if
-        /// the exception is a RuntimeException, otherwise it returns.
-        /// This allows the caller to rethrow unexpected exceptions.
-        /// </exception>
         internal void ManageScriptException(RuntimeException e)
         {
             if (Command != null && commandRuntime.PipelineProcessor != null)
@@ -890,7 +801,6 @@ namespace System.Management.Automation
         private bool _disposed;
 
         
-        /// <remarks>We use the standard IDispose pattern</remarks>
         public void Dispose()
         {
             Dispose(true);

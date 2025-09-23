@@ -12,9 +12,6 @@ namespace Microsoft.PowerShell.Cmdletization
     public sealed class MethodInvocationInfo
     {
         
-        /// <param name="name">Name of the method to invoke.</param>
-        /// <param name="parameters">Method parameters.</param>
-        /// <param name="returnValue">Return value of the method (ok to pass <see langword="null"/> if the method doesn't return anything).</param>
         public MethodInvocationInfo(string name, IEnumerable<MethodParameter> parameters, MethodParameter returnValue)
         {
             ArgumentNullException.ThrowIfNull(name);

@@ -59,21 +59,18 @@ namespace System.Management.Automation
         }
 
         
-        /// <returns></returns>
         IEnumerator<PSClassInfo> IEnumerable<PSClassInfo>.GetEnumerator()
         {
             return this;
         }
 
         
-        /// <returns></returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
             return this;
         }
 
         
-        /// <returns></returns>
         public bool MoveNext()
         {
             _currentMatch = GetNextClass();
@@ -107,7 +104,6 @@ namespace System.Management.Automation
         #region private methods
 
         
-        /// <returns>Next PSClassInfo object or null if none are found.</returns>
         private PSClassInfo GetNextClass()
         {
             PSClassInfo returnValue = null;
@@ -183,9 +179,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="classNameMatcher">Wildcard pattern matcher for comparing class name.</param>
-        /// <param name="modulePath">Path to the module where the class is defined.</param>
-        /// <returns>Converted PSClassInfo object.</returns>
         private PSClassInfo CachedItemToPSClassInfo(WildcardPattern classNameMatcher, string modulePath)
         {
             foreach (var module in GetPSModuleInfo(modulePath))

@@ -180,7 +180,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <returns></returns>
         private CimGetAssociatedInstance CreateOperationAgent()
         {
             this.AsyncOperation = new CimGetAssociatedInstance();

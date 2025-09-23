@@ -9,14 +9,6 @@ namespace System.Management.Automation
     internal sealed class HelpFileHelpInfo : HelpInfo
     {
         
-        /// <remarks>
-        /// This is made private intentionally so that the only way to create object of this type
-        /// is through
-        ///     GetHelpInfo(string name, string text, string filename)
-        /// </remarks>
-        /// <param name="name">Help topic name.</param>
-        /// <param name="text">Help text.</param>
-        /// <param name="filename">File name that contains the help text.</param>
         private HelpFileHelpInfo(string name, string text, string filename)
         {
             FullHelp = PSObject.AsPSObject(text);
@@ -40,13 +32,11 @@ namespace System.Management.Automation
         }
 
         
-        /// <value>Name for the help info</value>
         internal override string Name { get; } = string.Empty;
 
         private readonly string _filename = string.Empty;
         private readonly string _synopsis = string.Empty;
         
-        /// <value>Synopsis for the help info</value>
         internal override string Synopsis
         {
             get
@@ -56,7 +46,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <value>Help category for the help info</value>
         internal override HelpCategory HelpCategory
         {
             get
@@ -66,14 +55,9 @@ namespace System.Management.Automation
         }
 
         
-        /// <value>Full help object for this help info</value>
         internal override PSObject FullHelp { get; }
 
         
-        /// <param name="name">Help topic name.</param>
-        /// <param name="text">Help text.</param>
-        /// <param name="filename">File name that contains the help text.</param>
-        /// <returns>HelpFileHelpInfo object created based on information provided.</returns>
         internal static HelpFileHelpInfo GetHelpInfo(string name, string text, string filename)
         {
             if (string.IsNullOrEmpty(name))
@@ -90,9 +74,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="text">Text to get the line for.</param>
-        /// <param name="line">Line number.</param>
-        /// <returns>The part of string in text that is in specified line.</returns>
         private static string GetLine(string text, int line)
         {
             StringReader reader = new StringReader(text);

@@ -36,13 +36,6 @@ namespace Microsoft.PowerShell.Commands
         public int Tail { get; set; } = -1;
 
         
-        /// <param name="context">
-        /// The context under which the command is running.
-        /// </param>
-        /// <returns>
-        /// An object representing the dynamic parameters for the cmdlet or null if there
-        /// are none.
-        /// </returns>
         internal override object GetDynamicParameters(CmdletProviderContext context)
         {
             if (Path != null && Path.Length > 0)
@@ -205,12 +198,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="holder"></param>
-        /// <param name="currentContext"></param>
-        /// <returns>
-        /// true if no error occurred
-        /// false if there was an error
-        /// </returns>
         private bool ScanForwardsForTail(in ContentHolder holder, CmdletProviderContext currentContext)
         {
             var fsReader = holder.Reader as FileSystemContentReaderWriter;
@@ -319,13 +306,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="reader">
-        /// reader should be able to be casted to FileSystemContentReader
-        /// </param>
-        /// <returns>
-        /// true if the stream pointer is moved to the right place
-        /// false if we cannot seek
-        /// </returns>
         private bool SeekPositionForTail(IContentReader reader)
         {
             var fsReader = reader as FileSystemContentReaderWriter;

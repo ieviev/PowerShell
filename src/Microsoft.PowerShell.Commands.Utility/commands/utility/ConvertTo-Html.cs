@@ -22,7 +22,6 @@ namespace Microsoft.PowerShell.Commands
     class ConvertToHtmlCommand : PSCmdlet
     {
         
-        /// <value></value>
         [Parameter(ValueFromPipeline = true)]
         public PSObject InputObject
         {
@@ -40,7 +39,6 @@ namespace Microsoft.PowerShell.Commands
         private PSObject _inputObject;
 
         
-        /// <value></value>
         [Parameter(Position = 0)]
         public object[] Property
         {
@@ -58,7 +56,6 @@ namespace Microsoft.PowerShell.Commands
         private object[] _property;
 
         
-        /// <value></value>
         [Parameter(ParameterSetName = "Page", Position = 3)]
         public string[] Body
         {
@@ -76,7 +73,6 @@ namespace Microsoft.PowerShell.Commands
         private string[] _body;
 
         
-        /// <value></value>
         [Parameter(ParameterSetName = "Page", Position = 1)]
         public string[] Head
         {
@@ -94,7 +90,6 @@ namespace Microsoft.PowerShell.Commands
         private string[] _head;
 
         
-        /// <value></value>
         [Parameter(ParameterSetName = "Page", Position = 2)]
         [ValidateNotNullOrEmpty]
         public string Title
@@ -113,7 +108,6 @@ namespace Microsoft.PowerShell.Commands
         private string _title = "HTML TABLE";
 
         
-        /// <value></value>
         [Parameter]
         [ValidateNotNullOrEmpty]
         [ValidateSet("Table", "List")]
@@ -210,7 +204,6 @@ namespace Microsoft.PowerShell.Commands
         private string[] _preContent;
 
         
-        /// <returns></returns>
         [Parameter(ParameterSetName = "Page")]
         [ValidateNotNullOrEmpty]
         public Hashtable Meta
@@ -252,7 +245,6 @@ namespace Microsoft.PowerShell.Commands
         private bool _charsetSpecified = false;
 
         
-        /// <returns></returns>
         [Parameter(ParameterSetName = "Page")]
         [ValidateNotNullOrEmpty]
         public SwitchParameter Transitional
@@ -293,8 +285,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="properties">Can be a string, ScriptBlock, or Hashtable.</param>
-        /// <returns></returns>
         private List<MshParameter> ProcessParameter(object[] properties)
         {
             TerminatingErrorContext invocationContext = new(this);
@@ -366,8 +356,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="obj"></param>
-        /// <returns></returns>
         private static string SafeToString(object obj)
         {
             if (obj == null)
@@ -492,7 +480,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="mshParams"></param>
         private void WriteColumns(List<MshParameter> mshParams)
         {
             StringBuilder COLTag = new();

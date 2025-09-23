@@ -18,22 +18,6 @@ namespace System.Management.Automation
         private static readonly PSTraceSource s_tracer = PSTraceSource.GetTracer("CommandSearch", "CommandSearch");
 
         
-        /// <param name="commandName">
-        /// The command name to search for in the path.
-        /// </param>
-        /// <param name="lookupPaths">
-        /// The paths to directories in which to lookup the command.
-        /// Ex.null: paths from PATH environment variable.
-        /// </param>
-        /// <param name="context">
-        /// The execution context for the current engine instance.
-        /// </param>
-        /// <param name="acceptableCommandNames">
-        /// The patterns to search for in the paths.
-        /// </param>
-        /// <param name="fuzzyMatcher">
-        /// The fuzzy matcher to use for fuzzy searching.
-        /// </param>
         internal CommandPathSearch(
             string commandName,
             LookupPathCollection lookupPaths,
@@ -229,27 +213,18 @@ namespace System.Management.Automation
         }
 
         
-        /// <returns>
-        /// An instance of this class as IEnumerator.
-        /// </returns>
         IEnumerator<string> IEnumerable<string>.GetEnumerator()
         {
             return this;
         }
 
         
-        /// <returns>
-        /// An instance of this class as IEnumerator.
-        /// </returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
             return this;
         }
 
         
-        /// <returns>
-        /// true if there was another command that matches, false otherwise.
-        /// </returns>
         public bool MoveNext()
         {
             bool result = false;
@@ -350,11 +325,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <value></value>
-        /// <exception cref="InvalidOperationException">
-        /// The enumerator is positioned before the first element of
-        /// the collection or after the last element.
-        /// </exception>
         string IEnumerator<string>.Current
         {
             get
@@ -385,12 +355,6 @@ namespace System.Management.Automation
         #region private members
 
         
-        /// <param name="pattern">
-        /// The pattern used to find the matching files in the specified directory.
-        /// </param>
-        /// <param name="directory">
-        /// The path to the directory to find the files in.
-        /// </param>
         private void GetNewDirectoryResults(string pattern, string directory)
         {
             IEnumerable<string>? result = null;

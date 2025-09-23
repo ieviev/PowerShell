@@ -199,7 +199,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <returns>The xml node for the command constructed.</returns>
         internal XmlDocument BuildXmlFromComments()
         {
             Diagnostics.Assert(!string.IsNullOrEmpty(_commandName), "Name can never be null");
@@ -515,8 +514,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="comment">A single line or multiline comment token.</param>
-        /// <param name="commentLines"></param>
         private static void CollectCommentText(Token comment, List<string> commentLines)
         {
             string text = comment.Text;
@@ -571,9 +568,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="commentLines">The comment block, as a list of lines.</param>
-        /// <param name="i"></param>
-        /// <returns>The text of the help section, with 'i' left on the last line collected.</returns>
         private static string GetSection(List<string> commentLines, ref int i)
         {
             bool capturing = false;
@@ -679,8 +673,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="comments">The list of comments to process.</param>
-        /// <returns>True if any special comments are found, false otherwise.</returns>
         internal bool AnalyzeCommentBlock(List<Token> comments)
         {
             if (comments == null || comments.Count == 0)
@@ -796,7 +788,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="helpInfo">The helpInfo object to set the fields on.</param>
         internal void SetAdditionalData(MamlCommandHelpInfo helpInfo)
         {
             helpInfo.SetAdditionalDataFromHelpComment(
@@ -914,8 +905,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="commentBlock">The block of comments to analyze.</param>
-        /// <returns>True if the block is our special comment block for help, false otherwise.</returns>
         internal static bool IsCommentHelpText(List<Token> commentBlock)
         {
             if ((commentBlock == null) || (commentBlock.Count == 0))

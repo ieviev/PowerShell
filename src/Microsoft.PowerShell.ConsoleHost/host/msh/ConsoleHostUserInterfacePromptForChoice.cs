@@ -16,24 +16,6 @@ namespace Microsoft.PowerShell
     internal partial class ConsoleHostUserInterface : PSHostUserInterface, IHostUISupportsMultipleChoiceSelection
     {
         
-        /// <param name="caption"></param>
-        /// <param name="message"></param>
-        /// <param name="choices"></param>
-        /// <param name="defaultChoice"></param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="choices"/> is null.
-        /// </exception>
-        /// <exception cref="ArgumentException">
-        /// If <paramref name="choices"/>.Count is 0.
-        /// </exception>
-        /// <exception cref="ArgumentOutOfRangeException">
-        /// If <paramref name="defaultChoice"/> is greater than
-        ///     the length of <paramref name="choices"/>.
-        /// </exception>
-        /// <exception cref="PromptingException">
-        ///  when prompt is canceled by, for example, Ctrl-c.
-        /// </exception>
         public override int PromptForChoice(string caption, string message, Collection<ChoiceDescription> choices, int defaultChoice)
         {
             HandleThrowOnReadAndPrompt();
@@ -140,23 +122,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="caption">
-        /// Caption to precede or title the prompt.  E.g. "Parameters for get-foo (instance 1 of 2)"
-        /// </param>
-        /// <param name="message">
-        /// A message that describes what the choice is for.
-        /// </param>
-        /// <param name="choices">
-        /// An Collection of ChoiceDescription objects that describe each choice.
-        /// </param>
-        /// <param name="defaultChoices">
-        /// The index of the labels in the choices collection element to be presented to the user as
-        /// the default choice(s).
-        /// </param>
-        /// <returns>
-        /// The indices of the choice elements that corresponds to the options selected.
-        /// </returns>
-        /// <seealso cref="System.Management.Automation.Host.PSHostUserInterface.PromptForChoice"/>
         public Collection<int> PromptForChoice(string caption,
             string message,
             Collection<ChoiceDescription> choices,

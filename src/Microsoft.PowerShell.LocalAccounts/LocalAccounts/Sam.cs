@@ -55,10 +55,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <remarks>
-        /// Although password can be set through Create-LocalUser and Set-LocalUser,
-        /// it is not a member of LocalUser so does not appear in this enumeration.
-        /// </remarks>
         [Flags]
         private enum UserProperties
         {
@@ -191,10 +187,6 @@ namespace System.Management.Automation.SecurityAccountsManager
 
 #region Internal Classes
         
-        /// <remarks>
-        /// Used primarily by the private ThrowOnFailure method when building
-        /// Exception objects to throw.
-        /// </remarks>
         private sealed class Context
         {
             public ContextOperation operation;
@@ -204,25 +196,6 @@ namespace System.Management.Automation.SecurityAccountsManager
             public string memberId;
 
             
-            /// <param name="operation">
-            /// One of the <see cref="ContextOperation"/> enumerations indicating
-            /// the type of operation under way.
-            /// </param>
-            /// <param name="objectType">
-            /// One of the <see cref="ContextObjectType"/> enumerations indicating
-            /// the type of object (user or group) being used.
-            /// </param>
-            /// <param name="objectIdentifier">
-            /// A string containing the name of the object. This may be either a
-            /// user/group name or a string representation of a SID.
-            /// </param>
-            /// <param name="target">
-            /// The target being operated on.
-            /// </param>
-            /// <param name="memberIdentifier">
-            /// A string containing the name of the member being added or removed
-            /// from a group. Used only in such cases.
-            /// </param>
             public Context(ContextOperation operation,
                            ContextObjectType objectType,
                            string objectIdentifier,
@@ -268,10 +241,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <remarks>
-        /// AccountInfo is the return type from the private
-        /// LookupAccountInfo method.
-        /// </remarks>
         private sealed class AccountInfo
         {
             public string AccountName;
@@ -359,14 +328,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 #region Local Groups
         
-        /// <param name="groupName">Name of the desired local group.</param>
-        /// <returns>
-        /// A <see cref="LocalGroup"/> object containing information about
-        /// the local group.
-        /// </returns>
-        /// <exception cref="GroupNotFoundException">
-        /// Thrown when the named group cannot be found.
-        /// </exception>
         internal LocalGroup GetLocalGroup(string groupName)
         {
             context = new Context(ContextOperation.Get, ContextObjectType.Group, groupName, groupName);
@@ -379,16 +340,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="sid">
-        /// A <see cref="SecurityIdentifier"/> object identifying the desired group.
-        /// </param>
-        /// <returns>
-        /// A <see cref="LocalGroup"/> object containing information about
-        /// the local group.
-        /// </returns>
-        /// <exception cref="GroupNotFoundException">
-        /// Thrown when the specified group cannot be found.
-        /// </exception>
         internal LocalGroup GetLocalGroup(SecurityIdentifier sid)
         {
             context = new Context(ContextOperation.Get, ContextObjectType.Group, sid.ToString(), sid);
@@ -401,17 +352,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="group">A <see cref="LocalGroup"/> object containing
-        /// information about the local group to be created.
-        /// </param>
-        /// <returns>
-        /// A new LocalGroup object containing information about the newly
-        /// created local group.
-        /// </returns>
-        /// <exception cref="GroupExistsException">
-        /// Thrown when an attempt is made to create a local group that already
-        /// exists.
-        /// </exception>
         internal LocalGroup CreateLocalGroup(LocalGroup group)
         {
             context = new Context(ContextOperation.New, ContextObjectType.Group, group.Name, group.Name);
@@ -420,15 +360,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="group">
-        /// A <see cref="LocalGroup"/> object representing the group to be updated.
-        /// </param>
-        /// <param name="changed">
-        /// A LocalGroup object containing the desired changes.
-        /// </param>
-        /// <remarks>
-        /// Currently, a group's description is the only changeable property.
-        /// </remarks>
         internal void UpdateLocalGroup(LocalGroup group, LocalGroup changed)
         {
             context = new Context(ContextOperation.Set, ContextObjectType.Group, group.Name, group);
@@ -437,13 +368,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="sid">
-        /// A <see cref="SecurityIdentifier"/> object identifying the
-        /// local group to be removed.
-        /// </param>
-        /// <exception cref="GroupNotFoundException">
-        /// Thrown when the specified group cannot be found.
-        /// </exception>
         internal void RemoveLocalGroup(SecurityIdentifier sid)
         {
             context = new Context(ContextOperation.Remove, ContextObjectType.Group, sid.ToString(), sid);
@@ -452,13 +376,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="group">
-        /// A <see cref="LocalGroup"/> object containing
-        /// information about the local group to be removed.
-        /// </param>
-        /// <exception cref="GroupNotFoundException">
-        /// Thrown when the specified group cannot be found.
-        /// </exception>
         internal void RemoveLocalGroup(LocalGroup group)
         {
             context = new Context(ContextOperation.Remove, ContextObjectType.Group, group.Name, group);
@@ -470,16 +387,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="sid">
-        /// A <see cref="SecurityIdentifier"/> object identifying
-        /// the local group to be renamed.
-        /// </param>
-        /// <param name="newName">
-        /// A string containing the new name for the local group.
-        /// </param>
-        /// <exception cref="GroupNotFoundException">
-        /// Thrown when the specified group cannot be found.
-        /// </exception>
         internal void RenameLocalGroup(SecurityIdentifier sid, string newName)
         {
             context = new Context(ContextOperation.Rename, ContextObjectType.Group, sid.ToString(), sid);
@@ -488,16 +395,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="group">
-        /// A <see cref="LocalGroup"/> object containing
-        /// information about the local group to be renamed.
-        /// </param>
-        /// <param name="newName">
-        /// A string containing the new name for the local group.
-        /// </param>
-        /// <exception cref="GroupNotFoundException">
-        /// Thrown when the specified group cannot be found.
-        /// </exception>
         internal void RenameLocalGroup(LocalGroup group, string newName)
         {
             context = new Context(ContextOperation.Rename, ContextObjectType.Group, group.Name, group);
@@ -509,13 +406,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="pred">
-        /// Predicate that determines whether a group satisfies the conditions.
-        /// </param>
-        /// <returns>
-        /// An <see cref="IEnumerable{LocalGroup}"/> object containing LocalGroup
-        /// objects that satisfy the predicate condition.
-        /// </returns>
         internal IEnumerable<LocalGroup> GetMatchingLocalGroups(Predicate<string> pred)
         {
             context = new Context(ContextOperation.Get, ContextObjectType.Group, string.Empty, null);
@@ -532,10 +422,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <returns>
-        /// An <see cref="IEnumerable{LocalGroup}"/> object containing a
-        /// LocalGroup object for each local group.
-        /// </returns>
         internal IEnumerable<LocalGroup> GetAllLocalGroups()
         {
             context = new Context(ContextOperation.Get, ContextObjectType.Group, string.Empty, null);
@@ -548,20 +434,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="group">
-        /// A <see cref="LocalGroup"/> object identifying the group to
-        /// which to add members.
-        /// </param>
-        /// <param name="member">
-        /// An object of type <see cref="LocalPrincipal"/> identifying
-        /// the member to be added.
-        /// </param>
-        /// <returns>
-        /// An Exception object indicating any errors encountered.
-        /// </returns>
-        /// <exception cref="GroupNotFoundException">
-        /// Thrown if the group could not be found.
-        /// </exception>
         internal Exception AddLocalGroupMember(LocalGroup group, LocalPrincipal member)
         {
             context = new Context(ContextOperation.AddMember, ContextObjectType.Group, group.Name, group);
@@ -572,20 +444,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="groupSid">
-        /// A <see cref="SecurityIdentifier"/> object identifying the group to
-        /// which to add members.
-        /// </param>
-        /// <param name="member">
-        /// An object of type <see cref="LocalPrincipal"/> identifying
-        /// the member to be added.
-        /// </param>
-        /// <returns>
-        /// An Exception object indicating any errors encountered.
-        /// </returns>
-        /// <exception cref="GroupNotFoundException">
-        /// Thrown if the group could not be found.
-        /// </exception>
         internal Exception AddLocalGroupMember(SecurityIdentifier groupSid, LocalPrincipal member)
         {
             context = new Context(ContextOperation.AddMember, ContextObjectType.Group, groupSid.ToString(), groupSid);
@@ -594,14 +452,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="group">
-        /// A <see cref="LocalGroup"/> object identifying the group whose members
-        /// are requested.
-        /// </param>
-        /// <returns>
-        /// An IEnumerable of <see cref="LocalPrincipal"/> objects containing the group's
-        /// members.
-        /// </returns>
         internal IEnumerable<LocalPrincipal> GetLocalGroupMembers(LocalGroup group)
         {
             context = new Context(ContextOperation.GetMember, ContextObjectType.Group, group.Name, group);
@@ -613,14 +463,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="groupSid">
-        /// A <see cref="SecurityIdentifier"/> object identifying the group whose members
-        /// are requested.
-        /// </param>
-        /// <returns>
-        /// An IEnumerable of <see cref="LocalPrincipal"/> objects containing the group's
-        /// members.
-        /// </returns>
         internal IEnumerable<LocalPrincipal> GetLocalGroupMembers(SecurityIdentifier groupSid)
         {
             context = new Context(ContextOperation.GetMember, ContextObjectType.Group, groupSid.ToString(), groupSid);
@@ -629,20 +471,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="group">
-        /// A <see cref="LocalGroup"/> object identifying the group from
-        /// which to remove members
-        /// </param>
-        /// <param name="member">
-        /// An object of type <see cref="LocalPrincipal"/> identifying
-        /// the member to be removed.
-        /// </param>
-        /// <returns>
-        /// An Exception object indicating any errors encountered.
-        /// </returns>
-        /// <exception cref="GroupNotFoundException">
-        /// Thrown if the group could not be found.
-        /// </exception>
         internal Exception RemoveLocalGroupMember(LocalGroup group, LocalPrincipal member)
         {
             context = new Context(ContextOperation.RemoveMember, ContextObjectType.Group, group.Name, group);
@@ -654,20 +482,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="groupSid">
-        /// A <see cref="SecurityIdentifier"/> object identifying the group from
-        /// which to remove members
-        /// </param>
-        /// <param name="member">
-        /// An Object of type <see cref="LocalPrincipal"/> identifying
-        /// the member to be removed.
-        /// </param>
-        /// <returns>
-        /// An Exception object indicating any errors encountered.
-        /// </returns>
-        /// <exception cref="GroupNotFoundException">
-        /// Thrown if the group could not be found.
-        /// </exception>
         internal Exception RemoveLocalGroupMember(SecurityIdentifier groupSid, LocalPrincipal member)
         {
             context = new Context(ContextOperation.RemoveMember, ContextObjectType.Group, groupSid.ToString(), groupSid);
@@ -678,14 +492,6 @@ namespace System.Management.Automation.SecurityAccountsManager
 
 #region Local Users
         
-        /// <param name="userName">Name of the desired local user.</param>
-        /// <returns>
-        /// A <see cref="LocalUser"/> object containing information about
-        /// the local user.
-        /// </returns>
-        /// <exception cref="UserNotFoundException">
-        /// Thrown when the named user cannot be found.
-        /// </exception>
         internal LocalUser GetLocalUser(string userName)
         {
             context = new Context(ContextOperation.Get, ContextObjectType.User, userName, userName);
@@ -698,16 +504,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="sid">
-        /// A <see cref="SecurityIdentifier"/> object identifying the desired user.
-        /// </param>
-        /// <returns>
-        /// A <see cref="LocalUser"/> object containing information about
-        /// the local user.
-        /// </returns>
-        /// <exception cref="UserNotFoundException">
-        /// Thrown when the specified user cannot be found.
-        /// </exception>
         internal LocalUser GetLocalUser(SecurityIdentifier sid)
         {
             context = new Context(ContextOperation.Get, ContextObjectType.User, sid.ToString(), sid);
@@ -720,24 +516,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="user">A <see cref="LocalUser"/> object containing
-        /// information about the local user to be created.
-        /// </param>
-        /// <param name="password">A <see cref="System.Security.SecureString"/> containing
-        /// the initial password to be set for the new local user. If this parameter is null,
-        /// no password is set.
-        /// </param>
-        /// <param name="setPasswordNeverExpires">
-        /// Indicates whether PasswordNeverExpires was specified
-        /// </param>
-        /// <returns>
-        /// A new LocalGroup object containing information about the newly
-        /// created local user.
-        /// </returns>
-        /// <exception cref="UserExistsException">
-        /// Thrown when an attempt is made to create a local user that already
-        /// exists.
-        /// </exception>
         internal LocalUser CreateLocalUser(LocalUser user, System.Security.SecureString password, bool setPasswordNeverExpires)
         {
             context = new Context(ContextOperation.New, ContextObjectType.User, user.Name, user);
@@ -746,13 +524,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="sid">
-        /// A <see cref="SecurityIdentifier"/> object identifying
-        /// the local user to be removed.
-        /// </param>
-        /// <exception cref="UserNotFoundException">
-        /// Thrown when the specified user cannot be found.
-        /// </exception>
         internal void RemoveLocalUser(SecurityIdentifier sid)
         {
             context = new Context(ContextOperation.Remove, ContextObjectType.User, sid.ToString(), sid);
@@ -761,13 +532,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="user">
-        /// A <see cref="LocalUser"/> object containing
-        /// information about the local user to be removed.
-        /// </param>
-        /// <exception cref="UserNotFoundException">
-        /// Thrown when the specified user cannot be found.
-        /// </exception>
         internal void RemoveLocalUser(LocalUser user)
         {
             context = new Context(ContextOperation.Remove, ContextObjectType.User, user.Name, user);
@@ -779,16 +543,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="sid">
-        /// A <see cref="SecurityIdentifier"/> objects identifying
-        /// the local user to be renamed.
-        /// </param>
-        /// <param name="newName">
-        /// A string containing the new name for the local user.
-        /// </param>
-        /// <exception cref="UserNotFoundException">
-        /// Thrown when the specified user cannot be found.
-        /// </exception>
         internal void RenameLocalUser(SecurityIdentifier sid, string newName)
         {
             context = new Context(ContextOperation.Rename, ContextObjectType.User, sid.ToString(), sid);
@@ -797,16 +551,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="user">
-        /// A <see cref="LocalUser"/> objects containing
-        /// information about the local user to be renamed.
-        /// </param>
-        /// <param name="newName">
-        /// A string containing the new name for the local user.
-        /// </param>
-        /// <exception cref="UserNotFoundException">
-        /// Thrown when the specified user cannot be found.
-        /// </exception>
         internal void RenameLocalUser(LocalUser user, string newName)
         {
             context = new Context(ContextOperation.Rename, ContextObjectType.User, user.Name, user);
@@ -818,13 +562,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="sid">
-        /// A <see cref="SecurityIdentifier"/> object identifying the user to enable or disable.
-        /// </param>
-        /// <param name="enable">
-        /// One of the <see cref="Enabling"/> enumeration values, indicating whether to
-        /// enable or disable the user.
-        /// </param>
         internal void EnableLocalUser(SecurityIdentifier sid, Enabling enable)
         {
             context = new Context(enable == Enabling.Enable ? ContextOperation.Enable
@@ -836,13 +573,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="user">
-        /// A <see cref="LocalUser"/> object representing the user to enable or disable.
-        /// </param>
-        /// <param name="enable">
-        /// One of the <see cref="Enabling"/> enumeration values, indicating whether to
-        /// enable or disable the user.
-        /// </param>
         internal void EnableLocalUser(LocalUser user, Enabling enable)
         {
             context = new Context(enable == Enabling.Enable ? ContextOperation.Enable
@@ -857,25 +587,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="user">
-        /// A <see cref="LocalUser"/> object representing the user to be updated.
-        /// </param>
-        /// <param name="changed">
-        /// A LocalUser object containing the desired changes.
-        /// </param>
-        /// <param name="password">A <see cref="System.Security.SecureString"/>
-        /// object containing the new password. A null value in this parameter
-        /// indicates that the password is not to be changed.
-        /// </param>
-        /// <param name="setPasswordNeverExpires">
-        /// Specifies whether the PasswordNeverExpires parameter was set.
-        /// </param>
-        /// <remarks>
-        /// Call this overload when intending to leave the password-expired
-        /// marker in its current state. To set the password and the
-        /// password-expired state, call the overload with a boolean as the
-        /// fourth parameter
-        /// </remarks>
         internal void UpdateLocalUser(LocalUser user, LocalUser changed, System.Security.SecureString password, bool? setPasswordNeverExpires)
         {
             context = new Context(ContextOperation.Set, ContextObjectType.User, user.Name, user);
@@ -884,13 +595,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="pred">
-        /// Predicate that determines whether a user satisfies the conditions.
-        /// </param>
-        /// <returns>
-        /// An <see cref="IEnumerable{LocalUser}"/> object containing LocalUser
-        /// objects that satisfy the predicate condition.
-        /// </returns>
         internal IEnumerable<LocalUser> GetMatchingLocalUsers(Predicate<string> pred)
         {
             context = new Context(ContextOperation.Get, ContextObjectType.User, string.Empty, null);
@@ -906,10 +610,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <returns>
-        /// An <see cref="IEnumerable{LocalUser}"/> object containing a
-        /// LocalUser object for each local user.
-        /// </returns>
         internal IEnumerable<LocalUser> GetAllLocalUsers()
         {
             context = new Context(ContextOperation.Get, ContextObjectType.User, null, null);
@@ -995,19 +695,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="sid">A <see cref="SecurityIdentifier"/> object identifying
-        /// the group to search for.</param>
-        /// <returns>
-        /// A SamRidEnumeration object representing the group.
-        /// </returns>
-        /// <exception cref="GroupNotFoundException">
-        /// Thrown when the specified group is not found.
-        /// </exception>
-        /// <remarks>
-        /// This method saves some time and effort over the GetGroup method
-        /// because it does not have to open a group to populate a full Group
-        /// object.
-        /// </remarks>
         private SamRidEnumeration GetGroupSre(SecurityIdentifier sid)
         {
             foreach (var sre in EnumerateGroups())
@@ -1018,19 +705,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="sid">A <see cref="SecurityIdentifier"/> object identifying
-        /// the user to search for.</param>
-        /// <returns>
-        /// A SamRidEnumeration object representing the user.
-        /// </returns>
-        /// <exception cref="UserNotFoundException">
-        /// Thrown when the specified user is not found.
-        /// </exception>
-        /// <remarks>
-        /// This method saves some time and effort over the GetUser method
-        /// because it does not have to open a user to populate a full LocalUser
-        /// object.
-        /// </remarks>
         private SamRidEnumeration GetUserSre(SecurityIdentifier sid)
         {
             foreach (var sre in EnumerateUsers())
@@ -1041,14 +715,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="domainHandle">Handle to the domain to enumerate over.</param>
-        /// <returns>
-        /// An IEnumerable of SamRidEnumeration objects, one for each local user.
-        /// </returns>
-        /// <remarks>
-        /// This is a "generator" method. Rather than returning an entire collection,
-        /// it uses 'yield return' to return each object in turn.
-        /// </remarks>
         private static IEnumerable<SamRidEnumeration> EnumerateUsersInDomain(IntPtr domainHandle)
         {
             UInt32 status = 0;
@@ -1089,13 +755,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <returns>
-        /// An IEnumerable of SamRidEnumeration objects, one for each local user.
-        /// </returns>
-        /// <remarks>
-        /// This is a "generator" method. Rather than returning an entire collection,
-        /// it uses 'yield return' to return each object in turn.
-        /// </remarks>
         private IEnumerable<SamRidEnumeration> EnumerateUsers()
         {
             foreach (var sre in EnumerateUsersInDomain(localDomainHandle))
@@ -1106,22 +765,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="userInfo">
-        /// A <see cref="LocalUser"/> object containing information about the new user.
-        /// </param>
-        /// <param name="password">A <see cref="System.Security.SecureString"/> containing
-        /// the initial password to be set for the new local user. If this parameter is null,
-        /// no password is set.
-        /// </param>
-        /// <param name="domainHandle">
-        /// Handle to the domain in which to create the new user.
-        /// </param>
-        /// <param name="setPasswordNeverExpires">
-        /// Indicates whether PasswordNeverExpires was specified
-        /// </param>
-        /// <returns>
-        /// A LocalUser object that represents the newly-created user
-        /// </returns>
         private LocalUser CreateUser(LocalUser userInfo, System.Security.SecureString password, IntPtr domainHandle, bool setPasswordNeverExpires)
         {
             IntPtr userHandle = IntPtr.Zero;
@@ -1184,10 +827,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="sid">
-        /// A <see cref="SecurityIdentifier"/> object identifying the
-        /// group to be removed.
-        /// </param>
         private void RemoveGroup(SecurityIdentifier sid)
         {
             var sre = GetGroupSre(sid);
@@ -1215,16 +854,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="sid">
-        /// A <see cref="SecurityIdentifier"/> object identifying
-        /// the local group to be renamed.
-        /// </param>
-        /// <param name="newName">
-        /// A string containing the new name for the group.
-        /// </param>
-        /// <exception cref="GroupNotFoundException">
-        /// Thrown when the specified group cannot be found.
-        /// </exception>
         private void RenameGroup(SecurityIdentifier sid, string newName)
         {
             var sre = GetGroupSre(sid);
@@ -1272,20 +901,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="groupSid">
-        /// A <see cref="SecurityIdentifier"/> object identifying the group to
-        /// which to add members.
-        /// </param>
-        /// <param name="member">
-        /// An object of type <see cref="LocalPrincipal"/>identifying
-        /// the member to be added.
-        /// </param>
-        /// <returns>
-        /// An Exception object indicating any errors encountered.
-        /// </returns>
-        /// <exception cref="GroupNotFoundException">
-        /// Thrown if the group could not be found.
-        /// </exception>
         private Exception AddGroupMember(SecurityIdentifier groupSid, LocalPrincipal member)
         {
             var sre = GetGroupSre(groupSid);    // We'll let this throw if necessary
@@ -1326,14 +941,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="groupSid">
-        /// A <see cref="SecurityIdentifier"/> object representing the group whose members
-        /// are requested.
-        /// </param>
-        /// <returns>
-        /// An IEnumerable of <see cref="LocalPrincipal"/> objects containing the group's
-        /// members.
-        /// </returns>
         private IEnumerable<LocalPrincipal> GetGroupMembers(SecurityIdentifier groupSid)
         {
             var sre = GetGroupSre(groupSid);
@@ -1377,20 +984,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="groupSid">
-        /// A <see cref="SecurityIdentifier"/> object identifying the group from
-        /// which to remove members
-        /// </param>
-        /// <param name="member">
-        /// An object of type <see cref="LocalPrincipal"/> identifying
-        /// the member to be removed.
-        /// </param>
-        /// <returns>
-        /// An IEnumerable of Exception objects indicating any errors encountered.
-        /// </returns>
-        /// <exception cref="GroupNotFoundException">
-        /// Thrown if the group could not be found.
-        /// </exception>
         private Exception RemoveGroupMember(SecurityIdentifier groupSid, LocalPrincipal member)
         {
             var sre = GetGroupSre(groupSid);    // We'll let this throw if necessary
@@ -1434,13 +1027,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="sre">
-        /// A <see cref="SamRidEnumeration"/> object containing minimal information
-        /// about a local user.
-        /// </param>
-        /// <returns>
-        /// A LocalUser object, populated with user information.
-        /// </returns>
         private LocalUser MakeLocalUserObject(SamRidEnumeration sre)
         {
             IntPtr userHandle = IntPtr.Zero;
@@ -1463,16 +1049,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="sre">
-        /// A <see cref="SamRidEnumeration"/> object containing minimal information
-        /// about a local user.
-        /// </param>
-        /// <param name="userHandle">
-        /// Handle to an open SAM user.
-        /// </param>
-        /// <returns>
-        /// A LocalUser object, populated with user information.
-        /// </returns>
         private LocalUser MakeLocalUserObject(SamRidEnumeration sre, IntPtr userHandle)
         {
             IntPtr buffer = IntPtr.Zero;
@@ -1525,14 +1101,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="sid">
-        /// A <see cref="SecurityIdentifier"/> object identifying the user to be
-        /// enabled or disabled.
-        /// </param>
-        /// <param name="enable">
-        /// One of the <see cref="Enabling"/> enumeration values indicating
-        /// whether the user is to be enabled or disabled.
-        /// </param>
         private void EnableUser(SecurityIdentifier sid, Enabling enable)
         {
             IntPtr userHandle = IntPtr.Zero;
@@ -1595,11 +1163,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="sid">
-        /// A <see cref="SecurityIdentifier"/> object identifying the user to be
-        /// renamed.
-        /// </param>
-        /// <param name="newName">The new user name.</param>
         private void RenameUser(SecurityIdentifier sid, string newName)
         {
             IntPtr userHandle = IntPtr.Zero;
@@ -1647,10 +1210,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="sid">
-        /// A <see cref="SecurityIdentifier"/> object identifying the user to be
-        /// removed.
-        /// </param>
         private void RemoveUser(SecurityIdentifier sid)
         {
             IntPtr userHandle = IntPtr.Zero;
@@ -1679,14 +1238,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="domainHandle">Handle to the domain to enumerate over.</param>
-        /// <returns>
-        /// An IEnumerable of SamRidEnumeration objects, one for each local user.
-        /// </returns>
-        /// <remarks>
-        /// This is a "generator" method. Rather than returning an entire collection,
-        /// it uses 'yield return' to return each object in turn.
-        /// </remarks>
         private static IEnumerable<SamRidEnumeration> EnumerateGroupsInDomain(IntPtr domainHandle)
         {
             UInt32 status = 0;
@@ -1728,13 +1279,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <returns>
-        /// An IEnumerable of SamRidEnumeration objects, one for each local group.
-        /// </returns>
-        /// <remarks>
-        /// This is a "generator" method. Rather than returning an entire collection,
-        /// it uses 'yield return' to return each object in turn.
-        /// </remarks>
         internal IEnumerable<SamRidEnumeration> EnumerateGroups()
         {
             foreach (var sre in EnumerateGroupsInDomain(localDomainHandle))
@@ -1745,13 +1289,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="groupInfo">
-        /// A <see cref="LocalGroup"/> object containing information about the new group.
-        /// </param>
-        /// <param name="domainHandle">Handle to the domain in which to create the new group.</param>
-        /// <returns>
-        /// A LocalGroup object that represents the newly-created group.
-        /// </returns>
         private LocalGroup CreateGroup(LocalGroup groupInfo, IntPtr domainHandle)
         {
             IntPtr aliasHandle = IntPtr.Zero;
@@ -1814,15 +1351,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="group">
-        /// A <see cref="LocalGroup"/> object representing the group to be updated.
-        /// </param>
-        /// <param name="changed">
-        /// A LocalGroup object containing the desired changes.
-        /// </param>
-        /// <remarks>
-        /// Currently, a group's description is the only changeable property.
-        /// </remarks>
         private void UpdateGroup(LocalGroup group, LocalGroup changed)
         {
             // Only description may be changed
@@ -1872,13 +1400,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="sre">
-        /// A <see cref="SamRidEnumeration"/> object containing minimal information
-        /// about a local group.
-        /// </param>
-        /// <returns>
-        /// A LocalGroup object, populated with group information.
-        /// </returns>
         private LocalGroup MakeLocalGroupObject(SamRidEnumeration sre)
         {
             IntPtr aliasHandle = IntPtr.Zero;
@@ -1901,16 +1422,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="sre">
-        /// A <see cref="SamRidEnumeration"/> object containing minimal information
-        /// about a local group.
-        /// </param>
-        /// <param name="aliasHandle">
-        /// Handle to an open SAM alias.
-        /// </param>
-        /// <returns>
-        /// A LocalGroup object, populated with group information.
-        /// </returns>
         private LocalGroup MakeLocalGroupObject(SamRidEnumeration sre, IntPtr aliasHandle)
         {
             IntPtr buffer = IntPtr.Zero;
@@ -1945,26 +1456,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="user">
-        /// A <see cref="LocalUser"/> object representing the user to be updated.
-        /// </param>
-        /// <param name="changed">
-        /// A LocalUser object containing the desired changes.
-        /// </param>
-        /// <param name="password">A <see cref="System.Security.SecureString"/>
-        /// object containing the new password. A null value in this parameter
-        /// indicates that the password is not to be changed.
-        /// </param>
-        /// <param name="passwordExpired">One of the
-        /// <see cref="PasswordExpiredState"/> enumeration values indicating
-        /// whether the password-expired state is to be explicitly set or
-        /// left as is.
-        /// If the <paramref name="password"/> parameter is null, this parameter
-        /// is ignored.
-        /// </param>
-        /// <param name="setPasswordNeverExpires">
-        /// Indicates whether the PasswordNeverExpires parameter was specified.
-        /// </param>
         private void UpdateUser(LocalUser user,
                                 LocalUser changed,
                                 System.Security.SecureString password,
@@ -2017,25 +1508,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="userHandle">Handle to an open SAM user.</param>
-        /// <param name="sourceUser">
-        /// A <see cref="LocalUser"/> object containing the data to set into the user.
-        /// </param>
-        /// <param name="setFlags">
-        /// A combination of <see cref="UserProperties"/> values indicating the properties to be set.
-        /// </param>
-        /// <param name="password">A <see cref="System.Security.SecureString"/>
-        /// object containing the new password.
-        /// </param>
-        /// <param name="passwordExpired">One of the
-        /// <see cref="PasswordExpiredState"/> enumeration values indicating
-        /// whether the password-expired state is to be explicitly set or
-        /// left as is. If the <paramref name="password"/> parameter is null,
-        /// this parameter is ignored.
-        /// </param>
-        /// <param name="setPasswordNeverExpires">
-        /// Nullable value the specifies whether the PasswordNeverExpires bit should be flipped
-        /// </param>
         private void SetUserData(IntPtr userHandle,
                                  LocalUser sourceUser,
                                  UserProperties setFlags,
@@ -2137,13 +1609,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="userHandle">
-        /// Handle to an open user.
-        /// </param>
-        /// <returns>
-        /// A 32-bit unsigned integer containing the User Account Control
-        /// flags as a set of bits.
-        /// </returns>
         private UInt32 GetUserAccountControl(IntPtr userHandle)
         {
             IntPtr buffer = IntPtr.Zero;
@@ -2170,13 +1635,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="objectHandle">
-        /// A handle to the SAM object whose DACL is to be retrieved.
-        /// </param>
-        /// <returns>
-        /// A <see cref="RawAcl"/> object containing the DACL retrieved from
-        /// the SAM object.
-        /// </returns>
         private RawAcl GetSamDacl(IntPtr objectHandle)
         {
             RawAcl rv = null;
@@ -2228,13 +1686,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="objectHandle">
-        /// A handle to the SAM object whose DACL is to be retrieved.
-        /// </param>
-        /// <param name="rawAcl">
-        /// A <see cref="RawAcl"/> object containing the DACL to be set into
-        /// the SAM object.
-        /// </param>
         private void SetSamDacl(IntPtr objectHandle, RawAcl rawAcl)
         {
             IntPtr ipsd = IntPtr.Zero;
@@ -2285,23 +1736,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="userHandle">
-        /// Handle to a SAM user object.
-        /// </param>
-        /// <param name="userSid">
-        /// A <see cref="SecurityIdentifier"/> object identifying the SAM
-        /// object's associated user.
-        /// </param>
-        /// <returns>
-        /// True if the user account password may be changed by its user,
-        /// false otherwise.
-        /// </returns>
-        /// <remarks>
-        /// The ability to for the user to change the user account password
-        /// is a permission in the object's DACL. This method walks through
-        /// the ACEs in the DACL, checking if the permission is granted to
-        /// either Everyone or the user identified by the userSid parameter.
-        /// </remarks>
         private bool GetUserMayChangePassword(IntPtr userHandle, SecurityIdentifier userSid)
         {
             var rawAcl = GetSamDacl(userHandle);
@@ -2328,24 +1762,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="userHandle">
-        /// Handle to a SAM user object.
-        /// </param>
-        /// <param name="userSid">
-        /// A <see cref="SecurityIdentifier"/> object identifying the SAM
-        /// object's associated user.
-        /// </param>
-        /// <param name="enable">
-        /// A boolean indicating whether the permission is to be enabled or
-        /// disabled.
-        /// </param>
-        /// <remarks>
-        /// The ability to for the user to change the user account password
-        /// is a permission in the object's DACL. This method walks through
-        /// the ACEs in the DACL, enabling or disabling the permission on ACEs
-        /// associated with either Everyone or the user identified by the
-        /// userSid parameter.
-        /// </remarks>
         private void SetUserMayChangePassword(IntPtr userHandle, SecurityIdentifier userSid, bool enable)
         {
             var changed = false;
@@ -2377,12 +1793,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="userHandle">
-        /// Handle to an open User.
-        /// </param>
-        /// <returns>
-        /// True if the user's password has expired, false otherwise.
-        /// </returns>
         private bool IsPasswordExpired(IntPtr userHandle)
         {
             IntPtr buffer = IntPtr.Zero;
@@ -2409,15 +1819,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="userHandle">Handle to an open User.</param>
-        /// <param name="password">A <see cref="System.Security.SecureString"/>
-        /// object containing the new password.
-        /// </param>
-        /// <param name="passwordExpired">One of the
-        /// <see cref="PasswordExpiredState"/> enumeration values indicating
-        /// whether the password-expired state is to be explicitly set or
-        /// left as is.
-        /// </param>
         private void SetUserPassword(IntPtr userHandle,
                                      System.Security.SecureString password,
                                      PasswordExpiredState passwordExpired)
@@ -2470,16 +1871,6 @@ namespace System.Management.Automation.SecurityAccountsManager
 
 #region Utility Methods
         
-        /// <param name="domainHandle">
-        /// Handle to the domain from which the ID was acquired.
-        /// </param>
-        /// <param name="rid">
-        /// The Relative ID value.
-        /// </param>
-        /// <returns>
-        /// A SecurityIdentifier object containing the SID of the
-        /// object identified by the <paramref name="rid"/> parameter.
-        /// </returns>
         private SecurityIdentifier RidToSid(IntPtr domainHandle, uint rid)
         {
             IntPtr sidBytes = IntPtr.Zero;
@@ -2508,14 +1899,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="sid">
-        /// A <see cref="SecurityIdentifier"/> object identifying the account
-        /// to look up.
-        /// </param>
-        /// <returns>
-        /// A <see cref="AccountInfo"/> object contains information about the
-        /// account, or null if no matching account was found.
-        /// </returns>
         private AccountInfo LookupAccountInfo(SecurityIdentifier sid)
         {
             var sbAccountName = new StringBuilder();
@@ -2565,13 +1948,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="accountName">
-        /// A string containing the name of the account to look up.
-        /// </param>
-        /// <returns>
-        /// A <see cref="AccountInfo"/> object contains information about the
-        /// account, or null if no matching account was found.
-        /// </returns>
         private AccountInfo LookupAccountInfo(string accountName)
         {
             var sbDomainName = new StringBuilder();
@@ -2639,15 +2015,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="info">
-        /// An AccountInfo object containing information about the account
-        /// for which the LocalPrincipal object is being created. This parameter
-        /// may be null, in which case this method returns null.
-        /// </param>
-        /// <returns>
-        /// A new LocalPrincipal object representing the account, or null if the
-        /// <paramref name="info"/> parameter is null.
-        /// </returns>
         private LocalPrincipal MakeLocalPrincipalObject(AccountInfo info)
         {
             if (info == null)
@@ -2678,26 +2045,12 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="ntStatus">
-        /// One of the NTSTATUS code values indicating the error, if any.
-        /// </param>
-        /// <returns>
-        /// True if the Status code represents a success, false otherwise.
-        /// </returns>
         private static bool Succeeded(UInt32 ntStatus)
         {
             return NtStatus.IsSuccess(ntStatus);
         }
 
         
-        /// <param name="ntStatus">
-        /// One of the NTSTATUS code values indicating the error, if any.
-        /// </param>
-        /// <param name="context">
-        /// A <see cref="Context"/> object containing information about the
-        /// current operation. If this parameter is null, the class's context
-        /// is used.
-        /// </param>
         private void ThrowOnFailure(UInt32 ntStatus, Context context = null)
         {
             if (NtStatus.IsError(ntStatus))
@@ -2710,19 +2063,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="ntStatus">
-        /// One of the NTSTATUS code values indicating the error, if any.
-        /// </param>
-        /// <param name="context">
-        /// A <see cref="Context"/> object containing information about the
-        /// current operation. If this parameter is null, the class's context
-        /// is used.
-        /// </param>
-        /// <returns>
-        /// An <see cref="Exception"/> object, or an object derived from Exception,
-        /// appropriate to the error. If <paramref name="ntStatus"/> does not
-        /// indicate an error, the method returns null.
-        /// </returns>
         private Exception MakeException(UInt32 ntStatus, Context context = null)
         {
             if (!NtStatus.IsError(ntStatus))
@@ -2818,13 +2158,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="samValue">
-        /// A signed 64-bit value representing a date and time.
-        /// </param>
-        /// <returns>
-        /// A nullable DateTime object representing a date and time,
-        /// or null if the <paramref name="samValue"/> parameter is zero.
-        /// </returns>
         private static DateTime? DateTimeFromSam(Int64 samValue)
         {
             if (samValue == 0 || samValue == 0X7FFFFFFFFFFFFFFF)
@@ -2834,13 +2167,6 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="sid">
-        /// A <see cref="SecurityIdentifier"/> object identifying the user or group.
-        /// </param>
-        /// <returns>
-        /// One of the <see cref="PrincipalSource"/> enumerations identifying the
-        /// source of the object.
-        /// </returns>
         private PrincipalSource? GetPrincipalSource(SecurityIdentifier sid)
         {
             var bSid = new byte[sid.BinaryLength];
@@ -2896,27 +2222,12 @@ namespace System.Management.Automation.SecurityAccountsManager
         }
 
         
-        /// <param name="info">
-        /// An <see cref="AccountInfo"/> object containing information about the
-        /// user or group.
-        /// </param>
-        /// <returns>
-        /// One of the <see cref="PrincipalSource"/> enumerations identifying the
-        /// source of the object.
-        /// </returns>
         private PrincipalSource? GetPrincipalSource(AccountInfo info)
         {
             return GetPrincipalSource(info.Sid);
         }
 
         
-        /// <param name="sre">
-        /// A <see cref="SamRidEnumeration"/> object identifying the user or group.
-        /// </param>
-        /// <returns>
-        /// One of the <see cref="PrincipalSource"/> enumerations identifying the
-        /// source of the object.
-        /// </returns>
         private PrincipalSource? GetPrincipalSource(SamRidEnumeration sre)
         {
             return GetPrincipalSource(RidToSid(sre.domainHandle, sre.RelativeId));

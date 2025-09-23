@@ -115,9 +115,6 @@ namespace Microsoft.PowerShell.Commands
         #region Paths
 
         
-        /// <param name="path">The file path to resolve.</param>
-        /// <param name="literalPath">The paths to process.</param>
-        /// <returns></returns>
         private List<string> ResolvePaths(string[] path, bool literalPath)
         {
             List<string> pathsToProcess = new();
@@ -168,7 +165,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="pathsToProcess">The paths to process.</param>
         private void ProcessPath(List<string> pathsToProcess)
         {
             foreach (string path in pathsToProcess)
@@ -178,7 +174,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="path">The file path to retrieve content from for processing.</param>
         private void ProcessFileContent(string path)
         {
             Span<byte> buffer = stackalloc byte[BUFFERSIZE];
@@ -292,7 +287,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="inputObject">The pipeline input object being processed.</param>
         private void ProcessInputObjects(PSObject inputObject)
         {
             object obj = inputObject.BaseObject;
@@ -339,8 +333,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="inputObject">The object to convert.</param>
-        /// <returns>Returns a byte array of the input values, or null if there is no available conversion path.</returns>
         private byte[] ConvertToBytes(object inputObject)
         {
             Type baseType = inputObject.GetType();
@@ -424,9 +416,6 @@ namespace Microsoft.PowerShell.Commands
         #region Output
 
         
-        /// <param name="inputBytes">Bytes for the hexadecimal representation.</param>
-        /// <param name="path">File path.</param>
-        /// <param name="offset">Offset in the file.</param>
         private void WriteHexadecimal(Span<byte> inputBytes, string path, long offset)
         {
             const int bytesPerObject = 16;
@@ -441,12 +430,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="inputBytes">Bytes for the hexadecimal representation.</param>
-        /// <param name="offset">Offset in the file.</param>
-        /// <param name="label">
-        /// The label for the byte group. This may be a file path, a string value, or a
-        /// formatted identifying string for the group.
-        /// </param>
         private void WriteHexadecimal(Span<byte> inputBytes, long offset, string label)
         {
             const int bytesPerObject = 16;

@@ -12,7 +12,6 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
         private CommandViewModel command;
 
         
-        /// <param name="command">The command targeted by the event.</param>
         public CommandEventArgs(CommandViewModel command)
         {
             this.command = command;

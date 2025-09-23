@@ -71,8 +71,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="so">Object to deserialize.</param>
-        /// <returns>Deserialized object or null.</returns>
         internal object Deserialize(PSObject so)
         {
             if (PSObject.Base(so) is FormatInfoData fid)
@@ -146,9 +144,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         it. We retail it because future schema extensions might require it
 
         
-        /// <param name="rawObject">Object to process.</param>
-        /// <param name="propertyName">Property to look up.</param>
-        /// <returns>String[] representation of the property.</returns>
         private static string[] ReadStringArrayHelper (object rawObject, string propertyName)
         {
             // throw if the property is not there
@@ -242,18 +237,12 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="so">Object whose the property belongs to.</param>
-        /// <param name="property">Name of the string property.</param>
-        /// <returns>String out of the MsObject.</returns>
         internal string DeserializeStringMemberVariableRaw(PSObject so, string property)
         {
             return (string)DeserializeMemberVariable(so, property, typeof(string), false );
         }
 
         
-        /// <param name="so">Object whose the property belongs to.</param>
-        /// <param name="property">Name of the string property.</param>
-        /// <returns>String out of the MsObject.</returns>
         internal string DeserializeStringMemberVariable(PSObject so, string property)
         {
             string val = (string)DeserializeMemberVariable(so, property, typeof(string), false );

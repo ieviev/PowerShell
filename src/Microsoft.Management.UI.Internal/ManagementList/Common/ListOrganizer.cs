@@ -20,7 +20,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="e">The event args.</param>
         protected override void OnKeyDown(KeyEventArgs e)
         {
             base.OnKeyDown(e);

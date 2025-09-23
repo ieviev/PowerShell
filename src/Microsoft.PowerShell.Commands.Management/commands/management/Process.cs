@@ -45,10 +45,6 @@ namespace Microsoft.PowerShell.Commands
         
         internal MatchMode myMode = MatchMode.All;
 
-        /// <remarks>
-        /// The Name parameter is declared in subclasses,
-        /// since it is optional for GetProcess and mandatory for StopProcess.
-        /// </remarks>
         internal string[] processNames = null;
 
         // The Id parameter is declared in subclasses,
@@ -56,7 +52,6 @@ namespace Microsoft.PowerShell.Commands
         internal int[] processIds = null;
 
         
-        /// <value>Process objects</value>
         [Parameter(
             ParameterSetName = "InputObject",
             Mandatory = true,
@@ -86,7 +81,6 @@ namespace Microsoft.PowerShell.Commands
         private readonly Dictionary<int, Process> _keys = new();
 
         
-        /// <returns></returns>
         internal List<Process> MatchingProcesses()
         {
             _matchingProcesses.Clear();
@@ -111,12 +105,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="x">First Process object.</param>
-        /// <param name="y">Second Process object.</param>
-        /// <returns>
-        /// As string.Compare: returns less than zero if x less than y,
-        /// greater than 0 if x greater than y, 0 if x == y.
-        /// </returns>
         private static int ProcessComparison(Process x, Process y)
         {
             int diff = string.Compare(
@@ -129,7 +117,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <returns></returns>
         private void RetrieveMatchingProcessesByProcessName()
         {
             if (processNames == null)
@@ -176,7 +163,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <returns></returns>
         private void RetrieveMatchingProcessesById()
         {
             if (processIds == null)
@@ -209,7 +195,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <returns></returns>
         private void RetrieveProcessesByInput()
         {
             if (InputObject == null)
@@ -226,18 +211,11 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <value>An array of <see cref="Process"/> components that represents all the process resources.</value>
-        /// <exception cref="System.Security.SecurityException">
-        /// MSDN does not document the list of exceptions,
-        /// but it is reasonable to expect that SecurityException is
-        /// among them.  Errors here will terminate the cmdlet.
-        /// </exception>
         internal Process[] AllProcesses => _allProcesses ??= Process.GetProcesses();
 
         private Process[] _allProcesses;
 
         
-        /// <param name="process">Process to add to list.</param>
         private void AddIdempotent(
             Process process)
         {
@@ -251,11 +229,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="process"></param>
-        /// <param name="innerException"></param>
-        /// <param name="resourceId"></param>
-        /// <param name="errorId"></param>
-        /// <param name="category"></param>
         internal void WriteNonTerminatingError(
             Process process,
             Exception innerException,
@@ -273,13 +246,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="processName"></param>
-        /// <param name="processId"></param>
-        /// <param name="targetObject"></param>
-        /// <param name="innerException"></param>
-        /// <param name="resourceId"></param>
-        /// <param name="errorId"></param>
-        /// <param name="category"></param>
         internal void WriteNonTerminatingError(
             string processName,
             int processId,
@@ -351,10 +317,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="process">
-        /// Process whose exit status has to be checked.
-        /// </param>
-        /// <returns>Tre if the process has exited or else returns false.</returns>
         internal static bool TryHasExited(Process process)
         {
             bool hasExited = true;
@@ -615,8 +577,6 @@ namespace Microsoft.PowerShell.Commands
         private const string TypeNameForProcessWithUserName = "System.Diagnostics.Process#IncludeUserName";
 
         
-        /// <param name="process"></param>
-        /// <returns></returns>
         private static PSObject AddUserNameToProcess(Process process)
         {
             // Return null if we failed to get the owner information
@@ -632,8 +592,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="process"></param>
-        /// <returns></returns>
         private static string RetrieveProcessUserName(Process process)
         {
             string userName = null;
@@ -946,10 +904,6 @@ namespace Microsoft.PowerShell.Commands
 
     #region StopProcessCommand
     
-    /// <remarks>
-    /// Processes will be sorted before being stopped.  PM confirms
-    /// that this should be fine.
-    /// </remarks>
     [Cmdlet(VerbsLifecycle.Stop, "Process",
         DefaultParameterSetName = "Id",
         SupportsShouldProcess = true, HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097058")]
@@ -1028,7 +982,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <value></value>
         [Parameter]
         [ValidateNotNullOrEmpty]
         public SwitchParameter Force { get; set; }
@@ -1170,8 +1123,6 @@ namespace Microsoft.PowerShell.Commands
         private string _currentUserName;
 
         
-        /// <param name="process"></param>
-        /// <returns>Returns the owner.</returns>
         private bool IsProcessOwnedByCurrentUser(Process process)
         {
             const uint TOKEN_QUERY = 0x0008;
@@ -1216,7 +1167,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="process"></param>
         private void StopDependentService(Process process)
         {
             string queryString = "Select * From Win32_Service Where ProcessId=" + SafeGetProcessId(process) + " And State !='Stopped'";
@@ -1253,8 +1203,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="process">Process to be stopped.</param>
-        /// <returns>True if process stopped successfully else false.</returns>
         private void StopProcess(Process process)
         {
             Exception exception = null;
@@ -1611,9 +1559,6 @@ namespace Microsoft.PowerShell.Commands
         private string _redirectstandardoutput;
 
         
-        /// <remarks>
-        /// The 'Verb' parameter is only supported on Windows Desktop.
-        /// </remarks>
         [Parameter(ParameterSetName = "UseShellExecute")]
         [ValidateNotNullOrEmpty]
         [ArgumentCompleter(typeof(VerbArgumentCompleter))]
@@ -2495,12 +2440,6 @@ namespace Microsoft.PowerShell.Commands
     public class VerbArgumentCompleter : IArgumentCompleter
     {
         
-        /// <param name="commandName">The command name.</param>
-        /// <param name="parameterName">The parameter name.</param>
-        /// <param name="wordToComplete">The word to complete.</param>
-        /// <param name="commandAst">The command AST.</param>
-        /// <param name="fakeBoundParameters">The fake bound parameters.</param>
-        /// <returns>List of Completion Results.</returns>
         public IEnumerable<CompletionResult> CompleteArgument(
             string commandName,
             string parameterName,
@@ -2549,9 +2488,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="wordToComplete">The word to complete.</param>
-        /// <param name="filePath">The file path to get verbs.</param>
-        /// <returns>List of file verbs to complete.</returns>
         private static IEnumerable<CompletionResult> CompleteFileVerbs(string wordToComplete, string filePath)
             => CompletionHelpers.GetMatchingResults(
                 wordToComplete,
@@ -2763,22 +2699,17 @@ namespace Microsoft.PowerShell.Commands
     {
         #region ctors
         
-        /// <returns>Doesn't return.</returns>
         public ProcessCommandException() : base()
         {
             throw new NotImplementedException();
         }
 
         
-        /// <param name="message"></param>
-        /// <returns>Constructed object.</returns>
         public ProcessCommandException(string message) : base(message)
         {
         }
 
         
-        /// <param name="message"></param>
-        /// <param name="innerException"></param>
         public ProcessCommandException(string message, Exception innerException)
             : base(message, innerException)
         {
@@ -2787,9 +2718,6 @@ namespace Microsoft.PowerShell.Commands
 
         #region Serialization
         
-        /// <param name="info"></param>
-        /// <param name="context"></param>
-        /// <returns>Constructed object.</returns>
         [Obsolete("Legacy serialization support is deprecated since .NET 8", DiagnosticId = "SYSLIB0051")]
         protected ProcessCommandException(
             SerializationInfo info,
@@ -2802,7 +2730,6 @@ namespace Microsoft.PowerShell.Commands
 
         #region Properties
         
-        /// <value></value>
         public string ProcessName
         {
             get { return _processName; }

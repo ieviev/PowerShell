@@ -18,7 +18,6 @@ namespace System.Management.Automation.Tracing
     public sealed class EtwEvent : Attribute
     {
         
-        /// <param name="eventId"></param>
         public EtwEvent(long eventId)
         {
             this.EventId = eventId;
@@ -56,9 +55,6 @@ namespace System.Management.Automation.Tracing
         public object[] Payload { get; }
 
         
-        /// <param name="descriptor">Event descriptor.</param>
-        /// <param name="success">Indicate whether the event is successfully written.</param>
-        /// <param name="payload">Event payload.</param>
         public EtwEventArgs(EventDescriptor descriptor, bool success, object[] payload)
         {
             this.Descriptor = descriptor;
@@ -83,8 +79,6 @@ namespace System.Management.Automation.Tracing
             private readonly EtwActivity tracer;
 
             
-            /// <param name="tracer"></param>
-            /// <param name="callback"></param>
             public CorrelatedCallback(EtwActivity tracer, CallbackNoParameter callback)
             {
                 ArgumentNullException.ThrowIfNull(callback);
@@ -97,8 +91,6 @@ namespace System.Management.Automation.Tracing
             }
 
             
-            /// <param name="tracer"></param>
-            /// <param name="callback"></param>
             public CorrelatedCallback(EtwActivity tracer, CallbackWithState callback)
             {
                 ArgumentNullException.ThrowIfNull(callback);
@@ -111,8 +103,6 @@ namespace System.Management.Automation.Tracing
             }
 
             
-            /// <param name="tracer"></param>
-            /// <param name="callback"></param>
             public CorrelatedCallback(EtwActivity tracer, AsyncCallback callback)
             {
                 ArgumentNullException.ThrowIfNull(callback);
@@ -128,8 +118,6 @@ namespace System.Management.Automation.Tracing
             private readonly CallbackWithStateAndArgs callbackWithStateAndArgs;
 
             
-            /// <param name="tracer"></param>
-            /// <param name="callback"></param>
             public CorrelatedCallback(EtwActivity tracer, CallbackWithStateAndArgs callback)
             {
                 ArgumentNullException.ThrowIfNull(callback);
@@ -195,9 +183,6 @@ namespace System.Management.Automation.Tracing
         public static event EventHandler<EtwEventArgs> EventWritten;
 
         
-        /// <param name="activityId"></param>
-        /// <returns>True when provided activity was set, false if current activity
-        /// was found to be same and set was not needed.</returns>
         public static bool SetActivityId(Guid activityId)
         {
             if (GetActivityId() != activityId)
@@ -210,14 +195,12 @@ namespace System.Management.Automation.Tracing
         }
 
         
-        /// <returns></returns>
         public static Guid CreateActivityId()
         {
             return EventProvider.CreateActivityId();
         }
 
         
-        /// <returns></returns>
         [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults")]
         public static Guid GetActivityId()
         {
@@ -258,9 +241,6 @@ namespace System.Management.Automation.Tracing
         }
 
         
-        /// <param name="levels">Levels to check.</param>
-        /// <param name="keywords">Keywords to check.</param>
-        /// <returns>True, if any ETW listener is enabled else false.</returns>
         public bool IsProviderEnabled(byte levels, long keywords)
         {
             return GetProvider().IsEnabled(levels, keywords);
@@ -274,8 +254,6 @@ namespace System.Management.Automation.Tracing
         }
 
         
-        /// <param name="callback"></param>
-        /// <returns></returns>
         public CallbackNoParameter Correlate(CallbackNoParameter callback)
         {
             ArgumentNullException.ThrowIfNull(callback);
@@ -284,8 +262,6 @@ namespace System.Management.Automation.Tracing
         }
 
         
-        /// <param name="callback"></param>
-        /// <returns></returns>
         public CallbackWithState Correlate(CallbackWithState callback)
         {
             ArgumentNullException.ThrowIfNull(callback);
@@ -294,8 +270,6 @@ namespace System.Management.Automation.Tracing
         }
 
         
-        /// <param name="callback"></param>
-        /// <returns></returns>
         public AsyncCallback Correlate(AsyncCallback callback)
         {
             ArgumentNullException.ThrowIfNull(callback);
@@ -304,8 +278,6 @@ namespace System.Management.Automation.Tracing
         }
 
         
-        /// <param name="callback"></param>
-        /// <returns></returns>
         public CallbackWithStateAndArgs Correlate(CallbackWithStateAndArgs callback)
         {
             ArgumentNullException.ThrowIfNull(callback);
@@ -332,8 +304,6 @@ namespace System.Management.Automation.Tracing
         }
 
         
-        /// <param name="ed">EventDescriptor.</param>
-        /// <param name="payload">Payload.</param>
         protected void WriteEvent(EventDescriptor ed, params object[] payload)
         {
             EventProvider provider = GetProvider();

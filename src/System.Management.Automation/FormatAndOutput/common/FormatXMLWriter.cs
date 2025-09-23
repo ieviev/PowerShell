@@ -19,13 +19,6 @@ namespace Microsoft.PowerShell.Commands
         private FormatXmlWriter() { }
 
         
-        /// <param name="typeDefinitions">Collection of PSTypeDefinition.</param>
-        /// <param name="filepath">Path to XML file.</param>
-        /// <param name="cmdlet">Cmdlet from which this si used.</param>
-        /// <param name="force">True - to force write the file.</param>
-        /// <param name="writeScriptBlock">True - to export scriptblocks.</param>
-        /// <param name="noclobber">True - do not overwrite the file.</param>
-        /// <param name="isLiteralPath">True - bypass wildcard expansion on the file name.</param>
         internal static void WriteToPs1Xml(PSCmdlet cmdlet, List<ExtendedTypeDefinition> typeDefinitions,
             string filepath, bool force, bool noclobber, bool writeScriptBlock, bool isLiteralPath)
         {

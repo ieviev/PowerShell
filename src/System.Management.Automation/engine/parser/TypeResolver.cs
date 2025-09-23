@@ -211,9 +211,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <remarks>
-        /// This set should be used directly only in the method CallResolveTypeNameWorkerHelper.
-        /// </remarks>
         [ThreadStatic]
         private static HashSet<Assembly> t_searchedAssemblies = null;
 
@@ -470,9 +467,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="strTypeName">A string representing the name of the type to convert.</param>
-        /// <param name="exception">The exception, if one happened, trying to find the type.</param>
-        /// <returns>A type if the conversion was successful, null otherwise.</returns>
         internal static Type ResolveType(string strTypeName, out Exception exception)
         {
             exception = null;
@@ -510,8 +504,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="types"></param>
-        /// <returns></returns>
         internal TypeResolutionState CloneWithAddTypesDefined(IEnumerable<string> types)
         {
             var newTypesDefined = new HashSet<string>(_typesDefined, StringComparer.OrdinalIgnoreCase);
@@ -880,8 +872,6 @@ namespace System.Management.Automation
             return null;
         }
         
-        /// <param name="typeName">The type accelerator name.</param>
-        /// <param name="type">The type of the type accelerator.</param>
         public static void Add(string typeName, Type type)
         {
             userTypeAccelerators[typeName] = type;
@@ -892,8 +882,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <returns>True if the accelerator was removed, false otherwise.</returns>
-        /// <param name="typeName">The accelerator to remove.</param>
         public static bool Remove(string typeName)
         {
             userTypeAccelerators.Remove(typeName);
@@ -903,13 +891,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <remarks>
-        /// The returned dictionary should be treated as read only.  Changes made
-        /// to the dictionary will not affect PowerShell scripts in any way.  Use
-        /// <see cref="TypeAccelerators.Add"/> and
-        /// <see cref="TypeAccelerators.Remove"/> to
-        /// affect the type resolution in PowerShell scripts.
-        /// </remarks>
         public static Dictionary<string, Type> Get
         {
             get

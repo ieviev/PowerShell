@@ -19,10 +19,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
     internal sealed class ErrorToErrorRecord
     {
         
-        /// <param name="inner"></param>
-        /// <param name="context">The context starting the operation, which generated the error.</param>
-        /// <param name="cimResultContext">The CimResultContext used to provide ErrorSource, etc. info.</param>
-        /// <returns></returns>
         internal static ErrorRecord ErrorRecordFromAnyException(
             InvocationContext context,
             Exception inner,
@@ -55,10 +51,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         #region Helper functions
         
-        /// <param name="context"></param>
-        /// <param name="cimException"></param>
-        /// <param name="cimResultContext">The CimResultContext used to provide ErrorSource, etc. info.</param>
-        /// <returns></returns>
         internal static ErrorRecord CreateFromCimException(
             InvocationContext context,
             CimException cimException,
@@ -70,12 +62,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="context"></param>
-        /// <param name="exception"></param>
-        /// <param name="errorId"></param>
-        /// <param name="errorCategory"></param>
-        /// <param name="cimResultContext">The CimResultContext used to provide ErrorSource, etc. info.</param>
-        /// <returns></returns>
         internal static ErrorRecord InitializeErrorRecord(
             InvocationContext context,
             Exception exception,
@@ -92,10 +78,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="context"></param>
-        /// <param name="cimException"></param>
-        /// <param name="cimResultContext">The CimResultContext used to provide ErrorSource, etc. info.</param>
-        /// <returns></returns>
         internal static ErrorRecord InitializeErrorRecord(
             InvocationContext context,
             CimException cimException,
@@ -117,12 +99,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="context"></param>
-        /// <param name="exception"></param>
-        /// <param name="errorId"></param>
-        /// <param name="errorCategory"></param>
-        /// <param name="cimResultContext">The CimResultContext used to provide ErrorSource, etc. info.</param>
-        /// <returns></returns>
         internal static ErrorRecord InitializeErrorRecordCore(
             InvocationContext context,
             Exception exception,
@@ -171,8 +147,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="cimException"></param>
-        /// <returns></returns>
         internal static ErrorCategory ConvertCimExceptionToErrorCategory(CimException cimException)
         {
             ErrorCategory result = ErrorCategory.NotSpecified;
@@ -191,8 +165,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="nativeErrorCode"></param>
-        /// <returns></returns>
         internal static ErrorCategory ConvertCimNativeErrorCodeToErrorCategory(NativeErrorCode nativeErrorCode)
         {
             switch (nativeErrorCode)
@@ -255,8 +227,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="cimError"></param>
-        /// <returns></returns>
         internal static ErrorCategory ConvertCimErrorToErrorCategory(CimInstance cimError)
         {
             if (cimError == null)
@@ -288,7 +258,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
     internal sealed class CimWriteError : CimSyncAction
     {
         
-        /// <param name="error"></param>
         public CimWriteError(CimInstance error, InvocationContext context)
         {
             this.Error = error;
@@ -296,7 +265,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="exception"></param>
         public CimWriteError(Exception exception, InvocationContext context, CimResultContext cimResultContext)
         {
             this.Exception = exception;
@@ -305,7 +273,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="cmdlet"></param>
         public override void Execute(CmdletOperationBase cmdlet)
         {
             Debug.Assert(cmdlet != null, "Caller should verify that cmdlet != null");

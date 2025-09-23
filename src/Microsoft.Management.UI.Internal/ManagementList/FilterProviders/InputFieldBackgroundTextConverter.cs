@@ -17,21 +17,6 @@ namespace Microsoft.Management.UI.Internal
         private static readonly Type ValidatingValueGenericType = typeof(ValidatingValue<>);
 
         
-        /// <param name="value">
-        /// A value of type ValidatingValue.
-        /// </param>
-        /// <param name="targetType">
-        /// The parameter is not used.
-        /// </param>
-        /// <param name="parameter">
-        /// The parameter is not used.
-        /// </param>
-        /// <param name="culture">
-        /// The parameter is not used.
-        /// </param>
-        /// <returns>
-        /// Returns a background string for value.
-        /// </returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             ArgumentNullException.ThrowIfNull(value);
@@ -46,11 +31,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="value">The parameter is not used.</param>
-        /// <param name="targetType">The parameter is not used.</param>
-        /// <param name="parameter">The parameter is not used.</param>
-        /// <param name="culture">The parameter is not used.</param>
-        /// <returns>The parameter is not used.</returns>
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             throw new NotSupportedException();

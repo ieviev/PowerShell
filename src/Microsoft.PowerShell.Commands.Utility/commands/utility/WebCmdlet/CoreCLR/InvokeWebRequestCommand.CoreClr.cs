@@ -25,7 +25,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="response"></param>
         internal override void ProcessResponse(HttpResponseMessage response)
         {
             ArgumentNullException.ThrowIfNull(response);

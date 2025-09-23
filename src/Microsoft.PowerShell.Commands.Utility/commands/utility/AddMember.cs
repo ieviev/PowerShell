@@ -423,8 +423,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="member"></param>
-        /// <returns></returns>
         private bool AddMemberToTarget(PSMemberInfo member)
         {
             PSMemberInfo previousMember = _inputObject.Members[member.Name];
@@ -515,12 +513,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <remarks>
-        /// This exception will be hidden in the positional binding phase. So we make sure
-        /// if the argument can be converted to PSMemberTypes, it gets bound to the -MemberType
-        /// parameter. We are sure that when this exception is thrown, the current positional
-        /// argument can be successfully bound to.
-        /// </remarks>
         private sealed class ValidateNotePropertyNameAttribute : ValidateArgumentsAttribute
         {
             protected override void Validate(object arguments, EngineIntrinsics engineIntrinsics)

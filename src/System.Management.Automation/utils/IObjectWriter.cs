@@ -7,7 +7,6 @@ using System.Threading;
 namespace System.Management.Automation.Runspaces
 {
     
-    /// <seealso cref="System.Management.Automation.Runspaces.Pipeline.Input"/>
     public abstract class PipelineWriter
     {
         
@@ -17,11 +16,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <value>true if the underlying stream is open, otherwise false</value>
-        /// <remarks>
-        /// Attempting to write to the underlying stream if IsOpen is false throws
-        /// a <see cref="PipelineClosedException"/>.
-        /// </remarks>
         public abstract bool IsOpen
         {
             get;
@@ -34,70 +28,21 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <value>
-        /// The capacity of the stream.
-        /// </value>
-        /// <remarks>
-        /// The capacity is the number of objects that stream may contain at one time.  Once this
-        /// limit is reached, attempts to write into the stream block until buffer space
-        /// becomes available.
-        /// </remarks>
         public abstract int MaxCapacity
         {
             get;
         }
 
         
-        /// <remarks>
-        /// Causes subsequent calls to IsOpen to return false and calls to
-        /// a write operation to throw an ObjectDisposedException.
-        /// All calls to Close() after the first call are silently ignored.
-        /// </remarks>
-        /// <exception cref="ObjectDisposedException">
-        /// The stream is already disposed
-        /// </exception>
         public abstract void Close();
 
         
-        /// <exception cref="ObjectDisposedException">
-        /// The stream is already disposed
-        /// </exception>
         public abstract void Flush();
 
         
-        /// <param name="obj">The object to add to the stream.</param>
-        /// <returns>
-        /// One, if the write was successful, otherwise;
-        /// zero if the stream was closed before the object could be written,
-        /// or if the object was AutomationNull.Value.
-        /// </returns>
-        /// <exception cref="PipelineClosedException">
-        /// The underlying stream is already closed
-        /// </exception>
-        /// <remarks>
-        /// AutomationNull.Value is ignored
-        /// </remarks>
         public abstract int Write(object obj);
 
         
-        /// <param name="obj">Object or enumeration to read from.</param>
-        /// <param name="enumerateCollection">
-        /// If enumerateCollection is true, and <paramref name="obj"/>
-        /// is an enumeration according to LanguagePrimitives.GetEnumerable,
-        /// the objects in the enumeration will be unrolled and
-        /// written separately.  Otherwise, <paramref name="obj"/>
-        /// will be written as a single object.
-        /// </param>
-        /// <returns>The number of objects written.</returns>
-        /// <exception cref="PipelineClosedException">
-        /// The underlying stream is already closed
-        /// </exception>
-        /// <remarks>
-        /// If the enumeration contains elements equal to
-        /// AutomationNull.Value, they are ignored.
-        /// This can cause the return value to be less than the size of
-        /// the collection.
-        /// </remarks>
         public abstract int Write(object obj, bool enumerateCollection);
     }
 

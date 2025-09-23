@@ -9,10 +9,6 @@ namespace System.Management.Automation
     internal sealed class AliasHelpInfo : HelpInfo
     {
         
-        /// <remarks>
-        /// The constructor is private. The only way to create an
-        /// AliasHelpInfo object is through static method <see cref="GetHelpInfo"/>
-        /// </remarks>
         [SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         private AliasHelpInfo(AliasInfo aliasInfo)
         {
@@ -42,15 +38,12 @@ namespace System.Management.Automation
         }
 
         
-        /// <value>Name of alias help.</value>
         internal override string Name { get; } = string.Empty;
 
         
-        /// <value>Synopsis of alias help.</value>
         internal override string Synopsis { get; } = string.Empty;
 
         
-        /// <value>Help category for alias help</value>
         internal override HelpCategory HelpCategory
         {
             get
@@ -62,7 +55,6 @@ namespace System.Management.Automation
         private readonly PSObject _fullHelpObject;
 
         
-        /// <value>Full help object of alias help.</value>
         internal override PSObject FullHelp
         {
             get
@@ -72,8 +64,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="aliasInfo">AliasInfo object for which to create AliasHelpInfo object.</param>
-        /// <returns>AliasHelpInfo object.</returns>
         internal static AliasHelpInfo GetHelpInfo(AliasInfo aliasInfo)
         {
             if (aliasInfo == null)

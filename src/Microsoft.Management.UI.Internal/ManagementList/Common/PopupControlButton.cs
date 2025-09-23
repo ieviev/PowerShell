@@ -11,9 +11,6 @@ using System.Windows.Threading;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <content>
-    /// Partial class implementation for PopupControlButton control.
-    /// </content>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public partial class PopupControlButton : ExpanderButton
     {
@@ -32,7 +29,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="e">The event data for the Checked event.</param>
         protected override void OnChecked(RoutedEventArgs e)
         {
             base.OnChecked(e);
@@ -40,7 +36,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="e">The event data for the Unchecked event.</param>
         protected override void OnUnchecked(RoutedEventArgs e)
         {
             base.OnUnchecked(e);
@@ -53,12 +48,9 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="e">The MouseButtonEventArgs that contains the event data. The event data reports that the left mouse button was released.</param>
         protected override void OnPreviewMouseLeftButtonUp(MouseButtonEventArgs e)
         {
-            ////
             // If the mouse is captured then we need to finish updating state after the current event it processed.
-            ////
             if (this.IsMouseCaptured && this.isClickInProgress)
             {
                 this.isClickInProgress = false;
@@ -77,7 +69,6 @@ namespace Microsoft.Management.UI.Internal
 
         partial void OnIsPopupOpenChangedImplementation(PropertyChangedEventArgs<bool> e)
         {
-            ////
             // If it looks like the button is in the act of being pressed,
             // then we don't want to update the IsChecked since the button
             // push will do it.
@@ -85,7 +76,6 @@ namespace Microsoft.Management.UI.Internal
             // However we do need to handle the case where the mouse down is on the
             // button, but mouse up isn't.
             //
-            ////
             if (Mouse.PrimaryDevice.LeftButton == MouseButtonState.Pressed && this.IsPopupOpen == false)
             {
                 if (this.GetIsMouseReallyOver())

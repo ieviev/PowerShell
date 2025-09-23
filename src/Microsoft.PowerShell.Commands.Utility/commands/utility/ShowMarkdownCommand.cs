@@ -83,8 +83,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="parameter">Name of parameter to pass to `ConvertFrom-Markdown`.</param>
-        /// <param name="input">Value of parameter.</param>
         private void ConvertFromMarkdown(string parameter, object input)
         {
             _powerShell.AddCommand("Microsoft.PowerShell.Utility\\ConvertFrom-Markdown").AddParameter(parameter, input);
@@ -110,7 +108,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="markdownInfo">Markdown object to process.</param>
         private void ProcessMarkdownInfo(MarkdownInfo markdownInfo)
         {
             if (UseBrowser)

@@ -189,15 +189,6 @@ namespace Microsoft.PowerShell.Cmdletization.Cim
         #region Public inputs from cmdletization
 
         
-        /// <param name="propertyName">Property name to query on.</param>
-        /// <param name="allowedPropertyValues">Property values to accept in the query.</param>
-        /// <param name="wildcardsEnabled">
-        ///   <see langword="true"/> if <paramref name="allowedPropertyValues"/> should be treated as a <see cref="string"/> containing a wildcard pattern;
-        ///   <see langword="false"/> otherwise.
-        /// </param>
-        /// <param name="behaviorOnNoMatch">
-        /// Describes how to handle filters that didn't match any objects
-        /// </param>
         public override void FilterByProperty(string propertyName, IEnumerable allowedPropertyValues, bool wildcardsEnabled, BehaviorOnNoMatch behaviorOnNoMatch)
         {
             this.ClientSideQuery.FilterByProperty(propertyName, allowedPropertyValues, wildcardsEnabled, behaviorOnNoMatch);
@@ -210,15 +201,6 @@ namespace Microsoft.PowerShell.Cmdletization.Cim
         }
 
         
-        /// <param name="propertyName">Property name to query on.</param>
-        /// <param name="excludedPropertyValues">Property values to reject in the query.</param>
-        /// <param name="wildcardsEnabled">
-        /// <see langword="true"/> if <paramref name="excludedPropertyValues"/> should be treated as a <see cref="string"/> containing a wildcard pattern;
-        /// <see langword="false"/> otherwise.
-        /// </param>
-        /// <param name="behaviorOnNoMatch">
-        /// Describes how to handle filters that didn't match any objects
-        /// </param>
         public override void ExcludeByProperty(string propertyName, IEnumerable excludedPropertyValues, bool wildcardsEnabled, BehaviorOnNoMatch behaviorOnNoMatch)
         {
             this.ClientSideQuery.ExcludeByProperty(propertyName, excludedPropertyValues, wildcardsEnabled, behaviorOnNoMatch);
@@ -235,11 +217,6 @@ namespace Microsoft.PowerShell.Cmdletization.Cim
         }
 
         
-        /// <param name="propertyName">Property name to query on.</param>
-        /// <param name="minPropertyValue">Minimum property value.</param>
-        /// <param name="behaviorOnNoMatch">
-        /// Describes how to handle filters that didn't match any objects
-        /// </param>
         public override void FilterByMinPropertyValue(string propertyName, object minPropertyValue, BehaviorOnNoMatch behaviorOnNoMatch)
         {
             this.ClientSideQuery.FilterByMinPropertyValue(propertyName, minPropertyValue, behaviorOnNoMatch);
@@ -257,11 +234,6 @@ namespace Microsoft.PowerShell.Cmdletization.Cim
         }
 
         
-        /// <param name="propertyName">Property name to query on.</param>
-        /// <param name="maxPropertyValue">Maximum property value.</param>
-        /// <param name="behaviorOnNoMatch">
-        /// Describes how to handle filters that didn't match any objects
-        /// </param>
         public override void FilterByMaxPropertyValue(string propertyName, object maxPropertyValue, BehaviorOnNoMatch behaviorOnNoMatch)
         {
             this.ClientSideQuery.FilterByMaxPropertyValue(propertyName, maxPropertyValue, behaviorOnNoMatch);
@@ -279,13 +251,6 @@ namespace Microsoft.PowerShell.Cmdletization.Cim
         }
 
         
-        /// <param name="associatedInstance">Object that query results have to be associated with.</param>
-        /// <param name="associationName">Name of the association.</param>
-        /// <param name="resultRole">Name of the role that <paramref name="associatedInstance"/> has in the association.</param>
-        /// <param name="sourceRole">Name of the role that query results have in the association.</param>
-        /// <param name="behaviorOnNoMatch">
-        /// Describes how to handle filters that didn't match any objects
-        /// </param>
         public override void FilterByAssociatedInstance(object associatedInstance, string associationName, string sourceRole, string resultRole, BehaviorOnNoMatch behaviorOnNoMatch)
         {
             this.ClientSideQuery.FilterByAssociatedInstance(associatedInstance, associationName, sourceRole, resultRole, behaviorOnNoMatch);
@@ -296,8 +261,6 @@ namespace Microsoft.PowerShell.Cmdletization.Cim
         }
 
         
-        /// <param name="optionName"></param>
-        /// <param name="optionValue"></param>
         public override void AddQueryOption(string optionName, object optionValue)
         {
             ArgumentException.ThrowIfNullOrEmpty(optionName);
@@ -346,7 +309,6 @@ namespace Microsoft.PowerShell.Cmdletization.Cim
         }
 
         
-        /// <returns>A string that represents the current CIM query.</returns>
         public override string ToString()
         {
             return _wqlCondition.ToString();

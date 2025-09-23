@@ -17,61 +17,6 @@ using System.Management.Automation.Internal;
 namespace System.Management.Automation.Tracing
 {
     
-    /// <remarks>
-    /// This component logs ETW trace events to syslog.
-    /// The log entries use the following common format
-    ///     (commitId:threadId:channelid) [context] payload
-    /// Where:
-    ///     commitId: A hash code of the full git commit id string.
-    ///     threadid: The thread identifier of calling code.
-    ///     channelid: The identifier for the output channel. See PSChannel for values.
-    ///     context: Dependent on the type of log entry.
-    ///     payload: Dependent on the type of log entry.
-    /// Note:
-    ///     commitId, threadId, and eventId are logged as HEX without a leading
-    ///     '0x'.
-    ///
-    /// 4 types of log entries are produced.
-    /// NOTE: Where constant string are logged, the template places the string in
-    /// double quotes. For example, the GitCommitId log entry uses "GitCommitId"
-    /// for the context value.
-    ///
-    /// Note that the examples illustrate the output from SysLogProvider.Log,
-    /// Data automatically prepended by syslog, such as timestamp, hostname, ident,
-    /// and processid are not shown.
-    ///
-    /// GitCommitId
-    ///   This is the first log entry for a session. It provides a correlation
-    ///   between the full git commit id string and a hash code used for subsequent
-    ///   log entries.
-    ///   Context: "GitCommitId"
-    ///   Payload: string "Hash:" hashcode as HEX string.
-    ///    For official builds, the GitCommitID is the release tag. For other builds the commit id may include an SHA-1 hash at the
-    ///    end of the release tag.
-    ///   Example 1: Official release
-    ///     (19E1025:3:10) [GitCommitId] v6.0.0-beta.9 Hash:64D0C08D
-    ///   Example 2: Commit id with SHA-1 hash
-    ///     (19E1025:3:10) [GitCommitId] v6.0.0-beta.8-67-gca2630a3dea6420a3cd3914c84a74c1c45311f54 Hash:8EE3A3B3
-    ///
-    /// Transfer
-    ///   A log entry to record a transfer event.
-    ///   Context: "Transfer"
-    ///   The playload is two, space separated string guids, the first being the
-    ///   parent activityid followed by the new activityid.
-    ///   Example: (19E1025:3:10) [Transfer] {de168a71-6bb9-47e4-8712-bc02506d98be} {ab0077f6-c042-4728-be76-f688cfb1b054}
-    ///
-    /// Activity
-    ///   A log entry for when activity is set.
-    ///   Context: "Activity"
-    ///   Payload: The string guid of the activity id.
-    ///   Example: (19E1025:3:10) [Activity] {ab0077f6-c042-4728-be76-f688cfb1b054}
-    ///
-    ///  Event
-    ///   Application logging (Events)
-    ///   Context: EventId:taskname.opcodename.levelname
-    ///   Payload: The event's message text formatted with arguments from the caller.
-    ///   Example: (19E1025:3:10) [Perftrack_ConsoleStartupStart:PowershellConsoleStartup.WinStart.Informational] PowerShell console is starting up
-    /// </remarks>
     internal class SysLogProvider
     {
         // Ensure the string pointer is not garbage collected.
@@ -83,10 +28,6 @@ namespace System.Management.Automation.Tracing
         private readonly byte _levelFilter;
 
         
-        /// <param name="applicationId">The log identity name used to identify the application in syslog.</param>
-        /// <param name="level">The trace level to enable.</param>
-        /// <param name="keywords">The keywords to enable.</param>
-        /// <param name="channels">The output channels to enable.</param>
         public SysLogProvider(string applicationId, PSLevel level, PSKeyword keywords, PSChannel channels)
         {
             // NOTE: This string needs to remain valid for the life of the process since the underlying API keeps
@@ -110,10 +51,6 @@ namespace System.Management.Automation.Tracing
         }
 
         
-        /// <remarks>
-        /// NOTE: do not access this field directly, use the MessageBuilder
-        /// property to ensure correct thread initialization; otherwise, a null reference can occur.
-        /// </remarks>
         [ThreadStatic]
         private static StringBuilder t_messageBuilder;
 
@@ -129,10 +66,6 @@ namespace System.Management.Automation.Tracing
         }
 
         
-        /// <remarks>
-        /// NOTE: do not access this field directly, use the Activity property
-        /// to ensure correct thread initialization.
-        /// </remarks>
         [ThreadStatic]
         private static Guid? t_activity;
 
@@ -156,9 +89,6 @@ namespace System.Management.Automation.Tracing
         }
 
         
-        /// <param name="level">The PSLevel to check.</param>
-        /// <param name="keywords">The PSKeyword to check.</param>
-        /// <returns>True if the specified level and keywords are enabled for logging.</returns>
         internal bool IsEnabled(PSLevel level, PSKeyword keywords)
         {
             return ((ulong)keywords & _keywordFilter) != 0
@@ -221,9 +151,6 @@ namespace System.Management.Automation.Tracing
 #endregion resource manager
 
         
-        /// <param name="sb">The StringBuilder to append.</param>
-        /// <param name="eventId">The id of the event to retrieve.</param>
-        /// <param name="args">An array of zero or more payload objects.</param>
         private static void GetEventMessage(StringBuilder sb, PSEventId eventId, params object[] args )
         {
             int parameterCount;
@@ -263,7 +190,6 @@ namespace System.Management.Automation.Tracing
         };
 
         
-        /// <param name="parentActivityId">The parent activity id.</param>
         public void LogTransfer(Guid parentActivityId)
         {
             // NOTE: always log
@@ -278,7 +204,6 @@ namespace System.Management.Automation.Tracing
         }
 
         
-        /// <param name="activity">The Guid activity identifier.</param>
         public void SetActivity(Guid activity)
         {
             int threadId = Environment.CurrentManagedThreadId;
@@ -292,13 +217,6 @@ namespace System.Management.Automation.Tracing
         }
 
         
-        /// <param name="eventId">The event id of the log entry.</param>
-        /// <param name="channel">The channel to log.</param>
-        /// <param name="task">The task for the log entry.</param>
-        /// <param name="opcode">The operation for the log entry.</param>
-        /// <param name="level">The logging level.</param>
-        /// <param name="keyword">The keyword(s) for the event.</param>
-        /// <param name="args">The payload for the log message.</param>
         public void Log(PSEventId eventId, PSChannel channel, PSTask task, PSOpcode opcode, PSLevel level, PSKeyword keyword, params object[] args)
         {
             if (ShouldLog(level, keyword, channel))
@@ -347,10 +265,6 @@ namespace System.Management.Automation.Tracing
     {
         private const string libpslnative = "libpsl-native";
         
-        /// <param name="priority">
-        /// The OR of a priority and facility in the SysLogPriority enum indicating the priority and facility of the log entry.
-        /// </param>
-        /// <param name="message">The message to put in the log entry.</param>
         [DllImport(libpslnative, CharSet = CharSet.Ansi, EntryPoint = "Native_SysLog")]
         internal static extern void SysLog(SysLogPriority priority, string message);
 

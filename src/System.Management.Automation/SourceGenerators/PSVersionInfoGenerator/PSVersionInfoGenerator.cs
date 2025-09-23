@@ -12,7 +12,6 @@ namespace SMA
     public class PSVersionInfoGenerator : IIncrementalGenerator
     {
         
-        /// <param name="context">Generator initialization context.</param>
         public void Initialize(IncrementalGeneratorInitializationContext context)
         {
             IncrementalValueProvider<BuildOptions> buildOptionsProvider = context.AnalyzerConfigOptionsProvider

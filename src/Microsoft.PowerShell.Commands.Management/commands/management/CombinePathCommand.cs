@@ -36,7 +36,6 @@ namespace Microsoft.PowerShell.Commands
         public string[] AdditionalChildPath { get; set; } = Array.Empty<string>();
 
         
-        /// <value></value>
         [Parameter]
         public SwitchParameter Resolve { get; set; }
 

@@ -69,12 +69,6 @@ namespace System.Management.Automation
     internal static class SessionStateUtilities
     {
         
-        /// <param name="array">
-        /// The array to be converted.
-        /// </param>
-        /// <returns>
-        /// A collection of the elements that were in the array.
-        /// </returns>
         internal static Collection<T> ConvertArrayToCollection<T>(T[] array)
         {
             Collection<T> result = new Collection<T>();
@@ -90,21 +84,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="collection">
-        /// The collection to check for the value.
-        /// </param>
-        /// <param name="value">
-        /// The value to check for.
-        /// </param>
-        /// <param name="comparer">
-        /// If specified the comparer will be used instead of .Equals.
-        /// </param>
-        /// <returns>
-        /// true if the value is contained in the collection or false otherwise.
-        /// </returns>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="collection"/> is null.
-        /// </exception>
         internal static bool CollectionContainsValue(IEnumerable collection, object value, IComparer comparer)
         {
             ArgumentNullException.ThrowIfNull(collection);
@@ -135,16 +114,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="globPatterns">
-        /// The string patterns to construct the WildcardPatterns for.
-        /// </param>
-        /// <param name="options">
-        /// The options to create the WildcardPatterns with.
-        /// </param>
-        /// <returns>
-        /// A collection of WildcardPatterns that represent the string patterns
-        /// that were passed.
-        /// </returns>
         internal static Collection<WildcardPattern> CreateWildcardsFromStrings(
             IEnumerable<string> globPatterns,
             WildcardOptions options)
@@ -171,20 +140,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="text">
-        /// The text to check against the wildcard pattern.
-        /// </param>
-        /// <param name="patterns">
-        /// An array of wildcard patterns. If the array is empty or null the text is deemed
-        /// to be a match.
-        /// </param>
-        /// <param name="defaultValue">
-        /// The default value that should be returned if <paramref name="patterns"/>
-        /// is empty or null.
-        /// </param>
-        /// <returns>
-        /// True if the text matches any of the patterns OR if patterns is null or empty and defaultValue is True.
-        /// </returns>
         internal static bool MatchesAnyWildcardPattern(
             string text,
             IEnumerable<WildcardPattern> patterns,
@@ -217,12 +172,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="openMode">
-        /// The OpenMode value to be converted.
-        /// </param>
-        /// <returns>
-        /// The FileMode representation of the OpenMode.
-        /// </returns>
         internal static FileMode GetFileModeFromOpenMode(OpenMode openMode)
         {
             FileMode result = FileMode.Create;

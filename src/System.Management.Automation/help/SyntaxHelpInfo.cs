@@ -16,22 +16,15 @@ namespace System.Management.Automation
         }
 
         
-        /// <value>Name for the help info</value>
         internal override string Name { get; } = string.Empty;
 
         
-        /// <value>Synopsis for the help info</value>
         internal override string Synopsis { get; } = string.Empty;
 
         
-        /// <value>Full help object for this help info</value>
         internal override PSObject FullHelp { get; }
 
         
-        /// <param name="name">Help topic name.</param>
-        /// <param name="text">Help text.</param>
-        /// <param name="category">Help category.</param>
-        /// <returns>SyntaxHelpInfo object created based on information provided.</returns>
         internal static SyntaxHelpInfo GetHelpInfo(string name, string text, HelpCategory category)
         {
             if (string.IsNullOrEmpty(name))

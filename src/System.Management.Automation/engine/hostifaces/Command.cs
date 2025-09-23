@@ -17,27 +17,18 @@ namespace System.Management.Automation.Runspaces
         #region constructors
 
         
-        /// <param name="command">Name of the command or script contents.</param>
-        /// <exception cref="ArgumentNullException">Command is null.</exception>
         public Command(string command)
             : this(command, false, null)
         {
         }
 
         
-        /// <param name="command">The command name or script contents.</param>
-        /// <param name="isScript">True if this command represents a script, otherwise; false.</param>
-        /// <exception cref="ArgumentNullException">Command is null.</exception>
         public Command(string command, bool isScript)
             : this(command, isScript, null)
         {
         }
 
         
-        /// <param name="command">The command name or script contents.</param>
-        /// <param name="isScript">True if this command represents a script, otherwise; false.</param>
-        /// <param name="useLocalScope">If true local scope is used to run the script command.</param>
-        /// <exception cref="ArgumentNullException">Command is null.</exception>
         public Command(string command, bool isScript, bool useLocalScope)
         {
             IsEndOfStatement = false;
@@ -87,7 +78,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <param name="command">The source <see cref="Command"/> instance.</param>
         internal Command(Command command)
         {
             IsScript = command.IsScript;
@@ -111,26 +101,18 @@ namespace System.Management.Automation.Runspaces
         #region Properties
 
         
-        /// <remarks>
-        /// This property is used to add positional or named parameters to the command.
-        /// </remarks>
         public CommandParameterCollection Parameters { get; } = new CommandParameterCollection();
 
         
-        /// <value>The command name, if <see cref="Command.IsScript"/> is false; otherwise; the script contents</value>
         public string CommandText { get; } = string.Empty;
 
         
-        /// <value>The command info object</value>
         internal CommandInfo CommandInfo { get; }
 
         
         public bool IsScript { get; }
 
         
-        /// <value>True if this command is a script and localScope is
-        /// used for executing the script</value>
-        /// <remarks>This value is always false for non-script commands</remarks>
         public bool UseLocalScope
         {
             get { return _useLocalScope ?? false; }
@@ -156,14 +138,12 @@ namespace System.Management.Automation.Runspaces
         #region Methods
 
         
-        /// <returns>A new <see cref="Command"/> that is a copy of this instance.</returns>
         internal Command Clone()
         {
             return new Command(this);
         }
 
         
-        /// <returns></returns>
         public override string ToString()
         {
             return CommandText;
@@ -176,17 +156,6 @@ namespace System.Management.Automation.Runspaces
         private PipelineResultTypes _mergeUnclaimedPreviousCommandResults =
             PipelineResultTypes.None;
         
-        /// <value></value>
-        /// <remarks>
-        /// Currently only supported operation is to merge
-        /// Output and Error.
-        /// </remarks>
-        /// <exception cref="NotSupportedException">
-        /// Currently only supported operation is to merge Output and Error.
-        /// Attempt to set the property to something other than
-        /// PipelineResultTypes.Error | PipelineResultTypes.Output results
-        /// in this exception.
-        /// </exception>
         public PipelineResultTypes MergeUnclaimedPreviousCommandResults
         {
             get
@@ -238,20 +207,6 @@ namespace System.Management.Automation.Runspaces
         internal PipelineResultTypes[] MergeInstructions { get; set; } = new PipelineResultTypes[MaxMergeType];
 
         
-        /// <param name="myResult">
-        /// Pipeline stream to be redirected.
-        /// </param>
-        /// <param name="toResult">
-        /// Pipeline stream in to which myResult is merged
-        /// </param>
-        /// <exception cref="ArgumentException">
-        /// myResult parameter is not PipelineResultTypes.Error or
-        /// toResult parameter is not PipelineResultTypes.Output
-        /// </exception>
-        /// <remarks>
-        /// Currently only operation supported is to merge error of command to output of
-        /// command.
-        /// </remarks>
         public void MergeMyResults(PipelineResultTypes myResult, PipelineResultTypes toResult)
         {
             if (myResult == PipelineResultTypes.None && toResult == PipelineResultTypes.None)
@@ -319,7 +274,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <param name="commandProcessor"></param>
         private
         void
         SetMergeSettingsOnCommandProcessor(CommandProcessorBase commandProcessor)
@@ -390,10 +344,6 @@ namespace System.Management.Automation.Runspaces
         #endregion Merge
 
         
-        /// <param name="executionContext"></param>
-        /// <param name="addToHistory"></param>
-        /// <param name="origin"></param>
-        /// <returns></returns>
         internal
         CommandProcessorBase
         CreateCommandProcessor
@@ -517,16 +467,6 @@ namespace System.Management.Automation.Runspaces
         #region Serialization / deserialization for remoting
 
         
-        /// <param name="commandAsPSObject">PSObject to rehydrate.</param>
-        /// <returns>
-        /// Command rehydrated from a PSObject property bag
-        /// </returns>
-        /// <exception cref="ArgumentNullException">
-        /// Thrown if the PSObject is null.
-        /// </exception>
-        /// <exception cref="System.Management.Automation.Remoting.PSRemotingDataStructureException">
-        /// Thrown when the PSObject is not in the expected format
-        /// </exception>
         internal static Command FromPSObjectForRemoting(PSObject commandAsPSObject)
         {
             if (commandAsPSObject == null)
@@ -581,8 +521,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <param name="psRPVersion">PowerShell remoting protocol version.</param>
-        /// <returns>This object as a PSObject property bag.</returns>
         internal PSObject ToPSObjectForRemoting(Version psRPVersion)
         {
             PSObject commandAsPSObject = RemotingEncoder.CreateEmptyPSObject();
@@ -750,9 +688,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <exception cref="System.ArgumentNullException">
-        /// command is null.
-        /// </exception>
         public void Add(string command)
         {
             if (string.Equals(command, "out-default", StringComparison.OrdinalIgnoreCase))
@@ -771,30 +706,18 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <param name="scriptContents">Script contents.</param>
-        /// <exception cref="System.ArgumentNullException">
-        /// scriptContents is null.
-        /// </exception>
         public void AddScript(string scriptContents)
         {
             this.Add(new Command(scriptContents, true));
         }
 
         
-        /// <param name="scriptContents">Script contents.</param>
-        /// <param name="useLocalScope">If true local scope is used to run the script command.</param>
-        /// <exception cref="System.ArgumentNullException">
-        /// scriptContents is null.
-        /// </exception>
         public void AddScript(string scriptContents, bool useLocalScope)
         {
             this.Add(new Command(scriptContents, true, useLocalScope));
         }
 
         
-        /// <returns>
-        /// string representing the command(s)
-        /// </returns>
         internal string GetCommandStringForHistory()
         {
             Diagnostics.Assert(this.Count != 0, "this is called when there is at least one element in the collection");

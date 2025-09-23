@@ -122,10 +122,6 @@ namespace Microsoft.PowerShell.Commands
 
         #region Private Methods
         
-        /// <remarks>
-        /// Arguments to -Name will be treated as names,
-        /// even if a name looks like a SID.
-        /// </remarks>
         private void ProcessName()
         {
             if (Name != null)
@@ -177,15 +173,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="groupName">
-        /// Name of the group to rename.
-        /// </param>
-        /// <param name="newName">
-        /// New name for the group.
-        /// </param>
-        /// <returns>
-        /// True if the group should be processed, false otherwise.
-        /// </returns>
         private bool CheckShouldProcess(string groupName, string newName)
         {
             string msg = StringUtil.Format(Strings.ActionRenameGroup, newName);

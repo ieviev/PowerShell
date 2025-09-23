@@ -45,7 +45,6 @@ namespace Microsoft.PowerShell.Commands
     {
         #region Parameters
         
-        /// <value></value>
         [Parameter]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("GoldMan", "#pw17903:UseOfLCID", Justification = "The CultureNumber is only used if the property has been set with a hex string starting with 0x")]
         public string Culture
@@ -89,7 +88,6 @@ namespace Microsoft.PowerShell.Commands
         internal CultureInfo _cultureInfo = null;
 
         
-        /// <value></value>
         [Parameter]
         public SwitchParameter CaseSensitive
         {
@@ -462,11 +460,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="cmdlet">PSCmdlet.</param>
-        /// <param name="inputObject">Input Object.</param>
-        /// <param name="isCaseSensitive">Indicates if the Property value comparisons need to be case sensitive or not.</param>
-        /// <param name="cultureInfo">Culture Info that needs to be used for comparison.</param>
-        /// <returns>OrderByPropertyEntry for the supplied InputObject.</returns>
         internal OrderByPropertyEntry CreateOrderByPropertyEntry(
             PSCmdlet cmdlet,
             PSObject inputObject,

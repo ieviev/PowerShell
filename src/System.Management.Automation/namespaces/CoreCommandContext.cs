@@ -25,12 +25,6 @@ namespace System.Management.Automation
         #region Constructor
 
         
-        /// <param name="executionContext">
-        /// The context of the engine.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="executionContext"/> is null.
-        /// </exception>
         internal CmdletProviderContext(ExecutionContext executionContext)
         {
             if (executionContext == null)
@@ -49,15 +43,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="executionContext">
-        /// The context of the engine.
-        /// </param>
-        /// <param name="origin">
-        /// The origin of the caller of this API
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="executionContext"/> is null.
-        /// </exception>
         internal CmdletProviderContext(ExecutionContext executionContext, CommandOrigin origin)
         {
             if (executionContext == null)
@@ -70,21 +55,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="command">
-        /// The command object that is running.
-        /// </param>
-        /// <param name="credentials">
-        /// The credentials the core command provider should use.
-        /// </param>
-        /// <param name="drive">
-        /// The drive under which this context should operate.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="command"/> is null.
-        /// </exception>
-        /// <exception cref="ArgumentException">
-        /// If <paramref name="command"/> contains a null Host or Context reference.
-        /// </exception>
         internal CmdletProviderContext(
             PSCmdlet command,
             PSCredential credentials,
@@ -125,18 +95,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="command">
-        /// The command object that is running.
-        /// </param>
-        /// <param name="credentials">
-        /// The credentials the core command provider should use.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="command"/> is null.
-        /// </exception>
-        /// <exception cref="ArgumentException">
-        /// If <paramref name="command"/> contains a null Host or Context reference.
-        /// </exception>
         internal CmdletProviderContext(
             PSCmdlet command,
             PSCredential credentials)
@@ -174,15 +132,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="command">
-        /// The command object that is running.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="command"/> is null.
-        /// </exception>
-        /// <exception cref="ArgumentException">
-        /// If <paramref name="command"/> contains a null Host or Context reference.
-        /// </exception>
         internal CmdletProviderContext(
             Cmdlet command)
         {
@@ -209,13 +158,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="contextToCopyFrom">
-        /// A CmdletProviderContext instance to copy the filters, ExecutionContext,
-        /// Credentials, Drive, and Force options from.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="contextToCopyFrom"/> is null.
-        /// </exception>
         internal CmdletProviderContext(
             CmdletProviderContext contextToCopyFrom)
         {
@@ -305,9 +247,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="context">
-        /// The context to copy the filters from.
-        /// </param>
         private void CopyFilters(CmdletProviderContext context)
         {
             Dbg.Diagnostics.Assert(
@@ -348,9 +287,6 @@ namespace System.Management.Automation
         internal bool PassThru { get; set; }
 
         
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="value"/> is null on set.
-        /// </exception>
         internal PSDriveInfo Drive { get; set; }
 
         
@@ -441,16 +377,6 @@ namespace System.Management.Automation
         #region User feedback mechanisms
 
         
-        /// <param name="target">
-        /// Name of the target resource being acted upon
-        /// </param>
-        /// <remarks>true if-and-only-if the action should be performed</remarks>
-        /// <exception cref="PipelineStoppedException">
-        /// The ActionPreference.Stop or ActionPreference.Inquire policy
-        /// triggered a terminating error.  The pipeline failure will be
-        /// ActionPreferenceStopException.
-        /// Also, this occurs if the pipeline was already stopped.
-        /// </exception>
         internal bool ShouldProcess(
             string target)
         {
@@ -464,17 +390,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="target">
-        /// Name of the target resource being acted upon
-        /// </param>
-        /// <param name="action">What action was being performed.</param>
-        /// <remarks>true if-and-only-if the action should be performed</remarks>
-        /// <exception cref="PipelineStoppedException">
-        /// The ActionPreference.Stop or ActionPreference.Inquire policy
-        /// triggered a terminating error.  The pipeline failure will be
-        /// ActionPreferenceStopException.
-        /// Also, this occurs if the pipeline was already stopped.
-        /// </exception>
         internal bool ShouldProcess(
             string target,
             string action)
@@ -489,29 +404,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="verboseDescription">
-        /// This should contain a textual description of the action to be
-        /// performed.  This is what will be displayed to the user for
-        /// ActionPreference.Continue.
-        /// </param>
-        /// <param name="verboseWarning">
-        /// This should contain a textual query of whether the action
-        /// should be performed, usually in the form of a question.
-        /// This is what will be displayed to the user for
-        /// ActionPreference.Inquire.
-        /// </param>
-        /// <param name="caption">
-        /// This is the caption of the window which may be displayed
-        /// if the user is prompted whether or not to perform the action.
-        /// It may be displayed by some hosts, but not all.
-        /// </param>
-        /// <remarks>true if-and-only-if the action should be performed</remarks>
-        /// <exception cref="PipelineStoppedException">
-        /// The ActionPreference.Stop or ActionPreference.Inquire policy
-        /// triggered a terminating error.  The pipeline failure will be
-        /// ActionPreferenceStopException.
-        /// Also, this occurs if the pipeline was already stopped.
-        /// </exception>
         internal bool ShouldProcess(
             string verboseDescription,
             string verboseWarning,
@@ -530,35 +422,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="verboseDescription">
-        /// This should contain a textual description of the action to be
-        /// performed.  This is what will be displayed to the user for
-        /// ActionPreference.Continue.
-        /// </param>
-        /// <param name="verboseWarning">
-        /// This should contain a textual query of whether the action
-        /// should be performed, usually in the form of a question.
-        /// This is what will be displayed to the user for
-        /// ActionPreference.Inquire.
-        /// </param>
-        /// <param name="caption">
-        /// This is the caption of the window which may be displayed
-        /// if the user is prompted whether or not to perform the action.
-        /// It may be displayed by some hosts, but not all.
-        /// </param>
-        /// <param name="shouldProcessReason">
-        /// Indicates the reason(s) why ShouldProcess returned what it returned.
-        /// Only the reasons enumerated in
-        /// <see cref="System.Management.Automation.ShouldProcessReason"/>
-        /// are returned.
-        /// </param>
-        /// <remarks>true if-and-only-if the action should be performed</remarks>
-        /// <exception cref="PipelineStoppedException">
-        /// The ActionPreference.Stop or ActionPreference.Inquire policy
-        /// triggered a terminating error.  The pipeline failure will be
-        /// ActionPreferenceStopException.
-        /// Also, this occurs if the pipeline was already stopped.
-        /// </exception>
         internal bool ShouldProcess(
             string verboseDescription,
             string verboseWarning,
@@ -583,17 +446,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="query">
-        /// Message to display to the user. This routine will append
-        /// the text "Continue" to ensure that people know what question
-        /// they are answering.
-        /// </param>
-        /// <param name="caption">
-        /// Dialog caption if the host uses a dialog.
-        /// </param>
-        /// <returns>
-        /// True if the user wants to continue, false if not.
-        /// </returns>
         internal bool ShouldContinue(
             string query,
             string caption)
@@ -608,23 +460,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="query">
-        /// Message to display to the user. This routine will append
-        /// the text "Continue" to ensure that people know what question
-        /// they are answering.
-        /// </param>
-        /// <param name="caption">
-        /// Dialog caption if the host uses a dialog.
-        /// </param>
-        /// <param name="yesToAll">
-        /// Indicates whether the user selected YesToAll
-        /// </param>
-        /// <param name="noToAll">
-        /// Indicates whether the user selected NoToAll
-        /// </param>
-        /// <returns>
-        /// True if the user wants to continue, false if not.
-        /// </returns>
         internal bool ShouldContinue(
             string query,
             string caption,
@@ -647,23 +482,14 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="text">
-        /// The string that needs to be written.
-        /// </param>
         internal void WriteVerbose(string text) => _command?.WriteVerbose(text);
 
         
-        /// <param name="text">
-        /// The string that needs to be written.
-        /// </param>
         internal void WriteWarning(string text) => _command?.WriteWarning(text);
 
         internal void WriteProgress(ProgressRecord record) => _command?.WriteProgress(record);
 
         
-        /// <param name="text">
-        /// The String that needs to be written.
-        /// </param>
         internal void WriteDebug(string text) => _command?.WriteDebug(text);
 
         internal void WriteInformation(InformationRecord record) => _command?.WriteInformation(record);
@@ -677,17 +503,6 @@ namespace System.Management.Automation
         #region Public methods
 
         
-        /// <param name="include">
-        /// The include filters which determines which items are included in
-        /// operations within this context.
-        /// </param>
-        /// <param name="exclude">
-        /// The exclude filters which determines which items are excluded from
-        /// operations within this context.
-        /// </param>
-        /// <param name="filter">
-        /// The provider specific filter for the operation.
-        /// </param>
         internal void SetFilters(Collection<string> include, Collection<string> exclude, string filter)
         {
             Include = include;
@@ -696,10 +511,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <returns>
-        /// An object array of the objects that have been accumulated
-        /// through the WriteObject method.
-        /// </returns>
         internal Collection<PSObject> GetAccumulatedObjects()
         {
             // Get the contents as an array
@@ -713,10 +524,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <returns>
-        /// An object array of the objects that have been accumulated
-        /// through the WriteError method.
-        /// </returns>
         internal Collection<ErrorRecord> GetAccumulatedErrorObjects()
         {
             // Get the contents as an array
@@ -730,30 +537,12 @@ namespace System.Management.Automation
         }
 
         
-        /// <exception cref="ProviderInvocationException">
-        /// If a CmdletProvider wrote any exceptions to the error pipeline, it is
-        /// wrapped and then thrown.
-        /// </exception>
         internal void ThrowFirstErrorOrDoNothing()
         {
             ThrowFirstErrorOrDoNothing(true);
         }
 
         
-        /// <param name="wrapExceptionInProviderException">
-        /// If true, the error will be wrapped in a ProviderInvocationException before
-        /// being thrown. If false, the error will be thrown as is.
-        /// </param>
-        /// <exception cref="ProviderInvocationException">
-        /// If <paramref name="wrapExceptionInProviderException"/> is true, the
-        /// first exception that was written to the error pipeline by a CmdletProvider
-        /// is wrapped and thrown.
-        /// </exception>
-        /// <exception>
-        /// If <paramref name="wrapExceptionInProviderException"/> is false,
-        /// the first exception that was written to the error pipeline by a CmdletProvider
-        /// is thrown.
-        /// </exception>
         internal void ThrowFirstErrorOrDoNothing(bool wrapExceptionInProviderException)
         {
             if (HasErrors())
@@ -796,12 +585,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="errorContext">
-        /// The context to write the errors to.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="errorContext"/> is null.
-        /// </exception>
         internal void WriteErrorsToContext(CmdletProviderContext errorContext)
         {
             if (errorContext == null)
@@ -819,25 +602,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="obj">
-        /// The object to be written.
-        /// </param>
-        /// <remarks>
-        /// If streaming is on and the writeObjectHandler was specified then the object
-        /// gets written to the writeObjectHandler. If streaming is on and the writeObjectHandler
-        /// was not specified and the command object was specified, the object gets written to
-        /// the WriteObject method of the command object.
-        /// If streaming is off the object gets written to an accumulator collection. The collection
-        /// of written object can be retrieved using the AccumulatedObjects method.
-        /// </remarks>
-        /// <exception cref="InvalidOperationException">
-        /// The CmdletProvider could not stream the results because no
-        /// cmdlet was specified to stream the output through.
-        /// </exception>
-        /// <exception cref="PipelineStoppedException">
-        /// If the pipeline has been signaled for stopping but
-        /// the provider calls this method.
-        /// </exception>
         internal void WriteObject(object obj)
         {
             // Making sure to obey the StopProcessing by
@@ -890,17 +654,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="errorRecord">
-        /// The error record to write to the pipeline or the internal buffer.
-        /// </param>
-        /// <exception cref="InvalidOperationException">
-        /// The CmdletProvider could not stream the error because no
-        /// cmdlet was specified to stream the output through.
-        /// </exception>
-        /// <exception cref="PipelineStoppedException">
-        /// If the pipeline has been signaled for stopping but
-        /// the provider calls this method.
-        /// </exception>
         internal void WriteError(ErrorRecord errorRecord)
         {
             // Making sure to obey the StopProcessing by
@@ -951,9 +704,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <returns>
-        /// True if the errors are being accumulated and some errors have been accumulated.  False otherwise.
-        /// </returns>
         internal bool HasErrors()
         {
             return _accumulatedErrorObjects != null && _accumulatedErrorObjects.Count > 0;

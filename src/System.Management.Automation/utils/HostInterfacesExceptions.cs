@@ -20,9 +20,6 @@ namespace System.Management.Automation.Host
         }
 
         
-        /// <param name="message">
-        /// The error message that explains the reason for the exception.
-        /// </param>
         public
         HostException(string message)
             : base(message)
@@ -31,14 +28,6 @@ namespace System.Management.Automation.Host
         }
 
         
-        /// <param name="message">
-        /// The error message that explains the reason for the exception.
-        /// </param>
-        /// <param name="innerException">
-        /// The exception that is the cause of the current exception. If the <paramref name="innerException"/>
-        /// parameter is not a null reference, the current exception is raised in a catch
-        /// block that handles the inner exception.
-        /// </param>
         public
         HostException(string message, Exception innerException)
             : base(message, innerException)
@@ -47,24 +36,6 @@ namespace System.Management.Automation.Host
         }
 
         
-        /// <param name="message">
-        /// The error message that explains the reason for the exception.
-        /// </param>
-        /// <param name="innerException">
-        /// The exception that is the cause of the current exception. If the <paramref name="innerException"/>
-        /// parameter is not a null reference, the current exception is raised in a catch
-        /// block that handles the inner exception.
-        /// </param>
-        /// <param name="errorId">
-        /// The string that should uniquely identifies the situation where the exception is thrown.
-        /// The string should not contain white space.
-        /// </param>
-        /// <param name="errorCategory">
-        /// The ErrorCategory into which this exception situation falls
-        /// </param>
-        /// <remarks>
-        /// Intentionally public, third-party hosts can call this
-        /// </remarks>
         public
         HostException(
             string message,
@@ -78,12 +49,6 @@ namespace System.Management.Automation.Host
         }
 
         
-        /// <param name="info">
-        /// The object that holds the serialized object data.
-        /// </param>
-        /// <param name="context">
-        /// The contextual information about the source or destination.
-        /// </param>
         [Obsolete("Legacy serialization support is deprecated since .NET 8", DiagnosticId = "SYSLIB0051")] 
         protected
         HostException(SerializationInfo info, StreamingContext context)
@@ -116,9 +81,6 @@ namespace System.Management.Automation.Host
         }
 
         
-        /// <param name="message">
-        /// The error message that explains the reason for the exception.
-        /// </param>
         public
         PromptingException(string message)
             : base(message)
@@ -127,14 +89,6 @@ namespace System.Management.Automation.Host
         }
 
         
-        /// <param name="message">
-        /// The error message that explains the reason for the exception.
-        /// </param>
-        /// <param name="innerException">
-        /// The exception that is the cause of the current exception. If the <paramref name="innerException"/>
-        /// parameter is not a null reference, the current exception is raised in a catch
-        /// block that handles the inner exception.
-        /// </param>
         public
         PromptingException(string message, Exception innerException)
             : base(message, innerException)
@@ -143,24 +97,6 @@ namespace System.Management.Automation.Host
         }
 
         
-        /// <param name="message">
-        /// The error message that explains the reason for the exception.
-        /// </param>
-        /// <param name="innerException">
-        /// The exception that is the cause of the current exception. If the <paramref name="innerException"/>
-        /// parameter is not a null reference, the current exception is raised in a catch
-        /// block that handles the inner exception.
-        /// </param>
-        /// <param name="errorId">
-        /// The string that should uniquely identifies the situation where the exception is thrown.
-        /// The string should not contain white space.
-        /// </param>
-        /// <param name="errorCategory">
-        /// The ErrorCategory into which this exception situation falls
-        /// </param>
-        /// <remarks>
-        /// Intentionally public, third-party hosts can call this
-        /// </remarks>
         public
         PromptingException(
             string message,
@@ -172,12 +108,6 @@ namespace System.Management.Automation.Host
         }
 
         
-        /// <param name="info">
-        /// The object that holds the serialized object data.
-        /// </param>
-        /// <param name="context">
-        /// The contextual information about the source or destination.
-        /// </param>
         [Obsolete("Legacy serialization support is deprecated since .NET 8", DiagnosticId = "SYSLIB0051")] 
         protected
         PromptingException(SerializationInfo info, StreamingContext context)

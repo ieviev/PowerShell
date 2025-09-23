@@ -50,7 +50,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="name">Name of the new LocalUser.</param>
         public LocalUser(string name)
           : base(name)
         {
@@ -58,7 +57,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="other">The LocalUser object to copy.</param>
         private LocalUser(LocalUser other)
           : this(other.Name)
         {
@@ -82,18 +80,12 @@ namespace Microsoft.PowerShell.Commands
 
         #region Public Methods
         
-        /// <returns>
-        /// A string containing the User Name.
-        /// </returns>
         public override string ToString()
         {
             return Name ?? SID.ToString();
         }
 
         
-        /// <returns>
-        /// A new LocalUser object with the same property values as this one.
-        /// </returns>
         public LocalUser Clone()
         {
             return new LocalUser(this);

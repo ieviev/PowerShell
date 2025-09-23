@@ -10,7 +10,6 @@ namespace System.Management.Automation
     {
         #region ctor
         
-        /// <returns>Constructed object.</returns>
         public PSSecurityException()
             : base()
         {
@@ -24,9 +23,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="info">Serialization information.</param>
-        /// <param name="context">Streaming context.</param>
-        /// <returns>Constructed object.</returns>
         [Obsolete("Legacy serialization support is deprecated since .NET 8", DiagnosticId = "SYSLIB0051")]
         protected PSSecurityException(SerializationInfo info,
                            StreamingContext context)
@@ -35,8 +31,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="message"></param>
-        /// <returns>Constructed object.</returns>
         public PSSecurityException(string message)
             : base(message)
         {
@@ -50,9 +44,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="message"></param>
-        /// <param name="innerException"></param>
-        /// <returns>Constructed object.</returns>
         public PSSecurityException(string message,
                                 Exception innerException)
             : base(message, innerException)
@@ -85,7 +76,6 @@ namespace System.Management.Automation
         private ErrorRecord _errorRecord;
 
         
-        /// <value></value>
         public override string Message
         {
             get { return _message; }

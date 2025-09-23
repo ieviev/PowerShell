@@ -11,9 +11,6 @@ using System.Windows.Media;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <content>
-    /// Partial class implementation for ScalableImage control.
-    /// </content>
     [SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public partial class ScalableImage : FrameworkElement
     {
@@ -30,8 +27,6 @@ namespace Microsoft.Management.UI.Internal
         #region Overrides
 
         
-        /// <param name="finalSize">The final area within the parent that this element should use to arrange itself and its children.</param>
-        /// <returns>The actual size used to render the control.</returns>
         protected override Size ArrangeOverride(Size finalSize)
         {
             // If a vector is provided, specify that the control will use all available area \\
@@ -44,7 +39,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="drawingContext">An instance of <see cref="System.Windows.Media.DrawingContext"/> used to render the control.</param>
         protected override void OnRender(DrawingContext drawingContext)
         {
             Rect renderArea = new Rect(this.RenderSize);
@@ -67,8 +61,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="layoutSlotSize">An instance of <see cref="System.Windows.Size"/> used for calculating an additional clip.</param>
-        /// <returns>Geometry to use as an additional clip in case when element is larger than available space.</returns>
         protected override Geometry GetLayoutClip(Size layoutSlotSize)
         {
             return ClipToBounds ? base.GetLayoutClip(layoutSlotSize) : null;

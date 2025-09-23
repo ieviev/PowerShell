@@ -12,7 +12,6 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
         private string commandName;
 
         
-        /// <param name="commandName">The name for the command needing help.</param>
         public HelpNeededEventArgs(string commandName)
         {
             this.commandName = commandName;

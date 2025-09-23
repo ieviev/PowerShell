@@ -32,36 +32,24 @@ namespace System.Management.Automation
     internal static class AstTypeInference
     {
         
-        /// <param name="ast">The ast to infer the type from.</param>
-        /// <returns>List of inferred typenames.</returns>
         public static IList<PSTypeName> InferTypeOf(Ast ast)
         {
             return InferTypeOf(ast, TypeInferenceRuntimePermissions.None);
         }
 
         
-        /// <param name="ast">The ast to infer the type from.</param>
-        /// <param name="evalPermissions">The runtime usage permissions allowed during type inference.</param>
-        /// <returns>List of inferred typenames.</returns>
         public static IList<PSTypeName> InferTypeOf(Ast ast, TypeInferenceRuntimePermissions evalPermissions)
         {
             return InferTypeOf(ast, PowerShell.Create(RunspaceMode.CurrentRunspace), evalPermissions);
         }
 
         
-        /// <param name="ast">The ast to infer the type from.</param>
-        /// <param name="powerShell">The instance of powershell to use for expression evaluation needed for type inference.</param>
-        /// <returns>List of inferred typenames.</returns>
         public static IList<PSTypeName> InferTypeOf(Ast ast, PowerShell powerShell)
         {
             return InferTypeOf(ast, powerShell, TypeInferenceRuntimePermissions.None);
         }
 
         
-        /// <param name="ast">The ast to infer the type from.</param>
-        /// <param name="powerShell">The instance of powershell to user for expression evaluation needed for type inference.</param>
-        /// <param name="evalPersmissions">The runtime usage permissions allowed during type inference.</param>
-        /// <returns>List of inferred typenames.</returns>
         public static IList<PSTypeName> InferTypeOf(Ast ast, PowerShell powerShell, TypeInferenceRuntimePermissions evalPersmissions)
         {
             var context = new TypeInferenceContext(powerShell);
@@ -69,10 +57,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="ast">The ast to infer the type from.</param>
-        /// <param name="context">The current type inference context.</param>
-        /// <param name="evalPersmissions">The runtime usage permissions allowed during type inference.</param>
-        /// <returns>List of inferred typenames.</returns>
         internal static IList<PSTypeName> InferTypeOf(
             Ast ast,
             TypeInferenceContext context,
@@ -114,7 +98,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="powerShell">The instance of powershell to use for expression evaluation needed for type inference.</param>
         public TypeInferenceContext(PowerShell powerShell)
         {
             Diagnostics.Assert(powerShell.Runspace != null, "Callers are required to ensure we have a runspace");
@@ -1443,10 +1426,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="commandAst">The ast to infer types from.</param>
-        /// <param name="cmdletInfo">The cmdletInfo.</param>
-        /// <param name="pseudoBinding">Pseudo bindings of parameters.</param>
-        /// <returns>List of inferred type names.</returns>
         private List<PSTypeName> InferTypesFromObjectCmdlets(CommandAst commandAst, CmdletInfo cmdletInfo, PseudoBindingInfo pseudoBinding)
         {
             var inferredTypes = new List<PSTypeName>(16);
@@ -2509,8 +2488,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="inferredTypes">The inferred types all the items in the array.</param>
-        /// <returns>The inferred strongly typed array type.</returns>
         private static PSTypeName GetArrayType(IEnumerable<PSTypeName> inferredTypes)
         {
             PSTypeName foundType = null;
@@ -2563,8 +2540,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="enumerableType">The type to infer enumerated item type from.</param>
-        /// <returns>The inferred enumerated item type.</returns>
         private static Type GetMostSpecificEnumeratedItemType(Type enumerableType)
         {
             if (enumerableType.IsArray)
@@ -2624,21 +2599,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="interfaceType">The interface to test.</param>
-        /// <param name="hasSeenNonGeneric">
-        /// A reference to a value indicating whether a non-generic enumerable type has been
-        /// seen. If <see paramref="interfaceType"/> is a non-generic enumerable type this
-        /// value will be set to <see langword="true"/>.
-        /// </param>
-        /// <param name="hasSeenDictionaryEnumerator">
-        /// A reference to a value indicating whether <see cref="IDictionaryEnumerator"/> has been
-        /// seen. If <paramref name="interfaceType"/> is a <see cref="IDictionaryEnumerator"/> this
-        /// value will be set to <see langword="true"/>.
-        /// </param>
-        /// <returns>
-        /// The value of <paramref name="interfaceType"/> if it can be used to infer a specific
-        /// enumerated type, otherwise <see langword="null"/>.
-        /// </returns>
         private static Type GetGenericCollectionLikeInterface(
             Type interfaceType,
             ref bool hasSeenNonGeneric,
@@ -2757,10 +2717,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="enumerableTypes">
-        /// The potentially enumerable types to infer enumerated type from.
-        /// </param>
-        /// <returns>The enumerated item types.</returns>
         internal static IEnumerable<PSTypeName> GetInferredEnumeratedTypes(IEnumerable<PSTypeName> enumerableTypes)
         {
             foreach (PSTypeName maybeEnumerableType in enumerableTypes)

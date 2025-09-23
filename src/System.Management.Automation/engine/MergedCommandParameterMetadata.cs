@@ -12,12 +12,6 @@ namespace System.Management.Automation
     internal class MergedCommandParameterMetadata
     {
         
-        /// <param name="metadata">
-        /// The metadata to replace in this object.
-        /// </param>
-        /// <returns>
-        /// A list of the merged parameter metadata that was added.
-        /// </returns>
         internal List<MergedCompiledCommandParameter> ReplaceMetadata(MergedCommandParameterMetadata metadata)
         {
             var result = new List<MergedCompiledCommandParameter>();
@@ -51,20 +45,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="parameterMetadata">
-        /// The compiled metadata for the type to be merged.
-        /// </param>
-        /// <param name="binderAssociation">
-        /// The type of binder that the CommandProcessor will use to bind
-        /// the parameters for <paramref name="parameterMetadata"/>
-        /// </param>
-        /// <returns>
-        /// A collection of the merged parameter metadata that was added.
-        /// </returns>
-        /// <exception cref="MetadataException">
-        /// If a parameter name or alias described in the <paramref name="parameterMetadata"/> already
-        /// exists.
-        /// </exception>
         internal Collection<MergedCompiledCommandParameter> AddMetadataForBinder(
             InternalParameterMetadata parameterMetadata,
             ParameterBinderAssociation binderAssociation)
@@ -177,21 +157,6 @@ namespace System.Management.Automation
         private string _defaultParameterSetName;
 
         
-        /// <param name="parameterSetName">
-        /// The name of the parameter set to add.
-        /// </param>
-        /// <returns>
-        /// The index of the parameter set name. If the name didn't already exist the
-        /// name gets added and the new index is returned. If the name already exists
-        /// the index of the existing name is returned.
-        /// </returns>
-        /// <remarks>
-        /// The nextAvailableParameterSetIndex is incremented if the parameter set name
-        /// is added.
-        /// </remarks>
-        /// <exception cref="ParsingMetadataException">
-        /// If more than uint.MaxValue parameter-sets are defined for the command.
-        /// </exception>
         private int AddParameterSetToMap(string parameterSetName)
         {
             int index = -1;
@@ -229,15 +194,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="defaultParameterSetName">
-        /// The default parameter set name.
-        /// </param>
-        /// <returns>
-        /// The bit flag for the default parameter set.
-        /// </returns>
-        /// <exception cref="ParsingMetadataException">
-        /// If more than uint.MaxValue parameter-sets are defined for the command.
-        /// </exception>
         internal uint GenerateParameterSetMappingFromMetadata(string defaultParameterSetName)
         {
             // First clear the parameter set map
@@ -304,12 +260,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="parameterSet">
-        /// The parameter set to get the name for.
-        /// </param>
-        /// <returns>
-        /// The name of the specified parameter set.
-        /// </returns>
         internal string GetParameterSetName(uint parameterSet)
         {
             string result = _defaultParameterSetName;
@@ -355,9 +305,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="key"></param>
-        /// <param name="dict"></param>
-        /// <returns></returns>
         private static string RetrieveParameterNameForAlias(
             string key,
             IDictionary<string, MergedCompiledCommandParameter> dict)
@@ -377,27 +324,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="name">
-        /// The name of the parameter.
-        /// </param>
-        /// <param name="throwOnParameterNotFound">
-        /// If true and a matching parameter is not found, an exception will be
-        /// throw. If false and a matching parameter is not found, null is returned.
-        /// </param>
-        /// <param name="tryExactMatching">
-        /// If true we do exact matching, otherwise we do not.
-        /// </param>
-        /// <param name="invocationInfo">
-        /// The invocation information about the code being run.
-        /// </param>
-        /// <returns>
-        /// The a collection of the metadata associated with the parameters that
-        /// match the specified name. If no matches were found, an empty collection
-        /// is returned.
-        /// </returns>
-        /// <exception cref="ArgumentException">
-        /// If <paramref name="name"/> is null or empty.
-        /// </exception>
         internal MergedCompiledCommandParameter GetMatchingParameter(
             string name,
             bool throwOnParameterNotFound,
@@ -534,12 +460,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="parameterSetFlag">
-        /// The bit representing the parameter set from which the parameters should be retrieved.
-        /// </param>
-        /// <returns>
-        /// A collection of all the parameters in the specified parameter set.
-        /// </returns>
         internal Collection<MergedCompiledCommandParameter> GetParametersInParameterSet(uint parameterSetFlag)
         {
             Collection<MergedCompiledCommandParameter> result =
@@ -587,12 +507,6 @@ namespace System.Management.Automation
     internal class MergedCompiledCommandParameter
     {
         
-        /// <param name="parameter">
-        /// The metadata for a parameter.
-        /// </param>
-        /// <param name="binderAssociation">
-        /// The type of binder that should be used to bind the parameter.
-        /// </param>
         internal MergedCompiledCommandParameter(
                 CompiledCommandParameter parameter,
                 ParameterBinderAssociation binderAssociation)

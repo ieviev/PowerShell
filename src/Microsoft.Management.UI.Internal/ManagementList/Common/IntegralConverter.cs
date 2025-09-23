@@ -16,15 +16,6 @@ namespace Microsoft.Management.UI.Internal
     public class IntegralConverter : IMultiValueConverter
     {
         
-        /// <param name="values">
-        /// The first value is the source.  The second is the factor.
-        /// </param>
-        /// <param name="targetType">The parameter is not used.</param>
-        /// <param name="parameter">The padding to subtract from the first value.</param>
-        /// <param name="culture">The parameter is not used.</param>
-        /// <returns>
-        /// The integral value.
-        /// </returns>
         public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             ArgumentNullException.ThrowIfNull(values);
@@ -64,11 +55,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="value">The parameter is not used.</param>
-        /// <param name="targetTypes">The parameter is not used.</param>
-        /// <param name="parameter">The parameter is not used.</param>
-        /// <param name="culture">The parameter is not used.</param>
-        /// <returns>The parameter is not used.</returns>
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, System.Globalization.CultureInfo culture)
         {
             throw new NotImplementedException();

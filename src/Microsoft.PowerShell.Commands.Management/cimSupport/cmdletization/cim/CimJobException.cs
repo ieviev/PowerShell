@@ -23,22 +23,17 @@ namespace Microsoft.PowerShell.Cmdletization.Cim
         }
 
         
-        /// <param name="message">The message that describes the error.</param>
         public CimJobException(string message) : this(message, null)
         {
         }
 
         
-        /// <param name="message">The message that describes the error.</param>
-        /// <param name="inner">The exception that is the cause of the current exception, or a null reference if no inner exception is specified.</param>
         public CimJobException(string message, Exception inner) : base(message, inner)
         {
             InitializeErrorRecord(null, "CimJob_ExternalError", ErrorCategory.NotSpecified);
         }
 
         
-        /// <param name="info">The <see cref="SerializationInfo"/> that holds the serialized object data about the exception being thrown.</param>
-        /// <param name="context">The <see cref="StreamingContext"/> that contains contextual information about the source or destination.</param>
         [Obsolete("Legacy serialization support is deprecated since .NET 8", DiagnosticId = "SYSLIB0051")] 
         protected CimJobException(
             SerializationInfo info,

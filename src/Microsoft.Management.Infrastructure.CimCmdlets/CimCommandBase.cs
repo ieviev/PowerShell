@@ -21,8 +21,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
     internal class ParameterDefinitionEntry
     {
         
-        /// <param name="parameterSetName"></param>
-        /// <param name="mandatory"></param>
         internal ParameterDefinitionEntry(string parameterSetName, bool mandatory)
         {
             this.IsMandatory = mandatory;
@@ -40,7 +38,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
     internal class ParameterSetEntry
     {
         
-        /// <param name="mandatoryParameterCount"></param>
         internal ParameterSetEntry(uint mandatoryParameterCount)
         {
             this.MandatoryParameterCount = mandatoryParameterCount;
@@ -49,7 +46,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="toClone"></param>
         internal ParameterSetEntry(ParameterSetEntry toClone)
         {
             this.MandatoryParameterCount = toClone.MandatoryParameterCount;
@@ -58,8 +54,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="mandatoryParameterCount"></param>
-        /// <param name="mandatory"></param>
         internal ParameterSetEntry(uint mandatoryParameterCount, bool isDefault)
         {
             this.MandatoryParameterCount = mandatoryParameterCount;
@@ -97,8 +91,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
     internal class ParameterBinder
     {
         
-        /// <param name="parameters"></param>
-        /// <param name="sets"></param>
         internal ParameterBinder(
             Dictionary<string, HashSet<ParameterDefinitionEntry>> parameters,
             Dictionary<string, ParameterSetEntry> sets)
@@ -150,8 +142,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="parameterName"></param>
-        /// <exception cref="PSArgumentException">Throw if conflict parameter was set.</exception>
         internal void SetParameter(string parameterName, bool isBeginProcess)
         {
             DebugHelper.WriteLogEx("ParameterName = {0}, isBeginProcess = {1}", 0, parameterName, isBeginProcess);
@@ -250,7 +240,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <returns></returns>
         internal string GetParameterSet()
         {
             DebugHelper.WriteLogEx();
@@ -363,7 +352,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="parameterName"></param>
         internal void SetParameter(object value, string parameterName)
         {
             // Ignore the null value being set,
@@ -425,7 +413,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="disposing">Whether it is directly called.</param>
         protected void Dispose(bool disposing)
         {
             // Check to see if Dispose has already been called.
@@ -602,9 +589,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         #region internal helper function
 
         
-        /// <param name="operationName"></param>
-        /// <param name="parameterName"></param>
-        /// <param name="authentication"></param>
         internal void ThrowInvalidAuthenticationTypeError(
             string operationName,
             string parameterName,
@@ -622,9 +606,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="operationName"></param>
-        /// <param name="parameterName"></param>
-        /// <param name="conflictParameterName"></param>
         internal void ThrowConflictParameterWasSet(
             string operationName,
             string parameterName,
@@ -664,9 +645,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="psCredentials"></param>
-        /// <param name="passwordAuthentication"></param>
-        /// <returns></returns>
         internal CimCredential CreateCimCredentials(PSCredential psCredentials,
             PasswordAuthenticationMechanism passwordAuthentication,
             string operationName,

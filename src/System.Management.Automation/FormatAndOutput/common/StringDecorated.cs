@@ -26,7 +26,6 @@ namespace System.Management.Automation.Internal
         }
 
         
-        /// <param name="text">The input string.</param>
         public StringDecorated(string text)
         {
             _text = text;
@@ -34,23 +33,18 @@ namespace System.Management.Automation.Internal
         }
 
         
-        /// <returns>Boolean if the string contains decoration.</returns>
         public bool IsDecorated => _isDecorated;
 
         
-        /// <returns>Length of content sans escape sequences.</returns>
         public int ContentLength => PlainText.Length;
 
         
-        /// <returns>Rendered string based on automatic output rendering.</returns>
         public override string ToString() => ToString(
             PSStyle.Instance.OutputRendering == OutputRendering.PlainText
                 ? OutputRendering.PlainText
                 : OutputRendering.Ansi);
 
         
-        /// <param name="outputRendering">Specify how to render the text content.</param>
-        /// <returns>Rendered string based on outputRendering.</returns>
         public string ToString(OutputRendering outputRendering)
         {
             if (outputRendering == OutputRendering.Host)
@@ -98,10 +92,6 @@ namespace System.Management.Automation.Internal
         internal static readonly Regex AnsiRegex = new Regex($"{GraphicsRegex}|{CsiRegex}|{HyperlinkRegex}", RegexOptions.Compiled);
 
         
-        /// <returns>
-        /// A dictionary with the key being the starting index of an escape sequence,
-        /// and the value being the length of the escape sequence.
-        /// </returns>
         internal Dictionary<int, int>? EscapeSequenceRanges
         {
             get
@@ -120,7 +110,6 @@ namespace System.Management.Automation.Internal
         }
 
         
-        /// <param name="text">The input string.</param>
         public ValueStringDecorated(string text)
         {
             _text = text;
@@ -130,23 +119,18 @@ namespace System.Management.Automation.Internal
         }
 
         
-        /// <returns>Boolean if the string contains decoration.</returns>
         public bool IsDecorated => _isDecorated;
 
         
-        /// <returns>Length of content sans escape sequences.</returns>
         public int ContentLength => PlainText.Length;
 
         
-        /// <returns>Rendered string based on automatic output rendering.</returns>
         public override string ToString() => ToString(
             PSStyle.Instance.OutputRendering == OutputRendering.PlainText
                 ? OutputRendering.PlainText
                 : OutputRendering.Ansi);
 
         
-        /// <param name="outputRendering">Specify how to render the text content.</param>
-        /// <returns>Rendered string based on outputRendering.</returns>
         public string ToString(OutputRendering outputRendering)
         {
             if (outputRendering == OutputRendering.Host)

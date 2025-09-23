@@ -25,7 +25,6 @@ namespace Microsoft.Management.UI.Internal
         #region Structors
 
         
-        /// <param name="owner">The owner of the automation peer.</param>
         public ExtendedFrameworkElementAutomationPeer(FrameworkElement owner)
             : base(owner)
         {
@@ -33,8 +32,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="owner">The owner of the automation peer.</param>
-        /// <param name="controlType">The control type of the element that is associated with the automation peer.</param>
         public ExtendedFrameworkElementAutomationPeer(FrameworkElement owner, AutomationControlType controlType)
             : this(owner)
         {
@@ -42,9 +39,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="owner">The owner of the automation peer.</param>
-        /// <param name="controlType">The control type of the element that is associated with the automation peer.</param>
-        /// <param name="isControlElement">Whether the element should show in the logical tree.</param>
         public ExtendedFrameworkElementAutomationPeer(FrameworkElement owner, AutomationControlType controlType, bool isControlElement)
             : this(owner, controlType)
         {
@@ -56,21 +50,18 @@ namespace Microsoft.Management.UI.Internal
         #region Overrides
 
         
-        /// <returns>The class name.</returns>
         protected override string GetClassNameCore()
         {
             return this.Owner.GetType().Name;
         }
 
         
-        /// <returns>Returns the control type of the element that is associated with the automation peer.</returns>
         protected override AutomationControlType GetAutomationControlTypeCore()
         {
             return this.controlType;
         }
 
         
-        /// <returns>This method always returns true.</returns>
         protected override bool IsControlElementCore()
         {
             return this.isControlElement;

@@ -147,7 +147,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <returns></returns>
         private CimGetCimClass CreateOperationAgent()
         {
             CimGetCimClass cimGetCimClass = new();

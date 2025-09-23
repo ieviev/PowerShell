@@ -14,21 +14,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
     internal sealed class CimWriteProgress : CimBaseAction
     {
         
-        /// <param name="activity">
-        ///  Activity identifier of the given activity
-        /// </param>
-        /// <param name="currentOperation">
-        /// current operation description of the given activity
-        /// </param>
-        /// <param name="statusDescription">
-        /// current status description of the given activity
-        /// </param>
-        /// <param name="percentageCompleted">
-        /// percentage completed of the given activity
-        /// </param>
-        /// <param name="secondsRemaining">
-        /// how many seconds remained for the given activity
-        /// </param>
         public CimWriteProgress(
             string theActivity,
             int theActivityID,
@@ -54,7 +39,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="cmdlet"></param>
         public override void Execute(CmdletOperationBase cmdlet)
         {
             DebugHelper.WriteLog(

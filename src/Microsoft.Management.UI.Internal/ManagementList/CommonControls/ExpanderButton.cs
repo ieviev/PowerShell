@@ -33,7 +33,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="e">The event data that describes the property that changed, as well as old and new values.</param>
         protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
         {
             base.OnPropertyChanged(e);
@@ -45,7 +44,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="args">The event data that describes the property that changed, as well as old and new values.</param>
         protected void OnIsCheckedChanged(DependencyPropertyChangedEventArgs args)
         {
             if (AutomationPeer.ListenerExists(AutomationEvents.PropertyChanged))
@@ -75,7 +73,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="args">The event data that describes getting keyboard focus.</param>
         protected override void OnGotKeyboardFocus(KeyboardFocusChangedEventArgs args)
         {
             SetToolTip();
@@ -83,7 +80,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="args">The event data that describes losing keyboard focus.</param>
         protected override void OnLostKeyboardFocus(KeyboardFocusChangedEventArgs args)
         {
             if (this.ToolTip is ToolTip toolTip)

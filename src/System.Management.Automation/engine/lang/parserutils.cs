@@ -213,8 +213,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="value">The int to convert.</param>
-        /// <returns>The reference equivalent.</returns>
         internal static object IntToObject(int value)
         {
             if (value < _MaxCache && value >= _MinCache)
@@ -233,10 +231,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="obj"></param>
-        /// <param name="errorPosition">The position to use for error reporting.</param>
-        /// <returns></returns>
-        /// <exception cref="RuntimeException">The result could not be represented as an integer.</exception>
         internal static int FixNum(object obj, IScriptExtent errorPosition)
         {
             obj = PSObject.Base(obj);
@@ -269,13 +263,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="lval">Left operand.</param>
-        /// <param name="rval">Right operand.</param>
-        /// <param name="op">Name of the operation method to perform.</param>
-        /// <param name="errorPosition">The position to use for error reporting.</param>
-        /// <param name="errorOp">The string to use in error messages representing the op.</param>
-        /// <returns>The result of the operation.</returns>
-        /// <exception cref="RuntimeException">An error occurred performing the operation, see inner exception.</exception>
         internal static object ImplicitOp(object lval, object rval, string op, IScriptExtent errorPosition, string errorOp)
         {
             // Get the base object. At somepoint, we may allow users to dynamically extend
@@ -690,21 +677,12 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="context">The execution context to use.</param>
-        /// <param name="errorPosition">The position to use for error reporting.</param>
-        /// <param name="lval">Left operand.</param>
-        /// <returns>The result of the operator.</returns>
         internal static object UnaryJoinOperator(ExecutionContext context, IScriptExtent errorPosition, object lval)
         {
             return JoinOperator(context, errorPosition, lval, string.Empty);
         }
 
         
-        /// <param name="context">The execution context to use.</param>
-        /// <param name="errorPosition">The position to use for error reporting.</param>
-        /// <param name="lval">Left operand.</param>
-        /// <param name="rval">Right operand.</param>
-        /// <returns>The result of the operator.</returns>
         internal static object JoinOperator(ExecutionContext context, IScriptExtent errorPosition, object lval, object rval)
         {
             string separator = PSObject.ToStringParser(context, rval);
@@ -723,9 +701,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="lval">The object on which to start.</param>
-        /// <param name="rval">The object on which to stop.</param>
-        /// <returns>The array of objects.</returns>
         internal static object RangeOperator(object lval, object rval)
         {
             var lbase = PSObject.Base(lval);
@@ -750,9 +725,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="lval">The object on which to start.</param>
-        /// <param name="rval">The object on which to stop.</param>
-        /// <returns>The enumerator.</returns>
         internal static IEnumerator GetRangeEnumerator(object lval, object rval)
         {
             var lbase = PSObject.Base(lval);
@@ -804,12 +776,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="context">The execution context in which to evaluate the expression.</param>
-        /// <param name="errorPosition">The position to use for error reporting.</param>
-        /// <param name="lval">The object on which to replace the values.</param>
-        /// <param name="rval">The replacement description.</param>
-        /// <param name="ignoreCase">True for -ireplace/-replace, false for -creplace.</param>
-        /// <returns>The result of the operator.</returns>
         internal static object ReplaceOperator(ExecutionContext context, IScriptExtent errorPosition, object lval, object rval, bool ignoreCase)
         {
             object pattern = string.Empty;
@@ -953,11 +919,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="context">The execution context to use.</param>
-        /// <param name="errorPosition">The position to use for error reporting.</param>
-        /// <param name="left">Left operand.</param>
-        /// <param name="right">Right operand.</param>
-        /// <returns>The result of the operator.</returns>
         internal static object IsOperator(ExecutionContext context, IScriptExtent errorPosition, object left, object right)
         {
             object lval = PSObject.Base(left);
@@ -992,11 +953,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="context">The execution context to use.</param>
-        /// <param name="errorPosition">The position to use for error reporting.</param>
-        /// <param name="left">Left operand.</param>
-        /// <param name="right">Right operand.</param>
-        /// <returns>The result of the operator.</returns>
         internal static object IsNotOperator(ExecutionContext context, IScriptExtent errorPosition, object left, object right)
         {
             object lval = PSObject.Base(left);
@@ -1031,12 +987,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="context">The execution context to use.</param>
-        /// <param name="errorPosition">The position to use for error reporting.</param>
-        /// <param name="lval">Left operand.</param>
-        /// <param name="rval">Right operand.</param>
-        /// <param name="operator">The operator.</param>
-        /// <returns>The result of the operator.</returns>
         internal static object LikeOperator(ExecutionContext context, IScriptExtent errorPosition, object lval, object rval, TokenKind @operator)
         {
             var wcp = rval as WildcardPattern;
@@ -1074,13 +1024,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="context">The execution context to use.</param>
-        /// <param name="errorPosition">The position to use for error reporting.</param>
-        /// <param name="lval">Left operand.</param>
-        /// <param name="rval">Right operand.</param>
-        /// <param name="ignoreCase">Ignore case?</param>
-        /// <param name="notMatch">True for -notmatch, false for -match.</param>
-        /// <returns>The result of the operator.</returns>
         internal static object MatchOperator(ExecutionContext context, IScriptExtent errorPosition, object lval, object rval, bool notMatch, bool ignoreCase)
         {
             RegexOptions reOptions = ignoreCase ? RegexOptions.IgnoreCase : RegexOptions.None;
@@ -1205,13 +1148,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="context">The execution context to use.</param>
-        /// <param name="errorPosition">The position to use for error reporting.</param>
-        /// <param name="left">Left operand.</param>
-        /// <param name="right">Right operand.</param>
-        /// <param name="ignoreCase">Ignore case?</param>
-        /// <param name="contains">True for -contains, false for -notcontains.</param>
-        /// <returns>The result of the operator.</returns>
         internal static object ContainsOperator(ExecutionContext context, IScriptExtent errorPosition, object left, object right, bool contains, bool ignoreCase)
         {
             IEnumerator list = LanguagePrimitives.GetEnumerator(left);
@@ -1260,9 +1196,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="patternString">The string to find the pattern for.</param>
-        /// <param name="options">The options used to create the regex.</param>
-        /// <returns>New or cached Regex.</returns>
         internal static Regex NewRegex(string patternString, RegexOptions options)
         {
             var subordinateRegexCache = s_regexCache.GetOrAdd(options, s_subordinateRegexCacheCreationDelegate);
@@ -1292,11 +1225,6 @@ namespace System.Management.Automation
         private const int MaxRegexCache = 1000;
 
         
-        /// <param name="context">The execution context used to see if the pipeline is stopping.</param>
-        /// <param name="errorPosition">The position to use for error reporting.</param>
-        /// <param name="enumerator">THe enumerator to advance.</param>
-        /// <exception cref="RuntimeException">An error occurred moving to the next element in the enumeration.</exception>
-        /// <returns>True if the move succeeded.</returns>
         internal static bool MoveNext(ExecutionContext context, IScriptExtent errorPosition, IEnumerator enumerator)
         {
             try
@@ -1327,9 +1255,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="errorPosition">The position to use for error reporting.</param>
-        /// <param name="enumerator">The enumerator to read from.</param>
-        /// <returns></returns>
         internal static object Current(IScriptExtent errorPosition, IEnumerator enumerator)
         {
             try
@@ -1356,8 +1281,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="obj">The object we want to retrieve the type's full name from.</param>
-        /// <returns>The obj's type full name.</returns>
         internal static string GetTypeFullName(object obj)
         {
             if (obj == null)
@@ -1379,16 +1302,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="errorPosition">The position to use for error reporting.</param>
-        /// <param name="target">The object to call the method on. It shouldn't be a PSObject.</param>
-        /// <param name="methodName">The name of the method to call.</param>
-        /// <param name="invocationConstraints">Invocation constraints.</param>
-        /// <param name="paramArray">The arguments to pass to the method.</param>
-        /// <param name="callStatic">Set to true if you want to call a static method.</param>
-        /// <param name="valueToSet">If not automation null, then this must be a settable property.</param>
-        /// <exception cref="RuntimeException">Wraps the exception returned from the method call.</exception>
-        /// <exception cref="FlowControlException">Internal exception from a flow control statement.</exception>
-        /// <returns></returns>
         internal static object CallMethod(
             IScriptExtent errorPosition,
             object target,
@@ -1651,17 +1564,6 @@ namespace System.Management.Automation
     internal static class InterpreterError
     {
         
-        /// <param name="targetObject">The target object for this exception.</param>
-        /// <param name="exceptionType">Type of exception to build.</param>
-        /// <param name="errorPosition">The position to use for error reporting.</param>
-        /// <param name="resourceIdAndErrorId">
-        /// ResourceID to look up template message, and also ErrorID
-        /// </param>
-        /// <param name="resourceString">
-        /// Resource string that holds the error message
-        /// </param>
-        /// <param name="args">Insertion parameters to message.</param>
-        /// <returns>A new instance of the specified exception type.</returns>
         internal static RuntimeException NewInterpreterException(object targetObject,
             Type exceptionType, IScriptExtent errorPosition, string resourceIdAndErrorId, string resourceString, params object[] args)
         {
@@ -1669,18 +1571,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="targetObject">The object associated with the problem.</param>
-        /// <param name="exceptionType">Type of exception to build.</param>
-        /// <param name="errorPosition">The position to use for error reporting.</param>
-        /// <param name="resourceIdAndErrorId">
-        /// ResourceID to look up template message, and also ErrorID
-        /// </param>
-        /// <param name="resourceString">
-        /// Resource string which holds the error message
-        /// </param>
-        /// <param name="innerException">Inner exception.</param>
-        /// <param name="args">Insertion parameters to message.</param>
-        /// <returns>New instance of an interpreter exception.</returns>
         internal static RuntimeException NewInterpreterExceptionWithInnerException(object targetObject,
             Type exceptionType, IScriptExtent errorPosition, string resourceIdAndErrorId, string resourceString, Exception innerException, params object[] args)
         {
@@ -1748,12 +1638,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="exceptionType">Type of exception to build.</param>
-        /// <param name="errorPosition">The position to use for error reporting.</param>
-        /// <param name="message">Message.</param>
-        /// <param name="errorId">ErrorID.</param>
-        /// <param name="innerException">Inner exception.</param>
-        /// <returns>New instance of ParseException.</returns>
         internal static RuntimeException NewInterpreterExceptionByMessage(
             Type exceptionType, IScriptExtent errorPosition, string message, string errorId, Exception innerException)
         {

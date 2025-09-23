@@ -60,7 +60,6 @@ namespace Microsoft.PowerShell.Commands
         #endregion Command code
 
         
-        /// <value></value>
         protected override bool ProviderSupportsShouldProcess
         {
             get
@@ -70,13 +69,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="context">
-        /// The context under which the command is running.
-        /// </param>
-        /// <returns>
-        /// An object representing the dynamic parameters for the cmdlet or null if there
-        /// are none.
-        /// </returns>
         internal override object GetDynamicParameters(CmdletProviderContext context)
         {
             if (Path != null && Path.Length > 0)

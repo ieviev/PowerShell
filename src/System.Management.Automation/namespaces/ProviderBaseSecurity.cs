@@ -11,19 +11,6 @@ namespace System.Management.Automation.Provider
         #region ISecurityDescriptorCmdletProvider method wrappers
 
         
-        /// <param name="path">
-        /// The path to the item to retrieve the security descriptor from.
-        /// </param>
-        /// <param name="sections">
-        /// Specifies the parts of a security descriptor to retrieve.
-        /// </param>
-        /// <param name="context">
-        /// The context under which this method is being called.
-        /// </param>
-        /// <returns>
-        /// Nothing. An instance of an object that represents the security descriptor
-        /// for the item specified by the path should be written to the context.
-        /// </returns>
         internal void GetSecurityDescriptor(
             string path,
             AccessControlSections sections,
@@ -44,19 +31,6 @@ namespace System.Management.Automation.Provider
         }
 
         
-        /// <param name="path">
-        /// The path to the item to set the new security descriptor on.
-        /// </param>
-        /// <param name="securityDescriptor">
-        /// The new security descriptor for the item.
-        /// </param>
-        /// <param name="context">
-        /// The context under which this method is being called.
-        /// </param>
-        /// <returns>
-        /// Nothing. The security descriptor object that was set should be written
-        /// to the context.
-        /// </returns>
         internal void SetSecurityDescriptor(
             string path,
             ObjectSecurity securityDescriptor,

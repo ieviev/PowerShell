@@ -8,11 +8,6 @@ using Dbg = System.Management.Automation.Diagnostics;
 namespace System.Management.Automation
 {
     
-    /// <remarks>
-    /// ProgressRecords are passed to <see cref="System.Management.Automation.Cmdlet.WriteProgress(ProgressRecord)"/>,
-    /// which, according to user preference, forwards that information on to the host for rendering to the user.
-    /// </remarks>
-    /// <seealso cref="System.Management.Automation.Cmdlet.WriteProgress(ProgressRecord)"/>
     [DataContract]
     public
     class ProgressRecord
@@ -20,15 +15,6 @@ namespace System.Management.Automation
         #region Public API
 
         
-        /// <param name="activityId">
-        /// A unique numeric key that identifies the activity to which this record applies.
-        /// </param>
-        /// <param name="activity">
-        /// A description of the activity for which progress is being reported.
-        /// </param>
-        /// <param name="statusDescription">
-        /// A description of the status of the activity.
-        /// </param>
         public
         ProgressRecord(int activityId, string activity, string statusDescription)
         {
@@ -55,9 +41,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="activityId">
-        /// A unique numeric key that identifies the activity to which this record applies.
-        /// </param>
         public
         ProgressRecord(int activityId)
         {
@@ -72,7 +55,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="other"></param>
         internal ProgressRecord(ProgressRecord other)
         {
             this.activity = other.activity;
@@ -97,16 +79,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <remarks>
-        /// Used to allow chaining of progress records (such as when one installation invokes a child installation). UI:
-        /// normally not directly visible except as already displayed as its own activity. Usually a sub-activity will be
-        /// positioned below and to the right of its parent.
-        ///
-        /// A negative value (the default) indicates that the activity is not a subordinate.
-        ///
-        /// May not be the same as ActivityId.
-        /// 
-        /// </remarks>
         public
         int
         ParentActivityId
@@ -128,10 +100,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <remarks>
-        /// States the overall intent of whats being accomplished, such as "Recursively removing item c:\temp." Typically
-        /// displayed in conjunction with a progress bar.
-        /// </remarks>
         public
         string
         Activity
@@ -217,9 +185,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <remarks>
-        /// A value less than 0 means "don't display a time remaining."
-        /// </remarks>
         public
         int
         SecondsRemaining
@@ -259,11 +224,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <returns>
-        /// "parent = a id = b act = c stat = d cur = e pct = f sec = g type = h" where
-        /// a, b, c, d, e, f, and g are the values of ParentActivityId, ActivityId, Activity, StatusDescription,
-        /// CurrentOperation, PercentComplete, SecondsRemaining and RecordType properties.
-        /// </returns>
         public override
         string
         ToString()
@@ -323,14 +283,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="startTime">When did the operation start.</param>
-        /// <param name="expectedDuration">How long does the operation usually take.</param>
-        /// <returns>Estimated percentage complete of the operation (always between 0 and 99% - never returns 100%).</returns>
-        /// <exception cref="ArgumentOutOfRangeException">
-        /// Thrown when
-        /// 1) <paramref name="startTime"/> is in the future
-        /// 2) <paramref name="expectedDuration"/> is negative or zero
-        /// </exception>
         internal static int GetPercentageComplete(DateTime startTime, TimeSpan expectedDuration)
         {
             DateTime now = DateTime.UtcNow;
@@ -385,16 +337,6 @@ namespace System.Management.Automation
         #region Serialization / deserialization for remoting
 
         
-        /// <param name="progressAsPSObject">PSObject to rehydrate.</param>
-        /// <returns>
-        /// ProgressRecord rehydrated from a PSObject property bag
-        /// </returns>
-        /// <exception cref="ArgumentNullException">
-        /// Thrown if the PSObject is null.
-        /// </exception>
-        /// <exception cref="System.Management.Automation.Remoting.PSRemotingDataStructureException">
-        /// Thrown when the PSObject is not in the expected format
-        /// </exception>
         internal static ProgressRecord FromPSObjectForRemoting(PSObject progressAsPSObject)
         {
             if (progressAsPSObject == null)
@@ -418,7 +360,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <returns>This object as a PSObject property bag.</returns>
         internal PSObject ToPSObjectForRemoting()
         {
             // Activity used to be mandatory but that's no longer the case.

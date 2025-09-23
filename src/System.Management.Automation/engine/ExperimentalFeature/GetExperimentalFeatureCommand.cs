@@ -34,10 +34,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <remarks>
-        /// Engine features come before module features.
-        /// Within engine features and module features, features are ordered by name.
-        /// </remarks>
         private static (int, string) GetSortingString(ExperimentalFeature feature)
         {
             return ExperimentalFeature.EngineSource.Equals(feature.Source, StringComparison.OrdinalIgnoreCase)

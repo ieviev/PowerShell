@@ -87,7 +87,6 @@ namespace Microsoft.PowerShell.CustomNamedPipeConnection
         { }
 
         
-        /// <param name="procId">Target process Id for pipe.</param>
         public NamedPipeClient(int procId)
         {
             PipeName = CreateProcessPipeName(
@@ -99,8 +98,6 @@ namespace Microsoft.PowerShell.CustomNamedPipeConnection
         #region Static methods
 
         
-        /// <param name="proc">Process object.</param>
-        /// <returns>Pipe name.</returns>
         private static string CreateProcessPipeName(System.Diagnostics.Process proc)
         {
             System.Text.StringBuilder pipeNameBuilder = new System.Text.StringBuilder();
@@ -133,7 +130,6 @@ namespace Microsoft.PowerShell.CustomNamedPipeConnection
         #region Public methods
 
         
-        /// <param name="timeout">Connection attempt timeout in milliseconds.</param>
         public void Connect(
             int timeout)
         {
@@ -306,9 +302,6 @@ namespace Microsoft.PowerShell.CustomNamedPipeConnection
         #region Public Methods
 
         
-        /// <param name="textWriter">Named pipe text stream writer.</param>
-        /// <param name="textReader">Named pipe text stream reader.</param>
-        /// <exception cref="TimeoutException">Connect attempt times out or is aborted.</exception>
         public void Connect(
             out StreamWriter textWriter,
             out StreamReader textReader)

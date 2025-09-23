@@ -1081,15 +1081,12 @@ namespace Microsoft.PowerShell.Commands
         public string Pattern { get; set; }
 
         
-        /// <returns></returns>
         public override string ToString()
         {
             return ToString(null);
         }
 
         
-        /// <param name="directory"></param>
-        /// <returns></returns>
         private string ToString(string directory)
         {
             string displayPath = (directory != null) ? RelativePath(directory) : _path;
@@ -1097,7 +1094,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <returns></returns>
         internal string GetNodeText()
         {
             string nodeText = string.Empty;
@@ -1117,8 +1113,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="directory">The directory base the truncation on.</param>
-        /// <returns>The relative path that was produced.</returns>
         private string RelativePath(string directory)
         {
             string relPath = _path;
@@ -1141,9 +1135,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="text"></param>
-        /// <param name="displaypath"></param>
-        /// <returns></returns>
         private string FormatLine(string text, string displaypath)
         {
             if (_path.Equals(inputStream))

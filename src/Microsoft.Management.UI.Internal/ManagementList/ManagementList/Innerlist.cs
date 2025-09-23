@@ -25,9 +25,6 @@ using System.Windows.Threading;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <content>
-    /// Partial class implementation for InnerList control.
-    /// </content>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling")]
     public partial class InnerList : System.Windows.Controls.ListView
     {
@@ -114,9 +111,6 @@ namespace Microsoft.Management.UI.Internal
         #region public methods
 
         
-        /// <param name="item">Object to scroll.</param>
-        /// <remarks>This method overrides ListBox.ScrollIntoView(), which throws NullReferenceException when VirtualizationMode is set to Recycling.
-        /// This implementation uses a workaround recommended by the WPF team.</remarks>
         public new void ScrollIntoView(object item)
         {
             Dispatcher.BeginInvoke(
@@ -134,7 +128,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="item">Object to scroll.</param>
         public void ScrollIntoViewFromTop(object item)
         {
             if (this.Items.Count > 0)
@@ -151,13 +144,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="column">
-        /// The column to sort
-        /// </param>
-        /// <param name="shouldScrollIntoView">
-        /// Indicates whether the SelectedItem should be scrolled into view.
-        /// </param>
-        /// <exception cref="ArgumentNullException">The specified value is a null reference.</exception>
         public void ApplySort(InnerListColumn column, bool shouldScrollIntoView)
         {
             ArgumentNullException.ThrowIfNull(column);
@@ -199,7 +185,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <returns>A list of data descriptions for the columns that are not the primary sort column.</returns>
         private List<UIPropertyGroupDescription> GetDescriptionsForSorting()
         {
             List<UIPropertyGroupDescription> dataDescriptions = new List<UIPropertyGroupDescription>();
@@ -247,8 +232,6 @@ namespace Microsoft.Management.UI.Internal
 
         #region protected methods
         
-        /// <param name="oldValue">Previous ItemsSource.</param>
-        /// <param name="newValue">Current ItemsSource.</param>
         protected override void OnItemsSourceChanged(System.Collections.IEnumerable oldValue, System.Collections.IEnumerable newValue)
         {
             base.OnItemsSourceChanged(oldValue, newValue);
@@ -279,7 +262,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="e">Event parameters.</param>
         protected override void OnItemsChanged(NotifyCollectionChangedEventArgs e)
         {
             base.OnItemsChanged(e);
@@ -304,7 +286,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="e">The event args.</param>
         protected override void OnKeyDown(KeyEventArgs e)
         {
             base.OnKeyDown(e);
@@ -328,8 +309,6 @@ namespace Microsoft.Management.UI.Internal
         #region static private methods
 
         
-        /// <param name="obj">InnerList whose property is being changed.</param>
-        /// <param name="e">Event arguments.</param>
         private static void InnerList_OnViewChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
             InnerList thisList = (InnerList)obj;
@@ -348,7 +327,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <returns>The exception to be thrown when using Items.</returns>
         private static NotSupportedException GetItemsException()
         {
             return new NotSupportedException(
@@ -362,7 +340,6 @@ namespace Microsoft.Management.UI.Internal
 
         #region instance private methods
         
-        /// <param name="newValue">ITemsSource passed to OnItemsSourceChanged.</param>
         private void SetCollectionView(System.Collections.IEnumerable newValue)
         {
             if (newValue == null)
@@ -384,7 +361,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="value">InnerList object.</param>
         private void UpdateViewAndCollectionView(IEnumerable value)
         {
             Debug.Assert(value != null, "value should be non-null");
@@ -508,7 +484,6 @@ namespace Microsoft.Management.UI.Internal
         #region Copy Helpers
 
         
-        /// <returns>A tab-delimited string representing the data of the selected rows.</returns>
         protected internal string GetClipboardTextForSelectedItems()
         {
             StringBuilder text = new StringBuilder();
@@ -559,8 +534,6 @@ namespace Microsoft.Management.UI.Internal
         #endregion ApplicationCommands.Copy
 
         
-        /// <param name="sender">Typically a GridViewColumnHeader.</param>
-        /// <param name="e">The event information.</param>
         private void Header_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key != Key.Space && e.Key != Key.Enter)
@@ -574,8 +547,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="sender">Typically a GridViewColumnHeader.</param>
-        /// <param name="e">The event information.</param>
         private void Header_Click(object sender, RoutedEventArgs e)
         {
             // Call HeaderActionProcess when mouse clicked on the header
@@ -583,7 +554,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="sender">Typically a GridViewColumnHeader.</param>
         private void HeaderActionProcess(object sender)
         {
             GridViewColumnHeader header = (GridViewColumnHeader)sender;
@@ -605,7 +575,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <returns>ContextMenu of List Columns.</returns>
         private ContextMenu GetListColumnsContextMenu()
         {
             this.contextMenu = new ContextMenu();
@@ -617,7 +586,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <returns>True if it is successfully set up.</returns>
         private bool SetColumnPickerContextMenuItem()
         {
             MenuItem columnPicker = new MenuItem();

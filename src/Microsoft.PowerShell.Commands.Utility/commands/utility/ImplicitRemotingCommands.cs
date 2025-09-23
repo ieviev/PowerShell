@@ -824,8 +824,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="commandName"></param>
-        /// <returns></returns>
         private bool IsCommandNameAllowedForImport(string commandName)
         {
             if (string.IsNullOrEmpty(commandName))
@@ -1044,8 +1042,6 @@ namespace Microsoft.PowerShell.Commands
         #region CommandInfo-specific rehydration helpers
 
         
-        /// <param name="name">Name to validate.</param>
-        /// <returns><see langword="true"/> if the name is safe; <see langword="false"/> otherwise.</returns>
         private static bool IsSafeNameOrIdentifier(string name)
         {
             // '.' is needed for stuff like net.exe
@@ -1059,16 +1055,12 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="parameterName">Parameter name to validate.</param>
-        /// <returns><see langword="true"/> if the name is safe; <see langword="false"/> otherwise.</returns>
         private static bool IsSafeParameterName(string parameterName)
         {
             return IsSafeNameOrIdentifier(parameterName) && !parameterName.Contains(':');
         }
 
         
-        /// <param name="type">Type to validate.</param>
-        /// <returns><see langword="true"/> if the type is safe; <see langword="false"/> otherwise.</returns>
         private static bool IsSafeTypeConstraint(Type type)
         {
             if (type == null)
@@ -1107,8 +1099,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="commandMetadata">Command metadata to verify.</param>
-        /// <returns><see langword="true"/> if the command metadata is safe; <see langword="false"/> otherwise.</returns>
         private bool IsSafeCommandMetadata(CommandMetadata commandMetadata)
         {
             if (!IsCommandNameMatchingParameters(commandMetadata.Name))
@@ -1332,10 +1322,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="name2commandMetadata">Dictionary where rehydrated CommandMetadata are going to be stored.</param>
-        /// <param name="alias2resolvedCommandName">Dictionary mapping alias names to resolved command names.</param>
-        /// <param name="remoteCommandInfo">Remote (deserialized) CommandInfo object.</param>
-        /// <returns>CommandMetadata equivalents.</returns>
         private void AddRemoteCommandMetadata(
             Dictionary<string, CommandMetadata> name2commandMetadata,
             Dictionary<string, string> alias2resolvedCommandName,
@@ -1529,7 +1515,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <returns>(rehydrated) CommandMetadata objects.</returns>
         internal List<ExtendedTypeDefinition> GetRemoteFormatData()
         {
             if ((this.FormatTypeName == null) || (this.FormatTypeName.Length == 0) ||
@@ -1621,15 +1606,12 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="sender"></param>
-        /// <param name="eventArgs"></param>
         private void HandleHostCallReceived(object sender, RemoteDataEventArgs<RemoteHostCall> eventArgs)
         {
             System.Management.Automation.Runspaces.Internal.ClientRemotePowerShell.ExitHandler(sender, eventArgs);
         }
 
         
-        /// <returns>(rehydrated) CommandMetadata objects.</returns>
         internal List<CommandMetadata> GetRemoteCommandMetadata(out Dictionary<string, string> alias2resolvedCommandName)
         {
             bool isReleaseCandidateBackcompatibilityMode =
@@ -1791,14 +1773,6 @@ namespace Microsoft.PowerShell.Commands
         internal Guid ModuleGuid { get; } = Guid.NewGuid();
 
         
-        /// <param name="moduleRootDirectory">Base directory for the module.</param>
-        /// <param name="moduleNamePrefix">FileName prefix for module files.</param>
-        /// <param name="encoding">Encoding of generated files.</param>
-        /// <param name="force">Whether to overwrite files.</param>
-        /// <param name="listOfCommandMetadata">Remote commands to generate proxies for.</param>
-        /// <param name="alias2resolvedCommandName">Dictionary mapping alias names to resolved command names.</param>
-        /// <param name="listOfFormatData">Remote format data to generate format.ps1xml for.</param>
-        /// <returns>Paths to generated files.</returns>
         internal List<string> GenerateProxyModule(
             DirectoryInfo moduleRootDirectory,
             string moduleNamePrefix,
@@ -1871,7 +1845,6 @@ namespace Microsoft.PowerShell.Commands
         #region Code generation helpers
 
         
-        /// <returns>Connection URI associated with the remote runspace.</returns>
         private string GetConnectionString()
         {
             if (_remoteRunspaceInfo.Runspace.ConnectionInfo is WSManConnectionInfo connectionInfo)
@@ -2487,7 +2460,6 @@ function Get-PSImplicitRemotingSession
         private const string ContainerIdParameterTemplate = @"-ContainerId '{0}' ";
 
         
-        /// <returns></returns>
         private string GenerateConnectionStringForNewRunspace()
         {
             if (_remoteRunspaceInfo.Runspace.ConnectionInfo is not WSManConnectionInfo connectionInfo)
@@ -2926,15 +2898,6 @@ function Get-PSImplicitRemotingClientSideParameters
         #endregion
 
         
-        /// <param name="moduleRootDirectory">Base directory for the module.</param>
-        /// <param name="fileNamePrefix">Filename prefix for module files.</param>
-        /// <param name="encoding">Encoding of generated files.</param>
-        /// <param name="force">Whether to overwrite files.</param>
-        /// <param name="listOfCommandMetadata">Remote commands to generate proxies for.</param>
-        /// <param name="alias2resolvedCommandName">Dictionary mapping alias names to resolved command names.</param>
-        /// <param name="listOfFormatData">Remote format data to generate format.ps1xml for.</param>
-        /// <param name="certificate">Certificate with which to sign the format files.</param>
-        /// <returns>Path to the created files.</returns>
         internal List<string> GenerateProxyModule(
             DirectoryInfo moduleRootDirectory,
             string fileNamePrefix,

@@ -14,12 +14,6 @@ namespace System.Management.Automation
         #region Constructors
 
         
-        /// <param name="sessionState">
-        /// An instance of SessionState that the APIs should work against.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="sessionState"/> is null.
-        /// </exception>
         internal SessionState(SessionStateInternal sessionState)
         {
             if (sessionState == null)
@@ -31,18 +25,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="context">
-        /// An instance of ExecutionContext whose EngineSessionState represents the parent session state.
-        /// </param>
-        /// <param name="createAsChild">
-        /// True if the session state should be created as a child session state.
-        /// </param>
-        /// <param name="linkToGlobal">
-        /// True if the session state should be linked to the global scope.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="context"/> is null.
-        /// </exception>
         internal SessionState(ExecutionContext context, bool createAsChild, bool linkToGlobal)
         {
             if (context == null)
@@ -144,8 +126,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="origin">The command origin value to check against...</param>
-        /// <param name="valueToCheck">The object to check.</param>
         public static void ThrowIfNotVisible(CommandOrigin origin, object valueToCheck)
         {
             SessionStateException exception;
@@ -208,9 +188,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="origin">The origin to check against.</param>
-        /// <param name="valueToCheck">The object to check.</param>
-        /// <returns>Returns true if the object is visible, false otherwise.</returns>
         public static bool IsVisible(CommandOrigin origin, object valueToCheck)
         {
             if (origin == CommandOrigin.Internal)
@@ -224,9 +201,6 @@ namespace System.Management.Automation
             return true;
         }
         
-        /// <param name="origin">The origin to check against.</param>
-        /// <param name="variable">The variable to check.</param>
-        /// <returns>Returns true if the object is visible, false otherwise.</returns>
         public static bool IsVisible(CommandOrigin origin, PSVariable variable)
         {
             if (origin == CommandOrigin.Internal)
@@ -239,9 +213,6 @@ namespace System.Management.Automation
             return (variable.Visibility == SessionStateEntryVisibility.Public);
         }
         
-        /// <param name="origin">The origin to check against.</param>
-        /// <param name="commandInfo">The command to check.</param>
-        /// <returns>Returns true if the object is visible, false otherwise.</returns>
         public static bool IsVisible(CommandOrigin origin, CommandInfo commandInfo)
         {
             if (origin == CommandOrigin.Internal)

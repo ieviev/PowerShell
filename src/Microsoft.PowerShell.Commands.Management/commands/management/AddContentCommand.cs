@@ -16,12 +16,6 @@ namespace Microsoft.PowerShell.Commands
         #region protected members
 
         
-        /// <param name="contentHolders">
-        /// The content holders that contain the writers to be moved.
-        /// </param>
-        /// <exception cref="ProviderInvocationException">
-        /// If calling Seek on the content writer throws an exception.
-        /// </exception>
         internal override void SeekContentPosition(List<ContentHolder> contentHolders)
         {
             foreach (ContentHolder holder in contentHolders)
@@ -57,12 +51,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="path">
-        /// The path to the item on which the content will be added.
-        /// </param>
-        /// <returns>
-        /// True if the action should continue or false otherwise.
-        /// </returns>
         internal override bool CallShouldProcess(string path)
         {
             string action = NavigationResources.AddContentAction;

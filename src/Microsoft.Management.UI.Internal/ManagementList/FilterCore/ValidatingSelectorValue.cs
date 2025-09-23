@@ -9,9 +9,6 @@ using System.Windows.Data;
 namespace Microsoft.Management.UI.Internal
 {
     
-    /// <typeparam name="T">
-    /// The generic parameter.
-    /// </typeparam>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public class ValidatingSelectorValue<T> : ValidatingValueBase
     {
@@ -21,7 +18,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="source">The source to initialize from.</param>
         public ValidatingSelectorValue(ValidatingSelectorValue<T> source)
             : base(source)
         {
@@ -72,12 +68,6 @@ namespace Microsoft.Management.UI.Internal
         private int selectedIndex;
 
         
-        /// <remarks>
-        /// If you set SelectedIndex to a value less that -1, an
-        /// ArgumentException is thrown. If you set SelectedIndex to a
-        /// value equal or greater than the number of child elements,
-        /// the value is ignored.
-        /// </remarks>
         public int SelectedIndex
         {
             get
@@ -159,7 +149,6 @@ namespace Microsoft.Management.UI.Internal
 
         #region Public Methods
 
-        /// <inheritdoc cref="IDeepCloneable.DeepClone()" />
         public override object DeepClone()
         {
             return new ValidatingSelectorValue<T>(this);
@@ -168,27 +157,12 @@ namespace Microsoft.Management.UI.Internal
         #region Validate
 
         
-        /// <returns>
-        /// Returns a DataErrorInfoValidationResult which indicates the validation state
-        /// of the object.
-        /// </returns>
         protected override DataErrorInfoValidationResult Validate()
         {
             return this.Validate(SelectedIndexPropertyName);
         }
 
         
-        /// <param name="columnName">
-        /// The name of the property whose error message will be checked.
-        /// </param>
-        /// <returns>
-        /// Returns a DataErrorInfoValidationResult which indicates
-        /// the validation state of the property.
-        /// </returns>
-        /// <exception cref="ArgumentException">
-        /// <paramref name="columnName"/> may only be
-        /// <see cref="SelectedIndexPropertyName"/>.
-        /// </exception>
         protected override DataErrorInfoValidationResult Validate(string columnName)
         {
             if (!columnName.Equals(SelectedIndexPropertyName, StringComparison.CurrentCulture))
@@ -209,12 +183,6 @@ namespace Microsoft.Management.UI.Internal
         #region NotifySelectedValueChanged
 
         
-        /// <param name="oldValue">
-        /// The previous selected value.
-        /// </param>
-        /// <param name="newValue">
-        /// The current selected value.
-        /// </param>
         protected void NotifySelectedValueChanged(T oldValue, T newValue)
         {
             EventHandler<PropertyChangedEventArgs<T>> eh = this.SelectedValueChanged;

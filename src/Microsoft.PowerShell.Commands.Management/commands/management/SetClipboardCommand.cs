@@ -67,8 +67,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="contentList">The content to store into the clipboard.</param>
-        /// <param name="append">If true, appends to clipboard instead of overwriting.</param>
         private void SetClipboardContent(List<string> contentList, bool append)
         {
             string setClipboardShouldProcessTarget;
@@ -122,7 +120,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="content">The content to store into the clipboard.</param>
         private void SetClipboardContent(string content)
         {
             if (!AsOSC52)

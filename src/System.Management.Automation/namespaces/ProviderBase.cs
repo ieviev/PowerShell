@@ -21,16 +21,6 @@ namespace System.Management.Automation.Provider
     public interface ICmdletProviderSupportsHelp
     {
         
-        /// <param name="helpItemName">
-        /// Name of command that the help is requested for.
-        /// </param>
-        /// <param name="path">
-        /// Full path to the current location of the user or the full path to
-        /// the location of the property that the user needs help about.
-        /// </param>
-        /// <returns>
-        /// The MAML help XML that should be presented to the user.
-        /// </returns>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Maml", Justification = "Maml is an acronym.")]
         string GetHelpMaml(string helpItemName, string path);
     }
@@ -38,12 +28,6 @@ namespace System.Management.Automation.Provider
     #region CmdletProvider
 
     
-    /// <remarks>
-    /// Although it is possible to derive from this base class to implement a Cmdlet Provider, in most
-    /// cases one should derive from <see cref="System.Management.Automation.Provider.ItemCmdletProvider"/>,
-    /// <see cref="System.Management.Automation.Provider.ContainerCmdletProvider"/>, or
-    /// <see cref ="System.Management.Automation.Provider.NavigationCmdletProvider"/>
-    /// </remarks>
     public abstract partial class CmdletProvider : IResourceSupplier
     {
         #region private data
@@ -71,12 +55,6 @@ namespace System.Management.Automation.Provider
         #endregion Trace object
 
         
-        /// <param name="providerInfoToSet">
-        /// The provider information that is stored by the Monad engine.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="providerInformation"/> is null.
-        /// </exception>
         internal void SetProviderInformation(ProviderInfo providerInfoToSet)
         {
             if (providerInfoToSet == null)
@@ -88,9 +66,6 @@ namespace System.Management.Automation.Provider
         }
 
         
-        /// <returns>
-        /// Whether the filter of the provider is set.
-        /// </returns>
         internal virtual bool IsFilterSet()
         {
             bool filterSet = !string.IsNullOrEmpty(Filter);
@@ -100,11 +75,6 @@ namespace System.Management.Automation.Provider
         #region CmdletProvider method wrappers
 
         
-        /// <exception cref="NotSupportedException">
-        /// On set, if the context contains credentials and the provider
-        /// doesn't support credentials, or if the context contains a filter
-        /// parameter and the provider does not support filters.
-        /// </exception>
         internal CmdletProviderContext Context
         {
             get
@@ -161,12 +131,6 @@ namespace System.Management.Automation.Provider
         }
 
         
-        /// <param name="providerInfo">
-        /// The information about the provider.
-        /// </param>
-        /// <param name="cmdletProviderContext">
-        /// The context under which this method is being called.
-        /// </param>
         internal ProviderInfo Start(ProviderInfo providerInfo, CmdletProviderContext cmdletProviderContext)
         {
             Context = cmdletProviderContext;
@@ -174,13 +138,6 @@ namespace System.Management.Automation.Provider
         }
 
         
-        /// <param name="cmdletProviderContext">
-        /// The context under which this method is being called.
-        /// </param>
-        /// <returns>
-        /// An object that has properties and fields decorated with
-        /// parsing attributes similar to a cmdlet class.
-        /// </returns>
         internal object StartDynamicParameters(CmdletProviderContext cmdletProviderContext)
         {
             Context = cmdletProviderContext;
@@ -189,16 +146,12 @@ namespace System.Management.Automation.Provider
         }
 
         
-        /// <param name="cmdletProviderContext">
-        /// The context under which this method is being called.
-        /// </param>
         internal void Stop(CmdletProviderContext cmdletProviderContext)
         {
             Context = cmdletProviderContext;
             Stop();
         }
 
-        /// <Content contentref="System.Management.Automation.Cmdlet.StopProcessing" />
         protected internal virtual void StopProcessing()
         {
         }
@@ -208,16 +161,6 @@ namespace System.Management.Automation.Provider
         #region IPropertyCmdletProvider method wrappers
 
         
-        /// <param name="path">
-        /// The path to the item to retrieve properties from.
-        /// </param>
-        /// <param name="providerSpecificPickList">
-        /// A list of properties that should be retrieved. If this parameter is null
-        /// or empty, all properties should be retrieved.
-        /// </param>
-        /// <param name="cmdletProviderContext">
-        /// The context under which this method is being called.
-        /// </param>
         internal void GetProperty(
             string path,
             Collection<string> providerSpecificPickList,
@@ -238,21 +181,6 @@ namespace System.Management.Automation.Provider
         }
 
         
-        /// <param name="path">
-        /// If the path was specified on the command line, this is the path
-        /// to the item to get the dynamic parameters for.
-        /// </param>
-        /// <param name="providerSpecificPickList">
-        /// A list of properties that should be retrieved. If this parameter is null
-        /// or empty, all properties should be retrieved.
-        /// </param>
-        /// <param name="cmdletProviderContext">
-        /// The context under which this method is being called.
-        /// </param>
-        /// <returns>
-        /// An object that has properties and fields decorated with
-        /// parsing attributes similar to a cmdlet class.
-        /// </returns>
         internal object GetPropertyDynamicParameters(
             string path,
             Collection<string> providerSpecificPickList,
@@ -269,16 +197,6 @@ namespace System.Management.Automation.Provider
         }
 
         
-        /// <param name="path">
-        /// The path to the item to set the properties on.
-        /// </param>
-        /// <param name="propertyValue">
-        /// A PSObject which contains a collection of the name, type, value
-        /// of the properties to be set.
-        /// </param>
-        /// <param name="cmdletProviderContext">
-        /// The context under which this method is being called.
-        /// </param>
         internal void SetProperty(
             string path,
             PSObject propertyValue,
@@ -299,21 +217,6 @@ namespace System.Management.Automation.Provider
         }
 
         
-        /// <param name="path">
-        /// If the path was specified on the command line, this is the path
-        /// to the item to get the dynamic parameters for.
-        /// </param>
-        /// <param name="propertyValue">
-        /// A PSObject which contains a collection of the name, type, value
-        /// of the properties to be set.
-        /// </param>
-        /// <param name="cmdletProviderContext">
-        /// The context under which this method is being called.
-        /// </param>
-        /// <returns>
-        /// An object that has properties and fields decorated with
-        /// parsing attributes similar to a cmdlet class.
-        /// </returns>
         internal object SetPropertyDynamicParameters(
             string path,
             PSObject propertyValue,
@@ -330,19 +233,6 @@ namespace System.Management.Automation.Provider
         }
 
         
-        /// <param name="path">
-        /// The path to the item from which the property should be cleared.
-        /// </param>
-        /// <param name="propertyName">
-        /// The name of the property that should be cleared.
-        /// </param>
-        /// <param name="cmdletProviderContext">
-        /// The context under which this method is being called.
-        /// </param>
-        /// <remarks>
-        /// Implement this method when you are providing access to a data store
-        /// that allows dynamic clearing of properties.
-        /// </remarks>
         internal void ClearProperty(
             string path,
             Collection<string> propertyName,
@@ -363,21 +253,6 @@ namespace System.Management.Automation.Provider
         }
 
         
-        /// <param name="path">
-        /// If the path was specified on the command line, this is the path
-        /// to the item to get the dynamic parameters for.
-        /// </param>
-        /// <param name="providerSpecificPickList">
-        /// A list of properties that should be cleared. If this parameter is null
-        /// or empty, all properties should be cleared.
-        /// </param>
-        /// <param name="cmdletProviderContext">
-        /// The context under which this method is being called.
-        /// </param>
-        /// <returns>
-        /// An object that has properties and fields decorated with
-        /// parsing attributes similar to a cmdlet class.
-        /// </returns>
         internal object ClearPropertyDynamicParameters(
             string path,
             Collection<string> providerSpecificPickList,
@@ -398,25 +273,6 @@ namespace System.Management.Automation.Provider
         #region IDynamicPropertyCmdletProvider
 
         
-        /// <param name="path">
-        /// The path to the item on which the new property should be created.
-        /// </param>
-        /// <param name="propertyName">
-        /// The name of the property that should be created.
-        /// </param>
-        /// <param name="propertyTypeName">
-        /// The type of the property that should be created.
-        /// </param>
-        /// <param name="value">
-        /// The new value of the property that should be created.
-        /// </param>
-        /// <param name="cmdletProviderContext">
-        /// The context under which this method is being called.
-        /// </param>
-        /// <remarks>
-        /// Implement this method when you are providing access to a data store
-        /// that allows dynamic creation of properties.
-        /// </remarks>
         internal void NewProperty(
             string path,
             string propertyName,
@@ -439,26 +295,6 @@ namespace System.Management.Automation.Provider
         }
 
         
-        /// <param name="path">
-        /// If the path was specified on the command line, this is the path
-        /// to the item to get the dynamic parameters for.
-        /// </param>
-        /// <param name="propertyName">
-        /// The name of the property that should be created.
-        /// </param>
-        /// <param name="propertyTypeName">
-        /// The type of the property that should be created.
-        /// </param>
-        /// <param name="value">
-        /// The new value of the property that should be created.
-        /// </param>
-        /// <param name="cmdletProviderContext">
-        /// The context under which this method is being called.
-        /// </param>
-        /// <returns>
-        /// An object that has properties and fields decorated with
-        /// parsing attributes similar to a cmdlet class.
-        /// </returns>
         internal object NewPropertyDynamicParameters(
             string path,
             string propertyName,
@@ -477,19 +313,6 @@ namespace System.Management.Automation.Provider
         }
 
         
-        /// <param name="path">
-        /// The path to the item on which the property should be removed.
-        /// </param>
-        /// <param name="propertyName">
-        /// The name of the property to be removed
-        /// </param>
-        /// <param name="cmdletProviderContext">
-        /// The context under which this method is being called.
-        /// </param>
-        /// <remarks>
-        /// Implement this method when you are providing access to a data store
-        /// that allows dynamic removal of properties.
-        /// </remarks>
         internal void RemoveProperty(
             string path,
             string propertyName,
@@ -510,20 +333,6 @@ namespace System.Management.Automation.Provider
         }
 
         
-        /// <param name="path">
-        /// If the path was specified on the command line, this is the path
-        /// to the item to get the dynamic parameters for.
-        /// </param>
-        /// <param name="propertyName">
-        /// The name of the property that should be removed.
-        /// </param>
-        /// <param name="cmdletProviderContext">
-        /// The context under which this method is being called.
-        /// </param>
-        /// <returns>
-        /// An object that has properties and fields decorated with
-        /// parsing attributes similar to a cmdlet class.
-        /// </returns>
         internal object RemovePropertyDynamicParameters(
             string path,
             string propertyName,
@@ -540,22 +349,6 @@ namespace System.Management.Automation.Provider
         }
 
         
-        /// <param name="path">
-        /// The path to the item on which the property should be renamed.
-        /// </param>
-        /// <param name="propertyName">
-        /// The name of the property that should be renamed.
-        /// </param>
-        /// <param name="newPropertyName">
-        /// The new name for the property.
-        /// </param>
-        /// <param name="cmdletProviderContext">
-        /// The context under which this method is being called.
-        /// </param>
-        /// <remarks>
-        /// Implement this method when you are providing access to a data store
-        /// that allows dynamic renaming of properties.
-        /// </remarks>
         internal void RenameProperty(
                     string path,
             string propertyName,
@@ -577,23 +370,6 @@ namespace System.Management.Automation.Provider
         }
 
         
-        /// <param name="path">
-        /// If the path was specified on the command line, this is the path
-        /// to the item to get the dynamic parameters for.
-        /// </param>
-        /// <param name="sourceProperty">
-        /// The name of the property that should be renamed.
-        /// </param>
-        /// <param name="destinationProperty">
-        /// The name of the property to rename it to.
-        /// </param>
-        /// <param name="cmdletProviderContext">
-        /// The context under which this method is being called.
-        /// </param>
-        /// <returns>
-        /// An object that has properties and fields decorated with
-        /// parsing attributes similar to a cmdlet class.
-        /// </returns>
         internal object RenamePropertyDynamicParameters(
             string path,
             string sourceProperty,
@@ -611,25 +387,6 @@ namespace System.Management.Automation.Provider
         }
 
         
-        /// <param name="sourcePath">
-        /// The path to the item from which the property should be copied.
-        /// </param>
-        /// <param name="sourceProperty">
-        /// The name of the property that should be copied.
-        /// </param>
-        /// <param name="destinationPath">
-        /// The path to the item to which the property should be copied.
-        /// </param>
-        /// <param name="destinationProperty">
-        /// The name of the property that should be copied to.
-        /// </param>
-        /// <param name="cmdletProviderContext">
-        /// The context under which this method is being called.
-        /// </param>
-        /// <remarks>
-        /// Implement this method when you are providing access to a data store
-        /// that allows dynamic copying of properties.
-        /// </remarks>
         internal void CopyProperty(
             string sourcePath,
             string sourceProperty,
@@ -652,26 +409,6 @@ namespace System.Management.Automation.Provider
         }
 
         
-        /// <param name="path">
-        /// If the path was specified on the command line, this is the path
-        /// to the item to get the dynamic parameters for.
-        /// </param>
-        /// <param name="sourceProperty">
-        /// The name of the property that should be copied.
-        /// </param>
-        /// <param name="destinationPath">
-        /// The path to the item to which the property should be copied.
-        /// </param>
-        /// <param name="destinationProperty">
-        /// The name of the property that should be copied to.
-        /// </param>
-        /// <param name="cmdletProviderContext">
-        /// The context under which this method is being called.
-        /// </param>
-        /// <returns>
-        /// An object that has properties and fields decorated with
-        /// parsing attributes similar to a cmdlet class.
-        /// </returns>
         internal object CopyPropertyDynamicParameters(
             string path,
             string sourceProperty,
@@ -690,25 +427,6 @@ namespace System.Management.Automation.Provider
         }
 
         
-        /// <param name="sourcePath">
-        /// The path to the item from which the property should be moved.
-        /// </param>
-        /// <param name="sourceProperty">
-        /// The name of the property that should be moved.
-        /// </param>
-        /// <param name="destinationPath">
-        /// The path to the item to which the property should be moved.
-        /// </param>
-        /// <param name="destinationProperty">
-        /// The name of the property that should be moved to.
-        /// </param>
-        /// <param name="cmdletProviderContext">
-        /// The context under which this method is being called.
-        /// </param>
-        /// <remarks>
-        /// Implement this method when you are providing access to a data store
-        /// that allows dynamic moving of properties.
-        /// </remarks>
         internal void MoveProperty(
             string sourcePath,
             string sourceProperty,
@@ -731,26 +449,6 @@ namespace System.Management.Automation.Provider
         }
 
         
-        /// <param name="path">
-        /// If the path was specified on the command line, this is the path
-        /// to the item to get the dynamic parameters for.
-        /// </param>
-        /// <param name="sourceProperty">
-        /// The name of the property that should be copied.
-        /// </param>
-        /// <param name="destinationPath">
-        /// The path to the item to which the property should be copied.
-        /// </param>
-        /// <param name="destinationProperty">
-        /// The name of the property that should be copied to.
-        /// </param>
-        /// <param name="cmdletProviderContext">
-        /// The context under which this method is being called.
-        /// </param>
-        /// <returns>
-        /// An object that has properties and fields decorated with
-        /// parsing attributes similar to a cmdlet class.
-        /// </returns>
         internal object MovePropertyDynamicParameters(
             string path,
             string sourceProperty,
@@ -773,15 +471,6 @@ namespace System.Management.Automation.Provider
         #region IContentCmdletProvider method wrappers
 
         
-        /// <param name="path">
-        /// The path to the item to retrieve content from.
-        /// </param>
-        /// <param name="cmdletProviderContext">
-        /// The context under which this method is being called.
-        /// </param>
-        /// <returns>
-        /// An instance of the IContentReader for the specified path.
-        /// </returns>
         internal IContentReader GetContentReader(
             string path,
             CmdletProviderContext cmdletProviderContext)
@@ -801,17 +490,6 @@ namespace System.Management.Automation.Provider
         }
 
         
-        /// <param name="path">
-        /// If the path was specified on the command line, this is the path
-        /// to the item to get the dynamic parameters for.
-        /// </param>
-        /// <param name="cmdletProviderContext">
-        /// The context under which this method is being called.
-        /// </param>
-        /// <returns>
-        /// An object that has properties and fields decorated with
-        /// parsing attributes similar to a cmdlet class.
-        /// </returns>
         internal object GetContentReaderDynamicParameters(
             string path,
             CmdletProviderContext cmdletProviderContext)
@@ -827,15 +505,6 @@ namespace System.Management.Automation.Provider
         }
 
         
-        /// <param name="path">
-        /// The path to the item to set content on.
-        /// </param>
-        /// <param name="cmdletProviderContext">
-        /// The context under which this method is being called.
-        /// </param>
-        /// <returns>
-        /// An instance of the IContentWriter for the specified path.
-        /// </returns>
         internal IContentWriter GetContentWriter(
             string path,
             CmdletProviderContext cmdletProviderContext)
@@ -855,17 +524,6 @@ namespace System.Management.Automation.Provider
         }
 
         
-        /// <param name="path">
-        /// If the path was specified on the command line, this is the path
-        /// to the item to get the dynamic parameters for.
-        /// </param>
-        /// <param name="cmdletProviderContext">
-        /// The context under which this method is being called.
-        /// </param>
-        /// <returns>
-        /// An object that has properties and fields decorated with
-        /// parsing attributes similar to a cmdlet class.
-        /// </returns>
         internal object GetContentWriterDynamicParameters(
             string path,
             CmdletProviderContext cmdletProviderContext)
@@ -881,12 +539,6 @@ namespace System.Management.Automation.Provider
         }
 
         
-        /// <param name="path">
-        /// The path to the item to clear the content from.
-        /// </param>
-        /// <param name="cmdletProviderContext">
-        /// The context under which this method is being called.
-        /// </param>
         internal void ClearContent(
             string path,
             CmdletProviderContext cmdletProviderContext)
@@ -906,17 +558,6 @@ namespace System.Management.Automation.Provider
         }
 
         
-        /// <param name="path">
-        /// If the path was specified on the command line, this is the path
-        /// to the item to get the dynamic parameters for.
-        /// </param>
-        /// <param name="cmdletProviderContext">
-        /// The context under which this method is being called.
-        /// </param>
-        /// <returns>
-        /// An object that has properties and fields decorated with
-        /// parsing attributes similar to a cmdlet class.
-        /// </returns>
         internal object ClearContentDynamicParameters(
             string path,
             CmdletProviderContext cmdletProviderContext)
@@ -938,20 +579,6 @@ namespace System.Management.Automation.Provider
         #region protected members
 
         
-        /// <param name="providerInfo">
-        /// The information about the provider that is being started.
-        /// </param>
-        /// <remarks>
-        /// The default implementation returns the ProviderInfo instance that
-        /// was passed.
-        ///
-        /// To have session state maintain persisted data on behalf of the provider,
-        /// the provider should derive from <see cref="System.Management.Automation.ProviderInfo"/>
-        /// and add any properties or
-        /// methods for the data it wishes to persist.  When Start gets called the
-        /// provider should construct an instance of its derived ProviderInfo using the
-        /// providerInfo that is passed in and return that new instance.
-        /// </remarks>
         protected virtual ProviderInfo Start(ProviderInfo providerInfo)
         {
             using (PSTransactionManager.GetEngineProtectionScope())
@@ -961,13 +588,6 @@ namespace System.Management.Automation.Provider
         }
 
         
-        /// <returns>
-        /// Overrides of this method should return an object that has properties and fields decorated with
-        /// parsing attributes similar to a cmdlet class or a
-        /// <see cref="System.Management.Automation.RuntimeDefinedParameterDictionary"/>.
-        ///
-        /// The default implementation returns null. (no additional parameters)
-        /// </returns>
         protected virtual object StartDynamicParameters()
         {
             using (PSTransactionManager.GetEngineProtectionScope())
@@ -977,12 +597,6 @@ namespace System.Management.Automation.Provider
         }
 
         
-        /// <remarks>
-        /// A provider should override this method to free up any resources that the provider
-        /// was using.
-        ///
-        /// The default implementation does nothing.
-        /// </remarks>
         protected virtual void Stop()
         {
             using (PSTransactionManager.GetEngineProtectionScope())
@@ -1071,10 +685,6 @@ namespace System.Management.Automation.Provider
         }
 
         
-        /// <remarks>
-        /// If a derived type of ProviderInfo was returned from the Start method, it
-        /// will be set here in all subsequent calls to the provider.
-        /// </remarks>
         protected internal ProviderInfo ProviderInfo
         {
             get
@@ -1119,15 +729,6 @@ namespace System.Management.Automation.Provider
         }
 
         
-        /// <remarks>
-        /// Gives the provider guidance on how vigorous it should be about performing
-        /// the operation. If true, the provider should do everything possible to perform
-        /// the operation. If false, the provider should attempt the operation but allow
-        /// even simple errors to terminate the operation.
-        /// For example, if the user tries to copy a file to a path that already exists and
-        /// the destination is read-only, if force is true, the provider should copy over
-        /// the existing read-only file. If force is false, the provider should write an error.
-        /// </remarks>
         public SwitchParameter Force
         {
             get
@@ -1220,19 +821,6 @@ namespace System.Management.Automation.Provider
 
         #region IResourceSupplier
         
-        /// <param name="baseName">
-        /// the base resource name
-        /// </param>
-        /// <param name="resourceId">
-        /// the resource id
-        /// </param>
-        /// <returns>
-        /// the resource string corresponding to baseName and resourceId
-        /// </returns>
-        /// <remarks>
-        /// When overriding this method, the resource string for the specified
-        /// resource should be retrieved from a localized resource assembly.
-        /// </remarks>
         public virtual string GetResourceString(string baseName, string resourceId)
         {
             using (PSTransactionManager.GetEngineProtectionScope())
@@ -1275,7 +863,6 @@ namespace System.Management.Automation.Provider
         #endregion IResourceSupplier
 
         #region ThrowTerminatingError
-        /// <Content contentref="System.Management.Automation.Cmdlet.ThrowTerminatingError" />
         [System.Diagnostics.CodeAnalysis.DoesNotReturn]
         public void ThrowTerminatingError(ErrorRecord errorRecord)
         {
@@ -1321,7 +908,6 @@ namespace System.Management.Automation.Provider
 
         #region User feedback mechanisms
 
-        /// <Content contentref="System.Management.Automation.Cmdlet.ShouldProcess" />
         public bool ShouldProcess(
             string target)
         {
@@ -1335,7 +921,6 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <Content contentref="System.Management.Automation.Cmdlet.ShouldProcess" />
         public bool ShouldProcess(
             string target,
             string action)
@@ -1350,7 +935,6 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <Content contentref="System.Management.Automation.Cmdlet.ShouldProcess" />
         public bool ShouldProcess(
             string verboseDescription,
             string verboseWarning,
@@ -1369,7 +953,6 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <Content contentref="System.Management.Automation.Cmdlet.ShouldProcess" />
         public bool ShouldProcess(
             string verboseDescription,
             string verboseWarning,
@@ -1390,7 +973,6 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <Content contentref="System.Management.Automation.Cmdlet.ShouldContinue" />
         public bool ShouldContinue(
             string query,
             string caption)
@@ -1405,7 +987,6 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <Content contentref="System.Management.Automation.Cmdlet.ShouldContinue" />
         public bool ShouldContinue(
             string query,
             string caption,
@@ -1450,7 +1031,6 @@ namespace System.Management.Automation.Provider
         }
         #endregion Transaction Support
 
-        /// <Content contentref="System.Management.Automation.Cmdlet.WriteVerbose" />
         public void WriteVerbose(string text)
         {
             using (PSTransactionManager.GetEngineProtectionScope())
@@ -1463,7 +1043,6 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <Content contentref="System.Management.Automation.Cmdlet.WriteWarning" />
         public void WriteWarning(string text)
         {
             using (PSTransactionManager.GetEngineProtectionScope())
@@ -1476,7 +1055,6 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <Content contentref="System.Management.Automation.Cmdlet.WriteProgress" />
         public void WriteProgress(ProgressRecord progressRecord)
         {
             using (PSTransactionManager.GetEngineProtectionScope())
@@ -1494,7 +1072,6 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <Content contentref="System.Management.Automation.Cmdlet.WriteDebug" />
         public void WriteDebug(string text)
         {
             using (PSTransactionManager.GetEngineProtectionScope())
@@ -1507,7 +1084,6 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <Content contentref="System.Management.Automation.Cmdlet.WriteInformation" />
         public void WriteInformation(InformationRecord record)
         {
             using (PSTransactionManager.GetEngineProtectionScope())
@@ -1520,7 +1096,6 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <Content contentref="System.Management.Automation.Cmdlet.WriteInformation" />
         public void WriteInformation(object messageData, string[] tags)
         {
             using (PSTransactionManager.GetEngineProtectionScope())
@@ -1534,15 +1109,6 @@ namespace System.Management.Automation.Provider
         }
 
         
-        /// <param name="item">
-        /// The item being written out.
-        /// </param>
-        /// <param name="path">
-        /// The path of the item being written out.
-        /// </param>
-        /// <param name="isContainer">
-        /// True if the item is a container, false otherwise.
-        /// </param>
         private void WriteObject(
             object item,
             string path,
@@ -1563,12 +1129,6 @@ namespace System.Management.Automation.Provider
         }
 
         
-        /// <param name="item">
-        /// The item being written out.
-        /// </param>
-        /// <param name="path">
-        /// The path of the item being written out.
-        /// </param>
         private void WriteObject(
             object item,
             string path)
@@ -1583,19 +1143,6 @@ namespace System.Management.Automation.Provider
         }
 
         
-        /// <param name="item">
-        /// The item to be wrapped.
-        /// </param>
-        /// <param name="path">
-        /// The path to the item.
-        /// </param>
-        /// <returns>
-        /// A PSObject that wraps the item and has path information attached
-        /// as notes.
-        /// </returns>
-        /// <exception cref="ArgumentNullException">
-        /// if <paramref name="item"/> is null.
-        /// </exception>
         private PSObject WrapOutputInPSObject(
             object item,
             string path)
@@ -1703,16 +1250,6 @@ namespace System.Management.Automation.Provider
         }
 
         
-        /// <param name="item">
-        /// The item to be written.
-        /// </param>
-        /// <param name="path">
-        /// The path of the item being written.
-        /// </param>
-        /// <param name="isContainer">
-        /// True if the item is a container, false otherwise.
-        /// </param>
-        /// 
         public void WriteItemObject(
             object item,
             string path,
@@ -1725,13 +1262,6 @@ namespace System.Management.Automation.Provider
         }
 
         
-        /// <param name="propertyValue">
-        /// The properties to be written.
-        /// </param>
-        /// <param name="path">
-        /// The path of the item being written.
-        /// </param>
-        /// 
         public void WritePropertyObject(
             object propertyValue,
             string path)
@@ -1743,13 +1273,6 @@ namespace System.Management.Automation.Provider
         }
 
         
-        /// <param name="securityDescriptor">
-        /// The Security Descriptor to be written.
-        /// </param>
-        /// <param name="path">
-        /// The path of the item from which the Security Descriptor was retrieved.
-        /// </param>
-        /// 
         public void WriteSecurityDescriptorObject(
             ObjectSecurity securityDescriptor,
             string path)
@@ -1760,7 +1283,6 @@ namespace System.Management.Automation.Provider
             }
         }
 
-        /// <Content contentref="System.Management.Automation.Cmdlet.WriteError" />
         public void WriteError(ErrorRecord errorRecord)
         {
             using (PSTransactionManager.GetEngineProtectionScope())

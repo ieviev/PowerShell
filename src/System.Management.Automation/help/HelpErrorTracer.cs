@@ -20,8 +20,6 @@ namespace System.Management.Automation
 
             private readonly HelpErrorTracer _helpTracer;
             
-            /// <param name="helpTracer"></param>
-            /// <param name="helpFile"></param>
             internal TraceFrame(HelpErrorTracer helpTracer, string helpFile)
             {
                 _helpTracer = helpTracer;
@@ -29,7 +27,6 @@ namespace System.Management.Automation
             }
 
             
-            /// <param name="errorRecord"></param>
             internal void TraceError(ErrorRecord errorRecord)
             {
                 if (_helpTracer.HelpSystem.VerboseHelpErrors)
@@ -37,7 +34,6 @@ namespace System.Management.Automation
             }
 
             
-            /// <param name="errorRecords"></param>
             internal void TraceErrors(Collection<ErrorRecord> errorRecords)
             {
                 if (_helpTracer.HelpSystem.VerboseHelpErrors)
@@ -84,8 +80,6 @@ namespace System.Management.Automation
         private readonly List<TraceFrame> _traceFrames = new List<TraceFrame>();
 
         
-        /// <param name="helpFile"></param>
-        /// <returns></returns>
         internal IDisposable Trace(string helpFile)
         {
             TraceFrame traceFrame = new TraceFrame(this, helpFile);
@@ -96,7 +90,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="errorRecord"></param>
         internal void TraceError(ErrorRecord errorRecord)
         {
             if (_traceFrames.Count == 0)
@@ -108,7 +101,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="errorRecords"></param>
         internal void TraceErrors(Collection<ErrorRecord> errorRecords)
         {
             if (_traceFrames.Count == 0)
@@ -133,7 +125,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <value></value>
         internal bool IsOn
         {
             get

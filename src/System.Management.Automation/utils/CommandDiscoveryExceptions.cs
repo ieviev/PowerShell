@@ -12,23 +12,6 @@ namespace System.Management.Automation
     public class CommandNotFoundException : RuntimeException
     {
         
-        /// <param name="commandName">
-        /// The name of the command that could not be found.
-        /// </param>
-        /// <param name="innerException">
-        /// The inner exception.
-        /// </param>
-        /// <param name="resourceStr">
-        /// This string is message template string
-        /// </param>
-        /// <param name="errorIdAndResourceId">
-        /// This string is the ErrorId passed to the ErrorRecord, and is also
-        /// the resourceId used to look up the message template string in
-        /// DiscoveryExceptions.txt.
-        /// </param>
-        /// <param name="messageArgs">
-        /// Additional arguments to format into the message.
-        /// </param>
         internal CommandNotFoundException(
             string commandName,
             Exception innerException,
@@ -45,27 +28,12 @@ namespace System.Management.Automation
         public CommandNotFoundException() : base() { }
 
         
-        /// <param name="message">
-        /// The message used in the exception.
-        /// </param>
         public CommandNotFoundException(string message) : base(message) { }
 
         
-        /// <param name="message">
-        /// The message used in the exception.
-        /// </param>
-        /// <param name="innerException">
-        /// An exception that led to this exception.
-        /// </param>
         public CommandNotFoundException(string message, Exception innerException) : base(message, innerException) { }
 
         
-        /// <param name="info">
-        /// serialization information
-        /// </param>
-        /// <param name="context">
-        /// streaming context
-        /// </param>
         [Obsolete("Legacy serialization support is deprecated since .NET 8", DiagnosticId = "SYSLIB0051")] 
         protected CommandNotFoundException(SerializationInfo info,
                                         StreamingContext context)
@@ -134,18 +102,6 @@ namespace System.Management.Automation
     public class ScriptRequiresException : RuntimeException
     {
         
-        /// <param name="commandName">
-        /// The name of the script containing the #requires statement.
-        /// </param>
-        /// <param name="requiresShellId">
-        /// The ID of the shell that is incompatible with the current shell.
-        /// </param>
-        /// <param name="requiresShellPath">
-        /// The path to the shell specified in the #requires -shellId statement.
-        /// </param>
-        /// <param name="errorId">
-        /// The error id for this exception.
-        /// </param>
         internal ScriptRequiresException(
             string commandName,
             string requiresShellId,
@@ -163,18 +119,6 @@ namespace System.Management.Automation
             this.SetErrorCategory(ErrorCategory.ResourceUnavailable);
         }
         
-        /// <param name="commandName">
-        /// The name of the script containing the #requires statement.
-        /// </param>
-        /// <param name="requiresPSVersion">
-        /// The Msh version that the script requires.
-        /// </param>
-        /// <param name="currentPSVersion">
-        /// The current Msh version
-        /// </param>
-        /// <param name="errorId">
-        /// The error id for this exception.
-        /// </param>
         internal ScriptRequiresException(
             string commandName,
             Version requiresPSVersion,
@@ -193,18 +137,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="commandName">
-        /// The name of the script containing the #requires statement.
-        /// </param>
-        /// <param name="missingItems">
-        /// The missing snap-ins/modules that the script requires.
-        /// </param>
-        /// /// <param name="forSnapins">
-        /// Indicates whether the error message needs to be constructed for missing snap-ins/ missing modules.
-        /// </param>
-        /// <param name="errorId">
-        /// The error id for this exception.
-        /// </param>
         internal ScriptRequiresException(
             string commandName,
             Collection<string> missingItems,
@@ -215,21 +147,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="commandName">
-        /// The name of the script containing the #requires statement.
-        /// </param>
-        /// <param name="missingItems">
-        /// The missing snap-ins/modules that the script requires.
-        /// </param>
-        /// /// <param name="forSnapins">
-        /// Indicates whether the error message needs to be constructed for missing snap-ins/ missing modules.
-        /// </param>
-        /// <param name="errorId">
-        /// The error id for this exception.
-        /// </param>
-        /// <param name="errorRecord">
-        /// The error Record for this exception.
-        /// </param>
         internal ScriptRequiresException(
             string commandName,
             Collection<string> missingItems,
@@ -249,12 +166,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="commandName">
-        /// The name of the script containing the #requires statement.
-        /// </param>
-        /// <param name="errorId">
-        /// The error id for this exception.
-        /// </param>
         internal ScriptRequiresException(
             string commandName,
             string errorId)
@@ -272,28 +183,13 @@ namespace System.Management.Automation
         public ScriptRequiresException() : base() { }
 
         
-        /// <param name="message">
-        /// The message used in the exception.
-        /// </param>
         public ScriptRequiresException(string message) : base(message) { }
 
         
-        /// <param name="message">
-        /// The message used in the exception.
-        /// </param>
-        /// <param name="innerException">
-        /// The exception that led to this exception.
-        /// </param>
         public ScriptRequiresException(string message, Exception innerException) : base(message, innerException) { }
 
         #region Serialization
         
-        /// <param name="info">
-        /// serialization information
-        /// </param>
-        /// <param name="context">
-        /// streaming context
-        /// </param>
         [Obsolete("Legacy serialization support is deprecated since .NET 8", DiagnosticId = "SYSLIB0051")] 
         protected ScriptRequiresException(SerializationInfo info,
                                         StreamingContext context)

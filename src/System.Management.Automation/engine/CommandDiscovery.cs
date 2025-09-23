@@ -23,9 +23,6 @@ namespace System.Management.Automation
     public class CommandLookupEventArgs : EventArgs
     {
         
-        /// <param name="commandName">The name of the command we're searching for.</param>
-        /// <param name="commandOrigin">The origin of the command internal or runspace (external).</param>
-        /// <param name="context">The execution context for this command.</param>
         internal CommandLookupEventArgs(string commandName, CommandOrigin commandOrigin, ExecutionContext context)
         {
             CommandName = commandName;
@@ -101,9 +98,6 @@ namespace System.Management.Automation
         #region ctor
 
         
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="context"/> is null.
-        /// </exception>
         internal CommandDiscovery(ExecutionContext context)
         {
             if (context == null)
@@ -116,12 +110,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="implementingType">
-        /// Type implementing the cmdlet
-        /// </param>
-        /// <returns>
-        /// True if the cmdlet is a special cmdlet that shouldn't be part of the discovery list. Or false otherwise.
-        /// </returns>
         private static bool IsSpecialCmdlet(Type implementingType)
         {
             // These commands should never be put in the discovery list.  They are an internal implementation
@@ -156,19 +144,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="name">
-        /// The name of the cmdlet to add.
-        /// </param>
-        /// <param name="newCmdletInfo">
-        /// The CmdletInfo to add.
-        /// </param>
-        /// <param name="isGlobal">
-        /// If true, the cmdlet is added to the Module Scope of the session state.
-        /// </param>
-        /// <exception cref="PSNotSupportedException">
-        /// If a cmdlet with the same module and cmdlet name already exists
-        /// but has a different implementing type.
-        /// </exception>
         internal CmdletInfo AddCmdletInfoToCache(string name, CmdletInfo newCmdletInfo, bool isGlobal)
         {
             if (string.IsNullOrEmpty(name))
@@ -192,15 +167,12 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="entry"></param>
         internal void AddSessionStateCmdletEntryToCache(SessionStateCmdletEntry entry)
         {
             AddSessionStateCmdletEntryToCache(entry, false);
         }
 
         
-        /// <param name="entry"></param>
-        /// <param name="local"></param>
         internal void AddSessionStateCmdletEntryToCache(SessionStateCmdletEntry entry, bool local)
         {
             if (!IsSpecialCmdlet(entry.ImplementingType))
@@ -215,26 +187,6 @@ namespace System.Management.Automation
         #region internal methods
 
         
-        /// <param name="commandName">
-        /// The command name to lookup.
-        /// </param>
-        /// <param name="commandOrigin">Location where the command was dispatched from.</param>
-        /// <param name="useLocalScope">
-        /// True if command processor should use local scope to execute the command,
-        /// False if not.  Null if command discovery should default to something reasonable
-        /// for the command discovered.
-        /// </param>
-        /// <param name="forCompletion">
-        /// True if this for parameter completion and script requirements should be ignored.
-        /// </param>
-        /// <returns>
-        /// </returns>
-        /// <exception cref="CommandNotFoundException">
-        /// If the command, <paramref name="commandName"/>, could not be found.
-        /// </exception>
-        /// <exception cref="System.Security.SecurityException">
-        /// If the security manager is preventing the command from running.
-        /// </exception>
         internal CommandProcessorBase LookupCommandProcessor(string commandName,
             CommandOrigin commandOrigin, bool? useLocalScope, bool forCompletion = false)
         {
@@ -387,27 +339,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="commandInfo">
-        /// The commandInfo for the command to lookup.
-        /// </param>
-        /// <param name="commandOrigin">Location where the command was dispatched from.</param>
-        /// <param name="useLocalScope">
-        /// True if command processor should use local scope to execute the command,
-        /// False if not.  Null if command discovery should default to something reasonable
-        /// for the command discovered.
-        /// </param>
-        /// <param name="forCompletion">
-        /// True if this for parameter completion and script requirements should be ignored.
-        /// </param>
-        /// <param name="sessionState">The session state the commandInfo should be run in.</param>
-        /// <returns>
-        /// </returns>
-        /// <exception cref="CommandNotFoundException">
-        /// If the command, <paramref name="commandName"/>, could not be found.
-        /// </exception>
-        /// <exception cref="System.Management.Automation.PSSecurityException">
-        /// If the security manager is preventing the command from running.
-        /// </exception>
         internal CommandProcessorBase LookupCommandProcessor(CommandInfo commandInfo,
             CommandOrigin commandOrigin, bool? useLocalScope, SessionStateInternal sessionState, bool forCompletion = false)
         {
@@ -585,17 +516,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="commandName">
-        /// The command name to lookup.
-        /// </param>
-        /// <returns>
-        /// An instance of a CommandInfo object that represents the
-        /// command. If the command is resolved as an alias, an AliasInfo
-        /// is returned with the ReferencedCommand info intact.
-        /// </returns>
-        /// <exception cref="CommandNotFoundException">
-        /// If the command, <paramref name="commandName"/>, could not be found.
-        /// </exception>
         internal CommandInfo LookupCommandInfo(string commandName)
         {
             return LookupCommandInfo(commandName, CommandOrigin.Internal);
@@ -1119,12 +1039,6 @@ namespace System.Management.Automation
         private readonly HashSet<string> _activePostCommand = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
         
-        /// <returns>
-        /// The contents of the PATH environment variable split on System.IO.Path.PathSeparator.
-        /// </returns>
-        /// <remarks>
-        /// The result is an ordered list of paths with paths starting with "." unresolved until lookup time.
-        /// </remarks>
         internal LookupPathCollection GetLookupDirectoryPaths()
         {
             LookupPathCollection result = new LookupPathCollection();
@@ -1252,18 +1166,6 @@ namespace System.Management.Automation
         private static string[] s_cachedPathExtCollectionWithPs1;
 
         
-        /// <param name="cmdletName">
-        /// The name of the cmdlet to return the information for.
-        /// </param>
-        /// <param name="searchAllScopes">
-        /// True if we should search all scopes, false if we should stop after finding the first.
-        /// </param>
-        /// <returns>
-        /// The CmdletInfo for the cmdlet for all the cmdlets with the specified name.
-        /// </returns>
-        /// <exception cref="ArgumentException">
-        /// If <paramref name="cmdletName"/> is null or empty.
-        /// </exception>
         internal IEnumerator<CmdletInfo> GetCmdletInfo(string cmdletName, bool searchAllScopes)
         {
             Dbg.Assert(!string.IsNullOrEmpty(cmdletName), "Caller should verify the cmdletName");
@@ -1379,9 +1281,6 @@ namespace System.Management.Automation
         internal LookupPathCollection() : base() { }
 
         
-        /// <param name="collection">
-        /// A set of items to be added to the collection.
-        /// </param>
         internal LookupPathCollection(IEnumerable<string> collection) : base()
         {
             foreach (string item in collection)
@@ -1391,12 +1290,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="item">
-        /// The string to add to the collection.
-        /// </param>
-        /// <returns>
-        /// The index at which the string was added or -1 if it was not added.
-        /// </returns>
         public new int Add(string item)
         {
             int result = -1;
@@ -1410,12 +1303,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="collection">
-        /// The collection of strings to add.
-        /// </param>
-        /// <remarks>
-        /// Only the strings that are not already in the collection will be added.
-        /// </remarks>
         internal void AddRange(ICollection<string> collection)
         {
             foreach (string name in collection)
@@ -1425,12 +1312,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="item">
-        /// The string to check for existence.
-        ///  </param>
-        /// <returns>
-        /// True if the string already exists in the collection.
-        /// </returns>
         public new bool Contains(string item)
         {
             bool result = false;
@@ -1448,9 +1329,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <returns>
-        /// A collection of all the indexes that are relative paths.
-        /// </returns>
         internal Collection<int> IndexOfRelativePath()
         {
             Collection<int> result = new Collection<int>();
@@ -1469,15 +1347,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="item">
-        /// The string to look for.
-        /// </param>
-        /// <returns>
-        /// The index of the string in the collection or -1 if it was not found.
-        /// </returns>
-        /// <exception cref="ArgumentException">
-        /// If <paramref name="item"/> is null or empty.
-        /// </exception>
         public new int IndexOf(string item)
         {
             if (string.IsNullOrEmpty(item))

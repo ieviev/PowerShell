@@ -11,7 +11,6 @@ namespace Microsoft.Management.UI.Internal
     public class ManagementListStateDescriptorFactory : IStateDescriptorFactory<ManagementList>
     {
         
-        /// <returns>A new ManagementListStateDescriptor.</returns>
         public StateDescriptor<ManagementList> Create()
         {
             return new ManagementListStateDescriptor();

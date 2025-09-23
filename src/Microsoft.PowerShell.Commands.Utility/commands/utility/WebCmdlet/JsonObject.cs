@@ -47,21 +47,12 @@ namespace Microsoft.PowerShell.Commands
             public readonly PSCmdlet Cmdlet;
 
             
-            /// <param name="maxDepth">The maximum depth to visit the object.</param>
-            /// <param name="enumsAsStrings">Indicates whether to use enum names for the JSON conversion.</param>
-            /// <param name="compressOutput">Indicates whether to get the compressed output.</param>
             public ConvertToJsonContext(int maxDepth, bool enumsAsStrings, bool compressOutput)
                 : this(maxDepth, enumsAsStrings, compressOutput, StringEscapeHandling.Default, targetCmdlet: null, CancellationToken.None)
             {
             }
 
             
-            /// <param name="maxDepth">The maximum depth to visit the object.</param>
-            /// <param name="enumsAsStrings">Indicates whether to use enum names for the JSON conversion.</param>
-            /// <param name="compressOutput">Indicates whether to get the compressed output.</param>
-            /// <param name="stringEscapeHandling">Specifies how strings are escaped when writing JSON text.</param>
-            /// <param name="targetCmdlet">Specifies the cmdlet that is calling this method.</param>
-            /// <param name="cancellationToken">Specifies the cancellation token for cancelling the operation.</param>
             public ConvertToJsonContext(
                 int maxDepth,
                 bool enumsAsStrings,
@@ -92,9 +83,6 @@ namespace Microsoft.PowerShell.Commands
         #region ConvertFromJson
 
         
-        /// <param name="input">The json text to convert.</param>
-        /// <param name="error">An error record if the conversion failed.</param>
-        /// <returns>A PSObject.</returns>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", Justification = "Preferring Json over JSON")]
         public static object ConvertFromJson(string input, out ErrorRecord error)
         {
@@ -102,12 +90,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="input">The json text to convert.</param>
-        /// <param name="returnHashtable">True if the result should be returned as a <see cref="System.Collections.Hashtable"/>
-        /// instead of a <see cref="System.Management.Automation.PSObject"/></param>
-        /// <param name="error">An error record if the conversion failed.</param>
-        /// <returns>A <see cref="System.Management.Automation.PSObject"/> or a <see cref="System.Collections.Hashtable"/>
-        /// if the <paramref name="returnHashtable"/> parameter is true.</returns>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", Justification = "Preferring Json over JSON")]
         public static object ConvertFromJson(string input, bool returnHashtable, out ErrorRecord error)
         {
@@ -115,26 +97,11 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="input">The JSON text to convert.</param>
-        /// <param name="returnHashtable">True if the result should be returned as a <see cref="System.Collections.Hashtable"/>
-        /// instead of a <see cref="System.Management.Automation.PSObject"/>.</param>
-        /// <param name="maxDepth">The max depth allowed when deserializing the json input. Set to null for no maximum.</param>
-        /// <param name="error">An error record if the conversion failed.</param>
-        /// <returns>A <see cref="System.Management.Automation.PSObject"/> or a <see cref="System.Collections.Hashtable"/>
-        /// if the <paramref name="returnHashtable"/> parameter is true.</returns>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", Justification = "Preferring Json over JSON")]
         public static object ConvertFromJson(string input, bool returnHashtable, int? maxDepth, out ErrorRecord error)
             => ConvertFromJson(input, returnHashtable, maxDepth, jsonDateKind: JsonDateKind.Default, out error);
 
         
-        /// <param name="input">The JSON text to convert.</param>
-        /// <param name="returnHashtable">True if the result should be returned as a <see cref="System.Collections.Hashtable"/>
-        /// instead of a <see cref="System.Management.Automation.PSObject"/>.</param>
-        /// <param name="maxDepth">The max depth allowed when deserializing the json input. Set to null for no maximum.</param>
-        /// <param name="jsonDateKind">Controls how DateTime values are to be converted.</param>
-        /// <param name="error">An error record if the conversion failed.</param>
-        /// <returns>A <see cref="System.Management.Automation.PSObject"/> or a <see cref="System.Collections.Hashtable"/>
-        /// if the <paramref name="returnHashtable"/> parameter is true.</returns>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", Justification = "Preferring Json over JSON")]
         internal static object ConvertFromJson(string input, bool returnHashtable, int? maxDepth, JsonDateKind jsonDateKind, out ErrorRecord error)
         {
@@ -489,10 +456,6 @@ namespace Microsoft.PowerShell.Commands
         private static bool _maxDepthWarningWritten;
 
         
-        /// <param name="obj">The object to be processed.</param>
-        /// <param name="currentDepth">The current depth into the object graph.</param>
-        /// <param name="context">The context to use for the convert-to-json operation.</param>
-        /// <returns>An object suitable for serializing to JSON.</returns>
         private static object ProcessValue(object obj, int currentDepth, in ConvertToJsonContext context)
         {
             context.CancellationToken.ThrowIfCancellationRequested();
@@ -614,17 +577,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="psObj">The containing PSObject, or null if the base object was not contained in a PSObject.</param>
-        /// <param name="obj">The base object that might have been decorated with additional properties.</param>
-        /// <param name="depth">The current depth into the object graph.</param>
-        /// <param name="isPurePSObj">The processed object is a pure PSObject.</param>
-        /// <param name="isCustomObj">The processed object is a custom object.</param>
-        /// <param name="context">The context for the operation.</param>
-        /// <returns>
-        /// The original base object if no additional properties had been added,
-        /// otherwise a dictionary containing the value of the original base object in the "value" key
-        /// as well as the names and values of an additional properties.
-        /// </returns>
         private static object AddPsProperties(object psObj, object obj, int depth, bool isPurePSObj, bool isCustomObj, in ConvertToJsonContext context)
         {
             if (!(psObj is PSObject pso))
@@ -658,11 +610,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="psObj">The containing PSObject, or null if the base object was not contained in a PSObject.</param>
-        /// <param name="receiver">The dictionary to which any additional properties will be appended.</param>
-        /// <param name="depth">The current depth into the object graph.</param>
-        /// <param name="isCustomObject">The processed object is a custom object.</param>
-        /// <param name="context">The context for the operation.</param>
         private static void AppendPsProperties(PSObject psObj, IDictionary receiver, int depth, bool isCustomObject, in ConvertToJsonContext context)
         {
             // if the psObj is a DateTime or String type, we don't serialize any extended or adapted properties

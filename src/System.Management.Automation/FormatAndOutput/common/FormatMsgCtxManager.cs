@@ -33,7 +33,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         internal abstract class OutputContext
         {
             
-            /// <param name="parentContextInStack">Parent context in the stack, it can be null.</param>
             internal OutputContext(OutputContext parentContextInStack)
             {
                 ParentContext = parentContextInStack;
@@ -44,7 +43,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="o">Object to process.</param>
         internal void Process(object o)
         {
             PacketInfoData formatData = o as PacketInfoData;

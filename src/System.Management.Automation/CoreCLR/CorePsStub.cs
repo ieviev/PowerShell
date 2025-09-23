@@ -46,9 +46,6 @@ namespace System.Management.Automation.Internal
     internal sealed class PSTransactionManager : IDisposable
     {
         
-        /// <remarks>
-        /// Always return false in CoreCLR
-        /// </remarks>
         internal bool HasTransaction
         {
             get
@@ -85,9 +82,6 @@ namespace System.Management.Automation.Internal
         }
 
         
-        /// <remarks>
-        /// Always return null in CoreCLR
-        /// </remarks>
         internal static IDisposable GetEngineProtectionScope()
         {
             return null;
@@ -315,15 +309,9 @@ namespace System.Management.Automation.ComInterop
     using System.Runtime.InteropServices;
 
     
-    /// <remarks>
-    /// COM is not supported on Unix platforms. So this is a stub type.
-    /// </remarks>
     internal static class ComBinder
     {
         
-        /// <remarks>
-        /// Always return false in CoreCLR.
-        /// </remarks>
         public static bool TryBindGetIndex(GetIndexBinder binder, DynamicMetaObject instance, DynamicMetaObject[] args, out DynamicMetaObject result)
         {
             result = null;
@@ -331,9 +319,6 @@ namespace System.Management.Automation.ComInterop
         }
 
         
-        /// <remarks>
-        /// Always return false in CoreCLR.
-        /// </remarks>
         public static bool TryBindSetIndex(SetIndexBinder binder, DynamicMetaObject instance, DynamicMetaObject[] args, DynamicMetaObject value, out DynamicMetaObject result)
         {
             result = null;
@@ -341,9 +326,6 @@ namespace System.Management.Automation.ComInterop
         }
 
         
-        /// <remarks>
-        /// Always return false in CoreCLR.
-        /// </remarks>
         public static bool TryBindGetMember(GetMemberBinder binder, DynamicMetaObject instance, out DynamicMetaObject result, bool delayInvocation)
         {
             result = null;
@@ -351,9 +333,6 @@ namespace System.Management.Automation.ComInterop
         }
 
         
-        /// <remarks>
-        /// Always return false in CoreCLR.
-        /// </remarks>
         public static bool TryBindSetMember(SetMemberBinder binder, DynamicMetaObject instance, DynamicMetaObject value, out DynamicMetaObject result)
         {
             result = null;
@@ -361,9 +340,6 @@ namespace System.Management.Automation.ComInterop
         }
 
         
-        /// <remarks>
-        /// Always return false in CoreCLR.
-        /// </remarks>
         public static bool TryBindInvokeMember(InvokeMemberBinder binder, bool isSetProperty, DynamicMetaObject instance, DynamicMetaObject[] args, out DynamicMetaObject result)
         {
             result = null;
@@ -388,11 +364,6 @@ namespace System.Management.Automation.Security
         private SystemPolicy() { }
 
         
-        /// <param name="context">Current execution context.</param>
-        /// <param name="title">Audit message title.</param>
-        /// <param name="message">Audit message message.</param>
-        /// <param name="fqid">Fully Qualified ID.</param>
-        /// <param name="dropIntoDebugger">Stops code execution and goes into debugger mode.</param>
         internal static void LogWDACAuditMessage(
             ExecutionContext context,
             string title,
@@ -403,14 +374,12 @@ namespace System.Management.Automation.Security
         }
 
         
-        /// <remarks>Always return SystemEnforcementMode.None on non-Windows platforms.</remarks>
         public static SystemEnforcementMode GetSystemLockdownPolicy()
         {
             return SystemEnforcementMode.None;
         }
 
         
-        /// <remarks>Always return SystemEnforcementMode.None on non-Windows platforms.</remarks>
         public static SystemEnforcementMode GetLockdownPolicy(string path, System.Runtime.InteropServices.SafeHandle handle)
         {
             return SystemEnforcementMode.None;
@@ -422,9 +391,6 @@ namespace System.Management.Automation.Security
         }
 
         
-        /// <param name="filePath">Script file path for policy check.</param>
-        /// <param name="fileStream">FileStream object to script file path.</param>
-        /// <returns>Policy check result for script file.</returns>
         public static SystemScriptFileEnforcement GetFilePolicyEnforcement(
             string filePath,
             System.IO.FileStream fileStream)
@@ -436,13 +402,10 @@ namespace System.Management.Automation.Security
     
     public enum SystemEnforcementMode
     {
-        /// Not enforced at all
         None = 0,
 
-        /// Enabled - allow, but audit
         Audit = 1,
 
-        /// Enabled, enforce restrictions
         Enforce = 2
     }
 
@@ -477,22 +440,18 @@ namespace System.Management.Automation.Tracing
     public abstract class EtwActivity
     {
         
-        /// <param name="activityId"></param>
-        /// <returns></returns>
         public static bool SetActivityId(Guid activityId)
         {
             return false;
         }
 
         
-        /// <returns></returns>
         public static Guid CreateActivityId()
         {
             return Guid.Empty;
         }
 
         
-        /// <returns></returns>
         public static Guid GetActivityId()
         {
             return Guid.Empty;
@@ -635,43 +594,24 @@ namespace System.Management.Automation.Tracing
         }
 
         
-        /// <param name="message1"></param>
-        /// <param name="message2"></param>
-        /// <returns></returns>
         public bool WriteMessage(string message1, string message2)
         {
             return false;
         }
 
         
-        /// <param name="message"></param>
-        /// <param name="instanceId"></param>
-        /// <returns></returns>
         public bool WriteMessage(string message, Guid instanceId)
         {
             return false;
         }
 
         
-        /// <param name="className"></param>
-        /// <param name="methodName"></param>
-        /// <param name="workflowId"></param>
-        /// <param name="message"></param>
-        /// <param name="parameters"></param>
-        /// <returns></returns>
         public void WriteMessage(string className, string methodName, Guid workflowId, string message, params string[] parameters)
         {
             return;
         }
 
         
-        /// <param name="className"></param>
-        /// <param name="methodName"></param>
-        /// <param name="workflowId"></param>
-        /// <param name="job"></param>
-        /// <param name="message"></param>
-        /// <param name="parameters"></param>
-        /// <returns></returns>
         public void WriteMessage(string className, string methodName, Guid workflowId, Job job, string message, params string[] parameters)
         {
             return;

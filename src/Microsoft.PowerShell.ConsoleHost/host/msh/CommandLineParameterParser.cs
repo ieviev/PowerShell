@@ -29,92 +29,58 @@ namespace Microsoft.PowerShell
             => null;
 
         
-        /// <param name="caption"></param>
-        /// <param name="message"></param>
-        /// <param name="descriptions"></param>
-        /// <returns></returns>
         public override Dictionary<string, PSObject> Prompt(string caption, string message, Collection<FieldDescription> descriptions)
             => throw new PSNotImplementedException();
 
         
-        /// <param name="caption"></param>
-        /// <param name="message"></param>
-        /// <param name="choices"></param>
-        /// <param name="defaultChoice"></param>
-        /// <returns></returns>
         public override int PromptForChoice(string caption, string message, Collection<ChoiceDescription> choices, int defaultChoice)
             => throw new PSNotImplementedException();
 
         
-        /// <param name="caption"></param>
-        /// <param name="message"></param>
-        /// <param name="userName"></param>
-        /// <param name="targetName"></param>
-        /// <returns></returns>
         public override PSCredential PromptForCredential(string caption, string message, string userName, string targetName)
             => throw new PSNotImplementedException();
 
         
-        /// <param name="caption"></param>
-        /// <param name="message"></param>
-        /// <param name="userName"></param>
-        /// <param name="targetName"></param>
-        /// <param name="allowedCredentialTypes"></param>
-        /// <param name="options"></param>
-        /// <returns></returns>
         public override PSCredential PromptForCredential(string caption, string message, string userName, string targetName, PSCredentialTypes allowedCredentialTypes, PSCredentialUIOptions options)
             => throw new PSNotImplementedException();
 
         
-        /// <returns></returns>
         public override string ReadLine()
             => throw new PSNotImplementedException();
 
         
-        /// <returns></returns>
         public override SecureString ReadLineAsSecureString()
             => throw new PSNotImplementedException();
 
         
-        /// <param name="value"></param>
         public override void Write(string value)
         { }
 
         
-        /// <param name="foregroundColor"></param>
-        /// <param name="backgroundColor"></param>
-        /// <param name="value"></param>
         public override void Write(ConsoleColor foregroundColor, ConsoleColor backgroundColor, string value)
         { }
 
         
-        /// <param name="message"></param>
         public override void WriteDebugLine(string message)
         { }
 
         
-        /// <param name="value"></param>
         public override void WriteErrorLine(string value)
             => Console.Out.WriteLine(value);
 
         
-        /// <param name="value"></param>
         public override void WriteLine(string value)
         { }
 
         
-        /// <param name="sourceId"></param>
-        /// <param name="record"></param>
         public override void WriteProgress(long sourceId, ProgressRecord record)
         { }
 
         
-        /// <param name="message"></param>
         public override void WriteVerboseLine(string message)
         { }
 
         
-        /// <param name="message"></param>
         public override void WriteWarningLine(string message)
         { }
     }
@@ -600,15 +566,6 @@ namespace Microsoft.PowerShell
 
         #region static methods
         
-        /// <param name="args">
-        /// The command line parameters to be processed.
-        /// </param>
-        /// <param name="settingFileArgIndex">
-        /// The index in args to the argument following '-SettingFile'.
-        /// </param>
-        /// <returns>
-        /// Returns true if the argument was parsed successfully and false if not.
-        /// </returns>
         private bool TryParseSettingFileHelper(string[] args, int settingFileArgIndex)
         {
             if (settingFileArgIndex >= args.Length)
@@ -647,20 +604,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="args">
-        /// The command line parameters to be processed.
-        /// </param>
-        /// <param name="argIndex">
-        /// The index in args to the argument to process.
-        /// </param>
-        /// <param name="noexitSeen">
-        /// Used during parsing files.
-        /// </param>
-        /// <returns>
-        /// Returns a Tuple:
-        /// The first value is a String called 'switchKey' with the word in a switch from the current argument or null.
-        /// The second value is a bool called 'shouldBreak', indicating if the parsing look should break.
-        /// </returns>
         private (string switchKey, bool shouldBreak) GetSwitchKey(string[] args, ref int argIndex, ref bool noexitSeen)
         {
             string switchKey = args[argIndex].Trim();
@@ -703,8 +646,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="_executionPolicy">The value provided on the command line.</param>
-        /// <returns>The execution policy.</returns>
         private static ParameterBitmap GetExecutionPolicy(string? _executionPolicy)
         {
             if (_executionPolicy is null)
@@ -805,9 +746,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="args">
-        /// The command line parameters to be processed.
-        /// </param>
         internal void Parse(string[] args)
         {
             if (_dirty)

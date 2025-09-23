@@ -20,10 +20,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="cmdlet">
-        /// cmdlet wrapper object, to which write result.
-        /// <see cref="CmdletOperationBase"/> for details.
-        /// </param>
         public virtual void Execute(CmdletOperationBase cmdlet)
         {
         }
@@ -43,7 +39,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <returns>Response from user.</returns>
         public virtual CimResponseType GetResponse()
         {
             this.Block();
@@ -96,7 +91,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="disposing">Whether it is directly called.</param>
         protected virtual void Dispose(bool disposing)
         {
             // Check to see if Dispose has already been called.

@@ -16,9 +16,6 @@ namespace System.Management.Automation
         #region constructor
 
         
-        /// <param name="parentScope">
-        /// The parent of this scope.  It can be null for the global scope.
-        /// </param>
         internal SessionStateScope(SessionStateScope parentScope)
         {
             ScopeOrigin = CommandOrigin.Internal;
@@ -46,9 +43,6 @@ namespace System.Management.Automation
         internal CommandOrigin ScopeOrigin { get; set; }
 
         
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="value"/> is null when setting the property.
-        /// </exception>
         internal SessionStateScope ScriptScope
         {
             get
@@ -66,7 +60,6 @@ namespace System.Management.Automation
         private SessionStateScope _scriptScope;
 
         
-        /// <value>Which version of strict mode is active for this scope and it's children.</value>
         internal Version StrictModeVersion { get; set; }
 
         
@@ -79,19 +72,6 @@ namespace System.Management.Automation
 
         #region Drives
         
-        /// <param name="newDrive">
-        /// The new drive to be added.
-        /// </param>
-        /// <remarks>
-        /// This method assumes the drive has already been verified and
-        /// the provider has already been notified.
-        /// </remarks>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="newDrive"/> is null.
-        /// </exception>
-        /// <exception cref="SessionStateException">
-        /// If a drive of the same name already exists in this scope.
-        /// </exception>
         internal void NewDrive(PSDriveInfo newDrive)
         {
             if (newDrive == null)
@@ -131,16 +111,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="drive">
-        /// The drive to be removed.
-        /// </param>
-        /// <remarks>
-        /// This method assumes that the drive has already been validated for removal
-        /// by the provider.
-        /// </remarks>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="drive"/> is null.
-        /// </exception>
         internal void RemoveDrive(PSDriveInfo drive)
         {
             if (drive == null)
@@ -178,16 +148,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="name">
-        /// The name of the drive to retrieve.
-        /// </param>
-        /// <returns>
-        /// An instance of a PSDriveInfo object with the specified name if one
-        /// exists in this scope or null if one does not exist.
-        /// </returns>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="name"/> is null.
-        /// </exception>
         internal PSDriveInfo GetDrive(string name)
         {
             if (name == null)
@@ -241,7 +201,6 @@ namespace System.Management.Automation
         internal IDictionary<string, PSVariable> Variables { get { return GetPrivateVariables(); } }
 
         
-        /// <param name="name">
         /// The name of the variable to retrieve.
         /// </param>
         /// <param name="origin">

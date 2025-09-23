@@ -51,7 +51,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
     internal class InvocationContext
     {
         
-        /// <param name="proxy"></param>
         internal InvocationContext(CimSessionProxy proxy)
         {
             if (proxy != null)
@@ -62,7 +61,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="proxy"></param>
         internal InvocationContext(string computerName, CimInstance targetCimInstance)
         {
             this.ComputerName = computerName;
@@ -70,15 +68,9 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <remarks>
-        /// return value could be null
-        /// </remarks>
         internal virtual string ComputerName { get; }
 
         
-        /// <remarks>
-        /// return value could be null
-        /// </remarks>
         internal virtual CimInstance TargetCimInstance { get; }
     }
     #endregion
@@ -89,8 +81,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
     internal interface IObjectPreProcess
     {
         
-        /// <param name="resultObject"></param>
-        /// <returns>Pre-processed object.</returns>
         object Process(object resultObject);
     }
     #endregion
@@ -100,7 +90,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
     internal sealed class CmdletActionEventArgs : EventArgs
     {
         
-        /// <param name="action">CimBaseAction object bound to the event.</param>
         public CmdletActionEventArgs(CimBaseAction action)
         {
             this.Action = action;
@@ -113,8 +102,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
     internal sealed class OperationEventArgs : EventArgs
     {
         
-        /// <param name="operationCancellation">Object used to cancel the operation.</param>
-        /// <param name="operation">Async observable operation.</param>
         public OperationEventArgs(IDisposable operationCancellation,
             IObservable<object> operation,
             bool theSuccess)
@@ -146,7 +133,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         private static readonly Dictionary<CimSession, uint> temporarySessionCache = new();
 
         
-        /// <param name="session">CimSession to be added.</param>
         internal static void AddCimSessionToTemporaryCache(CimSession session)
         {
             if (session != null)
@@ -168,8 +154,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="session"></param>
-        /// <param name="dispose">Whether need to dispose the <see cref="CimSession"/> object.</param>
         private static void RemoveCimSessionFromTemporaryCache(CimSession session,
             bool dispose)
         {
@@ -205,7 +189,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="session">CimSession to be added.</param>
         internal static void RemoveCimSessionFromTemporaryCache(CimSession session)
         {
             RemoveCimSessionFromTemporaryCache(session, true);
@@ -228,10 +211,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         #region constructors
 
         
-        /// <remarks>
-        /// Then create wrapper object by given CimSessionProxy object.
-        /// </remarks>
-        /// <param name="computerName"></param>
         public CimSessionProxy(CimSessionProxy proxy)
         {
             DebugHelper.WriteLogEx("protocol = {0}", 1, proxy.Protocol);
@@ -243,11 +222,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <remarks>
-        /// Create <see cref="CimSession"/> by given computer name.
-        /// Then create wrapper object.
-        /// </remarks>
-        /// <param name="computerName"></param>
         public CimSessionProxy(string computerName)
         {
             CreateSetSession(computerName, null, null, null, false);
@@ -255,13 +229,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <remarks>
-        /// Create <see cref="CimSession"/> by given computer name
-        /// and session options.
-        /// Then create wrapper object.
-        /// </remarks>
-        /// <param name="computerName"></param>
-        /// <param name="sessionOptions"></param>
         public CimSessionProxy(string computerName, CimSessionOptions sessionOptions)
         {
             CreateSetSession(computerName, null, sessionOptions, null, false);
@@ -269,12 +236,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <remarks>
-        /// Create <see cref="CimSession"/> by given computer name
-        /// and cimInstance. Then create wrapper object.
-        /// </remarks>
-        /// <param name="computerName"></param>
-        /// <param name="cimInstance"></param>
         public CimSessionProxy(string computerName, CimInstance cimInstance)
         {
             DebugHelper.WriteLogEx("ComputerName {0}; cimInstance.CimSessionInstanceID = {1}; cimInstance.CimSessionComputerName = {2}.",
@@ -312,13 +273,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <remarks>
-        /// Create <see cref="CimSession"/> by given computer name,
-        /// session options.
-        /// </remarks>
-        /// <param name="computerName"></param>
-        /// <param name="sessionOptions"></param>
-        /// <param name="operOptions">Used when create async operation.</param>
         public CimSessionProxy(string computerName, CimSessionOptions sessionOptions, CimOperationOptions operOptions)
         {
             CreateSetSession(computerName, null, sessionOptions, operOptions, false);
@@ -326,12 +280,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <remarks>
-        /// Create <see cref="CimSession"/> by given computer name.
-        /// Then create wrapper object.
-        /// </remarks>
-        /// <param name="computerName"></param>
-        /// <param name="operOptions">Used when create async operation.</param>
         public CimSessionProxy(string computerName, CimOperationOptions operOptions)
         {
             CreateSetSession(computerName, null, null, operOptions, false);
@@ -339,31 +287,18 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <remarks>
-        /// Create wrapper object by given session object.
-        /// </remarks>
-        /// <param name="session"></param>
         public CimSessionProxy(CimSession session)
         {
             CreateSetSession(null, session, null, null, false);
         }
 
         
-        /// <remarks>
-        /// Create wrapper object by given session object.
-        /// </remarks>
-        /// <param name="session"></param>
-        /// <param name="operOptions">Used when create async operation.</param>
         public CimSessionProxy(CimSession session, CimOperationOptions operOptions)
         {
             CreateSetSession(null, session, null, operOptions, false);
         }
 
         
-        /// <param name="computerName"></param>
-        /// <param name="session"></param>
-        /// <param name="sessionOptions"></param>
-        /// <param name="options"></param>
         private void CreateSetSession(
             string computerName,
             CimSession cimSession,
@@ -573,7 +508,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         #region misc operations
 
         
-        /// <returns></returns>
         public CimSession Detach()
         {
             DebugHelper.WriteLogEx();
@@ -587,8 +521,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="operation"></param>
-        /// <param name="cancelObject"></param>
         private void AddOperation(IObservable<object> operation)
         {
             DebugHelper.WriteLogEx();
@@ -601,7 +533,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="operation"></param>
         private void RemoveOperation(IObservable<object> operation)
         {
             DebugHelper.WriteLogEx();
@@ -626,7 +557,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="action"></param>
         protected void FireNewActionEvent(CimBaseAction action)
         {
             DebugHelper.WriteLogEx();
@@ -651,8 +581,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="cancelOperation"></param>
-        /// <param name="operation"></param>
         private void FireOperationCreatedEvent(
             IDisposable cancelOperation,
             IObservable<object> operation)
@@ -667,7 +595,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="operation"></param>
         private void FireOperationDeletedEvent(
             IObservable<object> operation,
             bool success)
@@ -689,8 +616,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         #region PSExtension callback functions
 
         
-        /// <param name="channel"></param>
-        /// <param name="message"></param>
         internal void WriteMessage(uint channel, string message)
         {
             DebugHelper.WriteLogEx("Channel = {0} message = {1}", 0, channel, message);
@@ -706,8 +631,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="operation"></param>
-        /// <param name="parameters"></param>
         internal void WriteOperationStartMessage(string operation, Hashtable parameterList)
         {
             DebugHelper.WriteLogEx();
@@ -733,7 +656,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="operation"></param>
         internal void WriteOperationCompleteMessage(string operation)
         {
             DebugHelper.WriteLogEx();
@@ -744,11 +666,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="activity"></param>
-        /// <param name="currentOperation"></param>
-        /// <param name="statusDescription"></param>
-        /// <param name="percentageCompleted"></param>
-        /// <param name="secondsRemaining"></param>
         public void WriteProgress(string activity,
             string currentOperation,
             string statusDescription,
@@ -776,8 +693,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="instance"></param>
-        /// <returns></returns>
         public CimResponseType WriteError(CimInstance instance)
         {
             DebugHelper.WriteLogEx("Error:{0}", 0, instance);
@@ -795,9 +710,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="message"></param>
-        /// <param name="prompt"></param>
-        /// <returns></returns>
         public CimResponseType PromptUser(string message, CimPromptType prompt)
         {
             DebugHelper.WriteLogEx("message:{0} prompt:{1}", 0, message, prompt);
@@ -818,8 +730,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         #region Async result handler
 
         
-        /// <param name="observer">Object triggered the event.</param>
-        /// <param name="resultArgs">Async result event argument.</param>
         internal void ResultEventHandler(
             object observer,
             AsyncResultEventArgsBase resultArgs)
@@ -878,7 +788,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="o"></param>
         private static void AddShowComputerNameMarker(object o)
         {
             if (o == null)
@@ -924,8 +833,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         #region Async operations
 
         
-        /// <param name="namespaceName"></param>
-        /// <param name="instance"></param>
         public void CreateInstanceAsync(string namespaceName, CimInstance instance)
         {
             Debug.Assert(instance != null, "Caller should verify that instance != NULL.");
@@ -942,8 +849,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="namespaceName"></param>
-        /// <param name="instance"></param>
         public void DeleteInstanceAsync(string namespaceName, CimInstance instance)
         {
             Debug.Assert(instance != null, "Caller should verify that instance != NULL.");
@@ -960,8 +865,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="namespaceName"></param>
-        /// <param name="instanceId"></param>
         public void GetInstanceAsync(string namespaceName, CimInstance instance)
         {
             Debug.Assert(instance != null, "Caller should verify that instance != NULL.");
@@ -978,8 +881,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="namespaceName"></param>
-        /// <param name="instance"></param>
         public void ModifyInstanceAsync(string namespaceName, CimInstance instance)
         {
             Debug.Assert(instance != null, "Caller should verify that instance != NULL.");
@@ -996,12 +897,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="namespaceName"></param>
-        /// <param name="sourceInstance"></param>
-        /// <param name="associationClassName"></param>
-        /// <param name="resultClassName"></param>
-        /// <param name="sourceRole"></param>
-        /// <param name="resultRole"></param>
         public void EnumerateAssociatedInstancesAsync(
             string namespaceName,
             CimInstance sourceInstance,
@@ -1028,8 +923,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="namespaceName"></param>
-        /// <param name="className"></param>
         public void EnumerateInstancesAsync(string namespaceName, string className)
         {
             DebugHelper.WriteLogEx("KeyOnly {0}", 0, this.OperationOptions.KeysOnly);
@@ -1046,10 +939,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="namespaceName"></param>
-        /// <param name="sourceInstance"></param>
-        /// <param name="associationClassName"></param>
-        /// <param name="sourceRole"></param>
         public void EnumerateReferencingInstancesAsync(
             string namespaceName,
             CimInstance sourceInstance,
@@ -1060,9 +949,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="namespaceName"></param>
-        /// <param name="queryDialect"></param>
-        /// <param name="queryExpression"></param>
         public void QueryInstancesAsync(
             string namespaceName,
             string queryDialect,
@@ -1082,8 +968,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="namespaceName"></param>
-        /// <param name="className"></param>
         public void EnumerateClassesAsync(string namespaceName)
         {
             DebugHelper.WriteLogEx("namespace {0}", 0, namespaceName);
@@ -1098,8 +982,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="namespaceName"></param>
-        /// <param name="className"></param>
         public void EnumerateClassesAsync(string namespaceName, string className)
         {
             this.CheckAvailability();
@@ -1115,8 +997,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="namespaceName"></param>
-        /// <param name="className"></param>
         public void GetClassAsync(string namespaceName, string className)
         {
             DebugHelper.WriteLogEx("namespace = {0}, className = {1}", 0, namespaceName, className);
@@ -1133,10 +1013,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="namespaceName"></param>
-        /// <param name="instance"></param>
-        /// <param name="methodName"></param>
-        /// <param name="methodParameters"></param>
         public void InvokeMethodAsync(
             string namespaceName,
             CimInstance instance,
@@ -1158,10 +1034,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="namespaceName"></param>
-        /// <param name="className"></param>
-        /// <param name="methodName"></param>
-        /// <param name="methodParameters"></param>
         public void InvokeMethodAsync(
             string namespaceName,
             string className,
@@ -1183,9 +1055,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="namespaceName"></param>
-        /// <param name="queryDialect"></param>
-        /// <param name="queryExpression"></param>
         public void SubscribeAsync(
             string namespaceName,
             string queryDialect,
@@ -1221,13 +1090,11 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         #region pre action APIs
         
-        /// <param name="args"></param>
         protected virtual bool PreNewActionEvent(CmdletActionEventArgs args)
         {
             return true;
         }
         
-        /// <param name="args"></param>
         protected virtual void PreOperationDeleteEvent(OperationEventArgs args)
         {
         }
@@ -1236,17 +1103,14 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         #region post action APIs
 
         
-        /// <param name="args"></param>
         protected virtual void PostNewActionEvent(CmdletActionEventArgs args)
         {
         }
         
-        /// <param name="args"></param>
         protected virtual void PostOperationCreateEvent(OperationEventArgs args)
         {
         }
         
-        /// <param name="args"></param>
         protected virtual void PostOperationDeleteEvent(OperationEventArgs args)
         {
         }
@@ -1412,8 +1276,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         #region helper methods
 
         
-        /// <param name="asyncResult"></param>
-        /// <param name="cimResultContext"></param>
         protected void ConsumeCimInstanceAsync(IObservable<CimInstance> asyncResult,
             CimResultContext cimResultContext)
         {
@@ -1421,9 +1283,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="asyncResult"></param>
-        /// <param name="ignoreResultObjects"></param>
-        /// <param name="cimResultContext"></param>
         protected void ConsumeCimInstanceAsync(
             IObservable<CimInstance> asyncResult,
             bool ignoreResultObjects,
@@ -1447,8 +1306,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="asyncResult"></param>
-        /// <param name="cimResultContext"></param>
         protected void ConsumeObjectAsync(IObservable<object> asyncResult,
             CimResultContext cimResultContext)
         {
@@ -1464,8 +1321,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="asyncResult"></param>
-        /// <param name="cimResultContext"></param>
         protected void ConsumeCimClassAsync(IObservable<CimClass> asyncResult,
             CimResultContext cimResultContext)
         {
@@ -1480,8 +1335,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="asyncResult"></param>
-        /// <param name="cimResultContext"></param>
         protected void ConsumeCimSubscriptionResultAsync(
             IObservable<CimSubscriptionResult> asyncResult,
             CimResultContext cimResultContext)
@@ -1496,10 +1349,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="asyncResult"></param>
-        /// <param name="className"></param>
-        /// <param name="methodName"></param>
-        /// <param name="cimResultContext"></param>
         protected void ConsumeCimInvokeMethodResultAsync(
             IObservable<CimMethodResultBase> asyncResult,
             string className,
@@ -1547,7 +1396,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <returns></returns>
         private CimSession CreateCimSessionByComputerName(string computerName)
         {
             DebugHelper.WriteLogEx("ComputerName {0}", 0, computerName);
@@ -1567,10 +1415,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="computerName"></param>
-        /// <param name="timeout"></param>
-        /// <param name="credential"></param>
-        /// <returns></returns>
         internal static CimSessionOptions CreateCimSessionOption(string computerName,
             uint timeout, CimCredential credential)
         {
@@ -1613,13 +1457,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         #region constructors
 
         
-        /// <remarks>
-        /// Create <see cref="CimSession"/> by given computer name
-        /// and session options.
-        /// Then create wrapper object.
-        /// </remarks>
-        /// <param name="computerName"></param>
-        /// <param name="sessionOptions"></param>
         public CimSessionProxyTestConnection(string computerName, CimSessionOptions sessionOptions)
             : base(computerName, sessionOptions)
         {
@@ -1630,7 +1467,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         #region pre action APIs
 
         
-        /// <param name="args"></param>
         protected override void PreOperationDeleteEvent(OperationEventArgs args)
         {
             DebugHelper.WriteLogEx("test connection result {0}", 0, args.success);
@@ -1656,24 +1492,12 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         #region constructors
 
         
-        /// <remarks>
-        /// Create <see cref="CimSession"/> by given computer name.
-        /// Then create wrapper object.
-        /// </remarks>
-        /// <param name="computerName"></param>
         public CimSessionProxyGetCimClass(string computerName)
             : base(computerName)
         {
         }
 
         
-        /// <remarks>
-        /// Create <see cref="CimSession"/> by given computer name
-        /// and session options.
-        /// Then create wrapper object.
-        /// </remarks>
-        /// <param name="computerName"></param>
-        /// <param name="sessionOptions"></param>
         public CimSessionProxyGetCimClass(CimSession session)
             : base(session)
         {
@@ -1683,7 +1507,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         #region pre action APIs
         
-        /// <param name="args"></param>
         protected override bool PreNewActionEvent(CmdletActionEventArgs args)
         {
             DebugHelper.WriteLogEx();
@@ -1803,10 +1626,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         #region constructors
 
         
-        /// <remarks>
-        /// Create <see cref="CimSession"/> by given computer name.
-        /// Then create wrapper object.
-        /// </remarks>
         public CimSessionProxyNewCimInstance(string computerName, CimNewCimInstance operation)
             : base(computerName)
         {
@@ -1814,14 +1633,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="computerName"></param>
-        /// <remarks>
-        /// Create <see cref="CimSession"/> by given computer name
-        /// and session options.
-        /// Then create wrapper object.
-        /// </remarks>
-        /// <param name="computerName"></param>
-        /// <param name="sessionOptions"></param>
         public CimSessionProxyNewCimInstance(CimSession session, CimNewCimInstance operation)
             : base(session)
         {
@@ -1832,7 +1643,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         #region pre action APIs
         
-        /// <param name="args"></param>
         protected override bool PreNewActionEvent(CmdletActionEventArgs args)
         {
             DebugHelper.WriteLogEx();
@@ -1871,12 +1681,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
     {
         #region constructors
         
-        /// <remarks>
-        /// Create <see cref="CimSession"/> by given <see cref="CimSessionProxy"/> object.
-        /// Then create wrapper object.
-        /// </remarks>
-        /// <param name="originalProxy"><see cref="CimSessionProxy"/> object to clone.</param>
-        /// <param name="passThru">PassThru, true means output the modified instance; otherwise does not output.</param>
         public CimSessionProxySetCimInstance(CimSessionProxy originalProxy, bool passThru)
             : base(originalProxy)
         {
@@ -1884,13 +1688,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <remarks>
-        /// Create <see cref="CimSession"/> by given computer name.
-        /// Then create wrapper object.
-        /// </remarks>
-        /// <param name="computerName"></param>
-        /// <param name="cimInstance"></param>
-        /// <param name="passThru"></param>
         public CimSessionProxySetCimInstance(string computerName,
             CimInstance cimInstance,
             bool passThru)
@@ -1900,13 +1697,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <remarks>
-        /// Create <see cref="CimSession"/> by given computer name
-        /// and session options.
-        /// Then create wrapper object.
-        /// </remarks>
-        /// <param name="computerName"></param>
-        /// <param name="sessionOptions"></param>
         public CimSessionProxySetCimInstance(CimSession session, bool passThru)
             : base(session)
         {
@@ -1916,7 +1706,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         #region pre action APIs
         
-        /// <param name="args"></param>
         protected override bool PreNewActionEvent(CmdletActionEventArgs args)
         {
             DebugHelper.WriteLogEx();

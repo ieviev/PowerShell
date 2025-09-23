@@ -30,9 +30,6 @@ namespace Microsoft.PowerShell.Commands
         private Dictionary<string, IEnumerable<string>>? _headers;
 
         
-        /// <value>
-        /// Full response content, including the HTTP status line, headers, and body.
-        /// </value>
         public string? RawContent { get; protected set; }
 
         
@@ -65,16 +62,9 @@ namespace Microsoft.PowerShell.Commands
         #region Constructors
 
         
-        /// <param name="response">The Http response.</param>
-        /// <param name="perReadTimeout">Time permitted between reads or Timeout.InfiniteTimeSpan for no timeout.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
         public WebResponseObject(HttpResponseMessage response, TimeSpan perReadTimeout, CancellationToken cancellationToken) : this(response, null, perReadTimeout, cancellationToken) { }
 
         
-        /// <param name="response">Http response.</param>
-        /// <param name="contentStream">The http content stream.</param>
-        /// <param name="perReadTimeout">Time permitted between reads or Timeout.InfiniteTimeSpan for no timeout.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
         public WebResponseObject(HttpResponseMessage response, Stream? contentStream, TimeSpan perReadTimeout, CancellationToken cancellationToken)
         {
             this.perReadTimeout = perReadTimeout;
@@ -143,7 +133,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <returns>The string representation of this web response.</returns>
         public sealed override string ToString()
         {
             if (Content is null)

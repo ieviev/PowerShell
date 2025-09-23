@@ -254,7 +254,6 @@ namespace Microsoft.PowerShell.Commands
         private static object s_sequenceNumberLock = new object();
 
         
-        /// <returns>String.</returns>
         private string GenerateRandomName()
         {
             string rndname = null;
@@ -287,9 +286,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="NameSpace"></param>
-        /// <param name="ClassName"></param>
-        /// <returns></returns>
         [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling")]
         private Assembly GenerateWebServiceProxyAssembly(string NameSpace, string ClassName)
         {
@@ -412,8 +408,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="assembly"></param>
-        /// <param name="parameters"></param>
         private void GetReferencedAssemblies(Assembly assembly, CompilerParameters parameters)
         {
             if (!parameters.ReferencedAssemblies.Contains(assembly.Location))
@@ -428,8 +422,6 @@ namespace Microsoft.PowerShell.Commands
             }
         }
         
-        /// <param name="assembly"></param>
-        /// <returns></returns>
         private object InstantiateWebServiceProxy(Assembly assembly)
         {
             Type proxyType = null;

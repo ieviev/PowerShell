@@ -8,9 +8,6 @@ using System.Diagnostics;
 namespace Microsoft.Management.UI.Internal
 {
     
-    /// <typeparam name="T">
-    /// The generic parameter.
-    /// </typeparam>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public class PropertyValueSelectorFilterRule<T> : SelectorFilterRule where T : IComparable
     {
@@ -28,13 +25,6 @@ namespace Microsoft.Management.UI.Internal
         #region Ctor
 
         
-        /// <param name="propertyName">
-        /// Gets the name of the property on the item to evaluate which holds
-        /// the real value which should be evaluated.
-        /// </param>
-        /// <param name="propertyDisplayName">
-        /// The display friendly representation of the property name.
-        /// </param>
         public PropertyValueSelectorFilterRule(string propertyName, string propertyDisplayName)
             : this(propertyName, propertyDisplayName, FilterRuleCustomizationFactory.FactoryInstance.CreateDefaultFilterRulesForPropertyValueSelectorFilterRule<T>())
         {
@@ -42,16 +32,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="propertyName">
-        /// The propertyName on the item to evaluate which holds the real
-        /// value which should be evaluated.
-        /// </param>
-        /// <param name="propertyDisplayName">
-        /// The display friendly representation of the propertyName.
-        /// </param>
-        /// <param name="rules">
-        /// The collection of available rules.
-        /// </param>
         public PropertyValueSelectorFilterRule(string propertyName, string propertyDisplayName, IEnumerable<FilterRule> rules)
         {
             this.PropertyName = propertyName;
@@ -71,7 +51,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="source">The source to initialize from.</param>
         public PropertyValueSelectorFilterRule(PropertyValueSelectorFilterRule<T> source)
             : base(source)
         {
@@ -84,12 +63,6 @@ namespace Microsoft.Management.UI.Internal
         #region Public Methods
 
         
-        /// <param name="item">
-        /// The item to evaluate.
-        /// </param>
-        /// <returns>
-        /// Returns true if the item matches the filtering criteria, false otherwise.
-        /// </returns>
         public override bool Evaluate(object item)
         {
             if (!this.IsValid)

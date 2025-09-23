@@ -42,18 +42,6 @@ namespace Microsoft.Management.UI.Internal
         #region Ctor
 
         
-        /// <param name="isValid">
-        /// Indicates whether the value checked against the
-        /// DataErrorInfoValidationResult is valid
-        /// </param>
-        /// <param name="errorContent">
-        /// Information about the invalidity.
-        /// </param>
-        /// <param name="errorMessage">
-        /// The error message to display to the user. If the result is invalid
-        /// and the error message is empty (""), the result will be treated as
-        /// invalid but no error will be presented to the user.
-        /// </param>
         public DataErrorInfoValidationResult(bool isValid, object errorContent, string errorMessage)
             : base(isValid, errorContent)
         {

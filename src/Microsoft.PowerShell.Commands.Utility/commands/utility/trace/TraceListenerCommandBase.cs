@@ -21,7 +21,6 @@ namespace Microsoft.PowerShell.Commands
         internal string[] NameInternal { get; set; } = Array.Empty<string>();
 
         
-        /// <value></value>
         internal PSTraceSourceOptions OptionsInternal
         {
             get
@@ -62,21 +61,15 @@ namespace Microsoft.PowerShell.Commands
         internal bool traceOptionsSpecified;
 
         
-        /// <value></value>
         internal string FileListener { get; set; }
 
         
-        /// <remarks>
-        /// Note that we do not attempt to reset the read-only attribute.
-        /// </remarks>
         public bool ForceWrite { get; set; }
 
         
-        /// <value></value>
         internal bool DebuggerListener { get; set; }
 
         
-        /// <value></value>
         internal SwitchParameter PSHostListener
         {
             get { return _host; }

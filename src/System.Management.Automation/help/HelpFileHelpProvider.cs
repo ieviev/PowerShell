@@ -21,7 +21,6 @@ namespace System.Management.Automation
         #region Common Properties
 
         
-        /// <value>Name of the provider</value>
         internal override string Name
         {
             get
@@ -31,7 +30,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <value>Help category of the provider</value>
         internal override HelpCategory HelpCategory
         {
             get
@@ -271,8 +269,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="path">File path to load help from.</param>
-        /// <returns>Help info object loaded from the file.</returns>
         private HelpInfo LoadHelpFile(string path)
         {
             string fileName = Path.GetFileName(path);
@@ -313,7 +309,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <returns>A collection of string representing locations.</returns>
         internal Collection<string> GetExtendedSearchPaths()
         {
             Collection<string> searchPaths = GetSearchPaths();

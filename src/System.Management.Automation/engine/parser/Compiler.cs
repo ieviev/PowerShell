@@ -2665,9 +2665,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="usingStatements">Using statement asts.</param>
-        /// <param name="allUsingsAreNamespaces">This flag allow us some optimizations, if usings don't have assemblies and modules.</param>
-        /// <param name="exprs"></param>
         internal static void GenerateLoadUsings(IEnumerable<UsingStatementAst> usingStatements, bool allUsingsAreNamespaces, List<Expression> exprs)
         {
             TypeResolutionState trs;
@@ -2697,9 +2694,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="rootForDefiningTypes"></param>
-        /// <param name="typeAsts">Non-empty array of TypeDefinitionAst.</param>
-        /// <returns>Assembly with defined types.</returns>
         internal static Assembly DefinePowerShellTypes(Ast rootForDefiningTypes, TypeDefinitionAst[] typeAsts)
         {
             // TODO(sevoroby): this Diagnostic is conceptually right.
@@ -2840,8 +2834,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="originalModuleInfo">Module to load.</param>
-        /// <returns>Module info of the same module, but loaded.</returns>
         private static PSModuleInfo LoadModule(PSModuleInfo originalModuleInfo)
         {
             // originalModuleInfo is created during parse time and may not contain [System.Type] types exported from the module.
@@ -3263,8 +3255,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="statementAst">The statement to examine.</param>
-        /// <returns>True is the compiler should add the success setting, false otherwise.</returns>
         private bool ShouldSetExecutionStatusToSuccess(StatementAst statementAst)
         {
             // Simple overload fan out
@@ -3280,8 +3270,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="pipelineAst">The pipeline to examine.</param>
-        /// <returns>True is the compiler should add the success setting, false otherwise.</returns>
         private bool ShouldSetExecutionStatusToSuccess(PipelineAst pipelineAst)
         {
             ExpressionAst expressionAst = GetSingleExpressionFromPipeline(pipelineAst);
@@ -3309,8 +3297,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="assignmentStatementAst">The assignment statement to examine.</param>
-        /// <returns>True is the compiler should add the success setting, false otherwise.</returns>
         private bool ShouldSetExecutionStatusToSuccess(AssignmentStatementAst assignmentStatementAst)
         {
             // Get right-most RHS in cases like $x = $y = <expr>
@@ -3335,8 +3321,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="expressionAst">The expression to examine.</param>
-        /// <returns>True is the compiler should add the success setting, false otherwise.</returns>
         private bool ShouldSetExecutionStatusToSuccess(ExpressionAst expressionAst)
         {
             switch (expressionAst)
@@ -3685,8 +3669,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="pipelineAst">The pipeline in the pipeline chain to compile to an expression.</param>
-        /// <returns>The compiled expression to execute the pipeline.</returns>
         private Expression CompilePipelineChainElement(PipelineAst pipelineAst)
         {
             if (ShouldSetExecutionStatusToSuccess(pipelineAst))

@@ -27,9 +27,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <returns>
-        /// Returns a DataTemplate.
-        /// </returns>
         protected override DataTemplate ChooseTemplate()
         {
             if (this.ContentTemplateSelector == null || this.ContentConverter == null)

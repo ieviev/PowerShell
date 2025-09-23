@@ -38,7 +38,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <returns>Array of strings representing content from clipboard.</returns>
         private List<string> GetClipboardContentAsText()
         {
             var result = new List<string>();

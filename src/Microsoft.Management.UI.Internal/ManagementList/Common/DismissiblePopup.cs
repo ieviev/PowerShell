@@ -12,9 +12,6 @@ using System.Windows.Media;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <content>
-    /// Partial class implementation for DismissiblePopup control.
-    /// </content>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public partial class DismissiblePopup : Popup
     {
@@ -27,7 +24,6 @@ namespace Microsoft.Management.UI.Internal
         private delegate void FocusChildDelegate();
 
         
-        /// <param name="e">The event arguments.</param>
         protected override void OnOpened(EventArgs e)
         {
             base.OnOpened(e);
@@ -43,7 +39,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="e">The event arguments.</param>
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);
@@ -110,12 +105,9 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="e">The event data.</param>
         protected override void OnKeyDown(System.Windows.Input.KeyEventArgs e)
         {
-            ////
             // Close the popup if ESC is pressed
-            ////
             if (e.Key == System.Windows.Input.Key.Escape && this.CloseOnEscape)
             {
                 this.IsOpen = false;

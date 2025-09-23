@@ -37,9 +37,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="filterRule">
-        /// The FilterRulePanelItem that will be added to the FilterRulePanel.
-        /// </param>
         public AddFilterRulePickerItem(FilterRulePanelItem filterRule)
         {
             this.FilterRule = filterRule;
@@ -51,9 +48,6 @@ namespace Microsoft.Management.UI.Internal
         #region NotifyPropertyChanged
 
         
-        /// <param name="propertyName">
-        /// The propertyName which has changed.
-        /// </param>
         protected void NotifyPropertyChanged(string propertyName)
         {
             PropertyChangedEventHandler eh = this.PropertyChanged;

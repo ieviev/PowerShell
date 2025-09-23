@@ -11,9 +11,6 @@ namespace Microsoft.Management.UI.Internal
 {
 
     
-    /// <remarks>
-    /// If a control wants to dismiss the popup then they should execute the DismissPopupCommand on a target in the popup window.
-    /// </remarks>
     [Localizability(LocalizationCategory.None)]
     partial class DismissiblePopup
     {
@@ -30,9 +27,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <remarks>
-        /// A command which child controls can use to tell the popup to close.
-        /// </remarks>
         protected virtual void OnDismissPopupExecuted(ExecutedRoutedEventArgs e)
         {
             OnDismissPopupExecutedImplementation(e);

@@ -21,7 +21,6 @@ namespace Microsoft.Management.UI.Internal
         #region Structors
 
         
-        /// <param name="owner">The owner of the automation peer.</param>
         public ExpanderButtonAutomationPeer(ExpanderButton owner)
             : base(owner)
         {
@@ -33,15 +32,12 @@ namespace Microsoft.Management.UI.Internal
         #region Overrides
 
         
-        /// <returns>The class name.</returns>
         protected override string GetClassNameCore()
         {
             return this.Owner.GetType().Name;
         }
 
         
-        /// <param name="patternInterface">Specifies the control pattern that is returned.</param>
-        /// <returns>The control pattern for the <see cref="ExpanderButton"/> that is associated with this <see cref="ExpanderButtonAutomationPeer"/>.</returns>
         public override object GetPattern(PatternInterface patternInterface)
         {
             if (patternInterface == PatternInterface.ExpandCollapse ||

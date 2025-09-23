@@ -42,9 +42,6 @@ namespace Microsoft.Management.UI.Internal
         partial void OnClearTextCanExecuteImplementation(CanExecuteRoutedEventArgs e);
 
         
-        /// <remarks>
-        /// Clears the search text.
-        /// </remarks>
         protected virtual void OnClearTextExecuted(ExecutedRoutedEventArgs e)
         {
             OnClearTextExecutedImplementation(e);

@@ -23,8 +23,6 @@ namespace System.Management.Automation
         private static readonly int s_currentProcessId = Environment.ProcessId;
 
         
-        /// <param name="current">The process we want to find the
-        /// parent of</param>
         internal static Process GetParentProcess(Process current)
         {
             var processId = current.Id;
@@ -66,7 +64,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <returns></returns>
         internal static bool IsRunningOnProcessArchitectureARM()
         {
             Architecture arch = RuntimeInformation.ProcessArchitecture;
@@ -102,8 +99,6 @@ namespace System.Management.Automation
         #region ASTUtils
 
         
-        /// <param name="usingAst">A using expression.</param>
-        /// <returns>Base64 encoded string as the key of the UsingExpressionAst.</returns>
         internal static string GetUsingExpressionKey(Language.UsingExpressionAst usingAst)
         {
             Diagnostics.Assert(usingAst != null, "Caller makes sure the parameter is not null");
@@ -133,11 +128,6 @@ namespace System.Management.Automation
         #region EvaluatePowerShellDataFile
 
         
-        /// <param name="parameterName"></param>
-        /// <param name="psDataFilePath"></param>
-        /// <param name="context"></param>
-        /// <param name="skipPathValidation"></param>
-        /// <returns></returns>
         internal static Hashtable EvaluatePowerShellDataFileAsModuleManifest(
                                      string parameterName,
                                      string psDataFilePath,
@@ -157,28 +147,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="parameterName">
-        /// Name of the parameter that takes the specified .psd1 file as a value
-        /// </param>
-        /// <param name="psDataFilePath">
-        /// Path to the powershell data file
-        /// </param>
-        /// <param name="context">
-        /// ExecutionContext to use
-        /// </param>
-        /// <param name="allowedCommands">
-        /// Set of command names that are allowed to use in the .psd1 file
-        /// </param>
-        /// <param name="allowedVariables">
-        /// Set of variable names that are allowed to use in the .psd1 file
-        /// </param>
-        /// <param name="allowEnvironmentVariables">
-        /// If true, allow to use environment variables in the .psd1 file
-        /// </param>
-        /// <param name="skipPathValidation">
-        /// If true, caller guarantees the path is valid
-        /// </param>
-        /// <returns></returns>
         internal static Hashtable EvaluatePowerShellDataFile(
                                      string parameterName,
                                      string psDataFilePath,
@@ -365,8 +333,6 @@ namespace System.Management.Automation
     internal static class StringToBase64Converter
     {
         
-        /// <param name="input">String to encode.</param>
-        /// <returns>Base64 encoded string.</returns>
         internal static string StringToBase64String(string input)
         {
             // NTRAID#Windows Out Of Band Releases-926471-2005/12/27-JonN
@@ -384,8 +350,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="base64">Base64 string to decode.</param>
-        /// <returns>Decoded string.</returns>
         internal static string Base64ToString(string base64)
         {
             if (string.IsNullOrEmpty(base64))
@@ -398,8 +362,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="base64"></param>
-        /// <returns></returns>
         internal static object[] Base64ToArgsConverter(string base64)
         {
             if (string.IsNullOrEmpty(base64))

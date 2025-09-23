@@ -21,12 +21,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="context">
-        /// An instance of ExecutionContext that the APIs should work against.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="context"/> is null.
-        /// </exception>
         internal EngineIntrinsics(ExecutionContext context)
         {
             ArgumentNullException.ThrowIfNull(context);

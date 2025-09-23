@@ -22,9 +22,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="cmdlet">
-        /// An instance of the cmdlet.
-        /// </param>
         internal SecurityDescriptorCmdletProviderIntrinsics(Cmdlet cmdlet)
         {
             if (cmdlet == null)
@@ -37,9 +34,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="sessionState">
-        /// An instance of the real session state class.
-        /// </param>
         internal SecurityDescriptorCmdletProviderIntrinsics(SessionStateInternal sessionState)
         {
             if (sessionState == null)
@@ -57,16 +51,6 @@ namespace System.Management.Automation
         #region GetSecurityDescriptor
 
         
-        /// <param name="path">
-        /// The path of the item to retrieve. It may be a drive or provider-qualified path and may include.
-        /// glob characters.
-        /// </param>
-        /// <param name="includeSections">
-        /// The sections of the security descriptor to include.
-        /// </param>
-        /// <returns>
-        /// The SecurityDescriptor(s) at the specified path.
-        /// </returns>
         public Collection<PSObject> Get(string path, AccessControlSections includeSections)
         {
             Dbg.Diagnostics.Assert(
@@ -78,19 +62,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="path">
-        /// The path of the item to retrieve. It may be a drive or provider-qualified path and may include
-        /// glob characters.
-        /// </param>
-        /// <param name="includeSections">
-        /// The sections of the security descriptor to include.
-        /// </param>
-        /// <param name="context">
-        /// The context under which the command is running.
-        /// </param>
-        /// <returns>
-        /// Nothing. The object(s) at the specified path are written to the context.
-        /// </returns>
         internal void Get(string path,
                         AccessControlSections includeSections,
                         CmdletProviderContext context)
@@ -108,16 +79,6 @@ namespace System.Management.Automation
         #region SetSecurityDescriptor
 
         
-        /// <param name="path">
-        /// The path of the item to set. It may be a drive or provider-qualified path and may include
-        /// glob characters.
-        /// </param>
-        /// <param name="sd">
-        /// The new security descriptor to set.
-        /// </param>
-        /// <returns>
-        /// The SecurityDescriptor(s) set at the specified path.
-        /// </returns>
         public Collection<PSObject> Set(string path, ObjectSecurity sd)
         {
             Dbg.Diagnostics.Assert(
@@ -131,19 +92,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="path">
-        /// The path of the item to set. It may be a drive or provider-qualified path and may include
-        /// glob characters.
-        /// </param>
-        /// <param name="sd">
-        /// The new security descriptor to set.
-        /// </param>
-        /// <param name="context">
-        /// The context under which the command is running.
-        /// </param>
-        /// <returns>
-        /// Nothing. The object(s) set at the specified path are written to the context.
-        /// </returns>
         internal void Set(string path, ObjectSecurity sd, CmdletProviderContext context)
         {
             Dbg.Diagnostics.Assert(
@@ -160,16 +108,6 @@ namespace System.Management.Automation
         #region NewSecurityDescriptor
 
         
-        /// <param name="path">
-        /// The path of the item to retrieve. It may be a drive or provider-qualified path and may include
-        /// glob characters.
-        /// </param>
-        /// <param name="includeSections">
-        /// The sections of the security descriptor to include.
-        /// </param>
-        /// <returns>
-        /// The SecurityDescriptor(s) at the specified path.
-        /// </returns>
         public ObjectSecurity NewFromPath(string path, AccessControlSections includeSections)
         {
             Dbg.Diagnostics.Assert(
@@ -181,19 +119,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="providerId">
-        /// The name of the provider.
-        /// </param>
-        /// <param name="type">
-        /// The type of the item which corresponds to the security
-        /// descriptor that we want to create.
-        /// </param>
-        /// <param name="includeSections">
-        /// The sections of the security descriptor to include.
-        /// </param>
-        /// <returns>
-        /// A new SecurityDescriptor of the specified type.
-        /// </returns>
         public ObjectSecurity NewOfType(string providerId, string type, AccessControlSections includeSections)
         {
             Dbg.Diagnostics.Assert(

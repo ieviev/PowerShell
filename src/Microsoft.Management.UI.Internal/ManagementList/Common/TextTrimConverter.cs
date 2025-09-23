@@ -23,11 +23,6 @@ namespace Microsoft.Management.UI.Internal
         #region IValueConverter Members
 
         
-        /// <param name="value">Original string.</param>
-        /// <param name="targetType">The parameter is not used.</param>
-        /// <param name="parameter">The parameter is not used.</param>
-        /// <param name="culture">The parameter is not used.</param>
-        /// <returns>The trimmed string.</returns>
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             return TrimValue(value);
@@ -45,11 +40,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="value">Original string.</param>
-        /// <param name="targetType">The parameter is not used.</param>
-        /// <param name="parameter">The parameter is not used.</param>
-        /// <param name="culture">The parameter is not used.</param>
-        /// <returns>The trimmed string.</returns>
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             return TrimValue(value);

@@ -23,9 +23,6 @@ namespace Microsoft.PowerShell.Commands
         public Dictionary<string, string> Fields { get; }
 
         
-        /// <param name="id"></param>
-        /// <param name="method"></param>
-        /// <param name="action"></param>
         public FormObject(string id, string method, string action)
         {
             Id = id;

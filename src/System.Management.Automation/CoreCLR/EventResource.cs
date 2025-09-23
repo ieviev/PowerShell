@@ -16,11 +16,6 @@ namespace System.Management.Automation.Tracing
         private const string MissingEventIdResourceName = "MissingEventIdMessage";
 
         
-        /// <remarks>
-        /// This method is called when GetMessage returns a null value indicating the passed
-        /// in event id was not found. The message should be used as the format string
-        /// with the event id as the single variable argument.
-        /// <remarks>
         public static string GetMissingEventMessage(out int parameterCount)
         {
             parameterCount = 1;
@@ -28,9 +23,6 @@ namespace System.Management.Automation.Tracing
         }
 
         
-        /// <param name="eventId">The event id for the message resource to retrieve.</param>
-        /// <param name="parameterCount">The number of parameters required by the message resource.</param>
-        /// <returns>The string resource id of the associated event message; otherwise, a null reference if the event id is not valid.</returns>
         public static string GetMessage(int eventId, out int parameterCount)
         {
             switch (eventId)

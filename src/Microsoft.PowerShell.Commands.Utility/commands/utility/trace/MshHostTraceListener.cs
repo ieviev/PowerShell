@@ -9,10 +9,6 @@ using System.Text;
 namespace Microsoft.PowerShell.Commands
 {
     
-    /// <remarks>
-    /// This trace listener cannot be specified in the app.config file.
-    /// It must be added through the add-tracelistener cmdlet.
-    /// </remarks>
     internal sealed class PSHostTraceListener
         : System.Diagnostics.TraceListener
     {
@@ -40,9 +36,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="disposing">
-        /// True if the TraceListener is being disposed, false otherwise.
-        /// </param>
         protected override void Dispose(bool disposing)
         {
             try
@@ -61,9 +54,6 @@ namespace Microsoft.PowerShell.Commands
         #endregion TraceListener constructors and disposer
 
         
-        /// <param name="output">
-        /// The trace output to be written.
-        /// </param>
         public override void Write(string output)
         {
             try
@@ -80,9 +70,6 @@ namespace Microsoft.PowerShell.Commands
         private readonly StringBuilder _cachedWrite = new();
 
         
-        /// <param name="output">
-        /// The trace output to be written.
-        /// </param>
         public override void WriteLine(string output)
         {
             try

@@ -26,10 +26,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <remarks>
-        /// This can either be the real token at which place the error happens or a position
-        /// token indicating the location where error happens.
-        /// </remarks>
         public PSToken Token { get; }
 
         

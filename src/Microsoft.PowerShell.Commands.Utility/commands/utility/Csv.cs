@@ -17,9 +17,6 @@ namespace Microsoft.PowerShell.Commands
         internal char Delimiter { get; } = ',';
 
         
-        /// <param name="csv">
-        /// String to be parsed.
-        /// </param>
         internal Collection<string> ParseCsv(string csv)
         {
             Collection<string> result = new();

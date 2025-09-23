@@ -19,21 +19,6 @@ namespace System.Management.Automation
         #region ctor
 
         
-        /// <param name="name">
-        /// The name of the script.
-        /// </param>
-        /// <param name="path">
-        /// The path to the script
-        /// </param>
-        /// <param name="context">
-        /// The context of the currently running engine.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="context"/> is null.
-        /// </exception>
-        /// <exception cref="ArgumentException">
-        /// If <paramref name="path"/> is null or empty.
-        /// </exception>
         internal ExternalScriptInfo(string name, string path, ExecutionContext context)
             : base(name, CommandTypes.ExternalScript, context)
         {
@@ -50,15 +35,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="name">
-        /// The name of the script.
-        /// </param>
-        /// <param name="path">
-        /// The path to the script
-        /// </param>
-        /// <exception cref="ArgumentException">
-        /// If <paramref name="path"/> is null or empty.
-        /// </exception>
         internal ExternalScriptInfo(string name, string path) : base(name, CommandTypes.ExternalScript)
         {
             if (string.IsNullOrEmpty(path))
@@ -296,7 +272,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="host"></param>
         public void ValidateScriptInfo(Host.PSHost host)
         {
             if (!_signatureChecked)

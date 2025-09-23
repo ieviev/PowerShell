@@ -11,7 +11,6 @@ namespace Microsoft.Management.UI.Internal
     public class AutomationGroup : ContentControl
     {
         
-        /// <returns>The <see cref="AutomationPeer"/> implementations for this control.</returns>
         protected override AutomationPeer OnCreateAutomationPeer()
         {
             return new ExtendedFrameworkElementAutomationPeer(this, AutomationControlType.Group, true);

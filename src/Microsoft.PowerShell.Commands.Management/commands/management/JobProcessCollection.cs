@@ -27,13 +27,10 @@ internal sealed class JobProcessCollection : IDisposable
     { }
 
     
-    /// <param name="process">The process to add to the job.</param>
-    /// <returns>Whether the job creation and assignment worked or not.</returns>
     public bool AssignProcessToJobObject(SafeProcessHandle process)
         => InitializeJob() && Interop.Windows.AssignProcessToJobObject(_jobObject, process);
 
     
-    /// <param name="cancellationToken">A token to cancel the operation.</param>
     public void WaitForExit(CancellationToken cancellationToken)
     {
         if (_completionPort is null)

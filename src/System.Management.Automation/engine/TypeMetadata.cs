@@ -33,7 +33,6 @@ namespace System.Management.Automation
         #region Constructor
 
         
-        /// <param name="psMD"></param>
         internal ParameterSetMetadata(ParameterSetSpecificMetadata psMD)
         {
             Dbg.Assert(psMD != null, "ParameterSetSpecificMetadata cannot be null");
@@ -41,7 +40,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="other">Object to copy.</param>
         internal ParameterSetMetadata(ParameterSetMetadata other)
         {
             if (other == null)
@@ -64,7 +62,6 @@ namespace System.Management.Automation
         #region Public Properties
 
         
-        /// <value></value>
         public bool IsMandatory
         {
             get
@@ -79,7 +76,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <value></value>
         public int Position
         {
             get
@@ -122,7 +118,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <value></value>
         public bool ValueFromRemainingArguments
         {
             get
@@ -183,7 +178,6 @@ namespace System.Management.Automation
         #region Private / Internal Methods & Properties
 
         
-        /// <param name="psMD"></param>
         internal void Initialize(ParameterSetSpecificMetadata psMD)
         {
             _isMandatory = psMD.IsMandatory;
@@ -197,12 +191,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="second">
-        /// An object to compare this instance with
-        /// </param>
-        /// <returns>
-        /// true if the metadata is same. false otherwise.
-        /// </returns>
         internal bool Equals(ParameterSetMetadata second)
         {
             if ((_isMandatory != second._isMandatory) ||
@@ -281,7 +269,6 @@ namespace System.Management.Automation
         private const string HelpMessageFormat = @"{0}HelpMessage='{1}'";
 
         
-        /// <returns></returns>
         internal string GetProxyParameterData()
         {
             Text.StringBuilder result = new System.Text.StringBuilder();
@@ -350,27 +337,12 @@ namespace System.Management.Automation
         #region Constructor
 
         
-        /// <param name="name">
-        /// Name of the parameter.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// name is null.
-        /// </exception>
         public ParameterMetadata(string name)
             : this(name, null)
         {
         }
 
         
-        /// <param name="name">
-        /// Name of the parameter.
-        /// </param>
-        /// <param name="parameterType">
-        /// Type of the parameter.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// name is null.
-        /// </exception>
         public ParameterMetadata(string name, Type parameterType)
         {
             if (string.IsNullOrEmpty(name))
@@ -387,7 +359,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="other">Object to copy.</param>
         public ParameterMetadata(ParameterMetadata other)
         {
             if (other == null)
@@ -437,9 +408,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="cmdParameterMD">
-        /// Internal CompiledCommandParameter metadata
-        /// </param>
         internal ParameterMetadata(CompiledCommandParameter cmdParameterMD)
         {
             Dbg.Assert(cmdParameterMD != null,
@@ -550,16 +518,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="type">
-        /// CLR Type for which the parameter metadata is constructed.
-        /// </param>
-        /// <returns>
-        /// A Dictionary of ParameterMetadata keyed by parameter name.
-        /// null if no parameter metadata is found.
-        /// </returns>
-        /// <exception cref="ArgumentNullException">
-        /// type is null.
-        /// </exception>
         public static Dictionary<string, ParameterMetadata> GetParameterMetadata(Type type)
         {
             if (type == null)
@@ -579,7 +537,6 @@ namespace System.Management.Automation
         #region Internal Methods/Properties
 
         
-        /// <param name="compiledParameterMD"></param>
         internal void Initialize(CompiledCommandParameter compiledParameterMD)
         {
             _name = compiledParameterMD.Name;
@@ -610,8 +567,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="cmdParameterMetadata"></param>
-        /// <returns></returns>
         internal static Dictionary<string, ParameterMetadata> GetParameterMetadata(MergedCommandParameterMetadata
             cmdParameterMetadata)
         {
@@ -716,16 +671,6 @@ namespace System.Management.Automation
         private const string CredentialAttributeFormat = @"{0}[System.Management.Automation.CredentialAttribute()]";
 
         
-        /// <param name="prefix">
-        /// prefix that is added to every new-line. Used for tabbing content.
-        /// </param>
-        /// <param name="paramNameOverride">
-        /// The paramNameOverride is used as the parameter name if it is not null or empty.
-        /// </param>
-        /// <param name="isProxyForCmdlet">
-        /// The parameter is for a cmdlet and requires a Parameter attribute.
-        /// </param>
-        /// <returns></returns>
         internal string GetProxyParameterData(string prefix, string paramNameOverride, bool isProxyForCmdlet)
         {
             Text.StringBuilder result = new System.Text.StringBuilder();
@@ -821,15 +766,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="attrib">
-        /// Attribute to process.
-        /// </param>
-        /// <param name="prefix">
-        /// Prefix string to add.
-        /// </param>
-        /// <returns>
-        /// Attribute's proxy string.
-        /// </returns>
         private static string GetProxyAttributeData(Attribute attrib, string prefix)
         {
             string result;
@@ -1031,26 +967,6 @@ namespace System.Management.Automation
         #region ctor
 
         
-        /// <param name="runtimeDefinedParameters">
-        /// The runtime-defined parameter collection that describes the parameters and their metadata.
-        /// </param>
-        /// <param name="processingDynamicParameters">
-        /// True if dynamic parameters are being processed, or false otherwise.
-        /// </param>
-        /// <param name="checkNames">
-        /// Check for reserved parameter names.
-        /// </param>
-        /// <returns>
-        /// An instance of the TypeMetadata for the specified runtime-defined parameters. The metadata
-        /// is always constructed on demand and never cached.
-        /// </returns>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="runtimeDefinedParameters"/> is null.
-        /// </exception>
-        /// <exception cref="MetadataException">
-        /// If a parameter defines the same parameter-set name multiple times.
-        /// If the attributes could not be read from a property or field.
-        /// </exception>
         internal static InternalParameterMetadata Get(RuntimeDefinedParameterDictionary runtimeDefinedParameters,
                                                       bool processingDynamicParameters,
                                                       bool checkNames)
@@ -1064,26 +980,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="type">
-        /// The type to get the metadata for.
-        /// </param>
-        /// <param name="context">
-        /// The current engine context.
-        /// </param>
-        /// <param name="processingDynamicParameters">
-        /// True if dynamic parameters are being processed, or false otherwise.
-        /// </param>
-        /// <returns>
-        /// An instance of the TypeMetadata for the specified type. The metadata may get
-        /// constructed on-demand or may be retrieved from the cache.
-        /// </returns>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="type"/> is null.
-        /// </exception>
-        /// <exception cref="MetadataException">
-        /// If a parameter defines the same parameter-set name multiple times.
-        /// If the attributes could not be read from a property or field.
-        /// </exception>
         internal static InternalParameterMetadata Get(Type type, ExecutionContext context, bool processingDynamicParameters)
         {
             if (type == null)
@@ -1107,23 +1003,6 @@ namespace System.Management.Automation
 
         //
         
-        /// <param name="runtimeDefinedParameters">
-        /// The collection of runtime-defined parameters that declare the parameters and their
-        /// metadata.
-        /// </param>
-        /// <param name="processingDynamicParameters">
-        /// True if dynamic parameters are being processed, or false otherwise.
-        /// </param>
-        /// <param name="checkNames">
-        /// Check if the parameter name has been reserved.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="runtimeDefinedParameters"/> is null.
-        /// </exception>
-        /// <exception cref="MetadataException">
-        /// If a parameter defines the same parameter-set name multiple times.
-        /// If the attributes could not be read from a property or field.
-        /// </exception>
         internal InternalParameterMetadata(RuntimeDefinedParameterDictionary runtimeDefinedParameters, bool processingDynamicParameters, bool checkNames)
         {
             if (runtimeDefinedParameters == null)
@@ -1136,19 +1015,6 @@ namespace System.Management.Automation
 
         //
         
-        /// <param name="type">
-        /// The type information for the bindable object
-        /// </param>
-        /// <param name="processingDynamicParameters">
-        /// True if dynamic parameters are being processed, or false otherwise.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="type"/> is null.
-        /// </exception>
-        /// <exception cref="MetadataException">
-        /// If a parameter defines the same parameter-set name multiple times.
-        /// If the attributes could not be read from a property or field.
-        /// </exception>
         internal InternalParameterMetadata(Type type, bool processingDynamicParameters)
         {
             if (type == null)
@@ -1186,19 +1052,6 @@ namespace System.Management.Automation
         #region helper methods
 
         
-        /// <param name="runtimeDefinedParameters">
-        /// A description of the parameters and their metadata.
-        /// </param>
-        /// <param name="processingDynamicParameters">
-        /// True if dynamic parameters are being processed, or false otherwise.
-        /// </param>
-        /// <param name="checkNames">
-        /// Check if the parameter name has been reserved.
-        /// </param>
-        /// <exception cref="MetadataException">
-        /// If a parameter defines the same parameter-set name multiple times.
-        /// If the attributes could not be read from a property or field.
-        /// </exception>
         private void ConstructCompiledParametersUsingRuntimeDefinedParameters(
             RuntimeDefinedParameterDictionary runtimeDefinedParameters,
             bool processingDynamicParameters,
@@ -1224,13 +1077,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="processingDynamicParameters">
-        /// True if dynamic parameters are being processed, or false otherwise.
-        /// </param>
-        /// <exception cref="MetadataException">
-        /// If a parameter defines the same parameter-set name multiple times.
-        /// If the attributes could not be read from a property or field.
-        /// </exception>
         private void ConstructCompiledParametersUsingReflection(bool processingDynamicParameters)
         {
             Diagnostics.Assert(
@@ -1383,15 +1229,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="member">
-        /// The member to check to see if it is a parameter.
-        /// </param>
-        /// <returns>
-        /// True if at least one ParameterAttribute is declared on the member, or false otherwise.
-        /// </returns>
-        /// <exception cref="MetadataException">
-        /// If GetCustomAttributes fails on <paramref name="member"/>.
-        /// </exception>
         private static bool IsMemberAParameter(MemberInfo member)
         {
             try

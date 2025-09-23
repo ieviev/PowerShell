@@ -32,7 +32,6 @@ namespace Microsoft.PowerShell.Commands
         public int SyncWindow { get; set; } = int.MaxValue;
 
         
-        /// <value></value>
         [Parameter]
         public object[] Property { get; set; }
 
@@ -102,7 +101,6 @@ namespace Microsoft.PowerShell.Commands
         private const string InputObjectPropertyName = "InputObject";
 
         
-        /// <param name="differenceEntry"></param>
         private void Process(OrderByPropertyEntry differenceEntry)
         {
             Diagnostics.Assert(_referenceEntries != null, "null referenceEntries");

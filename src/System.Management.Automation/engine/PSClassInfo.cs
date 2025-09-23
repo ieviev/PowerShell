@@ -10,7 +10,6 @@ namespace System.Management.Automation
     public sealed class PSClassInfo
     {
         
-        /// <param name="name">Name of the PS Class.</param>
         internal PSClassInfo(string name)
         {
             this.Name = name;
@@ -23,7 +22,6 @@ namespace System.Management.Automation
         public ReadOnlyCollection<PSClassMemberInfo> Members { get; private set; }
 
         
-        /// <param name="members">Updated members.</param>
         public void UpdateMembers(IList<PSClassMemberInfo> members)
         {
             if (members != null)

@@ -307,10 +307,6 @@ namespace System.Management.Automation.Language
             }
 
             
-            /// <param name="parser"></param>
-            /// <param name="typeDefinitionAst"></param>
-            /// <param name="interfaces">Return declared interfaces.</param>
-            /// <returns></returns>
             private Type GetBaseTypes(Parser parser, TypeDefinitionAst typeDefinitionAst, out List<Type> interfaces)
             {
                 // Define base types and report errors.
@@ -560,7 +556,6 @@ namespace System.Management.Automation.Language
                     needDefaultCtor = instanceCtors.Count == 0;
                 }
 
-                //// Now we can decide to create explicit default ctors or report error.
 
                 if (needStaticCtor)
                 {

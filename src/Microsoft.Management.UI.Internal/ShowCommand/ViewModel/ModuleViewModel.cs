@@ -42,8 +42,6 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
 
         #region Construction and Destructor
         
-        /// <param name="name">Module name.</param>
-        /// <param name="importedModules">All loaded modules.</param>
         public ModuleViewModel(string name, Dictionary<string, ShowCommandModuleInfo> importedModules)
         {
             ArgumentNullException.ThrowIfNull(name);
@@ -230,14 +228,12 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
         }
 
         
-        /// <param name="parentAllModules">The AllModulesViewModel containing this.</param>
         internal void SetAllModules(AllModulesViewModel parentAllModules)
         {
             this.allModules = parentAllModules;
         }
 
         
-        /// <param name="markRepeatedCmdlets">True to mark repeated commands with a flag that will produce a module qualified name in GetScript.</param>
         internal void SortCommands(bool markRepeatedCmdlets)
         {
             this.commands.Sort(this.Compare);
@@ -264,7 +260,6 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
         }
 
         
-        /// <param name="filter">Current filter.</param>
         internal void RefreshFilteredCommands(string filter)
         {
             this.filteredCommands.Clear();
@@ -321,7 +316,6 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
         }
 
         
-        /// <param name="e">Event arguments.</param>
         internal void OnSelectedCommandNeedsHelp(HelpNeededEventArgs e)
         {
             EventHandler<HelpNeededEventArgs> handler = this.SelectedCommandNeedsHelp;
@@ -343,10 +337,6 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
         #region Private Method
 
         
-        /// <param name="filterPattern">Pattern corresponding to filter.</param>
-        /// <param name="commandName">Command name string.</param>
-        /// <param name="filter">Filter string.</param>
-        /// <returns>True if coparisonText matches str or pattern.</returns>
         private static bool Matches(WildcardPattern filterPattern, string commandName, string filter)
         {
             if (filterPattern != null)
@@ -358,9 +348,6 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
         }
 
         
-        /// <param name="commandName">Command name string.</param>
-        /// <param name="filter">Filter string.</param>
-        /// <returns>Return match result.</returns>
         private static bool MatchesEvenIfInPlural(string commandName, string filter)
         {
             if (commandName.Contains(filter, StringComparison.OrdinalIgnoreCase))
@@ -384,24 +371,18 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
         }
 
         
-        /// <param name="sender">HelpNeeded event sender.</param>
-        /// <param name="e">HelpNeeded event argument.</param>
         private void SelectedCommand_HelpNeeded(object sender, HelpNeededEventArgs e)
         {
             this.OnSelectedCommandNeedsHelp(e);
         }
 
         
-        /// <param name="sender">HelpNeeded event sender.</param>
-        /// <param name="e">HelpNeeded event argument.</param>
         private void SelectedCommand_ImportModule(object sender, EventArgs e)
         {
             this.OnSelectedCommandNeedsImportModule();
         }
 
         
-        /// <param name="sender">Event sender.</param>
-        /// <param name="e">Event arguments.</param>
         private void SelectedCommand_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (!e.PropertyName.Equals("SelectedParameterSetAllMandatoryParametersHaveValues"))
@@ -422,9 +403,6 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
         }
 
         
-        /// <param name="source">Source commandmodule.</param>
-        /// <param name="target">Target commandmodule.</param>
-        /// <returns>Return compare result.</returns>
         private int Compare(CommandViewModel source, CommandViewModel target)
         {
             return string.Compare(source.Name, target.Name, StringComparison.OrdinalIgnoreCase);
@@ -432,7 +410,6 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
         #endregion
 
         
-        /// <param name="propertyName">The changed property.</param>
         private void OnNotifyPropertyChanged(string propertyName)
         {
             PropertyChangedEventHandler handler = this.PropertyChanged;

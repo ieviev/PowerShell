@@ -16,7 +16,6 @@ namespace Microsoft.PowerShell.Commands
         private string _stringData;
 
         
-        /// <value></value>
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
         [AllowEmptyString]
         public string StringData

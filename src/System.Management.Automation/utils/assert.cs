@@ -20,7 +20,6 @@ namespace System.Management.Automation
     internal class AssertException : SystemException
     {
         
-        /// <param name="message">Repassed to the base class.</param>
         internal AssertException(string message) : base(message)
         {
             // 3 will skip the assertion caller, this method and AssertException.StackTrace
@@ -28,23 +27,10 @@ namespace System.Management.Automation
         }
 
         
-        /// <value>the constructor's stackTrace</value>
         public override string StackTrace { get; }
     }
 
     
-    /// <remarks>
-    /// All methods are public and static.
-    /// The class cannot derive from the sealed System.Diagnostics.Debug
-    /// The class was also made sealed.
-    /// <newpara/>
-    /// <example>
-    /// <code>
-    /// Diagnostics.Assert(x >= 0,"A negative x would have caused early return.");
-    /// </code>
-    /// </example>
-    /// <newpara/>
-    /// </remarks>
     internal sealed class Diagnostics
     {
         internal static string StackTrace(int framesToSkip)
@@ -67,7 +53,6 @@ namespace System.Management.Automation
 
         private static bool s_throwInsteadOfAssert = false;
         
-        /// <value>false for dialog, true for exception</value>
         internal static bool ThrowInsteadOfAssert
         {
             get
@@ -91,12 +76,6 @@ namespace System.Management.Automation
         private Diagnostics() { }
 
         
-        /// <param name="condition">
-        /// logical condition that should be true for program to proceed
-        /// </param>
-        /// <param name="whyThisShouldNeverHappen">
-        /// Message to explain why condition should always be true
-        /// </param>
         // These two lines are playing havoc with asmmeta. Since only one asmmeta file
         // can be checked in at a time if you compile the asmmeta for a fre build then
         // the checked can't compile against it since these methods will not exist. If
@@ -113,15 +92,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="condition">
-        /// logical condition that should be true for program to proceed
-        /// </param>
-        /// <param name="whyThisShouldNeverHappen">
-        /// Message to explain why condition should always be true
-        /// </param>
-        /// <param name="detailMessage">
-        /// Additional information about the assertion
-        /// </param>
         // These two lines are playing havoc with asmmeta. Since only one asmmeta file
         // can be checked in at a time if you compile the asmmeta for a fre build then
         // the checked can't compile against it since these methods will not exist. If

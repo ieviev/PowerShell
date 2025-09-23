@@ -14,13 +14,6 @@ namespace Microsoft.Management.UI.Internal
     public class VisualToAncestorDataConverter : IValueConverter
     {
         
-        /// <param name="value">The visual whose ancestors are searched.</param>
-        /// <param name="targetType">The parameter is not used.</param>
-        /// <param name="parameter">The type of the data to find. The type must be a class.</param>
-        /// <param name="culture">The parameter is not used.</param>
-        /// <returns>The data of the specified type; or if not found, <c>null</c>.</returns>
-        /// <exception cref="ArgumentException">The specified value is not a class type.</exception>
-        /// <exception cref="ArgumentNullException">The specified value is a null reference.</exception>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             ArgumentNullException.ThrowIfNull(value);
@@ -42,11 +35,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="value">The parameter is not used.</param>
-        /// <param name="targetType">The parameter is not used.</param>
-        /// <param name="parameter">The parameter is not used.</param>
-        /// <param name="culture">The parameter is not used.</param>
-        /// <returns>The parameter is not used.</returns>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();

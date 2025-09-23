@@ -29,11 +29,6 @@ namespace System.Management.Automation.PSTasks
         #region Constructor
 
         
-        /// <param name="scriptBlock">Script block to run in task.</param>
-        /// <param name="usingValuesMap">Using values passed into script block.</param>
-        /// <param name="dollarUnderbar">Dollar underbar variable value.</param>
-        /// <param name="currentLocationPath">Current working directory.</param>
-        /// <param name="dataStreamWriter">Cmdlet data stream writer.</param>
         public PSTask(
             ScriptBlock scriptBlock,
             Dictionary<string, object> usingValuesMap,
@@ -177,11 +172,6 @@ namespace System.Management.Automation.PSTasks
         #region Constructor
 
         
-        /// <param name="scriptBlock">Script block to run.</param>
-        /// <param name="usingValuesMap">Using variable values passed to script block.</param>
-        /// <param name="dollarUnderbar">Dollar underbar variable value for script block.</param>
-        /// <param name="currentLocationPath">Current working directory.</param>
-        /// <param name="job">Job object associated with task.</param>
         public PSJobTask(
             ScriptBlock scriptBlock,
             Dictionary<string, object> usingValuesMap,
@@ -366,10 +356,6 @@ namespace System.Management.Automation.PSTasks
         }
 
         
-        /// <param name="scriptBlock">Script block to run.</param>
-        /// <param name="usingValuesMap">Using variable values passed to script block.</param>
-        /// <param name="dollarUnderbar">Dollar underbar variable value.</param>
-        /// <param name="currentLocationPath">Current working directory.</param>
         protected PSTaskBase(
             ScriptBlock scriptBlock,
             Dictionary<string, object> usingValuesMap,
@@ -405,7 +391,6 @@ namespace System.Management.Automation.PSTasks
         #region Public Methods
 
         
-        /// <param name="runspace">Runspace used to run task.</param>
         public void Start(Runspace runspace)
         {
             if (_powershell != null)
@@ -485,7 +470,6 @@ namespace System.Management.Automation.PSTasks
         #region Properties
 
         
-        /// <returns>Data added wait handle.</returns>
         internal WaitHandle DataAddedWaitHandle
         {
             get => _dataStream.WaitHandle;
@@ -498,7 +482,6 @@ namespace System.Management.Automation.PSTasks
         private PSTaskDataStreamWriter() { }
 
         
-        /// <param name="psCmdlet">Parent cmdlet.</param>
         public PSTaskDataStreamWriter(PSCmdlet psCmdlet)
         {
             _cmdlet = psCmdlet;
@@ -511,7 +494,6 @@ namespace System.Management.Automation.PSTasks
         #region Public Methods
 
         
-        /// <param name="streamObject">Data stream object to write.</param>
         public void Add(PSStreamObject streamObject)
         {
             _dataStream.Add(streamObject);
@@ -609,8 +591,6 @@ namespace System.Management.Automation.PSTasks
         private PSTaskPool() { }
 
         
-        /// <param name="size">Total number of allowed running objects in pool at one time.</param>
-        /// <param name="useNewRunspace">When true, a new runspace object is created for the task instead of reusing one from the pool.</param>
         public PSTaskPool(
             int size,
             bool useNewRunspace)
@@ -686,8 +666,6 @@ namespace System.Management.Automation.PSTasks
         #region Public Methods
 
         
-        /// <param name="task">Task to be added to pool.</param>
-        /// <returns>True when task is successfully added.</returns>
         public bool Add(PSTaskBase task)
         {
             if (!_isOpen)
@@ -730,8 +708,6 @@ namespace System.Management.Automation.PSTasks
         }
 
         
-        /// <param name="childJob">Child job to be added to pool.</param>
-        /// <returns>True when child job is successfully added.</returns>
         public bool Add(PSTaskChildJob childJob)
         {
             return Add(childJob.Task);
@@ -939,9 +915,6 @@ namespace System.Management.Automation.PSTasks
         private PSTaskJob() { }
 
         
-        /// <param name="command">Job command text.</param>
-        /// <param name="throttleLimit">Pool size limit for task job.</param>
-        /// <param name="useNewRunspace">When true, a new runspace object is created for the task instead of reusing one from the pool.</param>
         internal PSTaskJob(
             string command,
             int throttleLimit,
@@ -998,7 +971,6 @@ namespace System.Management.Automation.PSTasks
         }
 
         
-        /// <param name="disposing">Indicates disposing action.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -1014,8 +986,6 @@ namespace System.Management.Automation.PSTasks
         #region Internal Methods
 
         
-        /// <param name="childJob">Child job to add.</param>
-        /// <returns>True when child job is successfully added.</returns>
         internal bool AddJob(PSTaskChildJob childJob)
         {
             if (!_isOpen)
@@ -1100,8 +1070,6 @@ namespace System.Management.Automation.PSTasks
         private PSTaskChildDebugger() { }
 
         
-        /// <param name="debugger">Script debugger associated with task.</param>
-        /// <param name="jobName">Job name for associated task.</param>
         public PSTaskChildDebugger(
             Debugger debugger,
             string jobName)
@@ -1124,9 +1092,6 @@ namespace System.Management.Automation.PSTasks
         #region Debugger overrides
 
         
-        /// <param name="command">PowerShell command.</param>
-        /// <param name="output">PowerShell output.</param>
-        /// <returns>Debugger command results.</returns>
         public override DebuggerCommandResults ProcessCommand(
             PSCommand command,
             PSDataCollection<PSObject> output)
@@ -1141,78 +1106,44 @@ namespace System.Management.Automation.PSTasks
         }
 
         
-        /// <param name="breakpoints">List of breakpoints.</param>
-        /// <param name="runspaceId">The runspace id of the runspace you want to interact with. A null value will use the current runspace.</param>
         public override void SetBreakpoints(IEnumerable<Breakpoint> breakpoints, int? runspaceId) =>
             _wrappedDebugger.SetBreakpoints(breakpoints, runspaceId);
 
         
-        /// <param name="resumeAction">Debugger resume action.</param>
         public override void SetDebuggerAction(DebuggerResumeAction resumeAction)
         {
             _wrappedDebugger.SetDebuggerAction(resumeAction);
         }
 
         
-        /// <param name="id">Id of the breakpoint you want.</param>
-        /// <param name="runspaceId">The runspace id of the runspace you want to interact with. A null value will use the current runspace.</param>
-        /// <returns>The breakpoint with the specified id.</returns>
         public override Breakpoint GetBreakpoint(int id, int? runspaceId) =>
             _wrappedDebugger.GetBreakpoint(id, runspaceId);
 
         
-        /// <param name="runspaceId">The runspace id of the runspace you want to interact with. A null value will use the current runspace.</param>
-        /// <returns>A list of breakpoints in a runspace.</returns>
         public override List<Breakpoint> GetBreakpoints(int? runspaceId) =>
             _wrappedDebugger.GetBreakpoints(runspaceId);
 
         
-        /// <param name="command">The name of the command that will trigger the breakpoint. This value may not be null.</param>
-        /// <param name="action">The action to take when the breakpoint is hit. If null, PowerShell will break into the debugger when the breakpoint is hit.</param>
-        /// <param name="path">The path to the script file where the breakpoint may be hit. If null, the breakpoint may be hit anywhere the command is invoked.</param>
-        /// <param name="runspaceId">The runspace id of the runspace you want to interact with. A null value will use the current runspace.</param>
-        /// <returns>The command breakpoint that was set.</returns>
         public override CommandBreakpoint SetCommandBreakpoint(string command, ScriptBlock action, string path, int? runspaceId) =>
             _wrappedDebugger.SetCommandBreakpoint(command, action, path, runspaceId);
 
         
-        /// <param name="variableName">The name of the variable that will trigger the breakpoint. This value may not be null.</param>
-        /// <param name="accessMode">The variable access mode that will trigger the breakpoint.</param>
-        /// <param name="action">The action to take when the breakpoint is hit. If null, PowerShell will break into the debugger when the breakpoint is hit.</param>
-        /// <param name="path">The path to the script file where the breakpoint may be hit. If null, the breakpoint may be hit anywhere the variable is accessed using the specified access mode.</param>
-        /// <param name="runspaceId">The runspace id of the runspace you want to interact with. A null value will use the current runspace.</param>
-        /// <returns>The variable breakpoint that was set.</returns>
         public override VariableBreakpoint SetVariableBreakpoint(string variableName, VariableAccessMode accessMode, ScriptBlock action, string path, int? runspaceId) =>
             _wrappedDebugger.SetVariableBreakpoint(variableName, accessMode, action, path, runspaceId);
 
         
-        /// <param name="path">The path to the script file where the breakpoint may be hit. This value may not be null.</param>
-        /// <param name="line">The line in the script file where the breakpoint may be hit. This value must be greater than or equal to 1.</param>
-        /// <param name="column">The column in the script file where the breakpoint may be hit. If 0, the breakpoint will trigger on any statement on the line.</param>
-        /// <param name="action">The action to take when the breakpoint is hit. If null, PowerShell will break into the debugger when the breakpoint is hit.</param>
-        /// <param name="runspaceId">The runspace id of the runspace you want to interact with. A null value will use the current runspace.</param>
-        /// <returns>The line breakpoint that was set.</returns>
         public override LineBreakpoint SetLineBreakpoint(string path, int line, int column, ScriptBlock action, int? runspaceId) =>
             _wrappedDebugger.SetLineBreakpoint(path, line, column, action, runspaceId);
 
         
-        /// <param name="breakpoint">The breakpoint to enable in the debugger. This value may not be null.</param>
-        /// <param name="runspaceId">The runspace id of the runspace you want to interact with. A null value will use the current runspace.</param>
-        /// <returns>The updated breakpoint if it was found; null if the breakpoint was not found in the debugger.</returns>
         public override Breakpoint EnableBreakpoint(Breakpoint breakpoint, int? runspaceId) =>
             _wrappedDebugger.EnableBreakpoint(breakpoint, runspaceId);
 
         
-        /// <param name="breakpoint">The breakpoint to enable in the debugger. This value may not be null.</param>
-        /// <param name="runspaceId">The runspace id of the runspace you want to interact with. A null value will use the current runspace.</param>
-        /// <returns>The updated breakpoint if it was found; null if the breakpoint was not found in the debugger.</returns>
         public override Breakpoint DisableBreakpoint(Breakpoint breakpoint, int? runspaceId) =>
             _wrappedDebugger.DisableBreakpoint(breakpoint, runspaceId);
 
         
-        /// <param name="breakpoint">The breakpoint to remove from the debugger. This value may not be null.</param>
-        /// <param name="runspaceId">The runspace id of the runspace you want to interact with. A null value will use the current runspace.</param>
-        /// <returns>True if the breakpoint was removed from the debugger; false otherwise.</returns>
         public override bool RemoveBreakpoint(Breakpoint breakpoint, int? runspaceId) =>
             _wrappedDebugger.RemoveBreakpoint(breakpoint, runspaceId);
 
@@ -1223,18 +1154,12 @@ namespace System.Management.Automation.PSTasks
         }
 
         
-        /// <returns>Debugger stop eventArgs.</returns>
         public override DebuggerStopEventArgs GetDebuggerStopArgs()
         {
             return _wrappedDebugger.GetDebuggerStopArgs();
         }
 
         
-        /// <param name="parent">Parent debugger.</param>
-        /// <param name="breakPoints">List of breakpoints.</param>
-        /// <param name="startAction">Debugger mode.</param>
-        /// <param name="host">PowerShell host.</param>
-        /// <param name="path">Current path.</param>
         public override void SetParent(
             Debugger parent,
             IEnumerable<Breakpoint> breakPoints,
@@ -1247,7 +1172,6 @@ namespace System.Management.Automation.PSTasks
         }
 
         
-        /// <param name="mode">Debugger mode to set.</param>
         public override void SetDebugMode(DebugModes mode)
         {
             _wrappedDebugger.SetDebugMode(mode);
@@ -1256,14 +1180,12 @@ namespace System.Management.Automation.PSTasks
         }
 
         
-        /// <returns>Enumerable call stack.</returns>
         public override IEnumerable<CallStackFrame> GetCallStack()
         {
             return _wrappedDebugger.GetCallStack();
         }
 
         
-        /// <param name="enabled">True to enable debugger step mode.</param>
         public override void SetDebuggerStepMode(bool enabled)
         {
             _wrappedDebugger.SetDebuggerStepMode(enabled);
@@ -1319,10 +1241,6 @@ namespace System.Management.Automation.PSTasks
         private PSTaskChildJob() { }
 
         
-        /// <param name="scriptBlock">Script block to run.</param>
-        /// <param name="usingValuesMap">Using variable values passed to script block.</param>
-        /// <param name="dollarUnderbar">Dollar underbar variable value.</param>
-        /// <param name="currentLocationPath">Current working directory.</param>
         public PSTaskChildJob(
             ScriptBlock scriptBlock,
             Dictionary<string, object> usingValuesMap,

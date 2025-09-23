@@ -7,9 +7,6 @@ namespace System.Management.Automation
     internal class QuestionMarkVariable : PSVariable
     {
         
-        /// <param name="context">
-        /// Execution context
-        /// </param>
         internal QuestionMarkVariable(ExecutionContext context)
             : base(SpecialVariables.Question, true, ScopedItemOptions.ReadOnly | ScopedItemOptions.AllScope, RunspaceInit.DollarHookDescription)
         {

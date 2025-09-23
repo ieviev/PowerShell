@@ -16,7 +16,6 @@ namespace Microsoft.PowerShell.Commands
     internal sealed class PSPropertyExpressionFilter
     {
         
-        /// <param name="wildcardPatternsStrings">Array of pattern strings to use.</param>
         internal PSPropertyExpressionFilter(string[] wildcardPatternsStrings)
         {
             ArgumentNullException.ThrowIfNull(wildcardPatternsStrings);
@@ -29,8 +28,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="expression">PSPropertyExpression to test against.</param>
-        /// <returns>True if there is a match, else false.</returns>
         internal bool IsMatch(PSPropertyExpression expression)
         {
             for (int k = 0; k < _wildcardPatterns.Length; k++)
@@ -62,30 +59,25 @@ namespace Microsoft.PowerShell.Commands
         #region Command Line Switches
 
         
-        /// <value></value>
         [Parameter(ValueFromPipeline = true)]
         public PSObject InputObject { get; set; } = AutomationNull.Value;
 
         
-        /// <value></value>
         [Parameter(Position = 0, ParameterSetName = "DefaultParameter")]
         [Parameter(Position = 0, ParameterSetName = "SkipLastParameter")]
         public object[] Property { get; set; }
 
         
-        /// <value></value>
         [Parameter(ParameterSetName = "DefaultParameter")]
         [Parameter(ParameterSetName = "SkipLastParameter")]
         public string[] ExcludeProperty { get; set; }
 
         
-        /// <value></value>
         [Parameter(ParameterSetName = "DefaultParameter")]
         [Parameter(ParameterSetName = "SkipLastParameter")]
         public string ExpandProperty { get; set; }
 
         
-        /// <value></value>
         [Parameter]
         public SwitchParameter Unique
         {
@@ -101,7 +93,6 @@ namespace Microsoft.PowerShell.Commands
         public SwitchParameter CaseInsensitive { get; set; }
 
         
-        /// <value></value>
         [Parameter(ParameterSetName = "DefaultParameter")]
         // NTRAID#Windows Out Of Band Releases-927878-2006/03/02
         // Allow zero
@@ -116,7 +107,6 @@ namespace Microsoft.PowerShell.Commands
         private int _last = 0;
 
         
-        /// <value></value>
         [Parameter(ParameterSetName = "DefaultParameter")]
         // NTRAID#Windows Out Of Band Releases-927878-2006/03/02
         // Allow zero
@@ -132,7 +122,6 @@ namespace Microsoft.PowerShell.Commands
         private bool _firstOrLastSpecified;
 
         
-        /// <value></value>
         [Parameter(ParameterSetName = "DefaultParameter")]
         [Parameter(ParameterSetName = "SkipLastParameter")]
         [ValidateRange(0, int.MaxValue)]
@@ -149,7 +138,6 @@ namespace Microsoft.PowerShell.Commands
         public SwitchParameter Wait { get; set; }
 
         
-        /// <value></value>
         [Parameter(ParameterSetName = "IndexParameter")]
         [ValidateRange(0, int.MaxValue)]
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
@@ -170,7 +158,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <value></value>
         [Parameter(ParameterSetName = "SkipIndexParameter")]
         [ValidateRange(0, int.MaxValue)]
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]

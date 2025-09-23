@@ -22,7 +22,6 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
         }
 
         
-        /// <param name="e">Event arguments.</param>
         protected override void OnClosed(System.EventArgs e)
         {
             ShowCommandSettings.Default.Save();
@@ -30,8 +29,6 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
         }
 
         
-        /// <param name="sender">Event sender.</param>
-        /// <param name="e">Event arguments.</param>
         private void ShowCommandWindow_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             ShowCommandSettings.Default.ShowOneCommandWidth = this.Width;
@@ -39,8 +36,6 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
         }
 
         
-        /// <param name="sender">Event sender.</param>
-        /// <param name="e">Event arguments.</param>
         private void ShowCommandWindow_LocationChanged(object sender, System.EventArgs e)
         {
             ShowCommandSettings.Default.ShowOneCommandTop = this.Top;
@@ -48,8 +43,6 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
         }
 
         
-        /// <param name="sender">Event sender.</param>
-        /// <param name="e">Event arguments.</param>
         private void ShowCommandWindow_StateChanged(object sender, System.EventArgs e)
         {
             ShowCommandSettings.Default.ShowOneCommandWindowMaximized = this.WindowState == WindowState.Maximized;

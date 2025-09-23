@@ -41,7 +41,6 @@ namespace Microsoft.PowerShell.Commands
             AllowedVersions = versions.ToArray();
         }
 
-        /// <inheritdoc/>
         public HttpVersionCompletionsAttribute() : base(AllowedVersions)
         {
         } 

@@ -20,7 +20,6 @@ using System.Xml.Serialization;
 
 namespace Microsoft.PowerShell.Cmdletization.Xml
 {
-    /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.17929")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlType(AnonymousType = true, Namespace = "http://schemas.microsoft.com/cmdlets-over-objects/2009/11")]
@@ -31,7 +30,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
 
         private EnumMetadataEnum[] _enumsField;
 
-        /// <remarks/>
         public ClassMetadata Class
         {
             get
@@ -45,7 +43,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlArrayItem("Enum", IsNullable = false)]
         public EnumMetadataEnum[] Enums
         {
@@ -61,7 +58,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
         }
     }
 
-    /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.17929")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlType(Namespace = "http://schemas.microsoft.com/cmdlets-over-objects/2009/11")]
@@ -83,7 +79,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
 
         private string _classVersionField;
 
-        /// <remarks/>
         public string Version
         {
             get
@@ -97,7 +92,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         public string DefaultNoun
         {
             get
@@ -111,7 +105,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         public ClassMetadataInstanceCmdlets InstanceCmdlets
         {
             get
@@ -125,7 +118,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlArrayItem("Cmdlet", IsNullable = false)]
         public StaticCmdletMetadata[] StaticCmdlets
         {
@@ -140,7 +132,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlArrayItem("Data", IsNullable = false)]
         public ClassMetadataData[] CmdletAdapterPrivateData
         {
@@ -155,7 +146,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlAttribute()]
         public string CmdletAdapter
         {
@@ -170,7 +160,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlAttribute()]
         public string ClassName
         {
@@ -185,7 +174,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlAttribute()]
         public string ClassVersion
         {
@@ -201,7 +189,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
         }
     }
 
-    /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.17929")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlType(AnonymousType = true, Namespace = "http://schemas.microsoft.com/cmdlets-over-objects/2009/11")]
@@ -213,7 +200,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
 
         private InstanceCmdletMetadata[] _cmdletField;
 
-        /// <remarks/>
         public GetCmdletParameters GetCmdletParameters
         {
             get
@@ -227,7 +213,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         public GetCmdletMetadata GetCmdlet
         {
             get
@@ -241,7 +226,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlElement("Cmdlet")]
         public InstanceCmdletMetadata[] Cmdlet
         {
@@ -257,7 +241,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
         }
     }
 
-    /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.17929")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlType(Namespace = "http://schemas.microsoft.com/cmdlets-over-objects/2009/11")]
@@ -271,7 +254,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
 
         private string _defaultCmdletParameterSetField;
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlArrayItem("Property", IsNullable = false)]
         public PropertyMetadata[] QueryableProperties
         {
@@ -286,7 +268,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlArrayItem(IsNullable = false)]
         public Association[] QueryableAssociations
         {
@@ -301,7 +282,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlArrayItem("Option", IsNullable = false)]
         public QueryOption[] QueryOptions
         {
@@ -316,7 +296,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlAttribute()]
         public string DefaultCmdletParameterSet
         {
@@ -332,7 +311,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
         }
     }
 
-    /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.17929")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlType(Namespace = "http://schemas.microsoft.com/cmdlets-over-objects/2009/11")]
@@ -346,7 +324,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
 
         private string _propertyNameField;
 
-        /// <remarks/>
         public TypeMetadata Type
         {
             get
@@ -360,7 +337,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlElement("ExcludeQuery", typeof(WildcardablePropertyQuery))]
         [System.Xml.Serialization.XmlElement("MaxValueQuery", typeof(PropertyQuery))]
         [System.Xml.Serialization.XmlElement("MinValueQuery", typeof(PropertyQuery))]
@@ -379,7 +355,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlElement("ItemsElementName")]
         [System.Xml.Serialization.XmlIgnore()]
         public ItemsChoiceType[] ItemsElementName
@@ -395,7 +370,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlAttribute()]
         public string PropertyName
         {
@@ -411,7 +385,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
         }
     }
 
-    /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.17929")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlType(Namespace = "http://schemas.microsoft.com/cmdlets-over-objects/2009/11")]
@@ -421,7 +394,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
 
         private string _eTSTypeField;
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlAttribute()]
         public string PSType
         {
@@ -436,7 +408,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlAttribute()]
         public string ETSType
         {
@@ -452,7 +423,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
         }
     }
 
-    /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.17929")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlType(Namespace = "http://schemas.microsoft.com/cmdlets-over-objects/2009/11")]
@@ -466,7 +436,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
 
         private string _resultRoleField;
 
-        /// <remarks/>
         public AssociationAssociatedInstance AssociatedInstance
         {
             get
@@ -480,7 +449,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlAttribute("Association")]
         public string Association1
         {
@@ -495,7 +463,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlAttribute()]
         public string SourceRole
         {
@@ -510,7 +477,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlAttribute()]
         public string ResultRole
         {
@@ -526,7 +492,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
         }
     }
 
-    /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.17929")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlType(AnonymousType = true, Namespace = "http://schemas.microsoft.com/cmdlets-over-objects/2009/11")]
@@ -536,7 +501,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
 
         private CmdletParameterMetadataForGetCmdletFilteringParameter _cmdletParameterMetadataField;
 
-        /// <remarks/>
         public TypeMetadata Type
         {
             get
@@ -550,7 +514,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         public CmdletParameterMetadataForGetCmdletFilteringParameter CmdletParameterMetadata
         {
             get
@@ -565,7 +528,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
         }
     }
 
-    /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.17929")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlType(Namespace = "http://schemas.microsoft.com/cmdlets-over-objects/2009/11")]
@@ -575,7 +537,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
 
         private bool _errorOnNoMatchFieldSpecified;
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlAttribute()]
         public bool ErrorOnNoMatch
         {
@@ -590,7 +551,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlIgnore()]
         public bool ErrorOnNoMatchSpecified
         {
@@ -606,7 +566,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
         }
     }
 
-    /// <remarks/>
     [System.Xml.Serialization.XmlInclude(typeof(CmdletParameterMetadataForGetCmdletFilteringParameter))]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.17929")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -623,7 +582,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
 
         private string[] _cmdletParameterSetsField;
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlAttribute()]
         public bool ValueFromPipeline
         {
@@ -638,7 +596,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlIgnore()]
         public bool ValueFromPipelineSpecified
         {
@@ -653,7 +610,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlAttribute()]
         public bool ValueFromPipelineByPropertyName
         {
@@ -668,7 +624,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlIgnore()]
         public bool ValueFromPipelineByPropertyNameSpecified
         {
@@ -683,7 +638,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlAttribute()]
         public string[] CmdletParameterSets
         {
@@ -699,7 +653,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
         }
     }
 
-    /// <remarks/>
     [System.Xml.Serialization.XmlInclude(typeof(CmdletParameterMetadataForGetCmdletParameter))]
     [System.Xml.Serialization.XmlInclude(typeof(CmdletParameterMetadataForGetCmdletFilteringParameter))]
     [System.Xml.Serialization.XmlInclude(typeof(CmdletParameterMetadataForInstanceMethodParameter))]
@@ -739,7 +692,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
 
         private string _positionField;
 
-        /// <remarks/>
         public object AllowEmptyCollection
         {
             get
@@ -753,7 +705,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         public object AllowEmptyString
         {
             get
@@ -767,7 +718,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         public object AllowNull
         {
             get
@@ -781,7 +731,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         public object ValidateNotNull
         {
             get
@@ -795,7 +744,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         public object ValidateNotNullOrEmpty
         {
             get
@@ -809,7 +757,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         public CmdletParameterMetadataValidateCount ValidateCount
         {
             get
@@ -823,7 +770,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         public CmdletParameterMetadataValidateLength ValidateLength
         {
             get
@@ -837,7 +783,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         public CmdletParameterMetadataValidateRange ValidateRange
         {
             get
@@ -851,7 +796,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlArrayItem("AllowedValue", IsNullable = false)]
         public string[] ValidateSet
         {
@@ -866,7 +810,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         public ObsoleteAttributeMetadata Obsolete
         {
             get
@@ -880,7 +823,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlAttribute()]
         public bool IsMandatory
         {
@@ -895,7 +837,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlIgnore()]
         public bool IsMandatorySpecified
         {
@@ -910,7 +851,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlAttribute()]
         public string[] Aliases
         {
@@ -925,7 +865,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlAttribute()]
         public string PSName
         {
@@ -940,7 +879,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlAttribute(DataType = "nonNegativeInteger")]
         public string Position
         {
@@ -956,7 +894,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
         }
     }
 
-    /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.17929")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlType(AnonymousType = true, Namespace = "http://schemas.microsoft.com/cmdlets-over-objects/2009/11")]
@@ -966,7 +903,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
 
         private string _maxField;
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlAttribute(DataType = "nonNegativeInteger")]
         public string Min
         {
@@ -981,7 +917,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlAttribute(DataType = "nonNegativeInteger")]
         public string Max
         {
@@ -997,7 +932,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
         }
     }
 
-    /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.17929")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlType(AnonymousType = true, Namespace = "http://schemas.microsoft.com/cmdlets-over-objects/2009/11")]
@@ -1007,7 +941,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
 
         private string _maxField;
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlAttribute(DataType = "nonNegativeInteger")]
         public string Min
         {
@@ -1022,7 +955,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlAttribute(DataType = "nonNegativeInteger")]
         public string Max
         {
@@ -1038,7 +970,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
         }
     }
 
-    /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.17929")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlType(AnonymousType = true, Namespace = "http://schemas.microsoft.com/cmdlets-over-objects/2009/11")]
@@ -1048,7 +979,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
 
         private string _maxField;
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlAttribute(DataType = "integer")]
         public string Min
         {
@@ -1063,7 +993,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlAttribute(DataType = "integer")]
         public string Max
         {
@@ -1079,7 +1008,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
         }
     }
 
-    /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.17929")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlType(Namespace = "http://schemas.microsoft.com/cmdlets-over-objects/2009/11")]
@@ -1087,7 +1015,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
     {
         private string _messageField;
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlAttribute()]
         public string Message
         {
@@ -1103,7 +1030,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
         }
     }
 
-    /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.17929")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlType(Namespace = "http://schemas.microsoft.com/cmdlets-over-objects/2009/11")]
@@ -1113,7 +1039,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
 
         private bool _valueFromPipelineByPropertyNameFieldSpecified;
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlAttribute()]
         public bool ValueFromPipelineByPropertyName
         {
@@ -1128,7 +1053,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlIgnore()]
         public bool ValueFromPipelineByPropertyNameSpecified
         {
@@ -1144,7 +1068,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
         }
     }
 
-    /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.17929")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlType(Namespace = "http://schemas.microsoft.com/cmdlets-over-objects/2009/11")]
@@ -1158,7 +1081,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
 
         private bool _valueFromPipelineByPropertyNameFieldSpecified;
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlAttribute()]
         public bool ValueFromPipeline
         {
@@ -1173,7 +1095,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlIgnore()]
         public bool ValueFromPipelineSpecified
         {
@@ -1188,7 +1109,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlAttribute()]
         public bool ValueFromPipelineByPropertyName
         {
@@ -1203,7 +1123,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlIgnore()]
         public bool ValueFromPipelineByPropertyNameSpecified
         {
@@ -1219,7 +1138,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
         }
     }
 
-    /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.17929")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlType(Namespace = "http://schemas.microsoft.com/cmdlets-over-objects/2009/11")]
@@ -1231,7 +1149,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
 
         private string _optionNameField;
 
-        /// <remarks/>
         public TypeMetadata Type
         {
             get
@@ -1245,7 +1162,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         public CmdletParameterMetadataForGetCmdletParameter CmdletParameterMetadata
         {
             get
@@ -1259,7 +1175,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlAttribute()]
         public string OptionName
         {
@@ -1275,7 +1190,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
         }
     }
 
-    /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.17929")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlType(Namespace = "http://schemas.microsoft.com/cmdlets-over-objects/2009/11")]
@@ -1285,7 +1199,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
 
         private GetCmdletParameters _getCmdletParametersField;
 
-        /// <remarks/>
         public CommonCmdletMetadata CmdletMetadata
         {
             get
@@ -1299,7 +1212,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         public GetCmdletParameters GetCmdletParameters
         {
             get
@@ -1314,7 +1226,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
         }
     }
 
-    /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.17929")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlType(Namespace = "http://schemas.microsoft.com/cmdlets-over-objects/2009/11")]
@@ -1334,7 +1245,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
 
         private string _helpUriField;
 
-        /// <remarks/>
         public ObsoleteAttributeMetadata Obsolete
         {
             get
@@ -1348,7 +1258,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlAttribute()]
         public string Verb
         {
@@ -1363,7 +1272,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlAttribute()]
         public string Noun
         {
@@ -1378,7 +1286,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlAttribute()]
         public string[] Aliases
         {
@@ -1393,7 +1300,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlAttribute()]
         public ConfirmImpact ConfirmImpact
         {
@@ -1408,7 +1314,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlIgnore()]
         public bool ConfirmImpactSpecified
         {
@@ -1423,7 +1328,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlAttribute(DataType = "anyURI")]
         public string HelpUri
         {
@@ -1439,25 +1343,19 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
         }
     }
 
-    /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.17929")]
     [System.Xml.Serialization.XmlType(Namespace = "http://schemas.microsoft.com/cmdlets-over-objects/2009/11")]
     public enum ConfirmImpact
     {
-        /// <remarks/>
         None,
 
-        /// <remarks/>
         Low,
 
-        /// <remarks/>
         Medium,
 
-        /// <remarks/>
         High,
     }
 
-    /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.17929")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlType(Namespace = "http://schemas.microsoft.com/cmdlets-over-objects/2009/11")]
@@ -1467,7 +1365,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
 
         private StaticMethodMetadata[] _methodField;
 
-        /// <remarks/>
         public StaticCmdletMetadataCmdletMetadata CmdletMetadata
         {
             get
@@ -1481,7 +1378,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlElement("Method")]
         public StaticMethodMetadata[] Method
         {
@@ -1497,7 +1393,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
         }
     }
 
-    /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.17929")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlType(AnonymousType = true, Namespace = "http://schemas.microsoft.com/cmdlets-over-objects/2009/11")]
@@ -1505,7 +1400,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
     {
         private string _defaultCmdletParameterSetField;
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlAttribute()]
         public string DefaultCmdletParameterSet
         {
@@ -1521,7 +1415,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
         }
     }
 
-    /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.17929")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlType(Namespace = "http://schemas.microsoft.com/cmdlets-over-objects/2009/11")]
@@ -1531,7 +1424,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
 
         private string _cmdletParameterSetField;
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlArrayItem("Parameter", IsNullable = false)]
         public StaticMethodParameterMetadata[] Parameters
         {
@@ -1546,7 +1438,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlAttribute()]
         public string CmdletParameterSet
         {
@@ -1562,7 +1453,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
         }
     }
 
-    /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.17929")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlType(Namespace = "http://schemas.microsoft.com/cmdlets-over-objects/2009/11")]
@@ -1572,7 +1462,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
 
         private CmdletOutputMetadata _cmdletOutputMetadataField;
 
-        /// <remarks/>
         public CmdletParameterMetadataForStaticMethodParameter CmdletParameterMetadata
         {
             get
@@ -1586,7 +1475,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         public CmdletOutputMetadata CmdletOutputMetadata
         {
             get
@@ -1601,7 +1489,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
         }
     }
 
-    /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.17929")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlType(Namespace = "http://schemas.microsoft.com/cmdlets-over-objects/2009/11")]
@@ -1611,7 +1498,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
 
         private string _pSNameField;
 
-        /// <remarks/>
         public object ErrorCode
         {
             get
@@ -1625,7 +1511,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlAttribute()]
         public string PSName
         {
@@ -1641,7 +1526,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
         }
     }
 
-    /// <remarks/>
     [System.Xml.Serialization.XmlInclude(typeof(InstanceMethodParameterMetadata))]
     [System.Xml.Serialization.XmlInclude(typeof(StaticMethodParameterMetadata))]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.17929")]
@@ -1655,7 +1539,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
 
         private string _defaultValueField;
 
-        /// <remarks/>
         public TypeMetadata Type
         {
             get
@@ -1669,7 +1552,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlAttribute()]
         public string ParameterName
         {
@@ -1684,7 +1566,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlAttribute()]
         public string DefaultValue
         {
@@ -1700,7 +1581,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
         }
     }
 
-    /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.17929")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlType(Namespace = "http://schemas.microsoft.com/cmdlets-over-objects/2009/11")]
@@ -1710,7 +1590,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
 
         private CmdletOutputMetadata _cmdletOutputMetadataField;
 
-        /// <remarks/>
         public CmdletParameterMetadataForInstanceMethodParameter CmdletParameterMetadata
         {
             get
@@ -1724,7 +1603,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         public CmdletOutputMetadata CmdletOutputMetadata
         {
             get
@@ -1739,7 +1617,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
         }
     }
 
-    /// <remarks/>
     [System.Xml.Serialization.XmlInclude(typeof(InstanceMethodMetadata))]
     [System.Xml.Serialization.XmlInclude(typeof(StaticMethodMetadata))]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.17929")]
@@ -1751,7 +1628,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
 
         private string _methodNameField;
 
-        /// <remarks/>
         public CommonMethodMetadataReturnValue ReturnValue
         {
             get
@@ -1765,7 +1641,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlAttribute()]
         public string MethodName
         {
@@ -1781,7 +1656,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
         }
     }
 
-    /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.17929")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlType(AnonymousType = true, Namespace = "http://schemas.microsoft.com/cmdlets-over-objects/2009/11")]
@@ -1791,7 +1665,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
 
         private CmdletOutputMetadata _cmdletOutputMetadataField;
 
-        /// <remarks/>
         public TypeMetadata Type
         {
             get
@@ -1805,7 +1678,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         public CmdletOutputMetadata CmdletOutputMetadata
         {
             get
@@ -1820,7 +1692,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
         }
     }
 
-    /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.17929")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlType(Namespace = "http://schemas.microsoft.com/cmdlets-over-objects/2009/11")]
@@ -1828,7 +1699,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
     {
         private InstanceMethodParameterMetadata[] _parametersField;
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlArrayItem("Parameter", IsNullable = false)]
         public InstanceMethodParameterMetadata[] Parameters
         {
@@ -1844,7 +1714,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
         }
     }
 
-    /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.17929")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlType(Namespace = "http://schemas.microsoft.com/cmdlets-over-objects/2009/11")]
@@ -1856,7 +1725,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
 
         private GetCmdletParameters _getCmdletParametersField;
 
-        /// <remarks/>
         public CommonCmdletMetadata CmdletMetadata
         {
             get
@@ -1870,7 +1738,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         public InstanceMethodMetadata Method
         {
             get
@@ -1884,7 +1751,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         public GetCmdletParameters GetCmdletParameters
         {
             get
@@ -1899,7 +1765,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
         }
     }
 
-    /// <remarks/>
     [System.Xml.Serialization.XmlInclude(typeof(WildcardablePropertyQuery))]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.17929")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -1908,7 +1773,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
     {
         private CmdletParameterMetadataForGetCmdletFilteringParameter _cmdletParameterMetadataField;
 
-        /// <remarks/>
         public CmdletParameterMetadataForGetCmdletFilteringParameter CmdletParameterMetadata
         {
             get
@@ -1923,7 +1787,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
         }
     }
 
-    /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.17929")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlType(Namespace = "http://schemas.microsoft.com/cmdlets-over-objects/2009/11")]
@@ -1933,7 +1796,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
 
         private bool _allowGlobbingFieldSpecified;
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlAttribute()]
         public bool AllowGlobbing
         {
@@ -1948,7 +1810,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlIgnore()]
         public bool AllowGlobbingSpecified
         {
@@ -1964,25 +1825,19 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
         }
     }
 
-    /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.17929")]
     [System.Xml.Serialization.XmlType(Namespace = "http://schemas.microsoft.com/cmdlets-over-objects/2009/11", IncludeInSchema = false)]
     public enum ItemsChoiceType
     {
-        /// <remarks/>
         ExcludeQuery,
 
-        /// <remarks/>
         MaxValueQuery,
 
-        /// <remarks/>
         MinValueQuery,
 
-        /// <remarks/>
         RegularQuery,
     }
 
-    /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.17929")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlType(AnonymousType = true, Namespace = "http://schemas.microsoft.com/cmdlets-over-objects/2009/11")]
@@ -1992,7 +1847,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
 
         private string _valueField;
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlAttribute()]
         public string Name
         {
@@ -2007,7 +1861,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlText()]
         public string Value
         {
@@ -2023,7 +1876,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
         }
     }
 
-    /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.17929")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlType(AnonymousType = true, Namespace = "http://schemas.microsoft.com/cmdlets-over-objects/2009/11")]
@@ -2039,7 +1891,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
 
         private bool _bitwiseFlagsFieldSpecified;
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlElement("Value")]
         public EnumMetadataEnumValue[] Value
         {
@@ -2054,7 +1905,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlAttribute()]
         public string EnumName
         {
@@ -2069,7 +1919,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlAttribute()]
         public string UnderlyingType
         {
@@ -2084,7 +1933,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlAttribute()]
         public bool BitwiseFlags
         {
@@ -2099,7 +1947,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlIgnore()]
         public bool BitwiseFlagsSpecified
         {
@@ -2115,7 +1962,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
         }
     }
 
-    /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.17929")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlType(AnonymousType = true, Namespace = "http://schemas.microsoft.com/cmdlets-over-objects/2009/11")]
@@ -2125,7 +1971,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
 
         private string _valueField;
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlAttribute()]
         public string Name
         {
@@ -2140,7 +1985,6 @@ namespace Microsoft.PowerShell.Cmdletization.Xml
             }
         }
 
-        /// <remarks/>
         [System.Xml.Serialization.XmlAttribute(DataType = "integer")]
         public string Value
         {

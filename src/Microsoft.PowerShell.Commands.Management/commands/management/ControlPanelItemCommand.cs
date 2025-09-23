@@ -35,11 +35,6 @@ namespace Microsoft.PowerShell.Commands
         internal string Path { get; }
 
         
-        /// <param name="name"></param>
-        /// <param name="canonicalName"></param>
-        /// <param name="category"></param>
-        /// <param name="description"></param>
-        /// <param name="path"></param>
         internal ControlPanelItem(string name, string canonicalName, string[] category, string description, string path)
         {
             Name = name;
@@ -50,7 +45,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <returns></returns>
         public override string ToString()
         {
             return this.Name;
@@ -159,8 +153,6 @@ $result
         #endregion
 
         
-        /// <param name="item"></param>
-        /// <returns></returns>
         private bool ContainVerbOpen(ShellFolderItem item)
         {
             bool result = false;
@@ -180,8 +172,6 @@ $result
         }
 
         
-        /// <param name="verbActionName">Locale specific verb action exposed by the control panel item.</param>
-        /// <returns>True if the control panel item supports verb action open or else returns false.</returns>
         private static bool CompareVerbActionOpen(string verbActionName)
         {
             if (s_verbActionOpenName == null)
@@ -214,8 +204,6 @@ $result
         }
 
         
-        /// <returns>True if the current SKU is a Server Core machine or if the Server-GUI-Shell
-        /// feature is removed on the machine or else returns false.</returns>
         private bool IsServerCoreOrHeadLessServer()
         {
             bool result = false;
@@ -270,8 +258,6 @@ $result
         }
 
         
-        /// <param name="controlPanelItems"></param>
-        /// <returns></returns>
         internal List<ShellFolderItem> GetControlPanelItemByCategory(List<ShellFolderItem> controlPanelItems)
         {
             List<ShellFolderItem> list = new List<ShellFolderItem>();
@@ -320,9 +306,6 @@ $result
         }
 
         
-        /// <param name="controlPanelItems"></param>
-        /// <param name="withCategoryFilter"></param>
-        /// <returns></returns>
         internal List<ShellFolderItem> GetControlPanelItemByName(List<ShellFolderItem> controlPanelItems, bool withCategoryFilter)
         {
             List<ShellFolderItem> list = new List<ShellFolderItem>();
@@ -366,9 +349,6 @@ $result
         }
 
         
-        /// <param name="controlPanelItems"></param>
-        /// <param name="withCategoryFilter"></param>
-        /// <returns></returns>
         internal List<ShellFolderItem> GetControlPanelItemByCanonicalName(List<ShellFolderItem> controlPanelItems, bool withCategoryFilter)
         {
             List<ShellFolderItem> list = new List<ShellFolderItem>();
@@ -457,8 +437,6 @@ $result
         }
 
         
-        /// <param name="controlPanelItems"></param>
-        /// <returns></returns>
         internal List<ShellFolderItem> GetControlPanelItemsByInstance(List<ShellFolderItem> controlPanelItems)
         {
             List<ShellFolderItem> list = new List<ShellFolderItem>();

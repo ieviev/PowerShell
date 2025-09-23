@@ -20,9 +20,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         internal class CimInvokeCimMethodContext : XOperationContextBase
         {
             
-            /// <param name="theNamespace"></param>
-            /// <param name="theCollection"></param>
-            /// <param name="theProxy"></param>
             internal CimInvokeCimMethodContext(string theNamespace,
                 string theMethodName,
                 CimMethodParametersCollection theCollection,
@@ -48,7 +45,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="cmdlet"><see cref="GetCimInstanceCommand"/> object.</param>
         public void InvokeCimMethod(InvokeCimMethodCommand cmdlet)
         {
             IEnumerable<string> computerNames = ConstValue.GetComputerNames(cmdlet.ComputerName);
@@ -201,7 +197,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="cimInstance"></param>
         public void InvokeCimMethodOnCimInstance(CimInstance cimInstance, XOperationContextBase context, CmdletOperationBase operation)
         {
             DebugHelper.WriteLogEx();
@@ -225,8 +220,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         #region private methods
 
         
-        /// <param name="proxy"></param>
-        /// <param name="cmdlet"></param>
         private static void SetSessionProxyProperties(
             ref CimSessionProxy proxy,
             InvokeCimMethodCommand cmdlet)
@@ -239,9 +232,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="computerName"></param>
-        /// <param name="cmdlet"></param>
-        /// <returns></returns>
         private CimSessionProxy CreateSessionProxy(
             string computerName,
             InvokeCimMethodCommand cmdlet)
@@ -252,10 +242,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="computerName"></param>
-        /// <param name="cimInstance"></param>
-        /// <param name="cmdlet"></param>
-        /// <returns></returns>
         private CimSessionProxy CreateSessionProxy(
             string computerName,
             CimInstance cimInstance,
@@ -267,9 +253,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="session"></param>
-        /// <param name="cmdlet"></param>
-        /// <returns></returns>
         private CimSessionProxy CreateSessionProxy(
             CimSession session,
             InvokeCimMethodCommand cmdlet)
@@ -280,13 +263,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="parameters"></param>
-        /// <param name="cimClass"></param>
-        /// <param name="cimInstance"></param>
-        /// <param name="methodName"></param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentNullException">See CimProperty.Create.</exception>
-        /// <exception cref="ArgumentException">CimProperty.Create.</exception>
         private CimMethodParametersCollection CreateParametersCollection(
             IDictionary parameters,
             CimClass cimClass,

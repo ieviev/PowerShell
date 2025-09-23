@@ -49,7 +49,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         internal List<ListControlItemDefinition> itemDefinitionList = new List<ListControlItemDefinition>();
 
         
-        /// <returns></returns>
         internal ListControlEntryDefinition Copy()
         {
             ListControlEntryDefinition result = new ListControlEntryDefinition();
@@ -260,7 +259,6 @@ namespace System.Management.Automation
         
         public DisplayEntry DisplayEntry { get; internal set; }
 
-        /// <summary/>
         public DisplayEntry ItemSelectionCondition { get; internal set; }
 
         
@@ -293,8 +291,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="label"></param>
-        /// <param name="entry"></param>
         public ListControlEntryItem(string label, DisplayEntry entry)
         {
             this.Label = label;
@@ -314,7 +310,6 @@ namespace System.Management.Automation
         }
     }
 
-    /// <summary/>
     public class ListEntryBuilder
     {
         private readonly ListControlBuilder _listBuilder;

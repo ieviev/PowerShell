@@ -12,8 +12,6 @@ using System.Management.Automation;
 namespace Microsoft.PowerShell.Cmdletization
 {
     
-    /// <typeparam name="TObjectInstance">Type that represents instances of objects from the wrapped object model</typeparam>
-    /// <typeparam name="TSession">Type representing remote sessions</typeparam>
     [SuppressMessage("Microsoft.Design", "CA1005:AvoidExcessiveParametersOnGenericTypes")]
     public abstract class SessionBasedCmdletAdapter<TObjectInstance, TSession> : CmdletAdapter<TObjectInstance>, IDisposable
         where TObjectInstance : class
@@ -102,19 +100,6 @@ namespace Microsoft.PowerShell.Cmdletization
         #region Abstract methods to be overridden in derived classes
 
         
-        /// <param name="session">Remote session to query.</param>
-        /// <param name="query">Query parameters.</param>
-        /// <remarks>
-        /// <para>
-        /// This method shouldn't do any processing or interact with the remote session.
-        /// Doing so will interfere with ThrottleLimit functionality.
-        /// </para>
-        /// <para>
-        /// <see cref="Job.WriteObject"/> (and other methods returning job results) will block to support throttling and flow-control.
-        /// Implementations of Job instance returned from this method should make sure that implementation-specific flow-control mechanism pauses further processing,
-        /// until calls from <see cref="Job.WriteObject"/> (and other methods returning job results) return.
-        /// </para>
-        /// </remarks>
         internal abstract StartableJob CreateQueryJob(TSession session, QueryBuilder query);
 
         private StartableJob DoCreateQueryJob(TSession sessionForJob, QueryBuilder query, Action<TSession, TObjectInstance> actionAgainstResults)
@@ -150,21 +135,6 @@ namespace Microsoft.PowerShell.Cmdletization
         }
 
         
-        /// <param name="session">Remote session to invoke the method in.</param>
-        /// <param name="objectInstance">The object on which to invoke the method.</param>
-        /// <param name="methodInvocationInfo">Method invocation details.</param>
-        /// <param name="passThru"><see langword="true"/> if successful method invocations should emit downstream the <paramref name="objectInstance"/> being operated on.</param>
-        /// <remarks>
-        /// <para>
-        /// This method shouldn't do any processing or interact with the remote session.
-        /// Doing so will interfere with ThrottleLimit functionality.
-        /// </para>
-        /// <para>
-        /// <see cref="Job.WriteObject"/> (and other methods returning job results) will block to support throttling and flow-control.
-        /// Implementations of Job instance returned from this method should make sure that implementation-specific flow-control mechanism pauses further processing,
-        /// until calls from <see cref="Job.WriteObject"/> (and other methods returning job results) return.
-        /// </para>
-        /// </remarks>
         internal abstract StartableJob CreateInstanceMethodInvocationJob(TSession session, TObjectInstance objectInstance, MethodInvocationInfo methodInvocationInfo, bool passThru);
 
         private StartableJob DoCreateInstanceMethodInvocationJob(TSession sessionForJob, TObjectInstance objectInstance, MethodInvocationInfo methodInvocationInfo, bool passThru, bool asJob)
@@ -185,19 +155,6 @@ namespace Microsoft.PowerShell.Cmdletization
         }
 
         
-        /// <param name="session">Remote session to invoke the method in.</param>
-        /// <param name="methodInvocationInfo">Method invocation details.</param>
-        /// <remarks>
-        /// <para>
-        /// This method shouldn't do any processing or interact with the remote session.
-        /// Doing so will interfere with ThrottleLimit functionality.
-        /// </para>
-        /// <para>
-        /// <see cref="Job.WriteObject"/> (and other methods returning job results) will block to support throttling and flow-control.
-        /// Implementations of Job instance returned from this method should make sure that implementation-specific flow-control mechanism pauses further processing,
-        /// until calls from <see cref="Job.WriteObject"/> (and other methods returning job results) return.
-        /// </para>
-        /// </remarks>
         internal abstract StartableJob CreateStaticMethodInvocationJob(TSession session, MethodInvocationInfo methodInvocationInfo);
 
         private StartableJob DoCreateStaticMethodInvocationJob(TSession sessionForJob, MethodInvocationInfo methodInvocationInfo)
@@ -264,7 +221,6 @@ namespace Microsoft.PowerShell.Cmdletization
         }
 
         
-        /// <returns>Default sessions to use when the user doesn't specify the -Session cmdlet parameter.</returns>
         protected abstract TSession DefaultSession { get; }
 
         
@@ -344,8 +300,6 @@ namespace Microsoft.PowerShell.Cmdletization
         private ThrottlingJob _parentJob;
 
         
-        /// <param name="query">Query parameters.</param>
-        /// <returns>A lazy evaluated collection of object instances.</returns>
         public override void ProcessRecord(QueryBuilder query)
         {
             _parentJob.DisableFlowControlForPendingCmdletActionsQueue();
@@ -367,9 +321,6 @@ namespace Microsoft.PowerShell.Cmdletization
         }
 
         
-        /// <param name="query">Query parameters.</param>
-        /// <param name="methodInvocationInfo">Method invocation details.</param>
-        /// <param name="passThru"><see langword="true"/> if successful method invocations should emit downstream the object instance being operated on.</param>
         public override void ProcessRecord(QueryBuilder query, MethodInvocationInfo methodInvocationInfo, bool passThru)
         {
             _parentJob.DisableFlowControlForPendingJobsQueue();
@@ -543,9 +494,6 @@ namespace Microsoft.PowerShell.Cmdletization
         }
 
         
-        /// <param name="objectInstance">The object on which to invoke the method.</param>
-        /// <param name="methodInvocationInfo">Method invocation details.</param>
-        /// <param name="passThru"><see langword="true"/> if successful method invocations should emit downstream the <paramref name="objectInstance"/> being operated on.</param>
         public override void ProcessRecord(TObjectInstance objectInstance, MethodInvocationInfo methodInvocationInfo, bool passThru)
         {
             ArgumentNullException.ThrowIfNull(objectInstance);
@@ -570,7 +518,6 @@ namespace Microsoft.PowerShell.Cmdletization
         }
 
         
-        /// <param name="methodInvocationInfo">Method invocation details.</param>
         public override void ProcessRecord(MethodInvocationInfo methodInvocationInfo)
         {
             ArgumentNullException.ThrowIfNull(methodInvocationInfo);

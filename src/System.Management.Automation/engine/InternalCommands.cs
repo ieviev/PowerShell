@@ -241,9 +241,6 @@ namespace Microsoft.PowerShell.Commands
         #region Overrides
 
         
-        /// <exception cref="ParseException">Could not parse script.</exception>
-        /// <exception cref="RuntimeException">See Pipeline.Invoke.</exception>
-        /// <exception cref="ParameterBindingException">See Pipeline.Invoke.</exception>
         protected override void BeginProcessing()
         {
             switch (ParameterSetName)
@@ -259,9 +256,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <exception cref="ParseException">Could not parse script.</exception>
-        /// <exception cref="RuntimeException">See Pipeline.Invoke.</exception>
-        /// <exception cref="ParameterBindingException">See Pipeline.Invoke.</exception>
         protected override void ProcessRecord()
         {
             switch (ParameterSetName)
@@ -281,9 +275,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <exception cref="ParseException">Could not parse script.</exception>
-        /// <exception cref="RuntimeException">See Pipeline.Invoke.</exception>
-        /// <exception cref="ParameterBindingException">See Pipeline.Invoke.</exception>
         protected override void EndProcessing()
         {
             switch (ParameterSetName)
@@ -1037,8 +1028,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="obj">Source object.</param>
-        /// <returns>String representation of the source object.</returns>
         private static string GetStringRepresentation(object obj)
         {
             string objInString;
@@ -1062,7 +1051,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <returns>True if success.</returns>
         private bool GetValueFromIDictionaryInput()
         {
             object target = PSObject.Base(_inputObject);
@@ -1095,7 +1083,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="obj">Source object.</param>
         private void WriteToPipelineWithUnrolling(object obj)
         {
             IEnumerator objAsEnumerator = LanguagePrimitives.GetEnumerator(obj);
@@ -1110,7 +1097,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="list">Source list.</param>
         private void WriteOutIEnumerator(IEnumerator list)
         {
             if (list != null)
@@ -1128,8 +1114,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="inputObject">Source object.</param>
-        /// <returns>True if we are in restrictedLanguageMode.</returns>
         private bool BlockMethodInLanguageMode(object inputObject)
         {
             // Cannot invoke a method in RestrictedLanguage mode
@@ -1174,12 +1158,6 @@ namespace Microsoft.PowerShell.Commands
         #endregion
 
         
-        /// <param name="paraName"></param>
-        /// <param name="resourceString"></param>
-        /// <param name="errorId"></param>
-        /// <param name="target"></param>
-        /// <param name="args"></param>
-        /// <returns></returns>
         internal static ErrorRecord GenerateNameParameterError(string paraName, string resourceString, string errorId, object target, params object[] args)
         {
             string message;
@@ -1891,7 +1869,6 @@ namespace Microsoft.PowerShell.Commands
             return WildcardPattern.Get(val, wildcardOptions);
         }
 
-        /// <summary/>
         protected override void BeginProcessing()
         {
             if (_script != null)
@@ -2086,9 +2063,6 @@ namespace Microsoft.PowerShell.Commands
         private DynamicPropertyGetter _propGetter;
 
         
-        /// <exception cref="ParseException">Could not parse script.</exception>
-        /// <exception cref="RuntimeException">See Pipeline.Invoke.</exception>
-        /// <exception cref="ParameterBindingException">See Pipeline.Invoke.</exception>
         protected override void ProcessRecord()
         {
             if (_inputObject == AutomationNull.Value)
@@ -2180,7 +2154,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <returns>The value of the property.</returns>
         private object GetValue(ref bool error)
         {
             if (LanguagePrimitives.IsNull(InputObject))
@@ -2331,7 +2304,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <returns>Matched PSMembers.</returns>
         private ReadOnlyPSMemberInfoCollection<PSMemberInfo> GetMatchMembers()
         {
             if (!WildcardPattern.ContainsWildcardCharacters(_property))
@@ -2544,12 +2516,6 @@ namespace Microsoft.PowerShell.Commands
         private static readonly string[] s_strictModeVersions = new string[] { "Latest", "3.0", "2.0", "1.0" };
 
         
-        /// <param name="commandName">The command name.</param>
-        /// <param name="parameterName">The parameter name.</param>
-        /// <param name="wordToComplete">The word to complete.</param>
-        /// <param name="commandAst">The command AST.</param>
-        /// <param name="fakeBoundParameters">The fake bound parameters.</param>
-        /// <returns>List of Completion Results.</returns>
         public IEnumerable<CompletionResult> CompleteArgument(
             string commandName,
             string parameterName,

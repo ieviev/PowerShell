@@ -8,12 +8,9 @@ using System.Security.Permissions;
 namespace System.Management.Automation.Runspaces
 {
     
-    /// 
     public class PSSnapInException : RuntimeException
     {
         
-        /// <param name="PSSnapin">PSSnapin for the exception.</param>
-        /// <param name="message">Message with load failure detail.</param>
         internal PSSnapInException(string PSSnapin, string message)
             : base()
         {
@@ -23,9 +20,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <param name="PSSnapin">PSSnapin for the exception.</param>
-        /// <param name="message">Message with load failure detail.</param>
-        /// <param name="warning">Whether this is just a warning for PSSnapin load.</param>
         internal PSSnapInException(string PSSnapin, string message, bool warning)
             : base()
         {
@@ -36,9 +30,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <param name="PSSnapin">PSSnapin for the exception.</param>
-        /// <param name="message">Message with load failure detail.</param>
-        /// <param name="exception">Exception for PSSnapin load failure.</param>
         internal PSSnapInException(string PSSnapin, string message, Exception exception)
             : base(message, exception)
         {
@@ -53,15 +44,12 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <param name="message">Error message.</param>
         public PSSnapInException(string message)
             : base(message)
         {
         }
 
         
-        /// <param name="message">Error message.</param>
-        /// <param name="innerException">Inner exception.</param>
         public PSSnapInException(string message, Exception innerException)
             : base(message, innerException)
         {
@@ -96,7 +84,6 @@ namespace System.Management.Automation.Runspaces
         private bool _isErrorRecordOriginallyNull;
 
         
-        /// 
         public override ErrorRecord ErrorRecord
         {
             get
@@ -135,8 +122,6 @@ namespace System.Management.Automation.Runspaces
         #region Serialization
 
         
-        /// <param name="info">Serialization information.</param>
-        /// <param name="context">Streaming context.</param>
         [Obsolete("Legacy serialization support is deprecated since .NET 8", DiagnosticId = "SYSLIB0051")] 
         protected PSSnapInException(SerializationInfo info,
                                         StreamingContext context)

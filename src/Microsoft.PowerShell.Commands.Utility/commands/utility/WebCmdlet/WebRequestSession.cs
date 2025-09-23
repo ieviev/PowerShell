@@ -133,7 +133,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="certificate">The certificate to be added.</param>
         internal void AddCertificate(X509Certificate certificate)
         {
             Certificates ??= new X509CertificateCollection();
@@ -145,9 +144,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="suppressHttpClientRedirects">True if the caller does not want the HttpClient to ever handle redirections automatically.</param>
-        /// <param name="clientWasReset">Contains true if an existing HttpClient had to be disposed and recreated since the WebSession was last used.</param>
-        /// <returns>The HttpClient cached in the WebSession, based on all current settings.</returns>
         internal HttpClient GetHttpClient(bool suppressHttpClientRedirects, out bool clientWasReset)
         {
             // Do not auto redirect if the caller does not want it, or maximum redirections is 0
@@ -254,7 +250,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="disposing">True when called from Dispose() and false when called from finalizer.</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!_disposed)

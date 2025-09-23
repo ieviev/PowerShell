@@ -44,10 +44,6 @@ namespace Microsoft.PowerShell.Commands
     internal class WmiAsyncCmdletHelper : AsyncCmdletHelper
     {
         
-        /// <param name="childJob">Job associated with this operation.</param>
-        /// <param name="wmiObject">Object associated with this operation.</param>
-        /// <param name="computerName">Computer on which the operation is invoked.</param>
-        /// <param name="results">Sink to get wmi objects.</param>
         internal WmiAsyncCmdletHelper(PSWmiChildJob childJob, Cmdlet wmiObject, string computerName, ManagementOperationObserver results)
         {
             _wmiObject = wmiObject;
@@ -58,11 +54,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="childJob">Job associated with this operation.</param>
-        /// <param name="wmiObject">Object associated with this operation.</param>
-        /// <param name="computerName">Computer on which the operation is invoked.</param>
-        /// <param name="results">Sink to return wmi objects.</param>
-        /// <param name="count">Number of times the WMI command is executed.</param>
         internal WmiAsyncCmdletHelper(PSWmiChildJob childJob, Cmdlet wmiObject, string computerName, ManagementOperationObserver results, int count)
             : this(childJob, wmiObject, computerName, results)
         {
@@ -647,10 +638,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="computer"></param>
-        /// <param name="methodName"></param>
-        /// <param name="isLocal"></param>
-        /// <returns></returns>
         private bool NeedToEnablePrivilege(string computer, string methodName, ref bool isLocal)
         {
             bool result = false;
@@ -1418,8 +1405,6 @@ namespace Microsoft.PowerShell.Commands
         private const string WMIJobType = "WmiJob";
 
         
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void HandleChildJobStateChanged(object sender, JobStateEventArgs e)
         {
             if (e.JobStateInfo.State == JobState.Blocked)
@@ -1498,9 +1483,6 @@ namespace Microsoft.PowerShell.Commands
 
         private bool _moreData = false;
         
-        /// <remarks>
-        /// This has more data if any of the child jobs have more data.
-        /// </remarks>
         public override bool HasMoreData
         {
             get
@@ -1566,9 +1548,6 @@ namespace Microsoft.PowerShell.Commands
             }
         }
         
-        /// <param name="disposing">
-        /// if true, release all the managed objects.
-        /// </param>
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -1612,9 +1591,6 @@ namespace Microsoft.PowerShell.Commands
             _throttleManager.EndSubmitOperations();
         }
         
-        /// <param name="sender">Sender of this event, unused.</param>
-        /// <param name="eventArgs">event arguments, should be empty in this
-        /// case</param>
         private void HandleJobUnblocked(object sender, EventArgs eventArgs)
         {
             bool unblockjob = false;
@@ -1818,9 +1794,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="disposing">
-        /// if true, release all the managed objects.
-        /// </param>
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -1888,8 +1861,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="sender">Sender of this event.</param>
-        /// <param name="eventArgs">Not used in this method.</param>
         private void HandleThrottleComplete(object sender, EventArgs eventArgs)
         {
             if (_helper.State == WmiState.NotStarted)

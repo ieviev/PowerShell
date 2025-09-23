@@ -59,18 +59,6 @@ namespace Microsoft.PowerShell.Commands
         private readonly string _provider = string.Empty;
 
         
-        /// <remarks>
-        /// Currently we support following views:
-        ///
-        /// 1. Reminder (Default - Experienced User)
-        /// 2. Detailed (Beginner - Beginning User)
-        /// 3. Full     (All Users)
-        /// 4. Examples
-        /// 5. Parameters
-        ///
-        /// Currently we support these views only for Cmdlets.
-        /// A SnapIn developer can however change these views.
-        /// </remarks>
         [Parameter(ParameterSetName = "DetailedView", Mandatory = true)]
         public SwitchParameter Detailed
         {
@@ -84,18 +72,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <remarks>
-        /// Currently we support following views:
-        ///
-        /// 1. Reminder (Default - Experienced User)
-        /// 2. Detailed (Beginner - Beginning User)
-        /// 3. Full     (All Users)
-        /// 4. Examples
-        /// 5. Parameters
-        ///
-        /// Currently we support these views only for Cmdlets.
-        /// A SnapIn developer can however change these views.
-        /// </remarks>
         [Parameter(ParameterSetName = "AllUsersView")]
         public SwitchParameter Full
         {
@@ -109,17 +85,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <remarks>
-        /// Currently we support following views:
-        ///
-        /// 1. Reminder (Default - Experienced User)
-        /// 2. Detailed (Beginner - Beginning User)
-        /// 3. Full     (All Users)
-        /// 4. Examples
-        ///
-        /// Currently we support these views only for Cmdlets.
-        /// A SnapIn developer can however change these views.
-        /// </remarks>
         [Parameter(ParameterSetName = "Examples", Mandatory = true)]
         public SwitchParameter Examples
         {
@@ -133,9 +98,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <remarks>
-        /// Support WildCard strings as supported by WildcardPattern class.
-        /// </remarks>
         [Parameter(ParameterSetName = "Parameters", Mandatory = true)]
         public string[] Parameter { get; set; }
 
@@ -370,9 +332,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="originalHelpObject">Full help object to transform.</param>
-        /// <returns>Transformed help object with new TypeNames.</returns>
-        /// <remarks>If Detailed and Full are not specified, nothing is changed.</remarks>
         private PSObject TransformView(PSObject originalHelpObject)
         {
             Diagnostics.Assert(originalHelpObject != null,
@@ -426,8 +385,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="helpInfo">HelpInfo object to look for the parameter.</param>
-        /// <returns>Array of parameter infos.</returns>
         private PSObject[] GetParameterInfo(HelpInfo helpInfo)
         {
             List<PSObject> parameterInfosList = new List<PSObject>(Parameter.Length);
@@ -444,7 +401,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="helpInfo">HelpInfo Object to look for the parameter.</param>
         private void GetAndWriteParameterInfo(HelpInfo helpInfo)
         {
             s_tracer.WriteLine("Searching parameters for {0}", helpInfo.Name);
@@ -467,10 +423,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="cat">Category specified by the user.</param>
-        /// <exception cref="ArgumentException">
-        /// If the request can't be serviced.
-        /// </exception>
         private void ValidateAndThrowIfError(HelpCategory cat)
         {
             if (cat == HelpCategory.None)
@@ -578,7 +530,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="uriToLaunch"></param>
         private void LaunchOnlineHelp(Uri uriToLaunch)
         {
             Diagnostics.Assert(uriToLaunch != null, "uriToLaunch should not be null");
@@ -686,7 +637,6 @@ namespace Microsoft.PowerShell.Commands
     public static class GetHelpCodeMethods
     {
         
-        /// <returns>True if Get-Help is found, false otherwise.</returns>
         private static bool DoesCurrentRunspaceIncludeCoreHelpCmdlet()
         {
             InitialSessionState iss = Runspace.DefaultRunspace.InitialSessionState;
@@ -719,14 +669,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="commandInfoPSObject">
-        /// CommandInfo instance wrapped as PSObject
-        /// </param>
-        /// <returns>
-        /// null if <paramref name="commandInfoPSObject"/> is not a CommandInfo type.
-        /// null if HelpUri could not be retrieved either from CommandMetadata or
-        /// help content.
-        /// </returns>
         [SuppressMessage("Microsoft.Design", "CA1055:UriReturnValuesShouldNotBeStrings")]
         public static string GetHelpUri(PSObject commandInfoPSObject)
         {

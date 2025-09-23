@@ -176,8 +176,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <returns>None.</returns>
-        /// <remarks>This method updates "activeAssociationList" instance property.</remarks>
         private static void FilterActiveAssociationList(List<MshResolvedExpressionParameterAssociation> activeAssociationList)
         {
             // we got a valid set of properties from the default property set

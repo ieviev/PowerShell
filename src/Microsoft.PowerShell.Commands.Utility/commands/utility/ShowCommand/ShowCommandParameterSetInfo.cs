@@ -12,9 +12,6 @@ namespace Microsoft.PowerShell.Commands.ShowCommandExtension
     public class ShowCommandParameterSetInfo
     {
         
-        /// <param name="other">
-        /// The object to wrap.
-        /// </param>
         public ShowCommandParameterSetInfo(CommandParameterSetInfo other)
         {
             ArgumentNullException.ThrowIfNull(other);
@@ -25,9 +22,6 @@ namespace Microsoft.PowerShell.Commands.ShowCommandExtension
         }
 
         
-        /// <param name="other">
-        /// The object to wrap.
-        /// </param>
         public ShowCommandParameterSetInfo(PSObject other)
         {
             ArgumentNullException.ThrowIfNull(other);

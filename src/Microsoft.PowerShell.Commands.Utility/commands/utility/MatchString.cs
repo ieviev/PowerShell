@@ -34,7 +34,6 @@ namespace Microsoft.PowerShell.Commands
         public string[] DisplayPostContext { get; set; }
 
         
-        /// <returns>A new object that is a copy of this instance.</returns>
         public object Clone()
         {
             return new MatchInfoContext()
@@ -53,19 +52,15 @@ namespace Microsoft.PowerShell.Commands
         private static readonly string s_inputStream = "InputStream";
 
         
-        /// <value>True if case was ignored.</value>
         public bool IgnoreCase { get; set; }
 
         
-        /// <value>The number of the matching line.</value>
         public ulong LineNumber { get; set; }
 
         
-        /// <value>The text of the matching line.</value>
         public string Line { get; set; } = string.Empty;
 
         
-        /// <value>Whether the matched portion of the string is highlighted with the negative VT sequence.</value>
         private readonly bool _emphasize;
 
         
@@ -81,8 +76,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="matchIndexes">Sets the matchIndexes.</param>
-        /// <param name="matchLengths">Sets the matchLengths.</param>
         public MatchInfo(IReadOnlyList<int> matchIndexes, IReadOnlyList<int> matchLengths)
         {
             this._emphasize = true;
@@ -91,11 +84,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <remarks>
-        /// It will be the string "InputStream" if the object came from the input stream.
-        /// This is a readonly property calculated from the path <see cref="Path"/>.
-        /// </remarks>
-        /// <value>The file name.</value>
         public string Filename
         {
             get
@@ -112,10 +100,6 @@ namespace Microsoft.PowerShell.Commands
         private string _filename;
 
         
-        /// <remarks>
-        /// It will be "InputStream" if the object came from the input stream.
-        /// </remarks>
-        /// <value>The path name.</value>
         public string Path
         {
             get => _pathSet ? _path : s_inputStream;
@@ -131,19 +115,12 @@ namespace Microsoft.PowerShell.Commands
         private bool _pathSet;
 
         
-        /// <value>The pattern string.</value>
         public string Pattern { get; set; }
 
         
         public MatchInfoContext Context { get; set; }
 
         
-        /// <remarks>
-        /// For example, if the matching path was c:\foo\bar\baz.c and the directory argument was c:\foo
-        /// the routine would return bar\baz.c .
-        /// </remarks>
-        /// <param name="directory">The directory base the truncation on.</param>
-        /// <returns>The relative path that was produced.</returns>
         public string RelativePath(string directory)
         {
             if (!_pathSet)
@@ -185,29 +162,18 @@ namespace Microsoft.PowerShell.Commands
         private const string EmptyPrefix = "";
 
         
-        /// <remarks>
-        /// If the path component is set, as would be the case when matching
-        /// in a file, ToString() would return the path, line number and line text.
-        /// If path is not set, then just the line text is presented.
-        /// </remarks>
-        /// <returns>The string representation of the match object.</returns>
         public override string ToString()
         {
             return ToString(null);
         }
 
         
-        /// <param name="directory">Directory to use as the root when calculating the relative path.</param>
-        /// <returns>The string representation of the match object.</returns>
         public string ToString(string directory)
         {
             return ToString(directory, Line);
         }
 
         
-        /// <param name="directory">Directory to use as the root when calculating the relative path.</param>
-        /// <param name="line">Line that the match occurs in.</param>
-        /// <returns>The string representation of the match object.</returns>
         private string ToString(string directory, string line)
         {
             string displayPath = (directory != null) ? RelativePath(directory) : _path;
@@ -239,8 +205,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="directory">Directory to use as the root when calculating the relative path.</param>
-        /// <returns>The string representation of the match object with matched text inverted.</returns>
         public string ToEmphasizedString(string directory)
         {
             if (!_emphasize)
@@ -252,7 +216,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <returns>The matched line with matched text inverted.</returns>
         private string EmphasizeLine()
         {
             string invertColorsVT100 = PSStyle.Instance.Reverse;
@@ -289,11 +252,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="lineStr">The line to format.</param>
-        /// <param name="displayLineNumber">The line number to display.</param>
-        /// <param name="displayPath">The file path, formatted for display.</param>
-        /// <param name="prefix">The match prefix.</param>
-        /// <returns>The formatted line as a string.</returns>
         private string FormatLine(string lineStr, ulong displayLineNumber, string displayPath, string prefix)
         {
             return _pathSet
@@ -305,7 +263,6 @@ namespace Microsoft.PowerShell.Commands
         public Match[] Matches { get; set; } = Array.Empty<Match>();
 
         
-        /// <returns>A new object that is a copy of this instance.</returns>
         internal MatchInfo Clone()
         {
             // Just do a shallow copy and then deep-copy the
@@ -339,7 +296,6 @@ namespace Microsoft.PowerShell.Commands
         private const string ParameterSetLiteralFileRaw = "LiteralFileRaw";
 
         
-        /// <typeparam name="T">The type of items that are buffered.</typeparam>
         private sealed class CircularBuffer<T> : ICollection<T>
         {
             // Ring of items
@@ -352,8 +308,6 @@ namespace Microsoft.PowerShell.Commands
             private int _firstIndex;
 
             
-            /// <param name="capacity">The maximum capacity of the buffer.</param>
-            /// <exception cref="ArgumentOutOfRangeException">If <paramref name="capacity"/> is negative.</exception>
             public CircularBuffer(int capacity)
             {
                 ArgumentOutOfRangeException.ThrowIfNegative(capacity);
@@ -369,12 +323,6 @@ namespace Microsoft.PowerShell.Commands
             public bool IsFull => Count == Capacity;
 
             
-            /// <param name="zeroBasedIndex">The index to wrap.</param>
-            /// <exception cref="ArgumentOutOfRangeException">If <paramref name="zeroBasedIndex"/> is out of range.</exception>
-            /// <returns>
-            /// The actual index that <paramref name="zeroBasedIndex"/>
-            /// maps to.
-            /// </returns>
             private int WrapIndex(int zeroBasedIndex)
             {
                 if (Capacity == 0 || zeroBasedIndex < 0)
@@ -406,7 +354,6 @@ namespace Microsoft.PowerShell.Commands
             public bool IsReadOnly => false;
 
             
-            /// <param name="item">The item to add.</param>
             public void Add(T item)
             {
                 if (Capacity == 0)
@@ -465,7 +412,6 @@ namespace Microsoft.PowerShell.Commands
             #endregion
 
             
-            /// <returns>The new array.</returns>
             public T[] ToArray()
             {
                 T[] result = new T[Count];
@@ -474,8 +420,6 @@ namespace Microsoft.PowerShell.Commands
             }
 
             
-            /// <param name="index">The index of the item to access.</param>
-            /// <returns>The buffered item at index <paramref name="index"/>.</returns>
             public T this[int index]
             {
                 get
@@ -497,11 +441,9 @@ namespace Microsoft.PowerShell.Commands
             IList<MatchInfo> EmitQueue { get; }
 
             
-            /// <param name="line">The line to track.</param>
             void TrackLine(string line);
 
             
-            /// <param name="match">The line to track.</param>
             void TrackMatch(MatchInfo match);
 
             
@@ -534,8 +476,6 @@ namespace Microsoft.PowerShell.Commands
             private MatchInfo _matchInfo = null;
 
             
-            /// <param name="preContext">How much preContext to collect at most.</param>
-            /// <param name="postContext">How much postContext to collect at most.</param>
             public DisplayContextTracker(int preContext, int postContext)
             {
                 _preContext = preContext;
@@ -647,18 +587,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <remarks>
-        /// The difference between logical and display context is
-        /// that logical context includes as many context lines
-        /// as possible for a given match, up to the specified
-        /// limit, including context lines which overlap between
-        /// matches and other matching lines themselves. Display
-        /// context, on the other hand, is designed to display
-        /// a possibly-continuous set of matches by excluding
-        /// overlapping context (lines will only appear once)
-        /// and other matching lines (since they will appear
-        /// as their own match entries.).
-        /// </remarks>
         private sealed class LogicalContextTracker : IContextTracker
         {
             // A union: string | MatchInfo. Needed since
@@ -707,8 +635,6 @@ namespace Microsoft.PowerShell.Commands
             private readonly CircularBuffer<ContextEntry> _collectedContext;
 
             
-            /// <param name="preContext">How much preContext to collect at most.</param>
-            /// <param name="postContext">How much postContext to collect at most.</param>
             public LogicalContextTracker(int preContext, int postContext)
             {
                 _preContext = preContext;
@@ -754,12 +680,6 @@ namespace Microsoft.PowerShell.Commands
             #endregion
 
             
-            /// <remarks>
-            /// The range is inclusive; the entries at
-            /// startIndex and endIndex will both be checked.
-            /// </remarks>
-            /// <param name="startIndex">The beginning of the match range.</param>
-            /// <param name="endIndex">The ending of the match range.</param>
             private void EmitAllInRange(int startIndex, int endIndex)
             {
                 for (int i = startIndex; i <= endIndex; i++)
@@ -806,14 +726,6 @@ namespace Microsoft.PowerShell.Commands
             }
 
             
-            /// <remarks>
-            /// Context ranges must be within the bounds of the context buffer.
-            /// </remarks>
-            /// <param name="match">The match to operate on.</param>
-            /// <param name="preStartIndex">The start index of the preContext range.</param>
-            /// <param name="preLength">The length of the preContext range.</param>
-            /// <param name="postStartIndex">The start index of the postContext range.</param>
-            /// <param name="postLength">The length of the postContext range.</param>
             private void Emit(MatchInfo match, int preStartIndex, int preLength, int postStartIndex, int postLength)
             {
                 if (match.Context != null)
@@ -826,12 +738,6 @@ namespace Microsoft.PowerShell.Commands
             }
 
             
-            /// <remarks>
-            /// The range must be within the bounds of the context buffer.
-            /// </remarks>
-            /// <param name="startIndex">The index to start at.</param>
-            /// <param name="length">The length of the range.</param>
-            /// <returns>String representation of the collected context at the specified range.</returns>
             private string[] CopyContext(int startIndex, int length)
             {
                 string[] result = new string[length];
@@ -852,8 +758,6 @@ namespace Microsoft.PowerShell.Commands
             private readonly IContextTracker _logicalTracker;
 
             
-            /// <param name="preContext">How much preContext to collect at most.</param>
-            /// <param name="postContext">How much postContext to collect at most.</param>
             public ContextTracker(int preContext, int postContext)
             {
                 _displayTracker = new DisplayContextTracker(preContext, postContext);
@@ -1093,7 +997,6 @@ namespace Microsoft.PowerShell.Commands
         public SwitchParameter NoEmphasis { get; set; }
 
         
-        /// <exception cref="WildcardPatternException">Invalid wildcard pattern was specified.</exception>
         [Parameter]
         [ValidateNotNullOrEmpty]
         public string[] Include
@@ -1267,9 +1170,6 @@ namespace Microsoft.PowerShell.Commands
         private readonly List<string> _inputObjectFileList = new(1) { string.Empty };
 
         
-        /// <exception cref="ArgumentException">Regular expression parsing error, path error.</exception>
-        /// <exception cref="FileNotFoundException">A file cannot be found.</exception>
-        /// <exception cref="DirectoryNotFoundException">A file cannot be found.</exception>
         protected override void ProcessRecord()
         {
             if (_doneProcessing)
@@ -1371,8 +1271,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="filename">The file to process.</param>
-        /// <returns>True if a match was found; otherwise false.</returns>
         private bool ProcessFile(string filename)
         {
             var contextTracker = GetContextTracker();
@@ -1464,8 +1362,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="contextTracker">The context tracker to operate on.</param>
-        /// <returns>Whether or not any objects were emitted.</returns>
         private bool FlushTrackerQueue(IContextTracker contextTracker)
         {
             // Do we even have any matches to emit?
@@ -1548,10 +1444,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="operandString">The result of converting operand to a string.</param>
-        /// <param name="matchInfo">The input object in filter mode.</param>
-        /// <param name="matchResult">The match info object - this will be null if this.quiet is set.</param>
-        /// <returns>True if the input object matched.</returns>
         private bool DoMatchWorker(string operandString, MatchInfo matchInfo, out MatchInfo matchResult)
         {
             bool gotMatch = false;
@@ -1713,9 +1605,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="filePaths">The filePaths to resolve.</param>
-        /// <param name="isLiteralPath">True if the wildcard resolution should not be attempted.</param>
-        /// <returns>The resolved (absolute) paths.</returns>
         private List<string> ResolveFilePaths(string[] filePaths, bool isLiteralPath)
         {
             List<string> allPaths = new();
@@ -1819,8 +1708,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="filename">The filename to test.</param>
-        /// <returns>True if the filename is acceptable.</returns>
         private bool MeetsIncludeExcludeCriteria(string filename)
         {
             bool ok = false;

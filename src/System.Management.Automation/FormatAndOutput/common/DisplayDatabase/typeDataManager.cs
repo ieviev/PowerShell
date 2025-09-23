@@ -44,22 +44,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="formatFiles"></param>
-        /// <param name="isShared"></param>
-        /// <param name="authorizationManager">
-        /// Authorization manager to perform signature checks before reading ps1xml files (or null of no checks are needed)
-        /// </param>
-        /// <param name="host">
-        /// Host passed to <paramref name="authorizationManager"/>.  Can be null if no interactive questions should be asked.
-        /// </param>
-        /// <exception cref="ArgumentNullException"/>
-        /// <exception cref="ArgumentException">
-        /// 1. FormatFile is not rooted.
-        /// </exception>
-        /// <exception cref="FormatTableLoadException">
-        /// 1. There were errors loading Formattable. Look in the Errors property to get
-        /// detailed error messages.
-        /// </exception>
         internal TypeInfoDataBaseManager(
             IEnumerable<string> formatFiles,
             bool isShared,
@@ -105,11 +89,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="formatFile"></param>
-        /// <param name="shouldPrepend">
-        /// if true, <paramref name="formatFile"/> is prepended to the current FormatTable's file list.
-        /// if false, it will be appended.
-        /// </param>
         internal void Add(string formatFile, bool shouldPrepend)
         {
             if (string.IsNullOrEmpty(formatFile) || (!Path.IsPathRooted(formatFile)))
@@ -131,7 +110,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="formatFile"></param>
         internal void Remove(string formatFile)
         {
             lock (_formatFileList)
@@ -141,12 +119,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="formatData">
-        /// The format data to update the database
-        /// </param>
-        /// <param name="shouldPrepend">
-        /// Specify the order in which the format data will be loaded
-        /// </param>
         internal void AddFormatData(IEnumerable<ExtendedTypeDefinition> formatData, bool shouldPrepend)
         {
             Diagnostics.Assert(isShared, "this method should only be called from FormatTable to update a shared database");
@@ -207,12 +179,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="authorizationManager">
-        /// Authorization manager to perform signature checks before reading ps1xml files (or null of no checks are needed)
-        /// </param>
-        /// <param name="host">
-        /// Host passed to <paramref name="authorizationManager"/>.  Can be null if no interactive questions should be asked.
-        /// </param>
         internal void Update(AuthorizationManager authorizationManager, PSHost host)
         {
             if (DisableFormatTableUpdates)
@@ -239,18 +205,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="mshsnapins">Files to be loaded and errors to be updated.</param>
-        /// <param name="authorizationManager">
-        /// Authorization manager to perform signature checks before reading ps1xml files (or null of no checks are needed)
-        /// </param>
-        /// <param name="host">
-        /// Host passed to <paramref name="authorizationManager"/>.  Can be null if no interactive questions should be asked.
-        /// </param>
-        /// <param name="preValidated">
-        /// True if the format data has been pre-validated (build time, manual testing, etc) so that validation can be
-        /// skipped at runtime.
-        /// </param>
-        /// <returns>Database instance.</returns>
         internal void UpdateDataBase(
             Collection<PSSnapInTypeAndFormatErrors> mshsnapins,
             AuthorizationManager authorizationManager,
@@ -274,21 +228,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="files">*.formal.xml files to be loaded.</param>
-        /// <param name="expressionFactory">Expression factory to validate script blocks.</param>
-        /// <param name="acceptLoadingErrors">If true, load the database even if there are loading errors.</param>
-        /// <param name="authorizationManager">
-        /// Authorization manager to perform signature checks before reading ps1xml files (or null of no checks are needed)
-        /// </param>
-        /// <param name="host">
-        /// Host passed to <paramref name="authorizationManager"/>.  Can be null if no interactive questions should be asked.
-        /// </param>
-        /// <param name="preValidated">
-        /// True if the format data has been pre-validated (build time, manual testing, etc) so that validation can be
-        /// skipped at runtime.
-        /// </param>
-        /// <param name="logEntries">Trace and error logs from loading the format Xml files.</param>
-        /// <returns>True if we had a successful load.</returns>
         internal bool LoadFromFile(
             Collection<PSSnapInTypeAndFormatErrors> files,
             PSPropertyExpressionFactory expressionFactory,
@@ -334,21 +273,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="files">*.formal.xml files to be loaded.</param>
-        /// <param name="expressionFactory">Expression factory to validate script blocks.</param>
-        /// <param name="authorizationManager">
-        /// Authorization manager to perform signature checks before reading ps1xml files (or null of no checks are needed)
-        /// </param>
-        /// <param name="host">
-        /// Host passed to <paramref name="authorizationManager"/>.  Can be null if no interactive questions should be asked.
-        /// </param>
-        /// <param name="preValidated">
-        /// True if the format data has been pre-validated (build time, manual testing, etc) so that validation can be
-        /// skipped at runtime.
-        /// </param>
-        /// <param name="logEntries">List of logger entries (errors, etc.) to return to the caller.</param>
-        /// <param name="success">True if no error occurred.</param>
-        /// <returns>A database instance loaded from file(s).</returns>
         private static TypeInfoDataBase LoadFromFileHelper(
             Collection<PSSnapInTypeAndFormatErrors> files,
             PSPropertyExpressionFactory expressionFactory,
@@ -514,14 +438,12 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="db">Db being initialized.</param>
         private static void AddPreLoadIntrinsics(TypeInfoDataBase db)
         {
             // NOTE: nothing to add for the time being. Add here if needed.
         }
 
         
-        /// <param name="db">Db being initialized.</param>
         private static void AddPostLoadIntrinsics(TypeInfoDataBase db)
         {
             // add entry for the output of update-formatdata

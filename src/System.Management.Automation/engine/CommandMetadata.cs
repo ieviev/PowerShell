@@ -19,8 +19,6 @@ using System.Diagnostics.CodeAnalysis;
 namespace System.Management.Automation
 {
     
-    /// <seealso cref="System.Management.Automation.Runspaces.InitialSessionState.CreateRestricted"/>
-    /// <seealso cref="System.Management.Automation.CommandMetadata.GetRestrictedCommands"/>
     [Flags]
     public enum SessionCapabilities
     {
@@ -38,51 +36,18 @@ namespace System.Management.Automation
         #region Public Constructor
 
         
-        /// <param name="commandType">
-        /// CLS complaint type to inspect for Cmdlet metadata.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// commandType is null.
-        /// </exception>
-        /// <exception cref="MetadataException">
-        /// If a parameter defines the same parameter-set name multiple times.
-        /// If the attributes could not be read from a property or field.
-        /// </exception>
         public CommandMetadata(Type commandType)
         {
             Init(null, null, commandType, false);
         }
 
         
-        /// <param name="commandInfo">
-        /// The commandInfo object to construct CommandMetadata for
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// commandInfo is null.
-        /// </exception>
-        /// <exception cref="PSNotSupportedException">
-        /// If the commandInfo is an alias to an unknown command, or if the commandInfo
-        /// is an unsupported command type.
-        /// </exception>
         public CommandMetadata(CommandInfo commandInfo)
             : this(commandInfo, false)
         {
         }
 
         
-        /// <param name="commandInfo">
-        /// The commandInfo object to construct CommandMetadata for
-        /// </param>
-        /// <param name="shouldGenerateCommonParameters">
-        /// Should common parameters be included in the metadata?
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// commandInfo is null.
-        /// </exception>
-        /// <exception cref="PSNotSupportedException">
-        /// If the commandInfo is an alias to an unknown command, or if the commandInfo
-        /// is an unsupported command type.
-        /// </exception>
         public CommandMetadata(CommandInfo commandInfo, bool shouldGenerateCommonParameters)
         {
             if (commandInfo == null)
@@ -123,7 +88,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="path">The path to the script file.</param>
         public CommandMetadata(string path)
         {
             string scriptName = IO.Path.GetFileName(path);
@@ -134,7 +98,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="other">Object to copy.</param>
         public CommandMetadata(CommandMetadata other)
         {
             if (other == null)
@@ -258,31 +221,6 @@ namespace System.Management.Automation
         #region ctor
 
         
-        /// <param name="commandName">
-        /// The name of the command that this metadata represents.
-        /// </param>
-        /// <param name="cmdletType">
-        /// The cmdlet to get the metadata for.
-        /// </param>
-        /// <param name="context">
-        /// The current engine context.
-        /// </param>
-        /// <returns>
-        /// The CommandMetadata for the specified cmdlet.
-        /// </returns>
-        /// <exception cref="ArgumentException">
-        /// If <paramref name="commandName"/> is null or empty.
-        /// </exception>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="cmdletType"/> is null.
-        /// </exception>
-        /// <exception cref="ParsingMetadataException">
-        /// If more than int.MaxValue parameter-sets are defined for the command.
-        /// </exception>
-        /// <exception cref="MetadataException">
-        /// If a parameter defines the same parameter-set name multiple times.
-        /// If the attributes could not be read from a property or field.
-        /// </exception>
         internal static CommandMetadata Get(string commandName, Type cmdletType, ExecutionContext context)
         {
             if (string.IsNullOrEmpty(commandName))
@@ -313,28 +251,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="commandName">
-        /// The name of the command that this metadata represents.
-        /// </param>
-        /// <param name="cmdletType">
-        /// An instance of an object type that can be used to bind MSH parameters. A type is
-        /// considered bindable if it has at least one field and/or property that is decorated
-        /// with the ParameterAttribute.
-        /// </param>
-        /// <param name="context">
-        /// The current engine context. If null, the command and type metadata will be generated
-        /// and will not be cached.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="cmdletType"/> is null.
-        /// </exception>
-        /// <exception cref="ParsingMetadataException">
-        /// If more than int.MaxValue parameter-sets are defined for the command.
-        /// </exception>
-        /// <exception cref="MetadataException">
-        /// If a parameter defines the same parameter-set name multiple times.
-        /// If the attributes could not be read from a property or field.
-        /// </exception>
         internal CommandMetadata(string commandName, Type cmdletType, ExecutionContext context)
         {
             if (string.IsNullOrEmpty(commandName))
@@ -356,26 +272,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="scriptblock"></param>
-        /// <param name="context"></param>
-        /// <param name="commandName"></param>
-        /// <remarks>
-        /// Unlike cmdlet based on a C# type where cmdlet metadata and parameter
-        /// metadata is created through reflecting the implementation type, script
-        /// cmdlet has different way for constructing metadata.
-        ///
-        ///     1. Metadata for cmdlet itself comes from cmdlet statement, which
-        ///        is parsed into CmdletDeclarationNode and then converted into
-        ///        a CmdletAttribute object.
-        ///     2. Metadata for parameter comes from parameter declaration statement,
-        ///        which is parsed into parameter nodes with parameter annotations.
-        ///        Information in ParameterNodes is eventually transformed into a
-        ///        dictionary of RuntimeDefinedParameters.
-        ///
-        /// By the time this constructor is called, information about CmdletAttribute
-        /// and RuntimeDefinedParameters for the script block has been setup with
-        /// the scriptblock object.
-        /// </remarks>
         internal CommandMetadata(ScriptBlock scriptblock, string commandName, ExecutionContext context)
         {
             if (scriptblock == null)
@@ -445,18 +341,15 @@ namespace System.Management.Automation
         private string _defaultParameterSetName = ParameterAttribute.AllParameterSets;
 
         
-        /// <value></value>
         public bool SupportsShouldProcess { get; set; }
 
         
-        /// <value></value>
         public bool SupportsPaging { get; set; }
 
         
         public bool PositionalBinding { get; set; } = true;
 
         
-        /// <value></value>
         public bool SupportsTransactions { get; set; }
 
         
@@ -487,7 +380,6 @@ namespace System.Management.Automation
         private RemotingCapability _remotingCapability = RemotingCapability.PowerShell;
 
         
-        /// <value></value>
         public ConfirmImpact ConfirmImpact { get; set; } = ConfirmImpact.Medium;
 
         
@@ -533,7 +425,6 @@ namespace System.Management.Automation
         private bool _shouldGenerateCommonParameters;
 
         
-        /// <value></value>
         internal ObsoleteAttribute Obsolete { get; set; }
 
         #endregion
@@ -541,7 +432,6 @@ namespace System.Management.Automation
         #region internal members
 
         
-        /// <value></value>
         internal MergedCommandParameterMetadata StaticCommandParameterMetadata
         {
             get
@@ -553,7 +443,6 @@ namespace System.Management.Automation
         private readonly MergedCommandParameterMetadata _staticCommandParameterMetadata;
 
         
-        /// <value></value>
         internal bool ImplementsDynamicParameters
         {
             get { return _implementsDynamicParameters; }
@@ -600,9 +489,6 @@ namespace System.Management.Automation
         #region helper methods
 
         
-        /// <exception cref="ParsingMetadataException">
-        /// If more than int.MaxValue parameter-sets are defined for the command.
-        /// </exception>
         private void ConstructCmdletMetadataUsingReflection()
         {
             Diagnostics.Assert(
@@ -642,15 +528,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="attribute">
-        /// The CmdletAttribute to process
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="attribute"/> is null.
-        /// </exception>
-        /// <exception cref="ParsingMetadataException">
-        /// If more than int.MaxValue parameter-sets are defined for the command.
-        /// </exception>
         private void ProcessCmdletAttribute(CmdletCommonMetadataAttribute attribute)
         {
             if (attribute == null)
@@ -688,12 +565,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="context"></param>
-        /// <param name="parameterMetadata"></param>
-        /// <param name="shouldGenerateCommonParameters">
-        /// true if metadata info about Verbose,Debug etc needs to be generated.
-        /// false otherwise.
-        /// </param>
         private MergedCommandParameterMetadata MergeParameterMetadata(ExecutionContext context, InternalParameterMetadata parameterMetadata, bool shouldGenerateCommonParameters)
         {
             // Create an instance of the static metadata class
@@ -760,7 +631,6 @@ namespace System.Management.Automation
         #region Proxy Command generation
 
         
-        /// <returns></returns>
         internal string GetProxyCommand(string helpComment, bool generateDynamicParameters)
         {
             if (string.IsNullOrEmpty(helpComment))
@@ -1224,8 +1094,6 @@ clean
         }
 
         
-        /// <returns></returns>
-        /// <seealso cref="System.Management.Automation.Runspaces.InitialSessionState.CreateRestricted(SessionCapabilities)"/>
         public static Dictionary<string, CommandMetadata> GetRestrictedCommands(SessionCapabilities sessionCapabilities)
         {
             List<CommandMetadata> restrictedCommands = new List<CommandMetadata>();

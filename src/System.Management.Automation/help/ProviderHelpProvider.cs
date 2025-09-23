@@ -12,10 +12,6 @@ using System.Xml;
 namespace System.Management.Automation
 {
     
-    /// <remarks>
-    /// Provider Help information are stored in 'help.xml' files. Location of these files
-    /// can be found from CommandDiscovery.
-    /// </remarks>
     internal class ProviderHelpProvider : HelpProviderWithCache
     {
         
@@ -29,7 +25,6 @@ namespace System.Management.Automation
         #region Common Properties
 
         
-        /// <value>Name of this help provider.</value>
         internal override string Name
         {
             get
@@ -39,7 +34,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <value>Help category of this provider</value>
         internal override HelpCategory HelpCategory
         {
             get
@@ -53,7 +47,6 @@ namespace System.Management.Automation
         #region Help Provider Interface
 
         
-        /// <param name="helpRequest">Help request object.</param>
         internal override IEnumerable<HelpInfo> ExactMatchHelp(HelpRequest helpRequest)
         {
             Collection<ProviderInfo> matchingProviders = null;
@@ -123,10 +116,6 @@ namespace System.Management.Automation
         private readonly Hashtable _helpFiles = new Hashtable();
 
         
-        /// <remarks>
-        /// This will load providerHelpInfo from help file into help cache.
-        /// </remarks>
-        /// <param name="providerInfo">ProviderInfo for which to locate help.</param>
         private void LoadHelpFile(ProviderInfo providerInfo)
         {
             if (providerInfo == null)
@@ -243,14 +232,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="helpRequest">Help request object.</param>
-        /// <param name="searchOnlyContent">
-        /// If true, searches for pattern in the help content. Individual
-        /// provider can decide which content to search in.
-        ///
-        /// If false, searches for pattern in the command names.
-        /// </param>
-        /// <returns></returns>
         internal override IEnumerable<HelpInfo> SearchHelp(HelpRequest helpRequest, bool searchOnlyContent)
         {
             int countOfHelpInfoObjectsFound = 0;
@@ -351,14 +332,6 @@ namespace System.Management.Automation
         }
 #if V2
         
-        /// <remarks>
-        /// For command help info, this will
-        ///     1. check whether provider-specific commandlet help exists.
-        ///     2. merge found provider-specific help with commandlet help provided.
-        /// </remarks>
-        /// <param name="helpInfo">HelpInfo forwarded in.</param>
-        /// <param name="helpRequest">Help request object.</param>
-        /// <returns>The help info object after processing.</returns>
         override internal HelpInfo ProcessForwardedHelp(HelpInfo helpInfo, HelpRequest helpRequest)
         {
             if (helpInfo == null)

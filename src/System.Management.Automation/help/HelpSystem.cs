@@ -18,7 +18,6 @@ namespace System.Management.Automation
     internal class HelpSystem
     {
         
-        /// <param name="context">Execution context for this help system.</param>
         internal HelpSystem(ExecutionContext context)
         {
             if (context == null)
@@ -34,7 +33,6 @@ namespace System.Management.Automation
         private readonly ExecutionContext _executionContext;
 
         
-        /// <value></value>
         internal ExecutionContext ExecutionContext
         {
             get
@@ -66,8 +64,6 @@ namespace System.Management.Automation
         #region Help API
 
         
-        /// <param name="helpRequest">HelpRequest object</param>
-        /// <returns>An array of HelpInfo objects</returns>
         internal IEnumerable<HelpInfo> GetHelp(HelpRequest helpRequest)
         {
             if (helpRequest == null)
@@ -87,7 +83,6 @@ namespace System.Management.Automation
         private readonly Collection<ErrorRecord> _lastErrors = new Collection<ErrorRecord>();
 
         
-        /// <value></value>
         internal Collection<ErrorRecord> LastErrors
         {
             get
@@ -99,7 +94,6 @@ namespace System.Management.Automation
         private HelpCategory _lastHelpCategory = HelpCategory.None;
 
         
-        /// <value>help category to search for help</value>
         internal HelpCategory LastHelpCategory
         {
             get
@@ -115,7 +109,6 @@ namespace System.Management.Automation
         private bool _verboseHelpErrors = false;
 
         
-        /// <value></value>
         internal bool VerboseHelpErrors
         {
             get
@@ -133,7 +126,6 @@ namespace System.Management.Automation
         private Collection<string> _searchPaths = null;
 
         
-        /// <returns>A collection of strings representing locations.</returns>
         internal Collection<string> GetSearchPaths()
         {
             // return the cache if already present.
@@ -160,8 +152,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="helpRequest">Help request object.</param>
-        /// <returns>An array of HelpInfo objects</returns>
         private IEnumerable<HelpInfo> DoGetHelp(HelpRequest helpRequest)
         {
             _lastErrors.Clear();
@@ -223,8 +213,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="helpRequest">Help request object</param>
-        /// <returns>HelpInfo object retrieved (can be null)</returns>
         internal IEnumerable<HelpInfo> ExactMatchHelp(HelpRequest helpRequest)
         {
             bool isHelpInfoFound = false;
@@ -255,10 +243,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="helpInfo"></param>
-        /// <param name="helpRequest">Help request object.</param>
-        /// <returns>Never returns null.</returns>
-        /// <remarks>helpInfos is not null or empty.</remarks>
         private IEnumerable<HelpInfo> ForwardHelp(HelpInfo helpInfo, HelpRequest helpRequest)
         {
             // findout if this helpInfo needs to be processed further..
@@ -305,7 +289,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <returns></returns>
         private HelpInfo GetDefaultHelp()
         {
             HelpRequest helpRequest = new HelpRequest("default", HelpCategory.DefaultHelp);
@@ -319,8 +302,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="helpRequest">Help request object.</param>
-        /// <returns>An IEnumerable of HelpInfo object.</returns>
         private IEnumerable<HelpInfo> SearchHelp(HelpRequest helpRequest)
         {
             int countOfHelpInfosFound = 0;
@@ -407,7 +388,6 @@ namespace System.Management.Automation
         private readonly ArrayList _helpProviders = new ArrayList();
 
         
-        /// <value>a list of help providers</value>
         internal ArrayList HelpProviders
         {
             get
@@ -417,11 +397,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <remarks>
-        /// Currently we hardcode the sequence of help provider initialization.
-        /// In the longer run, we probably will load help providers based on some provider catalog. That
-        /// will allow new providers to be defined by customer.
-        /// </remarks>
         private void InitializeHelpProviders()
         {
             HelpProvider helpProvider = null;
@@ -532,7 +507,6 @@ namespace System.Management.Automation
         private HelpErrorTracer _helpErrorTracer;
 
         
-        /// <value></value>
         internal HelpErrorTracer HelpErrorTracer
         {
             get
@@ -542,8 +516,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="helpFile"></param>
-        /// <returns></returns>
         internal IDisposable Trace(string helpFile)
         {
             if (_helpErrorTracer == null)
@@ -553,7 +525,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="errorRecord"></param>
         internal void TraceError(ErrorRecord errorRecord)
         {
             if (_helpErrorTracer == null)
@@ -563,7 +534,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="errorRecords"></param>
         internal void TraceErrors(Collection<ErrorRecord> errorRecords)
         {
             if (_helpErrorTracer == null || errorRecords == null)
@@ -654,9 +624,6 @@ namespace System.Management.Automation
         internal HelpCategory HelpCategory = HelpCategory.None;
 
         
-        /// <param name="assemblyName">Assembly that contains this help provider.</param>
-        /// <param name="className">The class that implements this help provider.</param>
-        /// <param name="helpCategory">Help category of this help provider.</param>
         internal HelpProviderInfo(string assemblyName, string className, HelpCategory helpCategory)
         {
             this.AssemblyName = assemblyName;

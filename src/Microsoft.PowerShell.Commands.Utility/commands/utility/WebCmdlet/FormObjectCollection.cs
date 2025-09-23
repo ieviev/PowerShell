@@ -12,8 +12,6 @@ namespace Microsoft.PowerShell.Commands
     public class FormObjectCollection : Collection<FormObject>
     {
         
-        /// <param name="key"></param>
-        /// <returns></returns>
         public FormObject? this[string key]
         {
             get

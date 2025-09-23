@@ -18,8 +18,6 @@ namespace Microsoft.PowerShell.GlobalTool.Shim
         private const string UnixFolderName = "unix";
 
         
-        /// <param name="args">Arguments passed to the global tool.</param>'
-        /// <returns>Exit code returned by pwsh.</returns>
         public static int Main(string[] args)
         {
             var currentPath = new FileInfo(System.Reflection.Assembly.GetEntryAssembly().Location).Directory.FullName;

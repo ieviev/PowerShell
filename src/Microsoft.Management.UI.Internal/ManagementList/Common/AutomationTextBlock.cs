@@ -26,7 +26,6 @@ namespace Microsoft.Management.UI.Internal
         #region Overides
 
         
-        /// <returns>The <see cref="System.Windows.Automation.Peers.AutomationPeer"/> implementations for this control.</returns>
         protected override AutomationPeer OnCreateAutomationPeer()
         {
             return new AutomationTextBlockAutomationPeer(this);

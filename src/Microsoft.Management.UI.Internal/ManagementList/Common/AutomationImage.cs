@@ -26,7 +26,6 @@ namespace Microsoft.Management.UI.Internal
         #region Overides
 
         
-        /// <returns>The <see cref="System.Windows.Automation.Peers.AutomationPeer"/> implementations for this control.</returns>
         protected override AutomationPeer OnCreateAutomationPeer()
         {
             return new AutomationImageAutomationPeer(this);
@@ -42,7 +41,6 @@ namespace Microsoft.Management.UI.Internal
         #region Constructors
 
         
-        /// <param name="owner">The owner of the automation peer.</param>
         public AutomationImageAutomationPeer(Image owner)
             : base(owner)
         {
@@ -54,7 +52,6 @@ namespace Microsoft.Management.UI.Internal
         #region Overrides
 
         
-        /// <returns>This method always returns false.</returns>
         protected override bool IsControlElementCore()
         {
             return false;

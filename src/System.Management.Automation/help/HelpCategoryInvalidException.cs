@@ -16,7 +16,6 @@ namespace Microsoft.PowerShell.Commands
     public class HelpCategoryInvalidException : ArgumentException, IContainsErrorRecord
     {
         
-        /// <param name="helpCategory">The name of help category that is invalid.</param>
         public HelpCategoryInvalidException(string helpCategory)
             : base()
         {
@@ -32,8 +31,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="helpCategory">The name of help category that is invalid.</param>
-        /// <param name="innerException">The inner exception of this exception.</param>
         public HelpCategoryInvalidException(string helpCategory, Exception innerException)
             : base(
                   (innerException != null) ? innerException.Message : string.Empty,
@@ -53,7 +50,6 @@ namespace Microsoft.PowerShell.Commands
         private ErrorRecord _errorRecord;
 
         
-        /// <value>ErrorRecord instance</value>
         public ErrorRecord ErrorRecord
         {
             get
@@ -65,7 +61,6 @@ namespace Microsoft.PowerShell.Commands
         private readonly string _helpCategory = System.Management.Automation.HelpCategory.None.ToString();
 
         
-        /// <value>Name of the help category.</value>
         public string HelpCategory
         {
             get
@@ -75,7 +70,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <value>Error message.</value>
         public override string Message
         {
             get
@@ -91,8 +85,6 @@ namespace Microsoft.PowerShell.Commands
 
         #region Serialization
         
-        /// <param name="info">Serialization information.</param>
-        /// <param name="context">Streaming context.</param>
         [Obsolete("Legacy serialization support is deprecated since .NET 8", DiagnosticId = "SYSLIB0051")] 
         protected HelpCategoryInvalidException(SerializationInfo info,
                                         StreamingContext context)            

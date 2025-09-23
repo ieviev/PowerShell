@@ -17,10 +17,6 @@ namespace System.Management.Automation.Help
         internal static readonly string HelpIntoXmlName = "HelpInfo.xml";
 
         
-        /// <param name="name">Module name.</param>
-        /// <param name="guid">Module GUID.</param>
-        /// <param name="path">Module path.</param>
-        /// <param name="uri">HelpInfo URI.</param>
         internal UpdatableHelpModuleInfo(string name, Guid guid, string path, string uri)
         {
             Debug.Assert(!string.IsNullOrEmpty(name));
@@ -54,8 +50,6 @@ namespace System.Management.Automation.Help
         internal string HelpInfoUri { get; }
 
         
-        /// <param name="culture">Current culture.</param>
-        /// <returns>HelpContent name.</returns>
         internal string GetHelpContentName(CultureInfo culture)
         {
             Debug.Assert(culture != null);
@@ -64,7 +58,6 @@ namespace System.Management.Automation.Help
         }
 
         
-        /// <returns>HelpInfo name.</returns>
         internal string GetHelpInfoName()
         {
             return ModuleName + "_" + _moduleGuid.ToString() + "_" + HelpIntoXmlName;

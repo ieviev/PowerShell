@@ -51,9 +51,6 @@ namespace System.Management.Automation
         #region public methods
 
         
-        /// <param name="input"></param>
-        /// <param name="cursorIndex"></param>
-        /// <returns></returns>
         public static Tuple<Ast, Token[], IScriptPosition> MapStringInputToParsedInput(string input, int cursorIndex)
         {
             if (cursorIndex > input.Length)
@@ -71,10 +68,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="input">The input to complete.</param>
-        /// <param name="cursorIndex">The index of the cursor in the input.</param>
-        /// <param name="options">Optional options to configure how completion is performed.</param>
-        /// <returns></returns>
         public static CommandCompletion CompleteInput(string input, int cursorIndex, Hashtable options)
         {
             if (input == null || input.Length == 0)
@@ -87,11 +80,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="ast">Ast for pre-parsed input.</param>
-        /// <param name="tokens">Tokens for pre-parsed input.</param>
-        /// <param name="positionOfCursor"></param>
-        /// <param name="options">Optional options to configure how completion is performed.</param>
-        /// <returns></returns>
         public static CommandCompletion CompleteInput(Ast ast, Token[] tokens, IScriptPosition positionOfCursor, Hashtable options)
         {
             if (ast == null)
@@ -118,11 +106,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="input">The input script to complete.</param>
-        /// <param name="cursorIndex">The offset in <paramref name="input"/> where completion is requested.</param>
-        /// <param name="options">Optional parameter that specifies configurable options for completion.</param>
-        /// <param name="powershell">The powershell to use to invoke the script function TabExpansion2.</param>
-        /// <returns>A collection of completions with the replacement start and length.</returns>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "powershell")]
         public static CommandCompletion CompleteInput(string input, int cursorIndex, Hashtable options, PowerShell powershell)
         {
@@ -178,12 +161,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="ast">The ast for pre-parsed input.</param>
-        /// <param name="tokens"></param>
-        /// <param name="cursorPosition"></param>
-        /// <param name="options">Optional options to configure how completion is performed.</param>
-        /// <param name="powershell">The powershell to use to invoke the script function TabExpansion2.</param>
-        /// <returns></returns>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "powershell")]
         public static CommandCompletion CompleteInput(Ast ast, Token[] tokens, IScriptPosition cursorPosition, Hashtable options, PowerShell powershell)
         {
@@ -250,8 +227,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="forward">True if we should move forward through the list, false if backwards.</param>
-        /// <returns>The next completion result, or null if no results.</returns>
         public CompletionResult GetNextResult(bool forward)
         {
             CompletionResult result = null;
@@ -279,11 +254,6 @@ namespace System.Management.Automation
         #region Internal methods
 
         
-        /// <param name="input">The input script to complete.</param>
-        /// <param name="cursorIndex">The offset in <paramref name="input"/> where completion is requested.</param>
-        /// <param name="options">Optional parameter that specifies configurable options for completion.</param>
-        /// <param name="debugger">Current debugger.</param>
-        /// <returns>A collection of completions with the replacement start and length.</returns>
         internal static CommandCompletion CompleteInputInDebugger(string input, int cursorIndex, Hashtable options, Debugger debugger)
         {
             if (input == null)
@@ -310,12 +280,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="ast">The ast for pre-parsed input.</param>
-        /// <param name="tokens"></param>
-        /// <param name="cursorPosition"></param>
-        /// <param name="options">Optional options to configure how completion is performed.</param>
-        /// <param name="debugger">Current debugger.</param>
-        /// <returns>Command completion.</returns>
         internal static CommandCompletion CompleteInputInDebugger(Ast ast, Token[] tokens, IScriptPosition cursorPosition, Hashtable options, Debugger debugger)
         {
             if (ast == null)

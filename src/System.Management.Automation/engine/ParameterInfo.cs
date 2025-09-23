@@ -12,15 +12,6 @@ namespace System.Management.Automation
         #region ctor
 
         
-        /// <param name="parameter">
-        /// The parameter metadata to retrieve the parameter information from.
-        /// </param>
-        /// <param name="parameterSetFlag">
-        /// The parameter set flag to get the parameter information from.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="parameter"/> is null.
-        /// </exception>
         internal CommandParameterInfo(
             CompiledCommandParameter parameter,
             uint parameterSetFlag)
@@ -50,15 +41,9 @@ namespace System.Management.Automation
         public Type ParameterType { get; }
 
         
-        /// <remarks>
-        /// True if the parameter is dynamic, or false otherwise.
-        /// </remarks>
         public bool IsMandatory { get; private set; }
 
         
-        /// <remarks>
-        /// True if the parameter is mandatory, or false otherwise.
-        /// </remarks>
         public bool IsDynamic { get; }
 
         

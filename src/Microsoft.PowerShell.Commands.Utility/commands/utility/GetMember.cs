@@ -73,12 +73,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <remarks>
-        /// Gives the Member matcher guidance on how vigorous the Match should be.
-        /// If set to true all members in a given view + membertype are displayed.
-        /// This parameter is added to hide Get/Set property accessor methods by default.
-        /// If a user wants to see these methods, -force should be set to true.
-        /// </remarks>
         [Parameter]
         public SwitchParameter Force
         {

@@ -18,7 +18,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <value></value>
         [Parameter]
         public
         ConsoleColor
@@ -50,7 +49,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <value></value>
         [Parameter]
         public
         ConsoleColor

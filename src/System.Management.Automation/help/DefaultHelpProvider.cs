@@ -17,7 +17,6 @@ namespace System.Management.Automation
         #region Common Properties
 
         
-        /// <value></value>
         internal override string Name
         {
             get
@@ -27,7 +26,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <value></value>
         internal override HelpCategory HelpCategory
         {
             get
@@ -41,8 +39,6 @@ namespace System.Management.Automation
         #region Help Provider Interface
 
         
-        /// <param name="helpRequest">Help request object.</param>
-        /// <returns></returns>
         internal override IEnumerable<HelpInfo> ExactMatchHelp(HelpRequest helpRequest)
         {
             HelpRequest defaultHelpRequest = helpRequest.Clone();

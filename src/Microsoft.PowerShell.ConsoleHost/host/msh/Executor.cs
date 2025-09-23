@@ -25,17 +25,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="parent">
-        /// A reference to the parent ConsoleHost that created this instance.
-        /// </param>
-        /// <param name="useNestedPipelines">
-        /// true if the executor is supposed to use nested pipelines; false if not.
-        /// </param>
-        /// <param name="isPromptFunctionExecutor">
-        /// True if the instance will be used to execute the prompt function, which will delay stopping the pipeline by some
-        /// milliseconds.  This will prevent us from stopping the pipeline so quickly that, when the user leans on the ctrl-c
-        /// key, the prompt "stops working" (because it is being stopped faster than it can run to completion).
-        /// </param>
         internal Executor(ConsoleHost parent, bool useNestedPipelines, bool isPromptFunctionExecutor)
         {
             Dbg.Assert(parent != null, "parent should not be null");
@@ -89,7 +78,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="ex"></param>
         private void AsyncPipelineFailureHandler(Exception ex)
         {
             ErrorRecord er = null;
@@ -143,15 +131,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="tempPipeline">
-        /// The pipeline to execute.
-        /// </param>
-        /// <param name="exceptionThrown">
-        /// Any exception thrown trying to run the pipeline.
-        /// </param>
-        /// <param name="options">
-        /// The options to use to execute the pipeline.
-        /// </param>
         internal void ExecuteCommandAsyncHelper(Pipeline tempPipeline, out Exception exceptionThrown, ExecutionOptions options)
         {
             Dbg.Assert(!_isPromptFunctionExecutor, "should not async invoke the prompt");
@@ -276,19 +255,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="command">
-        /// The command line to be executed. Must be non-null.
-        /// </param>
-        /// <param name="exceptionThrown">
-        /// Receives the Exception thrown by the execution of the command, if any. If no exception is thrown, then set to null.
-        /// Can be tested to see if the execution was successful or not.
-        /// </param>
-        /// <param name="options">
-        /// Options to govern the execution
-        /// </param>
-        /// <returns>
-        /// The object stream resulting from the execution. May be null.
-        /// </returns>
         internal Collection<PSObject> ExecuteCommand(string command, out Exception exceptionThrown, ExecutionOptions options)
         {
             Dbg.Assert(!string.IsNullOrEmpty(command), "command should have a value");
@@ -417,17 +383,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="command">
-        /// The command to execute. May be any valid monad command.
-        /// </param>
-        /// <param name="exceptionThrown">
-        /// Receives the Exception thrown by the execution of the command, if any. Set to null if no exception is thrown.
-        /// Can be tested to see if the execution was successful or not.
-        /// </param>
-        /// <returns>
-        /// The string representation of the first result object returned, or null if an exception was thrown or no objects were
-        /// returned by the command.
-        /// </returns>
         internal string ExecuteCommandAndGetResultAsString(string command, out Exception exceptionThrown)
         {
             exceptionThrown = null;
@@ -466,13 +421,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="command">
-        /// The command to execute. May be any valid monad command.
-        /// </param>
-        /// <returns>
-        /// The Nullable`bool representation of the first result object returned, or null if an exception was thrown or no
-        /// objects were returned by the command.
-        /// </returns>
         internal bool? ExecuteCommandAndGetResultAsBool(string command)
         {
             bool? result = ExecuteCommandAndGetResultAsBool(command, out _);
@@ -481,17 +429,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="command">
-        /// The command to execute. May be any valid monad command.
-        /// </param>
-        /// <param name="exceptionThrown">
-        /// Receives the Exception thrown by the execution of the command, if any. Set to null if no exception is thrown.
-        /// Can be tested to see if the execution was successful or not.
-        /// </param>
-        /// <returns>
-        /// The Nullable`bool representation of the first result object returned, or null if an exception was thrown or no
-        /// objects were returned by the command.
-        /// </returns>
         internal bool? ExecuteCommandAndGetResultAsBool(string command, out Exception exceptionThrown)
         {
             exceptionThrown = null;
@@ -575,43 +512,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <value>
-        /// The instance to make current. Null is allowed.
-        /// </value>
-        /// <remarks>
-        /// Here are some state-transition cases to illustrate the use of CurrentExecutor
-        ///
-        /// null is current
-        /// p1.ExecuteCommand
-        ///     set p1 as current
-        ///     promptforparams
-        ///         tab complete
-        ///             p2.ExecuteCommand
-        ///                 set p2 as current
-        ///                 p2.Execute completes
-        ///                 restore old current to p1
-        ///     p1.Execute completes
-        ///     restore null as current
-        ///
-        /// Here's another case:
-        /// null is current
-        /// p1.ExecuteCommand
-        ///     set p1 as current
-        ///     ShouldProcess - suspend
-        ///         EnterNestedPrompt
-        ///             set null as current so that break does not exit the subshell
-        ///             evaluate prompt
-        ///                 p2.ExecuteCommand
-        ///                    set p2 as current
-        ///                    Execute completes
-        ///                    restore null as current
-        ///            nested loop exit
-        ///            restore p1 as current
-        ///
-        /// Summary:
-        /// ExecuteCommand always saves/sets/restores CurrentExecutor
-        /// Host.EnterNestedPrompt always saves/clears/restores CurrentExecutor
-        /// </remarks>
         internal static Executor CurrentExecutor
         {
             get

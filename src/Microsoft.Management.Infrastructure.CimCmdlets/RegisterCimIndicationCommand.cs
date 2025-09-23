@@ -216,8 +216,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private static void newSubscriber_Unsubscribed(
             object sender, PSEventUnsubscribedEventArgs e)
         {
@@ -239,7 +237,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
             parameters, parameterSets);
 
         
-        /// <param name="parameterName"></param>
         private void SetParameter(object value, string parameterName)
         {
             if (value == null)

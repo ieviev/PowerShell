@@ -32,7 +32,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <value></value>
         [Parameter(Position = 2)]
         public PSTraceSourceOptions Option
         {
@@ -48,12 +47,10 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <value></value>
         [Parameter(Position = 1, Mandatory = true, ParameterSetName = "expressionSet")]
         public ScriptBlock Expression { get; set; }
 
         
-        /// <value></value>
         [Parameter(Position = 1, Mandatory = true, ParameterSetName = "commandSet")]
         public string Command { get; set; }
 
@@ -78,7 +75,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <value></value>
         [Parameter]
         [Alias("PSPath", "Path")]
         public string FilePath
@@ -98,7 +94,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <value></value>
         [Parameter]
         public SwitchParameter Debugger
         {
@@ -108,7 +103,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <value></value>
         [Parameter]
         public SwitchParameter PSHost
         {
@@ -301,11 +295,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <value>true if the underlying stream is open, otherwise; false.</value>
-        /// <remarks>
-        /// Attempting to write to the underlying stream if IsOpen is false throws
-        /// an <see cref="ObjectDisposedException"/>.
-        /// </remarks>
         public override bool IsOpen
         {
             get
@@ -321,28 +310,12 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <value>
-        /// The capacity of the stream.
-        /// </value>
-        /// <remarks>
-        /// The capacity is the number of objects that stream may contain at one time.  Once this
-        /// limit is reached, attempts to write into the stream block until buffer space
-        /// becomes available.
-        /// </remarks>
         public override int MaxCapacity
         {
             get { return int.MaxValue; }
         }
 
         
-        /// <remarks>
-        /// Causes subsequent calls to IsOpen to return false and calls to
-        /// a write operation to throw an ObjectDisposedException.
-        /// All calls to Close() after the first call are silently ignored.
-        /// </remarks>
-        /// <exception cref="ObjectDisposedException">
-        /// The stream is already disposed.
-        /// </exception>
         public override void Close()
         {
             if (_isOpen)
@@ -353,23 +326,11 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <exception cref="ObjectDisposedException">
-        /// The underlying stream is disposed.
-        /// </exception>
         public override void Flush()
         {
         }
 
         
-        /// <param name="obj">The object to add to the stream.</param>
-        /// <returns>
-        /// One, if the write was successful, otherwise;
-        /// zero if the stream was closed before the object could be written,
-        /// or if the object was AutomationNull.Value.
-        /// </returns>
-        /// <exception cref="ObjectDisposedException">
-        /// The underlying stream is closed.
-        /// </exception>
         public override int Write(object obj)
         {
             _cmdlet.ResetTracing(_matchingSources);
@@ -393,21 +354,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="obj">Object or enumeration to read from.</param>
-        /// <param name="enumerateCollection">
-        /// If enumerateCollection is true, and <paramref name="obj"/>
-        /// is an enumeration according to LanguagePrimitives.GetEnumerable,
-        /// the objects in the enumeration will be unrolled and
-        /// written separately.  Otherwise, <paramref name="obj"/>
-        /// will be written as a single object.
-        /// </param>
-        /// <returns>The number of objects written.</returns>
-        /// <exception cref="ObjectDisposedException">
-        /// The underlying stream is closed.
-        /// </exception>
-        /// <exception cref="ArgumentException">
-        /// <paramref name="obj"/> contains AutomationNull.Value
-        /// </exception>
         public override int Write(object obj, bool enumerateCollection)
         {
             _cmdlet.ResetTracing(_matchingSources);

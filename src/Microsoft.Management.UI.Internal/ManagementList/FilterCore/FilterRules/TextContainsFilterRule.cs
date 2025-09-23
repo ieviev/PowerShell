@@ -20,19 +20,12 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="source">The source to initialize from.</param>
         public TextContainsFilterRule(TextContainsFilterRule source)
             : base(source)
         {
         }
 
         
-        /// <param name="data">
-        /// The data to compare with.
-        /// </param>
-        /// <returns>
-        /// Returns true if data contains Value, false otherwise.
-        /// </returns>
         protected override bool Evaluate(string data)
         {
             Debug.Assert(this.IsValid, "is valid");

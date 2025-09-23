@@ -122,10 +122,6 @@ namespace Microsoft.PowerShell.Commands
 
         #region Private Methods
         
-        /// <remarks>
-        /// Arguments to -Name will be treated as names,
-        /// even if a name looks like a SID.
-        /// </remarks>
         private void ProcessName()
         {
             if (Name != null)
@@ -177,15 +173,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="userName">
-        /// Name of the user to rename.
-        /// </param>
-        /// <param name="newName">
-        /// New name for the user.
-        /// </param>
-        /// <returns>
-        /// True if the user should be processed, false otherwise.
-        /// </returns>
         private bool CheckShouldProcess(string userName, string newName)
         {
             string msg = StringUtil.Format(Strings.ActionRenameUser, newName);

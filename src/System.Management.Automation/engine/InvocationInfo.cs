@@ -18,7 +18,6 @@ namespace System.Management.Automation
         #region Constructors
 
         
-        /// <param name="command"></param>
         internal InvocationInfo(InternalCommand command)
             : this(command.CommandInfo,
                    command.InvocationExtent ?? PositionUtilities.EmptyExtent)
@@ -27,12 +26,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="commandInfo">
-        /// The command information the invocation info represents.
-        /// </param>
-        /// <param name="scriptPosition">
-        /// The position representing the invocation, or the position representing the error.
-        /// </param>
         internal InvocationInfo(CommandInfo commandInfo, IScriptExtent scriptPosition)
             : this(commandInfo, scriptPosition, null)
         {
@@ -40,15 +33,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="commandInfo">
-        /// The command information the invocation info represents.
-        /// </param>
-        /// <param name="scriptPosition">
-        /// The position representing the invocation, or the position representing the error.
-        /// </param>
-        /// <param name="context">
-        /// The context in which the InvocationInfo is being created.
-        /// </param>
         internal InvocationInfo(CommandInfo commandInfo, IScriptExtent scriptPosition, ExecutionContext context)
         {
             MyCommand = commandInfo;
@@ -178,7 +162,6 @@ namespace System.Management.Automation
         #region Public Members
 
         
-        /// <value>may be null</value>
         public CommandInfo MyCommand { get; }
 
         
@@ -204,32 +187,27 @@ namespace System.Management.Automation
         }
 
         
-        /// <value>The script line number or -1 if not executing in a script.</value>
         public int ScriptLineNumber
         {
             get { return ScriptPosition.StartLineNumber; }
         }
 
         
-        /// <value>The line offset or -1 if not executed from a text line.</value>
         public int OffsetInLine
         {
             get { return ScriptPosition.StartColumnNumber; }
         }
 
         
-        /// <value>The history ID or -1 if not available.</value>
         public long HistoryId { get; internal set; } = -1;
 
         
-        /// <value>The script name or "" if there was no script.</value>
         public string ScriptName
         {
             get { return ScriptPosition.File ?? string.Empty; }
         }
 
         
-        /// <value>Line that was entered to invoke this command</value>
         public string Line
         {
             get
@@ -244,7 +222,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <value>Statement that was entered to invoke this command.</value>
         public string Statement
         {
             get
@@ -254,7 +231,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <value>Formatted string indicating the command's position in the line</value>
         public string PositionMessage
         {
             get { return PositionUtilities.VerboseMessage(ScriptPosition); }
@@ -283,7 +259,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <value>The name string.</value>
         public string InvocationName
         {
             get { return _invocationName ?? string.Empty; }
@@ -292,11 +267,9 @@ namespace System.Management.Automation
         }
 
         
-        /// <value>number of elements in the containing pipeline</value>
         public int PipelineLength { get; internal set; }
 
         
-        /// <value>which element this command was in the containing pipeline</value>
         public int PipelinePosition { get; internal set; }
 
         
@@ -309,9 +282,6 @@ namespace System.Management.Automation
         public IScriptExtent DisplayScriptPosition { get; set; }
 
         
-        /// <param name="commandInfo"></param>
-        /// <param name="scriptPosition"></param>
-        /// <returns></returns>
         public static InvocationInfo Create(
             CommandInfo commandInfo,
             IScriptExtent scriptPosition)
@@ -355,16 +325,9 @@ namespace System.Management.Automation
         }
 
         
-        /// <remarks>
-        /// All the commands in a given pipeline share the same PipelinePositionInfo.
-        /// </remarks>
         internal int[] PipelineIterationInfo { get; set; } = Array.Empty<int>();
 
         
-        /// <remarks>
-        /// InvocationInfos are usually serialized as part of another object, so we add "InvocationInfo_" to
-        /// the note properties to prevent collisions with any properties set by the containing object.
-        /// </remarks>
         internal void ToPSObjectForRemoting(PSObject psObject)
         {
             RemotingEncoder.AddNoteProperty<object>(psObject, "InvocationInfo_BoundParameters", () => this.BoundParameters);
@@ -437,10 +400,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <remarks>
-        /// CommandInfos are usually serialized as part of InvocationInfos, so we add "CommandInfo_" to
-        /// the note properties to prevent collisions with any properties set by the containing object.
-        /// </remarks>
         internal static void ToPSObjectForRemoting(CommandInfo commandInfo, PSObject psObject)
         {
             if (commandInfo != null)

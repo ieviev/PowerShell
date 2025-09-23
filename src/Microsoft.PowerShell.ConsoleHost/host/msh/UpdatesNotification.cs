@@ -16,9 +16,6 @@ using Newtonsoft.Json.Linq;
 namespace Microsoft.PowerShell
 {
     
-    /// <remarks>
-    /// For the detailed design, please take a look at the corresponding RFC.
-    /// </remarks>
     internal static class UpdatesNotification
     {
         private const string UpdateCheckEnvVar = "POWERSHELL_UPDATECHECK";
@@ -255,17 +252,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="updateFilePath">Get the exact update file path.</param>
-        /// <param name="lastUpdateVersion">Get the version of the new release.</param>
-        /// <param name="lastUpdateDate">Get the publish date of the new release.</param>
-        /// <returns>
-        /// False, when
-        ///   1. found more than one update files that matched the pattern; OR
-        ///   2. found only one update file, but failed to parse its name for version and publish date.
-        /// True, when
-        ///   1. no update file was found, namely no new updates yet;
-        ///   2. found only one update file, and succeeded to parse its name for version and publish date.
-        /// </returns>
         private static bool TryParseUpdateFile(
             out string updateFilePath,
             out SemanticVersion lastUpdateVersion,

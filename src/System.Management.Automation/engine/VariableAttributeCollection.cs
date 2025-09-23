@@ -13,13 +13,6 @@ namespace System.Management.Automation
         #region constructor
 
         
-        /// <param name="variable">
-        /// The variable that needs to be verified anytime an attribute
-        /// changes.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="variable"/> is null.
-        /// </exception>
         internal PSVariableAttributeCollection(PSVariable variable)
         {
             if (variable == null)
@@ -34,19 +27,6 @@ namespace System.Management.Automation
         #region Collection overrides
 
         
-        /// <param name="index">
-        /// The zero-based index at which <paramref name="item"/> should be inserted.
-        /// </param>
-        /// <param name="item">
-        /// The attribute being added to the collection.
-        /// </param>
-        /// <exception cref="ValidationMetadataException">
-        /// If the new attribute causes the variable to be in an invalid state.
-        /// </exception>
-        /// <exception cref="ArgumentTransformationMetadataException">
-        /// If the new attribute is an ArgumentTransformationAttribute and the transformation
-        /// fails.
-        /// </exception>
         protected override void InsertItem(int index, Attribute item)
         {
             object variableValue = VerifyNewAttribute(item);
@@ -57,15 +37,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="index">
-        /// The zero-based index at which <paramref name="item"/> should be set.
-        /// </param>
-        /// <param name="item">
-        /// The attribute being set in the collection.
-        /// </param>
-        /// <exception cref="ValidationMetadataException">
-        /// If the new attribute causes the variable to be in an invalid state.
-        /// </exception>
         protected override void SetItem(int index, Attribute item)
         {
             object variableValue = VerifyNewAttribute(item);
@@ -79,20 +50,12 @@ namespace System.Management.Automation
         #region private data
 
         
-        /// <param name="item">The attribute to add.</param>
         internal void AddAttributeNoCheck(Attribute item)
         {
             base.InsertItem(this.Count, item);
         }
 
         
-        /// <param name="item">
-        /// The new attribute to be added to the collection.
-        /// </param>
-        /// <returns>
-        /// The new variable value. This may change from the original value if the
-        /// new attribute is an ArgumentTransformationAttribute.
-        /// </returns>
         private object VerifyNewAttribute(Attribute item)
         {
             object variableValue = _variable.Value;

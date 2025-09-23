@@ -54,16 +54,11 @@ namespace Microsoft.PowerShell.Commands
         
         public LocalAccountsException() : base() { }
         
-        /// <param name="message"></param>
         public LocalAccountsException(string message) : base(message) { }
         
-        /// <param name="message"></param>
-        /// <param name="ex"></param>
         public LocalAccountsException(string message, Exception ex) : base(message, ex) { }
 
         
-        /// <param name="info"></param>
-        /// <param name="ctx"></param>
         protected LocalAccountsException(SerializationInfo info, StreamingContext ctx) : base(info, ctx) { }
     }
 
@@ -101,15 +96,10 @@ namespace Microsoft.PowerShell.Commands
         
         public InternalException() : base() { }
         
-        /// <param name="message"></param>
         public InternalException(string message) : base(message) { }
         
-        /// <param name="message"></param>
-        /// <param name="ex"></param>
         public InternalException(string message, Exception ex) : base(message, ex) { }
         
-        /// <param name="info"></param>
-        /// <param name="ctx"></param>
         protected InternalException(SerializationInfo info, StreamingContext ctx) : base(info, ctx) { }
     }
 
@@ -147,15 +137,10 @@ namespace Microsoft.PowerShell.Commands
         
         public Win32InternalException() : base() {}
         
-        /// <param name="message"></param>
         public Win32InternalException(string message) : base(message) { }
         
-        /// <param name="message"></param>
-        /// <param name="ex"></param>
         public Win32InternalException(string message, Exception ex) : base(message, ex) { }
         
-        /// <param name="info"></param>
-        /// <param name="ctx"></param>
         protected Win32InternalException(SerializationInfo info, StreamingContext ctx) : base(info, ctx) { }
     }
 
@@ -169,26 +154,20 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="message"></param>
         public InvalidPasswordException(string message)
             : base(message, null, ErrorCategory.InvalidArgument)
         {
         }
 
         
-        /// <param name="errorCode"></param>
         public InvalidPasswordException(uint errorCode)
             : base(StringUtil.GetSystemMessage(errorCode), null, ErrorCategory.InvalidArgument)
         {
         }
 
         
-        /// <param name="message"></param>
-        /// <param name="ex"></param>
         public InvalidPasswordException(string message, Exception ex) : base(message, ex) { }
         
-        /// <param name="info"></param>
-        /// <param name="ctx"></param>
         protected InvalidPasswordException(SerializationInfo info, StreamingContext ctx) : base(info, ctx) { }
     }
 
@@ -196,7 +175,6 @@ namespace Microsoft.PowerShell.Commands
     public class InvalidParametersException : LocalAccountsException
     {
         
-        /// <param name="message"></param>
         public InvalidParametersException(string message)
             : base(message, null, ErrorCategory.InvalidArgument)
         {
@@ -210,12 +188,8 @@ namespace Microsoft.PowerShell.Commands
         
         public InvalidParametersException() : base() { }
         
-        /// <param name="message"></param>
-        /// <param name="ex"></param>
         public InvalidParametersException(string message, Exception ex) : base(message, ex) { }
         
-        /// <param name="info"></param>
-        /// <param name="ctx"></param>
         protected InvalidParametersException(SerializationInfo info, StreamingContext ctx) : base(info, ctx) { }
     }
 
@@ -230,15 +204,10 @@ namespace Microsoft.PowerShell.Commands
         
         public AccessDeniedException() : base() { }
         
-        /// <param name="message"></param>
         public AccessDeniedException(string message) : base(message) { }
         
-        /// <param name="message"></param>
-        /// <param name="ex"></param>
         public AccessDeniedException(string message, Exception ex) : base(message, ex) { }
         
-        /// <param name="info"></param>
-        /// <param name="ctx"></param>
         protected AccessDeniedException(SerializationInfo info, StreamingContext ctx) : base(info, ctx) { }
     }
 
@@ -253,15 +222,10 @@ namespace Microsoft.PowerShell.Commands
         
         public InvalidNameException() : base() { }
         
-        /// <param name="message"></param>
         public InvalidNameException(string message) : base(message) { }
         
-        /// <param name="message"></param>
-        /// <param name="ex"></param>
         public InvalidNameException(string message, Exception ex) : base(message, ex) { }
         
-        /// <param name="info"></param>
-        /// <param name="ctx"></param>
         protected InvalidNameException(SerializationInfo info, StreamingContext ctx) : base(info, ctx) { }
     }
 
@@ -276,15 +240,10 @@ namespace Microsoft.PowerShell.Commands
         
         public NameInUseException() : base() { }
         
-        /// <param name="message"></param>
         public NameInUseException(string message) : base(message) { }
         
-        /// <param name="message"></param>
-        /// <param name="ex"></param>
         public NameInUseException(string message, Exception ex) : base(message, ex) { }
         
-        /// <param name="info"></param>
-        /// <param name="ctx"></param>
         protected NameInUseException(SerializationInfo info, StreamingContext ctx) : base(info, ctx) { }
     }
 
@@ -299,15 +258,10 @@ namespace Microsoft.PowerShell.Commands
         
         public NotFoundException() : base() { }
         
-        /// <param name="message"></param>
         public NotFoundException(string message) : base(message) { }
         
-        /// <param name="message"></param>
-        /// <param name="ex"></param>
         public NotFoundException(string message, Exception ex) : base(message, ex) { }
         
-        /// <param name="info"></param>
-        /// <param name="ctx"></param>
         protected NotFoundException(SerializationInfo info, StreamingContext ctx) : base(info, ctx) { }
     }
 
@@ -322,15 +276,10 @@ namespace Microsoft.PowerShell.Commands
         
         public PrincipalNotFoundException() : base() { }
         
-        /// <param name="message"></param>
         public PrincipalNotFoundException(string message) : base(message) { }
         
-        /// <param name="message"></param>
-        /// <param name="ex"></param>
         public PrincipalNotFoundException(string message, Exception ex) : base(message, ex) { }
         
-        /// <param name="info"></param>
-        /// <param name="ctx"></param>
         protected PrincipalNotFoundException(SerializationInfo info, StreamingContext ctx) : base(info, ctx) { }
     }
 
@@ -345,15 +294,10 @@ namespace Microsoft.PowerShell.Commands
         
         public GroupNotFoundException() : base() { }
         
-        /// <param name="message"></param>
         public GroupNotFoundException(string message) : base(message) { }
         
-        /// <param name="message"></param>
-        /// <param name="ex"></param>
         public GroupNotFoundException(string message, Exception ex) : base(message, ex) { }
         
-        /// <param name="info"></param>
-        /// <param name="ctx"></param>
         protected GroupNotFoundException(SerializationInfo info, StreamingContext ctx) : base(info, ctx) { }
     }
 
@@ -368,15 +312,10 @@ namespace Microsoft.PowerShell.Commands
         
         public UserNotFoundException() : base() { }
         
-        /// <param name="message"></param>
         public UserNotFoundException(string message) : base(message) { }
         
-        /// <param name="message"></param>
-        /// <param name="ex"></param>
         public UserNotFoundException(string message, Exception ex) : base(message, ex) { }
         
-        /// <param name="info"></param>
-        /// <param name="ctx"></param>
         protected UserNotFoundException(SerializationInfo info, StreamingContext ctx) : base(info, ctx) { }
     }
 
@@ -391,15 +330,10 @@ namespace Microsoft.PowerShell.Commands
         
         public MemberNotFoundException() : base() { }
         
-        /// <param name="message"></param>
         public MemberNotFoundException(string message) : base(message) { }
         
-        /// <param name="message"></param>
-        /// <param name="ex"></param>
         public MemberNotFoundException(string message, Exception ex) : base(message, ex) { }
         
-        /// <param name="info"></param>
-        /// <param name="ctx"></param>
         protected MemberNotFoundException(SerializationInfo info, StreamingContext ctx) : base(info, ctx) { }
     }
 
@@ -414,15 +348,10 @@ namespace Microsoft.PowerShell.Commands
         
         public ObjectExistsException() : base() { }
         
-        /// <param name="message"></param>
         public ObjectExistsException(string message) : base(message) { }
         
-        /// <param name="message"></param>
-        /// <param name="ex"></param>
         public ObjectExistsException(string message, Exception ex) : base(message, ex) { }
         
-        /// <param name="info"></param>
-        /// <param name="ctx"></param>
         protected ObjectExistsException(SerializationInfo info, StreamingContext ctx) : base(info, ctx) { }
     }
 
@@ -437,15 +366,10 @@ namespace Microsoft.PowerShell.Commands
         
         public GroupExistsException() : base() { }
         
-        /// <param name="message"></param>
         public GroupExistsException(string message) : base(message) { }
         
-        /// <param name="message"></param>
-        /// <param name="ex"></param>
         public GroupExistsException(string message, Exception ex) : base(message, ex) { }
         
-        /// <param name="info"></param>
-        /// <param name="ctx"></param>
         protected GroupExistsException(SerializationInfo info, StreamingContext ctx) : base(info, ctx) { }
     }
 
@@ -460,15 +384,10 @@ namespace Microsoft.PowerShell.Commands
         
         public UserExistsException() : base() { }
         
-        /// <param name="message"></param>
         public UserExistsException(string message) : base(message) { }
         
-        /// <param name="message"></param>
-        /// <param name="ex"></param>
         public UserExistsException(string message, Exception ex) : base(message, ex) { }
         
-        /// <param name="info"></param>
-        /// <param name="ctx"></param>
         protected UserExistsException(SerializationInfo info, StreamingContext ctx) : base(info, ctx) { }
     }
 
@@ -483,15 +402,10 @@ namespace Microsoft.PowerShell.Commands
         
         public MemberExistsException() : base() { }
         
-        /// <param name="message"></param>
         public MemberExistsException(string message) : base(message) { }
         
-        /// <param name="message"></param>
-        /// <param name="ex"></param>
         public MemberExistsException(string message, Exception ex) : base(message, ex) { }
         
-        /// <param name="info"></param>
-        /// <param name="ctx"></param>
         protected MemberExistsException(SerializationInfo info, StreamingContext ctx) : base(info, ctx) { }
     }
 }

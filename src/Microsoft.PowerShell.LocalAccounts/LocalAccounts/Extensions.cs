@@ -15,15 +15,6 @@ namespace System.Management.Automation.SecurityAccountsManager.Extensions
     internal static class CmdletExtensions
     {
         
-        /// <param name="cmdlet">The cmdlet being extended with this method.</param>
-        /// <param name="s">The string to be converted to a SID.</param>
-        /// <param name="allowSidConstants">
-        /// A boolean indicating whether SID constants, such as "BA", are considered.
-        /// </param>
-        /// <returns>
-        /// A <see cref="SecurityIdentifier"/> object if the conversion was successful,
-        /// null otherwise.
-        /// </returns>
         internal static SecurityIdentifier TrySid(this Cmdlet cmdlet,
                                                   string s,
                                                   bool allowSidConstants = false)
@@ -51,17 +42,6 @@ namespace System.Management.Automation.SecurityAccountsManager.Extensions
     internal static class PSExtensions
     {
         
-        /// <param name="cmdlet">
-        /// The <see cref="PSCmdlet"/> object to check.
-        /// </param>
-        /// <param name="parameterName">
-        /// A string containing the name of the parameter. This should be in the
-        /// same letter-casing as the defined parameter.
-        /// </param>
-        /// <returns>
-        /// True if the specified parameter was given on the cmdlet invocation,
-        /// false otherwise.
-        /// </returns>
         internal static bool HasParameter(this PSCmdlet cmdlet, string parameterName)
         {
             var invocation = cmdlet.MyInvocation;
@@ -86,10 +66,6 @@ namespace System.Management.Automation.SecurityAccountsManager.Extensions
     internal static class SidExtensions
     {
         
-        /// <param name="sid">The SecurityIdentifier containing the desired Relative ID.</param>
-        /// <returns>
-        /// A UInt32 value containing the Relative ID in the SecurityIdentifier.
-        /// </returns>
         internal static UInt32 GetRid(this SecurityIdentifier sid)
         {
             byte[] sidBinary = new byte[sid.BinaryLength];
@@ -99,15 +75,6 @@ namespace System.Management.Automation.SecurityAccountsManager.Extensions
         }
 
         
-        /// <param name="sid">The SecurityIdentifier containing the desired Authority.</param>
-        /// <returns>
-        /// A long integer value containing the SecurityIdentifier's Identifier Authority value.
-        /// </returns>
-        /// <remarks>
-        /// This method is used primarily for determining the Source of a Principal.
-        /// The Win32 API LsaLookupUserAccountType function does not (yet) properly
-        /// identify MicrosoftAccount principals.
-        /// </remarks>
         internal static long GetIdentifierAuthority(this SecurityIdentifier sid)
         {
             byte[] sidBinary = new byte[sid.BinaryLength];
@@ -135,12 +102,6 @@ namespace System.Management.Automation.SecurityAccountsManager.Extensions
     internal static class SecureStringExtensions
     {
         
-        /// <param name="str">
-        /// This SecureString object, containing encrypted text.
-        /// </param>
-        /// <returns>
-        /// A string containing the SecureString object's original text.
-        /// </returns>
         internal static string AsString(this SecureString str)
         {
 #if CORECLR

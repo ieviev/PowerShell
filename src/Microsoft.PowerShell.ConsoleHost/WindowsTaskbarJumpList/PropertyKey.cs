@@ -22,8 +22,6 @@ namespace Microsoft.PowerShell
         #region Public Construction
 
         
-        /// <param name="formatId">A unique GUID for the property.</param>
-        /// <param name="propertyId">Property identifier (PID).</param>
         internal PropertyKey(Guid formatId, int propertyId)
         {
             this.FormatId = formatId;
@@ -35,8 +33,6 @@ namespace Microsoft.PowerShell
         #region IEquatable<PropertyKey> Members
 
         
-        /// <param name="other">The object to compare against.</param>
-        /// <returns>Equality result.</returns>
         public bool Equals(PropertyKey other)
         {
             return other.Equals((object)this);
@@ -47,15 +43,12 @@ namespace Microsoft.PowerShell
         #region equality and hashing
 
         
-        /// <returns></returns>
         public override int GetHashCode()
         {
             return FormatId.GetHashCode() ^ PropertyId;
         }
 
         
-        /// <param name="obj">The object to compare against.</param>
-        /// <returns>Equality result.</returns>
         public override bool Equals(object obj)
         {
             if (obj == null)
@@ -69,25 +62,18 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="propKey1">First property key to compare.</param>
-        /// <param name="propKey2">Second property key to compare.</param>
-        /// <returns>True if object a equals object b. false otherwise.</returns>
         public static bool operator ==(PropertyKey propKey1, PropertyKey propKey2)
         {
             return propKey1.Equals(propKey2);
         }
 
         
-        /// <param name="propKey1">First property key to compare.</param>
-        /// <param name="propKey2">Second property key to compare.</param>
-        /// <returns>True if object a does not equal object b. false otherwise.</returns>
         public static bool operator !=(PropertyKey propKey1, PropertyKey propKey2)
         {
             return !propKey1.Equals(propKey2);
         }
 
         
-        /// <returns>String representing the property key.</returns>
         public override string ToString()
         {
             return string.Format(System.Globalization.CultureInfo.InvariantCulture,

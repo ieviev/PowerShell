@@ -15,7 +15,6 @@ namespace Microsoft.PowerShell.Commands
     public sealed class StartTranscriptCommand : PSCmdlet
     {
         
-        /// <value></value>
         [Parameter(Position = 0, ParameterSetName = "ByPath")]
         [ValidateNotNullOrEmpty]
         public string Path
@@ -62,7 +61,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <value></value>
         [Parameter]
         public SwitchParameter Append
         {
@@ -78,9 +76,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <remarks>
-        /// The read-only attribute will not be replaced when the transcript is done.
-        /// </remarks>
         [Parameter]
         public SwitchParameter Force
         {
@@ -244,8 +239,6 @@ namespace Microsoft.PowerShell.Commands
             }
         }
 
-        /// resolve a user provided file name or path (including globbing characters)
-        /// to a fully qualified file path, using the file system provider
         private string ResolveFilePath(string filePath, bool isLiteralPath)
         {
             string path = null;

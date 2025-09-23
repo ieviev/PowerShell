@@ -71,9 +71,6 @@ namespace Microsoft.Management.UI.Internal
         partial void OnClearFilterCanExecuteImplementation(CanExecuteRoutedEventArgs e);
 
         
-        /// <remarks>
-        /// Informs the ManagementList that it should clear the filter that is applied.
-        /// </remarks>
         protected virtual void OnClearFilterExecuted(ExecutedRoutedEventArgs e)
         {
             OnClearFilterExecutedImplementation(e);
@@ -108,9 +105,6 @@ namespace Microsoft.Management.UI.Internal
         partial void OnSaveViewCanExecuteImplementation(CanExecuteRoutedEventArgs e);
 
         
-        /// <remarks>
-        /// Informs the PickerBase that it should close the dropdown.
-        /// </remarks>
         protected virtual void OnSaveViewExecuted(ExecutedRoutedEventArgs e)
         {
             OnSaveViewExecutedImplementation(e);
@@ -145,9 +139,6 @@ namespace Microsoft.Management.UI.Internal
         partial void OnStartFilterCanExecuteImplementation(CanExecuteRoutedEventArgs e);
 
         
-        /// <remarks>
-        /// Informs the ManagementList that it should apply the filter.
-        /// </remarks>
         protected virtual void OnStartFilterExecuted(ExecutedRoutedEventArgs e)
         {
             OnStartFilterExecutedImplementation(e);
@@ -182,9 +173,6 @@ namespace Microsoft.Management.UI.Internal
         partial void OnStopFilterCanExecuteImplementation(CanExecuteRoutedEventArgs e);
 
         
-        /// <remarks>
-        /// Informs the ManagementList that it should stop filtering that is in progress.
-        /// </remarks>
         protected virtual void OnStopFilterExecuted(ExecutedRoutedEventArgs e)
         {
             OnStopFilterExecutedImplementation(e);
@@ -701,9 +689,6 @@ namespace Microsoft.Management.UI.Internal
         // CreateAutomationPeer
         //
         
-        /// <returns>
-        /// An instance of the AutomationPeer.
-        /// </returns>
         protected override System.Windows.Automation.Peers.AutomationPeer OnCreateAutomationPeer()
         {
             return new ExtendedFrameworkElementAutomationPeer(this,AutomationControlType.Pane);

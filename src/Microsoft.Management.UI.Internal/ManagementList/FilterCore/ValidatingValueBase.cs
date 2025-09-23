@@ -20,7 +20,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="source">The source to initialize from.</param>
         protected ValidatingValueBase(ValidatingValueBase source)
         {
             ArgumentNullException.ThrowIfNull(source);
@@ -74,16 +73,6 @@ namespace Microsoft.Management.UI.Internal
         #region Item
 
         
-        /// <param name="columnName">
-        /// The name of the property whose error message will be checked.
-        /// </param>
-        /// <returns>
-        /// The error message for the property, or an empty string ("") if
-        /// the property is valid.
-        /// </returns>
-        /// <exception cref="ArgumentException">
-        /// <paramref name="columnName"/> is invalid.
-        /// </exception>
         public string this[string columnName]
         {
             get
@@ -119,9 +108,6 @@ namespace Microsoft.Management.UI.Internal
         #region PropertyChanged
 
         
-        /// <remarks>
-        /// The listeners attached to this event are not serialized.
-        /// </remarks>
         public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion PropertyChanged
@@ -130,13 +116,11 @@ namespace Microsoft.Management.UI.Internal
 
         #region Public Methods
 
-        /// <inheritdoc cref="IDeepCloneable.DeepClone()" />
         public abstract object DeepClone();
 
         #region AddValidationRule
 
         
-        /// <param name="rule">The validation rule to add.</param>
         public void AddValidationRule(DataErrorInfoValidationRule rule)
         {
             ArgumentNullException.ThrowIfNull(rule);
@@ -152,7 +136,6 @@ namespace Microsoft.Management.UI.Internal
         #region RemoveValidationRule
 
         
-        /// <param name="rule">The rule to remove.</param>
         public void RemoveValidationRule(DataErrorInfoValidationRule rule)
         {
             ArgumentNullException.ThrowIfNull(rule);
@@ -181,20 +164,9 @@ namespace Microsoft.Management.UI.Internal
         #region Validate
 
         
-        /// <returns>
-        /// Returns a DataErrorInfoValidationResult which indicates the validation state
-        /// of the object.
-        /// </returns>
         protected abstract DataErrorInfoValidationResult Validate();
 
         
-        /// <param name="propertyName">
-        /// The name of the property whose error message will be checked.
-        /// </param>
-        /// <returns>
-        /// Returns a DataErrorInfoValidationResult which indicates the validation state
-        /// of the property.
-        /// </returns>
         protected abstract DataErrorInfoValidationResult Validate(string propertyName);
 
         #endregion Validate
@@ -235,9 +207,6 @@ namespace Microsoft.Management.UI.Internal
         #region NotifyPropertyChanged
 
         
-        /// <param name="propertyName">
-        /// The propertyName which has changed.
-        /// </param>
         protected void NotifyPropertyChanged(string propertyName)
         {
             PropertyChangedEventHandler eh = this.PropertyChanged;

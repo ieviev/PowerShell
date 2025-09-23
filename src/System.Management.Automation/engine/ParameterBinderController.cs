@@ -17,15 +17,6 @@ namespace System.Management.Automation
         #region ctor
 
         
-        /// <param name="invocationInfo">
-        ///     The invocation information about the code being run.
-        /// </param>
-        /// <param name="context">
-        ///     The engine context in which the command is being run.
-        /// </param>
-        /// <param name="parameterBinder">
-        ///     The default parameter binder for the command.
-        /// </param>
         internal ParameterBinderController(InvocationInfo invocationInfo, ExecutionContext context, ParameterBinderBase parameterBinder)
         {
             Diagnostics.Assert(invocationInfo != null, "Caller to verify invocationInfo is not null.");
@@ -80,7 +71,6 @@ namespace System.Management.Automation
         // Keep record of the bound default parameters
 
         
-        /// <value></value>
         protected Collection<CommandParameterInternal> UnboundArguments { get; set; } = new Collection<CommandParameterInternal>();
 
         internal void ClearUnboundArguments()
@@ -92,12 +82,6 @@ namespace System.Management.Automation
         protected Dictionary<string, CommandParameterInternal> BoundArguments { get; } = new Dictionary<string, CommandParameterInternal>(StringComparer.OrdinalIgnoreCase);
 
         
-        /// <exception cref="ParameterBindingException">
-        /// If a parameter token is not matched with an argument and its not a bool or
-        /// SwitchParameter.
-        /// Or
-        /// The name of the argument matches more than one parameter.
-        /// </exception>
         protected void ReparseUnboundArguments()
         {
             Collection<CommandParameterInternal> result = new Collection<CommandParameterInternal>();
@@ -274,13 +258,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="arg">
-        /// The argument to check.
-        /// </param>
-        /// <returns>
-        /// True if the argument is a string and starts with a dash,
-        /// or false otherwise.
-        /// </returns>
         internal static bool ArgumentLooksLikeParameter(string arg)
         {
             bool result = false;
@@ -294,12 +271,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="commandProcessor">
-        /// The command processor instance to add the reparsed parameters to.
-        /// </param>
-        /// <param name="arguments">
-        /// The arguments that require reparsing.
-        /// </param>
         internal static void AddArgumentsToCommandProcessor(CommandProcessorBase commandProcessor, object[] arguments)
         {
             if ((arguments != null) && (arguments.Length > 0))
@@ -363,27 +334,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="argument">
-        /// The argument to be bound.
-        /// </param>
-        /// <param name="flags">
-        /// The flags for type coercion, validation, and script block binding.
-        /// </param>
-        /// <returns>
-        /// True if the parameter was successfully bound. False if <paramref name="flags"/> does not have the
-        /// flag <see>ParameterBindingFlags.ShouldCoerceType</see> and the type does not match the parameter type.
-        /// </returns>
-        /// <exception cref="ParameterBindingException">
-        /// If argument transformation fails.
-        /// or
-        /// The argument could not be coerced to the appropriate type for the parameter.
-        /// or
-        /// The parameter argument transformation, prerequisite, or validation failed.
-        /// or
-        /// If the binding to the parameter fails.
-        /// or
-        /// The parameter has already been bound.
-        /// </exception>
         internal virtual bool BindParameter(
             CommandParameterInternal argument,
             ParameterBindingFlags flags)
@@ -426,46 +376,12 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="parameters">
-        /// The arguments to be bound.
-        /// </param>
-        /// <returns>
-        /// The arguments which are still not bound.
-        /// </returns>
         internal virtual Collection<CommandParameterInternal> BindParameters(Collection<CommandParameterInternal> parameters)
         {
             throw new NotImplementedException();
         }
 
         
-        /// <param name="parameterSets">
-        /// The parameter set used to bind the arguments.
-        /// </param>
-        /// <param name="argument">
-        /// The argument to be bound.
-        /// </param>
-        /// <param name="parameter">
-        /// The metadata for the parameter to bind the argument to.
-        /// </param>
-        /// <param name="flags">
-        /// Flags for type coercion and validation of the arguments.
-        /// </param>
-        /// <returns>
-        /// True if the parameter was successfully bound. False if <paramref name="flags"/>
-        /// specifies no type coercion and the type does not match the parameter type.
-        /// </returns>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="parameter"/> or <paramref name="argument"/> is null.
-        /// </exception>
-        /// <exception cref="ParameterBindingException">
-        /// If argument transformation fails.
-        /// or
-        /// The argument could not be coerced to the appropriate type for the parameter.
-        /// or
-        /// The parameter argument transformation, prerequisite, or validation failed.
-        /// or
-        /// If the binding to the parameter fails.
-        /// </exception>
         internal virtual bool BindParameter(
             uint parameterSets,
             CommandParameterInternal argument,
@@ -510,25 +426,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="parameterSets">
-        /// The parameter set used to bind the arguments.
-        /// </param>
-        /// <param name="arguments">
-        /// The arguments that should be attempted to bind to the parameters of the specified parameter binder.
-        /// </param>
-        /// <exception cref="ParameterBindingException">
-        /// if multiple parameters are found matching the name.
-        /// or
-        /// if no match could be found.
-        /// or
-        /// If argument transformation fails.
-        /// or
-        /// The argument could not be coerced to the appropriate type for the parameter.
-        /// or
-        /// The parameter argument transformation, prerequisite, or validation failed.
-        /// or
-        /// If the binding to the parameter fails.
-        /// </exception>
         protected Collection<CommandParameterInternal> BindNamedParameters(uint parameterSets, Collection<CommandParameterInternal> arguments)
         {
             Collection<CommandParameterInternal> result = new Collection<CommandParameterInternal>();
@@ -611,39 +508,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="unboundArguments">
-        /// The unbound arguments to attempt to bind as positional arguments.
-        /// </param>
-        /// <param name="validParameterSets">
-        /// The current parameter set flags that are valid.
-        /// </param>
-        /// <param name="defaultParameterSet">
-        /// The parameter set to use to disambiguate parameters that have the same position
-        /// </param>
-        /// <param name="outgoingBindingException">
-        /// Returns the underlying parameter binding exception if any was generated.
-        /// </param>
-        /// <returns>
-        /// The remaining arguments that have not been bound.
-        /// </returns>
-        /// <remarks>
-        /// It is assumed that the unboundArguments parameter has already been processed
-        /// for this parameter binder. All named parameters have been paired with their
-        /// values. Any arguments that don't have a name are considered positional and
-        /// will be processed in this method.
-        /// </remarks>
-        /// <exception cref="ParameterBindingException">
-        /// If multiple parameters were found for the same position in the specified
-        /// parameter set.
-        /// or
-        /// If argument transformation fails.
-        /// or
-        /// The argument could not be coerced to the appropriate type for the parameter.
-        /// or
-        /// The parameter argument transformation, prerequisite, or validation failed.
-        /// or
-        /// If the binding to the parameter fails.
-        /// </exception>
         internal Collection<CommandParameterInternal> BindPositionalParameters(
             Collection<CommandParameterInternal> unboundArguments,
             uint validParameterSets,
@@ -819,12 +683,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="positionalParameterDictionary">
-        /// The sorted dictionary of positional parameters.
-        /// </param>
-        /// <param name="validParameterSets">
-        /// Valid parameter sets
-        /// </param>
         internal static void UpdatePositionalDictionary(
             SortedDictionary<int, Dictionary<MergedCompiledCommandParameter, PositionalCommandParameter>> positionalParameterDictionary,
             uint validParameterSets)
@@ -956,7 +814,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="pbex"></param>
         protected void ThrowElaboratedBindingException(ParameterBindingException pbex)
         {
             if (pbex == null)
@@ -1035,10 +892,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <returns>
-        /// The sorted dictionary of MergedCompiledCommandParameter metadata with the position
-        /// as the key.
-        /// </returns>
         internal static SortedDictionary<int, Dictionary<MergedCompiledCommandParameter, PositionalCommandParameter>> EvaluateUnboundPositionalParameters(
             ICollection<MergedCompiledCommandParameter> unboundParameters, uint validParameterSetFlag)
         {

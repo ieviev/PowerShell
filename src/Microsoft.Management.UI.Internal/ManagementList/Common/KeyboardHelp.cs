@@ -20,9 +20,6 @@ namespace Microsoft.Management.UI.Internal
     internal static class KeyboardHelp
     {
         
-        /// <param name="element">The element to get FlowDirection from.</param>
-        /// <param name="key">The key pressed.</param>
-        /// <returns>The logical direction.</returns>
         public static LogicalDirection GetLogicalDirection(DependencyObject element, Key key)
         {
             Debug.Assert(element != null, "element not null");
@@ -57,9 +54,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="element">The element to get FlowDirection from.</param>
-        /// <param name="key">The key pressed.</param>
-        /// <returns>The focus direction.</returns>
         public static FocusNavigationDirection GetNavigationDirection(DependencyObject element, Key key)
         {
             Debug.Assert(element != null, "element not null");
@@ -100,7 +94,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <returns>True if a control is pressed.</returns>
         public static bool IsControlPressed()
         {
             if ((Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
@@ -114,8 +107,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="key">The key pressed.</param>
-        /// <returns>True if the key is a navigation key.</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         private static bool IsFlowDirectionKey(Key key)
         {

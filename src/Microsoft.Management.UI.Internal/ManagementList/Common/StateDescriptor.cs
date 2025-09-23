@@ -9,7 +9,6 @@ using System.Text;
 namespace Microsoft.Management.UI.Internal
 {
     
-    /// <typeparam name="T">There are no restrictions on T.</typeparam>
     [SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public abstract class StateDescriptor<T>
     {
@@ -23,7 +22,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="name">The friendly name for the StateDescriptor.</param>
         protected StateDescriptor(string name)
             : this()
         {
@@ -59,11 +57,9 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="subject">The object whose state will be saved.</param>
         public abstract void SaveState(T subject);
 
         
-        /// <param name="subject">The object whose state will be restored.</param>
         public abstract void RestoreState(T subject);
     }
 }

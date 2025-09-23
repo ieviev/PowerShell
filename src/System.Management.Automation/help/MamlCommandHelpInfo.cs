@@ -11,8 +11,6 @@ namespace System.Management.Automation
     internal class MamlCommandHelpInfo : BaseCommandHelpInfo
     {
         
-        /// <param name="helpObject"></param>
-        /// <param name="helpCategory"></param>
         internal MamlCommandHelpInfo(PSObject helpObject, HelpCategory helpCategory)
             : base(helpCategory)
         {
@@ -39,12 +37,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <remarks>
-        /// This constructor is intentionally made private so that the only way to create
-        /// MamlCommandHelpInfo is through static function
-        ///     Load(XmlNode node)
-        /// where some sanity check is done.
-        /// </remarks>
         private MamlCommandHelpInfo(XmlNode xmlNode, HelpCategory helpCategory) : base(helpCategory)
         {
             MamlNode mamlNode = new MamlNode(xmlNode);
@@ -88,7 +80,6 @@ namespace System.Management.Automation
         private readonly PSObject _fullHelpObject;
 
         
-        /// <value>Full help object for this help item.</value>
         internal override PSObject FullHelp
         {
             get
@@ -145,7 +136,6 @@ namespace System.Management.Automation
 
         private string _component = null;
         
-        /// <value></value>
         internal override string Component
         {
             get
@@ -156,7 +146,6 @@ namespace System.Management.Automation
 
         private string _role = null;
         
-        /// <value></value>
         internal override string Role
         {
             get
@@ -167,7 +156,6 @@ namespace System.Management.Automation
 
         private string _functionality = null;
         
-        /// <value></value>
         internal override string Functionality
         {
             get
@@ -188,7 +176,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="userDefinedData">User defined data object.</param>
         internal void AddUserDefinedData(UserDefinedHelpData userDefinedData)
         {
             if (userDefinedData == null)
@@ -220,9 +207,6 @@ namespace System.Management.Automation
         #region Load
 
         
-        /// <param name="xmlNode">XmlNode that contains help info.</param>
-        /// <param name="helpCategory">Help category this maml object fits into.</param>
-        /// <returns>MamlCommandHelpInfo object created.</returns>
         internal static MamlCommandHelpInfo Load(XmlNode xmlNode, HelpCategory helpCategory)
         {
             MamlCommandHelpInfo mamlCommandHelpInfo = new MamlCommandHelpInfo(xmlNode, helpCategory);
@@ -241,12 +225,6 @@ namespace System.Management.Automation
 
 #if V2
         
-        /// <remarks>
-        /// A new MamlCommandHelpInfo is created to avoid polluting the provider help cache.
-        /// </remarks>
-        /// <param name="cmdletHelp">Provider-specific cmdletHelp to merge into current MamlCommandHelpInfo object.</param>
-        /// <param name="dynamicParameterHelp">Provider-specific dynamic parameter help to merge into current MamlCommandHelpInfo object.</param>
-        /// <returns>Merged command help info object.</returns>
         internal MamlCommandHelpInfo MergeProviderSpecificHelp(PSObject cmdletHelp, PSObject[] dynamicParameterHelp)
         {
             if (this._fullHelpObject == null)
@@ -273,11 +251,6 @@ namespace System.Management.Automation
         #region Helper Methods and Overloads
 
         
-        /// <param name="psObject">FullHelp object.</param>
-        /// <param name="propertyName">
-        /// Name of the property for which text needs to be extracted.
-        /// </param>
-        /// <returns></returns>
         private static string ExtractTextForHelpProperty(PSObject psObject, string propertyName)
         {
             if (psObject == null)
@@ -293,8 +266,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="psObject"></param>
-        /// <returns></returns>
         private static string ExtractText(PSObject psObject)
         {
             if (psObject == null)
@@ -345,8 +316,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="pattern"></param>
-        /// <returns></returns>
         internal override bool MatchPatternInContent(WildcardPattern pattern)
         {
             System.Management.Automation.Diagnostics.Assert(pattern != null, "pattern cannot be null");

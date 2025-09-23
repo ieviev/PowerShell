@@ -19,12 +19,6 @@ namespace Microsoft.PowerShell
     public sealed class UnmanagedPSEntry
     {
         
-        /// <param name="args">
-        /// Command line arguments to PowerShell
-        /// </param>
-        /// <param name="argc">
-        /// Length of the passed in argument array.
-        /// </param>
         public static int Start([MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.LPWStr, SizeParamIndex = 1)] string[] args, int argc)
         {
 #if DEBUG

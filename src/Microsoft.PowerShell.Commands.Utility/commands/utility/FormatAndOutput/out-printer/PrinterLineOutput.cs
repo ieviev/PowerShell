@@ -26,7 +26,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <value></value>
         internal override int ColumnNumber
         {
             get
@@ -37,7 +36,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <value></value>
         internal override int RowNumber
         {
             get
@@ -48,7 +46,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="s">Line to write.</param>
         internal override void WriteLine(string s)
         {
             CheckStopProcessing();
@@ -59,7 +56,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="s">The raw text to be written to the device.</param>
         internal override void WriteRawText(string s)
         {
             CheckStopProcessing();
@@ -80,7 +76,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="printerName">Name of printer, if null use default printer.</param>
         internal PrinterLineOutput(string printerName)
         {
             _printerName = printerName;
@@ -93,14 +88,12 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="s">String to write.</param>
         private void OnWriteLine(string s)
         {
             _lines.Enqueue(s);
         }
 
         
-        /// <param name="s">String to write.</param>
         private void OnWrite(string s)
         {
             _lines.Enqueue(s);
@@ -137,7 +130,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="g">GDI+ graphics object needed for verification.</param>
         private void CreateFont(Graphics g)
         {
             if (_printFont != null)
@@ -161,7 +153,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="g">GDI+ graphics object needed for verification.</param>
         private void VerifyFont(Graphics g)
         {
             // check if the font is fixed pitch
@@ -186,8 +177,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="sender">Sender, not used.</param>
-        /// <param name="ev">Print page event.</param>
         private void pd_PrintPage(object sender, PrintPageEventArgs ev)
         {
             float yPos = 0; // GDI+ coordinate down the page
@@ -259,11 +248,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         private int _printFontSize = 0;
 
         
-        /// <remarks>
-        /// This default must be loaded from a resource file as different
-        /// cultures will have different defaults and the localizer would
-        /// know the default for different cultures.
-        /// </remarks>
         private static readonly string s_defaultPrintFontName;
 
         

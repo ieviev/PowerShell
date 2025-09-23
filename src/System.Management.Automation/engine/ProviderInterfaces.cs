@@ -23,12 +23,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="sessionState">
-        /// The session to which this is a facade.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="sessionState"/> is null.
-        /// </exception>
         internal CmdletProviderManagementIntrinsics(SessionStateInternal sessionState)
         {
             if (sessionState == null)
@@ -44,19 +38,6 @@ namespace System.Management.Automation
         #region Public methods
 
         
-        /// <param name="name">
-        /// Either the fully-qualified or friendly name for the provider.
-        /// </param>
-        /// <returns>
-        /// The provider information for the specified provider.
-        /// </returns>
-        /// <exception cref="ArgumentException">
-        /// If <paramref name="name"/> is null or empty.
-        /// </exception>
-        /// <exception cref="ProviderNotFoundException">
-        /// If the provider specified by <paramref name="name"/> is not currently
-        /// loaded.
-        /// </exception>
         public Collection<ProviderInfo> Get(string name)
         {
             Dbg.Diagnostics.Assert(
@@ -69,23 +50,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="name">
-        /// Either the fully-qualified or friendly name for the provider.
-        /// </param>
-        /// <returns>
-        /// The provider information for the specified provider.
-        /// </returns>
-        /// <exception cref="ArgumentException">
-        /// If <paramref name="name"/> is null or empty.
-        /// </exception>
-        /// <exception cref="ProviderNameAmbiguousException">
-        /// If <paramref name="name"/> is not PSSnapin-qualified and more than one provider
-        /// exists with the specified name.
-        /// </exception>
-        /// <exception cref="ProviderNotFoundException">
-        /// If the provider specified by <paramref name="name"/> is not currently
-        /// loaded.
-        /// </exception>
         public ProviderInfo GetOne(string name)
         {
             Dbg.Diagnostics.Assert(
@@ -112,15 +76,6 @@ namespace System.Management.Automation
         #region Internal methods
 
         
-        /// <param name="capability">
-        /// The capability to check the provider for.
-        /// </param>
-        /// <param name="provider">
-        /// The provider information to use for the check.
-        /// </param>
-        /// <returns>
-        /// True, if the provider has the capability, false otherwise.
-        /// </returns>
         internal static bool CheckProviderCapabilities(
             ProviderCapabilities capability,
             ProviderInfo provider)

@@ -16,18 +16,12 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="source">The source to initialize from.</param>
         public IsEmptyFilterRule(IsEmptyFilterRule source)
             : base(source)
         {
         }
 
         
-        /// <param name="item">The item to evaluate.</param>
-        /// <returns>
-        /// Returns true if the item is null or if the item is a string
-        /// composed of whitespace. False otherwise.
-        /// </returns>
         public override bool Evaluate(object item)
         {
             if (item == null)

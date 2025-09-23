@@ -88,18 +88,12 @@ namespace System.Management.Automation
             public string BrightWhite { get; } = "\x1b[97m";
 
             
-            /// <param name="red">Byte value representing red.</param>
-            /// <param name="green">Byte value representing green.</param>
-            /// <param name="blue">Byte value representing blue.</param>
-            /// <returns>String representing ANSI code for RGB value.</returns>
             public string FromRgb(byte red, byte green, byte blue)
             {
                 return $"\x1b[38;2;{red};{green};{blue}m";
             }
 
             
-            /// <param name="rgb">RGB value specified as an integer.</param>
-            /// <returns>String representing ANSI code for RGB value.</returns>
             public string FromRgb(int rgb)
             {
                 byte red, green, blue;
@@ -113,8 +107,6 @@ namespace System.Management.Automation
             }
 
             
-            /// <param name="color">The foreground color to be mapped from.</param>
-            /// <returns>The VT escape sequence representing the foreground color.</returns>
             public string FromConsoleColor(ConsoleColor color)
             {
                 return MapForegroundColorToEscapeSequence(color);
@@ -173,18 +165,12 @@ namespace System.Management.Automation
             public string BrightWhite { get; } = "\x1b[107m";
 
             
-            /// <param name="red">Byte value representing red.</param>
-            /// <param name="green">Byte value representing green.</param>
-            /// <param name="blue">Byte value representing blue.</param>
-            /// <returns>String representing ANSI code for RGB value.</returns>
             public string FromRgb(byte red, byte green, byte blue)
             {
                 return $"\x1b[48;2;{red};{green};{blue}m";
             }
 
             
-            /// <param name="rgb">RGB value specified as an integer.</param>
-            /// <returns>String representing ANSI code for RGB value.</returns>
             public string FromRgb(int rgb)
             {
                 byte red, green, blue;
@@ -198,8 +184,6 @@ namespace System.Management.Automation
             }
 
             
-            /// <param name="color">The background color to be mapped from.</param>
-            /// <returns>The VT escape sequence representing the background color.</returns>
             public string FromConsoleColor(ConsoleColor color)
             {
                 return MapBackgroundColorToEscapeSequence(color);
@@ -395,23 +379,18 @@ namespace System.Management.Automation
                 private readonly Dictionary<string, string> _extensionDictionary = new(StringComparer.OrdinalIgnoreCase);
 
                 
-                /// <param name="extension">Extension to add.</param>
-                /// <param name="decoration">ANSI string value to add.</param>
                 public void Add(string extension, string decoration)
                 {
                     _extensionDictionary.Add(ValidateExtension(extension), ValidateNoContent(decoration));
                 }
 
                 
-                /// <param name="extension">Extension to add.</param>
-                /// <param name="decoration">ANSI string value to add.</param>
                 internal void AddWithoutValidation(string extension, string decoration)
                 {
                     _extensionDictionary.Add(extension, decoration);
                 }
 
                 
-                /// <param name="extension">Extension to remove.</param>
                 public void Remove(string extension)
                 {
                     _extensionDictionary.Remove(ValidateExtension(extension));
@@ -424,8 +403,6 @@ namespace System.Management.Automation
                 }
 
                 
-                /// <param name="extension">Extension to get decoration for.</param>
-                /// <returns>The decoration for specified extension.</returns>
                 public string this[string extension]
                 {
                     get
@@ -440,8 +417,6 @@ namespace System.Management.Automation
                 }
 
                 
-                /// <param name="extension">Extension to check for.</param>
-                /// <returns>True if the dictionary contains the specified extension, otherwise false.</returns>
                 public bool ContainsKey(string extension)
                 {
                     if (string.IsNullOrEmpty(extension))
@@ -453,7 +428,6 @@ namespace System.Management.Automation
                 }
 
                 
-                /// <returns>The extensions for the dictionary.</returns>
                 public IEnumerable<string> Keys
                 {
                     get
@@ -543,9 +517,6 @@ namespace System.Management.Automation
         public string Strikethrough { get; } = "\x1b[9m";
 
         
-        /// <param name="text">Text describing the link.</param>
-        /// <param name="link">A valid hyperlink.</param>
-        /// <returns>String representing ANSI code for the hyperlink.</returns>
         public string FormatHyperlink(string text, Uri link)
         {
             return $"\x1b]8;;{link}\x1b\\{text}\x1b]8;;\x1b\\";
@@ -642,9 +613,6 @@ namespace System.Management.Automation
             };
 
         
-        /// <param name="color">The <see cref="ConsoleColor"/> to be mapped from.</param>
-        /// <param name="isBackground">Whether or not it's a background color.</param>
-        /// <returns>The VT escape sequence representing the color.</returns>
         internal static string MapColorToEscapeSequence(ConsoleColor color, bool isBackground)
         {
             int index = (int)color;
@@ -657,21 +625,14 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="foregroundColor">The foreground color to be mapped from.</param>
-        /// <returns>The VT escape sequence representing the foreground color.</returns>
         public static string MapForegroundColorToEscapeSequence(ConsoleColor foregroundColor)
             => MapColorToEscapeSequence(foregroundColor, isBackground: false);
 
         
-        /// <param name="backgroundColor">The background color to be mapped from.</param>
-        /// <returns>The VT escape sequence representing the background color.</returns>
         public static string MapBackgroundColorToEscapeSequence(ConsoleColor backgroundColor)
             => MapColorToEscapeSequence(backgroundColor, isBackground: true);
 
         
-        /// <param name="foregroundColor">The foreground color of the color pair.</param>
-        /// <param name="backgroundColor">The background color of the color pair.</param>
-        /// <returns>The VT escape sequence representing the foreground and background color pair.</returns>
         public static string MapColorPairToEscapeSequence(ConsoleColor foregroundColor, ConsoleColor backgroundColor)
         {
             int foreIndex = (int)foregroundColor;

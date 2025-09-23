@@ -15,8 +15,6 @@ namespace System.Management.Automation.Help
     internal class CultureSpecificUpdatableHelp
     {
         
-        /// <param name="culture">Culture info.</param>
-        /// <param name="version">Version info.</param>
         internal CultureSpecificUpdatableHelp(CultureInfo culture, Version version)
         {
             Debug.Assert(version != null);
@@ -33,13 +31,6 @@ namespace System.Management.Automation.Help
         internal CultureInfo Culture { get; set; }
 
         
-        /// <param name="culture">Culture to enumerate</param>
-        /// <example>
-        /// Examples:
-        /// en-GB => { en-GB, en }
-        /// zh-Hans-CN => { zh-Hans-CN, zh-Hans, zh }.
-        /// </example>
-        /// <returns>An enumerable list of culture names.</returns>
         internal static IEnumerable<string> GetCultureFallbackChain(CultureInfo culture)
         {
             // We use just names instead because comparing two CultureInfo objects
@@ -58,8 +49,6 @@ namespace System.Management.Automation.Help
         }
 
         
-        /// <param name="cultureName">Name of the culture to check.</param>
-        /// <returns>True if supported, false if not.</returns>
         internal bool IsCultureSupported(string cultureName)
         {
             Debug.Assert(cultureName != null, $"{nameof(cultureName)} may not be null");
@@ -71,8 +60,6 @@ namespace System.Management.Automation.Help
     internal class UpdatableHelpInfo
     {
         
-        /// <param name="unresolvedUri">Unresolved help content URI.</param>
-        /// <param name="cultures">Supported UI cultures.</param>
         internal UpdatableHelpInfo(string unresolvedUri, CultureSpecificUpdatableHelp[] cultures)
         {
             Debug.Assert(cultures != null);
@@ -92,9 +79,6 @@ namespace System.Management.Automation.Help
         internal CultureSpecificUpdatableHelp[] UpdatableHelpItems { get; }
 
         
-        /// <param name="helpInfo">HelpInfo object to check.</param>
-        /// <param name="culture">Culture to check.</param>
-        /// <returns>True if the other HelpInfo is newer, false if not.</returns>
         internal bool IsNewerVersion(UpdatableHelpInfo helpInfo, CultureInfo culture)
         {
             Debug.Assert(helpInfo != null);
@@ -113,8 +97,6 @@ namespace System.Management.Automation.Help
         }
 
         
-        /// <param name="cultureName">Name of the culture to check.</param>
-        /// <returns>True if supported, false if not.</returns>
         internal bool IsCultureSupported(string cultureName)
         {
             Debug.Assert(cultureName != null, $"{nameof(cultureName)} may not be null");
@@ -122,7 +104,6 @@ namespace System.Management.Automation.Help
         }
 
         
-        /// <returns>Supported cultures in string.</returns>
         internal string GetSupportedCultures()
         {
             if (UpdatableHelpItems.Length == 0)
@@ -146,8 +127,6 @@ namespace System.Management.Automation.Help
         }
 
         
-        /// <param name="culture">Culture info.</param>
-        /// <returns>Culture version.</returns>
         internal Version GetCultureVersion(CultureInfo culture)
         {
             foreach (CultureSpecificUpdatableHelp updatableHelpItem in UpdatableHelpItems)

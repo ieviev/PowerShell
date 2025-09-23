@@ -31,14 +31,6 @@ namespace System.Management.Automation
         
 
         
-        /// <remarks>
-        /// We can't depend on assembly version for PowerShell version.
-        ///
-        /// This is why we hard code the PowerShell version here.
-        ///
-        /// For each later release of PowerShell, this constant needs to
-        /// be updated to reflect the right version.
-        /// </remarks>
         private static readonly Version s_psV1Version = new(1, 0);
         private static readonly Version s_psV2Version = new(2, 0);
         private static readonly Version s_psV3Version = new(3, 0);
@@ -154,12 +146,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <remarks>
-        /// For 3.0 PowerShell, we use "3" as the registry version key only for Engine
-        /// related data like ApplicationBase.
-        /// For 3.0 PowerShell, we still use "1" as the registry version key for
-        /// Snapin and Custom shell lookup/discovery.
-        /// </remarks>
         internal static string RegistryVersionKey
         {
             get
@@ -294,9 +280,6 @@ namespace System.Management.Automation
         private string versionString;
 
         
-        /// <param name="version">The version to parse.</param>
-        /// <exception cref="FormatException"></exception>
-        /// <exception cref="OverflowException"></exception>
         public SemanticVersion(string version)
         {
             var v = SemanticVersion.Parse(version);
@@ -309,15 +292,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="major">The major version.</param>
-        /// <param name="minor">The minor version.</param>
-        /// <param name="patch">The patch version.</param>
-        /// <param name="preReleaseLabel">The pre-release label for the version.</param>
-        /// <param name="buildLabel">The build metadata for the version.</param>
-        /// <exception cref="FormatException">
-        /// If <paramref name="preReleaseLabel"/> don't match 'LabelUnitRegEx'.
-        /// If <paramref name="buildLabel"/> don't match 'BuildUnitRegEx'.
-        /// </exception>
         public SemanticVersion(int major, int minor, int patch, string preReleaseLabel, string buildLabel)
             : this(major, minor, patch)
         {
@@ -343,14 +317,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="major">The major version.</param>
-        /// <param name="minor">The minor version.</param>
-        /// <param name="patch">The minor version.</param>
-        /// <param name="label">The label for the version.</param>
-        /// <exception cref="PSArgumentException">
-        /// <exception cref="FormatException">
-        /// If <paramref name="label"/> don't match 'LabelRegEx'.
-        /// </exception>
         public SemanticVersion(int major, int minor, int patch, string label)
             : this(major, minor, patch)
         {
@@ -371,12 +337,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="major">The major version.</param>
-        /// <param name="minor">The minor version.</param>
-        /// <param name="patch">The minor version.</param>
-        /// <exception cref="PSArgumentException">
-        /// If <paramref name="major"/>, <paramref name="minor"/>, or <paramref name="patch"/> is less than 0.
-        /// </exception>
         public SemanticVersion(int major, int minor, int patch)
         {
             if (major < 0)
@@ -403,28 +363,12 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="major">The major version.</param>
-        /// <param name="minor">The minor version.</param>
-        /// <exception cref="PSArgumentException">
-        /// If <paramref name="major"/> or <paramref name="minor"/> is less than 0.
-        /// </exception>
         public SemanticVersion(int major, int minor) : this(major, minor, 0) { }
 
         
-        /// <param name="major">The major version.</param>
-        /// <exception cref="PSArgumentException">
-        /// If <paramref name="major"/> is less than 0.
-        /// </exception>
         public SemanticVersion(int major) : this(major, 0, 0) { }
 
         
-        /// <param name="version">The version.</param>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="version"/> is null.
-        /// </exception>
-        /// <exception cref="PSArgumentException">
-        /// If <paramref name="version.Revision"/> is more than 0.
-        /// </exception>
         public SemanticVersion(Version version)
         {
             if (version == null)
@@ -455,7 +399,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="semver"></param>
         public static implicit operator Version(SemanticVersion semver)
         {
             PSObject psobj;
@@ -498,11 +441,6 @@ namespace System.Management.Automation
         public string BuildLabel { get; }
 
         
-        /// <param name="version">The string to parse.</param>
-        /// <returns></returns>
-        /// <exception cref="PSArgumentException"></exception>
-        /// <exception cref="FormatException"></exception>
-        /// <exception cref="OverflowException"></exception>
         public static SemanticVersion Parse(string version)
         {
             if (version == null)
@@ -523,8 +461,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="version">The string to parse.</param>
-        /// <param name="result">The return value when the string is a valid <see cref="SemanticVersion"/></param>
         public static bool TryParse(string version, out SemanticVersion result)
         {
             if (version != null)

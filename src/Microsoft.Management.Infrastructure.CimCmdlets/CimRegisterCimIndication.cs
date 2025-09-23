@@ -34,7 +34,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         public CimSubscriptionResult Result { get; }
 
         
-        /// <param name="theResult"></param>
         public CimSubscriptionResultEventArgs(
             CimSubscriptionResult theResult)
         {
@@ -50,7 +49,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         public Exception Exception { get; }
 
         
-        /// <param name="theResult"></param>
         public CimSubscriptionExceptionEventArgs(
             Exception theException)
         {
@@ -73,11 +71,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="computerName">Null stands for localhost.</param>
-        /// <param name="nameSpace"></param>
-        /// <param name="queryDialect"></param>
-        /// <param name="queryExpression"></param>
-        /// <param name="operationTimeout"></param>
         public void RegisterCimIndication(
             string computerName,
             string nameSpace,
@@ -93,12 +86,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="cimSession">Cannot be null.</param>
-        /// <param name="nameSpace"></param>
-        /// <param name="queryDialect"></param>
-        /// <param name="queryExpression"></param>
-        /// <param name="operationTimeout"></param>
-        /// <exception cref="ArgumentNullException">Throw if cimSession is null.</exception>
         public void RegisterCimIndication(
             CimSession cimSession,
             string nameSpace,
@@ -119,7 +106,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         #region override methods
 
         
-        /// <param name="proxy"></param>
         protected override void SubscribeToCimSessionProxyEvent(CimSessionProxy proxy)
         {
             DebugHelper.WriteLog("SubscribeToCimSessionProxyEvent", 4);
@@ -131,10 +117,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="cimSession">
-        /// <seealso cref="CimSession"/> object raised the event
-        /// </param>
-        /// <param name="actionArgs">Event argument.</param>
         private void CimIndicationHandler(object cimSession, CmdletActionEventArgs actionArgs)
         {
             DebugHelper.WriteLogEx("action is {0}. Disposed {1}", 0, actionArgs.Action, this.Disposed);
@@ -226,7 +208,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         #region internal property
         
-        /// <param name="cmdlet"></param>
         internal Cmdlet Cmdlet
         {
             get;
@@ -244,9 +225,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         #region private methods
         
-        /// <param name="computerName"></param>
-        /// <param name="timeout"></param>
-        /// <returns></returns>
         private CimSessionProxy CreateSessionProxy(
             string computerName,
             uint timeout)
@@ -257,9 +235,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="session"></param>
-        /// <param name="timeout"></param>
-        /// <returns></returns>
         private CimSessionProxy CreateSessionProxy(
             CimSession session,
             uint timeout)

@@ -19,8 +19,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         internal const string PartialPSTypeName = @"Microsoft.Management.Infrastructure.CimInstance#__PartialCIMInstance";
 
         
-        /// <param name="resultObject"></param>
-        /// <returns></returns>
         public object Process(object resultObject)
         {
             if (resultObject is CimInstance)
@@ -43,14 +41,12 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="cmdlet"><see cref="GetCimInstanceCommand"/> object.</param>
         public void GetCimInstance(GetCimInstanceCommand cmdlet)
         {
             GetCimInstanceInternal(cmdlet);
         }
 
         
-        /// <param name="cmdlet"></param>
         protected void GetCimInstanceInternal(CimBaseCommand cmdlet)
         {
             IEnumerable<string> computerNames = ConstValue.GetComputerNames(
@@ -340,8 +336,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         #region help methods
 
         
-        /// <param name="proxy"></param>
-        /// <param name="cmdlet"></param>
         private static void SetSessionProxyProperties(
             ref CimSessionProxy proxy,
             CimBaseCommand cmdlet)
@@ -391,9 +385,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="computerName"></param>
-        /// <param name="cmdlet"></param>
-        /// <returns></returns>
         protected CimSessionProxy CreateSessionProxy(
             string computerName,
             CimBaseCommand cmdlet)
@@ -404,10 +395,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="computerName"></param>
-        /// <param name="cimInstance"></param>
-        /// <param name="cmdlet"></param>
-        /// <returns></returns>
         protected CimSessionProxy CreateSessionProxy(
             string computerName,
             CimInstance cimInstance,
@@ -420,9 +407,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="session"></param>
-        /// <param name="cmdlet"></param>
-        /// <returns></returns>
         protected CimSessionProxy CreateSessionProxy(
             CimSession session,
             CimBaseCommand cmdlet)
@@ -433,10 +417,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="computerName"></param>
-        /// <param name="cimInstance"></param>
-        /// <param name="cmdlet"></param>
-        /// <returns></returns>
         protected CimSessionProxy CreateSessionProxy(
             string computerName,
             CimInstance cimInstance,
@@ -448,9 +428,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="session"></param>
-        /// <param name="cmdlet"></param>
-        /// <returns></returns>
         protected CimSessionProxy CreateSessionProxy(
             CimSession session,
             CimBaseCommand cmdlet,
@@ -462,8 +439,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="proxy"></param>
-        /// <param name="cmdlet"></param>
         private static void SetPreProcess(CimSessionProxy proxy, GetCimInstanceCommand cmdlet)
         {
             if (cmdlet.KeyOnly || (cmdlet.SelectProperties != null))

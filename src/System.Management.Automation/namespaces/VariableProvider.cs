@@ -35,9 +35,6 @@ namespace Microsoft.PowerShell.Commands
         #region DriveCmdletProvider overrides
 
         
-        /// <returns>
-        /// An array of a single PSDriveInfo object representing the variables drive.
-        /// </returns>
         protected override Collection<PSDriveInfo> InitializeDefaultDrives()
         {
             string description = SessionStateStrings.VariableDriveDescription;
@@ -60,12 +57,6 @@ namespace Microsoft.PowerShell.Commands
         #region protected members
 
         
-        /// <param name="name">
-        /// The name of the variable to retrieve.
-        /// </param>
-        /// <returns>
-        /// A PSVariable that represents the variable.
-        /// </returns>
         internal override object GetSessionStateItem(string name)
         {
             Dbg.Diagnostics.Assert(
@@ -76,15 +67,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="name">
-        /// The name of the variable to set.
-        /// </param>
-        /// <param name="value">
-        /// The new value for the variable.
-        /// </param>
-        /// <param name="writeItem">
-        /// If true, the item that was set should be written to WriteItemObject.
-        /// </param>
         internal override void SetSessionStateItem(string name, object value, bool writeItem)
         {
             Dbg.Diagnostics.Assert(
@@ -126,9 +108,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="name">
-        /// The name of the variable to remove from session state.
-        /// </param>
         internal override void RemoveSessionStateItem(string name)
         {
             Dbg.Diagnostics.Assert(
@@ -139,22 +118,12 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <returns>
-        /// An IDictionary representing the flattened view of the variables in
-        /// session state.
-        /// </returns>
         internal override IDictionary GetSessionStateTable()
         {
             return (IDictionary)SessionState.Internal.GetVariableTable();
         }
 
         
-        /// <param name="item">
-        /// The item to extract the value from.
-        /// </param>
-        /// <returns>
-        /// The value of the specified item.
-        /// </returns>
         internal override object GetValueOfItem(object item)
         {
             Dbg.Diagnostics.Assert(
@@ -176,12 +145,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="item">
-        /// The item to verify if it can be renamed.
-        /// </param>
-        /// <returns>
-        /// true if the item can be renamed or false otherwise.
-        /// </returns>
         internal override bool CanRenameItem(object item)
         {
             bool result = false;

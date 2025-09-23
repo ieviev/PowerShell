@@ -9,12 +9,6 @@ using Dbg = System.Management.Automation.Diagnostics;
 namespace System.Management.Automation
 {
     
-    /// <remarks>
-    /// There is already an internal class Token for representing the token.
-    ///
-    /// This class wraps the internal Token class for providing limited information
-    /// to syntax editor.
-    /// </remarks>
     public sealed class PSToken
     {
         internal PSToken(Token token)
@@ -38,17 +32,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <remarks>
-        /// The text here represents the content of token. It can be the same as
-        /// the text chunk within script resulting into this token, but usually is not
-        /// the case.
-        ///
-        /// For example, -name in following command result into a parameter token.
-        ///
-        ///     get-process -name foo
-        ///
-        /// Text property in this case is 'name' instead of '-name'.
-        /// </remarks>
         public string Content
         {
             get
@@ -62,8 +45,6 @@ namespace System.Management.Automation
         #region Token Type
 
         
-        /// <param name="token">The V3 token.</param>
-        /// <returns>The V2 PSTokenType.</returns>
         public static PSTokenType GetPSTokenType(Token token)
         {
             if ((token.TokenFlags & TokenFlags.CommandName) != 0)
@@ -315,11 +296,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <remarks>
-        /// StartLine, StartColumn, EndLine, and EndColumn are 1-based,
-        /// i.e., first line has a line number 1 and first character in
-        /// a line has column number 1.
-        /// </remarks>
         public int StartLine { get { return _extent.StartLineNumber; } }
 
         

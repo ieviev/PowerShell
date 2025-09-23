@@ -5,9 +5,6 @@ using System.Windows.Controls;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <content>
-    /// Partial class implementation for ManagementListTitle control.
-    /// </content>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public partial class ManagementListTitle : Control
     {

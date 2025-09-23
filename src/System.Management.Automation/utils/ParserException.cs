@@ -23,9 +23,6 @@ namespace System.Management.Automation
 
         #region Serialization
         
-        /// <param name="info">The serialization information to use when initializing this object.</param>
-        /// <param name="context">The streaming context to use when initializing this object.</param>
-        /// <returns>Constructed object.</returns>
         [Obsolete("Legacy serialization support is deprecated since .NET 8", DiagnosticId = "SYSLIB0051")]
         protected ParseException(SerializationInfo info,
                            StreamingContext context)
@@ -38,7 +35,6 @@ namespace System.Management.Automation
         #region ctor
 
         
-        /// <returns>Constructed object.</returns>
         public ParseException() : base()
         {
             base.SetErrorId(errorIdString);
@@ -46,8 +42,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="message">The error message to use when initializing this object.</param>
-        /// <returns>Constructed object.</returns>
         public ParseException(string message) : base(message)
         {
             base.SetErrorId(errorIdString);
@@ -55,9 +49,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="message">The error message to use when initializing this object.</param>
-        /// <param name="errorId">The errorId to use when initializing this object.</param>
-        /// <returns>Constructed object.</returns>
         internal ParseException(string message, string errorId) : base(message)
         {
             base.SetErrorId(errorId);
@@ -65,10 +56,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="message">The error message to use when initializing this object.</param>
-        /// <param name="errorId">The errorId to use when initializing this object.</param>
-        /// <param name="innerException">The inner exception to use when initializing this object.</param>
-        /// <returns>Constructed object.</returns>
         internal ParseException(string message, string errorId, Exception innerException)
             : base(message, innerException)
         {
@@ -77,9 +64,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="message">The error message to use when initializing this object.</param>
-        /// <param name="innerException">The inner exception to use when initializing this object.</param>
-        /// <returns>Constructed object.</returns>
         public ParseException(string message,
                         Exception innerException)
                 : base(message, innerException)
@@ -89,7 +73,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="errors">The collection of error messages.</param>
         public ParseException(ParseError[] errors)
         {
             if (errors is null || errors.Length == 0)
@@ -129,11 +112,6 @@ namespace System.Management.Automation
     }
 
     
-    /// <remarks>
-    /// This is a variation on a parsing error that indicates that the parse was incomplete
-    /// rather than irrecoverably wrong. A host can catch this exception and then prompt for additional
-    /// input to complete the parse.
-    /// </remarks>
     public class IncompleteParseException
             : ParseException
     {
@@ -145,9 +123,6 @@ namespace System.Management.Automation
 
         #region Serialization
         
-        /// <param name="info">The serialization information to use when initializing this object.</param>
-        /// <param name="context">The streaming context to use when initializing this object.</param>
-        /// <returns>Constructed object.</returns>
         [Obsolete("Legacy serialization support is deprecated since .NET 8", DiagnosticId = "SYSLIB0051")]
         protected IncompleteParseException(SerializationInfo info,
                            StreamingContext context)
@@ -157,7 +132,6 @@ namespace System.Management.Automation
         #endregion Serialization
 
         
-        /// <returns>Constructed object.</returns>
         public IncompleteParseException() : base()
         {
             // Error category is set in base constructor
@@ -165,8 +139,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="message">The error message to use when initializing this object.</param>
-        /// <returns>Constructed object.</returns>
         public IncompleteParseException(string message) : base(message)
         {
             // Error category is set in base constructor
@@ -174,19 +146,12 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="message">The error message to use when initializing this object.</param>
-        /// <param name="errorId">The errorId to use when initializing this object.</param>
-        /// <returns>Constructed object.</returns>
         internal IncompleteParseException(string message, string errorId) : base(message, errorId)
         {
             // Error category is set in base constructor
         }
 
         
-        /// <param name="message">The error message to use when initializing this object.</param>
-        /// <param name="errorId">The errorId to use when initializing this object.</param>
-        /// <param name="innerException">The inner exception to use when initializing this object.</param>
-        /// <returns>Constructed object.</returns>
         internal IncompleteParseException(string message, string errorId, Exception innerException)
             : base(message, errorId, innerException)
         {
@@ -194,9 +159,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="message">The error message to use when initializing this object.</param>
-        /// <param name="innerException">The inner exception to use when initializing this object.</param>
-        /// <returns>Constructed object.</returns>
         public IncompleteParseException(string message,
                         Exception innerException)
                 : base(message, innerException)

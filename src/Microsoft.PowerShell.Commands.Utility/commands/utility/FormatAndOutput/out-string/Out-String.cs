@@ -93,7 +93,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="s"></param>
         private void OnWriteLine(string s)
         {
             if (_stream)

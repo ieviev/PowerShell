@@ -33,50 +33,18 @@ namespace Microsoft.PowerShell.Commands
         #region protected members
 
         
-        /// <param name="name">
-        /// The name of the item to get.
-        /// </param>
-        /// <returns>
-        /// The item of the given name in the appropriate session state table.
-        /// </returns>
         internal abstract object GetSessionStateItem(string name);
 
         
-        /// <param name="name">
-        /// The name of the item to set.
-        /// </param>
-        /// <param name="value">
-        /// The new value for the item.
-        /// </param>
-        /// <param name="writeItem">
-        /// If true, the item that was set should be written to WriteItemObject.
-        /// </param>
         internal abstract void SetSessionStateItem(string name, object value, bool writeItem);
 
         
-        /// <param name="name">
-        /// The name of the item to remove.
-        /// </param>
         internal abstract void RemoveSessionStateItem(string name);
 
         
-        /// <returns>
-        /// An IDictionary representing the items in the session state table.
-        /// The key is the name of the item and the value is the value.
-        /// </returns>
         internal abstract IDictionary GetSessionStateTable();
 
         
-        /// <param name="item">
-        /// The item to extract the value from.
-        /// </param>
-        /// <returns>
-        /// The value of the specified item.
-        /// </returns>
-        /// <remarks>
-        /// The default implementation will get
-        /// the Value property of a DictionaryEntry
-        /// </remarks>
         internal virtual object GetValueOfItem(object item)
         {
             Dbg.Diagnostics.Assert(
@@ -94,12 +62,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="item">
-        /// The item to verify if it can be renamed.
-        /// </param>
-        /// <returns>
-        /// true if the item can be renamed or false otherwise.
-        /// </returns>
         internal virtual bool CanRenameItem(object item)
         {
             return true;
@@ -110,13 +72,6 @@ namespace Microsoft.PowerShell.Commands
         #region ItemCmdletProvider overrides
 
         
-        /// <param name="name">
-        /// Name of the item to get.
-        /// </param>
-        /// <remarks>
-        /// The item instance is written to the WriteObject
-        /// method.
-        /// </remarks>
         protected override void GetItem(string name)
         {
             bool isContainer = false;
@@ -146,16 +101,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="name">
-        /// Name of the item to set
-        /// </param>
-        /// <param name="value">
-        /// The value to which to set the item
-        /// </param>
-        /// <returns>
-        /// Nothing. The item that was set is written to the
-        /// WriteObject method.
-        /// </returns>
         protected override void SetItem(
             string name,
             object value)
@@ -207,7 +152,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="path"></param>
         protected override void ClearItem(string path)
         {
             if (string.IsNullOrEmpty(path))
@@ -260,12 +204,6 @@ namespace Microsoft.PowerShell.Commands
         #region ContainerCmdletProvider overrides
 
         
-        /// <param name="path">
-        /// The name of the item to retrieve, or all if empty or null.
-        /// </param>
-        /// <param name="recurse">
-        /// Ignored.
-        /// </param>
         protected override void GetChildItems(string path, bool recurse)
         {
             CommandOrigin origin = this.Context.Origin;
@@ -374,12 +312,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="path">
-        /// The name of the item to retrieve, or all if empty or null.
-        /// </param>
-        /// <param name="returnContainers">
-        /// Ignored.
-        /// </param>
         protected override void GetChildNames(string path, ReturnContainers returnContainers)
         {
             CommandOrigin origin = this.Context.Origin;
@@ -464,12 +396,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="path">
-        /// The container to check to see if there are any children.
-        /// </param>
-        /// <returns>
-        /// True if path is empty or null, false otherwise.
-        /// </returns>
         protected override bool HasChildItems(string path)
         {
             bool result = false;
@@ -498,13 +424,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="path">
-        /// The path to the item to check. If this is null or empty, the item
-        /// container is used (and always exists).
-        /// </param>
-        /// <returns>
-        /// True if the item exists, false otherwise.
-        /// </returns>
         protected override bool ItemExists(string path)
         {
             bool result = false;
@@ -541,28 +460,12 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="path">
-        /// The path to validate.
-        /// </param>
-        /// <returns>
-        /// True if the path is valid, or false otherwise.
-        /// </returns>
-        /// <remarks>
-        /// The path may not contain the following characters:
-        /// . ( ) :
-        /// </remarks>
         protected override bool IsValidPath(string path)
         {
             return !string.IsNullOrEmpty(path);
         }
 
         
-        /// <param name="path">
-        /// The name of the item to be removed.
-        /// </param>
-        /// <param name="recurse">
-        /// Ignored.
-        /// </param>
         protected override void RemoveItem(string path, bool recurse)
         {
             if (string.IsNullOrEmpty(path))
@@ -626,15 +529,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="path">
-        /// The name of the item to create.
-        /// </param>
-        /// <param name="type">
-        /// Ignored.
-        /// </param>
-        /// <param name="newItem">
-        /// The value of the new item.
-        /// </param>
         protected override void NewItem(string path, string type, object newItem)
         {
             if (string.IsNullOrEmpty(path))
@@ -701,15 +595,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="path">
-        /// The name of the item to copy.
-        /// </param>
-        /// <param name="copyPath">
-        /// The name of the item to create.
-        /// </param>
-        /// <param name="recurse">
-        /// Ignored.
-        /// </param>
         protected override void CopyItem(string path, string copyPath, bool recurse)
         {
             if (string.IsNullOrEmpty(path))
@@ -807,12 +692,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="name">
-        /// The name of the item to copy.
-        /// </param>
-        /// <param name="newName">
-        /// The new name of the item.
-        /// </param>
         protected override void RenameItem(string name, string newName)
         {
             if (string.IsNullOrEmpty(name))
@@ -953,36 +832,18 @@ namespace Microsoft.PowerShell.Commands
         #region IContentCmdletProvider methods
 
         
-        /// <param name="path">
-        /// The path to get the content reader for.
-        /// </param>
-        /// <returns>
-        /// An instance of an IContentReader for the given path.
-        /// </returns>
         public IContentReader GetContentReader(string path)
         {
             return new SessionStateProviderBaseContentReaderWriter(path, this);
         }
 
         
-        /// <param name="path">
-        /// The path to get the content writer for.
-        /// </param>
-        /// <returns>
-        /// An instance of an IContentWriter for the given path.
-        /// </returns>
         public IContentWriter GetContentWriter(string path)
         {
             return new SessionStateProviderBaseContentReaderWriter(path, this);
         }
 
         
-        /// <param name="path">
-        /// ignored.
-        /// </param>
-        /// <exception cref="NotSupportedException">
-        /// This exception is always thrown.
-        /// </exception>
         public void ClearContent(string path)
         {
             throw
@@ -996,18 +857,12 @@ namespace Microsoft.PowerShell.Commands
         // so these methods just return null
 
         
-        /// <param name="path"></param>
-        /// <returns>Null.</returns>
         public object GetContentReaderDynamicParameters(string path) { return null; }
 
         
-        /// <param name="path"></param>
-        /// <returns>Null.</returns>
         public object GetContentWriterDynamicParameters(string path) { return null; }
 
         
-        /// <param name="path"></param>
-        /// <returns>Null.</returns>
         public object ClearContentDynamicParameters(string path) { return null; }
 
         #endregion
@@ -1018,19 +873,6 @@ namespace Microsoft.PowerShell.Commands
     public class SessionStateProviderBaseContentReaderWriter : IContentReader, IContentWriter
     {
         
-        /// <param name="path">
-        /// The path to the session state item which the content will be read or written.
-        /// </param>
-        /// <param name="provider">
-        /// The SessionStateProviderBase derived provider that the content will be read or written
-        /// from/to.
-        /// </param>
-        /// <exception cref="ArgumentException">
-        /// if <paramref name="path"/> is null or empty.
-        /// </exception>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="provider"/> is null.
-        /// </exception>
         internal SessionStateProviderBaseContentReaderWriter(string path, SessionStateProviderBase provider)
         {
             if (string.IsNullOrEmpty(path))
@@ -1051,16 +893,6 @@ namespace Microsoft.PowerShell.Commands
         private readonly SessionStateProviderBase _provider;
 
         
-        /// <param name="readCount">
-        /// The number of "blocks" of data to be read from the item.
-        /// </param>
-        /// <returns>
-        /// An array of the blocks of data read from the item.
-        /// </returns>
-        /// <remarks>
-        /// A "block" of content is provider specific.  For the file system
-        /// a "block" may be considered a byte, a character, or delimited string.
-        /// </remarks>
         public IList Read(long readCount)
         {
             IList result = null;
@@ -1088,16 +920,6 @@ namespace Microsoft.PowerShell.Commands
         private bool _contentRead;
 
         
-        /// <param name="content">
-        /// An array of content "blocks" to be written to the item.
-        /// </param>
-        /// <returns>
-        /// The blocks of content that were successfully written to the item.
-        /// </returns>
-        /// <remarks>
-        /// A "block" of content is provider specific.  For the file system
-        /// a "block" may be considered a byte, a character, or delimited string.
-        /// </remarks>
         public IList Write(IList content)
         {
             if (content == null)
@@ -1118,15 +940,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="offset">
-        /// ignored
-        /// </param>
-        /// <param name="origin">
-        /// ignored
-        /// </param>
-        /// <exception cref="NotSupportedException">
-        /// This exception is always thrown.
-        /// </exception>
         public void Seek(long offset, SeekOrigin origin)
         {
             throw

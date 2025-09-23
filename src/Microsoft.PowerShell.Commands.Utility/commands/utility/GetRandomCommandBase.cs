@@ -314,9 +314,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="minValue">Minimum value.</param>
-        /// <param name="maxValue">Maximum value.</param>
-        /// <returns>Rnadom long.</returns>
         private long GetRandomInt64(long minValue, long maxValue)
         {
             // Randomly generate eight bytes and convert the byte array to UInt64
@@ -544,7 +541,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="seed">The seed value.</param>
         internal PolymorphicRandomNumberGenerator(int seed)
         {
             _cryptographicGenerator = null;
@@ -555,7 +551,6 @@ namespace Microsoft.PowerShell.Commands
         private readonly RandomNumberGenerator _cryptographicGenerator = null;
 
         
-        /// <returns>A random floating-point number that is greater than or equal to 0.0, and less than 1.0.</returns>
         internal double NextDouble()
         {
             // According to the CLR source:
@@ -564,7 +559,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <returns>A non-negative random integer.</returns>
         internal int Next()
         {
             int randomNumber;
@@ -587,8 +581,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="maxValue">The exclusive upper bound of the random number returned.</param>
-        /// <returns>Next random integer.</returns>
         internal int Next(int maxValue)
         {
             if (maxValue < 0)
@@ -600,9 +592,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="minValue">The inclusive lower bound of the random number returned.</param>
-        /// <param name="maxValue">The exclusive upper bound of the random number returned. maxValue must be greater than or equal to minValue.</param>
-        /// <returns>Next random integer.</returns>
         public int Next(int minValue, int maxValue)
         {
             if (minValue > maxValue)
@@ -627,7 +616,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="buffer">The array to be filled.</param>
         internal void NextBytes(byte[] buffer)
         {
             if (_cryptographicGenerator != null)
@@ -641,7 +629,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <returns>A random integer, using the full range of Int32.</returns>
         private int InternalSample()
         {
             int randomNumber;
@@ -654,7 +641,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <returns>A random double.</returns>
         private double InternalSampleLargeRange()
         {
             double randomNumber;

@@ -143,9 +143,6 @@ namespace Microsoft.Management.UI.Internal
         public static readonly DependencyProperty VisibleProperty = DependencyProperty.Register( "Visible", typeof(bool), typeof(InnerListColumn), new PropertyMetadata( BooleanBoxes.TrueBox, VisibleProperty_PropertyChanged) );
 
         
-        /// <remarks>
-        /// Modifying the Visible property does not in itself make the column visible or not visible.  This should always be kept in sync with the Columns property.
-        /// </remarks>
         [Bindable(true)]
         [Category("Common Properties")]
         [Description("Gets or sets a value indicating whether the columns we want to have available in the list.")]

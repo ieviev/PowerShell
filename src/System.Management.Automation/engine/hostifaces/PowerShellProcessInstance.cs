@@ -41,11 +41,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <param name="powerShellVersion">Specifies the version of powershell.</param>
-        /// <param name="credential">Specifies a user account credentials.</param>
-        /// <param name="initializationScript">Specifies a script that will be executed when the powershell process is initialized.</param>
-        /// <param name="useWow64">Specifies if the powershell process will be 32-bit.</param>
-        /// <param name="workingDirectory">Specifies the initial working directory for the new powershell process.</param>
         public PowerShellProcessInstance(Version powerShellVersion, PSCredential credential, ScriptBlock initializationScript, bool useWow64, string workingDirectory)
         {
             string exePath = PwshExePath;
@@ -138,10 +133,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <param name="powerShellVersion">Specifies the version of powershell.</param>
-        /// <param name="credential">Specifies a user account credentials.</param>
-        /// <param name="initializationScript">Specifies a script that will be executed when the powershell process is initialized.</param>
-        /// <param name="useWow64">Specifies if the powershell process will be 32-bit.</param>
         public PowerShellProcessInstance(Version powerShellVersion, PSCredential credential, ScriptBlock initializationScript, bool useWow64) : this(powerShellVersion, credential, initializationScript, useWow64, workingDirectory: null)
         {
         }

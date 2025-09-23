@@ -35,8 +35,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="obj"></param>
-        /// <returns>The parent process, or null if the parent is no longer running.</returns>
         public static object GetParentProcess(PSObject obj)
         {
             var process = PSObject.Base(obj) as Process;
@@ -44,8 +42,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="process"></param>
-        /// <returns>The pid of the parent process.</returns>
 #if UNIX
         internal static int GetParentPid(Process process)
         {

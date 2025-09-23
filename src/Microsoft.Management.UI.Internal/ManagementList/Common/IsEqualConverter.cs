@@ -15,16 +15,6 @@ namespace Microsoft.Management.UI.Internal
     public class IsEqualConverter : IMultiValueConverter
     {
         
-        /// <param name="values">
-        /// Two objects of any type.
-        /// </param>
-        /// <param name="targetType">The parameter is not used.</param>
-        /// <param name="parameter">The parameter is not used.</param>
-        /// <param name="culture">The parameter is not used.</param>
-        /// <returns>
-        /// True if-and-only-if the two objects are equal per Object.Equals().
-        /// Null is equal only to null.
-        /// </returns>
         public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             ArgumentNullException.ThrowIfNull(values);
@@ -52,11 +42,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="value">The parameter is not used.</param>
-        /// <param name="targetTypes">The parameter is not used.</param>
-        /// <param name="parameter">The parameter is not used.</param>
-        /// <param name="culture">The parameter is not used.</param>
-        /// <returns>The parameter is not used.</returns>
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, System.Globalization.CultureInfo culture)
         {
             throw new NotImplementedException();

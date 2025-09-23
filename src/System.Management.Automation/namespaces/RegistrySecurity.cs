@@ -20,16 +20,6 @@ namespace Microsoft.PowerShell.Commands
         #region ISecurityDescriptorCmdletProvider members
 
         
-        /// <param name="path">
-        /// The path to the item.
-        /// </param>
-        /// <param name="sections">
-        /// Specifies the parts of a security descriptor to retrieve.
-        /// </param>
-        /// <returns>
-        /// Nothing. An object that represents the security descriptor for the item
-        /// specified by path is written to the WriteSecurityDescriptorObject method.
-        /// </returns>
         public void GetSecurityDescriptor(string path,
                                           AccessControlSections sections)
         {
@@ -68,12 +58,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="path">
-        /// The path to the item to set the security descriptor on.
-        /// </param>
-        /// <param name="securityDescriptor">
-        /// The new security descriptor for the item.
-        /// </param>
         public void SetSecurityDescriptor(
             string path,
             ObjectSecurity securityDescriptor)
@@ -143,17 +127,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="path">
-        /// The path to the item whose type is to be used when
-        /// creating a new descriptor.
-        /// </param>
-        /// <param name="sections">
-        /// Specifies the parts of a security descriptor to create.
-        /// </param>
-        /// <returns>
-        /// An instance of <see cref="System.Security.AccessControl.ObjectSecurity"/> object.
-        /// </returns>
-        /// <remarks><paramref name="path"/> and <paramref name="sections"/> are not used by this method.</remarks>
         public ObjectSecurity NewSecurityDescriptorFromPath(
             string path,
             AccessControlSections sections)
@@ -169,15 +142,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="type">
-        /// The type of item associated with this security descriptor
-        /// </param>
-        /// <param name="sections">
-        /// Specifies the parts of a security descriptor to create.
-        /// </param>
-        /// <returns>
-        /// An instance of <see cref="System.Security.AccessControl.ObjectSecurity"/> object.
-        /// </returns>
         public ObjectSecurity NewSecurityDescriptorOfType(
             string type,
             AccessControlSections sections)

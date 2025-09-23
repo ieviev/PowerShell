@@ -47,24 +47,12 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="path">The path to parse.</param>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="path"/> is null.
-        /// </exception>
         public VariablePath(string path)
             : this(path, VariablePathFlags.None)
         {
         }
 
         
-        /// <param name="path">The path to parse.</param>
-        /// <param name="knownFlags">
-        /// These flags for anything known about the path (such as, is it a function) before
-        /// being scanned.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="path"/> is null.
-        /// </exception>
         internal VariablePath(string path, VariablePathFlags knownFlags)
         {
             if (string.IsNullOrEmpty(path))

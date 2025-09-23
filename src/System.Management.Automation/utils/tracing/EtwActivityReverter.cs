@@ -15,10 +15,6 @@ namespace System.Management.Automation.Tracing
         IDisposable
     {
         
-        /// <remarks>
-        ///     <para>Calling <see cref="IDisposable.Dispose"/> has the same effect as
-        ///         calling this method and is useful in the C# "using" syntax.</para>
-        /// </remarks>
         void RevertCurrentActivityId();
     }
 

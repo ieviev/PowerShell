@@ -92,8 +92,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="input">Input string.</param>
-        /// <returns>True if successfully converted, else returns false.</returns>
         private bool ConvertFromJsonHelper(string input)
         {
             ErrorRecord error = null;

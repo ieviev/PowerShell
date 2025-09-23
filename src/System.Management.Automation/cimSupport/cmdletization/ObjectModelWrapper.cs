@@ -8,7 +8,6 @@ using System.Management.Automation;
 namespace Microsoft.PowerShell.Cmdletization
 {
     
-    /// <typeparam name="TObjectInstance">Type that represents instances of objects from the wrapped object model</typeparam>
     public abstract class CmdletAdapter<TObjectInstance>
         where TObjectInstance : class
     {
@@ -39,11 +38,6 @@ namespace Microsoft.PowerShell.Cmdletization
         }
 
         
-        /// <param name="cmdlet"></param>
-        /// <param name="className"></param>
-        /// <param name="classVersion"></param>
-        /// <param name="moduleVersion"></param>
-        /// <param name="privateData"></param>
         public void Initialize(PSCmdlet cmdlet, string className, string classVersion, Version moduleVersion, IDictionary<string, string> privateData)
         {
             _moduleVersion = moduleVersion;
@@ -52,15 +46,12 @@ namespace Microsoft.PowerShell.Cmdletization
         }
 
         
-        /// <returns>Query builder for a given object model.</returns>
         public virtual QueryBuilder GetQueryBuilder()
         {
             throw new NotImplementedException();
         }
 
         
-        /// <param name="query">Query parameters.</param>
-        /// <returns>A lazy evaluated collection of object instances.</returns>
         public virtual void ProcessRecord(QueryBuilder query)
         {
             throw new NotImplementedException();
@@ -77,35 +68,23 @@ namespace Microsoft.PowerShell.Cmdletization
         }
 
         
-        /// <remarks>
-        /// The PowerShell engine will call this method on a separate thread
-        /// from the pipeline thread where BeginProcessing, EndProcessing
-        /// and other methods are normally being executed.
-        /// </remarks>
         public virtual void StopProcessing()
         {
         }
 
         
-        /// <param name="objectInstance">The object on which to invoke the method.</param>
-        /// <param name="methodInvocationInfo">Method invocation details.</param>
-        /// <param name="passThru"><see langword="true"/> if successful method invocations should emit downstream the <paramref name="objectInstance"/> being operated on.</param>
         public virtual void ProcessRecord(TObjectInstance objectInstance, MethodInvocationInfo methodInvocationInfo, bool passThru)
         {
             throw new NotImplementedException();
         }
 
         
-        /// <param name="query">Query parameters.</param>
-        /// <param name="methodInvocationInfo">Method invocation details.</param>
-        /// <param name="passThru"><see langword="true"/> if successful method invocations should emit downstream the object instance being operated on.</param>
         public virtual void ProcessRecord(QueryBuilder query, MethodInvocationInfo methodInvocationInfo, bool passThru)
         {
             throw new NotImplementedException();
         }
 
         
-        /// <param name="methodInvocationInfo">Method invocation details.</param>
         public virtual void ProcessRecord(
             MethodInvocationInfo methodInvocationInfo)
         {

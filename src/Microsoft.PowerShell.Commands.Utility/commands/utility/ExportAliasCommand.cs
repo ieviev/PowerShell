@@ -149,7 +149,6 @@ namespace Microsoft.PowerShell.Commands
         private bool _noclobber;
 
         
-        /// <value></value>
         [Parameter]
         public string Description { get; set; }
 
@@ -338,12 +337,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="readOnlyFileInfo">
-        /// If not null, this is the file whose read-only attribute
-        /// was cleared (due to the -Force parameter).  The attribute
-        /// should be reset.
-        /// </param>
-        /// <returns></returns>
         private StreamWriter OpenFile(out FileInfo readOnlyFileInfo)
         {
             StreamWriter result = null;

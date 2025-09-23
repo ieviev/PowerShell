@@ -32,10 +32,6 @@ namespace System.Management.Automation.Tracing
         }
 
         
-        /// <remarks>
-        /// NOTE: do not access this field directly, use the PayloadBuilder
-        /// property to ensure correct thread initialization; otherwise, a null reference can occur.
-        /// </remarks>
         [ThreadStatic]
         private static StringBuilder t_payloadBuilder;
 
@@ -51,25 +47,12 @@ namespace System.Management.Automation.Tracing
         }
 
         
-        /// <param name="level"></param>
-        /// <param name="keywords"></param>
-        /// <returns></returns>
-        /// <remarks>
-        /// Typically, a provider does not call this method to determine whether a session requested the specified event;
-        /// the provider simply writes the event, and ETW determines whether the event is logged to a session. A provider
-        /// may want to call this function if the provider needs to perform extra work to generate the event. In this case,
-        ///  calling this function first to determine if a session requested the event or not, may save resources and time.
-        /// </remarks>
         internal bool IsEnabled(PSLevel level, PSKeyword keywords)
         {
             return s_provider.IsEnabled(level, keywords);
         }
 
         
-        /// <param name="logContext"></param>
-        /// <param name="eventId"></param>
-        /// <param name="exception"></param>
-        /// <param name="additionalInfo"></param>
         internal override void LogEngineHealthEvent(LogContext logContext, int eventId, Exception exception, Dictionary<string, string> additionalInfo)
         {
             StringBuilder payload = PayloadBuilder;
@@ -83,18 +66,12 @@ namespace System.Management.Automation.Tracing
         }
 
         
-        /// <param name="state">This the action performed in AmsiUtil class, like init, scan, etc</param>
-        /// <param name="context">The amsiContext handled - Session pair</param>
         internal override void LogAmsiUtilStateEvent(string state, string context)
         {
             WriteEvent(PSEventId.Amsi_Init, PSChannel.Analytic, PSOpcode.Method, PSLevel.Informational, PSTask.Amsi, (PSKeyword)0x0, state, context);
         }
 
         
-        /// <param name="queryName">Name of the WDAC query.</param>
-        /// <param name="fileName">Name of script file for policy query. Can be null value.</param>
-        /// <param name="querySuccess">Query call succeed code.</param>
-        /// <param name="queryResult">Result code of WDAC query.</param>
         internal override void LogWDACQueryEvent(
             string queryName,
             string fileName,
@@ -105,9 +82,6 @@ namespace System.Management.Automation.Tracing
         }
 
         
-        /// <param name="title">Title of WDAC audit event.</param>
-        /// <param name="message">WDAC audit event message.</param>
-        /// <param name="fqid">FullyQualifiedId of WDAC audit event.</param>
         internal override void LogWDACAuditEvent(
             string title,
             string message,
@@ -117,9 +91,6 @@ namespace System.Management.Automation.Tracing
         }
 
         
-        /// <param name="logContext"></param>
-        /// <param name="newState"></param>
-        /// <param name="previousState"></param>
         internal override void LogEngineLifecycleEvent(LogContext logContext, EngineState newState, EngineState previousState)
         {
             if (IsEnabled(PSLevel.Informational, PSKeyword.Cmdlets | PSKeyword.UseAlwaysAnalytic))
@@ -144,8 +115,6 @@ namespace System.Management.Automation.Tracing
         }
 
         
-        /// <param name="logContext"></param>
-        /// <param name="exception"></param>
         internal override void LogCommandHealthEvent(LogContext logContext, Exception exception)
         {
             StringBuilder payload = PayloadBuilder;
@@ -157,8 +126,6 @@ namespace System.Management.Automation.Tracing
         }
 
         
-        /// <param name="getLogContext"></param>
-        /// <param name="newState"></param>
         internal override void LogCommandLifecycleEvent(Func<LogContext> getLogContext, CommandState newState)
         {
             if (IsEnabled(PSLevel.Informational, PSKeyword.Cmdlets | PSKeyword.UseAlwaysAnalytic))
@@ -192,8 +159,6 @@ namespace System.Management.Automation.Tracing
         }
 
         
-        /// <param name="logContext"></param>
-        /// <param name="pipelineExecutionDetail"></param>
         internal override void LogPipelineExecutionDetailEvent(LogContext logContext, List<string> pipelineExecutionDetail)
         {
             StringBuilder payload = PayloadBuilder;
@@ -211,9 +176,6 @@ namespace System.Management.Automation.Tracing
         }
 
         
-        /// <param name="logContext"></param>
-        /// <param name="providerName"></param>
-        /// <param name="exception"></param>
         internal override void LogProviderHealthEvent(LogContext logContext, string providerName, Exception exception)
         {
             StringBuilder payload = PayloadBuilder;
@@ -232,9 +194,6 @@ namespace System.Management.Automation.Tracing
         }
 
         
-        /// <param name="logContext"></param>
-        /// <param name="providerName"></param>
-        /// <param name="newState"></param>
         internal override void LogProviderLifecycleEvent(LogContext logContext, string providerName, ProviderState newState)
         {
             if (IsEnabled(PSLevel.Informational, PSKeyword.Cmdlets | PSKeyword.UseAlwaysAnalytic))
@@ -256,10 +215,6 @@ namespace System.Management.Automation.Tracing
         }
 
         
-        /// <param name="logContext"></param>
-        /// <param name="variableName"></param>
-        /// <param name="value"></param>
-        /// <param name="previousValue"></param>
         internal override void LogSettingsEvent(LogContext logContext, string variableName, string value, string previousValue)
         {
             if (IsEnabled(PSLevel.Informational, PSKeyword.Cmdlets | PSKeyword.UseAlwaysAnalytic))
@@ -281,19 +236,12 @@ namespace System.Management.Automation.Tracing
         }
 
         
-        /// <returns></returns>
         internal override bool UseLoggingVariables()
         {
             return false;
         }
 
         
-        /// <param name="id">Event id.</param>
-        /// <param name="channel"></param>
-        /// <param name="opcode"></param>
-        /// <param name="task"></param>
-        /// <param name="logContext">Log context.</param>
-        /// <param name="payLoad"></param>
         internal void WriteEvent(PSEventId id, PSChannel channel, PSOpcode opcode, PSTask task, LogContext logContext, string payLoad)
         {
             s_provider.Log(id, channel, task, opcode, GetPSLevelFromSeverity(logContext.Severity), DefaultKeywords,
@@ -303,13 +251,6 @@ namespace System.Management.Automation.Tracing
         }
 
         
-        /// <param name="id"></param>
-        /// <param name="channel"></param>
-        /// <param name="opcode"></param>
-        /// <param name="level"></param>
-        /// <param name="task"></param>
-        /// <param name="keyword"></param>
-        /// <param name="args"></param>
         internal void WriteEvent(PSEventId id, PSChannel channel, PSOpcode opcode, PSLevel level, PSTask task, PSKeyword keyword, params object[] args)
         {
             s_provider.Log(id, channel, task, opcode, level, keyword, args);
@@ -322,7 +263,6 @@ namespace System.Management.Automation.Tracing
         }
 
         
-        /// <param name="newActivityId">The GUID identifying the activity.</param>
         internal void SetActivityIdForCurrentThread(Guid newActivityId)
         {
             s_provider.SetActivity(newActivityId);

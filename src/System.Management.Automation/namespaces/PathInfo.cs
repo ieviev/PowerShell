@@ -33,22 +33,12 @@ namespace System.Management.Automation
         }
 
         
-        /// <returns>
-        /// The drive associated with this PathInfo.
-        /// </returns>
         internal PSDriveInfo GetDrive()
         {
             return _drive;
         }
 
         
-        /// <exception cref="ProviderInvocationException">
-        /// The provider encountered an error when resolving the path.
-        /// </exception>
-        /// <exception cref="InvalidOperationException">
-        /// The path was a home relative path but the home path was not
-        /// set for the provider.
-        /// </exception>
         public string ProviderPath
         {
             get
@@ -82,9 +72,6 @@ namespace System.Management.Automation
         private readonly string _path = string.Empty;
 
         
-        /// <returns>
-        /// A string representing the PowerShell path.
-        /// </returns>
         public override string ToString()
         {
             string result = _path;
@@ -107,22 +94,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="drive">
-        /// The drive that contains the path
-        /// </param>
-        /// <param name="provider">
-        /// The provider that contains the path.
-        /// </param>
-        /// <param name="path">
-        /// The path this object represents.
-        /// </param>
-        /// <param name="sessionState">
-        /// The session state associated with the drive, provider, and path information.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="drive"/>, <paramref name="provider"/>,
-        /// <paramref name="path"/>, or <paramref name="sessionState"/> is null.
-        /// </exception>
         internal PathInfo(PSDriveInfo drive, ProviderInfo provider, string path, SessionState sessionState)
         {
             if (provider == null)

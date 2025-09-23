@@ -21,12 +21,6 @@ namespace System.Management.Automation
         #region ctor
 
         
-        /// <param name="command">
-        /// The NativeCommand to bind to.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="command"/>.Context is null
-        /// </exception>
         internal NativeCommandParameterBinder(
             NativeCommand command) : base(command.MyInvocation, command.Context, command)
         {
@@ -39,16 +33,6 @@ namespace System.Management.Automation
         #region Parameter binding
 
         
-        /// <param name="name">
-        ///     The name of the parameter to bind the value to. For applications
-        ///     this just becomes another parameter...
-        /// </param>
-        /// <param name="value">
-        ///     The value to bind to the parameter. It should be assumed by
-        ///     derived classes that the proper type coercion has already taken
-        ///     place and that any prerequisite metadata has been satisfied.
-        /// </param>
-        /// <param name="parameterMetadata"></param>
         internal override void BindParameter(string name, object value, CompiledCommandParameter parameterMetadata)
         {
             Diagnostics.Assert(false, "Unreachable code");
@@ -145,8 +129,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="parameter">The parameter associated with the operation.</param>
-        /// <param name="argument">The value used with parameter.</param>
         internal void AddToArgumentList(CommandParameterInternal parameter, string argument)
         {
             if (parameter.ParameterNameSpecified && parameter.ParameterText.EndsWith(":"))
@@ -198,12 +180,6 @@ namespace System.Management.Automation
         #region private members
 
         
-        /// <param name="context">Execution context instance.</param>
-        /// <param name="parameter">The parameter associated with the operation.</param>
-        /// <param name="obj">The object to append.</param>
-        /// <param name="argArrayAst">If the argument was an array literal, the Ast, otherwise null.</param>
-        /// <param name="sawVerbatimArgumentMarker">True if the argument occurs after --%.</param>
-        /// <param name="usedQuotes">True if the argument was a quoted string (single or double).</param>
         private void AppendOneNativeArgument(ExecutionContext context, CommandParameterInternal parameter, object obj, ArrayLiteralAst argArrayAst, bool sawVerbatimArgumentMarker, bool usedQuotes)
         {
             IEnumerator list = LanguagePrimitives.GetEnumerator(obj);
@@ -310,9 +286,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="arg">The argument that possibly needs expansion.</param>
-        /// <param name="parameter">The parameter associated with the operation.</param>
-        /// <param name="usedQuotes">True if the argument was a quoted string (single or double).</param>
         private void PossiblyGlobArg(string arg, CommandParameterInternal parameter, bool usedQuotes)
         {
             var argExpanded = false;
@@ -402,9 +375,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="arg">The argument that possibly needs expansion.</param>
-        /// <param name="parameter">The parameter associated with the operation.</param>
-        /// <returns>True if tilde expansion occurred.</returns>
         private bool ExpandTilde(string arg, CommandParameterInternal parameter)
         {
             var fileSystemProvider = Context.EngineSessionState.GetSingleProvider(FileSystemProvider.ProviderName);
@@ -427,7 +397,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="stringToCheck">The string to check for spaces.</param>
         internal static bool NeedQuotes(string stringToCheck)
         {
             bool needQuotes = false, followingBackslash = false;

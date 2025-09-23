@@ -28,32 +28,16 @@ namespace Microsoft.PowerShell
     
     public enum ExecutionPolicy
     {
-        /// Unrestricted - No files must be signed.  If a file originates from the
-        ///    internet, PowerShell provides a warning prompt to alert the user.  To
-        ///    suppress this warning message, right-click on the file in File Explorer,
-        ///    select "Properties," and then "Unblock."
         Unrestricted = 0,
 
-        /// RemoteSigned - Only .ps1 and .ps1xml files originating from the internet
-        ///    must be digitally signed.  If remote, signed, and executed, PowerShell
-        ///    prompts to determine if files from the signing publisher should be
-        ///    run or not.  This is the default setting.
         RemoteSigned = 1,
 
-        /// AllSigned - All .ps1 and .ps1xml files must be digitally signed.  If
-        ///    signed and executed, PowerShell prompts to determine if files from the
-        ///    signing publisher should be run or not.
         AllSigned = 2,
 
-        /// Restricted - All .ps1 files are blocked.  Ps1xml files must be digitally
-        ///    signed, and by a trusted publisher.  If you haven't made a trust decision
-        ///    on the publisher yet, prompting is done as in AllSigned mode.
         Restricted = 3,
 
-        /// Bypass - No files must be signed, and internet origin is not verified
         Bypass = 4,
 
-        /// Undefined - Not specified at this scope
         Undefined = 5,
 
         
@@ -63,24 +47,14 @@ namespace Microsoft.PowerShell
     
     public enum ExecutionPolicyScope
     {
-        /// Execution policy is retrieved from the
-        /// PSExecutionPolicyPreference environment variable.
         Process = 0,
 
-        /// Execution policy is retrieved from the HKEY_CURRENT_USER
-        /// registry hive for the current ShellId.
         CurrentUser = 1,
 
-        /// Execution policy is retrieved from the HKEY_LOCAL_MACHINE
-        /// registry hive for the current ShellId.
         LocalMachine = 2,
 
-        /// Execution policy is retrieved from the current user's
-        /// group policy setting.
         UserPolicy = 3,
 
-        /// Execution policy is retrieved from the machine-wide
-        /// group policy setting.
         MachinePolicy = 4
     }
 }
@@ -90,13 +64,10 @@ namespace System.Management.Automation.Internal
     
     internal enum SaferPolicy
     {
-        /// Explicitly allowed through an Allow rule
         ExplicitlyAllowed = 0,
 
-        /// Allowed because it has not been explicitly disallowed
         Allowed = 1,
 
-        /// Disallowed by a rule or policy.
         Disallowed = 2
     }
 
@@ -202,9 +173,6 @@ namespace System.Management.Automation.Internal
         private static bool? _hasGpScriptParent;
 
         
-        /// <remarks>
-        /// This is somewhat expensive to determine and does not change within the lifetime of the current process
-        /// </remarks>
         private static bool HasGpScriptParent
         {
             get
@@ -364,8 +332,6 @@ namespace System.Management.Automation.Internal
         }
 
         
-        /// <param name="file">Name of file to check.</param>
-        /// <returns>True when file has product binary signature.</returns>
         public static bool IsProductBinary(string file)
         {
             if (string.IsNullOrEmpty(file) || (!IO.File.Exists(file)))
@@ -409,7 +375,6 @@ namespace System.Management.Automation.Internal
         }
 
         
-        /// <returns>NULL if it is not defined at this level.</returns>
         private static string GetGroupPolicyValue(string shellId, ExecutionPolicyScope scope)
         {
             ConfigScope[] scopeKey = null;
@@ -429,7 +394,6 @@ namespace System.Management.Automation.Internal
         }
 
         
-        /// <returns>NULL if it is not defined at this level.</returns>
         private static string GetLocalPreferenceValue(string shellId, ExecutionPolicyScope scope)
         {
             switch (scope)
@@ -451,8 +415,6 @@ namespace System.Management.Automation.Internal
         private static bool _saferIdentifyLevelApiSupported = true;
 
         
-        /// <param name="path">The path to the file in question.</param>
-        /// <param name="handle">A file handle to the file in question, if available.</param>
         [SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods")]
         internal static SaferPolicy GetSaferPolicy(string path, SafeHandle handle)
         {
@@ -544,8 +506,6 @@ namespace System.Management.Automation.Internal
         }
 
         
-        /// <param name="filePath">Path to file.</param>
-        /// <returns>Does not return a value.</returns>
         internal static void CheckIfFileExists(string filePath)
         {
             if (!File.Exists(filePath))
@@ -555,8 +515,6 @@ namespace System.Management.Automation.Internal
         }
 
         
-        /// <param name="c">Certificate object.</param>
-        /// <returns>True on success, false otherwise.</returns>
         internal static bool CertIsGoodForSigning(X509Certificate2 c)
         {
             if (!c.HasPrivateKey)
@@ -568,8 +526,6 @@ namespace System.Management.Automation.Internal
         }
 
         
-        /// <param name="c">Certificate object.</param>
-        /// <returns>True on success, false otherwise.</returns>
         internal static bool CertIsGoodForEncryption(X509Certificate2 c)
         {
             return (
@@ -579,9 +535,6 @@ namespace System.Management.Automation.Internal
         }
 
         
-        /// <param name="c">Certificate object.</param>
-        /// <param name="expiring">Certificate expire time.</param>
-        /// <returns>True on success, false otherwise.</returns>
         internal static bool CertExpiresByTime(X509Certificate2 c, DateTime expiring)
         {
             return c.NotAfter < expiring;
@@ -623,8 +576,6 @@ namespace System.Management.Automation.Internal
         }
 
         
-        /// <param name="cert">Certificate object.</param>
-        /// <returns>A collection of cert eku strings.</returns>
         internal static Collection<string> GetCertEKU(X509Certificate2 cert)
         {
             Collection<string> ekus = new Collection<string>();
@@ -677,8 +628,6 @@ namespace System.Management.Automation.Internal
         }
 
         
-        /// <param name="n">Signed int number.</param>
-        /// <returns>DWORD.</returns>
         internal static DWORD GetDWORDFromInt(int n)
         {
             UInt32 result = BitConverter.ToUInt32(BitConverter.GetBytes(n), 0);
@@ -686,8 +635,6 @@ namespace System.Management.Automation.Internal
         }
 
         
-        /// <param name="n">Number.</param>
-        /// <returns>Int.</returns>
         internal static int GetIntFromDWORD(DWORD n)
         {
             Int64 n64 = n - 0x100000000L;
@@ -827,7 +774,6 @@ namespace System.Management.Automation
         internal static readonly string END_CERTIFICATE_SIGIL = "-----END CERTIFICATE-----";
 
         
-        /// <param name="bytes">The bytes to encode.</param>
         internal static string GetAsciiArmor(byte[] bytes)
         {
             StringBuilder output = new StringBuilder();
@@ -841,11 +787,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="actualContent">The Ascii armored content.</param>
-        /// <param name="beginMarker">The marker of the start of the Base64 content.</param>
-        /// <param name="endMarker">The marker of the end of the Base64 content.</param>
-        /// <param name="startIndex">The beginning of where the Ascii armor was detected.</param>
-        /// <param name="endIndex">The end of where the Ascii armor was detected.</param>
         internal static byte[] RemoveAsciiArmor(string actualContent, string beginMarker, string endMarker, out int startIndex, out int endIndex)
         {
             byte[] messageBytes = null;
@@ -882,14 +823,6 @@ namespace System.Management.Automation
         internal CmsMessageRecipient() { }
 
         
-        /// <param name="identifier">
-        ///     The identifier of the CmsMessageRecipient.
-        ///     Can be either:
-        ///         - The path to a file containing the certificate
-        ///         - The path to a directory containing the certificate
-        ///         - The thumbprint of the certificate, used to find the certificate in the certificate store
-        ///         - The Subject name of the recipient, used to find the certificate in the certificate store
-        /// </param>
         public CmsMessageRecipient(string identifier)
         {
             _identifier = identifier;
@@ -899,7 +832,6 @@ namespace System.Management.Automation
         private readonly string _identifier;
 
         
-        /// <param name="certificate">The certificate to use.</param>
         public CmsMessageRecipient(X509Certificate2 certificate)
         {
             _pendingCertificate = certificate;
@@ -916,9 +848,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="sessionState">A reference to an instance of Powershell's SessionState class.</param>
-        /// <param name="purpose">The purpose for which this identifier is being resolved (Encryption / Decryption.</param>
-        /// <param name="error">The error generated (if any) for this resolution.</param>
         public void Resolve(SessionState sessionState, ResolutionPurpose purpose, out ErrorRecord error)
         {
             error = null;
@@ -1274,9 +1203,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="content">The string to be scanned.</param>
-        /// <param name="sourceMetadata">Information about the source (filename, etc.).</param>
-        /// <returns>AMSI_RESULT_DETECTED if malware was detected in the sample.</returns>
         internal static AmsiNativeMethods.AMSI_RESULT ScanContent(string content, string sourceMetadata)
         {
 #if UNIX
@@ -1371,9 +1297,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="name">Name of content being reported.</param>
-        /// <param name="content">Content being reported.</param>
-        /// <returns>True if content was successfully reported.</returns>
         internal static bool ReportContent(
             string name,
             string content)
@@ -1567,55 +1490,33 @@ namespace System.Management.Automation
         {
             internal enum AMSI_RESULT
             {
-                /// AMSI_RESULT_CLEAN -> 0
                 AMSI_RESULT_CLEAN = 0,
 
-                /// AMSI_RESULT_NOT_DETECTED -> 1
                 AMSI_RESULT_NOT_DETECTED = 1,
 
-                /// Certain policies set by administrator blocked this content on this machine
                 AMSI_RESULT_BLOCKED_BY_ADMIN_BEGIN = 0x4000,
                 AMSI_RESULT_BLOCKED_BY_ADMIN_END = 0x4fff,
 
-                /// AMSI_RESULT_DETECTED -> 32768
                 AMSI_RESULT_DETECTED = 32768,
             }
 
-            /// Return Type: HRESULT->LONG->int
-            ///appName: LPCWSTR->WCHAR*
-            ///amsiContext: HAMSICONTEXT*
             [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
             [DllImport("amsi.dll", EntryPoint = "AmsiInitialize", CallingConvention = CallingConvention.StdCall)]
             internal static extern int AmsiInitialize(
                 [In][MarshalAs(UnmanagedType.LPWStr)] string appName, ref System.IntPtr amsiContext);
 
-            /// Return Type: void
-            ///amsiContext: HAMSICONTEXT->HAMSICONTEXT__*
             [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
             [DllImport("amsi.dll", EntryPoint = "AmsiUninitialize", CallingConvention = CallingConvention.StdCall)]
             internal static extern void AmsiUninitialize(System.IntPtr amsiContext);
 
-            /// Return Type: HRESULT->LONG->int
-            ///amsiContext: HAMSICONTEXT->HAMSICONTEXT__*
-            ///amsiSession: HAMSISESSION*
             [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
             [DllImport("amsi.dll", EntryPoint = "AmsiOpenSession", CallingConvention = CallingConvention.StdCall)]
             internal static extern int AmsiOpenSession(System.IntPtr amsiContext, ref System.IntPtr amsiSession);
 
-            /// Return Type: void
-            ///amsiContext: HAMSICONTEXT->HAMSICONTEXT__*
-            ///amsiSession: HAMSISESSION->HAMSISESSION__*
             [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
             [DllImport("amsi.dll", EntryPoint = "AmsiCloseSession", CallingConvention = CallingConvention.StdCall)]
             internal static extern void AmsiCloseSession(System.IntPtr amsiContext, System.IntPtr amsiSession);
 
-            /// Return Type: HRESULT->LONG->int
-            ///amsiContext: HAMSICONTEXT->HAMSICONTEXT__*
-            ///buffer: PVOID->void*
-            ///length: ULONG->unsigned int
-            ///contentName: LPCWSTR->WCHAR*
-            ///amsiSession: HAMSISESSION->HAMSISESSION__*
-            ///result: AMSI_RESULT*
             [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
             [DllImport("amsi.dll", EntryPoint = "AmsiScanBuffer", CallingConvention = CallingConvention.StdCall)]
             internal static extern int AmsiScanBuffer(
@@ -1626,12 +1527,6 @@ namespace System.Management.Automation
                 System.IntPtr amsiSession,
                 ref AMSI_RESULT result);
 
-            /// Return Type: HRESULT->LONG->int
-            /// amsiContext: HAMSICONTEXT->HAMSICONTEXT__*
-            /// buffer: PVOID->void*
-            /// length: ULONG->unsigned int
-            /// contentName: LPCWSTR->WCHAR*
-            /// result: AMSI_RESULT*
             [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
             [DllImport("amsi.dll", EntryPoint = "AmsiNotifyOperation", CallingConvention = CallingConvention.StdCall)]
             internal static extern int AmsiNotifyOperation(
@@ -1641,12 +1536,6 @@ namespace System.Management.Automation
                 [In][MarshalAs(UnmanagedType.LPWStr)] string contentName,
                 ref AMSI_RESULT result);
 
-            /// Return Type: HRESULT->LONG->int
-            ///amsiContext: HAMSICONTEXT->HAMSICONTEXT__*
-            ///string: LPCWSTR->WCHAR*
-            ///contentName: LPCWSTR->WCHAR*
-            ///amsiSession: HAMSISESSION->HAMSISESSION__*
-            ///result: AMSI_RESULT*
             [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
             [DllImport("amsi.dll", EntryPoint = "AmsiScanString", CallingConvention = CallingConvention.StdCall)]
             internal static extern int AmsiScanString(

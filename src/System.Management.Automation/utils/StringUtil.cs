@@ -98,51 +98,24 @@ namespace System.Management.Automation.Internal
         }
 
         
-        /// <param name="str">String that may contain VT escape sequences.</param>
-        /// <param name="startOffset">
-        /// When the string doesn't contain VT sequences, it's the starting index.
-        /// When the string contains VT sequences, it means starting from the 'n-th' char that doesn't belong to a escape sequence.
-        /// </param>
-        /// <returns>The requested substring.</returns>
         internal static string VtSubstring(this string str, int startOffset)
         {
             return VtSubstring(str, startOffset, int.MaxValue, prependStr: null, appendStr: null);
         }
 
         
-        /// <param name="str">String that may contain VT escape sequences.</param>
-        /// <param name="startOffset">
-        /// When the string doesn't contain VT sequences, it's the starting index.
-        /// When the string contains VT sequences, it means starting from the 'n-th' char that doesn't belong to a escape sequence.</param>
-        /// <param name="length">Number of non-escape-sequence characters to be included in the substring.</param>
-        /// <returns>The requested substring.</returns>
         internal static string VtSubstring(this string str, int startOffset, int length)
         {
             return VtSubstring(str, startOffset, length, prependStr: null, appendStr: null);
         }
 
         
-        /// <param name="str">String that may contain VT escape sequences.</param>
-        /// <param name="startOffset">
-        /// When the string doesn't contain VT sequences, it's the starting index.
-        /// When the string contains VT sequences, it means starting from the 'n-th' char that doesn't belong to a escape sequence.</param>
-        /// <param name="prependStr">The string to be prepended to the substring.</param>
-        /// <param name="appendStr">The string to be appended to the substring.</param>
-        /// <returns>The requested substring.</returns>
         internal static string VtSubstring(this string str, int startOffset, string prependStr, string appendStr)
         {
             return VtSubstring(str, startOffset, int.MaxValue, prependStr, appendStr);
         }
 
         
-        /// <param name="str">String that may contain VT escape sequences.</param>
-        /// <param name="startOffset">
-        /// When the string doesn't contain VT sequences, it's the starting index.
-        /// When the string contains VT sequences, it means starting from the 'n-th' char that doesn't belong to a escape sequence.</param>
-        /// <param name="length">Number of non-escape-sequence characters to be included in the substring.</param>
-        /// <param name="prependStr">The string to be prepended to the substring.</param>
-        /// <param name="appendStr">The string to be appended to the substring.</param>
-        /// <returns>The requested substring.</returns>
         internal static string VtSubstring(this string str, int startOffset, int length, string prependStr, string appendStr)
         {
             var valueStrDec = new ValueStringDecorated(str);

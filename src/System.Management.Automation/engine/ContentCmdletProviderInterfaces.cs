@@ -22,12 +22,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="cmdlet">
-        /// An instance of the cmdlet.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="cmdlet"/> is null.
-        /// </exception>
         internal ContentCmdletProviderIntrinsics(Cmdlet cmdlet)
         {
             if (cmdlet == null)
@@ -40,12 +34,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="sessionState">
-        /// An instance of the sessionState.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="sessionState"/> is null.
-        /// </exception>
         internal ContentCmdletProviderIntrinsics(SessionStateInternal sessionState)
         {
             if (sessionState == null)
@@ -63,32 +51,6 @@ namespace System.Management.Automation
         #region GetContentReader
 
         
-        /// <param name="path">
-        /// The path to the item to get the content reader for.
-        /// </param>
-        /// <returns>
-        /// The IContentReader for the item(s) at the specified path.
-        /// </returns>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="path"/> is null.
-        /// </exception>
-        /// <exception cref="ProviderNotFoundException">
-        /// If the <paramref name="path"/> refers to a provider that could not be found.
-        /// </exception>
-        /// <exception cref="DriveNotFoundException">
-        /// If the <paramref name="path"/> refers to a drive that could not be found.
-        /// </exception>
-        /// <exception cref="ItemNotFoundException">
-        /// If <paramref name="path"/> does not contain glob characters and
-        /// could not be found.
-        /// </exception>
-        /// <exception cref="NotSupportedException">
-        /// If the provider that the <paramref name="path"/> refers to does
-        /// not support this operation.
-        /// </exception>
-        /// <exception cref="ProviderInvocationException">
-        /// If the provider threw an exception.
-        /// </exception>
         public Collection<IContentReader> GetReader(string path)
         {
             Dbg.Diagnostics.Assert(
@@ -101,38 +63,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="path">
-        /// The path(s) to the item(s) to get the content reader for.
-        /// </param>
-        /// <param name="force">
-        /// Passed on to providers to force operations.
-        /// </param>
-        /// <param name="literalPath">
-        /// If true, globbing is not done on paths.
-        /// </param>
-        /// <returns>
-        /// The IContentReader for the item(s) at the specified path.
-        /// </returns>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="path"/> is null.
-        /// </exception>
-        /// <exception cref="ProviderNotFoundException">
-        /// If the <paramref name="path"/> refers to a provider that could not be found.
-        /// </exception>
-        /// <exception cref="DriveNotFoundException">
-        /// If the <paramref name="path"/> refers to a drive that could not be found.
-        /// </exception>
-        /// <exception cref="ItemNotFoundException">
-        /// If <paramref name="path"/> does not contain glob characters and
-        /// could not be found.
-        /// </exception>
-        /// <exception cref="NotSupportedException">
-        /// If the provider that the <paramref name="path"/> refers to does
-        /// not support this operation.
-        /// </exception>
-        /// <exception cref="ProviderInvocationException">
-        /// If the provider threw an exception.
-        /// </exception>
         public Collection<IContentReader> GetReader(string[] path, bool force, bool literalPath)
         {
             Dbg.Diagnostics.Assert(
@@ -145,32 +75,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="path">
-        /// </param>
-        /// <param name="context">
-        /// </param>
-        /// <returns>
-        /// </returns>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="path"/> is null.
-        /// </exception>
-        /// <exception cref="ProviderNotFoundException">
-        /// If the <paramref name="path"/> refers to a provider that could not be found.
-        /// </exception>
-        /// <exception cref="DriveNotFoundException">
-        /// If the <paramref name="path"/> refers to a drive that could not be found.
-        /// </exception>
-        /// <exception cref="ItemNotFoundException">
-        /// If <paramref name="path"/> does not contain glob characters and
-        /// could not be found.
-        /// </exception>
-        /// <exception cref="NotSupportedException">
-        /// If the provider that the <paramref name="path"/> refers to does
-        /// not support this operation.
-        /// </exception>
-        /// <exception cref="ProviderInvocationException">
-        /// If the provider threw an exception.
-        /// </exception>
         internal Collection<IContentReader> GetReader(
             string path,
             CmdletProviderContext context)
@@ -185,33 +89,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="path">
-        /// The path to the item if it was specified on the command line.
-        /// </param>
-        /// <param name="context">
-        /// The context which the core command is running.
-        /// </param>
-        /// <returns>
-        /// An object that has properties and fields decorated with
-        /// parsing attributes similar to a cmdlet class.
-        /// </returns>
-        /// <exception cref="ProviderNotFoundException">
-        /// If the <paramref name="path"/> refers to a provider that could not be found.
-        /// </exception>
-        /// <exception cref="DriveNotFoundException">
-        /// If the <paramref name="path"/> refers to a drive that could not be found.
-        /// </exception>
-        /// <exception cref="ItemNotFoundException">
-        /// If <paramref name="path"/> does not contain glob characters and
-        /// could not be found.
-        /// </exception>
-        /// <exception cref="NotSupportedException">
-        /// If the provider that the <paramref name="path"/> refers to does
-        /// not support this operation.
-        /// </exception>
-        /// <exception cref="ProviderInvocationException">
-        /// If the provider threw an exception.
-        /// </exception>
         internal object GetContentReaderDynamicParameters(
             string path,
             CmdletProviderContext context)
@@ -230,32 +107,6 @@ namespace System.Management.Automation
         #region GetContentWriter
 
         
-        /// <param name="path">
-        /// The path to the item(s) to get the content writer for.
-        /// </param>
-        /// <returns>
-        /// The IContentWriter for the item(s) at the specified path.
-        /// </returns>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="path"/> is null.
-        /// </exception>
-        /// <exception cref="ProviderNotFoundException">
-        /// If the <paramref name="path"/> refers to a provider that could not be found.
-        /// </exception>
-        /// <exception cref="DriveNotFoundException">
-        /// If the <paramref name="path"/> refers to a drive that could not be found.
-        /// </exception>
-        /// <exception cref="ItemNotFoundException">
-        /// If <paramref name="path"/> does not contain glob characters and
-        /// could not be found.
-        /// </exception>
-        /// <exception cref="NotSupportedException">
-        /// If the provider that the <paramref name="path"/> refers to does
-        /// not support this operation.
-        /// </exception>
-        /// <exception cref="ProviderInvocationException">
-        /// If the provider threw an exception.
-        /// </exception>
         public Collection<IContentWriter> GetWriter(string path)
         {
             Dbg.Diagnostics.Assert(
@@ -268,38 +119,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="path">
-        /// The path(s) to the item(s) to get the content writer for.
-        /// </param>
-        /// <param name="force">
-        /// Passed on to providers to force operations.
-        /// </param>
-        /// <param name="literalPath">
-        /// If true, globbing is not done on paths.
-        /// </param>
-        /// <returns>
-        /// The IContentWriter for the item(s) at the specified path.
-        /// </returns>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="path"/> is null.
-        /// </exception>
-        /// <exception cref="ProviderNotFoundException">
-        /// If the <paramref name="path"/> refers to a provider that could not be found.
-        /// </exception>
-        /// <exception cref="DriveNotFoundException">
-        /// If the <paramref name="path"/> refers to a drive that could not be found.
-        /// </exception>
-        /// <exception cref="ItemNotFoundException">
-        /// If <paramref name="path"/> does not contain glob characters and
-        /// could not be found.
-        /// </exception>
-        /// <exception cref="NotSupportedException">
-        /// If the provider that the <paramref name="path"/> refers to does
-        /// not support this operation.
-        /// </exception>
-        /// <exception cref="ProviderInvocationException">
-        /// If the provider threw an exception.
-        /// </exception>
         public Collection<IContentWriter> GetWriter(string[] path, bool force, bool literalPath)
         {
             Dbg.Diagnostics.Assert(
@@ -312,32 +131,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="path">
-        /// </param>
-        /// <param name="context">
-        /// </param>
-        /// <returns>
-        /// </returns>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="path"/> is null.
-        /// </exception>
-        /// <exception cref="ProviderNotFoundException">
-        /// If the <paramref name="path"/> refers to a provider that could not be found.
-        /// </exception>
-        /// <exception cref="DriveNotFoundException">
-        /// If the <paramref name="path"/> refers to a drive that could not be found.
-        /// </exception>
-        /// <exception cref="ItemNotFoundException">
-        /// If <paramref name="path"/> does not contain glob characters and
-        /// could not be found.
-        /// </exception>
-        /// <exception cref="NotSupportedException">
-        /// If the provider that the <paramref name="path"/> refers to does
-        /// not support this operation.
-        /// </exception>
-        /// <exception cref="ProviderInvocationException">
-        /// If the provider threw an exception.
-        /// </exception>
         internal Collection<IContentWriter> GetWriter(
             string path,
             CmdletProviderContext context)
@@ -352,33 +145,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="path">
-        /// The path to the item if it was specified on the command line.
-        /// </param>
-        /// <param name="context">
-        /// The context which the core command is running.
-        /// </param>
-        /// <returns>
-        /// An object that has properties and fields decorated with
-        /// parsing attributes similar to a cmdlet class.
-        /// </returns>
-        /// <exception cref="ProviderNotFoundException">
-        /// If the <paramref name="path"/> refers to a provider that could not be found.
-        /// </exception>
-        /// <exception cref="DriveNotFoundException">
-        /// If the <paramref name="path"/> refers to a drive that could not be found.
-        /// </exception>
-        /// <exception cref="ItemNotFoundException">
-        /// If <paramref name="path"/> does not contain glob characters and
-        /// could not be found.
-        /// </exception>
-        /// <exception cref="NotSupportedException">
-        /// If the provider that the <paramref name="path"/> refers to does
-        /// not support this operation.
-        /// </exception>
-        /// <exception cref="ProviderInvocationException">
-        /// If the provider threw an exception.
-        /// </exception>
         internal object GetContentWriterDynamicParameters(
             string path,
             CmdletProviderContext context)
@@ -397,29 +163,6 @@ namespace System.Management.Automation
         #region ClearContent
 
         
-        /// <param name="path">
-        /// The path to the item(s) to clear the content from.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="path"/> is null.
-        /// </exception>
-        /// <exception cref="ProviderNotFoundException">
-        /// If the <paramref name="path"/> refers to a provider that could not be found.
-        /// </exception>
-        /// <exception cref="DriveNotFoundException">
-        /// If the <paramref name="path"/> refers to a drive that could not be found.
-        /// </exception>
-        /// <exception cref="ItemNotFoundException">
-        /// If <paramref name="path"/> does not contain glob characters and
-        /// could not be found.
-        /// </exception>
-        /// <exception cref="NotSupportedException">
-        /// If the provider that the <paramref name="path"/> refers to does
-        /// not support this operation.
-        /// </exception>
-        /// <exception cref="ProviderInvocationException">
-        /// If the provider threw an exception.
-        /// </exception>
         public void Clear(string path)
         {
             Dbg.Diagnostics.Assert(
@@ -432,35 +175,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="path">
-        /// The path(s) to the item(s) to clear the content from.
-        /// </param>
-        /// <param name="force">
-        /// Passed on to providers to force operations.
-        /// </param>
-        /// <param name="literalPath">
-        /// If true, globbing is not done on paths.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="path"/> is null.
-        /// </exception>
-        /// <exception cref="ProviderNotFoundException">
-        /// If the <paramref name="path"/> refers to a provider that could not be found.
-        /// </exception>
-        /// <exception cref="DriveNotFoundException">
-        /// If the <paramref name="path"/> refers to a drive that could not be found.
-        /// </exception>
-        /// <exception cref="ItemNotFoundException">
-        /// If <paramref name="path"/> does not contain glob characters and
-        /// could not be found.
-        /// </exception>
-        /// <exception cref="NotSupportedException">
-        /// If the provider that the <paramref name="path"/> refers to does
-        /// not support this operation.
-        /// </exception>
-        /// <exception cref="ProviderInvocationException">
-        /// If the provider threw an exception.
-        /// </exception>
         public void Clear(string[] path, bool force, bool literalPath)
         {
             Dbg.Diagnostics.Assert(
@@ -473,32 +187,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="path">
-        /// The path to the item(s) to clear the content from.
-        /// </param>
-        /// <param name="context">
-        /// The context under which the command is running.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="path"/> is null.
-        /// </exception>
-        /// <exception cref="ProviderNotFoundException">
-        /// If the <paramref name="path"/> refers to a provider that could not be found.
-        /// </exception>
-        /// <exception cref="DriveNotFoundException">
-        /// If the <paramref name="path"/> refers to a drive that could not be found.
-        /// </exception>
-        /// <exception cref="ItemNotFoundException">
-        /// If <paramref name="path"/> does not contain glob characters and
-        /// could not be found.
-        /// </exception>
-        /// <exception cref="NotSupportedException">
-        /// If the provider that the <paramref name="path"/> refers to does
-        /// not support this operation.
-        /// </exception>
-        /// <exception cref="ProviderInvocationException">
-        /// If the provider threw an exception.
-        /// </exception>
         internal void Clear(string path, CmdletProviderContext context)
         {
             Dbg.Diagnostics.Assert(
@@ -511,33 +199,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="path">
-        /// The path to the item if it was specified on the command line.
-        /// </param>
-        /// <param name="context">
-        /// The context which the core command is running.
-        /// </param>
-        /// <returns>
-        /// An object that has properties and fields decorated with
-        /// parsing attributes similar to a cmdlet class.
-        /// </returns>
-        /// <exception cref="ProviderNotFoundException">
-        /// If the <paramref name="path"/> refers to a provider that could not be found.
-        /// </exception>
-        /// <exception cref="DriveNotFoundException">
-        /// If the <paramref name="path"/> refers to a drive that could not be found.
-        /// </exception>
-        /// <exception cref="ItemNotFoundException">
-        /// If <paramref name="path"/> does not contain glob characters and
-        /// could not be found.
-        /// </exception>
-        /// <exception cref="NotSupportedException">
-        /// If the provider that the <paramref name="path"/> refers to does
-        /// not support this operation.
-        /// </exception>
-        /// <exception cref="ProviderInvocationException">
-        /// If the provider threw an exception.
-        /// </exception>
         internal object ClearContentDynamicParameters(string path, CmdletProviderContext context)
         {
             Dbg.Diagnostics.Assert(

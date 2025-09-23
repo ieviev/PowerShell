@@ -447,8 +447,6 @@ namespace Microsoft.PowerShell.Commands
         private string _indent = string.Empty;
 
         
-        /// <param name="name">The string to quote.</param>
-        /// <returns>The quoted string.</returns>
         private static string QuoteName(string name)
         {
             if (name == null)
@@ -457,8 +455,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="name">The Uri to quote.</param>
-        /// <returns>The quoted AbsoluteUri.</returns>
         private static string QuoteName(Uri name)
         {
             if (name == null)
@@ -467,8 +463,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="name">The Version object to quote.</param>
-        /// <returns>The quoted Version string.</returns>
         private static string QuoteName(Version name)
         {
             if (name == null)
@@ -477,9 +471,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="names">The list to quote.</param>
-        /// <param name="streamWriter">Streamwriter to get end of line character from.</param>
-        /// <returns>The quoted list.</returns>
         private static string QuoteNames(IEnumerable names, StreamWriter streamWriter)
         {
             if (names == null)
@@ -522,8 +513,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="moduleSpecs"></param>
-        /// <returns></returns>
         private static IEnumerable PreProcessModuleSpec(IEnumerable moduleSpecs)
         {
             if (moduleSpecs != null)
@@ -543,9 +532,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="moduleSpecs">The list to quote.</param>
-        /// <param name="streamWriter">Streamwriter to get end of line character from.</param>
-        /// <returns>The quoted list.</returns>
         private static string QuoteModules(IEnumerable moduleSpecs, StreamWriter streamWriter)
         {
             StringBuilder result = new StringBuilder();
@@ -625,9 +611,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="names">The list to quote.</param>
-        /// <param name="streamWriter">Streamwriter to get end of line character from.</param>
-        /// <returns>The quoted list.</returns>
         private string QuoteFiles(IEnumerable names, StreamWriter streamWriter)
         {
             List<string> resolvedPaths = new List<string>();
@@ -650,12 +633,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         //
-        ///// <param name="basePath">This is the path which will be used to determine whether a warning is to be displayed.</param>
-        ///// <param name="names">The list to quote</param>
-        ///// <param name="allowedExtension">This is the allowed file extension, any other extension will give an error.</param>
-        ///// <param name="streamWriter">Streamwriter to get end of line character from</param>
-        ///// <param name="item">The item of the manifest file for which names are being resolved.</param>
-        ///// <returns>The quoted list.</returns>
         // private string QuoteFilesWithWildcard(string basePath, IEnumerable names, string allowedExtension, StreamWriter streamWriter, string item)
         // {
         //    if (names != null)
@@ -721,8 +698,6 @@ namespace Microsoft.PowerShell.Commands
         // }
 
         
-        /// <param name="filePath"></param>
-        /// <returns></returns>
         private List<string> TryResolveFilePath(string filePath)
         {
             List<string> result = new List<string>();
@@ -764,11 +739,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="key">The manifest key to use.</param>
-        /// <param name="resourceString">ResourceString that holds the message.</param>
-        /// <param name="value">The formatted manifest fragment.</param>
-        /// <param name="streamWriter">Streamwriter to get end of line character from.</param>
-        /// <returns></returns>
         private string ManifestFragment(string key, string resourceString, string value, StreamWriter streamWriter)
         {
             return string.Format(CultureInfo.InvariantCulture, "{0}# {1}{2}{0}{3:19} = {4}{2}{2}", _indent, resourceString, streamWriter.NewLine, key, value);

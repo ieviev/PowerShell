@@ -58,15 +58,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <remarks>
-        /// Gives the provider guidance on how vigorous it should be about performing
-        /// the operation. If true, the provider should do everything possible to perform
-        /// the operation. If false, the provider should attempt the operation but allow
-        /// even simple errors to terminate the operation.
-        /// For example, if the user tries to copy a file to a path that already exists and
-        /// the destination is read-only, if force is true, the provider should copy over
-        /// the existing read-only file. If force is false, the provider should write an error.
-        /// </remarks>
         [Parameter]
         public override SwitchParameter Force
         {
@@ -76,13 +67,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="context">
-        /// The context under which the command is running.
-        /// </param>
-        /// <returns>
-        /// An object representing the dynamic parameters for the cmdlet or null if there
-        /// are none.
-        /// </returns>
         internal override object GetDynamicParameters(CmdletProviderContext context)
         {
             string propertyName = null;

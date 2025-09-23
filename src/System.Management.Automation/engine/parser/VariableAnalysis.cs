@@ -384,7 +384,6 @@ namespace System.Management.Automation.Language
             }
 
             
-            /// <param name="next"></param>
             internal void FlowsTo(Block next)
             {
                 if (_successors.IndexOf(next) < 0)
@@ -569,8 +568,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="ast"></param>
-        /// <returns></returns>
         internal static bool AnalyzeMemberFunction(FunctionMemberAst ast)
         {
             VariableAnalysis va = (new VariableAnalysis());

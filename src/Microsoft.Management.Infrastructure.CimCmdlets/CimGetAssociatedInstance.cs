@@ -19,7 +19,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="cmdlet"><see cref="GetCimInstanceCommand"/> object.</param>
         public void GetCimAssociatedInstance(GetCimAssociatedInstanceCommand cmdlet)
         {
             IEnumerable<string> computerNames = ConstValue.GetComputerNames(cmdlet.ComputerName);
@@ -69,8 +68,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         #region private methods
 
         
-        /// <param name="proxy"></param>
-        /// <param name="cmdlet"></param>
         private static void SetSessionProxyProperties(
             ref CimSessionProxy proxy,
             GetCimAssociatedInstanceCommand cmdlet)
@@ -84,10 +81,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="computerName"></param>
-        /// <param name="cimInstance"></param>
-        /// <param name="cmdlet"></param>
-        /// <returns></returns>
         private CimSessionProxy CreateSessionProxy(
             string computerName,
             CimInstance cimInstance,
@@ -99,9 +92,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="session"></param>
-        /// <param name="cmdlet"></param>
-        /// <returns></returns>
         private CimSessionProxy CreateSessionProxy(
             CimSession session,
             GetCimAssociatedInstanceCommand cmdlet)

@@ -16,8 +16,6 @@ namespace Microsoft.PowerShell.Cmdletization
         }
 
         
-        /// <param name="item"></param>
-        /// <returns></returns>
         protected override string GetKeyForItem(MethodParameter item)
         {
             return item.Name;

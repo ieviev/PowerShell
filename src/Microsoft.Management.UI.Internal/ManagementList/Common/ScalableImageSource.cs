@@ -13,9 +13,6 @@ using System.Windows.Media.Imaging;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <content>
-    /// Partial class implementation for SeparatedList control.
-    /// </content>
     [SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public partial class ScalableImageSource : Freezable
     {
@@ -32,7 +29,6 @@ namespace Microsoft.Management.UI.Internal
         #region Overrides
 
         
-        /// <returns>The new instance of the Freezable derived class.</returns>
         protected override Freezable CreateInstanceCore()
         {
             return new ScalableImageSource();

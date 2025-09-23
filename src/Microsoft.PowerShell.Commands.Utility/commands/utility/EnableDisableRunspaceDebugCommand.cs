@@ -35,10 +35,6 @@ namespace Microsoft.PowerShell.Commands
         #region Constructors
 
         
-        /// <param name="enabled">Enable debugger option.</param>
-        /// <param name="breakAll">BreakAll option.</param>
-        /// <param name="runspaceName">Runspace name.</param>
-        /// <param name="runspaceId">Runspace local Id.</param>
         public PSRunspaceDebug(bool enabled, bool breakAll, string runspaceName, int runspaceId)
         {
             if (string.IsNullOrEmpty(runspaceName))
@@ -156,7 +152,6 @@ namespace Microsoft.PowerShell.Commands
         #region Protected Methods
 
         
-        /// <returns>IReadOnlyList.</returns>
         protected IReadOnlyList<Runspace> GetRunspaces()
         {
             IReadOnlyList<Runspace> results = null;
@@ -191,8 +186,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="runspace">Runspace.</param>
-        /// <returns>Debugger.</returns>
         protected System.Management.Automation.Debugger GetDebuggerFromRunspace(Runspace runspace)
         {
             System.Management.Automation.Debugger debugger = null;
@@ -217,10 +210,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="processName">Process Name.</param>
-        /// <param name="appDomainName">App Domain Name.</param>
-        /// <param name="enable">Indicates if debug preference has to be enabled or disabled.</param>
-        /// <param name="fullyQualifiedErrorId">FullyQualifiedErrorId to be used on error.</param>
         protected void SetDebugPreferenceHelper(string processName, string[] appDomainName, bool enable, string fullyQualifiedErrorId)
         {
             List<string> appDomainNames = null;

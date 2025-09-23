@@ -38,10 +38,6 @@ namespace Microsoft.PowerShell.Commands
         public int Timeout { get; }
 
         
-        /// <param name="computerName"></param>
-        /// <param name="timeout"></param>
-        /// <param name="message"></param>
-        /// <param name="errorId"></param>
         internal RestartComputerTimeoutException(string computerName, int timeout, string message, string errorId)
             : base(message)
         {
@@ -55,18 +51,9 @@ namespace Microsoft.PowerShell.Commands
         public RestartComputerTimeoutException() : base() { }
 
         
-        /// <param name="message">
-        /// The message used in the exception.
-        /// </param>
         public RestartComputerTimeoutException(string message) : base(message) { }
 
         
-        /// <param name="message">
-        /// The message used in the exception.
-        /// </param>
-        /// <param name="innerException">
-        /// An exception that led to this exception.
-        /// </param>
         public RestartComputerTimeoutException(string message, Exception innerException) : base(message, innerException) { }
     }
 
@@ -269,7 +256,6 @@ $result
         }
 
         
-        /// <param name="disposing"></param>
         public void Dispose(bool disposing)
         {
             if (disposing)
@@ -334,10 +320,6 @@ $result
         }
 
         
-        /// <param name="activity"></param>
-        /// <param name="status"></param>
-        /// <param name="percent"></param>
-        /// <param name="progressRecordType"></param>
         private void WriteProgress(string activity, string status, int percent, ProgressRecordType progressRecordType)
         {
             ProgressRecord progress = new(_activityId, activity, status);
@@ -347,8 +329,6 @@ $result
         }
 
         
-        /// <param name="currentStage"></param>
-        /// <returns></returns>
         private int CalculateProgressPercentage(string currentStage)
         {
             switch (currentStage)
@@ -372,7 +352,6 @@ $result
         }
 
         
-        /// <param name="s"></param>
         private void OnTimedEvent(object s)
         {
             _exit = _timeUp = true;
@@ -595,11 +574,6 @@ $result
         }
 
         
-        /// <param name="computerNames"></param>
-        /// <param name="nextTestList"></param>
-        /// <param name="powershell"></param>
-        /// <param name="credential"></param>
-        /// <returns></returns>
         internal static List<string> TestPowerShell(List<string> computerNames, List<string> nextTestList, System.Management.Automation.PowerShell powershell, PSCredential credential)
         {
             List<string> psList = new();
@@ -1500,16 +1474,12 @@ $result
         public string ComputerName { get; set; }
 
         
-        /// <returns></returns>
         public override string ToString()
         {
             return FormatLine(this.HasSucceeded.ToString(), this.ComputerName);
         }
 
         
-        /// <param name="HasSucceeded"></param>
-        /// <param name="computername"></param>
-        /// <returns></returns>
         private static string FormatLine(string HasSucceeded, string computername)
         {
             return StringUtil.Format(MatchFormat, HasSucceeded, computername);
@@ -1531,17 +1501,12 @@ $result
         public string OldComputerName { get; set; }
 
         
-        /// <returns></returns>
         public override string ToString()
         {
             return FormatLine(this.HasSucceeded.ToString(), this.NewComputerName, this.OldComputerName);
         }
 
         
-        /// <param name="HasSucceeded"></param>
-        /// <param name="newcomputername"></param>
-        /// <param name="oldcomputername"></param>
-        /// <returns></returns>
         private static string FormatLine(string HasSucceeded, string newcomputername, string oldcomputername)
         {
             return StringUtil.Format(MatchFormat, HasSucceeded, newcomputername, oldcomputername);
@@ -1605,9 +1570,6 @@ $result
         internal const string localhostStr = "localhost";
 
         
-        /// <param name="computerName"></param>
-        /// <param name="psLocalCredential"></param>
-        /// <returns></returns>
         internal static string GetLocalAdminUserName(string computerName, PSCredential psLocalCredential)
         {
             string localUserName = null;
@@ -1634,8 +1596,6 @@ $result
         }
 
         
-        /// <param name="passwordLength"></param>
-        /// <returns></returns>
         internal static string GetRandomPassword(int passwordLength)
         {
             const int charMin = 32, charMax = 122;
@@ -1655,9 +1615,6 @@ $result
         }
 
         
-        /// <param name="computer"></param>
-        /// <param name="namespaceParameter"></param>
-        /// <returns></returns>
         internal static string GetScopeString(string computer, string namespaceParameter)
         {
             StringBuilder returnValue = new("\\\\");
@@ -1675,8 +1632,6 @@ $result
         }
 
         
-        /// <param name="drive"></param>
-        /// <returns></returns>
         internal static bool IsValidDrive(string drive)
         {
             DriveInfo[] drives = DriveInfo.GetDrives();
@@ -1693,9 +1648,6 @@ $result
         }
 
         
-        /// <param name="drives"></param>
-        /// <param name="sysdrive"></param>
-        /// <returns></returns>
         internal static bool ContainsSystemDrive(string[] drives, string sysdrive)
         {
             string driveApp;
@@ -1715,7 +1667,6 @@ $result
         }
 
         
-        /// <param name="computerNames"></param>
         internal static string GetMachineNames(string[] computerNames)
         {
             string separator = ",";
@@ -1806,8 +1757,6 @@ $result
         }
 
         
-        /// <param name="computerName"></param>
-        /// <returns></returns>
         internal static bool IsComputerNameValid(string computerName)
         {
             bool allDigits = true;
@@ -1842,16 +1791,6 @@ $result
         }
 
         
-        /// <param name="cmdlet">Cmdlet host for reporting errors.</param>
-        /// <param name="isLocalhost">True if local host computer.</param>
-        /// <param name="computerName">Target computer.</param>
-        /// <param name="flags">Win32Shutdown flags.</param>
-        /// <param name="credential">Optional credential.</param>
-        /// <param name="authentication">Optional authentication.</param>
-        /// <param name="formatErrorMessage">Error message format string that takes two parameters.</param>
-        /// <param name="ErrorFQEID">Fully qualified error Id.</param>
-        /// <param name="cancelToken">Cancel token.</param>
-        /// <returns>True on success.</returns>
         internal static bool InvokeWin32ShutdownUsingWsman(
             PSCmdlet cmdlet,
             bool isLocalhost,
@@ -1979,11 +1918,6 @@ $result
         }
 
         
-        /// <param name="nameToCheck">Computer name to validate.</param>
-        /// <param name="shortLocalMachineName"></param>
-        /// <param name="fullLocalMachineName"></param>
-        /// <param name="error"></param>
-        /// <returns>Valid computer name.</returns>
         internal static string ValidateComputerName(
             string nameToCheck,
             string shortLocalMachineName,

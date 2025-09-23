@@ -34,7 +34,6 @@ namespace Microsoft.PowerShell.Commands
         private object _prop;
 
         
-        /// <value></value>
         [Parameter]
         public SwitchParameter AutoSize
         {
@@ -45,7 +44,6 @@ namespace Microsoft.PowerShell.Commands
         private bool? _autosize = null;
 
         
-        /// <value></value>
         [Parameter]
         [ValidateRange(1, int.MaxValue)]
         public int Column

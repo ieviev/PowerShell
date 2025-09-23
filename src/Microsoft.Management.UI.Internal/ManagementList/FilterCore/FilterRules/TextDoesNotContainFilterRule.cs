@@ -17,19 +17,12 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="source">The source to initialize from.</param>
         public TextDoesNotContainFilterRule(TextDoesNotContainFilterRule source)
             : base(source)
         {
         }
 
         
-        /// <param name="data">
-        /// The data to compare with.
-        /// </param>
-        /// <returns>
-        /// Returns true if data does not contain Value, false otherwise.
-        /// </returns>
         protected override bool Evaluate(string data)
         {
             return !base.Evaluate(data);

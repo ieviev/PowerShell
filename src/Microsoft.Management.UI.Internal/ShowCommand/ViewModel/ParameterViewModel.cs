@@ -26,8 +26,6 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
 
         #region Construction and Destructor
         
-        /// <param name="parameter">The parameter information for this parameter.</param>
-        /// <param name="parameterSetName">The name of the parameter set this parameter is in.</param>
         public ParameterViewModel(ShowCommandParameterInfo parameter, string parameterSetName)
         {
             ArgumentNullException.ThrowIfNull(parameter);
@@ -172,12 +170,6 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
         #endregion
 
         
-        /// <param name="typeName">Parameter type name.</param>
-        /// <param name="position">Parameter position.</param>
-        /// <param name="mandatory">True if the parameter is mandatory.</param>
-        /// <param name="shared">True if the parameter is shared by parameter sets.</param>
-        /// <param name="valueFromPipeline">True if the parameter takes value from the pipeline.</param>
-        /// <returns> the tooltip based on the parameters.</returns>
         internal static string EvaluateTooltip(string typeName, int position, bool mandatory, bool shared, bool valueFromPipeline)
         {
             StringBuilder returnValue = new StringBuilder(string.Format(
@@ -214,7 +206,6 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
         }
 
         
-        /// <param name="propertyName">The changed property.</param>
         private void OnNotifyPropertyChanged(string propertyName)
         {
             PropertyChangedEventHandler handler = this.PropertyChanged;

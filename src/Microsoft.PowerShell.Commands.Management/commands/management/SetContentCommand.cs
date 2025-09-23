@@ -14,9 +14,6 @@ namespace Microsoft.PowerShell.Commands
         #region protected members
 
         
-        /// <param name="paths">
-        /// The path to the items that will be opened for writing content.
-        /// </param>
         internal override void BeforeOpenStreams(string[] paths)
         {
             if (paths == null || paths.Length == 0)
@@ -64,12 +61,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="path">
-        /// The path to the item on which the content will be set.
-        /// </param>
-        /// <returns>
-        /// True if the action should continue or false otherwise.
-        /// </returns>
         internal override bool CallShouldProcess(string path)
         {
             string action = NavigationResources.SetContentAction;

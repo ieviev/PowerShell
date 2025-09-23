@@ -10,10 +10,6 @@ namespace System.Management.Automation.Help
     internal class UpdatableHelpUri
     {
         
-        /// <param name="moduleName">Module name.</param>
-        /// <param name="moduleGuid">Module guid.</param>
-        /// <param name="culture">UI culture.</param>
-        /// <param name="resolvedUri">Resolved URI.</param>
         internal UpdatableHelpUri(string moduleName, Guid moduleGuid, CultureInfo culture, string resolvedUri)
         {
             Debug.Assert(!string.IsNullOrEmpty(moduleName));

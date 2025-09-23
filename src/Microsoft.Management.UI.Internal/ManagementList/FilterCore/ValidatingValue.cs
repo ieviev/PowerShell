@@ -8,9 +8,6 @@ using System.Globalization;
 namespace Microsoft.Management.UI.Internal
 {
     
-    /// <typeparam name="T">
-    /// The generic parameter.
-    /// </typeparam>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public class ValidatingValue<T> : ValidatingValueBase
     {
@@ -20,7 +17,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="source">The source to initialize from.</param>
         public ValidatingValue(ValidatingValue<T> source)
             : base(source)
         {
@@ -57,16 +53,12 @@ namespace Microsoft.Management.UI.Internal
 
         #region Public Methods
 
-        /// <inheritdoc cref="IDeepCloneable.DeepClone()" />
         public override object DeepClone()
         {
             return new ValidatingValue<T>(this);
         }
 
         
-        /// <returns>
-        /// The cast value.
-        /// </returns>
         public T GetCastValue()
         {
             if (!this.IsValid)
@@ -86,10 +78,6 @@ namespace Microsoft.Management.UI.Internal
         #region ForceValidationUpdate
 
         
-        /// <remarks>
-        /// The validation update occurs via signaling that
-        /// the Value property has changed.
-        /// </remarks>
         public void ForceValidationUpdate()
         {
             this.NotifyPropertyChanged("Value");
@@ -100,27 +88,12 @@ namespace Microsoft.Management.UI.Internal
         #region Validate
 
         
-        /// <returns>
-        /// Returns a DataErrorInfoValidationResult which indicates the validation state
-        /// of the object.
-        /// </returns>
         protected override DataErrorInfoValidationResult Validate()
         {
             return this.Validate(ValuePropertyName);
         }
 
         
-        /// <param name="columnName">
-        /// The name of the property whose error message will be checked.
-        /// </param>
-        /// <returns>
-        /// Returns a DataErrorInfoValidationResult which indicates
-        /// the validation state of the property.
-        /// </returns>
-        /// <exception cref="ArgumentException">
-        /// <paramref name="columnName"/> may only be
-        /// <see cref="ValuePropertyName"/>.
-        /// </exception>
         protected override DataErrorInfoValidationResult Validate(string columnName)
         {
             if (!columnName.Equals(ValuePropertyName, StringComparison.Ordinal))

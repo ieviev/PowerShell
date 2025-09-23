@@ -11,8 +11,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
     internal sealed class OutputGroupQueue
     {
         
-        /// <param name="callBack">Notification callback to be called when the desired number of objects is reached.</param>
-        /// <param name="objectCount">Max number of objects to be cached.</param>
         internal OutputGroupQueue(FormattedObjectsCache.ProcessCachedGroupNotification callBack, int objectCount)
         {
             _notificationCallBack = callBack;
@@ -20,8 +18,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="callBack">Notification callback to be called when the desired number of objects is reached.</param>
-        /// <param name="groupingDuration">Max amount of time to cache of objects.</param>
         internal OutputGroupQueue(FormattedObjectsCache.ProcessCachedGroupNotification callBack, TimeSpan groupingDuration)
         {
             _notificationCallBack = callBack;
@@ -29,8 +25,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="o">Object to add.</param>
-        /// <returns>Objects the cache needs to return. It can be null.</returns>
         internal List<PacketInfoData> Add(PacketInfoData o)
         {
             if (o is FormatStartData fsd)
@@ -136,7 +130,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <returns>Object retrieved, null if queue is empty.</returns>
         internal PacketInfoData Dequeue()
         {
             if (_queue.Count == 0)
@@ -172,12 +165,9 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
     internal sealed class FormattedObjectsCache
     {
         
-        /// <param name="formatStartData">Current Fs control message.</param>
-        /// <param name="objects">Enumeration of PacketInfoData objects.</param>
         internal delegate void ProcessCachedGroupNotification(FormatStartData formatStartData, List<PacketInfoData> objects);
 
         
-        /// <param name="cacheFrontEnd">If true, create a front end cache object.</param>
         internal FormattedObjectsCache(bool cacheFrontEnd)
         {
             if (cacheFrontEnd)
@@ -185,8 +175,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="callBack">Notification callback to be called when the desired number of objects is reached.</param>
-        /// <param name="objectCount">Max number of objects to be cached.</param>
         internal void EnableGroupCaching(ProcessCachedGroupNotification callBack, int objectCount)
         {
             if (callBack != null)
@@ -194,8 +182,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="callBack">Notification callback to be called when the desired number of objects is reached.</param>
-        /// <param name="groupingDuration">Max amount of time to cache of objects.</param>
         internal void EnableGroupCaching(ProcessCachedGroupNotification callBack, TimeSpan groupingDuration)
         {
             if (callBack != null)
@@ -203,8 +189,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="o">Object to add.</param>
-        /// <returns>List of objects the cache is flushing.</returns>
         internal List<PacketInfoData> Add(PacketInfoData o)
         {
             // if neither there, pass thru
@@ -227,7 +211,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <returns>All the objects that were in the cache.</returns>
         internal List<PacketInfoData> Drain()
         {
             // if neither there,we did not cache at all

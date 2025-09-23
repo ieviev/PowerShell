@@ -22,7 +22,6 @@ namespace System.Management.Automation
         private readonly XmlNode _xmlNode;
 
         
-        /// <value></value>
         internal XmlNode XmlNode
         {
             get
@@ -34,7 +33,6 @@ namespace System.Management.Automation
         private PSObject _mshObject;
 
         
-        /// <value></value>
         internal PSObject PSObject
         {
             get
@@ -56,8 +54,6 @@ namespace System.Management.Automation
         #region Conversion of xmlNode => PSObject
 
         
-        /// <param name="xmlNode"></param>
-        /// <returns></returns>
         private PSObject GetPSObject(XmlNode xmlNode)
         {
             if (xmlNode == null)
@@ -103,8 +99,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="xmlNode"></param>
-        /// <returns></returns>
         private PSObject GetInsidePSObject(XmlNode xmlNode)
         {
             Hashtable properties = GetInsideProperties(xmlNode);
@@ -122,8 +116,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="xmlNode"></param>
-        /// <returns></returns>
         private Hashtable GetInsideProperties(XmlNode xmlNode)
         {
             Hashtable properties = new Hashtable(StringComparer.OrdinalIgnoreCase);
@@ -143,9 +135,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="xmlNode">
-        /// Node whose children are verified for maml.
-        /// </param>
         private static void RemoveUnsupportedNodes(XmlNode xmlNode)
         {
             // Start with the first child..
@@ -172,9 +161,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="properties">Property hashtable.</param>
-        /// <param name="name">Property name.</param>
-        /// <param name="mshObject">Property value.</param>
         private static void AddProperty(Hashtable properties, string name, PSObject mshObject)
         {
             ArrayList propertyValues = (ArrayList)properties[name];
@@ -206,8 +192,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="properties"></param>
-        /// <returns></returns>
         private static Hashtable SimplifyProperties(Hashtable properties)
         {
             if (properties == null)
@@ -245,8 +229,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="xmlNode"></param>
-        /// <returns></returns>
         private static bool IsAtomic(XmlNode xmlNode)
         {
             if (xmlNode == null)
@@ -272,8 +254,6 @@ namespace System.Management.Automation
         #region Maml formatting
 
         
-        /// <param name="xmlNode"></param>
-        /// <returns></returns>
         private static bool IncludeMamlFormatting(XmlNode xmlNode)
         {
             if (xmlNode == null)
@@ -294,8 +274,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="xmlNode"></param>
-        /// <returns></returns>
         private static bool IsMamlFormattingNode(XmlNode xmlNode)
         {
             if (xmlNode.LocalName.Equals("para", StringComparison.OrdinalIgnoreCase))
@@ -311,8 +289,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="mshObject"></param>
-        /// <returns></returns>
         private static bool IsMamlFormattingPSObject(PSObject mshObject)
         {
             Collection<string> typeNames = mshObject.TypeNames;
@@ -324,8 +300,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="xmlNode"></param>
-        /// <returns></returns>
         private PSObject[] GetMamlFormattingPSObjects(XmlNode xmlNode)
         {
             ArrayList mshObjects = new ArrayList();
@@ -377,8 +351,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="nodes"></param>
-        /// <returns></returns>
         private static int GetParaMamlNodeCount(XmlNodeList nodes)
         {
             int i = 0;
@@ -400,8 +372,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="node"></param>
-        /// <param name="childNode"></param>
         private void WriteMamlInvalidChildNodeError(XmlNode node, XmlNode childNode)
         {
             ErrorRecord errorRecord = new ErrorRecord(new ParentContainsErrorRecordException("MamlInvalidChildNodeError"), "MamlInvalidChildNodeError", ErrorCategory.SyntaxError, null);
@@ -410,9 +380,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="node"></param>
-        /// <param name="childNodeName"></param>
-        /// <param name="count"></param>
         private void WriteMamlInvalidChildNodeCountError(XmlNode node, string childNodeName, int count)
         {
             ErrorRecord errorRecord = new ErrorRecord(new ParentContainsErrorRecordException("MamlInvalidChildNodeCountError"), "MamlInvalidChildNodeCountError", ErrorCategory.SyntaxError, null);
@@ -462,10 +429,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="xmlNode"></param>
-        /// <param name="newLine"></param>
-        /// <param name="trim"></param>
-        /// <returns></returns>
         private static PSObject GetParaPSObject(XmlNode xmlNode, bool newLine, bool trim = true)
         {
             if (xmlNode == null)
@@ -503,8 +466,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="xmlNode"></param>
-        /// <returns></returns>
         private ArrayList GetListPSObjects(XmlNode xmlNode)
         {
             ArrayList mshObjects = new ArrayList();
@@ -541,8 +502,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="xmlNode"></param>
-        /// <returns></returns>
         private static bool IsOrderedList(XmlNode xmlNode)
         {
             if (xmlNode == null)
@@ -564,10 +523,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="xmlNode"></param>
-        /// <param name="ordered"></param>
-        /// <param name="index"></param>
-        /// <returns></returns>
         private PSObject GetListItemPSObject(XmlNode xmlNode, bool ordered, ref int index)
         {
             if (xmlNode == null)
@@ -627,8 +582,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="xmlNode"></param>
-        /// <returns></returns>
         private ArrayList GetDefinitionListPSObjects(XmlNode xmlNode)
         {
             ArrayList mshObjects = new ArrayList();
@@ -662,8 +615,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="xmlNode"></param>
-        /// <returns></returns>
         private PSObject GetDefinitionListItemPSObject(XmlNode xmlNode)
         {
             if (xmlNode == null)
@@ -709,8 +660,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="xmlNode"></param>
-        /// <returns></returns>
         private string GetDefinitionText(XmlNode xmlNode)
         {
             if (xmlNode == null)
@@ -748,8 +697,6 @@ namespace System.Management.Automation
         #region Preformatted string processing
 
         
-        /// <param name="text"></param>
-        /// <returns></returns>
         private static string GetPreformattedText(string text)
         {
             // we are assuming tabsize=4 here.
@@ -787,8 +734,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="lines">Lines to trim.</param>
-        /// <returns>An string array with empty lines trimed on either end.</returns>
         private static string[] TrimLines(string[] lines)
         {
             if (lines == null || lines.Length == 0)
@@ -824,8 +769,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="lines"></param>
-        /// <returns></returns>
         private static int GetMinIndentation(string[] lines)
         {
             int minIndentation = -1;
@@ -845,8 +788,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="line"></param>
-        /// <returns></returns>
         private static int GetIndentation(string line)
         {
             if (IsEmptyLine(line))
@@ -858,8 +799,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="line"></param>
-        /// <returns></returns>
         private static bool IsEmptyLine(string line)
         {
             if (string.IsNullOrEmpty(line))
@@ -877,7 +816,6 @@ namespace System.Management.Automation
         #region Error handling
 
         
-        /// <value></value>
         internal Collection<ErrorRecord> Errors { get; } = new Collection<ErrorRecord>();
 
         #endregion

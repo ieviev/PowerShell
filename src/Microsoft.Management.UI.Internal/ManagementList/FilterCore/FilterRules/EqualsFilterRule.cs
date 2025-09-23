@@ -7,9 +7,6 @@ using System.Diagnostics;
 namespace Microsoft.Management.UI.Internal
 {
     
-    /// <typeparam name="T">
-    /// The generic parameter.
-    /// </typeparam>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public class EqualsFilterRule<T> : SingleValueComparableValueFilterRule<T> where T : IComparable
     {
@@ -20,19 +17,12 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="source">The source to initialize from.</param>
         public EqualsFilterRule(EqualsFilterRule<T> source)
             : base(source)
         {
         }
 
         
-        /// <param name="data">
-        /// The data to compare against.
-        /// </param>
-        /// <returns>
-        /// Returns true if data is equal to Value.
-        /// </returns>
         protected override bool Evaluate(T data)
         {
             Debug.Assert(this.IsValid, "isValid");

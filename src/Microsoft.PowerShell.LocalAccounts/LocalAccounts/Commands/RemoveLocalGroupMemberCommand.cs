@@ -126,33 +126,6 @@ namespace Microsoft.PowerShell.Commands
         #region Private Methods
 
         
-        /// <param name="groupId">
-        /// Name or SID (as a string) of the group we'll be removing from.
-        /// This string is used primarily for specifying the target
-        /// in WhatIf scenarios.
-        /// </param>
-        /// <param name="member">
-        /// LocalPrincipal object to be processed
-        /// </param>
-        /// <returns>
-        /// LocalPrincipal object processed and ready to be removed
-        /// </returns>
-        /// <remarks>
-        /// <para>
-        /// LocalPrincipal object in the Member parameter may not be complete,
-        /// particularly those created from a name or a SID string given to the
-        /// Member cmdlet parameter. The object returned from this method contains at the very least, contain a valid SID.
-        /// </para>
-        /// <para>
-        /// Any Member object provided by name or SID string will be looked up
-        /// to ensure that such an object exists. If an object is not found,
-        /// an error message is displayed by PowerShell and null will be returned from this method
-        /// </para>
-        /// <para>
-        /// This method also handles the WhatIf scenario. If the Cmdlet's
-        /// <b>ShouldProcess</b> method returns false on any Member object
-        /// </para>
-        /// </remarks>
         private LocalPrincipal MakePrincipal(string groupId, LocalPrincipal member)
         {
                LocalPrincipal principal = null;
@@ -191,13 +164,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="principal">Name of the principal to be removed.</param>
-        /// <param name="groupName">
-        /// Name of the group from which the members will be removed.
-        /// </param>
-        /// <returns>
-        /// True if the principal should be processed, false otherwise.
-        /// </returns>
         private bool CheckShouldProcess(LocalPrincipal principal, string groupName)
         {
             if (principal == null)
@@ -209,10 +175,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="group">
-        /// A <see cref="LocalGroup"/> object representing the group from which
-        /// the members will be removed.
-        /// </param>
         private void ProcessGroup(LocalGroup group)
         {
             string groupId = group.Name ?? group.SID.ToString();
@@ -231,19 +193,12 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="name">
-        /// The name of the group from which the members will be removed.
-        /// </param>
         private void ProcessName(string name)
         {
             ProcessGroup(sam.GetLocalGroup(name));
         }
 
         
-        /// <param name="groupSid">
-        /// A <see cref="SecurityIdentifier"/> object identifying the group
-        /// from which the members will be removed.
-        /// </param>
         private void ProcessSid(SecurityIdentifier groupSid)
         {
             foreach (var member in this.Member)

@@ -9,9 +9,6 @@ namespace System.Management.Automation.Internal
     internal abstract class ICabinetExtractor : IDisposable
     {
         
-        /// <param name="cabinetName">Cabinet file name.</param>
-        /// <param name="srcPath">Cabinet directory name, must be back slash terminated.</param>
-        /// <param name="destPath">Destination directory name, must be back slash terminated.</param>
         internal abstract bool Extract(string cabinetName, string srcPath, string destPath);
 
         #region IDisposable Interface
@@ -55,8 +52,6 @@ namespace System.Management.Automation.Internal
     }
 
     
-    /// <remarks>The C++/CLI implementation of this class needs to be
-    /// static</remarks>
     internal abstract class ICabinetExtractorLoader
     {
         internal virtual ICabinetExtractor GetCabinetExtractor() { return null; }
@@ -76,7 +71,6 @@ namespace System.Management.Automation.Internal
         }
 
         
-        /// <returns>Tracer instance.</returns>
         internal static ICabinetExtractor GetCabinetExtractor()
         {
             if (s_cabinetLoader != null)
@@ -94,9 +88,6 @@ namespace System.Management.Automation.Internal
     internal sealed class EmptyCabinetExtractor : ICabinetExtractor
     {
         
-        /// <param name="cabinetName">Cabinet file name.</param>
-        /// <param name="srcPath">Cabinet directory name, must be back slash terminated.</param>
-        /// <param name="destPath">Destination directory name, must be back slash terminated.</param>
         internal override bool Extract(string cabinetName, string srcPath, string destPath)
         {
             // its intentional that this method has no definition
@@ -104,7 +95,6 @@ namespace System.Management.Automation.Internal
         }
 
         
-        /// <param name="disposing"></param>
         protected override void Dispose(bool disposing)
         {
             // it's intentional that this method has no definition since there is nothing to dispose.

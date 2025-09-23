@@ -9,8 +9,6 @@ namespace System.Management.Automation
     internal class MamlClassHelpInfo : HelpInfo
     {
         
-        /// <param name="helpObject"></param>
-        /// <param name="helpCategory"></param>
         internal MamlClassHelpInfo(PSObject helpObject, HelpCategory helpCategory)
         {
             HelpCategory = helpCategory;
@@ -18,8 +16,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="xmlNode"></param>
-        /// <param name="helpCategory"></param>
         private MamlClassHelpInfo(XmlNode xmlNode, HelpCategory helpCategory)
         {
             HelpCategory = helpCategory;
@@ -38,9 +34,6 @@ namespace System.Management.Automation
         #region Load
 
         
-        /// <param name="xmlNode">XmlNode that contains help info.</param>
-        /// <param name="helpCategory">Help category this maml object fits into.</param>
-        /// <returns>MamlCommandHelpInfo object created.</returns>
         internal static MamlClassHelpInfo Load(XmlNode xmlNode, HelpCategory helpCategory)
         {
             MamlClassHelpInfo mamlClassHelpInfo = new MamlClassHelpInfo(xmlNode, helpCategory);
@@ -58,7 +51,6 @@ namespace System.Management.Automation
         #region Helper Methods and Overloads
 
         
-        /// <returns>MamlClassHelpInfo object.</returns>
         internal MamlClassHelpInfo Copy()
         {
             MamlClassHelpInfo result = new MamlClassHelpInfo(_fullHelpObject.Copy(), this.HelpCategory);
@@ -66,8 +58,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="newCategoryToUse"></param>
-        /// <returns>MamlClassHelpInfo.</returns>
         internal MamlClassHelpInfo Copy(HelpCategory newCategoryToUse)
         {
             MamlClassHelpInfo result = new MamlClassHelpInfo(_fullHelpObject.Copy(), newCategoryToUse);

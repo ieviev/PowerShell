@@ -16,9 +16,6 @@ namespace System.Management.Automation
 
         #region Serialization
         
-        /// <param name="info">The serialization information to use when initializing this object.</param>
-        /// <param name="context">The streaming context to use when initializing this object.</param>
-        /// <returns>Constructed object.</returns>
         [Obsolete("Legacy serialization support is deprecated since .NET 8", DiagnosticId = "SYSLIB0051")] 
         protected ApplicationFailedException(SerializationInfo info,
                            StreamingContext context)
@@ -28,7 +25,6 @@ namespace System.Management.Automation
         #endregion Serialization
 
         
-        /// <returns>Constructed object.</returns>
         public ApplicationFailedException() : base()
         {
             base.SetErrorId(errorIdString);
@@ -36,8 +32,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="message">The error message to use when initializing this object.</param>
-        /// <returns>Constructed object.</returns>
         public ApplicationFailedException(string message) : base(message)
         {
             base.SetErrorId(errorIdString);
@@ -45,9 +39,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="message">The error message to use when initializing this object.</param>
-        /// <param name="errorId">The errorId to use when initializing this object.</param>
-        /// <returns>Constructed object.</returns>
         internal ApplicationFailedException(string message, string errorId) : base(message)
         {
             base.SetErrorId(errorId);
@@ -55,10 +46,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="message">The error message to use when initializing this object.</param>
-        /// <param name="errorId">The errorId to use when initializing this object.</param>
-        /// <param name="innerException">The inner exception to use when initializing this object.</param>
-        /// <returns>Constructed object.</returns>
         internal ApplicationFailedException(string message, string errorId, Exception innerException)
             : base(message, innerException)
         {
@@ -67,9 +54,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="message">The error message to use when initializing this object.</param>
-        /// <param name="innerException">The inner exception to use when initializing this object.</param>
-        /// <returns>Constructed object.</returns>
         public ApplicationFailedException(string message,
                         Exception innerException)
                 : base(message, innerException)

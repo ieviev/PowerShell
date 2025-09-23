@@ -51,10 +51,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="basePaths">
-        /// Base directory paths that are separated by semicolon ';'. They will be the default paths to probe assemblies.
-        /// The passed-in argument could be null or an empty string, in which case there is no default paths to probe assemblies.
-        /// </param>
         private PowerShellAssemblyLoadContext(string basePaths)
         {
 #if !UNIX
@@ -123,17 +119,6 @@ namespace System.Management.Automation
 #endif
 
         
-        /// <remarks>
-        /// We user the assembly short name (AssemblyName.Name) as the key.
-        /// According to the Spec of AssemblyLoadContext, "in the context of a given instance of AssemblyLoadContext, only one assembly with
-        /// a given name can be loaded. Attempt to load a second assembly with the same name and different MVID will result in an exception."
-        ///
-        /// MVID is Module Version Identifier, which is a guid. Its purpose is solely to be unique for each time the module is compiled, and
-        /// it gets regenerated for every compilation. That means AssemblyLoadContext cannot handle loading two assemblies with the same name
-        /// but different versions, not even two assemblies with the exactly same code and version but built by two separate compilations.
-        ///
-        /// Therefore, there is no need to use the full assembly name as the key. Short assembly name is sufficient.
-        /// </remarks>
         private static readonly ConcurrentDictionary<string, Assembly> s_assemblyCache =
             new(StringComparer.OrdinalIgnoreCase);
 
@@ -391,9 +376,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="requestedAssembly">AssemblyName of the requested assembly.</param>
-        /// <param name="loadedAssembly">AssemblyName of the loaded assembly.</param>
-        /// <returns></returns>
         private static bool IsAssemblyMatching(AssemblyName requestedAssembly, AssemblyName loadedAssembly)
         {
             //
@@ -436,9 +418,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="tpaStrongName">
-        /// The assembly strong name of a CoreCLR Trusted_Platform_Assembly
-        /// </param>
         private static Assembly GetTrustedPlatformAssembly(string tpaStrongName)
         {
             // We always depend on the default context to load the TPAs that are recorded in
@@ -501,14 +480,6 @@ namespace System.Management.Automation
     public static class PowerShellAssemblyLoadContextInitializer
     {
         
-        /// <remarks>
-        /// This method is to be used by native host whose TPA list doesn't include PS assemblies, such as the
-        /// in-box Nano powershell, the PS remote WinRM plugin, in-box Nano DSC and in-box Nano SCOM agent.
-        /// </remarks>
-        /// <param name="basePaths">
-        /// Base directory paths that are separated by semicolon ';'.
-        /// They will be the default paths to probe assemblies.
-        /// </param>
         public static void SetPowerShellAssemblyLoadContext([MarshalAs(UnmanagedType.LPWStr)] string basePaths)
         {
             ArgumentException.ThrowIfNullOrEmpty(basePaths);
@@ -522,13 +493,6 @@ namespace System.Management.Automation
     public static unsafe class PowerShellUnsafeAssemblyLoad
     {
         
-        /// <remarks>
-        /// This API is covered by the experimental feature 'PSLoadAssemblyFromNativeCode',
-        /// and it may be deprecated and removed in future.
-        /// </remarks>
-        /// <param name="data">Unmanaged pointer to assembly data buffer.</param>
-        /// <param name="size">Size in bytes of the assembly data buffer.</param>
-        /// <returns>Returns zero on success and non-zero on failure.</returns>
         [UnmanagedCallersOnly]
         public static int LoadAssemblyFromNativeMemory(IntPtr data, int size)
         {

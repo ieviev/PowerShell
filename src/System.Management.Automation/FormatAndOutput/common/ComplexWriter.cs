@@ -17,8 +17,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
     internal sealed class ComplexWriter
     {
         
-        /// <param name="lineOutput">LineOutput interfaces to write to.</param>
-        /// <param name="numberOfTextColumns">Number of columns used to write out.</param>
         internal void Initialize(LineOutput lineOutput, int numberOfTextColumns)
         {
             _lo = lineOutput;
@@ -26,7 +24,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="s"></param>
         internal void WriteString(string s)
         {
             _indentationManager.Clear();
@@ -37,7 +34,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="formatValueList">List of FormatValue tokens to interpret.</param>
         internal void WriteObject(List<FormatValue> formatValueList)
         {
             // we always start with no indentation
@@ -54,8 +50,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="fe">Entry to process.</param>
-        /// <param name="currentDepth">Current depth of recursion.</param>
         private void GenerateFormatEntryDisplay(FormatEntry fe, int currentDepth)
         {
             foreach (object obj in fe.formatValueList)
@@ -103,7 +97,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="s">String to add to buffer.</param>
         private void AddToBuffer(string s)
         {
             _stringBuffer.Append(s);
@@ -315,8 +308,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="s">Input string.</param>
-        /// <returns>A collection of words.</returns>
         private static IEnumerable<GetWordsResult> GetWords(string s)
         {
             StringBuilder sb = new StringBuilder();
@@ -698,8 +689,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="s">String to split.</param>
-        /// <returns>String array with the values.</returns>
         internal static List<string> SplitLines(string s)
         {
             if (string.IsNullOrEmpty(s) || !s.Contains('\n'))

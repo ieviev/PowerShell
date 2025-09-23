@@ -123,8 +123,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             internal CommandWrapper command = new CommandWrapper();
 
             
-            /// <param name="typeName">ETS type name of the object to process.</param>
-            /// <returns>True if there is a match.</returns>
             internal bool AppliesToType(string typeName)
             {
                 foreach (string s in _applicableTypes)
@@ -151,8 +149,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="lineOutput">LineOutput to pass to the child pipelines.</param>
-        /// <param name="context">ExecutionContext to pass to the child pipelines.</param>
         internal void Initialize(LineOutput lineOutput, ExecutionContext context)
         {
             _lo = lineOutput;
@@ -160,7 +156,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="context">ExecutionContext to pass to the child pipeline.</param>
         private void InitializeCommandsHardWired(ExecutionContext context)
         {
             // set the default handler
@@ -169,9 +164,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="context">ExecutionContext to pass to the child pipeline.</param>
-        /// <param name="commandName">Name of the command to execute.</param>
-        /// <param name="commandType">Type of the command to execute.</param>
         private void RegisterCommandDefault(ExecutionContext context, string commandName, Type commandType)
         {
             CommandEntry ce = new CommandEntry();
@@ -182,7 +174,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="so">Pipeline object to process.</param>
         internal void Process(PSObject so)
         {
             // select which pipeline should handle the object
@@ -226,8 +217,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="so">Pipeline object to be processed.</param>
-        /// <returns>Applicable command entry.</returns>
         private CommandEntry GetActiveCommandEntry(PSObject so)
         {
             string typeName = PSObjectHelper.PSObjectIsOfExactType(so.InternalTypeNames);

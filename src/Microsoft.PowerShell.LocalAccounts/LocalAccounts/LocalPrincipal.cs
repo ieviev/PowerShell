@@ -48,7 +48,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="name">Name of the new LocalPrincipal.</param>
         public LocalPrincipal(string name)
         {
             Name = name;
@@ -57,9 +56,6 @@ namespace Microsoft.PowerShell.Commands
 
         #region Public Methods
         
-        /// <returns>
-        /// A string, in SDDL form, representing the Principal.
-        /// </returns>
         public override string ToString()
         {
             return Name ?? SID.ToString();

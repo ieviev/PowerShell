@@ -233,10 +233,6 @@ namespace System.Management.Automation.Internal
     }
 
     
-    /// <remarks>This exception is currently internal as it's not
-    /// surfaced to the user. However, if we decide to surface errors
-    /// to the user when something fails on the remote end, then this
-    /// can be turned public</remarks>
     [SuppressMessage("Microsoft.Design", "CA1064:ExceptionsShouldBePublic")]
     internal class PSCryptoException : Exception
     {
@@ -266,9 +262,6 @@ namespace System.Management.Automation.Internal
             : this(0, new StringBuilder(string.Empty)) { }
 
         
-        /// <param name="errorCode">error code returned by native
-        /// crypto application</param>
-        /// <param name="message">Error message associated with this failure.</param>
         public PSCryptoException(uint errorCode, StringBuilder message)
             : base(message.ToString())
         {
@@ -276,15 +269,10 @@ namespace System.Management.Automation.Internal
         }
 
         
-        /// <param name="message">Error message associated with this failure.</param>
         public PSCryptoException(string message)
             : this(message, null) { }
 
         
-        /// <param name="message">Error message.</param>
-        /// <param name="innerException">Inner exception.</param>
-        /// <remarks>This constructor is currently not called
-        /// explicitly from crypto utils</remarks>
         public PSCryptoException(string message, Exception innerException)
             : base(message, innerException)
         {
@@ -292,10 +280,6 @@ namespace System.Management.Automation.Internal
         }
 
         
-        /// <param name="info">Serialization info.</param>
-        /// <param name="context">Context in which this constructor is called.</param>
-        /// <remarks>Currently no custom type-specific serialization logic is
-        /// implemented</remarks>
         [Obsolete("Legacy serialization support is deprecated since .NET 8", DiagnosticId = "SYSLIB0051")]
         protected PSCryptoException(SerializationInfo info, StreamingContext context)
         {
@@ -330,8 +314,6 @@ namespace System.Management.Automation.Internal
         #region Constructors
 
         
-        /// <param name="serverMode">indicates if this service
-        /// provider is operating in server mode</param>
         private PSRSACryptoServiceProvider(bool serverMode)
         {
             if (serverMode)
@@ -348,7 +330,6 @@ namespace System.Management.Automation.Internal
         #region Internal Methods
 
         
-        /// <returns>Public key as base64 encoded string.</returns>
         internal string GetPublicKeyAsBase64EncodedString()
         {
             Dbg.Assert(_rsa != null, "No public key available.");
@@ -378,8 +359,6 @@ namespace System.Management.Automation.Internal
         }
 
         
-        /// <returns>Session key encrypted with receivers public key
-        /// and encoded as a base 64 string.</returns>
         internal string SafeExportSessionKey()
         {
             Dbg.Assert(_rsa != null, "No public key available.");
@@ -397,7 +376,6 @@ namespace System.Management.Automation.Internal
         }
 
         
-        /// <param name="publicKey">Base64 encoded public key to import.</param>
         internal void ImportPublicKeyFromBase64EncodedString(string publicKey)
         {
             Dbg.Assert(!string.IsNullOrEmpty(publicKey), "key cannot be null or empty");
@@ -407,8 +385,6 @@ namespace System.Management.Automation.Internal
         }
 
         
-        /// <param name="sessionKey">encrypted session key as a
-        /// base64 encoded string</param>
         internal void ImportSessionKeyFromBase64EncodedString(string sessionKey)
         {
             Dbg.Assert(!string.IsNullOrEmpty(sessionKey), "key cannot be null or empty");
@@ -425,8 +401,6 @@ namespace System.Management.Automation.Internal
         }
 
         
-        /// <param name="data">Data to encrypt.</param>
-        /// <returns>Encrypted byte array.</returns>
         internal byte[] EncryptWithSessionKey(byte[] data)
         {
             Dbg.Assert(_canEncrypt, "Remote key has not been imported to encrypt");
@@ -445,8 +419,6 @@ namespace System.Management.Automation.Internal
         }
 
         
-        /// <param name="data">Data to decrypt.</param>
-        /// <returns>Decrypted buffer.</returns>
         internal byte[] DecryptWithSessionKey(byte[] data)
         {
             using (ICryptoTransform decryptor = _aes.CreateDecryptor())
@@ -488,16 +460,12 @@ namespace System.Management.Automation.Internal
         #region Internal Static Methods
 
         
-        /// <returns>Crypto service provider for
-        /// the client side.</returns>
         internal static PSRSACryptoServiceProvider GetRSACryptoServiceProviderForClient()
         {
             return new PSRSACryptoServiceProvider(false);
         }
 
         
-        /// <returns>Crypto service provider for
-        /// the server side.</returns>
         internal static PSRSACryptoServiceProvider GetRSACryptoServiceProviderForServer()
         {
             return new PSRSACryptoServiceProvider(true);
@@ -621,8 +589,6 @@ namespace System.Management.Automation.Internal
         }
 
         
-        /// <param name="base64String"></param>
-        /// <returns></returns>
         protected SecureString ConvertBase64StringToSecureString(string base64String)
         {
             try
@@ -640,10 +606,6 @@ namespace System.Management.Automation.Internal
         }
 
         
-        /// <param name="secureString">
-        /// secure string to be encrypted
-        /// </param>
-        /// <returns></returns>
         protected string EncryptSecureStringCore(SecureString secureString)
         {
             string encryptedDataAsString = null;
@@ -674,10 +636,6 @@ namespace System.Management.Automation.Internal
         }
 
         
-        /// <param name="encryptedString">
-        /// encrypted string to be decrypted
-        /// </param>
-        /// <returns></returns>
         protected SecureString DecryptSecureStringCore(string encryptedString)
         {
             // removing an earlier assert from here. It is
@@ -716,15 +674,9 @@ namespace System.Management.Automation.Internal
         #region Internal Methods
 
         
-        /// <param name="secureString">Secure string to encrypt.</param>
-        /// <returns>Encrypted string.</returns>
-        /// <remarks>This method zeroes out all interim buffers used</remarks>
         internal abstract string EncryptSecureString(SecureString secureString);
 
         
-        /// <param name="encryptedString">Encrypted string.</param>
-        /// <returns>Secure string object.</returns>
-        /// <remarks>This method zeroes out any interim buffers used</remarks>
         internal abstract SecureString DecryptSecureString(string encryptedString);
 
         
@@ -738,7 +690,6 @@ namespace System.Management.Automation.Internal
         }
 
         
-        /// <param name="disposing"></param>
         public void Dispose(bool disposing)
         {
             if (disposing)
@@ -827,8 +778,6 @@ namespace System.Management.Automation.Internal
         }
 
         
-        /// <param name="publicKeyAsString">Public key in its string representation.</param>
-        /// <returns>True on success.</returns>
         internal bool ImportRemotePublicKey(string publicKeyAsString)
         {
             Dbg.Assert(!string.IsNullOrEmpty(publicKeyAsString), "public key passed in cannot be null");
@@ -863,8 +812,6 @@ namespace System.Management.Automation.Internal
         }
 
         
-        /// <param name="encryptedSessionKey"></param>
-        /// <returns></returns>
         internal bool ExportEncryptedSessionKey(out string encryptedSessionKey)
         {
             try
@@ -881,8 +828,6 @@ namespace System.Management.Automation.Internal
         }
 
         
-        /// <returns>Helper for testing.</returns>
-        /// <remarks>To be used only for testing</remarks>
         internal static PSRemotingCryptoHelperServer GetTestRemotingCryptHelperServer()
         {
             PSRemotingCryptoHelperServer helper = new PSRemotingCryptoHelperServer();
@@ -944,9 +889,6 @@ namespace System.Management.Automation.Internal
         }
 
         
-        /// <param name="publicKeyAsString">on execution will contain
-        /// the public key as string</param>
-        /// <returns>True on success.</returns>
         internal bool ExportLocalPublicKey(out string publicKeyAsString)
         {
             // generate keys - the method already takes of creating
@@ -978,8 +920,6 @@ namespace System.Management.Automation.Internal
         }
 
         
-        /// <param name="encryptedSessionKey"></param>
-        /// <returns></returns>
         internal bool ImportEncryptedSessionKey(string encryptedSessionKey)
         {
             Dbg.Assert(!string.IsNullOrEmpty(encryptedSessionKey), "encrypted session key passed in cannot be null");
@@ -1000,8 +940,6 @@ namespace System.Management.Automation.Internal
         internal override RemoteSession Session { get; set; }
 
         
-        /// <returns>Helper for testing.</returns>
-        /// <remarks>To be used only for testing</remarks>
         internal static PSRemotingCryptoHelperClient GetTestRemotingCryptHelperClient()
         {
             PSRemotingCryptoHelperClient helper = new PSRemotingCryptoHelperClient();

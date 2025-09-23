@@ -19,10 +19,6 @@ using System.Reflection;
 namespace System.Management.Automation
 {
     
-    /// <remarks>
-    /// Command Help information are stored in 'help.xml' files. Location of these files
-    /// can be found from through the engine execution context.
-    /// </remarks>
     internal class CommandHelpProvider : HelpProviderWithCache
     {
         
@@ -50,7 +46,6 @@ namespace System.Management.Automation
         #region Common Properties
 
         
-        /// <value>Name of this provider</value>
         internal override string Name
         {
             get
@@ -60,7 +55,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <value>Help category for this provider</value>
         internal override HelpCategory HelpCategory
         {
             get
@@ -401,16 +395,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <remarks>
-        /// ExactMatchHelp is overridden instead of DoExactMatchHelp to make sure
-        /// all help item retrieval will go through command discovery. Because each
-        /// help file can contain multiple help items for different commands. Directly
-        /// retrieve help cache can result in a invalid command to contain valid
-        /// help item. Forcing each ExactMatchHelp to go through command discovery
-        /// will make sure helpInfo for invalid command will not be returned.
-        /// </remarks>
-        /// <param name="helpRequest">Help request object.</param>
-        /// <returns></returns>
         internal override IEnumerable<HelpInfo> ExactMatchHelp(HelpRequest helpRequest)
         {
             int countHelpInfosFound = 0;
@@ -534,8 +518,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="cmdletInfo"></param>
-        /// <returns></returns>
         private string FindHelpFile(CmdletInfo cmdletInfo)
         {
             if (InternalTestHooks.BypassOnlineHelpRetrieval)
@@ -651,12 +633,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <remarks>
-        /// 1. Needs to pay special attention about error handling in this function.
-        /// Common errors include: file not found and invalid xml. None of these error
-        /// should cause help search to stop.
-        /// 2. a helpfile cache is used to avoid same file got loaded again and again.
-        /// </remarks>
         private void LoadHelpFile(string helpFile, string helpFileIdentifier)
         {
             XmlDocument doc = InternalDeserializer.LoadUnsafeXmlDocument(
@@ -725,8 +701,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="mshSnapInId">PSSnapIn Name for the current help file.</param>
-        /// <param name="userDefinedHelpData"></param>
         private void ProcessUserDefinedHelpData(string mshSnapInId, UserDefinedHelpData userDefinedHelpData)
         {
             if (userDefinedHelpData == null)
@@ -749,10 +723,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="helpFileIdentifier">Help file identifier (either name of PSSnapIn or simply full path to help file).</param>
-        /// <param name="commandName">Name of the command.</param>
-        /// <param name="helpCategory"></param>
-        /// <returns>HelpInfo object.</returns>
         private HelpInfo GetFromCommandCache(string helpFileIdentifier, string commandName, HelpCategory helpCategory)
         {
             Debug.Assert(!string.IsNullOrEmpty(commandName), "Cmdlet Name should not be null or empty.");
@@ -776,9 +746,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="helpFileIdentifier">Help file identifier (simply full path to help file).</param>
-        /// <param name="commandInfo"></param>
-        /// <returns>HelpInfo object.</returns>
         private HelpInfo GetFromCommandCache(string helpFileIdentifier, CommandInfo commandInfo)
         {
             Debug.Assert(commandInfo != null, "commandInfo cannot be null");
@@ -803,10 +770,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="cmdletInfo"></param>
-        /// <returns>
-        /// HelpInfo object representing help for the command.
-        /// </returns>
         private HelpInfo GetFromCommandCacheOrCmdletInfo(CmdletInfo cmdletInfo)
         {
             Debug.Assert(cmdletInfo != null, "cmdletInfo cannot be null");
@@ -846,11 +809,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="helpIdentifier"></param>
-        /// <param name="cmdInfo"></param>
-        /// <returns>
-        /// Copied help content or null if no help content is found.
-        /// </returns>
         private MamlCommandHelpInfo GetFromCommandCacheByRemovingPrefix(string helpIdentifier, CommandInfo cmdInfo)
         {
             Dbg.Assert(cmdInfo != null, "cmdInfo cannot be null");
@@ -898,9 +856,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="mshSnapInId">PSSnapIn name that this cmdlet belongs to.</param>
-        /// <param name="cmdletName">Name of the cmdlet.</param>
-        /// <param name="helpInfo">Help object for the cmdlet.</param>
         private void AddToCommandCache(string mshSnapInId, string cmdletName, MamlCommandHelpInfo helpInfo)
         {
             Debug.Assert(!string.IsNullOrEmpty(cmdletName), "Cmdlet Name should not be null or empty.");
@@ -930,9 +885,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="helpFile"></param>
-        /// <param name="helpItemsNode"></param>
-        /// <returns></returns>
         internal static bool IsMamlHelp(string helpFile, XmlNode helpItemsNode)
         {
             if (helpFile.EndsWith(".maml", StringComparison.OrdinalIgnoreCase))
@@ -954,12 +906,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="helpRequest">Help request object.</param>
-        /// <param name="searchOnlyContent">
-        /// If true, searches for pattern in the help content of all cmdlets.
-        /// Otherwise, searches for pattern in the cmdlet names.
-        /// </param>
-        /// <returns></returns>
         internal override IEnumerable<HelpInfo> SearchHelp(HelpRequest helpRequest, bool searchOnlyContent)
         {
             string target = helpRequest.Target;
@@ -1110,10 +1056,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="helpInfo"></param>
-        /// <param name="helpRequest"></param>
-        /// <param name="commandInfo"></param>
-        /// <returns></returns>
         private static bool Match(HelpInfo helpInfo, HelpRequest helpRequest, CommandInfo commandInfo)
         {
             if (helpRequest == null)
@@ -1159,13 +1101,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="target">Content to search in.</param>
-        /// <param name="patterns">String patterns to look for.</param>
-        /// <returns>
-        /// true if <paramref name="target"/> contains any of the patterns
-        /// present in <paramref name="patterns"/>
-        /// false otherwise.
-        /// </returns>
         private static bool Match(string target, ICollection<string> patterns)
         {
             // patterns should never be null as shell never accepts
@@ -1187,9 +1122,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="helpInfo">HelpInfo that is forwarded over.</param>
-        /// <param name="helpRequest">Help request object.</param>
-        /// <returns>The result helpInfo objects after processing.</returns>
         internal override IEnumerable<HelpInfo> ProcessForwardedHelp(HelpInfo helpInfo, HelpRequest helpRequest)
         {
             const HelpCategory categoriesHandled = (HelpCategory.Alias
@@ -1247,9 +1179,6 @@ namespace System.Management.Automation
         #region Extensions
 
         
-        /// <param name="commandName"></param>
-        /// <param name="context"></param>
-        /// <returns></returns>
         internal virtual CommandSearcher GetCommandSearcherForExactMatch(string commandName, ExecutionContext context)
         {
             CommandSearcher searcher = new CommandSearcher(
@@ -1262,9 +1191,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="pattern"></param>
-        /// <param name="context"></param>
-        /// <returns></returns>
         internal virtual CommandSearcher GetCommandSearcherForSearch(string pattern, ExecutionContext context)
         {
             CommandSearcher searcher =

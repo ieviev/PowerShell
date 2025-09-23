@@ -119,10 +119,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         internal virtual MshParameter CreateInstance() { return new MshParameter(); }
 
         
-        /// <param name="keyName">Key to verify.</param>
-        /// <param name="invocationContext">Invocation context for error reporting.</param>
-        /// <returns>Matching hash table entry.</returns>
-        /// <exception cref="ArgumentException"></exception>
         internal HashtableEntryDefinition MatchEntry(string keyName, TerminatingErrorContext invocationContext)
         {
             if (string.IsNullOrEmpty(keyName))
@@ -231,7 +227,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             _paramDef = p;
         }
 
-        /// <exception cref="ArgumentException"></exception>
         internal List<MshParameter> ProcessParameters(object[] p, TerminatingErrorContext invocationContext)
         {
             if (p == null || p.Length == 0)
@@ -282,7 +277,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             return false;
         }
 
-        /// <exception cref="ArgumentException"></exception>
         private Hashtable VerifyHashTable(IDictionary hash, TerminatingErrorContext invocationContext)
         {
             // full blown hash, need to:
@@ -348,7 +342,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             return retVal;
         }
 
-        /// <exception cref="ArgumentException"></exception>
         private void VerifyAndNormalizeParameter(MshParameter parameter,
                                                     TerminatingErrorContext invocationContext,
                                                     bool originalParameterWasHashTable)

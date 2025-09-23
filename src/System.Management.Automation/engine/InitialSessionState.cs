@@ -74,7 +74,6 @@ namespace System.Management.Automation.Runspaces
     public abstract class InitialSessionStateEntry
     {
         
-        /// <param name="name"></param>
         protected InitialSessionStateEntry(string name)
         {
             Name = name;
@@ -100,7 +99,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <returns>The cloned object...</returns>
         public abstract InitialSessionStateEntry Clone();
     }
 
@@ -108,8 +106,6 @@ namespace System.Management.Automation.Runspaces
     public abstract class ConstrainedSessionStateEntry : InitialSessionStateEntry
     {
         
-        /// <param name="name"></param>
-        /// <param name="visibility"></param>
         protected ConstrainedSessionStateEntry(string name, SessionStateEntryVisibility visibility)
             : base(name)
         {
@@ -124,15 +120,12 @@ namespace System.Management.Automation.Runspaces
     public abstract class SessionStateCommandEntry : ConstrainedSessionStateEntry
     {
         
-        /// <param name="name"></param>
         protected SessionStateCommandEntry(string name)
             : base(name, SessionStateEntryVisibility.Public)
         {
         }
 
         
-        /// <param name="name"></param>
-        /// <param name="visibility"></param>
         protected internal SessionStateCommandEntry(string name, SessionStateEntryVisibility visibility)
             : base(name, visibility)
         {
@@ -149,7 +142,6 @@ namespace System.Management.Automation.Runspaces
     public sealed class SessionStateTypeEntry : InitialSessionStateEntry
     {
         
-        /// <param name="fileName"></param>
         public SessionStateTypeEntry(string fileName)
             : base(fileName)
         {
@@ -162,7 +154,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <param name="typeTable"></param>
         public SessionStateTypeEntry(TypeTable typeTable)
             : base("*")
         {
@@ -175,8 +166,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <param name="typeData"></param>
-        /// <param name="isRemove"></param>
         public SessionStateTypeEntry(TypeData typeData, bool isRemove)
             : base("*")
         {
@@ -190,7 +179,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <returns>The cloned object.</returns>
         public override InitialSessionStateEntry Clone()
         {
             SessionStateTypeEntry entry;
@@ -234,7 +222,6 @@ namespace System.Management.Automation.Runspaces
     public sealed class SessionStateFormatEntry : InitialSessionStateEntry
     {
         
-        /// <param name="fileName"></param>
         public SessionStateFormatEntry(string fileName)
             : base("*")
         {
@@ -247,7 +234,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <param name="formattable"></param>
         public SessionStateFormatEntry(FormatTable formattable)
             : base("*")
         {
@@ -260,7 +246,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <param name="typeDefinition"></param>
         public SessionStateFormatEntry(ExtendedTypeDefinition typeDefinition)
             : base("*")
         {
@@ -273,7 +258,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <returns>The cloned object.</returns>
         public override InitialSessionStateEntry Clone()
         {
             SessionStateFormatEntry entry;
@@ -315,8 +299,6 @@ namespace System.Management.Automation.Runspaces
     public sealed class SessionStateAssemblyEntry : InitialSessionStateEntry
     {
         
-        /// <param name="name">The name of the assembly to load.</param>
-        /// <param name="fileName">The path to the assembly to use as an alternative.</param>
         public SessionStateAssemblyEntry(string name, string fileName)
             : base(name)
         {
@@ -324,14 +306,12 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <param name="name">The name of the assembly to load.</param>
         public SessionStateAssemblyEntry(string name)
             : base(name)
         {
         }
 
         
-        /// <returns>The cloned object.</returns>
         public override InitialSessionStateEntry Clone()
         {
             var entry = new SessionStateAssemblyEntry(Name, FileName);
@@ -348,9 +328,6 @@ namespace System.Management.Automation.Runspaces
     public sealed class SessionStateCmdletEntry : SessionStateCommandEntry
     {
         
-        /// <param name="name"></param>
-        /// <param name="implementingType"></param>
-        /// <param name="helpFileName"></param>
         public SessionStateCmdletEntry(string name, Type implementingType, string helpFileName)
             : base(name, SessionStateEntryVisibility.Public)
         {
@@ -360,10 +337,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <param name="name"></param>
-        /// <param name="implementingType"></param>
-        /// <param name="helpFileName"></param>
-        /// <param name="visibility"></param>
         internal SessionStateCmdletEntry(string name, Type implementingType, string helpFileName, SessionStateEntryVisibility visibility)
             : base(name, visibility)
         {
@@ -373,7 +346,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <returns></returns>
         public override InitialSessionStateEntry Clone()
         {
             SessionStateCmdletEntry entry = new SessionStateCmdletEntry(Name, ImplementingType, HelpFileName, Visibility);
@@ -393,9 +365,6 @@ namespace System.Management.Automation.Runspaces
     public sealed class SessionStateProviderEntry : ConstrainedSessionStateEntry
     {
         
-        /// <param name="name"></param>
-        /// <param name="implementingType"></param>
-        /// <param name="helpFileName"></param>
         public SessionStateProviderEntry(string name, Type implementingType, string helpFileName)
             : base(name, SessionStateEntryVisibility.Public)
         {
@@ -411,7 +380,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <returns>The cloned object.</returns>
         public override InitialSessionStateEntry Clone()
         {
             SessionStateProviderEntry entry = new SessionStateProviderEntry(Name, ImplementingType, HelpFileName, this.Visibility);
@@ -431,7 +399,6 @@ namespace System.Management.Automation.Runspaces
     public sealed class SessionStateScriptEntry : SessionStateCommandEntry
     {
         
-        /// <param name="path">The path to the script.</param>
         public SessionStateScriptEntry(string path)
             : base(path, SessionStateEntryVisibility.Public)
         {
@@ -440,8 +407,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <param name="path">The path to the script.</param>
-        /// <param name="visibility">Visibility of the script.</param>
         internal SessionStateScriptEntry(string path, SessionStateEntryVisibility visibility)
             : base(path, visibility)
         {
@@ -450,7 +415,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <returns>The cloned object.</returns>
         public override InitialSessionStateEntry Clone()
         {
             SessionStateScriptEntry entry = new SessionStateScriptEntry(Path, Visibility);
@@ -466,8 +430,6 @@ namespace System.Management.Automation.Runspaces
     public sealed class SessionStateAliasEntry : SessionStateCommandEntry
     {
         
-        /// <param name="name">The name of the alias entry to add.</param>
-        /// <param name="definition">The name of the command it resolves to.</param>
         public SessionStateAliasEntry(string name, string definition)
             : base(name, SessionStateEntryVisibility.Public)
         {
@@ -476,9 +438,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <param name="name">The name of the alias entry to add.</param>
-        /// <param name="definition">The name of the command it resolves to.</param>
-        /// <param name="description">A description of the purpose of the alias.</param>
         public SessionStateAliasEntry(string name, string definition, string description)
             : base(name, SessionStateEntryVisibility.Public)
         {
@@ -488,10 +447,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <param name="name">The name of the alias entry to add.</param>
-        /// <param name="definition">The name of the command it resolves to.</param>
-        /// <param name="description">A description of the purpose of the alias.</param>
-        /// <param name="options">Options defining the scope visibility, readonly and constant.</param>
         public SessionStateAliasEntry(string name, string definition, string description, ScopedItemOptions options)
             : base(name, SessionStateEntryVisibility.Public)
         {
@@ -502,11 +457,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <param name="name">The name of the alias entry to add.</param>
-        /// <param name="definition">The name of the command it resolves to.</param>
-        /// <param name="description">A description of the purpose of the alias.</param>
-        /// <param name="options">Options defining the scope visibility, readonly and constant.</param>
-        /// <param name="visibility"></param>
         internal SessionStateAliasEntry(string name, string definition, string description, ScopedItemOptions options, SessionStateEntryVisibility visibility)
             : base(name, visibility)
         {
@@ -516,7 +466,6 @@ namespace System.Management.Automation.Runspaces
             Options = options;
         }
         
-        /// <returns>The cloned object.</returns>
         public override InitialSessionStateEntry Clone()
         {
             SessionStateAliasEntry entry = new SessionStateAliasEntry(Name, Definition, Description, Options, Visibility);
@@ -538,7 +487,6 @@ namespace System.Management.Automation.Runspaces
     public sealed class SessionStateApplicationEntry : SessionStateCommandEntry
     {
         
-        /// <param name="path">The full path to the application.</param>
         public SessionStateApplicationEntry(string path)
             : base(path, SessionStateEntryVisibility.Public)
         {
@@ -547,8 +495,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <param name="path">The full path to the application.</param>
-        /// <param name="visibility">Sets the external visibility of the path.</param>
         internal SessionStateApplicationEntry(string path, SessionStateEntryVisibility visibility)
             : base(path, visibility)
         {
@@ -557,7 +503,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <returns>The cloned object.</returns>
         public override InitialSessionStateEntry Clone()
         {
             SessionStateApplicationEntry entry = new SessionStateApplicationEntry(Path, Visibility);
@@ -573,10 +518,6 @@ namespace System.Management.Automation.Runspaces
     public sealed class SessionStateFunctionEntry : SessionStateCommandEntry
     {
         
-        /// <param name="name">The name of the function.</param>
-        /// <param name="definition">The definition of the function.</param>
-        /// <param name="options">Options controlling scope-related elements of this object.</param>
-        /// <param name="helpFile">The name of the help file associated with the function.</param>
         public SessionStateFunctionEntry(string name, string definition, ScopedItemOptions options, string helpFile)
             : base(name, SessionStateEntryVisibility.Public)
         {
@@ -590,17 +531,12 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <param name="name">The name of the function.</param>
-        /// <param name="definition">The definition of the function.</param>
-        /// <param name="helpFile">The name of the help file associated with the function.</param>
         public SessionStateFunctionEntry(string name, string definition, string helpFile)
             : this(name, definition, ScopedItemOptions.None, helpFile)
         {
         }
 
         
-        /// <param name="name">The name of the function.</param>
-        /// <param name="definition">The definition of the function.</param>
         public SessionStateFunctionEntry(string name, string definition)
             : this(name, definition, ScopedItemOptions.None, null)
         {
@@ -637,7 +573,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <returns>The cloned object.</returns>
         public override InitialSessionStateEntry Clone()
         {
             SessionStateFunctionEntry entry = new SessionStateFunctionEntry(Name, Definition, Options, Visibility, ScriptBlock, HelpFile);
@@ -668,9 +603,6 @@ namespace System.Management.Automation.Runspaces
     public sealed class SessionStateVariableEntry : ConstrainedSessionStateEntry
     {
         
-        /// <param name="name">The name of the variable.</param>
-        /// <param name="value">The value to set the variable to.</param>
-        /// <param name="description">A descriptive string to attach to the variable.</param>
         public SessionStateVariableEntry(string name, object value, string description)
             : base(name, SessionStateEntryVisibility.Public)
         {
@@ -679,10 +611,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <param name="name">The name of the variable.</param>
-        /// <param name="value">The value to set the variable to.</param>
-        /// <param name="description">A descriptive string to attach to the variable.</param>
-        /// <param name="options">Options like readonly, constant, allscope, etc.</param>
         public SessionStateVariableEntry(string name, object value, string description, ScopedItemOptions options)
             : base(name, SessionStateEntryVisibility.Public)
         {
@@ -692,11 +620,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <param name="name">The name of the variable.</param>
-        /// <param name="value">The value to set the variable to.</param>
-        /// <param name="description">A descriptive string to attach to the variable.</param>
-        /// <param name="options">Options like readonly, constant, allscope, etc.</param>
-        /// <param name="attributes">A list of attributes to attach to the variable.</param>
         public SessionStateVariableEntry(string name, object value, string description, ScopedItemOptions options, Collection<Attribute> attributes)
             : base(name, SessionStateEntryVisibility.Public)
         {
@@ -707,11 +630,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <param name="name">The name of the variable.</param>
-        /// <param name="value">The value to set the variable to.</param>
-        /// <param name="description">A descriptive string to attach to the variable.</param>
-        /// <param name="options">Options like readonly, constant, allscope, etc.</param>
-        /// <param name="attribute">A single attribute to attach to the variable.</param>
         public SessionStateVariableEntry(string name, object value, string description, ScopedItemOptions options, Attribute attribute)
             : base(name, SessionStateEntryVisibility.Public)
         {
@@ -723,12 +641,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <param name="name">The name of the variable.</param>
-        /// <param name="value">The value to set the variable to.</param>
-        /// <param name="description">A descriptive string to attach to the variable.</param>
-        /// <param name="options">Options like readonly, constant, allscope, etc.</param>
-        /// <param name="attributes">A single attribute to attach to the variable.</param>
-        /// <param name="visibility"></param>
         internal SessionStateVariableEntry(string name, object value, string description, ScopedItemOptions options, Collection<Attribute> attributes, SessionStateEntryVisibility visibility)
             : base(name, visibility)
         {
@@ -739,7 +651,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <returns>The cloned object.</returns>
         public override InitialSessionStateEntry Clone()
         {
             // Copy the attribute collection if necessary...
@@ -771,7 +682,6 @@ namespace System.Management.Automation.Runspaces
     }
 
     
-    /// <typeparam name="T"></typeparam>
     public sealed class InitialSessionStateEntryCollection<T> : IEnumerable<T> where T : InitialSessionStateEntry
     {
         
@@ -781,7 +691,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <param name="items"></param>
         public InitialSessionStateEntryCollection(IEnumerable<T> items)
         {
             ArgumentNullException.ThrowIfNull(items);
@@ -795,7 +704,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <returns>The cloned collection.</returns>
         public InitialSessionStateEntryCollection<T> Clone()
         {
             InitialSessionStateEntryCollection<T> result;
@@ -828,8 +736,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <param name="index"></param>
-        /// <returns></returns>
         public T this[int index]
         {
             get
@@ -845,8 +751,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <param name="name"></param>
-        /// <returns></returns>
         public Collection<T> this[string name]
         {
             get
@@ -868,8 +772,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <param name="name"></param>
-        /// <returns></returns>
         internal Collection<T> LookUpByName(string name)
         {
             if (name == null)
@@ -894,7 +796,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <param name="index"></param>
         public void RemoveItem(int index)
         {
             lock (_syncObject)
@@ -904,8 +805,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <param name="index"></param>
-        /// <param name="count"></param>
         public void RemoveItem(int index, int count)
         {
             lock (_syncObject)
@@ -927,8 +826,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <param name="name">The name of the element to remove.</param>
-        /// <param name="type">The type of object to remove, can be null to remove any type.</param>
         public void Remove(string name, object type)
         {
             ArgumentNullException.ThrowIfNull(name);
@@ -961,7 +858,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <param name="item">The item to add...</param>
         public void Add(T item)
         {
             ArgumentNullException.ThrowIfNull(item);
@@ -973,7 +869,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <param name="items"></param>
         public void Add(IEnumerable<T> items)
         {
             ArgumentNullException.ThrowIfNull(items);
@@ -988,16 +883,12 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <returns></returns>
-        /// 
         IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             return _internalCollection.GetEnumerator();
         }
 
         
-        /// <returns></returns>
-        /// 
         IEnumerator<T> System.Collections.Generic.IEnumerable<T>.GetEnumerator()
         {
             return _internalCollection.GetEnumerator();
@@ -1062,21 +953,12 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <param name="path">The path to the PSSC session configuration file.</param>
-        /// <returns>InitialSessionState object.</returns>
         public static InitialSessionState CreateFromSessionConfigurationFile(string path)
         {
             return CreateFromSessionConfigurationFile(path, null);
         }
 
         
-        /// <param name="path">The path to the PSSC session configuration file.</param>
-        /// <param name="roleVerifier">
-        /// The verifier that PowerShell should call to determine if groups in the Role entry apply to the
-        /// target session. If you have a WindowsPrincipal for a user, for example, create a Function that
-        /// checks windowsPrincipal.IsInRole().
-        /// </param>
-        /// <returns>InitialSessionState object.</returns>
         public static InitialSessionState CreateFromSessionConfigurationFile(
             string path,
             Func<string, bool> roleVerifier)
@@ -1085,14 +967,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <param name="path">The path to the PSSC session configuration file.</param>
-        /// <param name="roleVerifier">
-        /// The verifier that PowerShell should call to determine if groups in the Role entry apply to the
-        /// target session. If you have a WindowsPrincipal for a user, for example, create a Function that
-        /// checks windowsPrincipal.IsInRole().
-        /// </param>
-        /// <param name="validateFile">Validates the file contents for supported SessionState options.</param>
-        /// <returns>InitialSessionState object.</returns>
         public static InitialSessionState CreateFromSessionConfigurationFile(
             string path,
             Func<string, bool> roleVerifier,
@@ -1120,10 +994,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <param name="sessionCapabilities">
-        /// What capabilities the session should have.
-        /// </param>
-        /// <returns></returns>
         public static InitialSessionState CreateRestricted(SessionCapabilities sessionCapabilities)
         {
             // only remote server has been requested
@@ -1239,7 +1109,6 @@ namespace System.Management.Automation.Runspaces
 
         // Creates an empty EE
         
-        /// <returns></returns>
         public static InitialSessionState Create()
         {
             InitialSessionState iss = new InitialSessionState();
@@ -1261,7 +1130,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <returns></returns>
         public static InitialSessionState CreateDefault()
         {
             // Read all of the registered PSSnapins
@@ -1324,7 +1192,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <returns></returns>
         public static InitialSessionState CreateDefault2()
         {
             InitialSessionState ss = new InitialSessionState();
@@ -1358,7 +1225,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <returns>The cloned object.</returns>
         public InitialSessionState Clone()
         {
             InitialSessionState ss = new InitialSessionState();
@@ -1430,17 +1296,12 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <param name="snapInName"></param>
-        /// <returns></returns>
         public static InitialSessionState Create(string snapInName)
         {
             return new InitialSessionState();
         }
 
         
-        /// <param name="snapInNameCollection"></param>
-        /// <param name="warning"></param>
-        /// <returns></returns>
         public static InitialSessionState Create(string[] snapInNameCollection, out PSConsoleLoadException warning)
         {
             warning = null;
@@ -1448,9 +1309,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <param name="snapInPath"></param>
-        /// <param name="warnings"></param>
-        /// <returns></returns>
         public static InitialSessionState CreateFrom(string snapInPath, out PSConsoleLoadException warnings)
         {
             warnings = null;
@@ -1458,9 +1316,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <param name="snapInPathCollection"></param>
-        /// <param name="warnings"></param>
-        /// <returns></returns>
         public static InitialSessionState CreateFrom(string[] snapInPathCollection, out PSConsoleLoadException warnings)
         {
             warnings = null;
@@ -1540,8 +1395,6 @@ namespace System.Management.Automation.Runspaces
         internal PSHost Host = null;
 
         
-        /// <param name="name">The modules to add.</param>
-        /// <returns></returns>
         public void ImportPSModule(params string[] name)
         {
             ArgumentNullException.ThrowIfNull(name);
@@ -1559,10 +1412,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <param name="modules">
-        /// The modules, whose specifications are specified by <paramref name="modules"/>,
-        /// to add.
-        /// </param>
         public void ImportPSModule(IEnumerable<ModuleSpecification> modules)
         {
             ArgumentNullException.ThrowIfNull(modules);
@@ -1574,9 +1423,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <param name="path">
-        /// Path from which all modules need to be imported.
-        /// </param>
         public void ImportPSModulesFromPath(string path)
         {
             string expandedpath = Environment.ExpandEnvironmentVariables(path);
@@ -1585,8 +1431,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <param name="name">The modules to add.</param>
-        /// <returns></returns>
         internal void ImportPSCoreModule(string[] name)
         {
             ArgumentNullException.ThrowIfNull(name);
@@ -2390,9 +2234,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <param name="commandModification">The hashtable of command modifications for this command.</param>
-        /// <param name="metadata">The metadata for the command being processed.</param>
-        /// <param name="parameterName">The parameter being modified.</param>
         private static void ProcessCommandModification(Hashtable commandModification, CommandMetadata metadata, string parameterName)
         {
             // If the metadata doesn't actually contain the parameter, then we need to create one.
@@ -2760,11 +2601,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <param name="commandPattern"></param>
-        /// <param name="moduleName"></param>
-        /// <param name="context"></param>
-        /// <param name="processedModules"></param>
-        /// <returns></returns>
         private static IEnumerable<CommandInfo> LookupCommands(
             string commandPattern,
             string moduleName,
@@ -2977,7 +2813,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <param name="context"></param>
         internal void ResetRunspaceState(ExecutionContext context)
         {
             lock (_syncObject)
@@ -3179,8 +3014,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <param name="context">The execution context for the runspace to update.</param>
-        /// <param name="updateOnly">If true, re-initialize the metadata collection...</param>
         internal void UpdateTypes(ExecutionContext context, bool updateOnly)
         {
             if (Types.Count == 1)
@@ -3289,8 +3122,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <param name="context">The execution context for the runspace to be updated.</param>
-        /// <param name="update">True if we only want to add stuff, false if we want to reinitialize.</param>
         internal void UpdateFormats(ExecutionContext context, bool update)
         {
             if (DisableFormatUpdates || this.Formats.Count == 0)
@@ -3399,9 +3230,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <param name="name"></param>
-        /// <param name="warning"></param>
-        /// <returns></returns>
         [Obsolete("Custom PSSnapIn is deprecated. Please use a module instead.", true)]
         public PSSnapInInfo ImportPSSnapIn(string name, out PSSnapInException warning)
         {

@@ -8,7 +8,6 @@ using System.Runtime.Serialization;
 namespace Microsoft.Management.UI.Internal
 {
     
-    /// <typeparam name="T">The generic parameter.</typeparam>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public abstract class SingleValueComparableValueFilterRule<T> : ComparableValueFilterRule<T> where T : IComparable
     {
@@ -42,7 +41,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="source">The source to initialize from.</param>
         protected SingleValueComparableValueFilterRule(SingleValueComparableValueFilterRule<T> source)
             : base(source)
         {

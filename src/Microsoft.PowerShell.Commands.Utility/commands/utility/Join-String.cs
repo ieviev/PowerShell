@@ -74,7 +74,6 @@ namespace Microsoft.PowerShell.Commands.Utility
         [Parameter(ValueFromPipeline = true)]
         public PSObject[] InputObject { get; set; }
 
-        /// <inheritdoc/>
         protected override void BeginProcessing()
         {
             _quoteChar = SingleQuote ? '\'' : DoubleQuote ? '"' : char.MinValue;
@@ -85,7 +84,6 @@ namespace Microsoft.PowerShell.Commands.Utility
             }
         }
 
-        /// <inheritdoc/>
         protected override void ProcessRecord()
         {
             if (InputObject != null)
@@ -132,7 +130,6 @@ namespace Microsoft.PowerShell.Commands.Utility
             }
         }
 
-        /// <inheritdoc/>
         protected override void EndProcessing()
         {
             _outputBuilder.Append(OutputSuffix);
@@ -190,12 +187,6 @@ namespace Microsoft.PowerShell.Commands.Utility
         };
 
         
-        /// <param name="commandName">The command name.</param>
-        /// <param name="parameterName">The parameter name.</param>
-        /// <param name="wordToComplete">The word to complete.</param>
-        /// <param name="commandAst">The command AST.</param>
-        /// <param name="fakeBoundParameters">The fake bound parameters.</param>
-        /// <returns>List of Completion Results.</returns>
         public IEnumerable<CompletionResult> CompleteArgument(
             string commandName,
             string parameterName,
@@ -226,12 +217,6 @@ namespace Microsoft.PowerShell.Commands.Utility
         };
 
         
-        /// <param name="commandName">The command name.</param>
-        /// <param name="parameterName">The parameter name.</param>
-        /// <param name="wordToComplete">The word to complete.</param>
-        /// <param name="commandAst">The command AST.</param>
-        /// <param name="fakeBoundParameters">The fake bound parameters.</param>
-        /// <returns>List of Completion Results.</returns>
         public IEnumerable<CompletionResult> CompleteArgument(
             string commandName,
             string parameterName,

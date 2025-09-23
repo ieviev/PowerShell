@@ -28,7 +28,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="moduleName">The module name.</param>
         public ModuleSpecification(string moduleName)
         {
             ArgumentException.ThrowIfNullOrEmpty(moduleName);
@@ -43,7 +42,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="moduleSpecification">The module specification as a hashtable.</param>
         public ModuleSpecification(Hashtable moduleSpecification)
         {
             ArgumentNullException.ThrowIfNull(moduleSpecification);
@@ -56,9 +54,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="moduleSpecification">Object to initialize.</param>
-        /// <param name="hashtable">Contains info about object to initialize.</param>
-        /// <returns></returns>
         internal static Exception ModuleSpecificationInitHelper(ModuleSpecification moduleSpecification, Hashtable hashtable)
         {
             StringBuilder badKeys = new StringBuilder();
@@ -196,7 +191,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <returns></returns>
         public override string ToString()
         {
             if (Guid == null && Version == null && RequiredVersion == null && MaximumVersion == null)
@@ -236,9 +230,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="input">The module specification string.</param>
-        /// <param name="result">The ModuleSpecification object.</param>
-        /// <returns></returns>
         public static bool TryParse(string input, out ModuleSpecification result)
         {
             result = null;
@@ -260,9 +251,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="context">The current execution context. Used for path normalization.</param>
-        /// <param name="basePath">The base path where a relative path should be interpreted with respect to.</param>
-        /// <returns>A fresh module specification object with the name normalized for use internally.</returns>
         internal ModuleSpecification WithNormalizedName(ExecutionContext context, string basePath)
         {
             // Save allocating a new module spec if we don't need to change anything
@@ -301,9 +289,6 @@ namespace Microsoft.PowerShell.Commands
     internal class ModuleSpecificationComparer : IEqualityComparer<ModuleSpecification>
     {
         
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <returns>True if the specifications are equal, false otherwise.</returns>
         public bool Equals(ModuleSpecification x, ModuleSpecification y)
         {
             if (x == y)
@@ -320,8 +305,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="obj">The module specification for the object.</param>
-        /// <returns>A hashcode that is always the same for any module specification with the same properties.</returns>
         public int GetHashCode(ModuleSpecification obj)
         {
             if (obj == null)

@@ -49,9 +49,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="propertyNames">An array of property names to add.</param>
-        /// <param name="displayNames">An array of display names to add.</param>
-        /// <param name="types">An array of types to add.</param>
         internal void AddColumns(string[] propertyNames, string[] displayNames, Type[] types)
         {
             ArgumentNullException.ThrowIfNull(propertyNames);
@@ -156,9 +153,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="livePSObject">
-        /// The item to add.
-        /// </param>
         internal void AddItem(PSObject livePSObject)
         {
             ArgumentNullException.ThrowIfNull(livePSObject);
@@ -177,9 +171,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="livePSObject">
-        /// The item to add.
-        /// </param>
         internal void AddHeteroViewItem(PSObject livePSObject)
         {
             ArgumentNullException.ThrowIfNull(livePSObject);
@@ -207,7 +198,6 @@ namespace Microsoft.PowerShell.Commands
         internal void BlockUntilClosed() => _closedEvent?.WaitOne();
 
         
-        /// <param name="isDisposing">True if being called from Dispose.</param>
         private void Dispose(bool isDisposing)
         {
             if (isDisposing)
@@ -238,25 +228,18 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <returns>
-        /// True if the out window is closed, false otherwise.
-        /// </returns>
         internal bool IsWindowClosed()
         {
             return (bool)_graphicalHostReflectionWrapper.CallMethod("GetWindowClosedStatus");
         }
 
         
-        /// <returns>The thrown and caught exception. It returns null if no exceptions were thrown by any previous method calls.</returns>
         internal Exception GetLastException()
         {
             return (Exception)_graphicalHostReflectionWrapper.CallMethod("GetLastException");
         }
 
         
-        /// <returns>
-        /// The selected item.
-        /// </returns>
         internal List<PSObject> GetSelectedItems()
         {
             return (List<PSObject>)_graphicalHostReflectionWrapper.CallMethod("SelectedItems");

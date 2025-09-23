@@ -66,9 +66,6 @@ namespace Microsoft.Management.UI.Internal
         #region Public Methods
 
         
-        /// <param name="item">
-        /// The item to add.
-        /// </param>
         public void AddFilterRulePanelItem(FilterRulePanelItem item)
         {
             ArgumentNullException.ThrowIfNull(item);
@@ -89,9 +86,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="item">
-        /// The item to remove.
-        /// </param>
         public void RemoveFilterRulePanelItem(FilterRulePanelItem item)
         {
             ArgumentNullException.ThrowIfNull(item);

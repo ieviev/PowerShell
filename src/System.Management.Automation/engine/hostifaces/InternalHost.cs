@@ -35,10 +35,6 @@ namespace System.Management.Automation.Internal.Host
         }
 
         
-        /// <value></value>
-        /// <exception cref="NotImplementedException">
-        ///  when the external host's Name is null or empty.
-        /// </exception>
         public override string Name
         {
             get
@@ -60,10 +56,6 @@ namespace System.Management.Automation.Internal.Host
         }
 
         
-        /// <value></value>
-        /// <exception cref="NotImplementedException">
-        ///  when the external host's Version is null.
-        /// </exception>
         public override System.Version Version
         {
             get
@@ -85,10 +77,6 @@ namespace System.Management.Automation.Internal.Host
         }
 
         
-        /// <value></value>
-        /// <exception cref="NotImplementedException">
-        ///  when the external host's InstanceId is a zero Guid.
-        /// </exception>
         public override System.Guid InstanceId
         {
             get
@@ -110,8 +98,6 @@ namespace System.Management.Automation.Internal.Host
         }
 
         
-        /// <value>
-        /// </value>
         public override System.Management.Automation.Host.PSHostUserInterface UI
         {
             get
@@ -130,11 +116,6 @@ namespace System.Management.Automation.Internal.Host
         }
 
         
-        /// <value>
-        /// </value>
-        /// <exception cref="NotImplementedException">
-        ///  when the external host's CurrentCulture is null.
-        /// </exception>
         public override System.Globalization.CultureInfo CurrentCulture
         {
             get
@@ -146,11 +127,6 @@ namespace System.Management.Automation.Internal.Host
         }
 
         
-        /// <value>
-        /// </value>
-        /// <exception cref="NotImplementedException">
-        /// If the external host's CurrentUICulture is null.
-        /// </exception>
         public override CultureInfo CurrentUICulture
         {
             get
@@ -161,7 +137,6 @@ namespace System.Management.Automation.Internal.Host
         }
 
         
-        /// <param name="exitCode"></param>
         public override void SetShouldExit(int exitCode)
         {
             _externalHostRef.Value.SetShouldExit(exitCode);
@@ -183,7 +158,6 @@ namespace System.Management.Automation.Internal.Host
         }
 
         
-        /// <param name="callingCommand"></param>
         internal void EnterNestedPrompt(InternalCommand callingCommand)
         {
             // Ensure we are in control of the pipeline
@@ -398,7 +372,6 @@ namespace System.Management.Automation.Internal.Host
         }
 
         
-        /// <seealso cref="PopRunspace"/>
         public void PushRunspace(System.Management.Automation.Runspaces.Runspace runspace)
         {
             IHostSupportsInteractiveSession host = GetIHostSupportsInteractiveSession();
@@ -406,7 +379,6 @@ namespace System.Management.Automation.Internal.Host
         }
 
         
-        /// <seealso cref="PushRunspace"/>
         public void PopRunspace()
         {
             IHostSupportsInteractiveSession host = GetIHostSupportsInteractiveSession();
@@ -434,8 +406,6 @@ namespace System.Management.Automation.Internal.Host
         }
 
         
-        /// <returns>True, if host in nested prompt
-        /// false, otherwise.</returns>
         internal bool HostInNestedPrompt()
         {
             if (NestedPromptCount > 0)
@@ -449,7 +419,6 @@ namespace System.Management.Automation.Internal.Host
         }
 
         
-        /// <seealso cref="RevertHostRef"/> and
         internal void SetHostRef(PSHost psHost)
         {
             _externalHostRef.Override(psHost);
@@ -457,7 +426,6 @@ namespace System.Management.Automation.Internal.Host
         }
 
         
-        /// <seealso cref="SetHostRef"/> and
         internal void RevertHostRef()
         {
             // nothing to revert if Host reference is not set.

@@ -26,7 +26,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <value></value>
         protected override bool ProviderSupportsShouldProcess
         {
             get
@@ -47,10 +46,6 @@ namespace Microsoft.PowerShell.Commands
         #region protected members
 
         
-        /// <returns>
-        /// A CmdletProviderContext instance initialized to the context of the current
-        /// command.
-        /// </returns>
         internal CmdletProviderContext GetCurrentContext()
         {
             CmdletProviderContext currentCommandContext = CmdletProviderContext;

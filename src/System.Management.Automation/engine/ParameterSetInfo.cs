@@ -19,24 +19,6 @@ namespace System.Management.Automation
         #region ctor
 
         
-        /// <param name="name">
-        /// The formal name of the parameter.
-        /// </param>
-        /// <param name="isDefaultParameterSet">
-        /// True if the parameter set is the default parameter set, or false otherwise.
-        /// </param>
-        /// <param name="parameterSetFlag">
-        /// The bit that specifies the parameter set in the type metadata.
-        /// </param>
-        /// <param name="parameterMetadata">
-        /// The type metadata about the cmdlet.
-        /// </param>
-        /// <exception cref="ArgumentException">
-        /// If <paramref name="name"/> is null or empty.
-        /// </exception>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="parameterMetadata"/> is null.
-        /// </exception>
         internal CommandParameterSetInfo(
             string name,
             bool isDefaultParameterSet,
@@ -96,9 +78,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="parameterAction"></param>
-        /// <param name="commonParameterAction"></param>
-        /// <returns></returns>
         internal void GenerateParametersInDisplayOrder(
             Action<CommandParameterInfo> parameterAction,
             Action<string> commonParameterAction)

@@ -13,18 +13,6 @@ using System.Threading;
 namespace System.Management.Automation.Internal
 {
     
-    /// <remarks>
-    /// Only use <see cref="System.Management.Automation.Internal.InternalCommand"/>
-    /// as a subclass of
-    /// <see cref="System.Management.Automation.Cmdlet"/>.
-    /// Do not attempt to create instances of
-    /// <see cref="System.Management.Automation.Internal.InternalCommand"/>
-    /// independently, or to derive other classes than
-    /// <see cref="System.Management.Automation.Cmdlet"/> from
-    /// <see cref="System.Management.Automation.Internal.InternalCommand"/>.
-    /// </remarks>
-    /// <seealso cref="System.Management.Automation.Cmdlet"/>
-    /// 
     [DebuggerDisplay("Command = {_commandInfo}")]
     public abstract class InternalCommand
     {
@@ -37,10 +25,6 @@ namespace System.Management.Automation.Internal
         #region ctor
 
         
-        /// <remarks>
-        /// The only constructor is internal, so outside users cannot create
-        /// an instance of this class.
-        /// </remarks>
         internal InternalCommand()
         {
             this.CommandInfo = null;
@@ -51,12 +35,10 @@ namespace System.Management.Automation.Internal
         #region internal_members
 
         
-        /// <value></value>
         internal IScriptExtent InvocationExtent { get; set; }
 
         private InvocationInfo _myInvocation = null;
         
-        /// <value>The invocation object for this command.</value>
         internal InvocationInfo MyInvocation
         {
             get { return _myInvocation ??= new InvocationInfo(this); }
@@ -125,9 +107,6 @@ namespace System.Management.Automation.Internal
         #region public_properties
 
         
-        /// <exception cref="System.ArgumentNullException">
-        /// may not be set to null
-        /// </exception>
         internal ExecutionContext Context
         {
             get
@@ -194,7 +173,6 @@ namespace System.Management.Automation.Internal
         #endregion Override
 
         
-        /// <exception cref="System.Management.Automation.PipelineStoppedException"></exception>
         internal void ThrowIfStopping()
         {
             if (IsStopping)
@@ -204,13 +182,6 @@ namespace System.Management.Automation.Internal
         #region Dispose
 
         
-        /// <remarks>
-        /// Using InternalDispose instead of Dispose pattern because this
-        /// interface was shipped in PowerShell V1 and 3rd cmdlets indirectly
-        /// derive from this interface. If we depend on Dispose() and 3rd
-        /// party cmdlets do not call base.Dispose (which is the case), we
-        /// will still end up having this leak.
-        /// </remarks>
         internal void InternalDispose(bool isDisposing)
         {
             _myInvocation = null;
@@ -301,20 +272,6 @@ namespace System.Management.Automation
     #endregion ConfirmImpact
 
     
-    /// <remarks>
-    /// There are two ways to create a Cmdlet: by deriving from the Cmdlet base class, and by
-    /// deriving from the PSCmdlet base class.  The Cmdlet base class is the primary means by
-    /// which users create their own Cmdlets.  Extending this class provides support for the most
-    /// common functionality, including object output and record processing.
-    /// If your Cmdlet requires access to the PowerShell Runtime (for example, variables in the session state,
-    /// access to the host, or information about the current Cmdlet Providers,) then you should instead
-    /// derive from the PSCmdlet base class.
-    /// The public members defined by the PSCmdlet class are not designed to be overridden; instead, they
-    /// provided access to different aspects of the PowerShell runtime.
-    /// In both cases, users should first develop and implement an object model to accomplish their
-    /// task, extending the Cmdlet or PSCmdlet classes only as a thin management layer.
-    /// </remarks>
-    /// <seealso cref="System.Management.Automation.Internal.InternalCommand"/>
     public abstract partial class PSCmdlet : Cmdlet
     {
         #region private_members
@@ -408,7 +365,6 @@ namespace System.Management.Automation
 
         #region Provider wrappers
 
-        /// <Content contentref="System.Management.Automation.PathIntrinsics.CurrentProviderLocation" />
         public PathInfo CurrentProviderLocation(string providerId)
         {
             using (PSTransactionManager.GetEngineProtectionScope())
@@ -424,7 +380,6 @@ namespace System.Management.Automation
                 return result;
             }
         }
-        /// <Content contentref="System.Management.Automation.PathIntrinsics.GetUnresolvedProviderPathFromPSPath" />
         public string GetUnresolvedProviderPathFromPSPath(string path)
         {
             using (PSTransactionManager.GetEngineProtectionScope())
@@ -433,7 +388,6 @@ namespace System.Management.Automation
             }
         }
 
-        /// <Content contentref="System.Management.Automation.PathIntrinsics.GetResolvedProviderPathFromPSPath" />
         public Collection<string> GetResolvedProviderPathFromPSPath(string path, out ProviderInfo provider)
         {
             using (PSTransactionManager.GetEngineProtectionScope())
@@ -448,10 +402,6 @@ namespace System.Management.Automation
         #region ctor
 
         
-        /// <remarks>
-        /// Only subclasses of <see cref="System.Management.Automation.Cmdlet"/>
-        /// can be created.
-        /// </remarks>
         protected PSCmdlet()
         {
         }
@@ -462,7 +412,6 @@ namespace System.Management.Automation
 
         #region PSVariable APIs
 
-        /// <Content contentref="System.Management.Automation.VariableIntrinsics.GetValue" />
         public object GetVariableValue(string name)
         {
             using (PSTransactionManager.GetEngineProtectionScope())
@@ -471,7 +420,6 @@ namespace System.Management.Automation
             }
         }
 
-        /// <Content contentref="System.Management.Automation.VariableIntrinsics.GetValue" />
         public object GetVariableValue(string name, object defaultValue)
         {
             using (PSTransactionManager.GetEngineProtectionScope())

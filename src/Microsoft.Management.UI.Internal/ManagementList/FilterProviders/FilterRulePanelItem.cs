@@ -57,13 +57,6 @@ namespace Microsoft.Management.UI.Internal
         #region Ctor
 
         
-        /// <param name="rule">
-        /// The FilterRule to store in this FilterRulePanelItem.
-        /// </param>
-        /// <param name="groupId">
-        /// A string which identifies which group this
-        /// item belongs to.
-        /// </param>
         public FilterRulePanelItem(FilterRule rule, string groupId)
         {
             ArgumentNullException.ThrowIfNull(rule);
@@ -78,9 +71,6 @@ namespace Microsoft.Management.UI.Internal
         #region Public Methods
 
         
-        /// <param name="propertyName">
-        /// The name of a property that has changed.
-        /// </param>
         protected void NotifyPropertyChanged(string propertyName)
         {
             Debug.Assert(!string.IsNullOrEmpty(propertyName), "not null");

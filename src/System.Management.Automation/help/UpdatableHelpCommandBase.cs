@@ -130,8 +130,6 @@ namespace Microsoft.PowerShell.Commands
         #region Events
 
         
-        /// <param name="sender">Event sender.</param>
-        /// <param name="e">Event arguments.</param>
         private void HandleProgressChanged(object sender, UpdatableHelpProgressEventArgs e)
         {
             Debug.Assert(e.CommandType == UpdatableHelpCommandType.UpdateHelpCommand
@@ -170,15 +168,12 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="module">Module name.</param>
-        /// <returns>True if system module, false if not.</returns>
         internal static bool IsSystemModule(string module)
         {
             return s_metadataCache.ContainsKey(module);
         }
 
         
-        /// <param name="commandType">Command type.</param>
         internal UpdatableHelpCommandBase(UpdatableHelpCommandType commandType)
         {
             _commandType = commandType;
@@ -245,11 +240,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="context">Execution context.</param>
-        /// <param name="pattern">Pattern to search.</param>
-        /// <param name="fullyQualifiedName">Module Specification.</param>
-        /// <param name="noErrors">Do not generate errors for modules without HelpInfoUri.</param>
-        /// <returns>A list of modules.</returns>
         private Dictionary<Tuple<string, Version>, UpdatableHelpModuleInfo> GetModuleInfo(ExecutionContext context, string pattern, ModuleSpecification fullyQualifiedName, bool noErrors)
         {
             List<PSModuleInfo> modules = null;
@@ -362,8 +352,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="moduleNames">Module names given by the user.</param>
-        /// <param name="fullyQualifiedNames">FullyQualifiedNames.</param>
         internal void Process(IEnumerable<string> moduleNames, IEnumerable<ModuleSpecification> fullyQualifiedNames)
         {
             _helpSystem.UseDefaultCredentials = _useDefaultCredentials;
@@ -407,7 +395,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="modules">Module objects given by the user.</param>
         internal void Process(IEnumerable<PSModuleInfo> modules)
         {
             if (modules == null || !modules.Any())
@@ -429,7 +416,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="name">Module name with globbing.</param>
         private void ProcessModuleWithGlobbing(string name)
         {
             if (string.IsNullOrEmpty(name))
@@ -446,7 +432,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="fullyQualifiedName">ModuleSpecification.</param>
         private void ProcessModuleWithGlobbing(ModuleSpecification fullyQualifiedName)
         {
             foreach (KeyValuePair<Tuple<string, Version>, UpdatableHelpModuleInfo> module in GetModuleInfo(null, fullyQualifiedName, false))
@@ -456,7 +441,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="module">Module to process.</param>
         private void ProcessModule(UpdatableHelpModuleInfo module)
         {
             _helpSystem.CurrentModule = module.ModuleName;
@@ -569,9 +553,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="module">Module to process.</param>
-        /// <param name="culture">Culture to use.</param>
-        /// <returns>True if the module has been processed, false if not.</returns>
         internal virtual bool ProcessModuleWithCulture(UpdatableHelpModuleInfo module, string culture)
         {
             return false;
@@ -582,10 +563,6 @@ namespace Microsoft.PowerShell.Commands
         #region Common methods
 
         
-        /// <param name="pattern">Pattern to match.</param>
-        /// <param name="fullyQualifiedName">ModuleSpecification.</param>
-        /// <param name="noErrors">Skip errors.</param>
-        /// <returns>A list of modules.</returns>
         internal Dictionary<Tuple<string, Version>, UpdatableHelpModuleInfo> GetModuleInfo(string pattern, ModuleSpecification fullyQualifiedName, bool noErrors)
         {
             Dictionary<Tuple<string, Version>, UpdatableHelpModuleInfo> modules = GetModuleInfo(Context, pattern, fullyQualifiedName, noErrors);
@@ -605,12 +582,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="module">ModuleInfo.</param>
-        /// <param name="currentHelpInfo">Current HelpInfo.xml.</param>
-        /// <param name="newHelpInfo">New HelpInfo.xml.</param>
-        /// <param name="culture">Current culture.</param>
-        /// <param name="force">Force update.</param>
-        /// <returns>True if it is necessary to update help, false if not.</returns>
         internal bool IsUpdateNecessary(UpdatableHelpModuleInfo module, UpdatableHelpInfo currentHelpInfo,
             UpdatableHelpInfo newHelpInfo, CultureInfo culture, bool force)
         {
@@ -641,12 +612,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="moduleName">Module name.</param>
-        /// <param name="path">Path to help info.</param>
-        /// <param name="filename">Help info file name.</param>
-        /// <param name="time">Current time (UTC).</param>
-        /// <param name="force">If -Force is specified.</param>
-        /// <returns>True if we are okay to update, false if not.</returns>
         internal bool CheckOncePerDayPerModule(string moduleName, string path, string filename, DateTime time, bool force)
         {
             // Update if -Force is specified
@@ -684,10 +649,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="path">Path to resolve.</param>
-        /// <param name="recurse">Resolve recursively?</param>
-        /// <param name="isLiteralPath">Treat the path / start path as a literal path?</param>///
-        /// <returns>A list of directories.</returns>
         internal IEnumerable<string> ResolvePath(string path, bool recurse, bool isLiteralPath)
         {
             List<string> resolvedPaths = new List<string>();
@@ -742,8 +703,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="path">Path to resolve.</param>
-        /// <returns>A list of directories.</returns>
         private static IEnumerable<string> RecursiveResolvePathHelper(string path)
         {
             if (System.IO.Directory.Exists(path))
@@ -767,7 +726,6 @@ namespace Microsoft.PowerShell.Commands
         #region Static methods
 
         
-        /// <param name="path">Path to validate.</param>
         internal void ValidatePathProvider(PathInfo path)
         {
             if (path.Provider == null || path.Provider.Name != FileSystemProvider.ProviderName)
@@ -782,7 +740,6 @@ namespace Microsoft.PowerShell.Commands
         #region Logging
 
         
-        /// <param name="message">Message to log.</param>
         internal void LogMessage(string message)
         {
             List<string> details = new List<string>() { message };
@@ -794,9 +751,6 @@ namespace Microsoft.PowerShell.Commands
         #region Exception processing
 
         
-        /// <param name="moduleName">Module name.</param>
-        /// <param name="culture">Culture info.</param>
-        /// <param name="e">Exception to check.</param>
         internal void ProcessException(string moduleName, string culture, Exception e)
         {
             UpdatableHelpSystemException except = null;

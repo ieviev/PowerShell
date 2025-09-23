@@ -22,16 +22,9 @@ namespace Microsoft.PowerShell.Commands
         #region Constructors
 
         
-        /// <param name="response">The response.</param>
-        /// <param name="perReadTimeout">Time permitted between reads or Timeout.InfiniteTimeSpan for no timeout.</param>
-        /// <param name="cancellationToken">Cancellation token.</param>
         public BasicHtmlWebResponseObject(HttpResponseMessage response, TimeSpan perReadTimeout, CancellationToken cancellationToken) : this(response, null, perReadTimeout, cancellationToken) { }
 
         
-        /// <param name="response">The response.</param>
-        /// <param name="contentStream">The content stream associated with the response.</param>
-        /// <param name="perReadTimeout">Time permitted between reads or Timeout.InfiniteTimeSpan for no timeout.</param>
-        /// <param name="cancellationToken">Cancellation token.</param>
         public BasicHtmlWebResponseObject(HttpResponseMessage response, Stream? contentStream, TimeSpan perReadTimeout, CancellationToken cancellationToken) : base(response, contentStream, perReadTimeout, cancellationToken)
         {
             InitializeContent(cancellationToken);
@@ -43,18 +36,9 @@ namespace Microsoft.PowerShell.Commands
         #region Properties
 
         
-        /// <value>
-        /// Content of the response body, decoded using <see cref="Encoding"/>,
-        /// if the <c>Content-Type</c> response header is a recognized text
-        /// type.  Otherwise <see langword="null"/>.
-        /// </value>
         public new string Content { get; private set; }
 
         
-        /// <value>
-        /// Encoding of the response body from the <c>Content-Type</c> header,
-        /// or <see langword="null"/> if the encoding could not be determined.
-        /// </value>
         public Encoding? Encoding { get; private set; }
 
         private WebCmdletElementCollection? _inputFields;
@@ -131,7 +115,6 @@ namespace Microsoft.PowerShell.Commands
         #region Methods
 
         
-        /// <param name="cancellationToken">The cancellation token.</param>
         [MemberNotNull(nameof(Content))]
         protected void InitializeContent(CancellationToken cancellationToken)
         {

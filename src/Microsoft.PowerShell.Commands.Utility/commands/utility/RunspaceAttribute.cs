@@ -13,17 +13,6 @@ namespace System.Management.Automation.Runspaces
     public sealed class RunspaceAttribute : ArgumentTransformationAttribute
     {
         
-        /// <param name="engineIntrinsics">
-        /// The engine APIs for the context under which the transformation is being
-        /// made.
-        /// </param>
-        /// <param name="inputData">
-        /// If a string, the transformation uses the input as the runspace name.
-        /// If an int, the transformation uses the input as the runspace ID.
-        /// If a guid, the transformation uses the input as the runspace GUID.
-        /// If already a Runspace, the transform does nothing.
-        /// </param>
-        /// <returns>A runspace object representing the inputData.</returns>
         public override object Transform(EngineIntrinsics engineIntrinsics, object inputData)
         {
             if (engineIntrinsics?.Host?.UI == null)

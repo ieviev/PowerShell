@@ -172,7 +172,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="liveObject">PSObject to be converted to a string.</param>
         internal string ConvertToString(PSObject liveObject)
         {
             StringFormatError formatErrorObject = new();
@@ -200,7 +199,6 @@ namespace Microsoft.PowerShell.Commands
         #region Private Methods
 
         
-        /// <param name="input">Object to process.</param>
         private void ProcessObject(PSObject input)
         {
             // Make sure the OGV window is not closed.
@@ -430,7 +428,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="isDisposing">True if being called from Dispose.</param>
         private void Dispose(bool isDisposing)
         {
             if (isDisposing)

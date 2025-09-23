@@ -25,7 +25,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="source">The source to initialize from.</param>
         public PropertiesTextContainsFilterRule(PropertiesTextContainsFilterRule source)
             : base(source)
         {
@@ -41,8 +40,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="item">The item to evaluate.</param>
-        /// <returns><c>true</c> if <paramref name="item"/> is not <c>null</c>, the current value is valid, and the specified properties on <paramref name="item"/> contain the current value; otherwise, <c>false</c>.</returns>
         public override bool Evaluate(object item)
         {
             if (item == null)
@@ -79,8 +76,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="data">The data to evaluate.</param>
-        /// <returns><c>true</c> if <paramref name="data"/> contains the current value; otherwise, <c>false</c>.</returns>
         protected override bool Evaluate(string data)
         {
             if (this.cachedRegex == null)

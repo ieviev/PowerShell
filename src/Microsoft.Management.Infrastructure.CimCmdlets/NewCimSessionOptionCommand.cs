@@ -471,7 +471,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         #region helper functions
         
-        /// <returns></returns>
         internal DComSessionOptions CreateDComSessionOptions()
         {
             DComSessionOptions dcomoptions = new();
@@ -509,7 +508,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <returns></returns>
         internal WSManSessionOptions CreateWSMANSessionOptions()
         {
             WSManSessionOptions wsmanoptions = new();

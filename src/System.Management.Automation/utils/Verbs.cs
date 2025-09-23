@@ -15,10 +15,6 @@ namespace System.Management.Automation
     #region VERBS
 
     
-    /// <remarks>
-    /// These verbs are recommended over their synonyms when used as the verb name
-    /// for cmdlets.
-    /// </remarks>
     public static class VerbsCommon
     {
         
@@ -125,10 +121,6 @@ namespace System.Management.Automation
     }
 
     
-    /// <remarks>
-    /// These verbs are recommended over their synonyms when used as the verb name
-    /// for cmdlets.
-    /// </remarks>
     public static class VerbsData
     {
         
@@ -206,10 +198,6 @@ namespace System.Management.Automation
     }
 
     
-    /// <remarks>
-    /// These verbs are recommended over their synonyms when used as the verb name
-    /// for cmdlets.
-    /// </remarks>
     public static class VerbsLifecycle
     {
         
@@ -280,10 +268,6 @@ namespace System.Management.Automation
     }
 
     
-    /// <remarks>
-    /// These verbs are recommended over their synonyms when used as the verb name
-    /// for cmdlets.
-    /// </remarks>
     public static class VerbsDiagnostic
     {
         
@@ -309,10 +293,6 @@ namespace System.Management.Automation
     }
 
     
-    /// <remarks>
-    /// These verbs are recommended over their synonyms when used as the verb name
-    /// for cmdlets.
-    /// </remarks>
     public static class VerbsCommunications
     {
         
@@ -335,10 +315,6 @@ namespace System.Management.Automation
     }
 
     
-    /// <remarks>
-    /// These verbs are recommended over their synonyms when used as the verb name
-    /// for cmdlets.
-    /// </remarks>
     public static class VerbsSecurity
     {
         
@@ -879,7 +855,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <value>List of all verb types.</value>
         private static Type[] VerbTypes => new Type[] {
             typeof(VerbsCommon),
             typeof(VerbsCommunications),
@@ -891,14 +866,9 @@ namespace System.Management.Automation
         };
 
         
-        /// <param name="verbType">The verb type.</param>
-        /// <returns>Verb group display name.</returns>
         private static string GetVerbGroupDisplayName(Type verbType) => verbType.Name.Substring(5);
 
         
-        /// <param name="verbs">The array of verbs.</param>
-        /// <param name="groups">The array of groups.</param>
-        /// <returns>List of Verbs.</returns>
         internal static IEnumerable<VerbInfo> FilterByVerbsAndGroups(string[] verbs, string[] groups)
         {
             if (groups is null || groups.Length == 0)
@@ -927,9 +897,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="groups">The list of groups</param>
-        /// <param name="verbType">The verb type to check.</param>
-        /// <returns>True if verb type was found, False if not found.</returns>
         private static bool GroupsContainVerbType(string[] groups, Type verbType)
             => SessionStateUtilities.CollectionContainsValue(
                 groups,
@@ -937,8 +904,6 @@ namespace System.Management.Automation
                 StringComparer.OrdinalIgnoreCase);
 
         
-        /// <param name="verbType">The verb type.</param>
-        /// <returns>List of field names.</returns>
         private static IEnumerable<string> EnumerateFieldNamesFromVerbType(Type verbType)
         {
             foreach (FieldInfo field in verbType.GetFields())
@@ -951,7 +916,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <returns>List of field names.</returns>
         private static IEnumerable<string> EnumerateFieldNamesFromAllVerbTypes()
         {
             foreach (Type verbType in VerbTypes)
@@ -964,8 +928,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="commands">The collection of commands.</param>
-        /// <returns>List of command verb names.</returns>
         private static IEnumerable<string> EnumerateCommandVerbNames(Collection<CmdletInfo> commands)
         {
             foreach (CmdletInfo command in commands)
@@ -975,9 +937,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="verbs">The array of verbs.</param>
-        /// <param name="verbType">The verb type.</param>
-        /// <returns>List of Verbs.</returns>
         private static IEnumerable<VerbInfo> FilterVerbsByType(string[] verbs, Type verbType)
         {
             if (verbs is null || verbs.Length == 0)
@@ -1007,9 +966,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="fieldName">The field name.</param>
-        /// <param name="verbType">The verb type.</param>
-        /// <returns>VerbInfo object.</returns>
         private static VerbInfo CreateVerbFromField(string fieldName, Type verbType) => new()
         {
             Verb = fieldName,
@@ -1022,12 +978,6 @@ namespace System.Management.Automation
         public class VerbArgumentCompleter : IArgumentCompleter
         {
             
-            /// <param name="commandName">The command name.</param>
-            /// <param name="parameterName">The parameter name.</param>
-            /// <param name="wordToComplete">The word to complete.</param>
-            /// <param name="commandAst">The command AST.</param>
-            /// <param name="fakeBoundParameters">The fake bound parameters.</param>
-            /// <returns>List of Completion Results.</returns>
             public IEnumerable<CompletionResult> CompleteArgument(
                 string commandName,
                 string parameterName,
@@ -1084,9 +1034,6 @@ namespace System.Management.Automation
             }
 
             
-            /// <param name="wordToComplete">The word to complete.</param>
-            /// <param name="groups">The list of groups.</param>
-            /// <returns>List of completions for verb.</returns>
             private static IEnumerable<CompletionResult> CompleteVerbWithGroups(string wordToComplete, string[] groups)
             {
                 foreach (Type verbType in VerbTypes)
@@ -1104,17 +1051,12 @@ namespace System.Management.Automation
             }
 
             
-            /// <param name="wordToComplete">The word to complete.</param>
-            /// <param name="commands">The list of commands.</param>
-            /// <returns>List of completions for verb.</returns>
             private static IEnumerable<CompletionResult> CompleteVerbWithCommands(string wordToComplete, Collection<CmdletInfo> commands)
                 => CompletionHelpers.GetMatchingResults(
                     wordToComplete,
                     possibleCompletionValues: EnumerateCommandVerbNames(commands));
 
             
-            /// <param name="wordToComplete">The word to complete.</param>
-            /// <returns>List of completions for verb.</returns>
             private static IEnumerable<CompletionResult> CompleteVerbForAllTypes(string wordToComplete)
                 => CompletionHelpers.GetMatchingResults(
                     wordToComplete,

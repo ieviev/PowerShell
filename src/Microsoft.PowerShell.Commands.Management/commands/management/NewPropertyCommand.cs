@@ -67,15 +67,6 @@ namespace Microsoft.PowerShell.Commands
         public object Value { get; set; }
 
         
-        /// <remarks>
-        /// Gives the provider guidance on how vigorous it should be about performing
-        /// the operation. If true, the provider should do everything possible to perform
-        /// the operation. If false, the provider should attempt the operation but allow
-        /// even simple errors to terminate the operation.
-        /// For example, if the user tries to copy a file to a path that already exists and
-        /// the destination is read-only, if force is true, the provider should copy over
-        /// the existing read-only file. If force is false, the provider should write an error.
-        /// </remarks>
         [Parameter]
         public override SwitchParameter Force
         {
@@ -91,13 +82,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="context">
-        /// The context under which the command is running.
-        /// </param>
-        /// <returns>
-        /// An object representing the dynamic parameters for the cmdlet or null if there
-        /// are none.
-        /// </returns>
         internal override object GetDynamicParameters(CmdletProviderContext context)
         {
             if (Path != null && Path.Length > 0)
@@ -204,12 +188,6 @@ namespace Microsoft.PowerShell.Commands
         };
 
         
-        /// <param name="commandName">The command name.</param>
-        /// <param name="parameterName">The parameter name.</param>
-        /// <param name="wordToComplete">The word to complete.</param>
-        /// <param name="commandAst">The command AST.</param>
-        /// <param name="fakeBoundParameters">The fake bound parameters.</param>
-        /// <returns>List of Completion Results.</returns>
         public IEnumerable<CompletionResult> CompleteArgument(
             string commandName,
             string parameterName,
@@ -225,8 +203,6 @@ namespace Microsoft.PowerShell.Commands
                     : [];
 
         
-        /// <param name="fakeBoundParameters">The fake bound parameters.</param>
-        /// <returns>Boolean indicating if paths are from Registry Provider.</returns>
         private static bool IsRegistryProvider(IDictionary fakeBoundParameters)
         {
             Collection<PathInfo> paths;
@@ -248,9 +224,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="path">The path to resolve.</param>
-        /// <param name="isLiteralPath">Specifies if path is literal path.</param>
-        /// <returns>Collection of Pathinfo objects.</returns>
         private static Collection<PathInfo> ResolvePath(object path, bool isLiteralPath)
         {
             using var ps = System.Management.Automation.PowerShell.Create(RunspaceMode.CurrentRunspace);

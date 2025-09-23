@@ -35,10 +35,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="children">
-        /// A collection of children which will be added to the
-        /// FilterExpressionOrOperatorNode's Children collection.
-        /// </param>
         public FilterExpressionOrOperatorNode(IEnumerable<FilterExpressionNode> children)
         {
             ArgumentNullException.ThrowIfNull(children);
@@ -51,13 +47,6 @@ namespace Microsoft.Management.UI.Internal
         #region Public Methods
 
         
-        /// <param name="item">
-        /// The item to evaluate against.
-        /// </param>
-        /// <returns>
-        /// True if any FilterExpressionNode child evaluates to true,
-        /// false otherwise.
-        /// </returns>
         public override bool Evaluate(object item)
         {
             if (this.Children.Count == 0)

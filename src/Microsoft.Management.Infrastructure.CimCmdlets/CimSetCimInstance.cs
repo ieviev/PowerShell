@@ -16,9 +16,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
     internal class CimSetCimInstanceContext : XOperationContextBase
     {
         
-        /// <param name="theNamespace"></param>
-        /// <param name="theCollection"></param>
-        /// <param name="theProxy"></param>
         internal CimSetCimInstanceContext(string theNamespace,
             IDictionary theProperty,
             CimSessionProxy theProxy,
@@ -52,7 +49,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="cmdlet"><see cref="SetCimInstanceCommand"/> object.</param>
         public void SetCimInstance(SetCimInstanceCommand cmdlet)
         {
             IEnumerable<string> computerNames = ConstValue.GetComputerNames(
@@ -119,7 +115,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="cimInstance"></param>
         public void SetCimInstance(CimInstance cimInstance, CimSetCimInstanceContext context, CmdletOperationBase cmdlet)
         {
             DebugHelper.WriteLog("CimSetCimInstance::SetCimInstance", 4);
@@ -143,10 +138,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         #region private members
 
         
-        /// <param name="properties"></param>
-        /// <param name="cimInstance"></param>
-        /// <param name="terminationMessage"></param>
-        /// <returns></returns>
         private bool SetProperty(IDictionary properties, ref CimInstance cimInstance, ref Exception exception)
         {
             DebugHelper.WriteLogEx();

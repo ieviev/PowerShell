@@ -40,7 +40,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <value>Name of command</value>
         internal override string Name
         {
             get
@@ -66,7 +65,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <value>Synopsis for this command help</value>
         internal override string Synopsis
         {
             get
@@ -111,17 +109,9 @@ namespace System.Management.Automation
         }
 
         
-        /// <value>Help category for this command help</value>
         internal override HelpCategory HelpCategory { get; }
 
         
-        /// <returns>
-        /// Null if no Uri is specified by the helpinfo or a
-        /// valid Uri.
-        /// </returns>
-        /// <exception cref="InvalidOperationException">
-        /// Specified Uri is not valid.
-        /// </exception>
         internal override Uri GetUriForOnlineHelp()
         {
             Uri result = null;
@@ -326,8 +316,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="pattern"></param>
-        /// <returns></returns>
         internal override bool MatchPatternInContent(WildcardPattern pattern)
         {
             Dbg.Assert(pattern != null, "pattern cannot be null");
@@ -343,8 +331,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="pattern">Pattern to search for parameters.</param>
-        /// <returns>A collection of parameters that match pattern.</returns>
         internal override PSObject[] GetParameter(string pattern)
         {
             // this object knows Maml format...

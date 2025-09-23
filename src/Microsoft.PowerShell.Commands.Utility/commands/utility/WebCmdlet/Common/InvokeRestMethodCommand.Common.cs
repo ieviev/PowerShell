@@ -58,7 +58,6 @@ namespace Microsoft.PowerShell.Commands
         #region Virtual Method Overrides
 
         
-        /// <param name="response"></param>
         internal override void ProcessResponse(HttpResponseMessage response)
         {
             ArgumentNullException.ThrowIfNull(response);

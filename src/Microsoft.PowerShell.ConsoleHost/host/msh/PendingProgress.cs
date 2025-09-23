@@ -18,15 +18,6 @@ namespace Microsoft.PowerShell
         #region Updating Code
 
         
-        /// <param name="sourceId">
-        /// Identifier of the source of the event.  This is used as part of the "key" for matching newly received records with
-        /// records that have already been received. For a record to match (meaning that they refer to the same activity), both
-        /// the source and activity identifiers need to match.
-        /// </param>
-        /// <param name="record">
-        /// The ProgressRecord received that will either update the status of an activity which we are already tracking, or
-        /// represent a new activity that we need to track.
-        /// </param>
         internal
         void
         Update(long sourceId, ProgressRecord record)
@@ -152,12 +143,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="nodes">
-        /// List in the tree from which the node is to be removed.
-        /// </param>
-        /// <param name="indexToRemove">
-        /// Index into the list of the node to be removed.
-        /// </param>
         private
         void
         RemoveNode(ArrayList nodes, int indexToRemove)
@@ -225,12 +210,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="nodes">
-        /// List in the tree where the node is to be added.
-        /// </param>
-        /// <param name="nodeToAdd">
-        /// Node to be added.
-        /// </param>
         private
         void
         AddNode(ArrayList nodes, ProgressNode nodeToAdd)
@@ -383,22 +362,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="sourceId">
-        /// Identifier of the source of the record.
-        /// </param>
-        /// <param name="activityId">
-        /// ActivityId to search for.
-        /// </param>
-        /// <param name="listWhereFound">
-        /// Receives reference to the List where the found node was located, or null if no suitable node was found.
-        /// </param>
-        /// <param name="indexWhereFound">
-        /// Receives the index into listWhereFound that indicating where in the list the node was located, or -1 if
-        /// no suitable node was found.
-        /// </param>
-        /// <returns>
-        /// The found node, or null if no suitable node was located.
-        /// </returns>
         private
         ProgressNode
         FindNodeById(long sourceId, int activityId, out ArrayList listWhereFound, out int indexWhereFound)
@@ -423,17 +386,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="nodes">
-        /// List of nodes to search. Child lists of each node in this list will also be searched.
-        /// </param>
-        /// <param name="oldestSoFar"></param>
-        /// The minimum age of the node to be located.  To find the oldest node, pass 0.
-        /// <param name="style">
-        /// The rendering style of the node to be located.
-        /// </param>
-        /// <returns>
-        /// The found node, or null if no suitable node was located.
-        /// </returns>
         private static ProgressNode FindOldestNodeOfGivenStyle(ArrayList nodes, int oldestSoFar, ProgressNode.RenderStyle style)
         {
             if (nodes == null)
@@ -507,18 +459,6 @@ namespace Microsoft.PowerShell
         #region Rendering Code
 
         
-        /// <param name="maxWidth">
-        /// The maximum width (in BufferCells) that the rendering may consume.
-        /// </param>
-        /// <param name="maxHeight">
-        /// The maximum height (in BufferCells) that the rendering may consume.
-        /// </param>
-        /// <param name="rawUI">
-        /// The PSHostRawUserInterface used to gauge string widths in the rendering.
-        /// </param>
-        /// <returns>
-        /// An array of strings containing the textual representation of the outstanding progress activities.
-        /// </returns>
         internal
         string[]
         Render(int maxWidth, int maxHeight, PSHostRawUserInterface rawUI)
@@ -578,21 +518,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="strings">
-        /// The rendered strings so far.  Additional rendering will be appended.
-        /// </param>
-        /// <param name="nodes">
-        /// The nodes to be rendered.  All child nodes will also be rendered.
-        /// </param>
-        /// <param name="indentation">
-        /// The current indentation level (in BufferCells).
-        /// </param>
-        /// <param name="maxWidth">
-        /// The maximum number of BufferCells that the rendering can consume, horizontally.
-        /// </param>
-        /// <param name="rawUI">
-        /// The PSHostRawUserInterface used to gauge string widths in the rendering.
-        /// </param>
         private static void RenderHelper(ArrayList strings, ArrayList nodes, int indentation, int maxWidth, PSHostRawUserInterface rawUI)
         {
             Dbg.Assert(strings != null, "strings should not be null");
@@ -652,17 +577,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="maxHeight">
-        /// The maximum height (in BufferCells) that the rendering may consume.
-        /// </param>
-        /// <param name="rawUi">
-        /// The PSHostRawUserInterface used to gauge string widths in the rendering.
-        /// </param>
-        /// <returns>
-        /// The vertical height (in BufferCells) that will be required to show all of the nodes in the given list.
-        /// </returns>
-        /// <param name="maxWidth">
-        /// </param>
         private int TallyHeight(PSHostRawUserInterface rawUi, int maxHeight, int maxWidth)
         {
             HeightTallyer ht = new HeightTallyer(rawUi, maxHeight, maxWidth);
@@ -673,9 +587,6 @@ namespace Microsoft.PowerShell
 #if DEBUG || ASSERTIONS_TRACE
 
         
-        /// <param name="nodes"></param>
-        /// <param name="style"></param>
-        /// <returns></returns>
         private static bool AllNodesHaveGivenStyle(ArrayList nodes, ProgressNode.RenderStyle style)
         {
             if (nodes == null)
@@ -724,9 +635,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <returns>
-        /// The number of nodes in the tree.
-        /// </returns>
         private
         int
         CountNodes()
@@ -739,31 +647,6 @@ namespace Microsoft.PowerShell
 #endif
 
         
-        /// <param name="rawUi">
-        /// The PSHostRawUserInterface used to gauge string widths in the rendering.
-        /// </param>
-        /// <param name="maxHeight">
-        /// The maximum height (in BufferCells) that the rendering may consume.
-        /// </param>
-        /// <param name="maxWidth">
-        /// The maximum width (in BufferCells) that the rendering may consume.
-        /// </param>
-        /// <param name="nodesCompressed">
-        /// Receives the number of nodes that were compressed. If the result of the method is false, then this will be the total
-        /// number of nodes being tracked (i.e. all of them will have been compressed).
-        /// </param>
-        /// <param name="priorStyle">
-        /// The rendering style (e.g. "compression level") that the nodes are expected to currently have.
-        /// </param>
-        /// <param name="newStyle">
-        /// The new rendering style that a node will have when it is compressed. If the result of the method is false, then all
-        /// nodes will have this rendering style.
-        /// </param>
-        /// <returns>
-        /// true to indicate that the nodes are compressed to the point that their rendering will fit within the constraint, or
-        /// false to indicate that all of the nodes are compressed to a given level, but that the rendering still can't fit
-        /// within the constraint.
-        /// </returns>
         private
         bool
         CompressToFitHelper(
@@ -799,19 +682,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="rawUi">
-        /// The PSHostRawUserInterface used to gauge string widths in the rendering.
-        /// </param>
-        /// <param name="maxHeight">
-        /// The maximum height (in BufferCells) that the rendering may consume.
-        /// </param>
-        /// <param name="maxWidth">
-        /// The maximum width (in BufferCells) that the rendering may consume.
-        /// </param>
-        /// <returns>
-        /// The number of nodes that were made invisible during the compression.
-        ///
-        /// </returns>
         private
         int
         CompressToFit(PSHostRawUserInterface rawUi, int maxHeight, int maxWidth)
@@ -884,18 +754,6 @@ namespace Microsoft.PowerShell
         class NodeVisitor
         {
             
-            /// <param name="node">
-            /// The node being visited.
-            /// </param>
-            /// <param name="listWhereFound">
-            /// The list in which the node resides.
-            /// </param>
-            /// <param name="indexWhereFound">
-            /// The index into listWhereFound of the node.
-            /// </param>
-            /// <returns>
-            /// true to continue visiting nodes, false if not.
-            /// </returns>
             internal abstract
             bool
             Visit(ProgressNode node, ArrayList listWhereFound, int indexWhereFound);

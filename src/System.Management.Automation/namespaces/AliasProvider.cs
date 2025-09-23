@@ -34,9 +34,6 @@ namespace Microsoft.PowerShell.Commands
         #region DriveCmdletProvider overrides
 
         
-        /// <returns>
-        /// An array of a single PSDriveInfo object representing the alias drive.
-        /// </returns>
         protected override Collection<PSDriveInfo> InitializeDefaultDrives()
         {
             string description = SessionStateStrings.AliasDriveDescription;
@@ -59,35 +56,12 @@ namespace Microsoft.PowerShell.Commands
         #region Dynamic Parameters
 
         
-        /// <param name="path">
-        /// Ignored.
-        /// </param>
-        /// <param name="type">
-        /// Ignored.
-        /// </param>
-        /// <param name="newItemValue">
-        /// Ignored.
-        /// </param>
-        /// <returns>
-        /// An instance of AliasProviderDynamicParameters which is the dynamic parameters for
-        /// NewItem.
-        /// </returns>
         protected override object NewItemDynamicParameters(string path, string type, object newItemValue)
         {
             return new AliasProviderDynamicParameters();
         }
 
         
-        /// <param name="path">
-        /// Ignored.
-        /// </param>
-        /// <param name="value">
-        /// Ignored.
-        /// </param>
-        /// <returns>
-        /// An instance of AliasProviderDynamicParameters which is the dynamic parameters for
-        /// SetItem.
-        /// </returns>
         protected override object SetItemDynamicParameters(string path, object value)
         {
             return new AliasProviderDynamicParameters();
@@ -98,12 +72,6 @@ namespace Microsoft.PowerShell.Commands
         #region protected members
 
         
-        /// <param name="name">
-        /// The name of the alias to retrieve.
-        /// </param>
-        /// <returns>
-        /// A DictionaryEntry that represents the value of the alias.
-        /// </returns>
         internal override object GetSessionStateItem(string name)
         {
             Dbg.Diagnostics.Assert(
@@ -116,16 +84,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="item">
-        /// The item to extract the value from.
-        /// </param>
-        /// <returns>
-        /// The value of the specified item.
-        /// </returns>
-        /// <remarks>
-        /// The default implementation will get
-        /// the Value property of a DictionaryEntry
-        /// </remarks>
         internal override object GetValueOfItem(object item)
         {
             Dbg.Diagnostics.Assert(
@@ -144,15 +102,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="name">
-        /// The name of the alias to set.
-        /// </param>
-        /// <param name="value">
-        /// The new value for the alias.
-        /// </param>
-        /// <param name="writeItem">
-        /// If true, the item that was set should be written to WriteItemObject.
-        /// </param>
 #pragma warning disable 0162
         internal override void SetSessionStateItem(string name, object value, bool writeItem)
         {
@@ -229,9 +178,6 @@ namespace Microsoft.PowerShell.Commands
 #pragma warning restore 0162
 
         
-        /// <param name="name">
-        /// The name of the alias to remove from session state.
-        /// </param>
         internal override void RemoveSessionStateItem(string name)
         {
             Dbg.Diagnostics.Assert(
@@ -242,22 +188,12 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <returns>
-        /// An IDictionary representing the flattened view of the aliases in
-        /// session state.
-        /// </returns>
         internal override IDictionary GetSessionStateTable()
         {
             return (IDictionary)SessionState.Internal.GetAliasTable();
         }
 
         
-        /// <param name="item">
-        /// The item to verify if it can be renamed.
-        /// </param>
-        /// <returns>
-        /// true if the item can be renamed or false otherwise.
-        /// </returns>
         internal override bool CanRenameItem(object item)
         {
             bool result = false;
@@ -309,7 +245,6 @@ namespace Microsoft.PowerShell.Commands
         private ScopedItemOptions _options;
 
         
-        /// <value></value>
         internal bool OptionsSet
         {
             get { return _optionsSet; }

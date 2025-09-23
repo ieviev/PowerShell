@@ -351,12 +351,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="c">The character to check.</param>
-        /// <param name="forceEndNumberOnTernaryOperatorChars">
-        /// In some cases, we want '?' and ':' to end a number token too, so they can be
-        /// treated as the ternary operator tokens.
-        /// </param>
-        /// <returns>Return true if the character ends the current number token.</returns>
         internal static bool ForceStartNewTokenAfterNumber(this char c, bool forceEndNumberOnTernaryOperatorChars)
         {
             if (c < 128)

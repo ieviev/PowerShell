@@ -31,9 +31,6 @@ namespace Microsoft.PowerShell.Commands
         #region DriveCmdletProvider overrides
 
         
-        /// <returns>
-        /// An array of a single PSDriveInfo object representing the alias drive.
-        /// </returns>
         protected override Collection<PSDriveInfo> InitializeDefaultDrives()
         {
             string description = SessionStateStrings.EnvironmentDriveDescription;
@@ -56,12 +53,6 @@ namespace Microsoft.PowerShell.Commands
         #region protected members
 
         
-        /// <param name="name">
-        /// The name of the environment variable to retrieve.
-        /// </param>
-        /// <returns>
-        /// A DictionaryEntry that represents the value of the environment variable.
-        /// </returns>
         internal override object GetSessionStateItem(string name)
         {
             Dbg.Diagnostics.Assert(
@@ -81,15 +72,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="name">
-        /// The name of the environment variable to set.
-        /// </param>
-        /// <param name="value">
-        /// The new value for the environment variable.
-        /// </param>
-        /// <param name="writeItem">
-        /// If true, the item that was set should be written to WriteItemObject.
-        /// </param>
         internal override void SetSessionStateItem(string name, object value, bool writeItem)
         {
             Dbg.Diagnostics.Assert(
@@ -132,9 +114,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="name">
-        /// The name of the environment variable to remove from session state.
-        /// </param>
         internal override void RemoveSessionStateItem(string name)
         {
             Dbg.Diagnostics.Assert(
@@ -145,10 +124,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <returns>
-        /// An IDictionary representing the flattened view of the environment variables in
-        /// session state.
-        /// </returns>
         internal override IDictionary GetSessionStateTable()
         {
             // Environment variables are case-sensitive on Unix and
@@ -199,12 +174,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="item">
-        /// The item to get the value from.
-        /// </param>
-        /// <returns>
-        /// The value of the item.
-        /// </returns>
         internal override object GetValueOfItem(object item)
         {
             Dbg.Diagnostics.Assert(

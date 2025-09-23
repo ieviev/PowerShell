@@ -9,9 +9,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
     internal sealed class ColumnWidthManager
     {
         
-        /// <param name="tableWidth">Overall width of the table in characters.</param>
-        /// <param name="minimumColumnWidth">Minimum usable column width.</param>
-        /// <param name="separatorWidth">Number of separator characters.</param>
         internal ColumnWidthManager(int tableWidth, int minimumColumnWidth, int separatorWidth)
         {
             _tableWidth = tableWidth;
@@ -20,7 +17,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="columnWidths">Array of column widths to appropriately size.</param>
         internal void CalculateColumnWidths(Span<int> columnWidths)
         {
             if (AssignColumnWidths(columnWidths))
@@ -34,8 +30,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="columnWidths">Columns to process.</param>
-        /// <returns>True if there was a fit, false if there is need for trimming.</returns>
         private bool AssignColumnWidths(Span<int> columnWidths)
         {
             // run a quick check to see if all the columns have a specified width,
@@ -113,7 +107,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="columnWidths">Column widths to trim.</param>
         private void TrimToFit(Span<int> columnWidths)
         {
             while (true)
@@ -149,8 +142,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="columnWidths">Column widths array.</param>
-        /// <returns></returns>
         private int CurrentTableWidth(Span<int> columnWidths)
         {
             int sum = 0;
@@ -169,8 +160,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="columnWidths">Column widths array.</param>
-        /// <returns>Index of the last visible column, -1 if none.</returns>
         private static int GetLastVisibleColumn(Span<int> columnWidths)
         {
             for (int k = 0; k < columnWidths.Length; k++)

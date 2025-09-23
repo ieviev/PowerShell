@@ -130,80 +130,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="lpFileName">
-        /// The name of the object to be created or opened.
-        /// In the ANSI version of this function, the name is limited to MAX_PATH characters.
-        /// To extend this limit to 32,767 wide characters, call the Unicode version of the
-        /// function and prepend "\\?\" to the path. For more information, see Naming a File.
-        /// For information on special device names, see Defining an MS-DOS Device Name.
-        /// To specify a COM port number greater than 9, use the following syntax: "\\.\COM10".
-        /// This syntax works for all port numbers and hardware that allows COM port numbers to be specified.
-        /// To create a file stream, specify the name of the file, a colon, and then the name of the
-        /// stream. For more information, see File Streams.
-        /// </param>
-        /// <param name="dwDesiredAccess">
-        /// The access to the object, which can be read, write, or both.
-        /// You cannot request an access mode that conflicts with the sharing mode that is
-        /// specified in an open request that has an open handle.
-        /// If this parameter is zero (0), the application can query file and device attributes
-        /// without accessing a device. This is useful for an application to determine the size
-        /// of a floppy disk drive and the formats it supports without requiring a floppy in a drive.
-        /// It can also be used to test for the existence of a file or directory without opening
-        /// them for read or write access.
-        /// See the "CreateFile desired access" below.
-        /// </param>
-        /// <param name="dwShareMode">
-        /// The sharing mode of an object, which can be read, write, both, or none.
-        /// You cannot request a sharing mode that conflicts with the access mode that is specified
-        /// in an open request that has an open handle, because that would result in the following
-        /// sharing violation: ERROR_SHARING_VIOLATION.
-        /// If this parameter is zero (0) and CreateFile succeeds, the object cannot be shared
-        /// and cannot be opened again until the handle is closed. For more information, see the
-        /// Remarks section of this topic.
-        /// The sharing options remain in effect until you close the handle to an object.
-        /// To enable a process to share an object while another process has the object open,
-        /// use a combination of one or more of the following values to specify the access mode
-        /// they can request to open the object.
-        /// </param>
-        /// <param name="lpSecurityAttributes">
-        /// A pointer to a SECURITY_ATTRIBUTES structure that determines whether or not the returned
-        /// handle can be inherited by child processes.
-        /// If lpSecurityAttributes is NULL, the handle cannot be inherited.
-        /// The lpSecurityDescriptor member of the structure specifies a security descriptor
-        /// for an object. If lpSecurityAttributes is NULL, the object gets a default security descriptor.
-        /// The access control lists (ACL) in the default security descriptor for a file or directory
-        /// are inherited from its parent directory.
-        /// The target file system must support security on files and directories for this parameter to
-        /// have an effect on them, which is indicated when GetVolumeInformation returns FS_PERSISTENT_ACLS.
-        /// CreateFile ignores lpSecurityDescriptor when opening an existing file, but continues to
-        /// use the other structure members.
-        /// </param>
-        /// <param name="dwCreationDisposition">
-        /// An action to take on files that exist and do not exist.
-        /// See "CreateFile creation disposition" below
-        /// </param>
-        /// <param name="dwFlagsAndAttributes">
-        /// The file attributes and flags.
-        /// This parameter can include any combination of the file attributes.
-        /// All other file attributes override FILE_ATTRIBUTE_NORMAL.
-        /// When CreateFile opens a file, it combines the file flags with existing
-        /// file attributes, and ignores any supplied file attributes.
-        /// </param>
-        /// <param name="hTemplateFile">
-        /// A handle to a template file with the GENERIC_READ access right.
-        /// The template file supplies file attributes and extended attributes for the file that is
-        /// being created. This parameter can be NULL.
-        /// When opening an existing file, CreateFile ignores the template file.
-        /// When opening a new EFS-encrypted file, the file inherits the DACL from its parent directory.
-        /// </param>
-        /// <returns>
-        /// If the function succeeds, the return value is an open handle to a specified file.
-        /// If a specified file exists before the function call and dwCreationDisposition is CREATE_ALWAYS
-        /// or OPEN_ALWAYS, a call to GetLastError returns ERROR_ALREADY_EXISTS, even when the
-        /// function succeeds. If a file does not exist before the call, GetLastError returns zero (0).
-        /// If the function fails, the return value is INVALID_HANDLE_VALUE.
-        /// To get extended error information, call GetLastError.
-        /// </returns>
         [DllImport(PinvokeDllNames.CreateFileDllName, SetLastError = true, CharSet = CharSet.Unicode)]
         internal static extern IntPtr CreateFile(
             string lpFileName,
@@ -215,18 +141,6 @@ namespace System.Management.Automation
             IntPtr hTemplateFile);
 
         
-        /// <param name="handle">
-        /// A valid handle to an open object.
-        /// </param>
-        /// <returns>
-        /// If the function succeeds, the return value is nonzero.
-        /// If the function fails, the return value is zero. To get extended error information,
-        /// call GetLastError.
-        /// If the application is running under a debugger, the function will throw an exception
-        /// if it receives either a handle value that is not valid or a pseudo-handle value.
-        /// This can happen if you close a handle twice, or if you call CloseHandle on a handle
-        /// returned by the FindFirstFile function.
-        /// </returns>
         [DllImport(PinvokeDllNames.CloseHandleDllName, SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool CloseHandle(IntPtr handle);
@@ -259,9 +173,6 @@ namespace System.Management.Automation
             FileAttributes dwFileAttributes); // _In_ DWORD
 
         
-        /// <param name="privilegeName"></param>
-        /// <param name="oldPrivilegeState"></param>
-        /// <returns></returns>
         internal static bool EnableTokenPrivilege(string privilegeName, ref TOKEN_PRIVILEGE oldPrivilegeState)
         {
             bool success = false;
@@ -337,9 +248,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="privilegeName"></param>
-        /// <param name="previousPrivilegeState"></param>
-        /// <returns></returns>
         internal static bool RestoreTokenPrivilege(string privilegeName, ref TOKEN_PRIVILEGE previousPrivilegeState)
         {
             // The privilege was not changed, do not need to restore it.
@@ -391,31 +299,16 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="lpSystemName"></param>
-        /// <param name="lpName"></param>
-        /// <param name="lpLuid"></param>
-        /// <returns></returns>
         [DllImport(PinvokeDllNames.LookupPrivilegeValueDllName, CharSet = CharSet.Unicode, SetLastError = true, BestFitMapping = false)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool LookupPrivilegeValue(string lpSystemName, string lpName, ref LUID lpLuid);
 
         
-        /// <param name="tokenHandler"></param>
-        /// <param name="requiredPrivileges"></param>
-        /// <param name="pfResult"></param>
-        /// <returns></returns>
         [DllImport(PinvokeDllNames.PrivilegeCheckDllName, CharSet = CharSet.Unicode, SetLastError = true, BestFitMapping = false)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool PrivilegeCheck(IntPtr tokenHandler, ref PRIVILEGE_SET requiredPrivileges, out bool pfResult);
 
         
-        /// <param name="tokenHandler"></param>
-        /// <param name="disableAllPrivilege"></param>
-        /// <param name="newPrivilegeState"></param>
-        /// <param name="bufferLength"></param>
-        /// <param name="previousPrivilegeState"></param>
-        /// <param name="returnLength"></param>
-        /// <returns></returns>
         [DllImport(PinvokeDllNames.AdjustTokenPrivilegesDllName, CharSet = CharSet.Unicode, SetLastError = true, BestFitMapping = false)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool AdjustTokenPrivileges(IntPtr tokenHandler, bool disableAllPrivilege,
@@ -453,15 +346,10 @@ namespace System.Management.Automation
         }
 
         
-        /// <returns></returns>
         [DllImport(PinvokeDllNames.GetCurrentProcessDllName)]
         internal static extern IntPtr GetCurrentProcess();
 
         
-        /// <param name="processHandle">Process handle.</param>
-        /// <param name="desiredAccess">Token access.</param>
-        /// <param name="tokenHandle">Process token.</param>
-        /// <returns>The current process token.</returns>
         [DllImport(PinvokeDllNames.OpenProcessTokenDllName, CharSet = CharSet.Unicode, SetLastError = true, BestFitMapping = false)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool OpenProcessToken(IntPtr processHandle, uint desiredAccess, out IntPtr tokenHandle);
@@ -518,7 +406,6 @@ namespace System.Management.Automation
             }
 
             
-            /// <param name="disposing"></param>
             private void Dispose(bool disposing)
             {
                 if (disposing)

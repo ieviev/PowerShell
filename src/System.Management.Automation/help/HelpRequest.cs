@@ -7,8 +7,6 @@ namespace System.Management.Automation
     internal class HelpRequest
     {
         
-        /// <param name="target"></param>
-        /// <param name="helpCategory"></param>
         internal HelpRequest(string target, HelpCategory helpCategory)
         {
             Target = target;
@@ -17,7 +15,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <returns></returns>
         internal HelpRequest Clone()
         {
             HelpRequest helpRequest = new HelpRequest(this.Target, this.HelpCategory);
@@ -37,31 +34,24 @@ namespace System.Management.Automation
         internal ProviderContext ProviderContext { get; set; }
 
         
-        /// <value></value>
         internal string Target { get; set; }
 
         
-        /// <value></value>
         internal HelpCategory HelpCategory { get; set; } = HelpCategory.None;
 
         
-        /// <value></value>
         internal string Provider { get; set; }
 
         
-        /// <value></value>
         internal int MaxResults { get; set; } = -1;
 
         
-        /// <value></value>
         internal string[] Component { get; set; }
 
         
-        /// <value></value>
         internal string[] Role { get; set; }
 
         
-        /// <value></value>
         internal string[] Functionality { get; set; }
 
         

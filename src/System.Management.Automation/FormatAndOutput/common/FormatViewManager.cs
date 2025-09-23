@@ -201,8 +201,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="viewGenerator"></param>
-        /// <param name="so"></param>
         private static void PrepareViewForRemoteObjects(ViewGenerator viewGenerator, PSObject so)
         {
             if (PSObjectHelper.ShouldShowComputerNameProperty(so))
@@ -212,11 +210,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="errorContext">Error context.</param>
-        /// <param name="viewName">Uses supplied view name.</param>
-        /// <param name="so">Source object.</param>
-        /// <param name="db">Types info database.</param>
-        /// <param name="formatShape">Requested format shape.</param>
         private static void ProcessUnknownViewName(TerminatingErrorContext errorContext, string viewName, PSObject so, TypeInfoDataBase db, FormatShape formatShape)
         {
             string msg = null;
@@ -541,8 +534,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="result">PSPropertyExpressionResult containing the failed evaluation data.</param>
-        /// <param name="sourceObject">Object used to evaluate the PSPropertyExpression.</param>
         internal void LogPSPropertyExpressionFailedResult(PSPropertyExpressionResult result, object sourceObject)
         {
             if (!_formatErrorPolicy.ShowErrorsAsMessages)
@@ -554,7 +545,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="error">String format error object.</param>
         internal void LogStringFormatError(StringFormatError error)
         {
             if (!_formatErrorPolicy.ShowErrorsAsMessages)
@@ -587,7 +577,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <returns>List of ErrorRecord objects.</returns>
         internal List<ErrorRecord> DrainFailedResultList()
         {
             if (!_formatErrorPolicy.ShowErrorsAsMessages)
@@ -606,8 +595,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="error">Internal error object.</param>
-        /// <returns>Corresponding ErrorRecord instance.</returns>
         private static ErrorRecord GenerateErrorRecord(FormattingError error)
         {
             ErrorRecord errorRecord = null;

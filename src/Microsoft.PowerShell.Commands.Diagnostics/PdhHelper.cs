@@ -461,9 +461,6 @@ namespace Microsoft.Powershell.Commands.GetCounter.PdhNative
         private readonly Dictionary<string, CounterHandleNInstance> _consumerPathToHandleAndInstanceMap = new();
 
         
-        /// <param name="strNative"></param>
-        /// <param name="strSize"></param>
-        /// <param name="strColl"></param>
         private static void ReadPdhMultiString(ref IntPtr strNative, Int32 strSize, ref StringCollection strColl)
         {
             Debug.Assert(strSize >= 2);
@@ -546,8 +543,6 @@ namespace Microsoft.Powershell.Commands.GetCounter.PdhNative
             return PdhResults.PDH_CSTATUS_VALID_DATA;
         }
         
-        /// <param name="dataSourceName"></param>
-        /// <returns></returns>
         public uint ConnectToDataSource(string dataSourceName)
         {
             if (_hDataSource != null && !_hDataSource.IsInvalid)

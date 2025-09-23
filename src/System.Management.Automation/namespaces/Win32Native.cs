@@ -86,14 +86,6 @@ namespace Microsoft.PowerShell.Commands.Internal
         #region PInvoke methods
 
         
-        /// <param name="lpSystemName"></param>
-        /// <param name="sid"></param>
-        /// <param name="lpName"></param>
-        /// <param name="cchName"></param>
-        /// <param name="referencedDomainName"></param>
-        /// <param name="cchReferencedDomainName"></param>
-        /// <param name="peUse"></param>
-        /// <returns></returns>
         [DllImport(PinvokeDllNames.LookupAccountSidDllName, CharSet = CharSet.Unicode, SetLastError = true, BestFitMapping = false)]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern unsafe bool LookupAccountSid(string lpSystemName,
@@ -130,21 +122,11 @@ namespace Microsoft.PowerShell.Commands.Internal
         internal static extern bool CloseHandle(IntPtr handle);
 
         
-        /// <param name="processHandle">Process handle.</param>
-        /// <param name="desiredAccess">Token access.</param>
-        /// <param name="tokenHandle">Process token.</param>
-        /// <returns>The current process token.</returns>
         [DllImport(PinvokeDllNames.OpenProcessTokenDllName, CharSet = CharSet.Unicode, SetLastError = true, BestFitMapping = false)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool OpenProcessToken(IntPtr processHandle, uint desiredAccess, out IntPtr tokenHandle);
 
         
-        /// <param name="tokenHandle"></param>
-        /// <param name="tokenInformationClass"></param>
-        /// <param name="tokenInformation"></param>
-        /// <param name="tokenInformationLength"></param>
-        /// <param name="returnLength"></param>
-        /// <returns></returns>
         [DllImport(PinvokeDllNames.GetTokenInformationDllName, CharSet = CharSet.Unicode, SetLastError = true, BestFitMapping = false)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool GetTokenInformation(IntPtr tokenHandle,

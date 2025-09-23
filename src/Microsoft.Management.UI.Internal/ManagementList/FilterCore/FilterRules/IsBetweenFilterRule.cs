@@ -9,9 +9,6 @@ using System.Runtime.Serialization;
 namespace Microsoft.Management.UI.Internal
 {
     
-    /// <typeparam name="T">
-    /// The generic parameter.
-    /// </typeparam>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public class IsBetweenFilterRule<T> : ComparableValueFilterRule<T> where T : IComparable
     {
@@ -57,7 +54,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="source">The source to initialize from.</param>
         public IsBetweenFilterRule(IsBetweenFilterRule<T> source)
             : base(source)
         {
@@ -73,13 +69,6 @@ namespace Microsoft.Management.UI.Internal
         #region Public Methods
 
         
-        /// <param name="data">
-        /// The data to evaluate.
-        /// </param>
-        /// <returns>
-        /// Returns true if data is between StartValue and EndValue,
-        /// false otherwise.
-        /// </returns>
         protected override bool Evaluate(T data)
         {
             Debug.Assert(this.IsValid, "is valid");

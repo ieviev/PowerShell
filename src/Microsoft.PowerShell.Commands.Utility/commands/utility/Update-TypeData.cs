@@ -476,7 +476,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <returns></returns>
         private void GetMembers(Dictionary<string, TypeMemberData> members)
         {
             if (!_isMemberTypeSet)
@@ -579,8 +578,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="typeData"></param>
-        /// <returns>False if empty, true if not.</returns>
         private bool EnsureTypeDataIsNotEmpty(TypeData typeData)
         {
             if (typeData.Members.Count == 0 && typeData.StandardMembers.Count == 0
@@ -690,11 +687,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="errorId"></param>
-        /// <param name="template"></param>
-        /// <param name="targetObject"></param>
-        /// <param name="args"></param>
-        /// <returns></returns>
         private static ErrorRecord NewError(string errorId, string template, object targetObject, params object[] args)
         {
             string message = string.Format(CultureInfo.CurrentCulture, template, args);

@@ -61,23 +61,6 @@ namespace Microsoft.PowerShell.Commands
         #region helpers
 
         
-        /// <param name="name">
-        /// The name or pattern of the variables to retrieve.
-        /// </param>
-        /// <param name="lookupScope">
-        /// The scope to do the lookup in. If null or empty the normal scoping rules apply.
-        /// </param>
-        /// <param name="wasFiltered">
-        /// True is returned if a variable exists of the given name but was filtered
-        /// out via globbing, include, or exclude.
-        /// </param>
-        /// <param name="quiet">
-        /// If true, don't report errors when trying to access private variables.
-        /// </param>
-        /// <returns>
-        /// A collection of the variables matching the name, include, and exclude
-        /// pattern in the specified scope.
-        /// </returns>
         internal List<PSVariable> GetMatchingVariables(string name, string lookupScope, out bool wasFiltered, bool quiet)
         {
             wasFiltered = false;
@@ -754,12 +737,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="varNames">
-        /// The name(s) of the variables to set.
-        /// </param>
-        /// <param name="varValue">
-        /// The value to set the variable to.
-        /// </param>
         private void SetVariable(string[] varNames, object varValue)
         {
             CommandOrigin origin = MyInvocation.CommandOrigin;
@@ -1280,9 +1257,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="matchingVariable">
-        /// The variable that matched the name parameter(s).
-        /// </param>
         private PSVariable ClearValue(PSVariable matchingVariable)
         {
             PSVariable result = matchingVariable;

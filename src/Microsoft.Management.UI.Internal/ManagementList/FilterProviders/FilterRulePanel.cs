@@ -15,19 +15,6 @@ using System.Windows.Input;
 namespace Microsoft.Management.UI.Internal
 {
     
-    /// <remarks>
-    /// <para>
-    /// The FilterRulePanel manages two primary entities: <see cref="FilterRulePanelItem"/>s and DataTemplates.
-    /// /// </para>
-    /// <para>
-    /// <see cref="FilterRulePanelItem" />s are the data classes that store the state for each item in the panel.
-    /// They are added and removed to/from the panel using the AddRulesCommand and the RemoveRuleCommand commands.
-    /// </para>
-    /// <para>
-    /// For a FilterRule to display in the panel it must have a DataTemplate registered. To add and remove
-    /// DataTemplates, use the AddFilterRulePanelItemContentTemplate and RemoveFilterRulePanelItemContentTemplate methods.
-    /// </para>
-    /// </remarks>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public partial class FilterRulePanel : Control, IFilterExpressionProvider
     {
@@ -124,12 +111,6 @@ namespace Microsoft.Management.UI.Internal
         #region Content Templates
 
         
-        /// <param name="type">
-        /// The type to associate the DataTemplate with.
-        /// </param>
-        /// <param name="dataTemplate">
-        /// The DataTemplate to associate the type with.
-        /// </param>
         public void AddFilterRulePanelItemContentTemplate(Type type, DataTemplate dataTemplate)
         {
             ArgumentNullException.ThrowIfNull(type);
@@ -140,9 +121,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="type">
-        /// The type to remove.
-        /// </param>
         public void RemoveFilterRulePanelItemContentTemplate(Type type)
         {
             ArgumentNullException.ThrowIfNull(type);
@@ -151,9 +129,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="type">A Type whose DataTemplate will be returned.</param>
-        /// <param name="dataTemplate">A DataTemplate registered for type.</param>
-        /// <returns>Returns true if there is a DataTemplate registered for type, false otherwise.</returns>
         public bool TryGetContentTemplate(Type type, out DataTemplate dataTemplate)
         {
             dataTemplate = null;

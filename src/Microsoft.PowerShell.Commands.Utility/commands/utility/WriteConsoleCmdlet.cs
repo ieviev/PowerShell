@@ -33,7 +33,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <value></value>
         [Parameter]
         public object Separator { get; set; } = " ";
 

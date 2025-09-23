@@ -17,9 +17,6 @@ namespace System.Management.Automation
         #region Constructors
 
         
-        /// <param name="expression">
-        /// The specified flag attribute expression string.
-        /// </param>
         public FlagsExpression(string expression)
         {
             if (!typeof(T).IsEnum)
@@ -46,9 +43,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="expression">
-        /// The array of specified flag attribute subexpression strings.
-        /// </param>
         public FlagsExpression(object[] expression)
         {
             if (!typeof(T).IsEnum)
@@ -310,12 +304,6 @@ namespace System.Management.Automation
         #region public methods
 
         
-        /// <param name="value">
-        /// The flag enum value to be evaluated.
-        /// </param>
-        /// <returns>
-        /// Whether the enum value satisfy the expression.
-        /// </returns>
         public bool Evaluate(T value)
         {
             object val = LanguagePrimitives.ConvertTo(value, _underType, CultureInfo.InvariantCulture);
@@ -327,16 +315,6 @@ namespace System.Management.Automation
         #region internal methods
 
         
-        /// <param name="flagName">
-        /// The enum element to be examined.
-        /// </param>
-        /// <returns>
-        /// Whether the enum element is present in the expression.
-        /// </returns>
-        /// <remarks>
-        /// The enum value passed in should be a single enum element value,
-        /// not a flag enum value with multiple bits set.
-        /// </remarks>
         internal bool ExistsInExpression(T flagName)
         {
             bool exist = false;
@@ -350,13 +328,6 @@ namespace System.Management.Automation
         #region parser methods
 
         
-        /// <param name="input">
-        /// The input argument string,
-        /// could be partial input (one element from the argument collection).
-        /// </param>
-        /// <returns>
-        /// A generic list of tokenized input.
-        /// </returns>
         private static List<Token> TokenizeInput(string input)
         {
             List<Token> tokenList = new List<Token>();
@@ -375,12 +346,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="input">
-        /// Input string
-        /// </param>
-        /// <param name="_offset">
-        /// Current offset position for the string parser.
-        /// </param>
         private static void FindNextToken(string input, ref int _offset)
         {
             while (_offset < input.Length)
@@ -395,15 +360,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="input">
-        /// Input string
-        /// </param>
-        /// <param name="_offset">
-        /// Current offset position for the string parser.
-        /// </param>
-        /// <returns>
-        /// The next token on the input string
-        /// </returns>
         private static Token GetNextToken(string input, ref int _offset)
         {
             StringBuilder sb = new StringBuilder();
@@ -481,9 +437,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="tokenList">
-        /// A list of tokenized input.
-        /// </param>
         private static void CheckSyntaxError(List<Token> tokenList)
         {
             // Initialize, assuming preceded by OR
@@ -534,9 +487,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="tokenList">
-        /// Tokenized list of the input string.
-        /// </param>
         private static Node ConstructExpressionTree(List<Token> tokenList)
         {
             bool notFlag = false;

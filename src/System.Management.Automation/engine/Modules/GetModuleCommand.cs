@@ -465,9 +465,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="modules">The modules to filter through.</param>
-        /// <param name="moduleSpecificationTable">Module constraints, keyed by module name, to filter modules of that name by.</param>
-        /// <returns>All modules from the original input that meet both any module edition and module specification constraints provided.</returns>
         private IEnumerable<PSModuleInfo> FilterModulesForEditionAndSpecification(
             IEnumerable<PSModuleInfo> modules,
             IDictionary<string, ModuleSpecification> moduleSpecificationTable)
@@ -494,9 +491,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="modules">The modules to filter by specification match.</param>
-        /// <param name="moduleSpecificationTable">The specification lookup table to filter the modules on.</param>
-        /// <returns>The modules that match their corresponding table entry, or which have no table entry.</returns>
         private static IEnumerable<PSModuleInfo> FilterModulesForSpecificationMatch(
             IEnumerable<PSModuleInfo> modules,
             IDictionary<string, ModuleSpecification> moduleSpecificationTable)
@@ -521,9 +515,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="moduleSpecTable">The module specifications to filter candidates from.</param>
-        /// <param name="module">The module to find candidates for from the module specification table.</param>
-        /// <returns>The module specifications matching the module based on name, path and subpath.</returns>
         private static IEnumerable<ModuleSpecification> GetCandidateModuleSpecs(
             IDictionary<string, ModuleSpecification> moduleSpecTable,
             PSModuleInfo module)
@@ -544,12 +535,6 @@ namespace Microsoft.PowerShell.Commands
     public class PSEditionArgumentCompleter : IArgumentCompleter
     {
         
-        /// <param name="commandName">The command name.</param>
-        /// <param name="parameterName">The parameter name.</param>
-        /// <param name="wordToComplete">The word to complete.</param>
-        /// <param name="commandAst">The command AST.</param>
-        /// <param name="fakeBoundParameters">The fake bound parameters.</param>
-        /// <returns>List of completion results.</returns>
         public IEnumerable<CompletionResult> CompleteArgument(
             string commandName,
             string parameterName,

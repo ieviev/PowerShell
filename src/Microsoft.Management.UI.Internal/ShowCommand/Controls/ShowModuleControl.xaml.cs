@@ -35,8 +35,6 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
 
         #region Events Handlers
         
-        /// <param name="sender">Event sender.</param>
-        /// <param name="e">Event arguments.</param>
         private void CommandList_PreviewMouseMove(object sender, MouseEventArgs e)
         {
             if (this.CommandList.IsMouseCaptured)
@@ -46,8 +44,6 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
         }
 
         
-        /// <param name="sender">Event sender.</param>
-        /// <param name="e">Event arguments.</param>
         private void CommandList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (this.CommandList.SelectedItem == null)

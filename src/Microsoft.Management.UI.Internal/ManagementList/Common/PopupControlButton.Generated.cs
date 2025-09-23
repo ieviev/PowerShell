@@ -20,9 +20,6 @@ namespace Microsoft.Management.UI.Internal
         public static readonly DependencyProperty IsPopupOpenProperty = DependencyProperty.Register( "IsPopupOpen", typeof(bool), typeof(PopupControlButton), new FrameworkPropertyMetadata( BooleanBoxes.FalseBox, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, IsPopupOpenProperty_PropertyChanged) );
 
         
-        /// <remarks>
-        /// The Popup.IsOpen property should be two-way bound to this property.
-        /// </remarks>
         [Bindable(true)]
         [Category("Common Properties")]
         [Description("Gets or sets a value indicating whether the popup is open or not.")]

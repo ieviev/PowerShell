@@ -77,7 +77,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="so"></param>
         internal override void PrepareForRemoteObjects(PSObject so)
         {
             Diagnostics.Assert(so != null, "so cannot be null");
@@ -121,8 +120,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <returns>None.</returns>
-        /// <remarks>This method updates "activeAssociationList" instance property.</remarks>
         private void FilterActiveAssociationList()
         {
             // we got a valid set of properties from the default property set

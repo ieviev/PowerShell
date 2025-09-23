@@ -382,9 +382,6 @@ namespace Microsoft.PowerShell
 
 #if !UNIX
         
-        /// <param name="hWnd">The window to show...</param>
-        /// <param name="nCmdShow">The command to do.</param>
-        /// <returns>True if it was successful.</returns>
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
@@ -438,10 +435,6 @@ namespace Microsoft.PowerShell
         internal delegate bool BreakHandler(ConsoleBreakSignal ConsoleBreakSignal);
 
         
-        /// <param name="handlerDelegate"></param>
-        /// <exception cref="HostException">
-        /// If Win32's SetConsoleCtrlHandler fails
-        /// </exception>
         internal static void AddBreakHandler(BreakHandler handlerDelegate)
         {
             bool result = NativeMethods.SetConsoleCtrlHandler(handlerDelegate, true);
@@ -457,9 +450,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <exception cref="HostException">
-        /// If Win32's SetConsoleCtrlHandler fails
-        /// </exception>
         internal static void RemoveBreakHandler()
         {
             bool result = NativeMethods.SetConsoleCtrlHandler(null, false);
@@ -535,10 +525,6 @@ namespace Microsoft.PowerShell
         );
 
         
-        /// <returns></returns>
-        /// <exception cref="HostException">
-        /// If Win32's CreateFile fails
-        /// </exception>
         internal static ConsoleHandle GetActiveScreenBufferHandle()
         {
             return _outputHandle.Value;
@@ -572,9 +558,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <exception cref="HostException">
-        /// If Win32's GetConsoleMode fails
-        /// </exception>
         internal static ConsoleModes GetMode(ConsoleHandle consoleHandle)
         {
             Dbg.Assert(!consoleHandle.IsInvalid, "consoleHandle is not valid");
@@ -596,15 +579,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="consoleHandle">
-        /// Handle to the console device returned by GetInputHandle
-        /// </param>
-        /// <param name="mode">
-        /// Mask of mode flags
-        /// </param>
-        /// <exception cref="HostException">
-        /// If Win32's SetConsoleMode fails
-        /// </exception>
         internal static void SetMode(ConsoleHandle consoleHandle, ConsoleModes mode)
         {
             Dbg.Assert(!consoleHandle.IsInvalid, "consoleHandle is not valid");
@@ -627,31 +601,6 @@ namespace Microsoft.PowerShell
         #region Input
 
         
-        /// <param name="consoleHandle"></param>
-        /// Handle to the console device returned by GetInputHandle
-        /// <param name="initialContentLength">
-        /// Length of initial content of the edit buffer. Zero if no initial content exists.
-        /// Must be less than editBuffer length.
-        /// </param>
-        /// <param name="editBuffer">
-        /// Edit buffer with optional initial content.
-        /// Caution! Last position in the edit buffer is for a null in native code.
-        /// </param>
-        /// <param name="charactersToRead">
-        /// Number of characters to read from the device.
-        /// Must be less than editBuffer length.
-        /// </param>
-        /// <param name="endOnTab">
-        /// True to allow the user to terminate input by hitting the tab or shift-tab key, in addition to the enter key
-        /// </param>
-        /// <param name="keyState">
-        /// Bit mask indicating the state of the control/shift keys at the point input was terminated.
-        /// </param>
-        /// </param>
-        /// <returns></returns>
-        /// <exception cref="HostException">
-        /// If Win32's ReadConsole fails
-        /// </exception>
         internal static string ReadConsole(
             ConsoleHandle consoleHandle,
             int initialContentLength,
@@ -709,18 +658,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="consoleHandle">
-        /// handle for the console where input is read
-        /// </param>
-        /// <param name="buffer">
-        /// array where data read are stored
-        /// </param>
-        /// <returns>
-        /// actual number of input records read
-        /// </returns>
-        /// <exception cref="HostException">
-        /// If Win32's ReadConsoleInput fails
-        /// </exception>
         internal static int ReadConsoleInput(ConsoleHandle consoleHandle, ref INPUT_RECORD[] buffer)
         {
             Dbg.Assert(!consoleHandle.IsInvalid, "ConsoleHandle is not valid");
@@ -746,18 +683,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="consoleHandle">
-        /// handle for the console where input is peeked
-        /// </param>
-        /// <param name="buffer">
-        /// array where data read are stored
-        /// </param>
-        /// <returns>
-        /// actual number of input records peeked
-        /// </returns>
-        /// <exception cref="HostException">
-        /// If Win32's PeekConsoleInput fails
-        /// </exception>
         internal static int PeekConsoleInput
         (
             ConsoleHandle consoleHandle,
@@ -788,15 +713,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="consoleHandle">
-        /// handle for the console where the number of console input events is obtained
-        /// </param>
-        /// <returns>
-        /// number of console input events
-        /// </returns>
-        /// <exception cref="HostException">
-        /// If Win32's GetNumberOfConsoleInputEvents fails
-        /// </exception>
         internal static int GetNumberOfConsoleInputEvents(ConsoleHandle consoleHandle)
         {
             Dbg.Assert(!consoleHandle.IsInvalid, "ConsoleHandle is not valid");
@@ -818,12 +734,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="consoleHandle">
-        /// handle for the console where the input buffer is flushed
-        /// </param>
-        /// <exception cref="HostException">
-        /// If Win32's FlushConsoleInputBuffer fails
-        /// </exception>
         internal static void FlushConsoleInputBuffer(ConsoleHandle consoleHandle)
         {
             Dbg.Assert(!consoleHandle.IsInvalid, "ConsoleHandle is not valid");
@@ -848,15 +758,6 @@ namespace Microsoft.PowerShell
         #region Buffer
 
         
-        /// <param name="consoleHandle">
-        /// Handle for the console where the screen buffer info is obtained
-        /// </param>
-        /// <returns>
-        /// info about the screen buffer. See the definition of CONSOLE_SCREEN_BUFFER_INFO
-        /// </returns>
-        /// <exception cref="HostException">
-        /// If Win32's GetConsoleScreenBufferInfo fails
-        /// </exception>
         internal static CONSOLE_SCREEN_BUFFER_INFO GetConsoleScreenBufferInfo(ConsoleHandle consoleHandle)
         {
             Dbg.Assert(!consoleHandle.IsInvalid, "ConsoleHandle is not valid");
@@ -878,11 +779,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="consoleHandle"></param>
-        /// <param name="newSize"></param>
-        /// <exception cref="HostException">
-        /// If Win32's SetConsoleScreenBufferSize fails
-        /// </exception>
         internal static void SetConsoleScreenBufferSize(ConsoleHandle consoleHandle, Size newSize)
         {
             Dbg.Assert(!consoleHandle.IsInvalid, "ConsoleHandle is not valid");
@@ -948,25 +844,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="consoleHandle">
-        /// handle for the console where output is written
-        /// </param>
-        /// <param name="origin">
-        /// location on screen buffer where writing starts
-        /// </param>
-        /// <param name="contents">
-        /// 2D array of cells. Caller needs to ensure that the array is 2D.
-        /// </param>
-        /// <exception cref="HostException">
-        /// If Win32's GetConsoleScreenBufferInfo fails
-        /// If there is not enough memory to complete calls to Win32's WriteConsoleOutput
-        /// </exception>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="contents"/> is null
-        /// </exception>
-        /// <exception cref="ArgumentException">
-        /// If it is illegal to write <paramref name="contents"/> to the output buffer
-        /// </exception>
         internal static void WriteConsoleOutput(ConsoleHandle consoleHandle, Coordinates origin, BufferCell[,] contents)
         {
             Dbg.Assert(!consoleHandle.IsInvalid, "ConsoleHandle is not valid");
@@ -1119,20 +996,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="consoleHandle"></param>
-        /// <param name="codePage"></param>
-        /// <param name="origin">Must be within the screen buffer.</param>
-        /// <param name="contents"></param>
-        /// <param name="contentsRegion"></param>
-        /// <param name="bufferInfo"></param>
-        /// <param name="firstLeftTrailingRow"></param>
-        /// <param name="firstRightLeadingRow"></param>
-        /// <exception cref="ArgumentException">
-        /// If it is illegal to write <paramref name="contents"/> at <paramref name="origin"/>
-        /// </exception>
-        /// <exception cref="HostException">
-        /// If there is not enough memory to complete calls to Win32's ReadConsoleOutput
-        /// </exception>
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Called in CHK builds")]
         internal static void CheckWriteEdges(
             ConsoleHandle consoleHandle,
@@ -1562,22 +1425,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="consoleHandle">
-        /// handle for the console where output is read
-        /// </param>
-        /// <param name="origin">
-        /// location on screen buffer where reading begins
-        /// </param>
-        /// <param name="contentsRegion">
-        /// indicates the area in <paramref name="contents"/> where the data read
-        /// is stored.
-        /// </param>
-        /// <param name="contents">
-        /// this is ref because the bounds and size of the array are needed.
-        /// </param>
-        /// <exception cref="HostException">
-        /// If there is not enough memory to complete calls to Win32's ReadConsoleOutput
-        /// </exception>
         internal static void ReadConsoleOutput
         (
             ConsoleHandle consoleHandle,
@@ -1641,10 +1488,6 @@ namespace Microsoft.PowerShell
 
         #region ReadConsoleOutput CJK
         
-        /// <param name="edge"></param>
-        /// <param name="contents"></param>
-        /// <param name="contentsRegion"></param>
-        /// <returns></returns>
         private static bool ShouldCheck(int edge, BufferCell[,] contents, Rectangle contentsRegion)
         {
             for (int i = contentsRegion.Top; i <= contentsRegion.Bottom; i++)
@@ -1749,14 +1592,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="consoleHandle"></param>
-        /// <param name="codePage"></param>
-        /// <param name="origin"></param>
-        /// <param name="contentsRegion"></param>
-        /// <param name="contents"></param>
-        /// <exception cref="HostException">
-        /// If there is not enough memory to complete calls to Win32's ReadConsoleOutput
-        /// </exception>
         internal static void ReadConsoleOutputCJK
         (
             ConsoleHandle consoleHandle,
@@ -2113,21 +1948,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="consoleHandle">
-        /// handle for the console where output is filled
-        /// </param>
-        /// <param name="character">
-        /// character to fill the console output
-        /// </param>
-        /// <param name="numberToWrite">
-        /// number of times to write character
-        /// </param>
-        /// <param name="origin">
-        /// location on screen buffer where writing starts
-        /// </param>
-        /// <exception cref="HostException">
-        /// If Win32's FillConsoleOutputCharacter fails
-        /// </exception>
         internal static void FillConsoleOutputCharacter
         (
             ConsoleHandle consoleHandle,
@@ -2164,21 +1984,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="consoleHandle">
-        /// handle for the console where output is filled
-        /// </param>
-        /// <param name="attribute">
-        /// attribute to fill the console output
-        /// </param>
-        /// <param name="numberToWrite">
-        /// number of times to write attribute
-        /// </param>
-        /// <param name="origin">
-        /// location on screen buffer where writing starts
-        /// </param>
-        /// <exception cref="HostException">
-        /// If Win32's FillConsoleOutputAttribute fails
-        /// </exception>
         internal static void FillConsoleOutputAttribute
         (
             ConsoleHandle consoleHandle,
@@ -2214,24 +2019,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="consoleHandle">
-        /// handle for the console where screen buffer is scrolled
-        /// </param>
-        /// <param name="scrollRectangle">
-        /// area to be scrolled
-        /// </param>
-        /// <param name="clipRectangle">
-        /// area to be updated after scrolling
-        /// </param>
-        /// <param name="destOrigin">
-        /// location to which the top left corner of scrollRectangle move
-        /// </param>
-        /// <param name="fill">
-        /// character and attribute to fill the area vacated by the scroll
-        /// </param>
-        /// <exception cref="HostException">
-        /// If Win32's ScrollConsoleScreenBuffer fails
-        /// </exception>
         internal static void ScrollConsoleScreenBuffer
         (
             ConsoleHandle consoleHandle,
@@ -2266,20 +2053,6 @@ namespace Microsoft.PowerShell
         #region Window
 
         
-        /// <param name="consoleHandle">
-        /// handle for the console where window info is set
-        /// </param>
-        /// <param name="absolute">
-        /// If this parameter is TRUE, the coordinates specify the new upper-left and
-        /// lower-right corners of the window. If it is false, the coordinates are offsets
-        /// to the current window-corner coordinates
-        /// </param>
-        /// <param name="windowInfo">
-        /// specify the size and position of the console screen buffer's window
-        /// </param>
-        /// <exception cref="HostException">
-        /// If Win32's SetConsoleWindowInfo fails
-        /// </exception>
         internal static void SetConsoleWindowInfo(ConsoleHandle consoleHandle, bool absolute, SMALL_RECT windowInfo)
         {
             Dbg.Assert(!consoleHandle.IsInvalid, "ConsoleHandle is not valid");
@@ -2298,15 +2071,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="consoleHandle">
-        /// handle for the console for which the largest window size is obtained
-        /// </param>
-        /// <returns>
-        /// the largest window size
-        /// </returns>
-        /// <exception cref="HostException">
-        /// If Win32's GetLargestConsoleWindowSize fails
-        /// </exception>
         internal static Size GetLargestConsoleWindowSize(ConsoleHandle consoleHandle)
         {
             Dbg.Assert(!consoleHandle.IsInvalid, "ConsoleHandle is not valid");
@@ -2327,12 +2091,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <returns>
-        /// a string for the title of the window
-        /// </returns>
-        /// <exception cref="HostException">
-        /// If Win32's GetConsoleTitle fails
-        /// </exception>
         internal static string GetConsoleWindowTitle()
         {
             const int MaxWindowTitleLength = 1024;
@@ -2355,12 +2113,6 @@ namespace Microsoft.PowerShell
         private static bool s_dontsetConsoleWindowTitle;
 
         
-        /// <param name="consoleTitle">
-        /// a string for the title of the window
-        /// </param>
-        /// <exception cref="HostException">
-        /// If Win32's SetConsoleTitle fails
-        /// </exception>
         internal static void SetConsoleWindowTitle(string consoleTitle)
         {
             if (s_dontsetConsoleWindowTitle)
@@ -2393,18 +2145,6 @@ namespace Microsoft.PowerShell
         #endregion Window
 
         
-        /// <param name="consoleHandle">
-        /// Handle for the console where the string is written.
-        /// </param>
-        /// <param name="output">
-        /// String that is written.
-        /// </param>
-        /// <param name="newLine">
-        /// New line is written.
-        /// </param>
-        /// <exception cref="HostException">
-        /// If the Win32's WriteConsole fails.
-        /// </exception>
         internal static void WriteConsole(ConsoleHandle consoleHandle, ReadOnlySpan<char> output, bool newLine)
         {
             Dbg.Assert(!consoleHandle.IsInvalid, "ConsoleHandle is not valid");
@@ -2497,15 +2237,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="consoleHandle">
-        /// handle for the console where text attribute is set
-        /// </param>
-        /// <param name="attribute">
-        /// text attribute to set the console
-        /// </param>
-        /// <exception cref="HostException">
-        /// if the Win32's SetConsoleTextAttribute fails
-        /// </exception>
         internal static void SetConsoleTextAttribute(ConsoleHandle consoleHandle, WORD attribute)
         {
             Dbg.Assert(!consoleHandle.IsInvalid, "ConsoleHandle is not valid");
@@ -2617,7 +2348,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <returns></returns>
         [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults",
             MessageId = "Microsoft.PowerShell.ConsoleControl+NativeMethods.ReleaseDC(System.IntPtr,System.IntPtr)")]
         internal static int LengthInBufferCells(string str, int offset, bool checkEscapeSequences)
@@ -2677,8 +2407,6 @@ namespace Microsoft.PowerShell
 #if !UNIX
 
         
-        /// <param name="codePage"></param>
-        /// <returns></returns>
         internal static bool IsCJKOutputCodePage(out uint codePage)
         {
             codePage = NativeMethods.GetConsoleOutputCP();
@@ -2696,15 +2424,6 @@ namespace Microsoft.PowerShell
         #region Cursor
 
         
-        /// <param name="consoleHandle">
-        /// handle for the console where cursor info is obtained
-        /// </param>
-        /// <returns>
-        /// cursor info
-        /// </returns>
-        /// <exception cref="HostException">
-        /// If Win32's GetConsoleCursorInfo fails
-        /// </exception>
         internal static CONSOLE_CURSOR_INFO GetConsoleCursorInfo(ConsoleHandle consoleHandle)
         {
             Dbg.Assert(!consoleHandle.IsInvalid, "ConsoleHandle is not valid");
@@ -2748,15 +2467,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="consoleHandle">
-        /// handle for the console where cursor info is set
-        /// </param>
-        /// <param name="cursorInfo">
-        /// cursor info to set the cursor
-        /// </param>
-        /// <exception cref="HostException">
-        /// If Win32's SetConsoleCursorInfo fails
-        /// </exception>
         internal static void SetConsoleCursorInfo(ConsoleHandle consoleHandle, CONSOLE_CURSOR_INFO cursorInfo)
         {
             Dbg.Assert(!consoleHandle.IsInvalid, "ConsoleHandle is not valid");
@@ -2779,11 +2489,6 @@ namespace Microsoft.PowerShell
         #region helper
 
         
-        /// <param name="win32Error"></param>
-        /// <param name="errorId"></param>
-        /// <param name="category"></param>
-        /// <param name="resourceStr"></param>
-        /// <returns></returns>
         private static HostException CreateHostException(
             int win32Error, string errorId, ErrorCategory category, string resourceStr)
         {

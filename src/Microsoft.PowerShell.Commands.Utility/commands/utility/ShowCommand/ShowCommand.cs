@@ -86,7 +86,6 @@ namespace Microsoft.PowerShell.Commands
 
         #region Public and Protected Methods
         
-        /// <param name="script">Script to execute.</param>
         public void RunScript(string script)
         {
             if (_showCommandProxy == null || string.IsNullOrEmpty(script))
@@ -219,7 +218,6 @@ namespace Microsoft.PowerShell.Commands
 
         #region Private Methods
         
-        /// <param name="script">Script to be run.</param>
         private void RunScriptSilentlyAndWithErrorHookup(string script)
         {
             // errors are not created here, because there is a field for it used in the final pop up
@@ -260,8 +258,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="command">Command to be retrieved.</param>
-        /// <param name="modules">List of loaded modules.</param>
         private void GetCommandInfoAndModules(out CommandInfo command, out Dictionary<string, ShowCommandModuleInfo> modules)
         {
             command = null;
@@ -307,7 +303,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <returns>True if there was no exception processing this record.</returns>
         private bool CanProcessRecordForOneCommand()
         {
             CommandInfo commandInfo;
@@ -329,7 +324,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <returns>True if there was no exception processing this record.</returns>
         private bool CanProcessRecordForAllCommands()
         {
             Collection<PSObject> rawCommands = this.InvokeCommand.InvokeScript(_showCommandProxy.GetShowAllModulesCommand());
@@ -390,23 +384,18 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="sender">Output collection.</param>
-        /// <param name="e">Output event.</param>
         private void Output_DataAdded(object sender, DataAddedEventArgs e)
         {
             this.WriteObject(((PSDataCollection<object>)sender)[e.Index]);
         }
 
         
-        /// <param name="sender">Error collection.</param>
-        /// <param name="e">Error event.</param>
         private void Error_DataAdded(object sender, DataAddedEventArgs e)
         {
             this.WriteError(((PSDataCollection<ErrorRecord>)sender)[e.Index]);
         }
 
         
-        /// <param name="isDisposing">True if being called from Dispose.</param>
         private void Dispose(bool isDisposing)
         {
             if (isDisposing)
@@ -427,9 +416,6 @@ namespace Microsoft.PowerShell.Commands
             internal const int STD_INPUT_HANDLE = -10;
 
             
-            /// <param name="str">String to add to console input buffer.</param>
-            /// <param name="newLine">True to add Enter after the string.</param>
-            /// <returns>True if it was successful in adding all characters to console input buffer.</returns>
             internal static bool AddToConsoleInputBuffer(string str, bool newLine)
             {
                 IntPtr handle = ConsoleInputWithNativeMethods.GetStdHandle(ConsoleInputWithNativeMethods.STD_INPUT_HANDLE);
@@ -477,17 +463,10 @@ namespace Microsoft.PowerShell.Commands
             }
 
             
-            /// <param name="nStdHandle">Which console handle to get.</param>
-            /// <returns>The console handle.</returns>
             [DllImport("kernel32.dll", SetLastError = true)]
             internal static extern IntPtr GetStdHandle(int nStdHandle);
 
             
-            /// <param name="hConsoleInput">Console handle.</param>
-            /// <param name="lpBuffer">Inputs to be written.</param>
-            /// <param name="nLength">Number of inputs to be written.</param>
-            /// <param name="lpNumberOfEventsWritten">Returned number of inputs actually written.</param>
-            /// <returns>0 if the function fails.</returns>
             [DllImport("kernel32.dll", SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             internal static extern bool WriteConsoleInput(
@@ -509,8 +488,6 @@ namespace Microsoft.PowerShell.Commands
                 internal KEY_EVENT_RECORD KeyEvent;
 
                 
-                /// <param name="inputRecord">Input record to be set.</param>
-                /// <param name="character">Character to set the record with.</param>
                 internal static void SetInputRecord(ref INPUT_RECORD inputRecord, char character)
                 {
                     inputRecord.EventType = INPUT_RECORD.KEY_EVENT;

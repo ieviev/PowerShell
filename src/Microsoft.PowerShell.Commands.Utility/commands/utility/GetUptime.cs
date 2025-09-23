@@ -15,7 +15,6 @@ namespace Microsoft.PowerShell.Commands
     public class GetUptimeCommand : PSCmdlet
     {
         
-        /// <value></value>
         [Parameter(ParameterSetName = SinceParameterSet)]
         public SwitchParameter Since { get; set; } = new SwitchParameter();
 

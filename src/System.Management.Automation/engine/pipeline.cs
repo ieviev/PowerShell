@@ -17,13 +17,6 @@ using Dbg = System.Management.Automation.Diagnostics;
 namespace System.Management.Automation.Internal
 {
     
-    /// <remarks>
-    /// The PipelineProcessor class is not thread-safe, so methods such as
-    /// AddCommand and SynchronousExecute should not be called
-    /// simultaneously.  While SynchronousExecute is running, it may access
-    /// ExternalInput, ExternalSuccessOutput and ExternalErrorOutput, and
-    /// those objects are thread-safe.
-    /// </remarks>
     internal class PipelineProcessor : IDisposable
     {
         #region private_members
@@ -59,11 +52,6 @@ namespace System.Management.Automation.Internal
         private bool _disposed = false;
 
         
-        /// <remarks>
-        /// This is only public because it implements an interface method.
-        /// The class itself is internal.
-        /// We use the standard IDispose pattern.
-        /// </remarks>
         public void Dispose()
         {
             Dispose(true);
@@ -253,11 +241,6 @@ namespace System.Management.Automation.Internal
         #region public_methods
 
         
-        /// <returns>Results from last pipeline stage.</returns>
-        /// <exception cref="InvalidOperationException">
-        /// see AddCommand
-        /// </exception>
-        /// <exception cref="ObjectDisposedException"></exception>
         internal int Add(CommandProcessorBase commandProcessor)
         {
             if (commandProcessor is NativeCommandProcessor nativeCommand)
@@ -301,22 +284,6 @@ namespace System.Management.Automation.Internal
         //   should be an int or enum to allow for more queues
         // 2005/03/08-JonN: This is an internal API
         
-        /// <param name="commandProcessor"></param>
-        /// <param name="readFromCommand">Reference number of command from which to read, 0 for none.</param>
-        /// <param name="readErrorQueue">Read from error queue of command readFromCommand.</param>
-        /// <returns>Reference number of this command for use in readFromCommand.</returns>
-        /// <exception cref="ObjectDisposedException"></exception>
-        /// <exception cref="ArgumentException">
-        /// FirstCommandCannotHaveInput: <paramref name="readFromCommand"/> must be zero
-        ///   for the first command in the pipe
-        /// InvalidCommandNumber: there is no command numbered <paramref name="readFromCommand"/>
-        ///   A command can only read from earlier commands; this prevents circular queues
-        /// </exception>
-        /// <exception cref="InvalidOperationException">
-        /// ExecutionAlreadyStarted: pipeline has already started or completed
-        /// PipeAlreadyTaken: the downstream pipe of command <paramref name="readFromCommand"/>
-        ///   is already taken
-        /// </exception>
         private int AddCommand(CommandProcessorBase commandProcessor, int readFromCommand, bool readErrorQueue)
         {
             if (commandProcessor == null)
@@ -430,45 +397,6 @@ namespace System.Management.Automation.Internal
 
         // 2005/03/08-JonN: This is an internal API
         
-        /// <param name="input">
-        /// Input objects for first stage. If this is AutomationNull.Value, the
-        /// first cmdlet is the beginning of the pipeline.
-        /// </param>
-        /// <returns>
-        /// Results from last pipeline stage.  This will be empty if
-        /// ExternalSuccessOutput is set.
-        /// </returns>
-        /// <exception cref="InvalidOperationException">
-        /// ExecutionAlreadyStarted: pipeline has already started or completed
-        /// </exception>
-        /// <exception cref="InvalidOperationException">
-        /// PipelineExecuteRequiresAtLeastOneCommand
-        /// </exception>
-        /// <exception cref="CmdletInvocationException">
-        /// A cmdlet encountered a terminating error
-        /// </exception>
-        /// <exception cref="PipelineStoppedException">
-        /// The pipeline was stopped asynchronously
-        /// </exception>
-        /// <exception cref="ActionPreferenceStopException">
-        /// The ActionPreference.Stop or ActionPreference.Inquire policy
-        /// triggered a terminating error.
-        /// </exception>
-        /// <exception cref="ParameterBindingException">
-        /// If any parameters fail to bind,
-        /// or
-        /// If any mandatory parameters are missing.
-        /// </exception>
-        /// <exception cref="MetadataException">
-        /// If there is an error generating the metadata for dynamic parameters.
-        /// </exception>
-        /// <exception cref="ExtendedTypeSystemException">
-        /// An error occurred clearing the error variable.
-        /// </exception>
-        /// <exception cref="HaltCommandException">
-        /// HaltCommandException will cause the command
-        /// to stop, but should not be reported as an error.
-        /// </exception>
         internal Array SynchronousExecuteEnumerate(object input)
         {
             if (Stopping)
@@ -688,11 +616,6 @@ namespace System.Management.Automation.Internal
         }
 
         
-        /// <remarks>
-        /// Exception from a 'Clean' block is not allowed to propagate up and terminate the pipeline
-        /// so that other 'Clean' blocks can run without being affected. Therefore, this method will
-        /// catch and handle all exceptions inside, and it will never throw.
-        /// </remarks>
         private void Clean()
         {
             if (!_executionStarted || _commands is null)
@@ -755,16 +678,6 @@ namespace System.Management.Automation.Internal
         }
 
         
-        /// <remarks>
-        /// The way we handle 'Clean' blocks in 'StartStepping', 'Step', and 'DoComplete' makes sure that:
-        ///  1. The 'Clean' blocks get to run if any exception is thrown from the pipeline execution.
-        ///  2. The 'Clean' blocks get to run if the pipeline runs to the end successfully.
-        /// However, this is not enough for a steppable pipeline, because the function, where the steppable
-        /// pipeline gets used, may fail (think about a proxy function). And that may lead to the situation
-        /// where "no exception was thrown from the steppable pipeline" but "the steppable pipeline didn't
-        /// run to the end". In that case, 'Clean' won't run unless it's triggered explicitly on the steppable
-        /// pipeline. This method is how we will expose this functionality to 'SteppablePipeline'.
-        /// </remarks>
         internal void DoCleanup()
         {
             Clean();
@@ -772,7 +685,6 @@ namespace System.Management.Automation.Internal
         }
 
         
-        /// <returns>The results of the execution.</returns>
         internal Array DoComplete()
         {
             if (!_executionStarted)
@@ -817,7 +729,6 @@ namespace System.Management.Automation.Internal
         }
 
         
-        /// <param name="expectInput">True if you want to write to this pipeline.</param>
         internal void StartStepping(bool expectInput)
         {
             bool startSucceeded = false;
@@ -894,35 +805,6 @@ namespace System.Management.Automation.Internal
         #region private_methods
 
         
-        /// <param name="input">
-        /// Array of input objects for first stage
-        /// </param>
-        /// <returns>
-        /// Results from last pipeline stage.  This will be empty if
-        /// ExternalSuccessOutput is set.
-        /// </returns>
-        /// <exception cref="InvalidOperationException">
-        /// PipelineExecuteRequiresAtLeastOneCommand
-        /// </exception>
-        /// <exception cref="PipelineStoppedException">
-        /// The pipeline has already been stopped, or a cmdlet encountered
-        /// a terminating error
-        /// </exception>
-        /// <exception cref="ParameterBindingException">
-        /// If any parameters fail to bind,
-        /// or
-        /// If any mandatory parameters are missing.
-        /// </exception>
-        /// <exception cref="MetadataException">
-        /// If there is an error generating the metadata for dynamic parameters.
-        /// </exception>
-        /// <exception cref="PipelineStoppedException">
-        /// The pipeline has already been stopped,
-        /// or a terminating error occurred.
-        /// </exception>
-        /// <exception cref="ExtendedTypeSystemException">
-        /// An error occurred clearing the error variable.
-        /// </exception>
         internal Array Step(object input)
         {
             bool injectSucceeded = false;
@@ -957,33 +839,6 @@ namespace System.Management.Automation.Internal
         }
 
         
-        /// <param name="incomingStream">
-        /// Input objects are expected, so do not close the first command.
-        /// This will prevent the one default call to ProcessRecord
-        /// on the first command.
-        /// </param>
-        /// <remarks>
-        /// Start must always be called in a context where terminating errors will
-        /// be caught and result in DisposeCommands.
-        /// </remarks>
-        /// <exception cref="InvalidOperationException">
-        /// PipelineExecuteRequiresAtLeastOneCommand
-        /// </exception>
-        /// <exception cref="ParameterBindingException">
-        /// If any parameters fail to bind,
-        /// or
-        /// If any mandatory parameters are missing.
-        /// </exception>
-        /// <exception cref="MetadataException">
-        /// If there is an error generating the metadata for dynamic parameters.
-        /// </exception>
-        /// <exception cref="PipelineStoppedException">
-        /// The pipeline has already been stopped,
-        /// or a terminating error occurred in a downstream cmdlet.
-        /// </exception>
-        /// <exception cref="ExtendedTypeSystemException">
-        /// An error occurred clearing the error variable.
-        /// </exception>
         private void Start(bool incomingStream)
         {
             // Every call to Step or SynchronousExecute will call Start.
@@ -1149,27 +1004,6 @@ namespace System.Management.Automation.Internal
         }
 
         
-        /// <param name="input">
-        /// Array of input objects for first stage
-        /// </param>
-        /// <param name="enumerate">If true, unravel the input otherwise pass as one object.</param>
-        /// <throws>
-        /// Exception if any cmdlet throws a [terminating] exception
-        /// </throws>
-        /// <remarks>
-        /// Inject must always be called in a context where terminating errors will
-        /// be caught and result in DisposeCommands.
-        /// </remarks>
-        /// <exception cref="InvalidOperationException">
-        /// PipelineExecuteRequiresAtLeastOneCommand
-        /// </exception>
-        /// <exception cref="PipelineStoppedException">
-        /// The pipeline has already been stopped, or a cmdlet encountered
-        /// a terminating error
-        /// </exception>
-        /// <exception cref="PipelineClosedException">
-        /// The ExternalWriter stream is closed
-        /// </exception>
         private void Inject(object input, bool enumerate)
         {
             // Add any input to the first command.
@@ -1204,10 +1038,6 @@ namespace System.Management.Automation.Internal
         }
 
         
-        /// <returns>
-        /// Results from last pipeline stage.  This will be empty if
-        /// ExternalSuccessOutput is set or if this pipeline has been linked.
-        /// </returns>
         private Array RetrieveResults()
         {
             if (_commands is null)
@@ -1253,7 +1083,6 @@ namespace System.Management.Automation.Internal
         }
 
         
-        /// <param name="pipeToUse">The pipeline to write success objects to.</param>
         internal void LinkPipelineSuccessOutput(Pipe pipeToUse)
         {
             Dbg.Assert(pipeToUse != null, "Caller should verify pipeToUse != null");
@@ -1385,9 +1214,6 @@ namespace System.Management.Automation.Internal
 
         private readonly object _stopReasonLock = new object();
         
-        /// <param name="e">Error which terminated the pipeline.</param>
-        /// <param name="command">Command against which to log SecondFailure.</param>
-        /// <returns>True if-and-only-if the pipeline was not already stopped.</returns>
         internal bool RecordFailure(Exception e, InternalCommand command)
         {
             bool wasStopping = false;
@@ -1451,13 +1277,6 @@ namespace System.Management.Automation.Internal
         #region public_properties
 
         
-        /// <remarks>
-        /// It is the responsibility of the caller to ensure that the object
-        /// reader is closed, usually by another thread.
-        /// </remarks>
-        /// <exception cref="InvalidOperationException">
-        /// ExecutionAlreadyStarted: pipeline has already started or completed
-        /// </exception>
         internal PipelineReader<object> ExternalInput
         {
             get
@@ -1478,9 +1297,6 @@ namespace System.Management.Automation.Internal
         }
 
         
-        /// <exception cref="InvalidOperationException">
-        /// ExecutionAlreadyStarted: pipeline has already started or completed
-        /// </exception>
         internal PipelineWriter ExternalSuccessOutput
         {
             get
@@ -1501,9 +1317,6 @@ namespace System.Management.Automation.Internal
         }
 
         
-        /// <exception cref="InvalidOperationException">
-        /// ExecutionAlreadyStarted: pipeline has already started or completed
-        /// </exception>
         internal PipelineWriter ExternalErrorOutput
         {
             get

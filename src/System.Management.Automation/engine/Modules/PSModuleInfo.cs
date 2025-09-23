@@ -41,20 +41,12 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="path">The absolute path to the module.</param>
-        /// <param name="context">The execution context for this engine instance.</param>
-        /// <param name="sessionState">The module's sessionstate object - this may be null if the module is a dll.</param>
         internal PSModuleInfo(string path, ExecutionContext context, SessionState sessionState)
             : this(null, path, context, sessionState)
         {
         }
 
         
-        /// <param name="name">The name to use for the module. If null, get it from the path name.</param>
-        /// <param name="path">The absolute path to the module.</param>
-        /// <param name="context">The execution context for this engine instance.</param>
-        /// <param name="sessionState">The module's sessionstate object - this may be null if the module is a dll.</param>
-        /// <param name="languageMode">Language mode for script based modules.</param>
         internal PSModuleInfo(string name, string path, ExecutionContext context, SessionState sessionState, PSLanguageMode? languageMode)
             : this(name, path, context, sessionState)
         {
@@ -62,10 +54,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="name">The name to use for the module. If null, get it from the path name.</param>
-        /// <param name="path">The absolute path to the module.</param>
-        /// <param name="context">The execution context for this engine instance.</param>
-        /// <param name="sessionState">The module's sessionstate object - this may be null if the module is a dll.</param>
         internal PSModuleInfo(string name, string path, ExecutionContext context, SessionState sessionState)
         {
             if (path != null)
@@ -111,7 +99,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="scriptBlock">The scriptblock to use to initialize the module.</param>
         public PSModuleInfo(ScriptBlock scriptBlock)
         {
             if (scriptBlock == null)
@@ -184,7 +171,6 @@ namespace System.Management.Automation
         internal bool HadErrorsLoading { get; set; }
 
         
-        /// <returns>The name of the module.</returns>
         public override string ToString()
         {
             return this.Name;
@@ -197,7 +183,6 @@ namespace System.Management.Automation
         public string Name { get; private set; } = string.Empty;
 
         
-        /// <param name="name">The name to set it to.</param>
         internal void SetName(string name)
         {
             Name = name;
@@ -370,7 +355,6 @@ namespace System.Management.Automation
         public Version Version { get; private set; } = new Version(0, 0);
 
         
-        /// <param name="version">The version to set...</param>
         internal void SetVersion(Version version)
         {
             Version = version;
@@ -560,7 +544,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="moduleContentScriptBlockAsts"></param>
         internal void CreateExportedTypeDefinitions(ScriptBlockAst moduleContentScriptBlockAsts)
         {
             if (moduleContentScriptBlockAsts == null)
@@ -590,7 +573,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="name">The function to add.</param>
         internal void AddDetectedFunctionExport(string name)
         {
             Dbg.Assert(name != null, "AddDetectedFunctionExport should not be called with a null value");
@@ -645,7 +627,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="cmdlet">The cmdlet to add...</param>
         internal void AddDetectedCmdletExport(string cmdlet)
         {
             Dbg.Assert(cmdlet != null, "AddDetectedCmdletExport should not be called with a null value");
@@ -694,7 +675,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="cmdlet">The cmdlet to add...</param>
         internal void AddExportedCmdlet(CmdletInfo cmdlet)
         {
             Dbg.Assert(cmdlet != null, "AddExportedCmdlet should not be called with a null value");
@@ -727,7 +707,6 @@ namespace System.Management.Automation
         private readonly List<CmdletInfo> _compiledExports = new List<CmdletInfo>();
 
         
-        /// <param name="aliasInfo">The cmdlet to add...</param>
         internal void AddExportedAlias(AliasInfo aliasInfo)
         {
             Dbg.Assert(aliasInfo != null, "AddExportedAlias should not be called with a null value");
@@ -796,7 +775,6 @@ namespace System.Management.Automation
         private ReadOnlyCollection<PSModuleInfo> _readonlyNestedModules;
 
         
-        /// <param name="nestedModule">The module to add.</param>
         internal void AddNestedModule(PSModuleInfo nestedModule)
         {
             AddModuleToList(nestedModule, _nestedModules);
@@ -870,7 +848,6 @@ namespace System.Management.Automation
         private ReadOnlyCollection<PSModuleInfo> _readonlyRequiredModules;
 
         
-        /// <param name="requiredModule">The module to add.</param>
         internal void AddRequiredModule(PSModuleInfo requiredModule)
         {
             AddModuleToList(requiredModule, _requiredModules);
@@ -890,7 +867,6 @@ namespace System.Management.Automation
         private ReadOnlyCollection<ModuleSpecification> _readonlyRequiredModulesSpecification;
 
         
-        /// <param name="requiredModuleSpecification">The module to add.</param>
         internal void AddRequiredModuleSpecification(ModuleSpecification requiredModuleSpecification)
         {
             _requiredModulesSpecification.Add(requiredModuleSpecification);
@@ -1025,8 +1001,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="name">The alias to add.</param>
-        /// <param name="value">The command it resolves to.</param>
         internal void AddDetectedAliasExport(string name, string value)
         {
             Dbg.Assert(name != null, "AddDetectedAliasExport should not be called with a null value");
@@ -1051,8 +1025,6 @@ namespace System.Management.Automation
         public SessionState SessionState { get; set; }
 
         
-        /// <param name="scriptBlockToBind">The original scriptblock.</param>
-        /// <returns>The new bound scriptblock.</returns>
         public ScriptBlock NewBoundScriptBlock(ScriptBlock scriptBlockToBind)
         {
             var context = LocalPipeline.GetExecutionContextFromTLS();
@@ -1089,9 +1061,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="sb">The scriptblock to invoke.</param>
-        /// <param name="args">Arguments to the scriptblock.</param>
-        /// <returns>The result of the invocation.</returns>
         public object Invoke(ScriptBlock sb, params object[] args)
         {
             if (sb == null)
@@ -1116,8 +1085,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="variableName"></param>
-        /// <returns></returns>
         public PSVariable GetVariableFromCallersModule(string variableName)
         {
             ArgumentException.ThrowIfNullOrEmpty(variableName);
@@ -1188,7 +1155,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <returns>A custom object.</returns>
         public PSObject AsCustomObject()
         {
             if (SessionState == null)
@@ -1241,7 +1207,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <returns>A new PSModuleInfo instance.</returns>
         public PSModuleInfo Clone()
         {
             PSModuleInfo clone = (PSModuleInfo)this.MemberwiseClone();
@@ -1289,15 +1254,12 @@ namespace System.Management.Automation
 
 #if DEBUG
         
-        /// <returns></returns>
         public static object GetAppDomainLevelModuleCache()
         {
             return s_appdomainModulePathCache;
         }
 #endif
         
-        /// <param name="moduleName">Module name to look up.</param>
-        /// <returns>The path to the matched module.</returns>
         internal static string ResolveUsingAppDomainLevelModuleCache(string moduleName)
         {
             string path;
@@ -1312,9 +1274,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="moduleName"></param>
-        /// <param name="path"></param>
-        /// <param name="force"></param>
         internal static void AddToAppDomainLevelModuleCache(string moduleName, string path, bool force)
         {
             if (force)
@@ -1328,8 +1287,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="moduleName">The name of the module to remove from the cache.</param>
-        /// <returns>True if the module was remove.</returns>
         internal static bool RemoveFromAppDomainLevelCache(string moduleName)
         {
             string outString;

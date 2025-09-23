@@ -54,7 +54,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <value></value>
         [Parameter(ParameterSetName = "optionsSet")]
         [Alias("PSPath", "Path")]
         public string FilePath
@@ -74,7 +73,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <value></value>
         [Parameter(ParameterSetName = "optionsSet")]
         public SwitchParameter Debugger
         {
@@ -84,7 +82,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <value></value>
         [Parameter(ParameterSetName = "optionsSet")]
         public SwitchParameter PSHost
         {
@@ -104,7 +101,6 @@ namespace Microsoft.PowerShell.Commands
         public string[] RemoveFileListener { get; set; } = new string[] { "*" };
 
         
-        /// <value></value>
         [Parameter(ParameterSetName = "optionsSet")]
         public SwitchParameter PassThru
         {

@@ -107,8 +107,6 @@ namespace System.Management.Automation
         #region Helpers
 
         
-        /// <param name="obj">The object to convert.</param>
-        /// <returns>The result of the conversion...</returns>
         internal static string SafeToString(object obj)
         {
             if (obj == null)
@@ -142,8 +140,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="list">The list to update.</param>
-        /// <param name="obj">The object to convert to a string...</param>
         internal static void SafeAddToStringList(List<string> list, object obj)
         {
             if (list == null)

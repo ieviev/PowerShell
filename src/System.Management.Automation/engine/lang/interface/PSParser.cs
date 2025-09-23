@@ -12,19 +12,6 @@ using Dbg = System.Management.Automation.Diagnostics;
 namespace System.Management.Automation
 {
     
-    /// <remarks>
-    /// This is a class providing the interface for parsing a script into a collection of
-    /// tokens, which primarily can be used for syntax colorization.
-    ///
-    /// Classes provided for syntax colorization includes,
-    ///
-    ///     1. PSParser: this class provides the main interface to be used.
-    ///     2. PSToken: this class provides a public representation of powershell tokens.
-    ///     3. PSParseError: this class provides a public representation of syntax errors.
-    ///
-    /// These three classes are provided for exposing interfaces only. They
-    /// should not be used in PowerShell engine code.
-    /// </remarks>
     //
     //  1. Design
     //
@@ -54,10 +41,6 @@ namespace System.Management.Automation
     public sealed class PSParser
     {
         
-        /// <remarks>
-        /// This constructor is made private intentionally. The only way to create an instance
-        /// of PSParser object is from PSParser pool maintained in this class.
-        /// </remarks>
         private PSParser()
         {
         }
@@ -116,17 +99,6 @@ namespace System.Management.Automation
         #region Public API
 
         
-        /// <param name="script">Script to parse.</param>
-        /// <param name="errors">Errors happened during parsing.</param>
-        /// <returns>Collection of tokens generated during parsing.</returns>
-        /// <exception cref="System.Management.Automation.RuntimeException">
-        /// Although this API returns most parse-time exceptions in the errors
-        /// collection, there are some scenarios where resource limits will result
-        /// in an exception being thrown by this API. This allows the caller to
-        /// distinguish between a successful parse with errors and a failed parse.
-        /// All exceptions thrown will be derived from System.Management.Automation.RuntimeException
-        /// but may contain an inner exception that describes the real issue.
-        /// </exception>
         public static Collection<PSToken> Tokenize(string script, out Collection<PSParseError> errors)
         {
             if (script == null)
@@ -141,17 +113,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="script">Script to parse, as an array of lines.</param>
-        /// <param name="errors">Errors happened during parsing.</param>
-        /// <returns>Collection of tokens generated during parsing.</returns>
-        /// <exception cref="System.Management.Automation.RuntimeException">
-        /// Although this API returns most parse-time exceptions in the errors
-        /// collection, there are some scenarios where resource limits will result
-        /// in an exception being thrown by this API. This allows the caller to
-        /// distinguish between a successful parse with errors and a failed parse.
-        /// All exceptions thrown will be derived from System.Management.Automation.RuntimeException
-        /// but may contain an inner exception that describes the real issue.
-        /// </exception>
         public static Collection<PSToken> Tokenize(object[] script, out Collection<PSParseError> errors)
         {
             if (script == null)

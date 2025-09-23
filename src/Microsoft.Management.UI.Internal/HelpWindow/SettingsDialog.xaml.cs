@@ -28,8 +28,6 @@ namespace Microsoft.Management.UI
         }
 
         
-        /// <param name="sender">Event sender.</param>
-        /// <param name="e">Event arguments.</param>
         private void OK_Click(object sender, RoutedEventArgs e)
         {
             HelpWindowSettings.Default.HelpDescriptionDisplayed = this.Description.IsChecked == true;

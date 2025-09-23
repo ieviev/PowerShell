@@ -88,7 +88,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
 
         #region LineOutput implementation
         
-        /// <value></value>
         internal override int ColumnNumber
         {
             get
@@ -117,7 +116,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <value></value>
         internal override int RowNumber
         {
             get
@@ -140,7 +138,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="s">Line to write.</param>
         internal override void WriteLine(string s)
         {
             CheckStopProcessing();
@@ -168,9 +165,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         #endregion
 
         
-        /// <param name="host">PSHostUserInterface to wrap.</param>
-        /// <param name="paging">True if we require prompting for page breaks.</param>
-        /// <param name="errorContext">Error context to throw exceptions.</param>
         internal ConsoleLineOutput(PSHost host, bool paging, TerminatingErrorContext errorContext)
         {
             if (host == null)
@@ -217,7 +211,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="s">String to write.</param>
         private void OnWriteLine(string s)
         {
             // Do any default transcription.
@@ -257,7 +250,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="s">String to write.</param>
         private void OnWrite(string s)
         {
             switch (this.WriteStream)
@@ -335,7 +327,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <value>true if we need to prompt</value>
         private bool NeedToPrompt
         {
             get
@@ -370,8 +361,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         private sealed class PromptHandler
         {
             
-            /// <param name="s">Prompt string to be used.</param>
-            /// <param name="cmdlet">The Cmdlet using this prompt handler.</param>
             internal PromptHandler(string s, ConsoleLineOutput cmdlet)
             {
                 if (string.IsNullOrEmpty(s))
@@ -382,9 +371,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             }
 
             
-            /// <param name="cols">Current number of columns on the screen.</param>
-            /// <param name="displayCells">String manipulation helper.</param>
-            /// <returns></returns>
             internal int ComputePromptLines(DisplayCells displayCells, int cols)
             {
                 // split the prompt string into lines
@@ -401,7 +387,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
             }
 
             
-            /// <param name="console">PSHostUserInterface instance to prompt to.</param>
             internal PromptResponse PromptUser(PSHostUserInterface console)
             {
                 // NOTE: assume the values passed to ComputePromptLines are still valid

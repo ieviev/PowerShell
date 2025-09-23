@@ -70,16 +70,11 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="pattern">The wildcard pattern to match.</param>
-        /// <returns>The constructed WildcardPattern object.</returns>
         public WildcardPattern(string pattern) : this(pattern, WildcardOptions.None)
         {
         }
 
         
-        /// <param name="pattern">The wildcard pattern to match.</param>
-        /// <param name="options">Wildcard options.</param>
-        /// <returns>The constructed WildcardPattern object.</returns>
         public WildcardPattern(string pattern, WildcardOptions options)
         {
             if (pattern == null)
@@ -94,9 +89,6 @@ namespace System.Management.Automation
         private static readonly WildcardPattern s_matchAllIgnoreCasePattern = new WildcardPattern("*", WildcardOptions.None);
 
         
-        /// <param name="pattern">The pattern.</param>
-        /// <param name="options"></param>
-        /// <returns></returns>
         public static WildcardPattern Get(string pattern, WildcardOptions options)
         {
             if (pattern == null)
@@ -109,7 +101,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <returns>True on success, false otherwise.</returns>
         private void Init()
         {
             StringComparison GetStringComparison()
@@ -167,8 +158,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="input">The string to search for a match.</param>
-        /// <returns>True if the wildcard pattern finds a match; otherwise, false.</returns>
         public bool IsMatch(string input)
         {
             Init();
@@ -176,11 +165,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="pattern">The input string containing the text to convert.</param>
-        /// <param name="charsNotToEscape">Array of characters that not to escape.</param>
-        /// <returns>
-        /// A string of characters with any metacharacters, except for those specified in <paramref name="charsNotToEscape"/>, converted to their escaped form.
-        /// </returns>
         internal static string Escape(string pattern, char[] charsNotToEscape)
         {
             if (pattern == null)
@@ -231,24 +215,12 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="pattern">The input string containing the text to convert.</param>
-        /// <returns>
-        /// A string of characters with any metacharacters converted to their escaped form.
-        /// </returns>
         public static string Escape(string pattern)
         {
             return Escape(pattern, Array.Empty<char>());
         }
 
         
-        /// <param name="pattern">
-        /// String which needs to be checked for the presence of wildcard chars
-        /// </param>
-        /// <returns>True if the string has wild card chars, false otherwise..</returns>
-        /// <remarks>
-        /// Currently { '*', '?', '[' } are considered wild card chars and
-        /// '`' is the escape character.
-        /// </remarks>
         public static bool ContainsWildcardCharacters(string pattern)
         {
             if (string.IsNullOrEmpty(pattern))
@@ -279,8 +251,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="pattern"> The string to check.</param>
-        /// <returns>Returns true if the string contains both a left and right bracket "[" "]" and if the right bracket comes after the left bracket.</returns>
         internal static bool ContainsRangeWildcard(string pattern)
         {
             if (string.IsNullOrEmpty(pattern))
@@ -314,16 +284,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="pattern">
-        /// The input string containing the text to convert.
-        /// </param>
-        /// <returns>
-        /// A string of characters with any escaped characters
-        /// converted to their unescaped form.
-        /// </returns>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="pattern"/> is null.
-        /// </exception>
         public static string Unescape(string pattern)
         {
             if (pattern == null)
@@ -401,7 +361,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <returns></returns>
         public string ToWql()
         {
             bool needsClientSideFiltering;
@@ -427,11 +386,6 @@ namespace System.Management.Automation
     public class WildcardPatternException : RuntimeException
     {
         
-        /// <remarks>This is the recommended constructor to use for this exception.</remarks>
-        /// <param name="errorRecord">
-        /// ErrorRecord object containing additional information about the error condition.
-        /// </param>
-        /// <returns>Constructed object.</returns>
         internal WildcardPatternException(ErrorRecord errorRecord)
             : base(RetrieveMessage(errorRecord))
         {
@@ -449,14 +403,11 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="message">The string to use as the exception message.</param>
         public WildcardPatternException(string message) : base(message)
         {
         }
 
         
-        /// <param name="message">The exception message to use.</param>
-        /// <param name="innerException">The innerException object to encapsulate.</param>
         public WildcardPatternException(string message,
                                         Exception innerException)
             : base(message, innerException)
@@ -464,8 +415,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="info">Serialization information.</param>
-        /// <param name="context">Streaming context.</param>
         [Obsolete("Legacy serialization support is deprecated since .NET 8", DiagnosticId = "SYSLIB0051")] 
         protected WildcardPatternException(SerializationInfo info,
                                         StreamingContext context)
@@ -478,11 +427,6 @@ namespace System.Management.Automation
     internal abstract class WildcardPatternParser
     {
         
-        /// <param name="pattern">
-        /// <see cref="WildcardPattern"/> object that includes both
-        /// the text of the pattern (<see cref="WildcardPattern.Pattern"/>)
-        /// and the pattern options (<see cref="WildcardPattern.Options"/>)
-        /// </param>
         protected virtual void BeginWildcardPattern(WildcardPattern pattern)
         {
         }
@@ -502,15 +446,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <remarks>
-        /// Bracket expressions of <see cref="WildcardPattern"/> are
-        /// a greatly simplified version of bracket expressions of POSIX wildcards
-        /// (https://www.opengroup.org/onlinepubs/9699919799/functions/fnmatch.html).
-        /// Only literal characters and character ranges are supported.
-        /// Negation (with either '!' or '^' characters),
-        /// character classes ([:alpha:])
-        /// and other advanced features are not supported.
-        /// </remarks>
         protected abstract void BeginBracketExpression();
 
         
@@ -525,12 +460,6 @@ namespace System.Management.Automation
         protected abstract void EndBracketExpression();
 
         
-        /// <param name="brackedExpressionContents"></param>
-        /// <param name="bracketExpressionOperators"></param>
-        /// <param name="pattern"></param>
-        /// <remarks>
-        /// This method should be kept "internal"
-        /// </remarks>
         internal void AppendBracketExpression(string brackedExpressionContents, string bracketExpressionOperators, string pattern)
         {
             this.BeginBracketExpression();
@@ -563,8 +492,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="pattern">Pattern to parse.</param>
-        /// <param name="parser">Parser to call back.</param>
         public static void Parse(WildcardPattern pattern, WildcardPatternParser parser)
         {
             parser.BeginWildcardPattern(pattern);
@@ -665,18 +592,6 @@ namespace System.Management.Automation
     }
 
     
-    /// <remarks>
-    /// A list of glob patterns and their equivalent regexes
-    ///
-    ///  glob pattern      regex
-    /// -------------     -------
-    /// *foo*              foo
-    /// foo                ^foo$
-    /// foo*bar            ^foo.*bar$
-    /// foo`*bar           ^foo\*bar$
-    ///
-    /// for a more cases see the unit-test file RegexTest.cs
-    /// </remarks>
     internal class WildcardPatternToRegexParser : WildcardPatternParser
     {
         private StringBuilder _regexPattern;
@@ -831,8 +746,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="wildcardPattern">Wildcard pattern to parse.</param>
-        /// <returns>Regular expression equivalent to <paramref name="wildcardPattern"/></returns>
         public static Regex Parse(WildcardPattern wildcardPattern)
         {
             WildcardPatternToRegexParser parser = new WildcardPatternToRegexParser();

@@ -20,19 +20,12 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="source">The source to initialize from.</param>
         public TextEndsWithFilterRule(TextEndsWithFilterRule source)
             : base(source)
         {
         }
 
         
-        /// <param name="data">
-        /// The value to compare with.
-        /// </param>
-        /// <returns>
-        /// Returns true is data ends with Value, false otherwise.
-        /// </returns>
         protected override bool Evaluate(string data)
         {
             Debug.Assert(this.IsValid, "is valid");

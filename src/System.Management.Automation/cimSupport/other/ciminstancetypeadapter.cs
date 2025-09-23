@@ -15,11 +15,6 @@ using Dbg = System.Management.Automation.Diagnostics;
 namespace Microsoft.PowerShell.Cim
 {
     
-    /// <remarks>
-    /// Implementing the PropertyOnlyAdapter for the time being as CimInstanceTypeAdapter currently
-    /// supports only properties. If method support is needed in future, this should derive from
-    /// Adapter class.
-    /// </remarks>
     public sealed class CimInstanceAdapter : PSPropertyAdapter
     {
         private static PSAdaptedProperty GetCimPropertyAdapter(CimProperty property, object baseObject, string propertyName)
@@ -53,8 +48,6 @@ namespace Microsoft.PowerShell.Cim
         }
 
         
-        /// <param name="baseObject"></param>
-        /// <returns></returns>
         public override System.Collections.ObjectModel.Collection<PSAdaptedProperty> GetProperties(object baseObject)
         {
             // baseObject should never be null
@@ -91,9 +84,6 @@ namespace Microsoft.PowerShell.Cim
         }
 
         
-        /// <param name="baseObject"></param>
-        /// <param name="propertyName"></param>
-        /// <returns></returns>
         public override PSAdaptedProperty GetProperty(object baseObject, string propertyName)
         {
             if (propertyName == null)
@@ -127,7 +117,6 @@ namespace Microsoft.PowerShell.Cim
             return null;
         }
 
-        /// <inheritdoc/>
         public override PSAdaptedProperty GetFirstPropertyOrDefault(object baseObject, MemberNamePredicate predicate)
         {
             if (predicate == null)
@@ -183,8 +172,6 @@ namespace Microsoft.PowerShell.Cim
         }
 
         
-        /// <param name="adaptedProperty"></param>
-        /// <returns></returns>
         public override string GetPropertyTypeName(PSAdaptedProperty adaptedProperty)
         {
             ArgumentNullException.ThrowIfNull(adaptedProperty);
@@ -203,8 +190,6 @@ namespace Microsoft.PowerShell.Cim
         }
 
         
-        /// <param name="adaptedProperty"></param>
-        /// <returns></returns>
         public override object GetPropertyValue(PSAdaptedProperty adaptedProperty)
         {
             ArgumentNullException.ThrowIfNull(adaptedProperty);
@@ -256,8 +241,6 @@ namespace Microsoft.PowerShell.Cim
         }
 
         
-        /// <param name="baseObject"></param>
-        /// <returns></returns>
         public override Collection<string> GetTypeNameHierarchy(object baseObject)
         {
             if (!(baseObject is CimInstance cimInstance))
@@ -306,8 +289,6 @@ namespace Microsoft.PowerShell.Cim
         }
 
         
-        /// <param name="adaptedProperty"></param>
-        /// <returns></returns>
         public override bool IsGettable(PSAdaptedProperty adaptedProperty)
         {
             
@@ -315,8 +296,6 @@ namespace Microsoft.PowerShell.Cim
         }
 
         
-        /// <param name="adaptedProperty"></param>
-        /// <returns></returns>
         public override bool IsSettable(PSAdaptedProperty adaptedProperty)
         {
             
@@ -337,8 +316,6 @@ namespace Microsoft.PowerShell.Cim
         }
 
         
-        /// <param name="adaptedProperty"></param>
-        /// <param name="value"></param>
         public override void SetPropertyValue(PSAdaptedProperty adaptedProperty, object value)
         {
             ArgumentNullException.ThrowIfNull(adaptedProperty);

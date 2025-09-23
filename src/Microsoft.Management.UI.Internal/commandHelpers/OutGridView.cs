@@ -78,7 +78,6 @@ namespace Microsoft.Management.UI.Internal
 
         #region private delegates
         
-        /// <param name="arg">Start GridView Window delegate.</param>
         private delegate void ThreadDelegate(object arg);
 
         #endregion private delegates
@@ -86,9 +85,6 @@ namespace Microsoft.Management.UI.Internal
         #region Private method that are intended to be called by the Out-GridView cmdlet.
 
         
-        /// <param name="invocation">Commands of the PowerShell.</param>
-        /// <param name="outputModeOptions">Selection mode of the list.</param>
-        /// <param name="closedEvent">ClosedEvent.</param>
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "The method is called using reflection.")]
         private void StartWindow(string invocation, string outputModeOptions, AutoResetEvent closedEvent)
         {
@@ -167,8 +163,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="sender">.</param>
-        /// <param name="e">.</param>
         private void ZoomEventHandlerPlus(object sender, ExecutedRoutedEventArgs e)
         {
             if (this.zoomLevel == 0)
@@ -189,8 +183,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="sender">.</param>
-        /// <param name="e">.</param>
         private void ZoomEventHandlerMinus(object sender, ExecutedRoutedEventArgs e)
         {
             if (this.zoomLevel >= ZOOM_MIN)
@@ -205,8 +197,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="outputMode">Output mode of the out-gridview.</param>
-        /// <returns>A new ManagementList.</returns>
         private ManagementList CreateManagementList(string outputMode)
         {
             ManagementList newList = new ManagementList();
@@ -221,8 +211,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="outputMode">Output mode of the out-gridview.</param>
-        /// <returns>A new mainGrid.</returns>
         private Grid CreateMainGrid(string outputMode)
         {
             Grid mainGrid = new Grid();
@@ -244,12 +232,10 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <returns>A new buttonGrid.</returns>
         private Grid CreateButtonGrid()
         {
             Grid buttonGrid = new Grid();
 
-            //// This will allow OK and Cancel to have the same width
             buttonGrid.SetValue(Grid.IsSharedSizeScopeProperty, true);
             buttonGrid.ColumnDefinitions.Add(new ColumnDefinition());
             buttonGrid.ColumnDefinitions.Add(new ColumnDefinition());
@@ -260,7 +246,6 @@ namespace Microsoft.Management.UI.Internal
             buttonGrid.HorizontalAlignment = HorizontalAlignment.Right;
             buttonGrid.SetValue(Grid.RowProperty, 1);
 
-            //// This will add OK and Cancel button to buttonGrid.
             buttonGrid.Children.Add(CreateOKButton());
             buttonGrid.Children.Add(CreateCancelButton());
 
@@ -268,7 +253,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <returns>A new OK button.</returns>
         private Button CreateOKButton()
         {
             Button ok = new Button();
@@ -283,7 +267,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <returns>A new Cancel button.</returns>
         private Button CreateCancelButton()
         {
             Button cancel = new Button();
@@ -298,8 +281,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="sender">Event sender.</param>
-        /// <param name="e">Event arguments.</param>
         private void OK_Click(object sender, RoutedEventArgs e)
         {
             if (this.managementList.List.SelectedItems.Count != 0)
@@ -315,15 +296,12 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="sender">Event sender.</param>
-        /// <param name="e">Event arguments.</param>
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             this.gridViewWindow.Close();
         }
 
         
-        /// <returns>Selected items of the list.</returns>
         private List<PSObject> SelectedItems()
         {
             return this.selectedItems;
@@ -336,9 +314,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="propertyNames">An array of property names to add.</param>
-        /// <param name="displayNames">An array of display names to add.</param>
-        /// <param name="types">An array of types to add.</param>
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "The method is called using reflection.")]
         private void AddColumns(string[] propertyNames, string[] displayNames, Type[] types)
         {
@@ -421,7 +396,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="value">PSObject of comlet data.</param>
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "The method is called using reflection.")]
         private void AddItem(PSObject value)
         {
@@ -465,7 +439,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <returns>The status of GridView Window close or not.</returns>
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "The method is called using reflection.")]
         private bool GetWindowClosedStatus()
         {
@@ -478,7 +451,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <returns>The thrown and caught exception. It returns null if no exceptions were thrown by any previous method calls.</returns>
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "The method is called using reflection.")]
         private Exception GetLastException()
         {
@@ -499,8 +471,6 @@ namespace Microsoft.Management.UI.Internal
         #region Private methods
 
         
-        /// <param name="sender">The sender object.</param>
-        /// <param name="e">Event Args.</param>
         private void GridViewWindowClosed(object sender, EventArgs e)
         {
             if (this.closedEvent != null && !this.closedEvent.SafeWaitHandle.IsClosed)
@@ -519,8 +489,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="sender">The sender object.</param>
-        /// <param name="e">RoutedEvent Args.</param>
         private void GridViewWindowLoaded(object sender, RoutedEventArgs e)
         {
             // signal the main thread

@@ -549,39 +549,30 @@ namespace System.Management.Automation.Security
         [StructLayout(LayoutKind.Sequential)]
         internal struct CRYPT_OID_INFO
         {
-            /// DWORD->unsigned int
             public uint cbSize;
 
-            /// LPCSTR->CHAR*
             [MarshalAs(UnmanagedType.LPStr)]
             public string pszOID;
 
-            /// LPCWSTR->WCHAR*
             [MarshalAs(UnmanagedType.LPWStr)]
             public string pwszName;
 
-            /// DWORD->unsigned int
             public uint dwGroupId;
 
-            /// Anonymous_a3ae7823_8a1d_432c_bc07_a72b6fc6c7d8
             public Anonymous_a3ae7823_8a1d_432c_bc07_a72b6fc6c7d8 Union1;
 
-            /// CRYPT_DATA_BLOB->_CRYPTOAPI_BLOB
             public CRYPT_ATTR_BLOB ExtraInfo;
         }
 
         [StructLayout(LayoutKind.Explicit)]
         internal struct Anonymous_a3ae7823_8a1d_432c_bc07_a72b6fc6c7d8
         {
-            /// DWORD->unsigned int
             [FieldOffset(0)]
             public uint dwValue;
 
-            /// ALG_ID->unsigned int
             [FieldOffset(0)]
             public uint Algid;
 
-            /// DWORD->unsigned int
             [FieldOffset(0)]
             public uint dwLength;
         }
@@ -589,20 +580,16 @@ namespace System.Management.Automation.Security
         [StructLayout(LayoutKind.Sequential)]
         internal struct CRYPT_ATTR_BLOB
         {
-            /// DWORD->unsigned int
             public uint cbData;
 
-            /// BYTE*
             public System.IntPtr pbData;
         }
 
         [StructLayout(LayoutKind.Sequential)]
         internal struct CRYPT_DATA_BLOB
         {
-            /// DWORD->unsigned int
             public uint cbData;
 
-            /// BYTE*
             public System.IntPtr pbData;
         }
 
@@ -728,7 +715,6 @@ namespace System.Management.Automation.Security
 
         internal enum SIGNATURE_STATE
         {
-            /// SIGNATURE_STATE_UNSIGNED_MISSING -> 0
             SIGNATURE_STATE_UNSIGNED_MISSING = 0,
 
             SIGNATURE_STATE_UNSIGNED_UNSUPPORTED,
@@ -748,49 +734,36 @@ namespace System.Management.Automation.Security
 
         internal enum SIGNATURE_INFO_FLAGS
         {
-            /// SIF_NONE -> 0x0000
             SIF_NONE = 0,
 
-            /// SIF_AUTHENTICODE_SIGNED -> 0x0001
             SIF_AUTHENTICODE_SIGNED = 1,
 
-            /// SIF_CATALOG_SIGNED -> 0x0002
             SIF_CATALOG_SIGNED = 2,
 
-            /// SIF_VERSION_INFO -> 0x0004
             SIF_VERSION_INFO = 4,
 
-            /// SIF_CHECK_OS_BINARY -> 0x0800
             SIF_CHECK_OS_BINARY = 2048,
 
-            /// SIF_BASE_VERIFICATION -> 0x1000
             SIF_BASE_VERIFICATION = 4096,
 
-            /// SIF_CATALOG_FIRST -> 0x2000
             SIF_CATALOG_FIRST = 8192,
 
-            /// SIF_MOTW -> 0x4000
             SIF_MOTW = 16384,
         }
 
         internal enum SIGNATURE_INFO_AVAILABILITY
         {
-            /// SIA_DISPLAYNAME -> 0x0001
             SIA_DISPLAYNAME = 1,
 
-            /// SIA_PUBLISHERNAME -> 0x0002
             SIA_PUBLISHERNAME = 2,
 
-            /// SIA_MOREINFOURL -> 0x0004
             SIA_MOREINFOURL = 4,
 
-            /// SIA_HASH -> 0x0008
             SIA_HASH = 8,
         }
 
         internal enum SIGNATURE_INFO_TYPE
         {
-            /// SIT_UNKNOWN -> 0
             SIT_UNKNOWN = 0,
 
             SIT_AUTHENTICODE,
@@ -801,147 +774,109 @@ namespace System.Management.Automation.Security
         [StructLayout(LayoutKind.Sequential)]
         internal struct SIGNATURE_INFO
         {
-            /// DWORD->unsigned int
             internal uint cbSize;
 
-            /// SIGNATURE_STATE->Anonymous_7e0526d8_af30_47f9_9233_a77658d0f1e5
             internal SIGNATURE_STATE nSignatureState;
 
-            /// SIGNATURE_INFO_TYPE->Anonymous_27075e4b_faa5_4e57_ada0_6d49fae74187
             internal SIGNATURE_INFO_TYPE nSignatureType;
 
-            /// DWORD->unsigned int
             internal uint dwSignatureInfoAvailability;
 
-            /// DWORD->unsigned int
             internal uint dwInfoAvailability;
 
-            /// PWSTR->WCHAR*
             [MarshalAs(UnmanagedType.LPWStr)]
             internal string pszDisplayName;
 
-            /// DWORD->unsigned int
             internal uint cchDisplayName;
 
-            /// PWSTR->WCHAR*
             [MarshalAs(UnmanagedType.LPWStr)]
             internal string pszPublisherName;
 
-            /// DWORD->unsigned int
             internal uint cchPublisherName;
 
-            /// PWSTR->WCHAR*
             [MarshalAs(UnmanagedType.LPWStr)]
             internal string pszMoreInfoURL;
 
-            /// DWORD->unsigned int
             internal uint cchMoreInfoURL;
 
-            /// LPBYTE->BYTE*
             internal System.IntPtr prgbHash;
 
-            /// DWORD->unsigned int
             internal uint cbHash;
 
-            /// BOOL->int
             internal int fOSBinary;
         }
 
         [StructLayout(LayoutKind.Sequential)]
         internal struct CERT_INFO
         {
-            /// DWORD->unsigned int
             internal uint dwVersion;
 
-            /// CRYPT_INTEGER_BLOB->_CRYPTOAPI_BLOB
             internal CRYPT_ATTR_BLOB SerialNumber;
 
-            /// CRYPT_ALGORITHM_IDENTIFIER->_CRYPT_ALGORITHM_IDENTIFIER
             internal CRYPT_ALGORITHM_IDENTIFIER SignatureAlgorithm;
 
-            /// CERT_NAME_BLOB->_CRYPTOAPI_BLOB
             internal CRYPT_ATTR_BLOB Issuer;
 
-            /// FILETIME->_FILETIME
             internal FILETIME NotBefore;
 
-            /// FILETIME->_FILETIME
             internal FILETIME NotAfter;
 
-            /// CERT_NAME_BLOB->_CRYPTOAPI_BLOB
             internal CRYPT_ATTR_BLOB Subject;
 
-            /// CERT_PUBLIC_KEY_INFO->_CERT_PUBLIC_KEY_INFO
             internal CERT_PUBLIC_KEY_INFO SubjectPublicKeyInfo;
 
-            /// CRYPT_BIT_BLOB->_CRYPT_BIT_BLOB
             internal CRYPT_BIT_BLOB IssuerUniqueId;
 
-            /// CRYPT_BIT_BLOB->_CRYPT_BIT_BLOB
             internal CRYPT_BIT_BLOB SubjectUniqueId;
 
-            /// DWORD->unsigned int
             internal uint cExtension;
 
-            /// PCERT_EXTENSION->_CERT_EXTENSION*
             internal System.IntPtr rgExtension;
         }
 
         [StructLayout(LayoutKind.Sequential)]
         internal struct CRYPT_ALGORITHM_IDENTIFIER
         {
-            /// LPSTR->CHAR*
             [MarshalAs(UnmanagedType.LPStr)]
             internal string pszObjId;
 
-            /// CRYPT_OBJID_BLOB->_CRYPTOAPI_BLOB
             internal CRYPT_ATTR_BLOB Parameters;
         }
 
         [StructLayout(LayoutKind.Sequential)]
         internal struct FILETIME
         {
-            /// DWORD->unsigned int
             internal uint dwLowDateTime;
 
-            /// DWORD->unsigned int
             internal uint dwHighDateTime;
         }
 
         [StructLayout(LayoutKind.Sequential)]
         internal struct CERT_PUBLIC_KEY_INFO
         {
-            /// CRYPT_ALGORITHM_IDENTIFIER->_CRYPT_ALGORITHM_IDENTIFIER
             internal CRYPT_ALGORITHM_IDENTIFIER Algorithm;
 
-            /// CRYPT_BIT_BLOB->_CRYPT_BIT_BLOB
             internal CRYPT_BIT_BLOB PublicKey;
         }
 
         [StructLayout(LayoutKind.Sequential)]
         internal struct CRYPT_BIT_BLOB
         {
-            /// DWORD->unsigned int
             internal uint cbData;
 
-            /// BYTE*
             internal System.IntPtr pbData;
 
-            /// DWORD->unsigned int
             internal uint cUnusedBits;
         }
 
         [StructLayout(LayoutKind.Sequential)]
         internal struct CERT_EXTENSION
         {
-            /// LPSTR->CHAR*
             [MarshalAs(UnmanagedType.LPStr)]
             internal string pszObjId;
 
-            /// BOOL->int
             internal int fCritical;
 
-            /// CRYPT_OBJID_BLOB->_CRYPTOAPI_BLOB
             internal CRYPT_ATTR_BLOB Value;
         }
     }
@@ -979,11 +914,6 @@ namespace System.Management.Automation.Security
     // SAFER native methods
     internal static partial class NativeMethods
     {
-        /// Return Type: BOOL->int
-        ///dwNumProperties: DWORD->unsigned int
-        ///pCodeProperties: PSAFER_CODE_PROPERTIES->_SAFER_CODE_PROPERTIES*
-        ///pLevelHandle: SAFER_LEVEL_HANDLE*
-        ///lpReserved: LPVOID->void*
         [DllImport("advapi32.dll", EntryPoint = "SaferIdentifyLevel", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool SaferIdentifyLevel(
@@ -995,12 +925,6 @@ namespace System.Management.Automation.Security
             [MarshalAs(UnmanagedType.LPWStr)]
             string bucket);
 
-        /// Return Type: BOOL->int
-        ///LevelHandle: SAFER_LEVEL_HANDLE->SAFER_LEVEL_HANDLE__*
-        ///InAccessToken: HANDLE->void*
-        ///OutAccessToken: PHANDLE->HANDLE*
-        ///dwFlags: DWORD->unsigned int
-        ///lpReserved: LPVOID->void*
         [DllImport("advapi32.dll", EntryPoint = "SaferComputeTokenFromLevel", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool SaferComputeTokenFromLevel(
@@ -1012,14 +936,10 @@ namespace System.Management.Automation.Security
             uint dwFlags,
             System.IntPtr lpReserved);
 
-        /// Return Type: BOOL->int
-        ///hLevelHandle: SAFER_LEVEL_HANDLE->SAFER_LEVEL_HANDLE__*
         [DllImport("advapi32.dll", EntryPoint = "SaferCloseLevel")]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool SaferCloseLevel([In] IntPtr hLevelHandle);
 
-        /// Return Type: BOOL->int
-        ///hObject: HANDLE->void*
         [DllImport(PinvokeDllNames.CloseHandleDllName, EntryPoint = "CloseHandle")]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool CloseHandle([In] System.IntPtr hObject);
@@ -1028,60 +948,45 @@ namespace System.Management.Automation.Security
     [StructLayout(LayoutKind.Sequential)]
     internal struct SAFER_CODE_PROPERTIES
     {
-        /// DWORD->unsigned int
         public uint cbSize;
 
-        /// DWORD->unsigned int
         public uint dwCheckFlags;
 
-        /// LPCWSTR->WCHAR*
         [MarshalAs(UnmanagedType.LPWStr)]
         public string ImagePath;
 
-        /// HANDLE->void*
         public System.IntPtr hImageFileHandle;
 
-        /// DWORD->unsigned int
         public uint UrlZoneId;
 
-        /// BYTE[SAFER_MAX_HASH_SIZE]
         [MarshalAs(
             UnmanagedType.ByValArray,
             SizeConst = NativeConstants.SAFER_MAX_HASH_SIZE,
             ArraySubType = UnmanagedType.I1)]
         public byte[] ImageHash;
 
-        /// DWORD->unsigned int
         public uint dwImageHashSize;
 
-        /// LARGE_INTEGER->_LARGE_INTEGER
         public LARGE_INTEGER ImageSize;
 
-        /// ALG_ID->unsigned int
         public uint HashAlgorithm;
 
-        /// LPBYTE->BYTE*
         public System.IntPtr pByteBlock;
 
-        /// HWND->HWND__*
         public System.IntPtr hWndParent;
 
-        /// DWORD->unsigned int
         public uint dwWVTUIChoice;
     }
 
     [StructLayout(LayoutKind.Explicit)]
     internal struct LARGE_INTEGER
     {
-        /// Anonymous_9320654f_2227_43bf_a385_74cc8c562686
         [FieldOffset(0)]
         public Anonymous_9320654f_2227_43bf_a385_74cc8c562686 Struct1;
 
-        /// Anonymous_947eb392_1446_4e25_bbd4_10e98165f3a9
         [FieldOffset(0)]
         public Anonymous_947eb392_1446_4e25_bbd4_10e98165f3a9 u;
 
-        /// LONGLONG->__int64
         [FieldOffset(0)]
         public long QuadPart;
     }
@@ -1089,27 +994,22 @@ namespace System.Management.Automation.Security
     [StructLayout(LayoutKind.Sequential)]
     internal struct HWND__
     {
-        /// int
         public int unused;
     }
 
     [StructLayout(LayoutKind.Sequential)]
     internal struct Anonymous_9320654f_2227_43bf_a385_74cc8c562686
     {
-        /// DWORD->unsigned int
         public uint LowPart;
 
-        /// LONG->int
         public int HighPart;
     }
 
     [StructLayout(LayoutKind.Sequential)]
     internal struct Anonymous_947eb392_1446_4e25_bbd4_10e98165f3a9
     {
-        /// DWORD->unsigned int
         public uint LowPart;
 
-        /// LONG->int
         public int HighPart;
     }
 

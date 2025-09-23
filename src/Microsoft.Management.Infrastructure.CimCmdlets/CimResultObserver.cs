@@ -26,7 +26,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
     internal class CimResultContext
     {
         
-        /// <param name="ErrorSource"></param>
         internal CimResultContext(object ErrorSource)
         {
             this.ErrorSource = ErrorSource;
@@ -42,9 +41,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
     internal abstract class AsyncResultEventArgsBase : EventArgs
     {
         
-        /// <param name="session"></param>
-        /// <param name="observable"></param>
-        /// <param name="resultType"></param>
         protected AsyncResultEventArgsBase(
             CimSession session,
             IObservable<object> observable,
@@ -56,10 +52,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="session"></param>
-        /// <param name="observable"></param>
-        /// <param name="resultType"></param>
-        /// <param name="context"></param>
         protected AsyncResultEventArgsBase(
             CimSession session,
             IObservable<object> observable,
@@ -87,8 +79,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
     internal class AsyncResultCompleteEventArgs : AsyncResultEventArgsBase
     {
         
-        /// <param name="session"><see cref="CimSession"/> object.</param>
-        /// <param name="cancellationDisposable"></param>
         public AsyncResultCompleteEventArgs(
             CimSession session,
             IObservable<object> observable)
@@ -101,9 +91,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
     internal class AsyncResultObjectEventArgs : AsyncResultEventArgsBase
     {
         
-        /// <param name="session"></param>
-        /// <param name="observable"></param>
-        /// <param name="resultObject"></param>
         public AsyncResultObjectEventArgs(
             CimSession session,
             IObservable<object> observable,
@@ -120,9 +107,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
     internal class AsyncResultErrorEventArgs : AsyncResultEventArgsBase
     {
         
-        /// <param name="session"></param>
-        /// <param name="observable"></param>
-        /// <param name="error"></param>
         public AsyncResultErrorEventArgs(
             CimSession session,
             IObservable<object> observable,
@@ -133,10 +117,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="session"></param>
-        /// <param name="observable"></param>
-        /// <param name="error"></param>
-        /// <param name="context"></param>
         public AsyncResultErrorEventArgs(
             CimSession session,
             IObservable<object> observable,
@@ -153,15 +133,12 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
     #region CimResultObserver
     
-    /// <typeparam name="T">object type</typeparam>
     internal class CimResultObserver<T> : IObserver<T>
     {
         
         public event EventHandler<AsyncResultEventArgsBase> OnNewResult;
 
         
-        /// <param name="session"><see cref="CimSession"/> object that issued the operation.</param>
-        /// <param name="observable">Operation that can be observed.</param>
         public CimResultObserver(CimSession session, IObservable<object> observable)
         {
             this.CurrentSession = session;
@@ -169,8 +146,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="session"><see cref="CimSession"/> object that issued the operation.</param>
-        /// <param name="observable">Operation that can be observed.</param>
         public CimResultObserver(CimSession session,
             IObservable<object> observable,
             CimResultContext cimResultContext)
@@ -201,7 +176,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="error">Error object.</param>
         public virtual void OnError(Exception error)
         {
             try
@@ -218,7 +192,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="value"></param>
         protected void OnNextCore(object value)
         {
             DebugHelper.WriteLogEx("value = {0}.", 1, value);
@@ -236,7 +209,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="value">Result object.</param>
         public virtual void OnNext(T value)
         {
             DebugHelper.WriteLogEx("value = {0}.", 1, value);
@@ -266,16 +238,12 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
     internal class CimSubscriptionResultObserver : CimResultObserver<CimSubscriptionResult>
     {
         
-        /// <param name="session"></param>
-        /// <param name="observable"></param>
         public CimSubscriptionResultObserver(CimSession session, IObservable<object> observable)
             : base(session, observable)
         {
         }
 
         
-        /// <param name="session"></param>
-        /// <param name="observable"></param>
         public CimSubscriptionResultObserver(
             CimSession session,
             IObservable<object> observable,
@@ -285,7 +253,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="value"></param>
         public override void OnNext(CimSubscriptionResult value)
         {
             DebugHelper.WriteLogEx();
@@ -297,17 +264,12 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
     internal class CimMethodResultObserver : CimResultObserver<CimMethodResultBase>
     {
         
-        /// <param name="session"></param>
-        /// <param name="observable"></param>
         public CimMethodResultObserver(CimSession session, IObservable<object> observable)
             : base(session, observable)
         {
         }
 
         
-        /// <param name="session"></param>
-        /// <param name="observable"></param>
-        /// <param name="context"></param>
         public CimMethodResultObserver(
             CimSession session,
             IObservable<object> observable,
@@ -317,7 +279,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="value"></param>
         public override void OnNext(CimMethodResultBase value)
         {
             DebugHelper.WriteLogEx();
@@ -376,15 +337,12 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
     internal class IgnoreResultObserver : CimResultObserver<CimInstance>
     {
         
-        /// <param name="session"></param>
-        /// <param name="observable"></param>
         public IgnoreResultObserver(CimSession session, IObservable<object> observable)
             : base(session, observable)
         {
         }
 
         
-        /// <param name="value"></param>
         public override void OnNext(CimInstance value)
         {
             DebugHelper.WriteLogEx();

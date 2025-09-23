@@ -21,68 +21,9 @@ using System.Runtime.Serialization;
 namespace System.Management.Automation
 {
     
-    /// <remarks>
-    /// This class track a block of script in a compiled form. It is also
-    /// used for direct invocation of the script block.
-    ///
-    /// 1. Overview
-    ///
-    /// Script block comes in two forms,
-    ///
-    /// a. Full form (cmdlet form)
-    ///
-    /// This comes in following format
-    ///
-    /// {
-    ///     begin
-    ///     {
-    ///         statementlist;
-    ///     }
-    ///     process
-    ///     {
-    ///         statementlist;
-    ///     }
-    ///     end
-    ///     {
-    ///         statementlist;
-    ///     }
-    /// }
-    ///
-    /// This form is used for running the script in a pipeline like
-    /// a cmdlet.
-    ///
-    /// b. Simple form
-    ///
-    /// This comes in following format
-    ///
-    /// {
-    ///     statementlist;
-    /// }
-    ///
-    /// 2. Script block execution
-    ///
-    /// For the full form (or cmdlet form) of script block, the script
-    /// block itself is part of a pipeline. Its execution is handled through
-    /// ScriptCommandProcessor, which involves execution of begin/process/end
-    /// blocks like a cmdlet. If a scriptblock in simple form is used in
-    /// a pipeline, its execution is done through ScriptCommandProcessor
-    /// also, with some of begin/process/end blocks default to be empty.
-    ///
-    /// A script block in simple form can be directly invoked (outside
-    /// of a pipeline context). For example,
-    ///
-    ///     {"text"}.Invoke()
-    ///
-    /// A scriptblock can be directly invoked internally or externally through
-    /// runspace API.
-    ///
-    /// This class will handle the logic for direct invocation of script blocks.
-    /// </remarks>
     public partial class ScriptBlock
     {
         
-        /// <param name="context">Engine context for this script block.</param>
-        /// <param name="script">The string to compile.</param>
         internal static ScriptBlock Create(ExecutionContext context, string script)
         {
             ScriptBlock sb = Create(context.Engine.EngineParser, null, script);
@@ -95,7 +36,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="script">The string to compile.</param>
         public static ScriptBlock Create(string script) => Create(
             parser: new Parser(),
             fileName: null,
@@ -105,7 +45,6 @@ namespace System.Management.Automation
             => new ScriptBlock(new CompiledScriptBlockData(script, isProductCode)) { DebuggerHidden = true };
 
         
-        /// <returns></returns>
         public ScriptBlock GetNewClosure()
         {
             PSModuleInfo m = new PSModuleInfo(true);
@@ -114,43 +53,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <remarks>
-        /// Some ScriptBlocks are too complicated to be converted into a PowerShell object.
-        /// For those ScriptBlocks a <see cref="ScriptBlockToPowerShellNotSupportedException"/> is thrown.
-        ///
-        /// ScriptBlock cannot be converted into a PowerShell object if
-        /// - It contains more than one statement
-        /// - It references variables undeclared in <c>param(...)</c> block
-        /// - It uses redirection to a file
-        /// - It uses dot sourcing
-        /// - Command names can't be resolved (i.e. if an element of a pipeline is another scriptblock)
-        ///
-        /// Declaration of variables in a <c>param(...)</c> block is enforced,
-        /// because undeclared variables are assumed to be variables from a remoting server.
-        /// Since we need to fully evaluate parameters of commands of a PowerShell object's
-        /// we reject all variables references that refer to a variable from a remoting server.
-        /// </remarks>
-        /// <param name="args">
-        /// arguments for the ScriptBlock (providing values for variables used within the ScriptBlock);
-        /// can be null
-        /// </param>
-        /// <returns>
-        /// PowerShell object representing the pipeline contained in this ScriptBlock
-        /// </returns>
-        /// <exception cref="ScriptBlockToPowerShellNotSupportedException">
-        /// Thrown when this ScriptBlock cannot be expressed as a PowerShell object.
-        /// For example thrown when there is more than one statement, if there
-        /// are undeclared variables, if redirection to a file is used.
-        /// </exception>
-        /// <exception cref="RuntimeException">
-        /// Thrown when evaluation of command arguments results in an exception.
-        /// Might depend on the value of $errorActionPreference variable.
-        /// For example trying to translate the following ScriptBlock will result in this exception:
-        /// <c>$errorActionPreference = "stop"; $sb = { get-foo $( throw ) }; $sb.GetPowerShell()</c>
-        /// </exception>
-        /// <exception cref="InvalidOperationException">
-        /// Thrown when there is no ExecutionContext associated with this ScriptBlock object.
-        /// </exception>
         public PowerShell GetPowerShell(params object[] args) => GetPowerShellImpl(
             context: LocalPipeline.GetExecutionContextFromTLS(),
             variables: null,
@@ -160,14 +62,6 @@ namespace System.Management.Automation
             args);
 
         
-        /// <param name="isTrustedInput">
-        /// Specifies whether the scriptblock being converted comes from a trusted source.
-        /// The default is False.
-        /// </param>
-        /// <param name="args">
-        /// arguments for the ScriptBlock (providing values for variables used within the ScriptBlock);
-        /// can be null
-        /// </param>
         public PowerShell GetPowerShell(bool isTrustedInput, params object[] args)
             => GetPowerShellImpl(
                 context: LocalPipeline.GetExecutionContextFromTLS(),
@@ -178,32 +72,6 @@ namespace System.Management.Automation
                 args);
 
         
-        /// <param name="variables">
-        /// variables to be supplied as context to the ScriptBlock (providing values for variables explicitly
-        /// requested by the 'using:' prefix.
-        /// </param>
-        /// <param name="args">
-        /// arguments for the ScriptBlock (providing values for variables used within the ScriptBlock);
-        /// can be null
-        /// </param>
-        /// <returns>
-        /// PowerShell object representing the pipeline contained in this ScriptBlock
-        /// </returns>
-        /// <exception cref="ScriptBlockToPowerShellNotSupportedException">
-        /// Thrown when this ScriptBlock cannot be expressed as a PowerShell object.
-        /// For example thrown when there is more than one statement, if there
-        /// are undeclared variables, if redirection to a file is used.
-        /// </exception>
-        /// <exception cref="RuntimeException">
-        /// Thrown when evaluation of command arguments results in an exception.
-        /// Might depend on the value of $errorActionPreference variable.
-        /// For example trying to translate the following ScriptBlock will result in this exception:
-        /// <c>$errorActionPreference = "stop"; $sb = { get-foo $( throw ) }; $sb.GetPowerShell()</c>
-        /// </exception>
-        /// <exception cref="InvalidOperationException">
-        /// Thrown when there is no ExecutionContext associated with this ScriptBlock object and no
-        /// variables are supplied.
-        /// </exception>
         public PowerShell GetPowerShell(Dictionary<string, object> variables, params object[] args)
         {
             ExecutionContext context = LocalPipeline.GetExecutionContextFromTLS();
@@ -219,35 +87,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="variables">
-        /// variables to be supplied as context to the ScriptBlock (providing values for variables explicitly
-        /// requested by the 'using:' prefix.
-        /// </param>
-        /// <param name="usingVariables">
-        /// key-value pairs from the <para>variables</para> that actually get used by the 'using:' prefix variables
-        /// </param>
-        /// <param name="args">
-        /// arguments for the ScriptBlock (providing values for variables used within the ScriptBlock);
-        /// can be null
-        /// </param>
-        /// <returns>
-        /// PowerShell object representing the pipeline contained in this ScriptBlock
-        /// </returns>
-        /// <exception cref="ScriptBlockToPowerShellNotSupportedException">
-        /// Thrown when this ScriptBlock cannot be expressed as a PowerShell object.
-        /// For example thrown when there is more than one statement, if there
-        /// are undeclared variables, if redirection to a file is used.
-        /// </exception>
-        /// <exception cref="RuntimeException">
-        /// Thrown when evaluation of command arguments results in an exception.
-        /// Might depend on the value of $errorActionPreference variable.
-        /// For example trying to translate the following ScriptBlock will result in this exception:
-        /// <c>$errorActionPreference = "stop"; $sb = { get-foo $( throw ) }; $sb.GetPowerShell()</c>
-        /// </exception>
-        /// <exception cref="InvalidOperationException">
-        /// Thrown when there is no ExecutionContext associated with this ScriptBlock object and no
-        /// variables are supplied.
-        /// </exception>
         public PowerShell GetPowerShell(
             Dictionary<string, object> variables,
             out Dictionary<string, object> usingVariables,
@@ -255,39 +94,6 @@ namespace System.Management.Automation
             => GetPowerShell(variables, out usingVariables, isTrustedInput: false, args);
 
         
-        /// <param name="variables">
-        /// variables to be supplied as context to the ScriptBlock (providing values for variables explicitly
-        /// requested by the 'using:' prefix.
-        /// </param>
-        /// <param name="usingVariables">
-        /// key-value pairs from the <para>variables</para> that actually get used by the 'using:' prefix variables
-        /// </param>
-        /// <param name="args">
-        /// arguments for the ScriptBlock (providing values for variables used within the ScriptBlock);
-        /// can be null
-        /// </param>
-        /// <param name="isTrustedInput">
-        /// Specifies whether the scriptblock being converted comes from a trusted source.
-        /// The default is False.
-        /// </param>
-        /// <returns>
-        /// PowerShell object representing the pipeline contained in this ScriptBlock
-        /// </returns>
-        /// <exception cref="ScriptBlockToPowerShellNotSupportedException">
-        /// Thrown when this ScriptBlock cannot be expressed as a PowerShell object.
-        /// For example thrown when there is more than one statement, if there
-        /// are undeclared variables, if redirection to a file is used.
-        /// </exception>
-        /// <exception cref="RuntimeException">
-        /// Thrown when evaluation of command arguments results in an exception.
-        /// Might depend on the value of $errorActionPreference variable.
-        /// For example trying to translate the following ScriptBlock will result in this exception:
-        /// <c>$errorActionPreference = "stop"; $sb = { get-foo $( throw ) }; $sb.GetPowerShell()</c>
-        /// </exception>
-        /// <exception cref="InvalidOperationException">
-        /// Thrown when there is no ExecutionContext associated with this ScriptBlock object and no
-        /// variables are supplied.
-        /// </exception>
         public PowerShell GetPowerShell(
             Dictionary<string, object> variables,
             out Dictionary<string, object> usingVariables,
@@ -323,7 +129,6 @@ namespace System.Management.Automation
                 args);
 
         
-        /// <returns>A steppable pipeline object.</returns>
         [SuppressMessage(
             "Microsoft.Naming",
             "CA1704:IdentifiersShouldBeSpelledCorrectly",
@@ -333,7 +138,6 @@ namespace System.Management.Automation
             => GetSteppablePipelineImpl(commandOrigin: CommandOrigin.Internal, args: null);
 
         
-        /// <returns>A steppable pipeline object.</returns>
         [SuppressMessage(
             "Microsoft.Naming",
             "CA1704:IdentifiersShouldBeSpelledCorrectly",
@@ -343,7 +147,6 @@ namespace System.Management.Automation
             => GetSteppablePipelineImpl(commandOrigin, args: null);
 
         
-        /// <returns>A steppable pipeline object.</returns>
         [SuppressMessage(
             "Microsoft.Naming",
             "CA1704:IdentifiersShouldBeSpelledCorrectly",
@@ -353,19 +156,10 @@ namespace System.Management.Automation
             => GetSteppablePipelineImpl(commandOrigin, args);
 
         
-        /// <param name="args">The arguments to this script.</param>
-        /// <returns>The object(s) generated during the execution of
-        /// the script block returned as a collection of PSObjects.</returns>
-        /// <exception cref="RuntimeException">Thrown if a script runtime exceptionexception occurred.</exception>
-        /// <exception cref="FlowControlException">An internal (non-public) exception from a flow control statement.</exception>
         public Collection<PSObject> Invoke(params object[] args) =>
             DoInvoke(dollarUnder: AutomationNull.Value, input: AutomationNull.Value, args);
 
         
-        /// <param name="functionsToDefine">A dictionary of functions to define.</param>
-        /// <param name="variablesToDefine">A list of variables to define.</param>
-        /// <param name="args">The arguments to the actual scriptblock.</param>
-        /// <returns></returns>
         public Collection<PSObject> InvokeWithContext(
             IDictionary functionsToDefine,
             List<PSVariable> variablesToDefine,
@@ -400,10 +194,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="functionsToDefine">A dictionary of functions to define.</param>
-        /// <param name="variablesToDefine">A list of variables to define.</param>
-        /// <param name="args">The arguments to the actual scriptblock.</param>
-        /// <returns></returns>
         public Collection<PSObject> InvokeWithContext(
             Dictionary<string, ScriptBlock> functionsToDefine,
             List<PSVariable> variablesToDefine,
@@ -459,11 +249,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="args">The arguments to pass to this scriptblock.</param>
-        /// <returns>The object(s) generated during the execution of the
-        /// script block. They may or may not be wrapped in PSObject. It's up to the caller to check.</returns>
-        /// <exception cref="RuntimeException">Thrown if a script runtime exceptionexception occurred.</exception>
-        /// <exception cref="FlowControlException">An internal (non-public) exception from a flow control statement.</exception>
         public object InvokeReturnAsIs(params object[] args)
             => DoInvokeReturnAsIs(
                 useLocalScope: true,
@@ -577,9 +362,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <remarks>
-        /// This does normal array reduction in the case of a one-element array.
-        /// </remarks>
         internal static object GetRawResult(List<object> result, bool wrapToPSObject)
         {
             switch (result.Count)
@@ -740,9 +522,6 @@ namespace System.Management.Automation
         #endregion
 
         
-        /// <exception cref="InvalidOperationException">
-        /// An attempt was made to use the scriptblock outside the engine.
-        /// </exception>
         internal ExecutionContext GetContextFromTLS()
         {
             ExecutionContext context = LocalPipeline.GetExecutionContextFromTLS();
@@ -766,19 +545,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="dollarUnder">
-        /// The value of the $_ variable for the script block. If AutomationNull.Value,
-        /// the $_ variable is not created.
-        /// </param>
-        /// <param name="input">
-        /// The value of the $input variable for the script block. If AutomationNull.Value,
-        /// the $input variable is not created.
-        /// </param>
-        /// <param name="args">The arguments to this script.</param>
-        /// <returns>The object(s) generated during the execution of
-        /// the script block returned as a collection of PSObjects.</returns>
-        /// <exception cref="RuntimeException">A script exception occurred.</exception>
-        /// <exception cref="FlowControlException">Internal exception from a flow control statement.</exception>
         internal Collection<PSObject> DoInvoke(object dollarUnder, object input, object[] args)
         {
             List<object> result = new List<object>();
@@ -796,8 +562,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="result"></param>
-        /// <returns></returns>
         private static Collection<PSObject> GetWrappedResult(List<object> result)
         {
             if (result == null || result.Count == 0)
@@ -815,22 +579,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="useLocalScope"></param>
-        /// <param name="errorHandlingBehavior"></param>
-        /// <param name="dollarUnder">
-        ///   The value of the $_ variable for the script block. If AutomationNull.Value,
-        ///   the $_ variable is not created.
-        /// </param>
-        /// <param name="input">
-        ///   The value of the $input variable for the script block. If AutomationNull.Value,
-        ///   the $input variable is not created.
-        /// </param>
-        /// <param name="scriptThis"></param>
-        /// <param name="args">The arguments to this script.</param>
-        /// <returns>The object(s) generated during the execution of
-        /// the script block returned as a collection of PSObjects.</returns>
-        /// <exception cref="RuntimeException">A script exception occurred.</exception>
-        /// <exception cref="FlowControlException">Internal exception from a flow control statement.</exception>
         internal object DoInvokeReturnAsIs(
             bool useLocalScope,
             ErrorHandlingBehavior errorHandlingBehavior,
@@ -1021,12 +769,9 @@ namespace System.Management.Automation
         private bool _expectInput;
 
         
-        /// <param name="expectInput"><see langword="true"/> if you plan to write input into this pipe; <see langword="false"/> otherwise.</param>
         public void Begin(bool expectInput) => Begin(expectInput, commandRuntime: (ICommandRuntime)null);
 
         
-        /// <param name="expectInput"><see langword="true"/> if you plan to write input into this pipe; <see langword="false"/> otherwise.</param>
-        /// <param name="contextToRedirectTo">Context used to figure out how to route the output and errors.</param>
         public void Begin(bool expectInput, EngineIntrinsics contextToRedirectTo)
         {
             ArgumentNullException.ThrowIfNull(contextToRedirectTo);
@@ -1038,7 +783,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="command">The command you're calling this from (i.e. instance of PSCmdlet or value of $PSCmdlet variable).</param>
         public void Begin(InternalCommand command)
         {
             if (command is null || command.MyInvocation is null)
@@ -1084,8 +828,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="input">The object to process.</param>
-        /// <returns>A collection of 0 or more result objects.</returns>
         public Array Process(object input)
         {
             try
@@ -1107,8 +849,6 @@ namespace System.Management.Automation
             }
         }
         
-        /// <param name="input">The input object to process.</param>
-        /// <returns></returns>
         public Array Process(PSObject input)
         {
             try
@@ -1131,7 +871,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <returns>The result of the execution.</returns>
         public Array Process()
         {
             try
@@ -1163,18 +902,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <remarks>
-        /// <para>
-        /// The way we handle 'Clean' blocks in a steppable pipeline makes sure that:</para>
-        /// <para>1. The 'Clean' blocks get to run if any exception is thrown from 'Begin/Process/End'.</para>
-        /// <para>2. The 'Clean' blocks get to run if 'End' finished successfully.</para>
-        /// <para>
-        /// However, this is not enough for a steppable pipeline, because the function, where the steppable
-        /// pipeline gets used, may fail (think about a proxy function). And that may lead to the situation
-        /// where "no exception was thrown from the steppable pipeline" but "the steppable pipeline didn't
-        /// run to the end". In that case, 'Clean' won't run unless it's triggered explicitly on the steppable
-        /// pipeline. This method allows a user to do that from the 'Clean' block of the proxy function.</para>
-        /// </remarks>
         public void Clean()
         {
             if (_pipeline.Commands is null)
@@ -1228,25 +955,18 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="message">The exception's message.</param>
         public ScriptBlockToPowerShellNotSupportedException(string message)
             : base(message)
         {
         }
 
         
-        /// <param name="message">The exception's message.</param>
-        /// <param name="innerException">The exception's inner exception.</param>
         public ScriptBlockToPowerShellNotSupportedException(string message, Exception innerException)
             : base(message, innerException)
         {
         }
 
         
-        /// <param name="errorId">String that uniquely identifies each thrown Exception.</param>
-        /// <param name="innerException">The inner exception.</param>
-        /// <param name="message">The error message.</param>
-        /// <param name="arguments">Arguments to the resource string.</param>
         internal ScriptBlockToPowerShellNotSupportedException(
             string errorId,
             Exception innerException,
@@ -1257,8 +977,6 @@ namespace System.Management.Automation
 
         #region Serialization
         
-        /// <param name="info">Serialization information.</param>
-        /// <param name="context">Streaming context.</param>
         [Obsolete("Legacy serialization support is deprecated since .NET 8", DiagnosticId = "SYSLIB0051")]
         protected ScriptBlockToPowerShellNotSupportedException(SerializationInfo info, StreamingContext context)
         {
@@ -1274,25 +992,6 @@ namespace System.Management.Automation
     internal sealed class ScriptBlockInvocationEventArgs : EventArgs
     {
         
-        /// <param name="scriptBlock">The scriptblock to invoke
-        /// </param>
-        /// /// <param name="useLocalScope"></param>
-        /// <param name="errorHandlingBehavior"></param>
-        /// <param name="dollarUnder">
-        ///   The value of the $_ variable for the script block. If AutomationNull.Value,
-        ///   the $_ variable is not created.
-        /// </param>
-        /// <param name="input">
-        ///   The value of the $input variable for the script block. If AutomationNull.Value,
-        ///   the $input variable is not created.
-        /// </param>
-        /// <param name="scriptThis"></param>
-        /// <param name="outputPipe">The output pipe which has the results of the invocation
-        /// </param>
-        /// <param name="invocationInfo">The information about current state of the runspace.</param>
-        /// <param name="args">The arguments to this script.</param>
-        /// <exception cref="ArgumentNullException">ScriptBlock is null
-        /// </exception>
         internal ScriptBlockInvocationEventArgs(
             ScriptBlock scriptBlock,
             bool useLocalScope,

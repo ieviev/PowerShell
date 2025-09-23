@@ -94,10 +94,6 @@ namespace Microsoft.Management.UI.Internal
         public abstract void StopFilter();
 
         
-        /// <returns>
-        /// The FilterExpression composed of FilterExpressions returned from the
-        /// registered providers.
-        /// </returns>
         public FilterExpressionNode FilterExpression
         {
             get
@@ -117,9 +113,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="provider">
-        /// The provider to add.
-        /// </param>
         public void AddFilterExpressionProvider(IFilterExpressionProvider provider)
         {
             ArgumentNullException.ThrowIfNull(provider);
@@ -129,9 +122,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="provider">
-        /// The provider to remove.
-        /// </param>
         public void RemoveFilterExpressionProvider(IFilterExpressionProvider provider)
         {
             ArgumentNullException.ThrowIfNull(provider);
@@ -143,9 +133,6 @@ namespace Microsoft.Management.UI.Internal
         #region NotifyPropertyChanged
 
         
-        /// <param name="propertyName">
-        /// The propertyName which has changed.
-        /// </param>
         protected void NotifyPropertyChanged(string propertyName)
         {
             Debug.Assert(!string.IsNullOrEmpty(propertyName), "propertyName is not null");

@@ -18,62 +18,33 @@ namespace System.Management.Automation
         #region Provider api
 
         
-        /// <param name="logContext"></param>
-        /// <param name="eventId"></param>
-        /// <param name="exception"></param>
-        /// <param name="additionalInfo"></param>
         internal abstract void LogEngineHealthEvent(LogContext logContext, int eventId, Exception exception, Dictionary<string, string> additionalInfo);
 
         
-        /// <param name="logContext"></param>
-        /// <param name="newState"></param>
-        /// <param name="previousState"></param>
         internal abstract void LogEngineLifecycleEvent(LogContext logContext, EngineState newState, EngineState previousState);
 
         
-        /// <param name="logContext"></param>
-        /// <param name="exception"></param>
         internal abstract void LogCommandHealthEvent(LogContext logContext, Exception exception);
 
         
-        /// <param name="getLogContext"></param>
-        /// <param name="newState"></param>
         internal abstract void LogCommandLifecycleEvent(Func<LogContext> getLogContext, CommandState newState);
 
         
-        /// <param name="logContext"></param>
-        /// <param name="pipelineExecutionDetail"></param>
         internal abstract void LogPipelineExecutionDetailEvent(LogContext logContext, List<string> pipelineExecutionDetail);
 
         
-        /// <param name="logContext"></param>
-        /// <param name="providerName"></param>
-        /// <param name="exception"></param>
         internal abstract void LogProviderHealthEvent(LogContext logContext, string providerName, Exception exception);
 
         
-        /// <param name="logContext"></param>
-        /// <param name="providerName"></param>
-        /// <param name="newState"></param>
         internal abstract void LogProviderLifecycleEvent(LogContext logContext, string providerName, ProviderState newState);
 
         
-        /// <param name="logContext"></param>
-        /// <param name="variableName"></param>
-        /// <param name="value"></param>
-        /// <param name="previousValue"></param>
         internal abstract void LogSettingsEvent(LogContext logContext, string variableName, string value, string previousValue);
 
         
-        /// <param name="state">This the action performed in AmsiUtil class, like init, scan, etc.</param>
-        /// <param name="context">The amsiContext handled - Session pair.</param>
         internal abstract void LogAmsiUtilStateEvent(string state, string context);
 
         
-        /// <param name="queryName">Name of the WDAC query.</param>
-        /// <param name="fileName">Name of script file for policy query. Can be null value.</param>
-        /// <param name="querySuccess">Query call succeed code.</param>
-        /// <param name="queryResult">Result code of WDAC query.</param>
         internal abstract void LogWDACQueryEvent(
             string queryName,
             string fileName,
@@ -81,16 +52,12 @@ namespace System.Management.Automation
             int queryResult);
 
         
-        /// <param name="title">Title of WDAC audit event.</param>
-        /// <param name="message">WDAC audit event message.</param>
-        /// <param name="fqid">FullyQualifiedId of WDAC audit event.</param>
         internal abstract void LogWDACAuditEvent(
             string title,
             string message,
             string fqid);
 
         
-        /// <returns></returns>
         internal virtual bool UseLoggingVariables()
         {
             return true;
@@ -124,8 +91,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="context"></param>
-        /// <returns></returns>
         protected static string GetPSLogUserData(ExecutionContext context)
         {
             if (context == null)
@@ -144,8 +109,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="sb">String builder.</param>
-        /// <param name="except">Exception.</param>
         protected static void AppendException(StringBuilder sb, Exception except)
         {
             sb.AppendLine(StringUtil.Format(EtwLoggingStrings.ErrorRecordMessage, except.Message));
@@ -169,8 +132,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="sb">String builder.</param>
-        /// <param name="additionalInfo">Additional information.</param>
         protected static void AppendAdditionalInfo(StringBuilder sb, Dictionary<string, string> additionalInfo)
         {
             if (additionalInfo != null)
@@ -183,8 +144,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="severity">Error severity.</param>
-        /// <returns>PS log level.</returns>
         protected static PSLevel GetPSLevelFromSeverity(string severity)
         {
             switch (severity)
@@ -206,8 +165,6 @@ namespace System.Management.Automation
         private const int LogContextInitialSize = 30 * 16 + 13 * 20 + 255;
 
         
-        /// <param name="context">Log context.</param>
-        /// <returns>String representation.</returns>
         protected static string LogContextToString(LogContext context)
         {
             StringBuilder sb = new StringBuilder(LogContextInitialSize);
@@ -262,80 +219,51 @@ namespace System.Management.Automation
         #region Provider api
 
         
-        /// <param name="logContext"></param>
-        /// <param name="eventId"></param>
-        /// <param name="exception"></param>
-        /// <param name="additionalInfo"></param>
         internal override void LogEngineHealthEvent(LogContext logContext, int eventId, Exception exception, Dictionary<string, string> additionalInfo)
         {
         }
 
         
-        /// <param name="logContext"></param>
-        /// <param name="newState"></param>
-        /// <param name="previousState"></param>
         internal override void LogEngineLifecycleEvent(LogContext logContext, EngineState newState, EngineState previousState)
         {
         }
 
         
-        /// <param name="logContext"></param>
-        /// <param name="exception"></param>
         internal override void LogCommandHealthEvent(LogContext logContext, Exception exception)
         {
         }
 
         
-        /// <param name="getLogContext"></param>
-        /// <param name="newState"></param>
         internal override void LogCommandLifecycleEvent(Func<LogContext> getLogContext, CommandState newState)
         {
         }
 
         
-        /// <param name="logContext"></param>
-        /// <param name="pipelineExecutionDetail"></param>
         internal override void LogPipelineExecutionDetailEvent(LogContext logContext, List<string> pipelineExecutionDetail)
         {
         }
 
         
-        /// <param name="logContext"></param>
-        /// <param name="providerName"></param>
-        /// <param name="exception"></param>
         internal override void LogProviderHealthEvent(LogContext logContext, string providerName, Exception exception)
         {
         }
 
         
-        /// <param name="logContext"></param>
-        /// <param name="providerName"></param>
-        /// <param name="newState"></param>
         internal override void LogProviderLifecycleEvent(LogContext logContext, string providerName, ProviderState newState)
         {
         }
 
         
-        /// <param name="logContext"></param>
-        /// <param name="variableName"></param>
-        /// <param name="value"></param>
-        /// <param name="previousValue"></param>
         internal override void LogSettingsEvent(LogContext logContext, string variableName, string value, string previousValue)
         {
         }
 
         
-        /// <param name="state">This the action performed in AmsiUtil class, like init, scan, etc.</param>
-        /// <param name="context">The amsiContext handled - Session pair.</param>
         internal override void LogAmsiUtilStateEvent(string state, string context)
         {
         }
 
         
-        /// <param name="queryName">Name of the WDAC query.</param>
-        /// <param name="fileName">Name of script file for policy query. Can be null value.</param>
-        /// <param name="querySuccess">Query call succeed code.</param>
-        /// <param name="queryResult">Result code of WDAC query.</param>
         internal override void LogWDACQueryEvent(
             string queryName,
             string fileName,
@@ -345,9 +273,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="title">Title of WDAC audit event.</param>
-        /// <param name="message">WDAC audit event message.</param>
-        /// <param name="fqid">FullyQualifiedId of WDAC audit event.</param>
         internal override void LogWDACAuditEvent(
             string title,
             string message,

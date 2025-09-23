@@ -9,14 +9,6 @@ using Dbg = System.Management.Automation;
 namespace System.Management.Automation
 {
     
-    /// <remarks>
-    /// A cmdlet provider may want to derive from this class to provide their
-    /// own public members or to cache information related to the drive. For instance,
-    /// if a drive is a connection to a remote machine and making that connection
-    /// is expensive, then the provider may want keep a handle to the connection as
-    /// a member of their derived <see cref="PSDriveInfo"/> class and use it when
-    /// the provider is invoked.
-    /// </remarks>
     public class PSDriveInfo : IComparable
     {
         
@@ -83,21 +75,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="path">
-        /// The root path to set for the drive.
-        /// </param>
-        /// <remarks>
-        /// This method can only be called during drive
-        /// creation. A NotSupportedException if this method
-        /// is called outside of drive creation.
-        /// </remarks>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="path"/> is null.
-        /// </exception>
-        /// <exception cref="NotSupportedException">
-        /// If this method gets called any other time except
-        /// during drive creation.
-        /// </exception>
         internal void SetRoot(string path)
         {
             if (path == null)
@@ -128,15 +105,9 @@ namespace System.Management.Automation
         public PSCredential Credential { get; } = PSCredential.Empty;
 
         
-        /// <value>
-        /// True if the drive is being created and the
-        /// root can be modified through the SetRoot method.
-        /// False otherwise.
-        /// </value>
         internal bool DriveBeingCreated { get; set; }
 
         
-        /// <value></value>
         internal bool IsAutoMounted { get; set; }
 
         
@@ -157,18 +128,6 @@ namespace System.Management.Automation
         #region ctor
 
         
-        /// <param name="driveInfo">
-        /// An existing PSDriveInfo object that should be copied to this instance.
-        /// </param>
-        /// <remarks>
-        /// A protected constructor that derived classes can call with an instance
-        /// of this class. This allows for easy creation of derived PSDriveInfo objects
-        /// which can be created in CmdletProvider's NewDrive method using the PSDriveInfo
-        /// that is passed in.
-        /// </remarks>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="PSDriveInfo"/> is null.
-        /// </exception>
         protected PSDriveInfo(PSDriveInfo driveInfo)
         {
             if (driveInfo == null)
@@ -191,29 +150,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="name">
-        /// The name of the drive.
-        /// </param>
-        /// <param name="provider">
-        /// The name of the provider which implements the functionality
-        /// for the root path of the drive.
-        /// </param>
-        /// <param name="root">
-        /// The root path of the drive. For example, the root of a
-        /// drive in the file system can be c:\windows\system32
-        /// </param>
-        /// <param name="description">
-        /// The description for the drive.
-        /// </param>
-        /// <param name="credential">
-        /// The credentials under which all operations on the drive should occur.
-        /// If null, the current user credential is used.
-        /// </param>
-        /// <throws>
-        /// ArgumentNullException - if <paramref name="name"/>,
-        /// <paramref name="provider"/>, or <paramref name="root"/>
-        /// is null.
-        /// </throws>
         public PSDriveInfo(
             string name,
             ProviderInfo provider,
@@ -265,33 +201,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="name">
-        /// The name of the drive.
-        /// </param>
-        /// <param name="provider">
-        /// The name of the provider which implements the functionality
-        /// for the root path of the drive.
-        /// </param>
-        /// <param name="root">
-        /// The root path of the drive. For example, the root of a
-        /// drive in the file system can be c:\windows\system32
-        /// </param>
-        /// <param name="description">
-        /// The description for the drive.
-        /// </param>
-        /// <param name="credential">
-        /// The credentials under which all operations on the drive should occur.
-        /// If null, the current user credential is used.
-        /// </param>
-        /// <param name="displayRoot">
-        /// The network path of the drive. This field would be populated only if PSDriveInfo
-        /// is targeting the network drive or else this filed is null for local drives.
-        /// </param>
-        /// <throws>
-        /// ArgumentNullException - if <paramref name="name"/>,
-        /// <paramref name="provider"/>, or <paramref name="root"/>
-        /// is null.
-        /// </throws>
         public PSDriveInfo(
             string name,
             ProviderInfo provider,
@@ -304,33 +213,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="name">
-        /// The name of the drive.
-        /// </param>
-        /// <param name="provider">
-        /// The name of the provider which implements the functionality
-        /// for the root path of the drive.
-        /// </param>
-        /// <param name="root">
-        /// The root path of the drive. For example, the root of a
-        /// drive in the file system can be c:\windows\system32
-        /// </param>
-        /// <param name="description">
-        /// The description for the drive.
-        /// </param>
-        /// <param name="credential">
-        /// The credentials under which all operations on the drive should occur.
-        /// If null, the current user credential is used.
-        /// </param>
-        /// <param name="persist">
-        /// It indicates if the created PSDrive would be
-        /// persisted across PowerShell sessions.
-        /// </param>
-        /// <throws>
-        /// ArgumentNullException - if <paramref name="name"/>,
-        /// <paramref name="provider"/>, or <paramref name="root"/>
-        /// is null.
-        /// </throws>
         public PSDriveInfo(
             string name,
             ProviderInfo provider,
@@ -346,19 +228,12 @@ namespace System.Management.Automation
         #endregion ctor
 
         
-        /// <returns>
-        /// Returns a String that is that name of the drive.
-        /// </returns>
         public override string ToString()
         {
             return Name;
         }
 
         
-        /// <value>
-        /// True if the drive should be hidden from the user, false
-        /// otherwise.
-        /// </value>
         internal bool Hidden
         {
             get
@@ -376,18 +251,6 @@ namespace System.Management.Automation
         private bool _hidden;
 
         
-        /// <param name="newName">
-        /// The new name for the drive.
-        /// </param>
-        /// <remarks>
-        /// This must be internal so that we allow the renaming of drives
-        /// via the Core Command API but not through a reference to the
-        /// drive object. More goes in to renaming a drive than just modifying
-        /// the name in this class.
-        /// </remarks>
-        /// <exception cref="ArgumentException">
-        /// If <paramref name="newName"/> is null or empty.
-        /// </exception>
         internal void SetName(string newName)
         {
             if (string.IsNullOrEmpty(newName))
@@ -399,19 +262,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="newProvider">
-        /// The new provider for the drive.
-        /// </param>
-        /// <remarks>
-        /// This must be internal so that we allow the renaming of providers.
-        /// All drives must be associated with the new provider name and can
-        /// be changed using the Core Command API but not through a reference to the
-        /// drive object. More goes in to renaming a provider than just modifying
-        /// the provider in this class.
-        /// </remarks>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="newProvider"/> is null.
-        /// </exception>
         internal void SetProvider(ProviderInfo newProvider)
         {
             if (newProvider == null)
@@ -465,15 +315,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="drive">
-        /// A PSDriveInfo object to compare.
-        /// </param>
-        /// <returns>
-        /// A signed number indicating the relative values of this instance and object specified.
-        /// Return Value: Less than zero        Meaning: This instance is less than object.
-        /// Return Value: Zero                  Meaning: This instance is equal to object.
-        /// Return Value: Greater than zero     Meaning: This instance is greater than object or object is a null reference.
-        /// </returns>
         public int CompareTo(PSDriveInfo drive)
         {
 #pragma warning disable 56506
@@ -489,16 +330,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="obj">
-        /// An object to compare.
-        /// </param>
-        /// <returns>
-        /// A signed number indicating the relative values of this
-        /// instance and object specified.
-        /// </returns>
-        /// <exception cref="ArgumentException">
-        /// If <paramref name="obj"/> is not a PSDriveInfo instance.
-        /// </exception>
         public int CompareTo(object obj)
         {
             PSDriveInfo drive = obj as PSDriveInfo;
@@ -516,12 +347,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="obj">
-        /// An object to compare.
-        /// </param>
-        /// <returns>
-        /// True if the drive names are equal, false otherwise.
-        /// </returns>
         public override bool Equals(object obj)
         {
             if (obj is PSDriveInfo)
@@ -535,28 +360,12 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="drive">
-        /// An object to compare.
-        /// </param>
-        /// <returns>
-        /// True if the drive names are equal, false otherwise.
-        /// </returns>
         public bool Equals(PSDriveInfo drive)
         {
             return CompareTo(drive) == 0;
         }
 
         
-        /// <param name="drive1">
-        /// The first object to compare to the second.
-        /// </param>
-        /// <param name="drive2">
-        /// The second object to compare to the first.
-        /// </param>
-        /// <returns>
-        /// True if the objects are PSDriveInfo objects and have the same name,
-        /// false otherwise.
-        /// </returns>
         public static bool operator ==(PSDriveInfo drive1, PSDriveInfo drive2)
         {
             object drive1Object = drive1;
@@ -578,31 +387,12 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="drive1">
-        /// The first object to compare to the second.
-        /// </param>
-        /// <param name="drive2">
-        /// The second object to compare to the first.
-        /// </param>
-        /// <returns>
-        /// True if the PSDriveInfo objects do not have the same name,
-        /// false otherwise.
-        /// </returns>
         public static bool operator !=(PSDriveInfo drive1, PSDriveInfo drive2)
         {
             return !(drive1 == drive2);
         }
 
         
-        /// <param name="drive1">
-        /// The drive to determine if it is less than the other drive.
-        /// </param>
-        /// <param name="drive2">
-        /// The drive to compare drive1 against.
-        /// </param>
-        /// <returns>
-        /// True if the lexical comparison of drive1's name is less than drive2's name.
-        /// </returns>
         public static bool operator <(PSDriveInfo drive1, PSDriveInfo drive2)
         {
             object drive1Object = drive1;
@@ -629,15 +419,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="drive1">
-        /// The drive to determine if it is greater than the other drive.
-        /// </param>
-        /// <param name="drive2">
-        /// The drive to compare drive1 against.
-        /// </param>
-        /// <returns>
-        /// True if the lexical comparison of drive1's name is greater than drive2's name.
-        /// </returns>
         public static bool operator >(PSDriveInfo drive1, PSDriveInfo drive2)
         {
             object drive1Object = drive1;
@@ -666,8 +447,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <returns>The result of base.GetHashCode().</returns>
-        /// 
         public override int GetHashCode()
         {
             return base.GetHashCode();

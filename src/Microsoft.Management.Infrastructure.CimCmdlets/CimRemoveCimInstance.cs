@@ -14,8 +14,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
     internal class CimRemoveCimInstanceContext : XOperationContextBase
     {
         
-        /// <param name="theNamespace"></param>
-        /// <param name="theProxy"></param>
         internal CimRemoveCimInstanceContext(string theNamespace,
             CimSessionProxy theProxy)
         {
@@ -34,7 +32,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="cmdlet"><see cref="GetCimInstanceCommand"/> object.</param>
         public void RemoveCimInstance(RemoveCimInstanceCommand cmdlet)
         {
             DebugHelper.WriteLogEx();
@@ -98,7 +95,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="cimInstance"></param>
         internal void RemoveCimInstance(CimInstance cimInstance, XOperationContextBase context, CmdletOperationBase cmdlet)
         {
             DebugHelper.WriteLogEx();

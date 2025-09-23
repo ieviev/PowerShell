@@ -32,7 +32,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="name">The name that will be displayed to users.</param>
         public ManagementListStateDescriptor(string name)
             : base(name)
         {
@@ -42,16 +41,6 @@ namespace Microsoft.Management.UI.Internal
 
         #region Save/Restore
         
-        /// <param name="subject">
-        /// The ManagementList instance whose state should be preserved.
-        /// </param>
-        /// <remarks>
-        /// Columns will not be saved if not supported per
-        /// <see cref="VerifyColumnsSavable"/>.
-        /// </remarks>
-        /// <exception cref="InvalidOperationException">
-        /// ManagementList.AutoGenerateColumns not supported.
-        /// </exception>
         public override void SaveState(ManagementList subject)
         {
             ArgumentNullException.ThrowIfNull(subject);
@@ -62,26 +51,12 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="subject">The ManagementList instance whose state should be restored.</param>
         public override void RestoreState(ManagementList subject)
         {
             this.RestoreState(subject, true);
         }
 
         
-        /// <param name="subject">
-        /// The ManagementList instance whose state should be restored.
-        /// </param>
-        /// <param name="applyRestoredFilter">
-        /// Whether the restored filter should be automatically applied.
-        /// </param>
-        /// <remarks>
-        /// Columns will not be restored if not supported per
-        /// <see cref="VerifyColumnsRestorable"/>.
-        /// </remarks>
-        /// <exception cref="InvalidOperationException">
-        /// ManagementList.AutoGenerateColumns not supported.
-        /// </exception>
         public void RestoreState(ManagementList subject, bool applyRestoredFilter)
         {
             ArgumentNullException.ThrowIfNull(subject);
@@ -119,12 +94,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="subject">Target ManagementList.</param>
-        /// <param name="callback">RetryActionAfterLoaded callback method.</param>
-        /// <returns>True if-and-only-if columns are restorable.</returns>
-        /// <exception cref="InvalidOperationException">
-        /// ManagementList.AutoGenerateColumns not supported.
-        /// </exception>
         private static bool VerifyColumnsRestorable(ManagementList subject, RetryActionCallback<ManagementList> callback)
         {
             if (WpfHelp.RetryActionAfterLoaded<ManagementList>(subject, callback, subject))
@@ -226,13 +195,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="subject">
-        /// Target <see cref="ManagementList"/> whose column state
-        /// is to be restored.
-        /// </param>
-        /// <remarks>
-        /// Required columns are always visible regardless of persisted state.
-        /// </remarks>
         private void RestoreColumnsState(ManagementList subject)
         {
             ColumnStateDescriptor csd;
@@ -505,20 +467,12 @@ namespace Microsoft.Management.UI.Internal
             private Dictionary<string, ColumnStateDescriptor> columns;
 
             
-            /// <param name="columns">The lookup dictionary.</param>
             public InnerListColumnOrderComparer(Dictionary<string, ColumnStateDescriptor> columns)
             {
                 this.columns = columns;
             }
 
             
-            /// <param name="x">The first object.</param>
-            /// <param name="y">The second object.</param>
-            /// <returns>
-            /// Returns 1 if x should ordered after y in the list, returns -1 if
-            /// x should be order before y, and returns 0 if the ordering should not
-            /// be changed.
-            /// </returns>
             public int Compare(InnerListColumn x, InnerListColumn y)
             {
                 if (ReferenceEquals(x, y))
@@ -552,7 +506,6 @@ namespace Microsoft.Management.UI.Internal
 
         #region ToString
         
-        /// <returns>A string to represent the instance of this class.</returns>
         public override string ToString()
         {
             return this.Name;

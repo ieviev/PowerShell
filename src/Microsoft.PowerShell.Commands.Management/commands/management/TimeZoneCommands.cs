@@ -350,7 +350,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="enable">Set to true to enable (or false to disable) the privilege.</param>
         protected void SetAccessToken(bool enable)
         {
             // open the access token for the current process
@@ -506,8 +505,6 @@ namespace Microsoft.PowerShell.Commands
             }
 
             
-            /// <param name="lpTimeZoneInformation">A DYNAMIC_TIME_ZONE_INFORMATION structure representing the desired local time zone.</param>
-            /// <returns></returns>
             [DllImport(SetDynamicTimeZoneApiDllName, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool SetDynamicTimeZoneInformation([In] ref DYNAMIC_TIME_ZONE_INFORMATION lpTimeZoneInformation);
@@ -533,53 +530,31 @@ namespace Microsoft.PowerShell.Commands
             public const string SE_TIME_ZONE_NAME = "SeTimeZonePrivilege"; // https://msdn.microsoft.com/library/bb530716(VS.85).aspx
 
             
-            /// <returns></returns>
             [DllImport(GetCurrentProcessApiDllName, ExactSpelling = true)]
             public static extern IntPtr GetCurrentProcess();
 
             
-            /// <param name="ProcessHandle"></param>
-            /// <param name="DesiredAccess"></param>
-            /// <param name="TokenHandle"></param>
-            /// <returns></returns>
             [DllImport(OpenProcessTokenApiDllName, SetLastError = true, CharSet = CharSet.Unicode, BestFitMapping = false)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool OpenProcessToken(IntPtr ProcessHandle, int DesiredAccess, ref IntPtr TokenHandle);
 
             
-            /// <param name="lpSystemName"></param>
-            /// <param name="lpName"></param>
-            /// <param name="lpLuid"></param>
-            /// <returns></returns>
             [DllImport(LookupPrivilegeTokenApiDllName, SetLastError = true, CharSet = CharSet.Unicode, BestFitMapping = false)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool LookupPrivilegeValue(string lpSystemName, string lpName, ref long lpLuid);
 
             
-            /// <param name="ClientToken"></param>
-            /// <param name="RequiredPrivileges"></param>
-            /// <param name="pfResult"></param>
-            /// <returns></returns>
             [DllImport(PrivilegeCheckApiDllName, SetLastError = true, CharSet = CharSet.Unicode, BestFitMapping = false)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool PrivilegeCheck(IntPtr ClientToken, ref PRIVILEGE_SET RequiredPrivileges, ref bool pfResult);
 
             
-            /// <param name="TokenHandle"></param>
-            /// <param name="DisableAllPrivileges"></param>
-            /// <param name="NewState"></param>
-            /// <param name="BufferLength"></param>
-            /// <param name="PreviousState"></param>
-            /// <param name="ReturnLength"></param>
-            /// <returns></returns>
             [DllImport(AdjustTokenPrivilegesApiDllName, SetLastError = true, CharSet = CharSet.Unicode, BestFitMapping = false)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool AdjustTokenPrivileges(IntPtr TokenHandle, bool DisableAllPrivileges,
                 ref TOKEN_PRIVILEGES NewState, int BufferLength, IntPtr PreviousState, IntPtr ReturnLength);
 
             
-            /// <param name="hObject"></param>
-            /// <returns></returns>
             [DllImport(CloseHandleApiDllName, ExactSpelling = true, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool CloseHandle(IntPtr hObject);
@@ -617,14 +592,6 @@ namespace Microsoft.PowerShell.Commands
             public const int SMTO_ABORTIFHUNG = 0x0002;
 
             
-            /// <param name="hWnd"></param>
-            /// <param name="Msg"></param>
-            /// <param name="wParam"></param>
-            /// <param name="lParam"></param>
-            /// <param name="fuFlags"></param>
-            /// <param name="uTimeout"></param>
-            /// <param name="lpdwResult"></param>
-            /// <returns></returns>
             [DllImport(SendMessageTimeoutApiDllName, SetLastError = true, CharSet = CharSet.Unicode)]
             public static extern IntPtr SendMessageTimeout(IntPtr hWnd, int Msg, IntPtr wParam, string lParam, int fuFlags, int uTimeout, ref int lpdwResult);
 
@@ -648,8 +615,6 @@ namespace Microsoft.PowerShell.Commands
         #endregion Error Ids
 
         
-        /// <param name="name">The name (or wildcard pattern) of the system time zone to find.</param>
-        /// <returns>A TimeZoneInfo object array containing information about the specified system time zones.</returns>
         internal static TimeZoneInfo[] LookupSystemTimeZoneInfoByName(string name)
         {
             WildcardPattern namePattern = new(name, WildcardOptions.IgnoreCase);

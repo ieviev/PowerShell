@@ -347,7 +347,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <returns></returns>
         internal virtual ControlBase Copy()
         {
             System.Management.Automation.Diagnostics.Assert(false,
@@ -503,15 +502,12 @@ namespace System.Management.Automation
         public List<FormatViewDefinition> FormatViewDefinition { get; internal set; }
 
         
-        /// <returns></returns>
         public override string ToString()
         {
             return TypeName;
         }
 
         
-        /// <param name="typeName"></param>
-        /// <param name="viewDefinitions"></param>
         public ExtendedTypeDefinition(string typeName, IEnumerable<FormatViewDefinition> viewDefinitions) : this()
         {
             if (string.IsNullOrEmpty(typeName))
@@ -527,7 +523,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="typeName"></param>
         public ExtendedTypeDefinition(string typeName) : this()
         {
             if (string.IsNullOrEmpty(typeName))
@@ -563,7 +558,6 @@ namespace System.Management.Automation
             InstanceId = instanceid;
         }
 
-        /// <summary/>
         public FormatViewDefinition(string name, PSControl control)
         {
             if (string.IsNullOrEmpty(name))
@@ -660,7 +654,6 @@ namespace System.Management.Automation
             ValueType = type;
         }
 
-        /// <summary/>
         public override string ToString()
         {
             return (ValueType == DisplayEntryValueType.Property ? "property: " : "script: ") + Value;

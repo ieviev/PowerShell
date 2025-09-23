@@ -10,9 +10,6 @@ using System.Windows.Input;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <content>
-    /// Partial class implementation for SearchBox control.
-    /// </content>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public partial class SearchBox : Control, IFilterExpressionProvider
     {
@@ -96,9 +93,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="searchBoxItems">A collection of searchbox items to convert.</param>
-        /// <returns>A filter expression.</returns>
-        /// <exception cref="ArgumentNullException">The specified value is a null reference.</exception>
         protected static FilterExpressionNode ConvertToFilterExpression(ICollection<SearchTextParseResult> searchBoxItems)
         {
             ArgumentNullException.ThrowIfNull(searchBoxItems);

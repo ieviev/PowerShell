@@ -34,8 +34,6 @@ namespace System.Management.Automation
     internal static class Utils
     {
         
-        /// <param name="d">The value to convert.</param>
-        /// <returns>Returns a BigInteger value equivalent to the input value rounded to nearest integer.</returns>
         internal static BigInteger AsBigInt(this double d) => new BigInteger(Math.Round(d));
 
         internal static bool TryCast(BigInteger value, out byte b)
@@ -159,12 +157,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="digits">Span or string of binary digits. Assumes all digits are either 1 or 0.</param>
-        /// <param name="unsigned">
-        /// Whether to treat the number as unsigned. When false, respects established conventions
-        /// with sign bits for certain input string lengths.
-        /// </param>
-        /// <returns>Returns the value of the binary string as a BigInteger.</returns>
         internal static BigInteger ParseBinary(ReadOnlySpan<char> digits, bool unsigned)
         {
             if (!unsigned)
@@ -291,9 +283,6 @@ namespace System.Management.Automation
         internal static readonly string[] AllowedEditionValues = { "Desktop", "Core" };
 
         
-        /// <param name="arg"> arg to check </param>
-        /// <param name="argName"> name of the arg </param>
-        /// <returns> Does not return a value.</returns>
         internal static void CheckKeyArg(byte[] arg, string argName)
         {
             if (arg == null)
@@ -315,9 +304,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="arg"> arg to check </param>
-        /// <param name="argName"> name of the arg </param>
-        /// <returns> Does not return a value.</returns>
         internal static void CheckArgForNullOrEmpty(string arg, string argName)
         {
             if (arg == null)
@@ -331,9 +317,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="arg"> arg to check </param>
-        /// <param name="argName"> name of the arg </param>
-        /// <returns> Does not return a value.</returns>
         internal static void CheckArgForNull(object arg, string argName)
         {
             if (arg == null)
@@ -343,9 +326,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="arg"> arg to check </param>
-        /// <param name="argName"> name of the arg </param>
-        /// <returns> Does not return a value.</returns>
         internal static void CheckSecureStringArg(SecureString arg, string argName)
         {
             if (arg == null)
@@ -376,7 +356,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <returns></returns>
         internal static TypeTable GetTypeTableFromExecutionContextTLS()
         {
             ExecutionContext ecFromTLS = Runspaces.LocalPipeline.GetExecutionContextFromTLS();
@@ -420,9 +399,6 @@ namespace System.Management.Automation
         private static string s_windowsPowerShellVersion = null;
 
         
-        /// <returns>
-        /// String of Windows PowerShell version from registry.
-        /// </returns>
         internal static string GetWindowsPowerShellVersionFromRegistry()
         {
             if (!string.IsNullOrEmpty(InternalTestHooks.TestWindowsPowerShellVersionString))
@@ -497,10 +473,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <returns>
-        /// true: if the filePath is under product folder
-        /// false: otherwise
-        /// </returns>
         internal static bool IsUnderProductFolder(string filePath)
         {
             FileInfo fileInfo = new FileInfo(filePath);
@@ -551,19 +523,12 @@ namespace System.Management.Automation
         #region Versioning related methods
 
         
-        /// <returns>String.</returns>
-        /// <remarks>
-        /// Cannot return a Version object as minor number is a requirement for
-        /// version object.
-        /// </remarks>
         internal static string GetCurrentMajorVersion()
         {
             return PSVersionInfo.PSVersion.Major.ToString(CultureInfo.InvariantCulture);
         }
 
         
-        /// <param name="versionString">String representing version.</param>
-        /// <returns>A Version Object.</returns>
         internal static Version StringToVersion(string versionString)
         {
             // max of 1 dot is allowed in version
@@ -600,16 +565,12 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="checkEdition">Edition to check.</param>
-        /// <returns>True if supported, false otherwise.</returns>
         internal static bool IsPSEditionSupported(string checkEdition)
         {
             return PSVersionInfo.PSEditionValue.Equals(checkEdition, StringComparison.OrdinalIgnoreCase);
         }
 
         
-        /// <param name="editions">The PowerShell editions to check compatibility with.</param>
-        /// <returns>True if the edition is supported by this runtime, false otherwise.</returns>
         internal static bool IsPSEditionSupported(IEnumerable<string> editions)
         {
             string currentPSEdition = PSVersionInfo.PSEditionValue;
@@ -625,8 +586,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="editionValue">Edition value to check.</param>
-        /// <returns>True if allowed, false otherwise.</returns>
         internal static bool IsValidPSEditionValue(string editionValue)
         {
             return AllowedEditionValues.Contains(editionValue, StringComparer.OrdinalIgnoreCase);
@@ -741,10 +700,6 @@ namespace System.Management.Automation
             key => new ConcurrentDictionary<string, PolicyBase>(StringComparer.Ordinal);
 
         
-        /// <param name="instance">Policy object that will be filled with values from registry.</param>
-        /// <param name="instanceType">Type of policy object used.</param>
-        /// <param name="gpoKey">Registry key that has policy settings.</param>
-        /// <returns>True if any property was successfully set on the policy object.</returns>
         private static bool TrySetPolicySettingsFromRegistryKey(object instance, Type instanceType, RegistryKey gpoKey)
         {
             var properties = instanceType.GetProperties(BindingFlags.Instance | BindingFlags.Public);
@@ -956,11 +911,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="module"></param>
-        /// <param name="context"></param>
-        /// <returns>
-        /// List of PSModuleInfo's or Null.
-        /// </returns>
         internal static List<PSModuleInfo> GetModules(string module, ExecutionContext context)
         {
             // first look in the loaded modules and then append the modules from gmo -Listavailable
@@ -1010,11 +960,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="fullyQualifiedName"></param>
-        /// <param name="context"></param>
-        /// <returns>
-        /// List of PSModuleInfo's or Null.
-        /// </returns>
         internal static List<PSModuleInfo> GetModules(ModuleSpecification fullyQualifiedName, ExecutionContext context)
         {
             // first look in the loaded modules and then append the modules from gmo -Listavailable
@@ -1080,8 +1025,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="impersonatedIdentity">Current impersonated Windows identity or null.</param>
-        /// <returns>True if current identity is impersonated.</returns>
         internal static bool TryGetWindowsImpersonatedIdentity(out WindowsIdentity impersonatedIdentity)
         {
             WindowsIdentity currentIdentity;
@@ -1231,9 +1174,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="mutex">The mutex to wait on. If it is null, a new one will be created.</param>
-        /// <param name="initializer">The initializer to use to recreate the mutex.</param>
-        /// <returns>A working mutex. If the mutex was abandoned, a new one is created to replace it.</returns>
         internal static Mutex SafeWaitMutex(Mutex mutex, MutexInitializer initializer)
         {
             try
@@ -1270,9 +1210,6 @@ namespace System.Management.Automation
 
 #if !UNIX
         
-        /// <param name="identityToImpersonate">Windows identity to impersonate or null.</param>
-        /// <param name="threadProc">Thread procedure for thread.</param>
-        /// <param name="state">Optional state for thread procedure.</param>
         internal static void QueueWorkItemWithImpersonation(
             WindowsIdentity identityToImpersonate,
             WaitCallback threadProc,
@@ -1305,9 +1242,6 @@ namespace System.Management.Automation
 #endif
 
         
-        /// <param name="commandName"></param>
-        /// <param name="moduleName"></param>
-        /// <returns>Command name and as appropriate Module name in out parameter.</returns>
         internal static string ParseCommandName(string commandName, out string moduleName)
         {
             var names = commandName.Split('\\', 2);
@@ -1357,8 +1291,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="context">ExecutionContext.</param>
-        /// <returns>The current ExecutionContext language mode.</returns>
         internal static PSLanguageMode EnforceSystemLockDownLanguageMode(ExecutionContext context)
         {
             switch (SystemPolicy.GetSystemLockdownPolicy())
@@ -1416,8 +1348,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="context">ExecutionContext.</param>
-        /// <returns>True if the session is restricted.</returns>
         internal static bool IsSessionRestricted(ExecutionContext context)
         {
             CmdletInfo cmdletInfo = context.SessionState.InvokeCommand.GetCmdlet("Microsoft.PowerShell.Core\\Import-Module");
@@ -1501,9 +1431,6 @@ namespace System.Management.Automation.Internal
         }
 
         
-        /// <param name="url">The connection URL to reflect in the returned instance's ConnectionString property.</param>
-        /// <param name="clientVersion">The version number to report as the remoting client's PowerShell version.</param>
-        /// <returns>The newly constructed custom PSSenderInfo instance.</returns>
         public static PSSenderInfo GetCustomPSSenderInfo(string url, Version clientVersion)
         {
             var dummyPrincipal = new PSPrincipal(new PSIdentity("none", true, "someuser", null), null);
@@ -1563,14 +1490,12 @@ namespace System.Management.Automation.Internal
         private readonly int _capacity;
 
         
-        /// <param name="capacity"></param>
         internal BoundedStack(int capacity)
         {
             _capacity = capacity;
         }
 
         
-        /// <param name="item"></param>
         internal void Push(T item)
         {
             this.AddFirst(item);
@@ -1582,7 +1507,6 @@ namespace System.Management.Automation.Internal
         }
 
         
-        /// <returns></returns>
         internal T Pop()
         {
             if (this.First == null)

@@ -185,7 +185,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="so">Object to process.</param>
         private void ProcessObject(PSObject so)
         {
             // we do protect against reentrancy, assuming
@@ -423,8 +422,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         private enum GroupTransition { none, enter, exit, startNew }
 
         
-        /// <param name="so">Object received from the input pipeline.</param>
-        /// <returns>GroupTransition enumeration.</returns>
         private GroupTransition ComputeGroupTransition(PSObject so)
         {
             // check if we have to start a group
@@ -450,7 +447,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="so">Object to process.</param>
         private void WritePayloadObject(PSObject so)
         {
             Diagnostics.Assert(so != null, "object so cannot be null");
@@ -463,8 +459,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="firstObjectInGroup">current pipeline object
-        /// that is starting the group</param>
         private void PushGroup(PSObject firstObjectInGroup)
         {
             GroupStartData startGroup = _viewManager.ViewGenerator.GenerateGroupStartData(firstObjectInGroup, _enumerationLimit);
@@ -485,7 +479,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
 
         #region expression factory
 
-        /// <exception cref="ParseException"></exception>
         internal ScriptBlock CreateScriptBlock(string scriptText)
         {
             var scriptBlock = this.OuterCmdlet().InvokeCommand.NewScriptBlock(scriptText);
@@ -516,12 +509,10 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         public object GroupBy { get; set; } = null;
 
         
-        /// <value></value>
         [Parameter]
         public string View { get; set; } = null;
 
         
-        /// <value></value>
         [Parameter]
         public SwitchParameter ShowError
         {
@@ -541,7 +532,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         internal bool? showErrorsAsMessages = null;
 
         
-        /// <value></value>
         [Parameter]
         public SwitchParameter DisplayError
         {
@@ -561,7 +551,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         internal bool? showErrorsInFormattedOutput = null;
 
         
-        /// <value></value>
         [Parameter]
         public SwitchParameter Force
         {
@@ -573,7 +562,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         private bool _forceFormattingAlsoOnOutOfBand;
 
         
-        /// <value></value>
         [Parameter]
         [ValidateSet(EnumerableExpansionConversion.CoreOnlyString,
                         EnumerableExpansionConversion.EnumOnlyString,
@@ -638,7 +626,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <returns>Parameters collected in unified manner.</returns>
         internal virtual FormattingCommandLineParameters GetCommandLineParameters()
         {
             return null;
@@ -723,7 +710,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         #region Command Line Switches
 
         
-        /// <value></value>
         [Parameter]
         public SwitchParameter AutoSize
         {
@@ -747,7 +733,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         public SwitchParameter RepeatHeader { get; set; }
 
         
-        /// <value></value>
         [Parameter]
         public SwitchParameter HideTableHeaders
         {
@@ -767,7 +752,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         private bool? _hideHeaders = null;
 
         
-        /// <value></value>
         [Parameter]
         public SwitchParameter Wrap
         {

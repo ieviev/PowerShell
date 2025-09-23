@@ -418,7 +418,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="line">Line to write.</param>
         public override void WriteCsvLine(string line)
         {
             // NTRAID#Windows Out Of Band Releases-915851-2005/09/13
@@ -665,7 +664,6 @@ namespace Microsoft.PowerShell.Commands
 
         #region CSV conversion
         
-        /// <param name="line">Line to write.</param>
         public override void WriteCsvLine(string line)
         {
             WriteObject(line);
@@ -777,9 +775,6 @@ namespace Microsoft.PowerShell.Commands
         private readonly StringBuilder _outputString;
 
         
-        /// <param name="delimiter">Delimiter char.</param>
-        /// <param name="quoteKind">Kind of quoting.</param>
-        /// <param name="quoteFields">List of fields to quote.</param>
         internal ExportCsvHelper(char delimiter, BaseCsvWritingCommand.QuoteKind quoteKind, string[] quoteFields)
         {
             _delimiter = delimiter;
@@ -834,7 +829,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <returns>Converted string.</returns>
         internal string ConvertPropertyNamesCSV(IList<string> propertyNames)
         {
             ArgumentNullException.ThrowIfNull(propertyNames); 
@@ -894,9 +888,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="mshObject">PSObject to convert.</param>
-        /// <param name="propertyNames">Property names.</param>
-        /// <returns></returns>
         internal string ConvertPSObjectToCSV(PSObject mshObject, IList<string> propertyNames)
         {
             ArgumentNullException.ThrowIfNull(propertyNames); 
@@ -979,8 +970,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="property"> Property to convert.</param>
-        /// <returns>ToString() value.</returns>
         internal static string GetToStringValueForProperty(PSPropertyInfo property)
         {
             ArgumentNullException.ThrowIfNull(property); 
@@ -1003,8 +992,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="source">PSObject whose type to determine.</param>
-        /// <returns>String with type information.</returns>
         internal static string GetTypeString(PSObject source)
         {
             string type = null;
@@ -1149,8 +1136,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="c"></param>
-        /// <returns></returns>
         private bool PeekNextChar(char c)
         {
             int i = _sr.Peek();
@@ -1163,7 +1148,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <returns>Line from file.</returns>
         private string ReadLine() => _sr.ReadLine();
 
         #endregion reading helpers
@@ -1243,7 +1227,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="names"></param>
         private static void ValidatePropertyNames(IList<string> names)
         {
             if (names != null)
@@ -1278,7 +1261,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <returns>Type string if present else null.</returns>
         private string ReadTypeInformation()
         {
             string type = null;
@@ -1300,9 +1282,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <returns>
-        /// Parsed collection of strings.
-        /// </returns>
         private void ParseNextRecord(List<string> result, StringBuilder current)
         {
             result.Clear();
@@ -1485,15 +1464,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="current"></param>
-        /// <param name="endOfRecord">
-        /// This is true if end of record is reached
-        /// when delimiter is hit. This would be true if delimiter is NewLine.
-        /// </param>
-        /// <param name="eatTrailingBlanks">
-        /// If this is true, eat the trailing blanks. Note:if there are non
-        /// whitespace characters present, then trailing blanks are not consumed.
-        /// </param>
         private void ReadTillNextDelimiter(StringBuilder current, ref bool endOfRecord, bool eatTrailingBlanks)
         {
             StringBuilder temp = new();

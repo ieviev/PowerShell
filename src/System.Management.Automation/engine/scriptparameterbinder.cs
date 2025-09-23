@@ -14,21 +14,6 @@ namespace System.Management.Automation
         #region ctor
 
         
-        /// <param name="script">
-        /// The script block representing the code being run
-        /// </param>
-        /// <param name="invocationInfo">
-        /// The invocation information about the code that is being run.
-        /// </param>
-        /// <param name="context">
-        /// The context under which the shell function is executing.
-        /// </param>
-        /// <param name="command">
-        /// The command instance that represents the script in a pipeline. May be null.
-        /// </param>
-        /// <param name="localScope">
-        /// If binding in a new local scope, the scope to set variables in.  If dotting, the value is null.
-        /// </param>
         internal ScriptParameterBinder(
             ScriptBlock script,
             InvocationInfo invocationInfo,
@@ -58,13 +43,6 @@ namespace System.Management.Automation
         #region Parameter default values
 
         
-        /// <param name="name">
-        /// The name of the parameter to get the default value of.
-        /// </param>
-        /// <returns>
-        /// The default value of the specified parameter.
-        /// </returns>
-        /// <exception cref="Exception">See SessionStateInternal.GetVariableValue.</exception>
         internal override object GetDefaultParameterValue(string name)
         {
             RuntimeDefinedParameter runtimeDefinedParameter;
@@ -81,15 +59,6 @@ namespace System.Management.Automation
         #region Parameter binding
 
         
-        /// <param name="name">
-        ///     The name of the parameter to bind the value to.
-        /// </param>
-        /// <param name="value">
-        ///     The value to bind to the parameter. It should be assumed by
-        ///     derived classes that the proper type coercion has already taken
-        ///     place and that any prerequisite metadata has been satisfied.
-        /// </param>
-        /// <param name="parameterMetadata"></param>
         internal override void BindParameter(string name, object value, CompiledCommandParameter parameterMetadata)
         {
             if (value == AutomationNull.Value || value == UnboundParameter.Value)

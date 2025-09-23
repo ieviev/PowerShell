@@ -11,9 +11,6 @@ using System.Windows.Input;
 
 namespace Microsoft.Management.UI.Internal
 {
-    /// <content>
-    /// Partial class implementation for ListOrganizerItem control.
-    /// </content>
     [SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public partial class ListOrganizerItem : Control
     {
@@ -61,7 +58,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="e">The event data.</param>
         protected override void OnKeyDown(KeyEventArgs e)
         {
             base.OnKeyDown(e);

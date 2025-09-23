@@ -157,10 +157,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="resolvedpath">File or directory path.</param>
-        /// <returns>True is the supplied path is a
-        /// valid file path or else false is returned.
-        /// If the supplied path is a directory path then false is returned.</returns>
         private bool IsValidFileForUnblocking(string resolvedpath)
         {
             bool isValidUnblockableFile = false;

@@ -361,7 +361,6 @@ namespace Microsoft.PowerShell.Commands
         [ValidateNotNull]
         public PSSession PSSession { get; set; }
 
-        /// Construct the Import-Module cmdlet object
         public ImportModuleCommand()
         {
             base.BaseDisableNameChecking = false;
@@ -1762,18 +1761,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <remarks>
-        /// Examples:
-        ///     c:\temp\mdir\mdir.psm1  # load absolute path
-        ///     ./mdir.psm1             # load relative path
-        ///     c:\temp\mdir\mdir       # resolve by using extensions. mdir is a directory, mdir.xxx is a file.
-        ///     c:\temp\mdir            # load default module if mdir is directory
-        ///     module                  # $PSScriptRoot/module/module.psd1 (ps1,psm1,dll)
-        ///     module/examplemodule.psm1      # $PSScriptRoot/module/module.psm1
-        ///     module/examplemodule           # $PSScriptRoot/module/examplemodule.XXX if examplemodule is not a directory...
-        ///     module/examplemodule           # $PSScriptRoot/module/examplemodule is a directory and $PSScriptRoot/module/examplemodule/examplemodule.XXX exists
-        ///     module/examplemodule/examplemodule.XXX
-        /// </remarks>
         protected override void ProcessRecord()
         {
             if (BaseMaximumVersion != null && BaseMinimumVersion != null && BaseMaximumVersion < BaseMinimumVersion)

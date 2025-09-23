@@ -18,11 +18,6 @@ using System.Security.Permissions;
 namespace System.Management.Automation
 {
     
-    /// <remarks>
-    /// Do not specify ErrorCategory.NotSpecified when creating an
-    /// <see cref="System.Management.Automation.ErrorRecord"/>.
-    /// Choose the best match from among the other values.
-    /// </remarks>
     public enum ErrorCategory
     {
         
@@ -136,20 +131,12 @@ namespace System.Management.Automation
 
         #region Properties
         
-        /// <see cref="System.Management.Automation.ErrorCategory"/>
-        /// for this error
         public ErrorCategory Category
         {
             get { return _errorRecord._category; }
         }
 
         
-        /// <value>text description of the operation</value>
-        /// <remarks>
-        /// By default, this is the cmdlet name.
-        /// The default can be overridden by calling Set with a
-        /// non-empty value, for example "Delete".
-        /// </remarks>
         public string Activity
         {
             get
@@ -177,12 +164,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <value>text description of the error</value>
-        /// <remarks>
-        /// By default, this is the exception type.
-        /// The default can be overridden by calling Set with a
-        /// non-empty value, for example "Permission Denied".
-        /// </remarks>
         public string Reason
         {
             get
@@ -211,13 +192,6 @@ namespace System.Management.Automation
         private bool _reasonIsExceptionType;
 
         
-        /// <value>text description of the target object</value>
-        /// <remarks>
-        /// By default, this is TargetObject.ToString(), or the empty string
-        /// if the target object is null.
-        /// The default can be overridden by calling Set with a
-        /// non-empty value, for example "John Doe".
-        /// </remarks>
         public string TargetName
         {
             get
@@ -252,13 +226,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <value>text description of the type of the target object</value>
-        /// <remarks>
-        /// By default, this is TargetObject.GetType().ToString(),
-        /// or the empty string if the target object is null.
-        /// The default can be overridden by calling Set with a
-        /// non-empty value, for example "Active Directory User".
-        /// </remarks>
         public string TargetType
         {
             get
@@ -286,22 +253,6 @@ namespace System.Management.Automation
 
         #region Methods
         
-        /// <returns>Concise text description.</returns>
-        /// <remarks>
-        /// GetMessage returns a concise string which categorizes the error,
-        /// based on
-        /// <see cref="System.Management.Automation.ErrorCategoryInfo.Category"/>
-        /// and including the other fields of
-        /// <see cref="System.Management.Automation.ErrorCategoryInfo"/>
-        /// as appropriate.  This string is much shorter
-        /// than
-        /// <see cref="System.Management.Automation.ErrorDetails.Message"/> or
-        /// <see cref="System.Exception.Message"/>, since it only
-        /// categorizes the error and does not contain a full description
-        /// or recommended actions.  The default host will display this
-        /// string instead of the full message if shell variable
-        /// $ErrorView is set to "CategoryView".
-        /// </remarks>
         public string GetMessage()
         {
             
@@ -310,23 +261,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="uiCultureInfo">Culture in which to display message.</param>
-        /// <returns>Concise text description.</returns>
-        /// <remarks>
-        /// GetMessage returns a concise string which categorizes the error,
-        /// based on
-        /// <see cref="System.Management.Automation.ErrorCategoryInfo.Category"/>
-        /// and including the other fields of
-        /// <see cref="System.Management.Automation.ErrorCategoryInfo"/>
-        /// as appropriate.  This string is much shorter
-        /// than
-        /// <see cref="System.Management.Automation.ErrorDetails.Message"/> or
-        /// <see cref="System.Exception.Message"/>, since it only
-        /// categorizes the error and does not contain a full description
-        /// or recommended actions.  The default host will display this
-        /// string instead of the full message if shell variable
-        /// $ErrorView is set to "CategoryView".
-        /// </remarks>
         public string GetMessage(CultureInfo uiCultureInfo)
         {
             // get template text
@@ -379,7 +313,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <returns>Developer-readable identifier.</returns>
         public override string ToString()
         {
             return GetMessage(CultureInfo.CurrentUICulture);
@@ -391,12 +324,6 @@ namespace System.Management.Automation
         private readonly ErrorRecord _errorRecord;
 
         
-        /// <param name="uiCultureInfo">Culture to retrieve template if needed.</param>
-        /// <param name="original">Original string.</param>
-        /// <returns>Ellipsized version of string.</returns>
-        /// <remarks>
-        /// "Please do not make this public as ellipsize is not a word."
-        /// </remarks>
         internal static string Ellipsize(CultureInfo uiCultureInfo, string original)
         {
             if (original.Length <= 40)
@@ -416,31 +343,10 @@ namespace System.Management.Automation
     }
 
     
-    /// <remarks>
-    /// ErrorDetails represents additional details about an
-    /// <see cref="System.Management.Automation.ErrorRecord"/>,
-    /// starting with a replacement Message.  Clients can use ErrorDetails
-    /// when they want to display a more specific Message than the one
-    /// contained in a particular Exception, without having to create
-    /// a new Exception or define a new Exception class.
-    ///
-    /// It is permitted to subclass <see cref="ErrorDetails"/>
-    /// but there is no established scenario for doing this, nor has it been tested.
-    /// </remarks>
     public class ErrorDetails : ISerializable
     {
         #region Constructor
         
-        /// <remarks>
-        /// It is preferred for Cmdlets to use
-        /// <see cref="ErrorDetails(Cmdlet,string,string,object[])"/>,
-        /// for CmdletProviders to use
-        /// <see cref="ErrorDetails(IResourceSupplier,string,string,object[])"/>,
-        /// and for other localizable code to use
-        /// <see cref="ErrorDetails(Assembly,string,string,object[])"/>
-        /// where possible.
-        /// </remarks>
-        /// <param name="message"></param>
         public ErrorDetails(string message)
         {
             _message = message;
@@ -448,39 +354,6 @@ namespace System.Management.Automation
 
         #region UseResourceId
         
-        /// <param name="cmdlet">Cmdlet containing the template string.</param>
-        /// <param name="baseName">by default, the
-        /// <see cref="System.Resources.ResourceManager"/>
-        /// name</param>
-        /// <param name="resourceId">
-        /// by default, the resourceId in the
-        /// <see cref="System.Resources.ResourceManager"/>
-        /// </param>
-        /// <param name="args">
-        /// <see cref="System.String.Format(IFormatProvider,string,object[])"/>
-        /// insertion parameters
-        /// </param>
-        /// <remarks>
-        /// This variant is a shortcut to build an instance of
-        /// <see cref="System.Management.Automation.ErrorDetails"/>
-        /// reducing the steps which localizable code generally has to duplicate when it
-        /// generates a localizable string.  This variant is preferred over
-        /// <see cref="System.Management.Automation.ErrorDetails(string)"/>,
-        /// since the improved
-        /// information about the error may help enable future scenarios.
-        ///
-        /// This constructor first loads the error message template string using
-        /// <see cref="Cmdlet.GetResourceString"/>.
-        /// The default implementation of
-        /// <see cref="Cmdlet.GetResourceString"/>
-        /// will load a string resource from the cmdlet assembly using
-        /// <paramref name="baseName"/> and <paramref name="resourceId"/>;
-        /// however, specific cmdlets can override this behavior
-        /// by overriding virtual method
-        /// <see cref="Cmdlet.GetResourceString"/>.
-        /// This constructor then inserts the specified args using
-        /// <see cref="System.String.Format(IFormatProvider,string,object[])"/>.
-        /// </remarks>
         public ErrorDetails(
             Cmdlet cmdlet,
             string baseName,
@@ -490,47 +363,6 @@ namespace System.Management.Automation
             _message = BuildMessage(cmdlet, baseName, resourceId, args);
         }
         
-        /// <param name="resourceSupplier">
-        /// Resource supplier, most often an instance of
-        /// <see cref="Provider.CmdletProvider"/>.
-        /// </param>
-        /// <param name="baseName">by default, the
-        /// <see cref="System.Resources.ResourceManager"/>
-        /// name</param>
-        /// <param name="resourceId">
-        /// by default, the resourceId in the
-        /// <see cref="System.Resources.ResourceManager"/>
-        /// </param>
-        /// <param name="args">
-        /// <see cref="System.String.Format(IFormatProvider,string,object[])"/>
-        /// insertion parameters
-        /// </param>
-        /// <remarks>
-        /// This variant is a shortcut to build an instance of
-        /// <see cref="System.Management.Automation.ErrorDetails"/>
-        /// reducing the steps which localizable code generally has to duplicate when it
-        /// generates a localizable string.  This variant is preferred over
-        /// <see cref="System.Management.Automation.ErrorDetails(string)"/>,
-        /// since the improved
-        /// information about the error may help enable future scenarios.
-        ///
-        /// This constructor first loads a template string using
-        /// <see cref="System.Management.Automation.IResourceSupplier.GetResourceString"/>.
-        /// The default implementation of
-        /// <see cref="Provider.CmdletProvider.GetResourceString"/>
-        /// will load a string resource from the CmdletProvider assembly using
-        /// <paramref name="baseName"/> and <paramref name="resourceId"/>;
-        /// however, specific CmdletProviders can override this behavior
-        /// by overriding virtual method
-        /// <see cref="Provider.CmdletProvider.GetResourceString"/>,
-        /// and it is also possible that PSSnapin custom classes
-        /// which are not instances of
-        /// <see cref="Provider.CmdletProvider"/>
-        /// will implement
-        /// <see cref="IResourceSupplier"/>.
-        /// The constructor then inserts the specified args using
-        /// <see cref="System.String.Format(IFormatProvider,string,object[])"/>.
-        /// </remarks>
         public ErrorDetails(
             IResourceSupplier resourceSupplier,
             string baseName,
@@ -540,34 +372,6 @@ namespace System.Management.Automation
             _message = BuildMessage(resourceSupplier, baseName, resourceId, args);
         }
         
-        /// <param name="assembly">
-        /// assembly containing the template string
-        /// </param>
-        /// <param name="baseName">by default, the
-        /// <see cref="System.Resources.ResourceManager"/>
-        /// name</param>
-        /// <param name="resourceId">
-        /// by default, the resourceId in the
-        /// <see cref="System.Resources.ResourceManager"/>
-        /// </param>
-        /// <param name="args">
-        /// <see cref="System.String.Format(IFormatProvider,string,object[])"/>
-        /// insertion parameters
-        /// </param>
-        /// <remarks>
-        /// This variant is a shortcut to build an instance of
-        /// <see cref="System.Management.Automation.ErrorDetails"/>
-        /// reducing the steps which localizable code generally has to duplicate when it
-        /// generates a localizable string.  This variant is preferred over
-        /// <see cref="System.Management.Automation.ErrorDetails(string)"/>,
-        /// since the improved
-        /// information about the error may help enable future scenarios.
-        ///
-        /// This constructor first loads a template string from the assembly using
-        /// <see cref="System.Resources.ResourceManager.GetString(string)"/>.
-        /// The constructor then inserts the specified args using
-        /// <see cref="System.String.Format(IFormatProvider,string,object[])"/>.
-        /// </remarks>
         public ErrorDetails(
             System.Reflection.Assembly assembly,
             string baseName,
@@ -588,9 +392,6 @@ namespace System.Management.Automation
 
         #region Serialization
         
-        /// <param name="info">Serialization information.</param>
-        /// <param name="context">Streaming context.</param>
-        /// <returns>Constructed object.</returns>
         protected ErrorDetails(SerializationInfo info,
                                StreamingContext context)
         {
@@ -600,8 +401,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="info">Serialization information.</param>
-        /// <param name="context">Streaming context.</param>
         public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             if (info != null)
@@ -615,20 +414,6 @@ namespace System.Management.Automation
 
         #region Public Properties
         
-        /// <remarks>
-        /// When an instance of
-        /// <see cref="System.Management.Automation.ErrorRecord"/>
-        /// contains a non-null
-        /// <see cref="System.Management.Automation.ErrorRecord.ErrorDetails"/>
-        /// and
-        /// <see cref="System.Management.Automation.ErrorDetails.Message"/>
-        /// is non-empty, the default host will display it instead of
-        /// the <see cref="System.Exception.Message"/> in
-        /// <see cref="System.Management.Automation.ErrorRecord.Exception"/>.
-        ///
-        /// This should be a grammatically correct localized text string, as with
-        /// <see cref="System.Exception.Message"/>
-        /// </remarks>
         public string Message
         {
             get { return ErrorRecord.NotNull(_message); }
@@ -637,10 +422,6 @@ namespace System.Management.Automation
         private readonly string _message = string.Empty;
 
         
-        /// <remarks>
-        /// This should be a grammatically correct localized text string.
-        /// This may be left empty.
-        /// </remarks>
         public string RecommendedAction
         {
             get
@@ -670,7 +451,6 @@ namespace System.Management.Automation
 
         #region ToString
         
-        /// <returns>Developer-readable identifier.</returns>
         public override string ToString()
         {
             return Message;
@@ -834,27 +614,6 @@ namespace System.Management.Automation
     }
 
     
-    /// <remarks>
-    /// An ErrorRecord describes an error.  It extends the usual information
-    /// in <see cref="System.Exception"/> with the additional information in
-    /// <see cref="System.Management.Automation.ErrorRecord.ErrorDetails"/>,
-    /// <see cref="System.Management.Automation.ErrorRecord.TargetObject"/>,
-    /// <see cref="System.Management.Automation.ErrorRecord.CategoryInfo"/>,
-    /// <see cref="System.Management.Automation.ErrorRecord.FullyQualifiedErrorId"/>,
-    /// <see cref="System.Management.Automation.ErrorRecord.ErrorDetails"/>, and
-    /// <see cref="System.Management.Automation.ErrorRecord.InvocationInfo"/>.
-    /// Non-terminating errors are stored as
-    /// <see cref="System.Management.Automation.ErrorRecord"/>
-    /// instances in shell variable
-    /// $error.
-    ///
-    /// Some terminating errors implement
-    /// <see cref="System.Management.Automation.IContainsErrorRecord"/>
-    /// which gives them an ErrorRecord property containing this additional
-    /// information.  In this case, ErrorRecord.Exception will be an instance of
-    /// <see cref="System.Management.Automation.ParentContainsErrorRecordException"/>.
-    /// rather than the actual exception, to avoid the mutual references.
-    /// </remarks>
     public class ErrorRecord : ISerializable
     {
         #region Constructor
@@ -864,24 +623,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="exception">
-        /// This is an exception which describes the error.
-        /// This argument may not be null, but it is not required
-        /// that the exception have ever been thrown.
-        /// </param>
-        /// <param name="errorId">
-        /// This string will be used to construct the FullyQualifiedErrorId,
-        /// which is a global identifier of the error condition.  Pass a
-        /// non-empty string which is specific to this error condition in
-        /// this context.
-        /// </param>
-        /// <param name="errorCategory">
-        /// This is the ErrorCategory which best describes the error.
-        /// </param>
-        /// <param name="targetObject">
-        /// This is the object against which the cmdlet or provider
-        /// was operating when the error occurred.  This is optional.
-        /// </param>
         public ErrorRecord(
             Exception exception,
             string errorId,
@@ -919,14 +660,6 @@ namespace System.Management.Automation
         // CommandInfo and its subclasses is too expensive.
 
         
-        /// <param name="info">Serialization information.</param>
-        /// <param name="context">Streaming context.</param>
-        /// <returns>Constructed object.</returns>
-        /// <remarks>
-        /// ErrorRecord instances which are serialized using
-        /// <see cref="ISerializable"/>
-        /// will only be partially reconstructed.
-        /// </remarks>
         protected ErrorRecord(SerializationInfo info,
                               StreamingContext context)
         {
@@ -935,8 +668,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="info">Serialization information.</param>
-        /// <param name="context">Streaming context.</param>
         public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             if (info != null)
@@ -966,17 +697,6 @@ namespace System.Management.Automation
         internal string _serializedErrorCategoryMessageOverride = null;
 
         
-        /// <param name="exception"></param>
-        /// <param name="targetObject"></param>
-        /// <param name="fullyQualifiedErrorId"></param>
-        /// <param name="errorCategory"></param>
-        /// <param name="errorCategory_Activity"></param>
-        /// <param name="errorCategory_Reason"></param>
-        /// <param name="errorCategory_TargetName"></param>
-        /// <param name="errorCategory_TargetType"></param>
-        /// <param name="errorCategory_Message"></param>
-        /// <param name="errorDetails_Message"></param>
-        /// <param name="errorDetails_RecommendedAction"></param>
         internal ErrorRecord(
             Exception exception,
             object targetObject,
@@ -1044,7 +764,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <returns></returns>
         internal void ToPSObjectForRemoting(PSObject dest)
         {
             ToPSObjectForRemoting(dest, SerializeExtendedInfo);
@@ -1087,15 +806,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="mshObject">
-        /// PSObject from which value is fetched.
-        /// </param>
-        /// <param name="note">
-        /// name of note whose value is fetched
-        /// </param>
-        /// <returns>
-        /// value of note
-        /// </returns>
         private static object GetNoteValue(PSObject mshObject, string note)
         {
             if (mshObject.Properties[note] is PSNoteProperty p)
@@ -1109,15 +819,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="serializedErrorRecord">
-        /// PSObject to convert to ErrorRecord
-        /// </param>
-        /// <returns>
-        /// ErrorRecord convert from mshObject.
-        /// </returns>
-        /// <exception cref="ArgumentNullException">
-        /// Thrown if mshObject parameter is null.
-        /// </exception>
         internal static ErrorRecord FromPSObjectForRemoting(PSObject serializedErrorRecord)
         {
             ErrorRecord er = new ErrorRecord();
@@ -1222,11 +923,6 @@ namespace System.Management.Automation
         #endregion Remoting
 
         
-        /// <param name="errorRecord">Wrapped ErrorRecord.</param>
-        /// <param name="replaceParentContainsErrorRecordException">
-        /// If the wrapped exception contains a ParentContainsErrorRecordException, the new
-        /// ErrorRecord should have this exception as its Exception instead.
-        /// </param>
         public ErrorRecord(ErrorRecord errorRecord,
                              Exception replaceParentContainsErrorRecordException)
         {
@@ -1267,11 +963,6 @@ namespace System.Management.Automation
         #region Override
 
         
-        /// <param name="replaceParentContainsErrorRecordException">
-        /// If the wrapped exception contains a ParentContainsErrorRecordException, the new
-        /// ErrorRecord should have this exception as its Exception instead.
-        /// </param>
-        /// <returns></returns>
         internal virtual ErrorRecord WrapException(Exception replaceParentContainsErrorRecordException)
         {
             return new ErrorRecord(this, replaceParentContainsErrorRecordException);
@@ -1282,7 +973,6 @@ namespace System.Management.Automation
         #region Public Properties
 
         
-        /// <value>never null</value>
         public Exception Exception
         {
             get
@@ -1295,7 +985,6 @@ namespace System.Management.Automation
         private Exception _error ;
 
         
-        /// <value>may be null</value>
         public object TargetObject { get => _target; }
 
         private object _target ;
@@ -1306,20 +995,11 @@ namespace System.Management.Automation
         }
 
         
-        /// <value>never null</value>
         public ErrorCategoryInfo CategoryInfo { get => _categoryInfo ??= new ErrorCategoryInfo(this); }
 
         private ErrorCategoryInfo _categoryInfo;
 
         
-        /// <value>never null</value>
-        /// <remarks>
-        /// FullyQualifiedErrorid identifies this error condition
-        /// more specifically than either the ErrorCategory
-        /// or the Exception.  Use FullyQualifiedErrorId to filter specific
-        /// error conditions, or to associate special handling with specific
-        /// error conditions.
-        /// </remarks>
         public string FullyQualifiedErrorId
         {
             get
@@ -1339,16 +1019,9 @@ namespace System.Management.Automation
         }
 
         
-        /// <value>may be null</value>
-        /// <remarks>
-        /// In particular, ErrorDetails.Message (if present and non-empty)
-        /// contains a replacement message which should be displayed instead of
-        /// Exception.Message.
-        /// </remarks>
         public ErrorDetails ErrorDetails { get; set; }
 
         
-        /// <value>may be null</value>
         public InvocationInfo InvocationInfo { get => _invocationInfo; }
 
         private InvocationInfo _invocationInfo ;
@@ -1492,7 +1165,6 @@ namespace System.Management.Automation
 
         #region ToString
         
-        /// <returns>Developer-readable identifier.</returns>
         public override string ToString()
         {
             if (ErrorDetails != null && !string.IsNullOrEmpty(ErrorDetails.Message))
@@ -1512,7 +1184,6 @@ namespace System.Management.Automation
     }
 
     
-    /// <typeparam name="TException">Anything that inherits Exception.</typeparam>
     internal class ErrorRecord<TException> : ErrorRecord where TException : Exception
     {
         public new TException Exception { get; }
@@ -1523,110 +1194,19 @@ namespace System.Management.Automation
     }
 
     
-    /// <remarks>
-    /// PowerShell defines certain exception classes which implement this interface.
-    /// This includes wrapper exceptions such as
-    /// <see cref="System.Management.Automation.CmdletInvocationException"/>,
-    /// and also PowerShell engine errors such as
-    /// <see cref="System.Management.Automation.GetValueException"/>.
-    /// Cmdlets and providers should not define this interface;
-    /// instead, they should use the
-    /// WriteError(ErrorRecord) or
-    /// ThrowTerminatingError(ErrorRecord) methods.
-    /// The ErrorRecord property will contain an ErrorRecord
-    /// which contains an instance of
-    /// <see cref="System.Management.Automation.ParentContainsErrorRecordException"/>
-    /// rather than the actual exception.
-    ///
-    /// Do not call WriteError(e.ErrorRecord).
-    /// The ErrorRecord contained in the ErrorRecord property of
-    /// an exception which implements IContainsErrorRecord
-    /// should not be passed directly to WriteError, since it contains
-    /// a ParentContainsErrorRecordException rather than the real exception.
-    ///
-    /// It is permitted for PSSnapins to implement custom Exception classes which implement
-    /// <see cref="IContainsErrorRecord"/>,
-    /// but it is generally preferable for Cmdlets and CmdletProviders to communicate
-    /// <see cref="ErrorRecord"/>
-    /// information using
-    /// <see cref="Cmdlet.ThrowTerminatingError"/>
-    /// or
-    /// <see cref="Provider.CmdletProvider.ThrowTerminatingError"/>
-    /// rather than by throwing an exception which implements
-    /// <see cref="IContainsErrorRecord"/>.
-    /// Consider implementing
-    /// <seealso cref="IContainsErrorRecord"/>
-    /// in your custom exception only if you throw it from a context
-    /// where a reference to the active
-    /// <seealso cref="Cmdlet"/> or
-    /// <seealso cref="Provider.CmdletProvider"/>
-    /// is no longer available.
-    /// </remarks>
 #nullable enable
     public interface IContainsErrorRecord
     {
         
-        /// <remarks>
-        /// The <see cref="ErrorRecord"/> instance returned by
-        /// <see cref="IContainsErrorRecord.ErrorRecord"/>
-        /// should contain in its
-        /// <see cref="System.Management.Automation.ErrorRecord.Exception"/>
-        /// property an instance of
-        /// <see cref="ParentContainsErrorRecordException"/>
-        /// rather than a reference to the root exception.  This prevents
-        /// a recursive reference between the exception implementing
-        /// <see cref="IContainsErrorRecord"/> and the
-        /// <see cref="ErrorRecord"/>.
-        /// Use the
-        /// <see cref="ParentContainsErrorRecordException(Exception)"/>
-        /// constructor so that the
-        /// <see cref="ParentContainsErrorRecordException"/>
-        /// will have the same
-        /// <see cref="System.Exception.Message"/>
-        /// as the root exception.
-        /// </remarks>
         ErrorRecord ErrorRecord { get; }
     }
 #nullable restore
 
     
-    /// <remarks>
-    /// <see cref="Provider.CmdletProvider"/>
-    /// implements this interface.  PSSnapins can implement
-    /// <see cref="IResourceSupplier"/>
-    /// on their custom classes, but the only purpose would be to permit
-    /// the custom class to be used in the
-    /// <see cref="ErrorDetails(IResourceSupplier,string,string,object[])"/>.
-    /// constructor.
-    /// <see cref="ErrorDetails"/> contains special constructor
-    /// <see cref="ErrorDetails(IResourceSupplier,string,string,object[])"/>
-    /// reducing the steps which localizable code generally has to duplicate when it
-    /// generates a localizable string.  This variant is preferred over
-    /// <see cref="ErrorDetails(string)"/>,
-    /// since the improved
-    /// information about the error may help enable future scenarios.
-    /// </remarks>
 #nullable enable
     public interface IResourceSupplier
     {
         
-        /// <remarks>
-        /// If the desired behavior is simple string lookup
-        /// in your assembly, you can use the
-        /// <see cref="ErrorDetails(Assembly,string,string,object[])"/>
-        /// constructor instead and not bother implementing
-        /// <see cref="IResourceSupplier"/>.
-        /// Consider implementing <see cref="IResourceSupplier"/>
-        /// if you want more complex behavior.
-        ///
-        /// Insertions will be inserted into the string with
-        /// <see cref="System.String.Format(IFormatProvider,string,object[])"/>
-        /// to generate the final error message in
-        /// <see cref="ErrorDetails.Message"/>.
-        /// </remarks>
-        /// <param name="baseName">The base resource name.</param>
-        /// <param name="resourceId">The resource id.</param>
-        /// <returns>The error message template string corresponding to baseName and resourceId.</returns>
         string GetResourceString(string baseName, string resourceId);
     }
 }

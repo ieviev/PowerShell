@@ -25,14 +25,6 @@ namespace System.Management.Automation
         #region Constructor
 
         
-        /// <param name="psInstanceId">
-        /// PowerShell InstanceId which added this data.
-        /// Guid.Empty, if the data is not added by a PowerShell
-        /// instance.
-        /// </param>
-        /// <param name="index">
-        /// Index at which the data is added.
-        /// </param>
         internal DataAddedEventArgs(Guid psInstanceId, int index)
         {
             PowerShellInstanceId = psInstanceId;
@@ -64,14 +56,6 @@ namespace System.Management.Automation
         #region Constructor
 
         
-        /// <param name="psInstanceId">
-        /// PowerShell InstanceId which added this data.
-        /// Guid.Empty, if the data is not added by a PowerShell
-        /// instance.
-        /// </param>
-        /// <param name="itemAdded">
-        /// The actual item about to be added.
-        /// </param>
         internal DataAddingEventArgs(Guid psInstanceId, object itemAdded)
         {
             PowerShellInstanceId = psInstanceId;
@@ -129,28 +113,12 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="items">
-        /// Items used to initialize the collection
-        /// </param>
-        /// <remarks>
-        /// This constructor is useful when the user wants to use an IEnumerable as an input to one of the PowerShell.BeginInvoke overloads.
-        /// The invocation doesn't complete until Complete() is called on the PSDataCollection; this constructor does the Complete() on
-        /// behalf of the user.
-        /// </remarks>
         public PSDataCollection(IEnumerable<T> items) : this(new List<T>(items))
         {
             this.Complete();
         }
 
         
-        /// <param name="capacity">
-        /// The number of elements that the new buffer can initially
-        /// store.
-        /// </param>
-        /// <remarks>
-        /// Capacity is the number of elements that the PSDataCollection can
-        /// store before resizing is required.
-        /// </remarks>
         public PSDataCollection(int capacity) : this(new List<T>(capacity))
         {
         }
@@ -160,8 +128,6 @@ namespace System.Management.Automation
         #region type converters
 
         
-        /// <param name="valueToConvert">The value to convert.</param>
-        /// <returns>New collection of value, marked as Complete.</returns>
         [SuppressMessage("Microsoft.Usage", "CA2225:OperatorOverloadsHaveNamedAlternates",
             Justification = "There are already alternates to the implicit casts, ToXXX and FromXXX methods are unnecessary and redundant")]
         public static implicit operator PSDataCollection<T>(bool valueToConvert)
@@ -170,8 +136,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="valueToConvert">The value to convert.</param>
-        /// <returns>New collection of value, marked as Complete.</returns>
         [SuppressMessage("Microsoft.Usage", "CA2225:OperatorOverloadsHaveNamedAlternates",
             Justification = "There are already alternates to the implicit casts, ToXXX and FromXXX methods are unnecessary and redundant")]
         public static implicit operator PSDataCollection<T>(string valueToConvert)
@@ -180,8 +144,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="valueToConvert">The value to convert.</param>
-        /// <returns>New collection of value, marked as Complete.</returns>
         [SuppressMessage("Microsoft.Usage", "CA2225:OperatorOverloadsHaveNamedAlternates",
             Justification = "There are already alternates to the implicit casts, ToXXX and FromXXX methods are unnecessary and redundant")]
         public static implicit operator PSDataCollection<T>(int valueToConvert)
@@ -190,8 +152,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="valueToConvert">The value to convert.</param>
-        /// <returns>New collection of value, marked as Complete.</returns>
         [SuppressMessage("Microsoft.Usage", "CA2225:OperatorOverloadsHaveNamedAlternates",
             Justification = "There are already alternates to the implicit casts, ToXXX and FromXXX methods are unnecessary and redundant")]
         public static implicit operator PSDataCollection<T>(byte valueToConvert)
@@ -208,8 +168,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="valueToConvert">The value to convert.</param>
-        /// <returns>New collection of value, marked as Complete.</returns>
         [SuppressMessage("Microsoft.Usage", "CA2225:OperatorOverloadsHaveNamedAlternates",
             Justification = "There are already alternates to the implicit casts, ToXXX and FromXXX methods are unnecessary and redundant")]
         public static implicit operator PSDataCollection<T>(Hashtable valueToConvert)
@@ -221,8 +179,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="valueToConvert">The value to convert.</param>
-        /// <returns>New collection of value, marked as Complete.</returns>
         [SuppressMessage("Microsoft.Usage", "CA2225:OperatorOverloadsHaveNamedAlternates",
             Justification = "There are already alternates to the implicit casts, ToXXX and FromXXX methods are unnecessary and redundant")]
         public static implicit operator PSDataCollection<T>(T valueToConvert)
@@ -234,8 +190,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="arrayToConvert">The value to convert.</param>
-        /// <returns>New collection of value, marked as Complete.</returns>
         [SuppressMessage("Microsoft.Usage", "CA2225:OperatorOverloadsHaveNamedAlternates",
             Justification = "There are already alternates to the implicit casts, ToXXX and FromXXX methods are unnecessary and redundant")]
         public static implicit operator PSDataCollection<T>(object[] arrayToConvert)
@@ -258,22 +212,12 @@ namespace System.Management.Automation
         #region Internal Constructor
 
         
-        /// <param name="listToUse">
-        /// buffer where the elements are stored
-        /// </param>
-        /// <remarks>
-        /// Using this constructor will make the data buffer a wrapper on
-        /// top of the <paramref name="listToUse"/>, which provides synchronized
-        /// access.
-        /// </remarks>
         internal PSDataCollection(IList<T> listToUse)
         {
             _data = listToUse;
         }
 
         
-        /// <param name="info">Serialization information for this instance.</param>
-        /// <param name="context">The streaming context for this instance.</param>
         protected PSDataCollection(SerializationInfo info, StreamingContext context)
         {
             if (info == null)
@@ -531,19 +475,6 @@ namespace System.Management.Automation
         #region IList Generic Overrides
 
         
-        /// <param name="index">
-        /// The zero-based index of the element to get or set.
-        /// </param>
-        /// <exception cref="InvalidOperationException">
-        /// Objects cannot be added to a closed buffer.
-        /// Make sure the buffer is open for Add and Insert
-        /// operations to succeed.
-        /// </exception>
-        /// <exception cref="ArgumentOutOfRangeException">
-        /// index is less than 0.
-        /// (or)
-        /// index is equal to or greater than Count.
-        /// </exception>
         public T this[int index]
         {
             get
@@ -575,12 +506,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="item">
-        /// The object to locate in the buffer.
-        /// </param>
-        /// <returns>
-        /// The index of item if found in the buffer; otherwise, -1.
-        /// </returns>
         public int IndexOf(T item)
         {
             lock (SyncObject)
@@ -590,21 +515,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="index">
-        /// The zero-based index at which item should be inserted.
-        /// </param>
-        /// <param name="item">
-        /// The object to insert into the buffer.
-        /// </param>
-        /// <exception cref="InvalidOperationException">
-        /// Objects cannot be added to a closed buffer.
-        /// Make sure the buffer is open for Add and Insert
-        /// operations to succeed.
-        /// </exception>
-        /// <exception cref="ArgumentOutOfRangeException">
-        /// The index specified is less than zero or greater
-        /// than Count.
-        /// </exception>
         public void Insert(int index, T item)
         {
             lock (SyncObject)
@@ -616,12 +526,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="index">
-        /// The zero-based index of the item to remove.
-        /// </param>
-        /// <exception cref="ArgumentOutOfRangeException">
-        /// index is not a valid index in the buffer.
-        /// </exception>
         public void RemoveAt(int index)
         {
             lock (SyncObject)
@@ -665,14 +569,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="item">
-        /// item to add
-        /// </param>
-        /// <exception cref="InvalidOperationException">
-        /// Objects cannot be added to a closed buffer.
-        /// Make sure the buffer is open for Add and Insert
-        /// operations to succeed.
-        /// </exception>
         public void Add(T item)
         {
             InternalAdd(Guid.Empty, item);
@@ -688,12 +584,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="item">
-        /// The object to locate in the buffer.
-        /// </param>
-        /// <returns>
-        /// true if the element value is found in the buffer; otherwise false.
-        /// </returns>
         public bool Contains(T item)
         {
             lock (SyncObject)
@@ -708,28 +598,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="array">
-        /// The destination Array for the elements of type T copied from the buffer.
-        /// </param>
-        /// <param name="arrayIndex">
-        /// The zero-based index in the array at which copying begins.
-        /// </param>
-        /// <exception cref="ArgumentException">
-        /// array is multidimensional.
-        /// (or)
-        /// arrayIndex is equal to or greater than the length of array.
-        /// (or)
-        /// The number of elements in the source buffer is greater than the
-        /// available space from arrayIndex to the end of the destination array.
-        /// (or)
-        /// Type T cannot be cast automatically to the type of the destination array.
-        /// </exception>
-        /// <exception cref="ArgumentNullException">
-        /// array is a null reference
-        /// </exception>
-        /// <exception cref="ArgumentOutOfRangeException">
-        /// arrayIndex is less than 0.
-        /// </exception>
         public void CopyTo(T[] array, int arrayIndex)
         {
             lock (SyncObject)
@@ -739,12 +607,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="item">
-        /// The object to remove from the buffer.
-        /// </param>
-        /// <returns>
-        /// true if item was successfully removed from the buffer; otherwise, false.
-        /// </returns>
         public bool Remove(T item)
         {
             lock (SyncObject)
@@ -765,9 +627,6 @@ namespace System.Management.Automation
         #region IEnumerable Generic Overrides
 
         
-        /// <returns>
-        /// An IEnumerator for objects of the type stored in the buffer.
-        /// </returns>
         public IEnumerator<T> GetEnumerator()
         {
             return new PSDataCollectionEnumerator<T>(this, EnumeratorNeverBlocks);
@@ -778,22 +637,6 @@ namespace System.Management.Automation
         #region IList Overrides
 
         
-        /// <param name="value">
-        /// The object to add to the buffer.
-        /// </param>
-        /// <returns>
-        /// The position into which the new element was inserted.
-        /// </returns>
-        /// <exception cref="InvalidOperationException">
-        /// Objects cannot be added to a closed buffer.
-        /// Make sure the buffer is open for Add and Insert
-        /// operations to succeed.
-        /// </exception>
-        /// <exception cref="ArgumentException">
-        /// value reference is null.
-        /// (or)
-        /// value is not of the correct generic type T for the buffer.
-        /// </exception>
         int IList.Add(object value)
         {
             PSDataCollection<T>.VerifyValueType(value);
@@ -805,18 +648,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="value">
-        /// The object to locate in the collection
-        /// </param>
-        /// <returns>
-        /// true if the element value is found in the collection;
-        /// otherwise false.
-        /// </returns>
-        /// <exception cref="ArgumentException">
-        /// value reference is null.
-        /// (or)
-        /// value is not of the correct generic type T for the buffer.
-        /// </exception>
         bool IList.Contains(object value)
         {
             PSDataCollection<T>.VerifyValueType(value);
@@ -824,17 +655,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="value">
-        /// The element in the buffer whose index is being determined.
-        /// </param>
-        /// <returns>
-        /// The index of the value if found in the buffer; otherwise, -1.
-        /// </returns>
-        /// <exception cref="ArgumentException">
-        /// value reference is null.
-        /// (or)
-        /// value is not of the correct generic type T for the buffer.
-        /// </exception>
         int IList.IndexOf(object value)
         {
             PSDataCollection<T>.VerifyValueType(value);
@@ -842,20 +662,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="index">
-        /// The zero-based index at which value is to be inserted.
-        /// </param>
-        /// <param name="value">
-        /// The object to insert into the buffer.
-        /// </param>
-        /// <exception cref="ArgumentOutOfRangeException">
-        /// index is not a valid index in the buffer.
-        /// </exception>
-        /// <exception cref="ArgumentException">
-        /// value reference is null.
-        /// (or)
-        /// value is not of the correct generic type T for the buffer.
-        /// </exception>
         void IList.Insert(int index, object value)
         {
             PSDataCollection<T>.VerifyValueType(value);
@@ -863,14 +669,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="value">
-        /// The object to be removed from the buffer.
-        /// </param>
-        /// <exception cref="ArgumentException">
-        /// value reference is null.
-        /// (or)
-        /// value is not of the correct generic type T for the buffer.
-        /// </exception>
         void IList.Remove(object value)
         {
             PSDataCollection<T>.VerifyValueType(value);
@@ -896,19 +694,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="index">
-        /// The zero-based index of the element to get or set.
-        /// </param>
-        /// <exception cref="IndexOutOfRangeException">
-        /// index is less than 0.
-        /// (or)
-        /// index is equal to or greater than Count.
-        /// </exception>
-        /// <exception cref="ArgumentException">
-        /// value reference is null.
-        /// (or)
-        /// value is not of the correct generic type T for the buffer.
-        /// </exception>
         object IList.this[int index]
         {
             get
@@ -946,27 +731,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="array">
-        /// The destination Array for the elements of type T copied
-        /// from the buffer.
-        /// </param>
-        /// <param name="index">
-        /// The zero-based index in the array at which copying begins.
-        /// </param>
-        /// <exception cref="ArgumentException">
-        /// array is multidimensional.
-        /// (or)
-        /// arrayIndex is equal to or greater than the length of array.
-        /// (or)
-        /// The number of elements in the source buffer is greater than the
-        /// available space from arrayIndex to the end of the destination array.
-        /// </exception>
-        /// <exception cref="ArgumentNullException">
-        /// array is a null reference
-        /// </exception>
-        /// <exception cref="ArgumentOutOfRangeException">
-        /// arrayIndex is less than 0.
-        /// </exception>
         void ICollection.CopyTo(Array array, int index)
         {
             lock (SyncObject)
@@ -980,9 +744,6 @@ namespace System.Management.Automation
         #region IEnumerable Overrides
 
         
-        /// <returns>
-        /// An IEnumerator for objects of the type stored in the buffer.
-        /// </returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
             return new PSDataCollectionEnumerator<T>(this, EnumeratorNeverBlocks);
@@ -993,19 +754,12 @@ namespace System.Management.Automation
         #region Streaming Behavior
 
         
-        /// <returns>
-        /// A new collection with a copy of all the elements in the current collection.
-        /// </returns>
         public Collection<T> ReadAll()
         {
             return ReadAndRemove(0);
         }
 
         
-        /// <returns>
-        /// A new collection with a copy of all the elements in the current collection.
-        /// </returns>
-        /// <param name="readCount">Maximum number of elements to read.</param>
         internal Collection<T> ReadAndRemove(int readCount)
         {
             Dbg.Assert(_data != null, "Collection cannot be null");
@@ -1073,20 +827,6 @@ namespace System.Management.Automation
         #region Protected Virtual Methods
 
         
-        /// <param name="psInstanceId">
-        /// InstanceId of PowerShell instance adding this data.
-        /// Guid.Empty if not initiated by a PowerShell instance.
-        /// </param>
-        /// <param name="index">
-        /// The zero-based index of the buffer where the object is to be inserted
-        /// </param>
-        /// <param name="item">
-        /// The object to be inserted into the buffer.
-        /// </param>
-        /// <exception cref="ArgumentOutOfRangeException">
-        /// The index specified is less than zero or greater
-        /// than Count.
-        /// </exception>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "ps", Justification = "PS signifies PowerShell and is used at many places in the product.")]
         protected virtual void InsertItem(Guid psInstanceId, int index, T item)
         {
@@ -1101,13 +841,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="index">
-        /// The zero-based index of the buffer where the object is to be removed.
-        /// </param>
-        /// <exception cref="ArgumentOutOfRangeException">
-        /// The index specified is less than zero or greater
-        /// than the number of items in the buffer.
-        /// </exception>
         protected virtual void RemoveItem(int index)
         {
             _data.RemoveAt(index);
@@ -1118,8 +851,6 @@ namespace System.Management.Automation
         #region Serializable
 
         
-        /// <param name="info">Serialization information for this instance.</param>
-        /// <param name="context">The streaming context for this instance.</param>
         public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             if (info == null)
@@ -1158,14 +889,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="psInstanceId">
-        /// PowerShell InstanceId which added this data.
-        /// Guid.Empty, if the data is not added by a PowerShell
-        /// instance.
-        /// </param>
-        /// <param name="index">
-        /// Index at which the data is added.
-        /// </param>
         private void RaiseEvents(Guid psInstanceId, int index)
         {
             bool raiseDataAdded = false;
@@ -1232,26 +955,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="psInstanceId">
-        /// InstanceId of PowerShell instance adding this data.
-        /// Guid.Empty if this is not initiated by a PowerShell instance.
-        /// </param>
-        /// <param name="index">
-        /// The zero-based index of the buffer where the object is
-        /// to be inserted.
-        /// </param>
-        /// <param name="item">
-        /// The object to be inserted into the buffer.
-        /// </param>
-        /// <exception cref="InvalidOperationException">
-        /// Objects cannot be added to a closed buffer.
-        /// Make sure the buffer is open for Add and Insert
-        /// operations to succeed.
-        /// </exception>
-        /// <exception cref="ArgumentOutOfRangeException">
-        /// The index specified is less than zero or greater
-        /// than Count.
-        /// </exception>
         private void InternalInsertItem(Guid psInstanceId, int index, T item)
         {
             if (!_isOpen)
@@ -1263,18 +966,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="psInstanceId">
-        /// InstanceId of PowerShell instance adding this data.
-        /// Guid.Empty if this is not initiated by a PowerShell instance.
-        /// </param>
-        /// <param name="item">
-        /// item to add
-        /// </param>
-        /// <exception cref="InvalidOperationException">
-        /// Objects cannot be added to a closed buffer.
-        /// Make sure the buffer is open for Add and Insert
-        /// operations to succeed.
-        /// </exception>
         internal void InternalAdd(Guid psInstanceId, T item)
         {
             // should not rely on data.Count in "finally"
@@ -1297,19 +988,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="psInstanceId">
-        /// InstanceId of PowerShell instance adding this data.
-        /// </param>
-        /// <param name="collection">
-        /// The ICollection whose elements should be added to the end of
-        /// the buffer.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="collection"/> is null.
-        /// </exception>
-        /// <exception cref="ArgumentException">
-        /// value is not of the correct generic type T for the buffer.
-        /// </exception>
         internal void InternalAddRange(Guid psInstanceId, ICollection collection)
         {
             if (collection == null)
@@ -1378,13 +1056,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="item">
-        /// The object to locate in the buffer.
-        /// </param>
-        /// <returns>
-        /// 0 based index of item if found,
-        /// -1 otherwise.
-        /// </returns>
         private int InternalIndexOf(T item)
         {
             if (_serializeInput)
@@ -1405,14 +1076,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="value">
-        /// Value to verify.
-        /// </param>
-        /// <exception cref="ArgumentException">
-        /// value reference is null.
-        /// (or)
-        /// value is not of the correct generic type T for the buffer.
-        /// </exception>
         private static void VerifyValueType(object value)
         {
             if (value == null)
@@ -1550,7 +1213,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="disposing">If true, release all managed resources.</param>
         protected void Dispose(bool disposing)
         {
             if (disposing)
@@ -1590,7 +1252,6 @@ namespace System.Management.Automation
     #endregion
 
     
-    /// <typeparam name="T"></typeparam>
     internal interface IBlockingEnumerator<out T> : IEnumerator<T>
     {
         bool MoveNext(bool block);
@@ -1599,7 +1260,6 @@ namespace System.Management.Automation
     #region PSDataCollectionEnumerator
 
     
-    /// <typeparam name="T"></typeparam>
     internal sealed class PSDataCollectionEnumerator<T> : IBlockingEnumerator<T>
     {
         #region Private Data
@@ -1614,12 +1274,6 @@ namespace System.Management.Automation
         #region Constructor
 
         
-        /// <param name="collection">
-        /// PSDataCollection to enumerate.
-        /// </param>
-        /// <param name="neverBlock">
-        /// Controls if the enumerator is blocking by default or not.
-        /// </param>
         internal PSDataCollectionEnumerator(PSDataCollection<T> collection, bool neverBlock)
         {
             Dbg.Assert(collection != null,
@@ -1639,11 +1293,6 @@ namespace System.Management.Automation
         #region IEnumerator Overrides
 
         
-        /// <remarks>
-        /// For better performance, this property does not throw an exception
-        /// if the enumerator is positioned before the first element or after
-        /// the last element; the value of the property is undefined.
-        /// </remarks>
         T IEnumerator<T>.Current
         {
             get
@@ -1653,11 +1302,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <remarks>
-        /// For better performance, this property does not throw an exception
-        /// if the enumerator is positioned before the first element or after
-        /// the last element; the value of the property is undefined.
-        /// </remarks>
         public object Current
         {
             get
@@ -1667,26 +1311,12 @@ namespace System.Management.Automation
         }
 
         
-        /// <returns>
-        /// true if the enumerator successfully advanced to the next element;
-        /// otherwise, false.
-        /// </returns>
-        /// <remarks>
-        /// This will block if the original collection is attached to any
-        /// active PowerShell instances and the original collection is not
-        /// closed.
-        /// </remarks>
         public bool MoveNext()
         {
             return MoveNext(!_neverBlock);
         }
 
         
-        /// <returns>
-        /// true if the enumerator successfully advanced to the next element;
-        /// otherwise, false.
-        /// </returns>
-        /// <param name="block">True - to block when no elements are available.</param>
         public bool MoveNext(bool block)
         {
             lock (_collToEnumerate.SyncObject)
@@ -1757,12 +1387,6 @@ namespace System.Management.Automation
         private readonly Guid _psInstanceId;
 
         
-        /// <param name="psInstanceId">
-        /// Guid of Powershell instance creating this buffers.
-        /// Whenever an item is added to one of the buffers, this id is
-        /// used to notify the buffer about the PowerShell instance adding
-        /// this data.
-        /// </param>
         internal PSInformationalBuffers(Guid psInstanceId)
         {
             Dbg.Assert(psInstanceId != Guid.Empty,
@@ -1833,23 +1457,18 @@ namespace System.Management.Automation
         internal PSDataCollection<InformationRecord> Information { get; set; }
 
         
-        /// <param name="item"></param>
         internal void AddProgress(ProgressRecord item) => progress?.InternalAdd(_psInstanceId, item);
 
         
-        /// <param name="item"></param>
         internal void AddVerbose(VerboseRecord item) => verbose?.InternalAdd(_psInstanceId, item);
 
         
-        /// <param name="item"></param>
         internal void AddDebug(DebugRecord item) => debug?.InternalAdd(_psInstanceId, item);
 
         
-        /// <param name="item"></param>
         internal void AddWarning(WarningRecord item) => Warning?.InternalAdd(_psInstanceId, item);
 
         
-        /// <param name="item"></param>
         internal void AddInformation(InformationRecord item) => Information?.InternalAdd(_psInstanceId, item);
 
         #endregion

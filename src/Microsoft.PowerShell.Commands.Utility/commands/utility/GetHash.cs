@@ -17,7 +17,6 @@ namespace Microsoft.PowerShell.Commands
     public class GetFileHashCommand : HashCmdletBase
     {
         
-        /// <value></value>
         [Parameter(Mandatory = true, ParameterSetName = PathParameterSet, Position = 0, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true)]
         public string[] Path
         {
@@ -33,7 +32,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <value></value>
         [Parameter(Mandatory = true, ParameterSetName = LiteralPathParameterSet, Position = 0, ValueFromPipelineByPropertyName = true)]
         [Alias("PSPath", "LP")]
         public string[] LiteralPath
@@ -52,7 +50,6 @@ namespace Microsoft.PowerShell.Commands
         private string[] _paths;
 
         
-        /// <value></value>
         [Parameter(Mandatory = true, ParameterSetName = StreamParameterSet, Position = 0)]
         public Stream InputStream { get; set; }
 
@@ -142,9 +139,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="path">Path to file which will be hashed.</param>
-        /// <param name="hash">Will contain the hash of the file content.</param>
-        /// <returns>Boolean value indicating whether the hash calculation succeeded or failed.</returns>
         private bool ComputeFileHash(string path, out string hash)
         {
             Stream openfilestream = null;
@@ -213,7 +207,6 @@ namespace Microsoft.PowerShell.Commands
     public class HashCmdletBase : PSCmdlet
     {
         
-        /// <value></value>
         [Parameter(Position = 1)]
         [ValidateSet(HashAlgorithmNames.SHA1,
                      HashAlgorithmNames.SHA256,

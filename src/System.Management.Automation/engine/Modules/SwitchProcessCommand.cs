@@ -99,17 +99,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="path">The path to the executable to exec.</param>
-        /// <param name="args">
-        /// The arguments to send through to the executable.
-        /// Array must have its final element be null.
-        /// </param>
-        /// <param name="env">
-        /// The environment variables to send through to the executable in the form of "key=value".
-        /// Array must have its final element be null.
-        /// <returns>
-        /// An exit code if exec failed, but if successful the calling process will be overwritten.
-        /// </returns>
         [DllImport("libc",
             EntryPoint = "execve",
             CallingConvention = CallingConvention.Cdecl,

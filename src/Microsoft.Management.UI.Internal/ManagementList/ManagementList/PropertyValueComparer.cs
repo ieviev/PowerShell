@@ -18,9 +18,6 @@ namespace Microsoft.Management.UI.Internal
         private bool sortRecursively = true;
 
         
-        /// <param name="dataDescriptions">The data descriptions containing sort information for all columns.</param>
-        /// <param name="sortRecursively">Whether sorting should compare additional columns when equal values are found.</param>
-        /// <param name="valueGetter">The <see cref="PropertyValueGetter"/> used to retrieve property values.</param>
         public PropertyValueComparer(List<UIPropertyGroupDescription> dataDescriptions, bool sortRecursively, IPropertyValueGetter valueGetter)
         {
             this.propertyValueGetter = valueGetter;
@@ -29,13 +26,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="a">The first object to compare.</param>
-        /// <param name="b">The second object to compare.</param>
-        /// <returns>
-        /// Less than zero if <paramref name="a"/> is less than <paramref name="b"/>;
-        /// greater than zero if <paramref name="a"/> is greater than <paramref name="b"/>;
-        /// otherwise, zero.
-        /// </returns>
         public int Compare(object a, object b)
         {
             foreach (UIPropertyGroupDescription dataDescription in this.dataDescriptions)

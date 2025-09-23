@@ -260,9 +260,6 @@ namespace System.Management.Automation
         public bool LogPipelineExecutionDetails { get; set; } = false;
 
         
-        /// <returns>
-        /// Name of the PSSnapIn
-        /// </returns>
         public override string ToString()
         {
             return Name;
@@ -371,7 +368,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="psSnapinId">PSSnapIn Id to validate.</param>
         internal static bool IsPSSnapinIdValid(string psSnapinId)
         {
             if (string.IsNullOrEmpty(psSnapinId))
@@ -383,10 +379,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="psSnapinId">PSSnapIn Id to validate.</param>
-        /// <exception cref="PSArgumentException">
-        /// 1. Specified PSSnapIn is not valid
-        /// </exception>
         internal static void VerifyPSSnapInFormatThrowIfError(string psSnapinId)
         {
             // PSSnapIn do not conform to the naming convention..so throw
@@ -407,15 +399,6 @@ namespace System.Management.Automation
     internal static class PSSnapInReader
     {
         
-        /// <returns>
-        /// A collection of PSSnapInInfo objects
-        /// </returns>
-        /// <exception cref="SecurityException">
-        /// User doesn't have access to monad/mshsnapin registration information
-        /// </exception>
-        /// <exception cref="ArgumentException">
-        /// Monad key is not installed
-        /// </exception>
         internal static Collection<PSSnapInInfo> ReadAll()
         {
             Collection<PSSnapInInfo> allMshSnapins = new Collection<PSSnapInInfo>();
@@ -483,8 +466,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="version"></param>
-        /// <returns></returns>
         private
         static
         bool MeetsVersionFormat(string version)
@@ -503,15 +484,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <returns>
-        /// A collection of PSSnapInInfo objects
-        /// </returns>
-        /// <exception cref="SecurityException">
-        /// User doesn't have permission to read MonadRoot or Version
-        /// </exception>
-        /// <exception cref="ArgumentException">
-        /// MonadRoot or Version key doesn't exist.
-        /// </exception>
         internal static Collection<PSSnapInInfo> ReadAll(string psVersion)
         {
             if (string.IsNullOrEmpty(psVersion))
@@ -524,15 +496,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <exception cref="SecurityException">
-        /// The User doesn't have required permission to read the registry key for this version.
-        /// </exception>
-        /// <exception cref="ArgumentException">
-        /// Specified version doesn't exist.
-        /// </exception>
-        /// <exception cref="SecurityException">
-        /// User doesn't have permission to read specified version
-        /// </exception>
         private static Collection<PSSnapInInfo> ReadAll(RegistryKey monadRootKey, string psVersion)
         {
             Dbg.Assert(monadRootKey != null, "caller should validate the information");
@@ -569,22 +532,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <returns>
-        /// MshSnapin info object
-        /// </returns>
-        /// <exception cref="SecurityException">
-        /// The user does not have the permissions required to read the
-        /// registry key for one of the following:
-        /// 1) Monad
-        /// 2) PSVersion
-        /// 3) MshSnapinId
-        /// </exception>
-        /// <exception cref="ArgumentException">
-        /// 1) Monad key is not present
-        /// 2) VersionKey is not present
-        /// 3) MshSnapin key is not present
-        /// 4) MshSnapin key is not valid
-        /// </exception>
         internal static PSSnapInInfo Read(string psVersion, string mshsnapinId)
         {
             if (string.IsNullOrEmpty(psVersion))
@@ -609,17 +556,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <remarks>
-        /// ReadOne will never create a default PSSnapInInfo object.
-        /// </remarks>
-        /// <exception cref="SecurityException">
-        /// The user does not have the permissions required to read the
-        /// registry key for specified mshsnapin.
-        /// </exception>
-        /// <exception cref="ArgumentException">
-        /// 1) Specified mshsnapin is not installed.
-        /// 2) Specified mshsnapin is not correctly installed.
-        /// </exception>
         private static PSSnapInInfo ReadOne(RegistryKey mshSnapInRoot, string mshsnapinId)
         {
             Dbg.Assert(!string.IsNullOrEmpty(mshsnapinId), "caller should validate the parameter");
@@ -672,13 +608,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="mshsnapinKey"></param>
-        /// <param name="name"></param>
-        /// <param name="mandatory"></param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentException">
-        /// if value is not present and mandatory is true
-        /// </exception>
         private static Collection<string> ReadMultiStringValue(RegistryKey mshsnapinKey, string name, bool mandatory)
         {
             object value = mshsnapinKey.GetValue(name);
@@ -730,13 +659,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="mshsnapinKey"></param>
-        /// <param name="name"></param>
-        /// <param name="mandatory"></param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentException">
-        /// if no value is available and mandatory is true.
-        /// </exception>
         internal static string ReadStringValue(RegistryKey mshsnapinKey, string name, bool mandatory)
         {
             Dbg.Assert(!string.IsNullOrEmpty(name), "caller should validate the parameter");
@@ -841,8 +763,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="tokens">Array of byte's.</param>
-        /// <returns></returns>
         internal static string ConvertByteArrayToString(byte[] tokens)
         {
             Dbg.Assert(tokens != null, "Input tokens should never be null");
@@ -856,9 +776,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <returns>
-        /// A PSSnapInInfo object
-        /// </returns>
         internal static PSSnapInInfo ReadCoreEngineSnapIn()
         {
             ReadRegistryInfo(
@@ -912,9 +829,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <returns>
-        /// A collection of PSSnapInInfo objects
-        /// </returns>
         internal static Collection<PSSnapInInfo> ReadEnginePSSnapIns()
         {
             ReadRegistryInfo(
@@ -1026,13 +940,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <returns></returns>
-        /// <exception cref="SecurityException">
-        /// Caller doesn't have access to monad registration information.
-        /// </exception>
-        /// <exception cref="ArgumentException">
-        /// Monad registration information is not available.
-        /// </exception>
         internal static RegistryKey GetMonadRootKey()
         {
             RegistryKey rootKey = Registry.LocalMachine.OpenSubKey(RegistryStrings.MonadRootKeyPath);
@@ -1049,11 +956,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <returns>RegistryKey.</returns>
-        /// <param name="psVersion">Major version in string format.</param>
-        /// <exception cref="ArgumentException">
-        /// Monad registration information is not available.
-        /// </exception>
         internal static RegistryKey GetPSEngineKey(string psVersion)
         {
             RegistryKey rootKey = GetMonadRootKey();
@@ -1080,15 +982,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="rootKey"></param>
-        /// <param name="psVersion"></param>
-        /// <returns></returns>
-        /// <exception cref="SecurityException">
-        /// Caller doesn't have permission to read the version key
-        /// </exception>
-        /// <exception cref="ArgumentException">
-        /// specified psVersion key is not present
-        /// </exception>
         internal static
         RegistryKey
         GetVersionRootKey(RegistryKey rootKey, string psVersion)
@@ -1107,15 +1000,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="versionRootKey"></param>
-        /// <param name="psVersion"></param>
-        /// <returns></returns>
-        /// <exception cref="SecurityException">
-        /// Caller doesn't have permission to read the mshsnapin key
-        /// </exception>
-        /// <exception cref="ArgumentException">
-        /// mshsnapin key is not present
-        /// </exception>
         private static
         RegistryKey
         GetMshSnapinRootKey(RegistryKey versionRootKey, string psVersion)
@@ -1132,15 +1016,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="mshSnapInName"></param>
-        /// <param name="psVersion"></param>
-        /// <returns></returns>
-        /// <exception cref="SecurityException">
-        /// Caller doesn't have permission to read the mshsnapin key
-        /// </exception>
-        /// <exception cref="ArgumentException">
-        /// mshsnapin key is not present
-        /// </exception>
         internal static
         RegistryKey
         GetMshSnapinKey(string mshSnapInName, string psVersion)

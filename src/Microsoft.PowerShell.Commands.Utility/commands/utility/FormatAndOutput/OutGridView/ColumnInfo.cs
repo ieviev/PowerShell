@@ -42,8 +42,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="src">Source string.</param>
-        /// <returns>The source string limited in the number of lines.</returns>
         internal static object LimitString(object src)
         {
             if (!(src is string srcString))

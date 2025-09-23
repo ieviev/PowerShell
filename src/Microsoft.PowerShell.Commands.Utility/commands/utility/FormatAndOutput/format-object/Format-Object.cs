@@ -32,7 +32,6 @@ namespace Microsoft.PowerShell.Commands
         private object[] _props;
 
         
-        /// <value></value>
         [ValidateRange(1, int.MaxValue)]
         [Parameter]
         public int Depth

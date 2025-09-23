@@ -40,7 +40,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="source">The source to initialize from.</param>
         public SelectorFilterRule(SelectorFilterRule source)
             : base(source)
         {
@@ -54,12 +53,6 @@ namespace Microsoft.Management.UI.Internal
         #region Public Methods
 
         
-        /// <param name="item">
-        /// The item to evaluate.
-        /// </param>
-        /// <returns>
-        /// Returns true if the item matches the filtering criteria, false otherwise.
-        /// </returns>
         public override bool Evaluate(object item)
         {
             if (!this.IsValid)
@@ -71,12 +64,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="oldValue">
-        /// The old FilterRule.
-        /// </param>
-        /// <param name="newValue">
-        /// The new FilterRule.
-        /// </param>
         protected void OnSelectedValueChanged(FilterRule oldValue, FilterRule newValue)
         {
             FilterRuleCustomizationFactory.FactoryInstance.ClearValues(newValue);

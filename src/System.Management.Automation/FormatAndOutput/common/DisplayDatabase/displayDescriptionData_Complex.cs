@@ -42,10 +42,8 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
 
 namespace System.Management.Automation
 {
-    /// <summary/>
     public sealed class CustomControl : PSControl
     {
-        /// <summary/>
         public List<CustomControlEntry> Entries { get; set; }
 
         internal ComplexControlBody _cachedBody;
@@ -77,7 +75,6 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary/>
         public static CustomControlBuilder Create(bool outOfBand = false)
         {
             var customControl = new CustomControl { OutOfBand = outOfBand };
@@ -110,7 +107,6 @@ namespace System.Management.Automation
         }
     }
 
-    /// <summary/>
     public sealed class CustomControlEntry
     {
         internal CustomControlEntry()
@@ -132,10 +128,8 @@ namespace System.Management.Automation
             }
         }
 
-        /// <summary/>
         public EntrySelectedBy SelectedBy { get; set; }
 
-        /// <summary/>
         public List<CustomItemBase> CustomItems { get; set; }
 
         internal bool SafeForExport()
@@ -150,7 +144,6 @@ namespace System.Management.Automation
         }
     }
 
-    /// <summary/>
     public abstract class CustomItemBase
     {
         internal virtual bool SafeForExport()
@@ -223,21 +216,16 @@ namespace System.Management.Automation
         }
     }
 
-    /// <summary/>
     public sealed class CustomItemExpression : CustomItemBase
     {
         internal CustomItemExpression() { }
 
-        /// <summary/>
         public DisplayEntry ItemSelectionCondition { get; set; }
 
-        /// <summary/>
         public DisplayEntry Expression { get; set; }
 
-        /// <summary/>
         public bool EnumerateCollection { get; set; }
 
-        /// <summary/>
         public CustomControl CustomControl { get; set; }
 
         internal override bool SafeForExport()
@@ -248,16 +236,11 @@ namespace System.Management.Automation
         }
     }
 
-    /// <summary/>
     public sealed class CustomItemFrame : CustomItemBase
     {
-        /// <summary/>
         public uint LeftIndent { get; set; }
-        /// <summary/>
         public uint RightIndent { get; set; }
-        /// <summary/>
         public uint FirstLineHanging { get; set; }
-        /// <summary/>
         public uint FirstLineIndent { get; set; }
 
         internal CustomItemFrame()
@@ -265,7 +248,6 @@ namespace System.Management.Automation
             CustomItems = new List<CustomItemBase>();
         }
 
-        /// <summary/>
         public List<CustomItemBase> CustomItems { get; set; }
 
         internal override bool SafeForExport()
@@ -280,26 +262,20 @@ namespace System.Management.Automation
         }
     }
 
-    /// <summary/>
     public sealed class CustomItemNewline : CustomItemBase
     {
-        /// <summary/>
         public CustomItemNewline()
         {
             this.Count = 1;
         }
-        /// <summary/>
         public int Count { get; set; }
     }
 
-    /// <summary/>
     public sealed class CustomItemText : CustomItemBase
     {
-        /// <summary/>
         public string Text { get; set; }
     }
 
-    /// <summary/>
     public sealed class CustomEntryBuilder
     {
         private readonly Stack<List<CustomItemBase>> _entryStack;
@@ -312,14 +288,12 @@ namespace System.Management.Automation
             _controlBuilder = controlBuilder;
         }
 
-        /// <summary/>
         public CustomEntryBuilder AddNewline(int count = 1)
         {
             _entryStack.Peek().Add(new CustomItemNewline { Count = count });
             return this;
         }
 
-        /// <summary/>
         public CustomEntryBuilder AddText(string text)
         {
             _entryStack.Peek().Add(new CustomItemText { Text = text });
@@ -347,7 +321,6 @@ namespace System.Management.Automation
             });
         }
 
-        /// <summary/>
         public CustomEntryBuilder AddPropertyExpressionBinding(
             string property,
             bool enumerateCollection = false,
@@ -359,7 +332,6 @@ namespace System.Management.Automation
             return this;
         }
 
-        /// <summary/>
         public CustomEntryBuilder AddScriptBlockExpressionBinding(
             string scriptBlock,
             bool enumerateCollection = false,
@@ -371,7 +343,6 @@ namespace System.Management.Automation
             return this;
         }
 
-        /// <summary/>
         public CustomEntryBuilder AddCustomControlExpressionBinding(
             CustomControl customControl,
             bool enumerateCollection = false,
@@ -392,7 +363,6 @@ namespace System.Management.Automation
             return this;
         }
 
-        /// <summary/>
         public CustomEntryBuilder StartFrame(uint leftIndent = 0, uint rightIndent = 0, uint firstLineHanging = 0, uint firstLineIndent = 0)
         {
             // Mutually exclusive
@@ -419,7 +389,6 @@ namespace System.Management.Automation
             return this;
         }
 
-        /// <summary/>
         public CustomEntryBuilder EndFrame()
         {
             if (_entryStack.Count < 2)
@@ -431,7 +400,6 @@ namespace System.Management.Automation
             return this;
         }
 
-        /// <summary/>
         public CustomControlBuilder EndEntry()
         {
             if (_entryStack.Count != 1)
@@ -444,7 +412,6 @@ namespace System.Management.Automation
         }
     }
 
-    /// <summary/>
     public sealed class CustomControlBuilder
     {
         internal CustomControl _control;
@@ -478,7 +445,6 @@ namespace System.Management.Automation
             return this;
         }
 
-        /// <summary/>
         public CustomEntryBuilder StartEntry(IEnumerable<string> entrySelectedByType = null, IEnumerable<DisplayEntry> entrySelectedByCondition = null)
         {
             var entry = new CustomControlEntry
@@ -489,7 +455,6 @@ namespace System.Management.Automation
             return new CustomEntryBuilder(this, entry);
         }
 
-        /// <summary/>
         public CustomControl EndControl()
         {
             return _control;

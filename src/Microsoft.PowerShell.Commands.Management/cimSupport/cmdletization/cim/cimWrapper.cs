@@ -76,7 +76,6 @@ namespace Microsoft.PowerShell.Cmdletization.Cim
         #region ObjectModelWrapper overrides
 
         
-        /// <returns>Query builder for CIM OM.</returns>
         public override QueryBuilder GetQueryBuilder()
         {
             return new CimQuery();
@@ -124,14 +123,12 @@ namespace Microsoft.PowerShell.Cmdletization.Cim
         private static long s_jobNumber;
 
         
-        /// <returns>Job name.</returns>
         protected override string GenerateParentJobName()
         {
             return "CimJob" + Interlocked.Increment(ref CimCmdletAdapter.s_jobNumber).ToString(CultureInfo.InvariantCulture);
         }
 
         
-        /// <returns>Default sessions to use when the user doesn't specify the -Session cmdlet parameter.</returns>
         protected override CimSession DefaultSession
         {
             get
@@ -149,9 +146,6 @@ namespace Microsoft.PowerShell.Cmdletization.Cim
         }
 
         
-        /// <param name="session">Remote session to query.</param>
-        /// <param name="baseQuery">Query parameters.</param>
-        /// <returns><see cref="System.Management.Automation.Job"/> object that performs a query against the wrapped object model.</returns>
         internal override StartableJob CreateQueryJob(CimSession session, QueryBuilder baseQuery)
         {
             if (!(baseQuery is CimQuery query))
@@ -177,11 +171,6 @@ namespace Microsoft.PowerShell.Cmdletization.Cim
         }
 
         
-        /// <param name="session">Remote session to invoke the method in.</param>
-        /// <param name="objectInstance">The object on which to invoke the method.</param>
-        /// <param name="methodInvocationInfo">Method invocation details.</param>
-        /// <param name="passThru"><see langword="true"/> if successful method invocations should emit downstream the <paramref name="objectInstance"/> being operated on.</param>
-        /// <returns></returns>
         internal override StartableJob CreateInstanceMethodInvocationJob(CimSession session, CimInstance objectInstance, MethodInvocationInfo methodInvocationInfo, bool passThru)
         {
             TerminatingErrorTracker tracker = TerminatingErrorTracker.GetTracker(this.CmdletInvocationInfo, isStaticCmdlet: false);
@@ -277,8 +266,6 @@ namespace Microsoft.PowerShell.Cmdletization.Cim
         }
 
         
-        /// <param name="session">Remote session to invoke the method in.</param>
-        /// <param name="methodInvocationInfo">Method invocation details.</param>
         internal override StartableJob CreateStaticMethodInvocationJob(CimSession session, MethodInvocationInfo methodInvocationInfo)
         {
             TerminatingErrorTracker tracker = TerminatingErrorTracker.GetTracker(this.CmdletInvocationInfo, isStaticCmdlet: true);

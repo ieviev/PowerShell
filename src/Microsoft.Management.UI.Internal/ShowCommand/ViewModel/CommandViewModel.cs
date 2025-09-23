@@ -337,7 +337,6 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
         }
 
         
-        /// <returns>Return script as string.</returns>
         public string GetScript()
         {
             StringBuilder builder = new StringBuilder();
@@ -383,25 +382,12 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
         }
 
         
-        /// <param name="name">The name of ShareParameterSet.</param>
-        /// <returns>Return true is ShareParameterSet. Else return false.</returns>
         internal static bool IsSharedParameterSetName(string name)
         {
             return name.Equals(CommandViewModel.SharedParameterSetName, StringComparison.OrdinalIgnoreCase);
         }
 
         
-        /// <param name="module">Module to which the CommandViewModel will belong to.</param>
-        /// <param name="commandInfo">Will showing command.</param>
-        /// <param name="noCommonParameters">True to ommit displaying common parameter.</param>
-        /// <exception cref="ArgumentNullException">If commandInfo is null</exception>
-        /// <exception cref="RuntimeException">
-        /// If could not create the CommandViewModel. For instance the ShowCommandCommandInfo corresponding to
-        /// the following function will throw a RuntimeException when the ShowCommandCommandInfo Parameters
-        /// are retrieved:
-        /// function CrashMe ([I.Am.A.Type.That.Does.Not.Exist]$name) {}
-        /// </exception>
-        /// <returns>The CommandViewModel corresponding to commandInfo.</returns>
         internal static CommandViewModel GetCommandViewModel(ModuleViewModel module, ShowCommandCommandInfo commandInfo, bool noCommonParameters)
         {
             ArgumentNullException.ThrowIfNull(commandInfo);
@@ -492,9 +478,6 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
         }
 
         
-        /// <param name="source">Source paremeterset.</param>
-        /// <param name="target">Target parameterset.</param>
-        /// <returns>0 if they are the same, -1 if source is smaller, 1 if source is larger.</returns>
         private int Compare(ParameterSetViewModel source, ParameterSetViewModel target)
         {
             if (this.defaultParameterSetName != null)
@@ -519,7 +502,6 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
         }
 
         
-        /// <param name="propertyName">The changed property.</param>
         private void OnNotifyPropertyChanged(string propertyName)
         {
             PropertyChangedEventHandler handler = this.PropertyChanged;
@@ -530,8 +512,6 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
         }
 
         
-        /// <param name="sender">Event sender.</param>
-        /// <param name="e">Event arguments.</param>
         private void SelectedParameterSet_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (!e.PropertyName.Equals("AllMandatoryParametersHaveValues"))

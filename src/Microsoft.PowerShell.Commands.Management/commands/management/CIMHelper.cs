@@ -37,38 +37,12 @@ namespace Microsoft.PowerShell.Commands
         internal const string DefaultQueryDialect = "WQL";
 
         
-        /// <param name="from">A string containing the WMI class name.</param>
-        /// <returns>
-        /// A string containing the WQL query string
-        /// </returns>
         internal static string WqlQueryAll(string from)
         {
             return "SELECT * from " + from;
         }
 
         
-        /// <typeparam name="T">
-        /// The type of the object to be created. Must be a default-constructable
-        /// reference type.
-        /// </typeparam>
-        /// <param name="session">
-        /// The CIM session to be queried.
-        /// </param>
-        /// <param name="nameSpace">
-        /// A string containing the namespace to run the query against
-        /// </param>
-        /// <param name="wmiClassName">
-        /// A string containing the name of the WMI class from which to populate
-        /// the resultant object.
-        /// </param>
-        /// <returns>
-        /// A new object of type T if successful, null otherwise.
-        /// </returns>
-        /// <remarks>
-        /// This method matches property and field names of type T with identically
-        /// named properties in the WMI class instance. The WMI property is converted
-        /// to the type of T's property or field.
-        /// </remarks>
         internal static T GetFirst<T>(CimSession session, string nameSpace, string wmiClassName) where T : class, new()
         {
             ArgumentException.ThrowIfNullOrEmpty(wmiClassName);
@@ -95,28 +69,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <typeparam name="T">
-        /// The type of the object to be created. Must be a default-constructable
-        /// reference type.
-        /// </typeparam>
-        /// <param name="session">
-        /// The CIM session to be queried.
-        /// </param>
-        /// <param name="nameSpace">
-        /// A string containing the namespace to run the query against
-        /// </param>
-        /// <param name="wmiClassName">
-        /// A string containing the name of the WMI class from which to populate
-        /// the resultant array elements.
-        /// </param>
-        /// <returns>
-        /// An array of new objects of type T if successful, null otherwise.
-        /// </returns>
-        /// <remarks>
-        /// This method matches property and field names of type T with identically
-        /// named properties in the WMI class instance. The WMI property is converted
-        /// to the type of T's property or field.
-        /// </remarks>
         internal static T[] GetAll<T>(CimSession session, string nameSpace, string wmiClassName) where T : class, new()
         {
             ArgumentException.ThrowIfNullOrEmpty(wmiClassName);
@@ -154,25 +106,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <typeparam name="T">
-        /// The type of the object to be created. Must be a default-constructable
-        /// reference type.
-        /// </typeparam>
-        /// <param name="session">
-        /// The CIM session to be queried.
-        /// </param>
-        /// <param name="wmiClassName">
-        /// A string containing the name of the WMI class from which to populate
-        /// the resultant array elements.
-        /// </param>
-        /// <returns>
-        /// An array of new objects of type T if successful, null otherwise.
-        /// </returns>
-        /// <remarks>
-        /// This method matches property and field names of type T with identically
-        /// named properties in the WMI class instance. The WMI property is converted
-        /// to the type of T's property or field.
-        /// </remarks>
         internal static T[] GetAll<T>(CimSession session, string wmiClassName) where T : class, new()
         {
             return GetAll<T>(session, DefaultNamespace, wmiClassName);
@@ -206,13 +139,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="path">
-        /// A string that may contain backslash characters.
-        /// </param>
-        /// <returns>
-        /// A new string in which any backslash characters have been "escaped"
-        /// by prefacing then with an additional backslash
-        /// </returns>
         internal static string EscapePath(string path)
         {
             return string.Join(@"\\", path.Split('\\'));
@@ -227,26 +153,12 @@ namespace Extensions
     internal static class CIMExtensions
     {
         
-        /// <param name="session">The CimSession to be queried.</param>
-        /// <param name="nameSpace">A string containing the namespace to run the query against.</param>
-        /// <param name="query">A string containing the query to be run.</param>
-        /// <returns>
-        /// An IEnumerable interface that can be used to enumerate the instances
-        /// </returns>
         internal static IEnumerable<CimInstance> QueryInstances(this CimSession session, string nameSpace, string query)
         {
             return session.QueryInstances(nameSpace, CIMHelper.DefaultQueryDialect, query);
         }
 
         
-        /// <param name="session">The CimSession to be queried.</param>
-        /// <param name="nameSpace">A string containing the namespace to run the query against.</param>
-        /// <param name="query">A string containing the query to be run.</param>
-        /// <returns>
-        /// A <see cref="Microsoft.Management.Infrastructure.CimInstance"/> object
-        /// representing the first instance in a query result if successful, null
-        /// otherwise.
-        /// </returns>
         internal static CimInstance QueryFirstInstance(this CimSession session, string nameSpace, string query)
         {
             try
@@ -266,13 +178,6 @@ namespace Extensions
         }
 
         
-        /// <param name="session">The CimSession to be queried.</param>
-        /// <param name="query">A string containing the query to be run.</param>
-        /// <returns>
-        /// A <see cref="Microsoft.Management.Infrastructure.CimInstance"/> object
-        /// representing the first instance in a query result if successful, null
-        /// otherwise.
-        /// </returns>
         internal static CimInstance QueryFirstInstance(this CimSession session, string query)
         {
             return session.QueryFirstInstance(CIMHelper.DefaultNamespace, query);

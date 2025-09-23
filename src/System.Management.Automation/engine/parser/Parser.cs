@@ -54,10 +54,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="fileName">The name of the file to parse.</param>
-        /// <param name="tokens">Returns the tokens from parsing the script.</param>
-        /// <param name="errors">Returns errors, if any, discovered while parsing the script.</param>
-        /// <returns>The <see cref="ScriptBlockAst"/> that represents the input script file.</returns>
         public static ScriptBlockAst ParseFile(string fileName, out Token[] tokens, out ParseError[] errors)
         {
             const string scriptSchemaExtension = ".schema.psm1";
@@ -117,21 +113,12 @@ namespace System.Management.Automation.Language
         private string _keywordModuleName;
 
         
-        /// <param name="input">The input to parse.</param>
-        /// <param name="tokens">Returns the tokens from parsing the script.</param>
-        /// <param name="errors">Returns errors, if any, discovered while parsing the script.</param>
-        /// <returns>The <see cref="ScriptBlockAst"/> that represents the input script file.</returns>
         public static ScriptBlockAst ParseInput(string input, out Token[] tokens, out ParseError[] errors)
         {
             return ParseInput(input, null , out tokens, out errors);
         }
 
         
-        /// <param name="input">The input to parse.</param>
-        /// <param name="fileName">The fileName if present or null.</param>
-        /// <param name="tokens">Returns the tokens from parsing the script.</param>
-        /// <param name="errors">Returns errors, if any, discovered while parsing the script.</param>
-        /// <returns>The <see cref="ScriptBlockAst"/> that represents the input script file.</returns>
         public static ScriptBlockAst ParseInput(string input, string fileName, out Token[] tokens, out ParseError[] errors)
         {
             ArgumentNullException.ThrowIfNull(input);
@@ -693,9 +680,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="input">The Hashtable string.</param>
-        /// <param name="result">The Hashtable object.</param>
-        /// <returns></returns>
         internal static bool TryParseAsConstantHashtable(string input, out Hashtable result)
         {
             result = null;
@@ -1933,7 +1917,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <returns>A statement ast.  Never returns null, always returns PipelineAst.EmptyPipeline if there was no statement.</returns>
         private StatementAst StatementRule()
         {
             // G  statement:
@@ -2346,12 +2329,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="inlineScriptToken"></param>
-        /// <param name="elements"></param>
-        /// <returns>
-        /// true  -- InlineScript parsing successful
-        /// false -- InlineScript parsing unsuccessful
-        /// </returns>
         private bool InlineScriptRule(Token inlineScriptToken, List<CommandElementAst> elements)
         {
             // G Command
@@ -3309,7 +3286,6 @@ namespace System.Management.Automation.Language
         private Dictionary<string, DynamicKeyword> _configurationKeywordsDefinedInThisFile;
 
         
-        /// <param name="keywordToken">The token of the associated keyword.</param>
         private ExpressionAst GetWordOrExpression(Token keywordToken)
         {
             Token nameToken = NextToken();
@@ -3690,14 +3666,9 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="functionName">The name of the function to invoke.</param>
-        /// <param name="keywordData">The data for this keyword definition.</param>
-        /// <returns></returns>
         private StatementAst DynamicKeywordStatementRule(Token functionName, DynamicKeyword keywordData)
         {
-            //////////////////////////////////////////////////////////////////////////////////
             // If a custom action was provided. then invoke it
-            //////////////////////////////////////////////////////////////////////////////////
             if (keywordData.PreParse != null)
             {
                 try
@@ -4003,9 +3974,7 @@ namespace System.Management.Automation.Language
                                                        GetNestedErrorAsts(originalInstanceName));
                 }
 
-                //////////////////////////////////////////////////////////////////////////
                 // The statement is now fully parsed
-                //////////////////////////////////////////////////////////////////////////
 
                 //
                 // Create DynamicKeywordStatementAst
@@ -4031,9 +4000,7 @@ namespace System.Management.Automation.Language
                 };
             }
 
-            //////////////////////////////////////////////////////////////////////////////////
             // If a custom action was provided. then invoke it
-            //////////////////////////////////////////////////////////////////////////////////
             if (keywordData.PostParse != null)
             {
                 try
@@ -5453,14 +5420,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="endErrorStatement">
-        /// Set to the last thing scanned that is definitely part of the catch, but only set after issuing an error.
-        /// </param>
-        /// <param name="errorAsts">
-        /// If there are any errors and CatchBlockRule is returning null, this list is used to return back any asts
-        /// consumed here (essentially the type constraints.)
-        /// </param>
-        /// <returns>A catch clause, or null there is no catch or there was some error.</returns>
         private CatchClauseAst CatchBlockRule(ref IScriptExtent endErrorStatement, ref List<TypeConstraintAst> errorAsts)
         {
             // G  catch-clause:
@@ -6658,11 +6617,6 @@ namespace System.Management.Automation.Language
         #region Expressions
 
         
-        /// <param name="endNumberOnTernaryOpChars">
-        /// When it's known for sure that we are expecting an expression, allowing a generic token like '12?' or '12:' is
-        /// not useful. In those cases, we force to start a new token upon seeing '?' and ':' when scanning for a number
-        /// by setting this parameter to true, hoping to find a ternary expression.
-        /// </param>
         private ExpressionAst ExpressionRule(bool endNumberOnTernaryOpChars = false)
         {
             // G  expression:
@@ -6760,11 +6714,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="endNumberOnTernaryOpChars">
-        /// When it's known for sure that we are expecting an expression, allowing a generic token like '12?' or '12:' is
-        /// not useful. In those cases, we force to start a new token upon seeing '?' and ':' when scanning for a number
-        /// by setting this parameter to true, hoping to find a ternary expression.
-        /// </param>
         private ExpressionAst BinaryExpressionRule(bool endNumberOnTernaryOpChars = false)
         {
             // G  binary-expression:
@@ -6937,11 +6886,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="endNumberOnTernaryOpChars">
-        /// When it's known for sure that we are expecting an expression, allowing a generic token like '12?' or '12:' is
-        /// not useful. In those cases, we force to start a new token upon seeing '?' and ':' when scanning for a number
-        /// by setting this parameter to true, hoping to find a ternary expression.
-        /// </param>
         private ExpressionAst ArrayLiteralRule(bool endNumberOnTernaryOpChars = false)
         {
             // G  array-literal-expression:
@@ -6991,11 +6935,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="endNumberOnTernaryOpChars">
-        /// When it's known for sure that we are expecting an expression, allowing a generic token like '12?' or '12:' is
-        /// not useful. In those cases, we force to start a new token upon seeing '?' and ':' when scanning for a number
-        /// by setting this parameter to true, hoping to find a ternary expression.
-        /// </param>
         private ExpressionAst UnaryExpressionRule(bool endNumberOnTernaryOpChars = false)
         {
             // G  unary-expression:
@@ -8027,8 +7966,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="errorId">The error ID string (.resx key).</param>
-        /// <param name="errorMsg">The error message, which may be a template string (.resx value).</param>
         [System.Diagnostics.Conditional("DEBUG")]
         [System.Diagnostics.Conditional("ASSERTIONS_TRACE")]
         private static void AssertErrorIdCorrespondsToMsgString(string errorId, string errorMsg)
@@ -8159,9 +8096,6 @@ namespace System.Management.Automation.Language
     public class ParseError
     {
         
-        /// <param name="extent">The IScriptExtent that represents the location of the error.</param>
-        /// <param name="errorId">The error ID to associate with the error.</param>
-        /// <param name="message">The message of the error.</param>
         public ParseError(IScriptExtent extent, string errorId, string message)
             : this(extent, errorId, message, false)
         {
@@ -8180,7 +8114,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <returns></returns>
         public override string ToString()
         {
             return PositionUtilities.VerboseMessage(Extent) + Environment.NewLine + Message;

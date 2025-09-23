@@ -10,9 +10,6 @@ namespace Microsoft.PowerShell.Commands.ShowCommandExtension
     public class ShowCommandModuleInfo
     {
         
-        /// <param name="other">
-        /// The object to wrap.
-        /// </param>
         public ShowCommandModuleInfo(PSModuleInfo other)
         {
             ArgumentNullException.ThrowIfNull(other);
@@ -21,9 +18,6 @@ namespace Microsoft.PowerShell.Commands.ShowCommandExtension
         }
 
         
-        /// <param name="other">
-        /// The object to wrap.
-        /// </param>
         public ShowCommandModuleInfo(PSObject other)
         {
             ArgumentNullException.ThrowIfNull(other);

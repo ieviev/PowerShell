@@ -10,7 +10,6 @@ using System.ComponentModel;
 namespace Microsoft.Management.UI.Internal
 {
     
-    /// <typeparam name="T">The type held by the collection.</typeparam>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public class ReadOnlyObservableAsyncCollection<T> :
         ReadOnlyCollection<T>,
@@ -23,8 +22,6 @@ namespace Microsoft.Management.UI.Internal
 
         #region Constructors
         
-        /// <param name="list">The collection with which to create this instance of the ReadOnlyObservableAsyncCollection class.
-        /// The object must also implement IAsyncProgress, INotifyCollectionChanged and INotifyPropertyChanged.</param>
         public ReadOnlyObservableAsyncCollection(IList<T> list)
             : base(list)
         {
@@ -37,15 +34,9 @@ namespace Microsoft.Management.UI.Internal
 
         #region Events
         
-        /// <remarks>
-        /// see <see cref="INotifyCollectionChanged"/>
-        /// </remarks>
         public event NotifyCollectionChangedEventHandler CollectionChanged;
 
         
-        /// <remarks>
-        /// see <see cref="INotifyPropertyChanged"/>
-        /// </remarks>
         public event PropertyChangedEventHandler PropertyChanged;
         #endregion Events
 

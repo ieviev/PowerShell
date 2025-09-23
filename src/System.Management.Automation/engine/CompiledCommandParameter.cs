@@ -15,19 +15,6 @@ namespace System.Management.Automation
         #region ctor
 
         
-        /// <param name="runtimeDefinedParameter">
-        /// A runtime defined parameter that contains the definition of the parameter and its metadata.
-        /// </param>
-        /// <param name="processingDynamicParameters">
-        /// True if dynamic parameters are being processed, or false otherwise.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="runtimeDefinedParameter"/> is null.
-        /// </exception>
-        /// <exception cref="MetadataException">
-        /// If the parameter has more than one <see cref="ParameterAttribute">ParameterAttribute</see>
-        /// that defines the same parameter-set name.
-        /// </exception>
         internal CompiledCommandParameter(RuntimeDefinedParameter runtimeDefinedParameter, bool processingDynamicParameters)
         {
             if (runtimeDefinedParameter == null)
@@ -95,22 +82,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="member">
-        /// The member information for the parameter
-        /// </param>
-        /// <param name="processingDynamicParameters">
-        /// True if dynamic parameters are being processed, or false otherwise.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="member"/> is null.
-        /// </exception>
-        /// <exception cref="ArgumentException">
-        /// If <paramref name="member"/> is not a field or a property.
-        /// </exception>
-        /// <exception cref="MetadataException">
-        /// If the member has more than one <see cref="ParameterAttribute">ParameterAttribute</see>
-        /// that defines the same parameter-set name.
-        /// </exception>
         internal CompiledCommandParameter(MemberInfo member, bool processingDynamicParameters)
         {
             if (member == null)
@@ -234,10 +205,6 @@ namespace System.Management.Automation
         internal bool IsMandatoryInSomeParameterSet { get; private set; }
 
         
-        /// <remarks>
-        /// This is a bit-field that maps the parameter sets in this parameter
-        /// to the parameter sets for the rest of the command.
-        /// </remarks>
         internal uint ParameterSetFlags { get; set; }
 
         
@@ -250,14 +217,6 @@ namespace System.Management.Automation
         internal string[] Aliases { get; }
 
         
-        /// <param name="validParameterSetFlags">
-        /// The flags for the parameter sets to check to see if the parameter takes
-        /// pipeline input.
-        /// </param>
-        /// <returns>
-        /// True if the parameter takes pipeline input in any of the specified parameter
-        /// sets, or false otherwise.
-        /// </returns>
         internal bool DoesParameterSetTakePipelineInput(uint validParameterSetFlags)
         {
             if (!IsPipelineParameterInSomeParameterSet)
@@ -284,12 +243,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="parameterSetFlag">
-        /// The parameter set to get the parameter set data for.
-        /// </param>
-        /// <returns>
-        /// The parameter set specified data for the specified parameter set.
-        /// </returns>
         internal ParameterSetSpecificMetadata GetParameterSetData(uint parameterSetFlag)
         {
             ParameterSetSpecificMetadata result = null;
@@ -317,13 +270,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="parameterSetFlags">
-        /// The parameter sets to get the parameter set data for.
-        /// </param>
-        /// <returns>
-        /// A collection for all parameter set specified data for the parameter sets specified by
-        /// the <paramref name="parameterSetFlags"/>.
-        /// </returns>
         internal IEnumerable<ParameterSetSpecificMetadata> GetMatchingParameterSetData(uint parameterSetFlags)
         {
             foreach (ParameterSetSpecificMetadata setData in ParameterSetData.Values)
@@ -348,10 +294,6 @@ namespace System.Management.Automation
         #region helper methods
 
         
-        /// <exception cref="MetadataException">
-        /// If the attribute is a parameter attribute and another parameter attribute
-        /// has been processed with the same parameter-set name.
-        /// </exception>
         private void ProcessAttribute(
             string memberName,
             Attribute attribute,
@@ -447,15 +389,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="parameterName">
-        /// The name of the parameter.
-        /// </param>
-        /// <param name="parameter">
-        /// The instance of the ParameterAttribute to extract the data from.
-        /// </param>
-        /// <exception cref="MetadataException">
-        /// If a parameter set name has already been declared on this parameter.
-        /// </exception>
         private void ProcessParameterAttribute(
             string parameterName,
             ParameterAttribute parameter)
@@ -512,9 +445,6 @@ namespace System.Management.Automation
     internal class ParameterCollectionTypeInformation
     {
         
-        /// <param name="type">
-        /// The type to determine the collection information for.
-        /// </param>
         internal ParameterCollectionTypeInformation(Type type)
         {
             ParameterCollectionType = ParameterCollectionType.NotCollection;

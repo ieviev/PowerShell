@@ -16,7 +16,6 @@ namespace Microsoft.PowerShell.Commands
     public class HelpNotFoundException : SystemException, IContainsErrorRecord
     {
         
-        /// <param name="helpTopic">The help topic for which help is not found.</param>
         public HelpNotFoundException(string helpTopic)
             : base()
         {
@@ -32,8 +31,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="helpTopic">The help topic for which help is not found.</param>
-        /// <param name="innerException">The inner exception.</param>
         public HelpNotFoundException(string helpTopic, Exception innerException)
             : base(
                   (innerException != null) ? innerException.Message : string.Empty,
@@ -57,7 +54,6 @@ namespace Microsoft.PowerShell.Commands
         private ErrorRecord _errorRecord;
 
         
-        /// <value>ErrorRecord instance.</value>
         public ErrorRecord ErrorRecord
         {
             get
@@ -69,7 +65,6 @@ namespace Microsoft.PowerShell.Commands
         private readonly string _helpTopic = string.Empty;
 
         
-        /// <value>Help topic.</value>
         public string HelpTopic
         {
             get
@@ -79,7 +74,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <value>Error message.</value>
         public override string Message
         {
             get
@@ -96,8 +90,6 @@ namespace Microsoft.PowerShell.Commands
         #region Serialization
 
         
-        /// <param name="info">Serialization information.</param>
-        /// <param name="context">Streaming context.</param>
         [Obsolete("Legacy serialization support is deprecated since .NET 8", DiagnosticId = "SYSLIB0051")] 
         protected HelpNotFoundException(SerializationInfo info,
                                         StreamingContext context)

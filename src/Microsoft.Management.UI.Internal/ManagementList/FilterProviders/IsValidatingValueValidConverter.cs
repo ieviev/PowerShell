@@ -12,21 +12,6 @@ namespace Microsoft.Management.UI.Internal
     public class IsValidatingValueValidConverter : IValueConverter
     {
         
-        /// <param name="value">
-        /// The Error string to check.
-        /// </param>
-        /// <param name="targetType">
-        /// The parameter is not used.
-        /// </param>
-        /// <param name="parameter">
-        /// The parameter is not used.
-        /// </param>
-        /// <param name="culture">
-        /// The parameter is not used.
-        /// </param>
-        /// <returns>
-        /// Returns true if value is null or empty, false otherwise.
-        /// </returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             string error = (string)value;
@@ -34,11 +19,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="value">The parameter is not used.</param>
-        /// <param name="targetType">The parameter is not used.</param>
-        /// <param name="parameter">The parameter is not used.</param>
-        /// <param name="culture">The parameter is not used.</param>
-        /// <returns>The parameter is not used.</returns>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotSupportedException();

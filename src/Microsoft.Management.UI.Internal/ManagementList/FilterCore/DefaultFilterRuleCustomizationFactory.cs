@@ -38,12 +38,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <typeparam name="T">
-        /// The type used to determine what rules to include.
-        /// </typeparam>
-        /// <returns>
-        /// Returns a collection of FilterRules.
-        /// </returns>
         public override ICollection<FilterRule> CreateDefaultFilterRulesForPropertyValueSelectorFilterRule<T>()
         {
             Collection<FilterRule> rules = new Collection<FilterRule>();
@@ -85,12 +79,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="oldRule">
-        /// The old filter rule.
-        /// </param>
-        /// <param name="newRule">
-        /// The new filter rule.
-        /// </param>
         public override void TransferValues(FilterRule oldRule, FilterRule newRule)
         {
             ArgumentNullException.ThrowIfNull(oldRule);
@@ -104,9 +92,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="rule">
-        /// The rule to clear.
-        /// </param>
         public override void ClearValues(FilterRule rule)
         {
             ArgumentNullException.ThrowIfNull(rule);
@@ -123,16 +108,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="value">
-        /// The value entered by the user.
-        /// </param>
-        /// <param name="typeToParseTo">
-        /// The desired type to parse value to.
-        /// </param>
-        /// <returns>
-        /// An error message to a user to explain how they can
-        /// enter a valid value.
-        /// </returns>
         public override string GetErrorMessageForInvalidValue(string value, Type typeToParseTo)
         {
             ArgumentNullException.ThrowIfNull(typeToParseTo);

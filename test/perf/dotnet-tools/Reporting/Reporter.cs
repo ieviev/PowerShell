@@ -32,8 +32,6 @@ namespace Reporting
         }
 
         
-        /// <param name="environment">Optional environment variable provider</param>
-        /// <returns>A Reporter instance or null if the environment is incorrect.</returns>
         public static Reporter CreateReporter(IEnvironment environment = null)
         {
             var ret = new Reporter();

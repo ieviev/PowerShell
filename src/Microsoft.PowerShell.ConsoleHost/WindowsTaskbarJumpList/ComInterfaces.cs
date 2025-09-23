@@ -12,11 +12,6 @@ namespace Microsoft.PowerShell
         [DllImport("kernel32.dll", SetLastError = false, EntryPoint = "GetStartupInfoW")]
         internal static extern void GetStartupInfo(out StartUpInfo lpStartupInfo);
 
-        /// <remarks>
-        /// IntPtr is being used for the string fields to make the marshaller faster and
-        /// simpler. With IntPtr, all fields are blittable, and since we don't use the
-        /// string fields at all, nothing is lost.
-        /// </remarks>
         [StructLayout(LayoutKind.Sequential)]
         internal readonly struct StartUpInfo
         {
@@ -116,34 +111,22 @@ namespace Microsoft.PowerShell
         internal interface IPropertyStore
         {
             
-            /// <param name="propertyCount"></param>
-            /// <returns></returns>
             [PreserveSig]
             HResult GetCount([Out] out uint propertyCount);
 
             
-            /// <param name="propertyIndex"></param>
-            /// <param name="key"></param>
-            /// <returns></returns>
             [PreserveSig]
             HResult GetAt([In] uint propertyIndex, out PropertyKey key);
 
             
-            /// <param name="key"></param>
-            /// <param name="pv"></param>
-            /// <returns></returns>
             [PreserveSig]
             HResult GetValue([In] in PropertyKey key, [Out] PropVariant pv);
 
             
-            /// <param name="key"></param>
-            /// <param name="pv"></param>
-            /// <returns></returns>
             [PreserveSig]
             HResult SetValue([In] in PropertyKey key, [In] PropVariant pv);
 
             
-            /// <returns></returns>
             [PreserveSig]
             HResult Commit();
         }

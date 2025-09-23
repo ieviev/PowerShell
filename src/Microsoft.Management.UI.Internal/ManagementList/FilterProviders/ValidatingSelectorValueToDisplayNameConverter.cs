@@ -14,22 +14,6 @@ namespace Microsoft.Management.UI.Internal
     public class ValidatingSelectorValueToDisplayNameConverter : IMultiValueConverter
     {
         
-        /// <param name="values">
-        /// The first parameter is the value to get the display name for.
-        /// The second parameter is the converter.
-        /// </param>
-        /// <param name="targetType">
-        /// Type of string.
-        /// </param>
-        /// <param name="parameter">
-        /// The parameter is not used.
-        /// </param>
-        /// <param name="culture">
-        /// The parameter is not used.
-        /// </param>
-        /// <returns>
-        /// Returns a display friendly name for the first value.
-        /// </returns>
         public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             ArgumentNullException.ThrowIfNull(values);
@@ -57,21 +41,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="value">
-        /// The parameter is not used.
-        /// </param>
-        /// <param name="targetTypes">
-        /// The parameter is not used.
-        /// </param>
-        /// <param name="parameter">
-        /// The parameter is not used.
-        /// </param>
-        /// <param name="culture">
-        /// The parameter is not used.
-        /// </param>
-        /// <returns>
-        /// The method does not return a value.
-        /// </returns>
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, System.Globalization.CultureInfo culture)
         {
             throw new NotSupportedException();

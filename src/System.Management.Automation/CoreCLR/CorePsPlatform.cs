@@ -589,7 +589,6 @@ namespace System.Management.Automation
                 private const string DirectoryOwnerFullGroupReadExecOtherReadExec = "drwxr-xr-x";
 
                 
-                /// <returns>The mode converted into a Unix style string similar to the output of ls.</returns>
                 public string GetModeString()
                 {
                     // On an Ubuntu system (docker), these 3 are roughly 70% of all the permissions
@@ -632,7 +631,6 @@ namespace System.Management.Automation
                 }
 
                 
-                /// <returns>The user name.</returns>
                 public string GetUserName()
                 {
                     if (usernameCache.TryGetValue(UserId, out string username))
@@ -649,7 +647,6 @@ namespace System.Management.Automation
                 }
 
                 
-                /// <returns>The name of the group.</returns>
                 public string GetGroupName()
                 {
                     if (groupnameCache.TryGetValue(GroupId, out string groupname))
@@ -673,8 +670,6 @@ namespace System.Management.Automation
             }
 
             
-            /// <param name="fs">A FileSystemInfo to check to determine if it is a hardlink.</param>
-            /// <returns>A boolean that represents whether the item is a hardlink.</returns>
             public static bool IsHardLink(FileSystemInfo fs)
             {
                 if (!fs.Exists || (fs.Attributes & FileAttributes.Directory) == FileAttributes.Directory)
@@ -694,8 +689,6 @@ namespace System.Management.Automation
             }
 
             
-            /// <param name="css">The common stat structure from which we copy.</param>
-            /// <returns>A managed common stat class instance.</returns>
             private static CommonStat CopyStatStruct(NativeMethods.CommonStatStruct css)
             {
                 CommonStat cs = new();
@@ -776,8 +769,6 @@ namespace System.Management.Automation
             }
 
             
-            /// <param name="path">The path to the lstat information.</param>
-            /// <returns>An instance of the CommonStat for the path.</returns>
             public static CommonStat GetLStat(string path)
             {
                 NativeMethods.CommonStatStruct css;
@@ -790,8 +781,6 @@ namespace System.Management.Automation
             }
 
             
-            /// <param name="path">The path to the stat information.</param>
-            /// <returns>An instance of the CommonStat for the path.</returns>
             public static CommonStat GetStat(string path)
             {
                 NativeMethods.CommonStatStruct css;
@@ -804,8 +793,6 @@ namespace System.Management.Automation
             }
 
             
-            /// <param name="pid">The process id used to get the parent process.</param>
-            /// <returns>The process id.</returns>
             public static int GetProcFSParentPid(int pid)
             {
                 const int invalidPid = -1;

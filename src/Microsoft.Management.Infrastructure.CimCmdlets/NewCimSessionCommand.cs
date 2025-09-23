@@ -141,7 +141,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         #region helper methods
 
         
-        /// <returns>Null means no prefer CimSessionOptions.</returns>
         internal void BuildSessionOptions(out CimSessionOptions outputOptions, out CimCredential outputCredential)
         {
             DebugHelper.WriteLogEx();

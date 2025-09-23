@@ -8,29 +8,11 @@ using System.Diagnostics;
 namespace System.Management.Automation
 {
     
-    /// <remarks>
-    /// An application is any file that is executable by Windows either directly or through
-    /// file associations excluding any .ps1 files or cmdlets.
-    /// </remarks>
     public class ApplicationInfo : CommandInfo
     {
         #region ctor
 
         
-        /// <param name="name">
-        /// The name of the application.
-        /// </param>
-        /// <param name="path">
-        /// The path to the application executable
-        /// </param>
-        /// <param name="context">
-        /// THe engine execution context for this command...
-        /// </param>
-        /// <exception cref="ArgumentException">
-        /// If <paramref name="path"/> or <paramref name="name"/> is null or empty
-        /// or contains one or more of the invalid
-        /// characters defined in InvalidPathChars.
-        /// </exception>
         internal ApplicationInfo(string name, string path, ExecutionContext context) : base(name, CommandTypes.Application)
         {
             if (string.IsNullOrEmpty(path))

@@ -58,9 +58,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="disposing">
-        /// Specified as true when Dispose() was called, false if this is called from the finalizer.
-        /// </param>
         protected virtual void Dispose(bool disposing)
         {
             if (disposing)

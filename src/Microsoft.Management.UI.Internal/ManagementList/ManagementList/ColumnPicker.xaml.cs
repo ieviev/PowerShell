@@ -16,10 +16,6 @@ using System.Windows.Input;
 namespace Microsoft.Management.UI.Internal
 {
     
-    /// <remarks>
-    /// The logic for manipulating the column lists is in
-    /// <see cref="InnerListGridView.OnColumnPicker"/>.
-    /// </remarks>
     [SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public partial class ColumnPicker : Window
     {
@@ -38,16 +34,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="columns">Initially selected columns.</param>
-        /// <param name="availableColumns">
-        /// All initial columns, if these include any which are selected
-        /// these are excluded.
-        /// </param>
-        /// <remarks>
-        /// It is not sufficient to just get
-        /// <paramref name="availableColumns"/>, since this does not
-        /// communicate the current ordering of visible columns.
-        /// </remarks>
         internal ColumnPicker(
             ICollection<GridViewColumn> columns,
             ICollection<InnerListColumn> availableColumns)
@@ -120,8 +106,6 @@ namespace Microsoft.Management.UI.Internal
         #region button clicks
 
         
-        /// <param name="sender">OK button.</param>
-        /// <param name="e">The RoutedEventArgs.</param>
         internal void OkButtonClick(object sender, RoutedEventArgs e)
         {
             foreach (InnerListColumn column in this.NotSelectedColumns)
@@ -138,12 +122,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="sender">Move Up button.</param>
-        /// <param name="e">The RoutedEventArgs.</param>
-        /// <remarks>
-        /// Moving the selected item in the bound collection does not
-        /// trigger the SelectionChanged event in the listbox.
-        /// </remarks>
         internal void MoveUpButtonClick(object sender, RoutedEventArgs e)
         {
             int selectedIndex = this.PART_SelectedList.SelectedIndex;
@@ -157,8 +135,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="sender">Move Down button.</param>
-        /// <param name="e">The RoutedEventArgs.</param>
         internal void MoveDownButtonClick(object sender, RoutedEventArgs e)
         {
             int selectedIndex = this.PART_SelectedList.SelectedIndex;
@@ -172,8 +148,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="sender">Add button.</param>
-        /// <param name="e">The RoutedEventArgs.</param>
         internal void AddButtonClick(object sender, RoutedEventArgs e)
         {
             InnerListColumn column = (InnerListColumn)this.PART_NotSelectedList.SelectedItem;
@@ -194,14 +168,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="sender">Remove button.</param>
-        /// <param name="e">The RoutedEventArgs.</param>
-        /// <remarks>
-        /// Note that we do not attempt to maintain the ordering of items
-        /// in the NotSelected list when they are removed and then added back.
-        /// In the current implementation, the View of the NotSelected list is
-        /// sorted by name through the CollectionViewSource.
-        /// </remarks>
         internal void RemoveButtonClick(object sender, RoutedEventArgs e)
         {
             InnerListColumn column = (InnerListColumn)this.PART_SelectedList.SelectedItem;
@@ -236,7 +202,6 @@ namespace Microsoft.Management.UI.Internal
 
         #region Automation
         
-        /// <returns>New AutomationPeer.</returns>
         protected override AutomationPeer OnCreateAutomationPeer()
         {
             return new ExtendedFrameworkElementAutomationPeer(this, AutomationControlType.Window);
@@ -245,8 +210,6 @@ namespace Microsoft.Management.UI.Internal
 
         #region enable/disable buttons
         
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The eventargs.</param>
         private void ListSelectionChanged(
             object sender, SelectionChangedEventArgs e)
         {
@@ -279,8 +242,6 @@ namespace Microsoft.Management.UI.Internal
         #endregion enable/disable buttons
 
         
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The eventargs.</param>
         private void NotSelectedList_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             // Ignore right-double-click, and also ignore cases where
@@ -302,8 +263,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The eventargs.</param>
         private void SelectedList_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             // Ignore right-double-click, and also ignore cases where

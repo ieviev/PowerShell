@@ -46,12 +46,6 @@ namespace Microsoft.PowerShell.Commands
     }
 
     
-    /// <remarks>
-    /// This class is created to make 'Measure-Object -MAX -MIN' work with ANYTHING that supports 'CompareTo'.
-    /// GenericMeasureInfo class is shipped with PowerShell V2. Fixing this bug requires, changing the type of
-    /// Maximum and Minimum properties which would be a breaking change. Hence created a new class to not
-    /// have an appcompat issues with PS V2.
-    /// </remarks>
     public sealed class GenericObjectMeasureInfo : MeasureInfo
     {
         
@@ -106,7 +100,6 @@ namespace Microsoft.PowerShell.Commands
     public sealed class MeasureObjectCommand : PSCmdlet
     {
         
-        /// <typeparam name="TValue">Value type.</typeparam>
         private sealed class MeasureObjectDictionary<TValue> : Dictionary<string, TValue>
             where TValue : new()
         {
@@ -116,10 +109,6 @@ namespace Microsoft.PowerShell.Commands
             }
 
             
-            /// <param name="key">The key to look up.</param>
-            /// <returns>
-            /// The existing value, or a newly-created value.
-            /// </returns>
             public TValue EnsureEntry(string key)
             {
                 TValue val;
@@ -164,12 +153,10 @@ namespace Microsoft.PowerShell.Commands
         #region Common parameters in both sets
 
         
-        /// <value></value>
         [Parameter(ValueFromPipeline = true)]
         public PSObject InputObject { get; set; } = AutomationNull.Value;
 
         
-        /// <value></value>
         [ValidateNotNullOrEmpty]
         [Parameter(Position = 0)]
         public PSPropertyExpression[] Property { get; set; }
@@ -194,7 +181,6 @@ namespace Microsoft.PowerShell.Commands
         private bool _measureStandardDeviation;
 
         
-        /// <value></value>
         [Parameter(ParameterSetName = GenericParameterSet)]
         public SwitchParameter Sum
         {
@@ -212,7 +198,6 @@ namespace Microsoft.PowerShell.Commands
         private bool _measureSum;
 
         
-        /// <value></value>
         [Parameter(ParameterSetName = GenericParameterSet)]
         public SwitchParameter AllStats
         {
@@ -230,7 +215,6 @@ namespace Microsoft.PowerShell.Commands
         private bool _allStats;
 
         
-        /// <value></value>
         [Parameter(ParameterSetName = GenericParameterSet)]
         public SwitchParameter Average
         {
@@ -248,7 +232,6 @@ namespace Microsoft.PowerShell.Commands
         private bool _measureAverage;
 
         
-        /// <value></value>
         [Parameter(ParameterSetName = GenericParameterSet)]
         public SwitchParameter Maximum
         {
@@ -266,7 +249,6 @@ namespace Microsoft.PowerShell.Commands
         private bool _measureMax;
 
         
-        /// <value></value>
         [Parameter(ParameterSetName = GenericParameterSet)]
         public SwitchParameter Minimum
         {
@@ -285,7 +267,6 @@ namespace Microsoft.PowerShell.Commands
 
         #region TextMeasure ParameterSet
         
-        /// <value></value>
         [Parameter(ParameterSetName = TextParameterSet)]
         public SwitchParameter Line
         {
@@ -303,7 +284,6 @@ namespace Microsoft.PowerShell.Commands
         private bool _measureLines = false;
 
         
-        /// <value></value>
         [Parameter(ParameterSetName = TextParameterSet)]
         public SwitchParameter Word
         {
@@ -321,7 +301,6 @@ namespace Microsoft.PowerShell.Commands
         private bool _measureWords = false;
 
         
-        /// <value></value>
         [Parameter(ParameterSetName = TextParameterSet)]
         public SwitchParameter Character
         {
@@ -339,7 +318,6 @@ namespace Microsoft.PowerShell.Commands
         private bool _measureCharacters = false;
 
         
-        /// <value></value>
         [Parameter(ParameterSetName = TextParameterSet)]
         public SwitchParameter IgnoreWhiteSpace
         {
@@ -398,7 +376,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="inObj">The object to analyze.</param>
         private void AnalyzeObjectProperties(PSObject inObj)
         {
             // Keep track of which properties are counted for an
@@ -455,8 +432,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="propertyName">The property this value corresponds to.</param>
-        /// <param name="objValue">The value to analyze.</param>
         private void AnalyzeValue(string propertyName, object objValue)
         {
             propertyName ??= thisObject;
@@ -503,17 +478,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="objValue">
-        /// Current input value.
-        /// </param>
-        /// <param name="statMinOrMaxValue">
-        /// Current minimum or maximum value in the statistics.
-        /// </param>
-        /// <param name="isMin">
-        /// Indicates if minimum or maximum value has to be found.
-        /// If true is passed in then the minimum of the two values would be returned.
-        /// If false is passed in then maximum of the two values will be returned.</param>
-        /// <returns></returns>
         private static object Compare(object objValue, object statMinOrMaxValue, bool isMin)
         {
             object currentValue = objValue;
@@ -544,9 +508,6 @@ namespace Microsoft.PowerShell.Commands
         private static class TextCountUtilities
         {
             
-            /// <param name="inStr">String whose chars are counted.</param>
-            /// <param name="ignoreWhiteSpace">True to discount white space.</param>
-            /// <returns>Number of chars in inStr.</returns>
             internal static int CountChar(string inStr, bool ignoreWhiteSpace)
             {
                 if (string.IsNullOrEmpty(inStr))
@@ -572,8 +533,6 @@ namespace Microsoft.PowerShell.Commands
             }
 
             
-            /// <param name="inStr">String whose words are counted.</param>
-            /// <returns>Number of words in inStr.</returns>
             internal static int CountWord(string inStr)
             {
                 if (string.IsNullOrEmpty(inStr))
@@ -604,8 +563,6 @@ namespace Microsoft.PowerShell.Commands
             }
 
             
-            /// <param name="inStr">String whose lines are counted.</param>
-            /// <returns>Number of lines in inStr.</returns>
             internal static int CountLine(string inStr)
             {
                 if (string.IsNullOrEmpty(inStr))
@@ -633,8 +590,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="strValue">The text to analyze.</param>
-        /// <param name="stat">The Statistics object to update.</param>
         private void AnalyzeString(string strValue, Statistics stat)
         {
             if (_measureCharacters)
@@ -646,8 +601,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="numValue">The number to analyze.</param>
-        /// <param name="stat">The Statistics object to update.</param>
         private void AnalyzeNumber(double numValue, Statistics stat)
         {
             if (_measureSum || _measureAverage || _measureStandardDeviation)
@@ -667,8 +620,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="propertyName">The missing property.</param>
-        /// <param name="errorId">The error ID to write.</param>
         private void WritePropertyNotFoundError(string propertyName, string errorId)
         {
             Diagnostics.Assert(Property != null, "no property and no InputObject should have been addressed");
@@ -733,9 +684,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="stat">The statistics to use.</param>
-        /// <param name="shouldUseGenericMeasureInfo"></param>
-        /// <returns>A new GenericMeasureInfo object.</returns>
         private MeasureInfo CreateGenericMeasureInfo(Statistics stat, bool shouldUseGenericMeasureInfo)
         {
             double? sum = null;
@@ -819,8 +767,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="stat">The statistics to use.</param>
-        /// <returns>A new TextMeasureInfo object.</returns>
         private TextMeasureInfo CreateTextMeasureInfo(Statistics stat)
         {
             TextMeasureInfo tmi = new();

@@ -25,9 +25,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <remarks>
-        /// Closes the picker and unchecks all items in the panel.
-        /// </remarks>
         protected virtual void OnCancelAddFilterRulesExecuted(ExecutedRoutedEventArgs e)
         {
             OnCancelAddFilterRulesExecutedImplementation(e);
@@ -62,9 +59,6 @@ namespace Microsoft.Management.UI.Internal
         partial void OnOkAddFilterRulesCanExecuteImplementation(CanExecuteRoutedEventArgs e);
 
         
-        /// <remarks>
-        /// Closes the picker and calls AddFilterRulesCommand with the collection of checked items from the picker.
-        /// </remarks>
         protected virtual void OnOkAddFilterRulesExecuted(ExecutedRoutedEventArgs e)
         {
             OnOkAddFilterRulesExecutedImplementation(e);

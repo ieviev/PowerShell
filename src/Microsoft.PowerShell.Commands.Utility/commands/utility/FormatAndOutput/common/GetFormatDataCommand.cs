@@ -14,8 +14,6 @@ using Microsoft.PowerShell.Commands.Internal.Format;
 namespace Microsoft.PowerShell.Commands
 {
     
-    /// <remarks>Currently supports only table controls
-    /// </remarks>
     [Cmdlet(VerbsCommon.Get, "FormatData", HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096614")]
     [OutputType(typeof(System.Management.Automation.ExtendedTypeDefinition))]
     public class GetFormatDataCommand : PSCmdlet

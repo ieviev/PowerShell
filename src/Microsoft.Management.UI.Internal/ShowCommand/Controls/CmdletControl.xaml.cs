@@ -35,8 +35,6 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
         #region Private Events
 
         
-        /// <param name="sender">Event sender.</param>
-        /// <param name="e">Event args.</param>
         private void ParameterSetTabControl_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (this.DataContext == null)
@@ -56,8 +54,6 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
         }
 
         
-        /// <param name="sender">Event sender.</param>
-        /// <param name="e">Event args.</param>
         private void CmdletControl_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
             if (e.Key == System.Windows.Input.Key.F1)
@@ -67,16 +63,12 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
         }
 
         
-        /// <param name="sender">Event sender.</param>
-        /// <param name="e">Event args.</param>
         private void HelpButton_Click(object sender, RoutedEventArgs e)
         {
             this.CurrentCommandViewModel.OpenHelpWindow();
         }
 
         
-        /// <param name="sender">Event sender.</param>
-        /// <param name="e">Event args.</param>
         private void ImportModuleButton_Click(object sender, RoutedEventArgs e)
         {
             this.CurrentCommandViewModel.OnImportModule();

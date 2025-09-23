@@ -22,9 +22,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="candidate">The candidate string to be compared.</param>
-        /// <param name="pattern">The pattern string to be compared with.</param>
-        /// <returns>True if the two strings have a distance <= MinimumDistance.</returns>
         internal bool IsFuzzyMatch(string candidate, string pattern, out int score)
         {
             score = GetDamerauLevenshteinDistance(candidate, pattern);
@@ -32,9 +29,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="string1">The first string to compare.</param>
-        /// <param name="string2">The second string to compare.</param>
-        /// <returns>The distance value where the lower the value the shorter the distance between the two strings representing a closer match.</returns>
         internal static int GetDamerauLevenshteinDistance(string string1, string string2)
         {
             string1 = string1.ToUpper(CultureInfo.CurrentCulture);

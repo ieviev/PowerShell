@@ -4,10 +4,6 @@
 namespace System.Management.Automation
 {
     
-    /// <remarks>
-    /// Command Help information are stored in 'help.xml' files. Location of these files
-    /// can be found from through the engine execution context.
-    /// </remarks>
     internal class ScriptCommandHelpProvider : CommandHelpProvider
     {
         
@@ -19,7 +15,6 @@ namespace System.Management.Automation
         #region Overrides
 
         
-        /// <value>Help category for this provider</value>
         internal override HelpCategory HelpCategory
         {
             get
@@ -34,9 +29,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="commandName"></param>
-        /// <param name="context"></param>
-        /// <returns></returns>
         internal override CommandSearcher GetCommandSearcherForExactMatch(string commandName, ExecutionContext context)
         {
             CommandSearcher searcher = new CommandSearcher(
@@ -49,9 +41,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="pattern"></param>
-        /// <param name="context"></param>
-        /// <returns></returns>
         internal override CommandSearcher GetCommandSearcherForSearch(string pattern, ExecutionContext context)
         {
             CommandSearcher searcher =

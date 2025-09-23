@@ -21,15 +21,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="item">
-        /// The item to return a template for.
-        /// </param>
-        /// <param name="container">
-        /// The parameter is not used.
-        /// </param>
-        /// <returns>
-        /// Returns a DataTemplate for item.
-        /// </returns>
         public override DataTemplate SelectTemplate(object item, System.Windows.DependencyObject container)
         {
             if (item == null)

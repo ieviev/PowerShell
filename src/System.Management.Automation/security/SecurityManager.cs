@@ -38,10 +38,6 @@ namespace Microsoft.PowerShell
         private readonly string _shellId;
 
         
-        /// <param name="shellId">
-        /// The shell identifier that the authorization manager applies
-        /// to.  For example, Microsoft.PowerShell
-        /// </param>
         public PSAuthorizationManager(string shellId)
             : base(shellId)
         {
@@ -440,7 +436,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="signature"></param>
         private static void TrustPublisher(Signature signature)
         {
             // Get the certificate of the signer
@@ -535,32 +530,6 @@ namespace Microsoft.PowerShell
         #endregion signing check
 
         
-        /// <param name="commandInfo">
-        /// The command to be run.
-        /// </param>
-        /// <param name="origin">
-        /// The origin of the command.
-        /// </param>
-        /// <param name="host">
-        /// The PSHost executing the command.
-        /// </param>
-        /// <param name="reason">
-        /// If access is denied, this parameter provides a specialized
-        /// Exception as the reason.
-        /// </param>
-        /// <returns>
-        /// True if the command should be run.  False otherwise.
-        /// </returns>
-        /// <exception cref="System.ArgumentException">
-        /// CommandInfo is invalid. This may occur if
-        /// commandInfo.Name is null or empty.
-        /// </exception>
-        /// <exception cref="System.ArgumentNullException">
-        /// CommandInfo is null.
-        /// </exception>
-        /// <exception cref="System.IO.FileNotFoundException">
-        /// The file specified by commandInfo.Path is not found.
-        /// </exception>
         protected internal override bool ShouldRun(CommandInfo commandInfo,
                                                    CommandOrigin origin,
                                                    PSHost host,

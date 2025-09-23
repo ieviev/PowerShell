@@ -85,10 +85,6 @@ namespace Microsoft.PowerShell.Telemetry
         // the session identifier
         private static string s_sessionId { get; }
 
-        /// Use a hashset for quick lookups.
-        /// We send telemetry only a known set of modules and tags.
-        /// If it's not in the list (initialized in the static constructor), then we report anonymous
-        /// or don't report anything (in the case of tags).
 
         
         public static bool CanSendTelemetry { get; private set; } = false;
@@ -99,9 +95,6 @@ namespace Microsoft.PowerShell.Telemetry
         }
 
         
-        /// <param name="name">The name of the environment variable.</param>
-        /// <param name="defaultValue">If the environment variable is not set, use this as the default value.</param>
-        /// <returns>A boolean representing the value of the environment variable.</returns>
         private static bool GetEnvironmentVariableAsBool(string name, bool defaultValue)
         {
             var str = Environment.GetEnvironmentVariable(name);
@@ -163,45 +156,31 @@ namespace Microsoft.PowerShell.Telemetry
         }
 
         
-        /// <param name="telemetryType">The type of telemetry that we'll be sending.</param>
-        /// <param name="moduleInfo">The module to report. If it is not allowed, then it is set to 'anonymous'.</param>
         internal static void SendModuleTelemetryMetric(TelemetryType telemetryType, PSModuleInfo moduleInfo)
         {
         }
 
         
-        /// <param name="telemetryType">The type of telemetry that we'll be sending.</param>
-        /// <param name="moduleName">The module name to report. If it is not allowed, then it is set to 'anonymous'.</param>
         internal static void SendModuleTelemetryMetric(TelemetryType telemetryType, string moduleName)
         {
         }
 
         
-        /// <param name="metricId">The type of telemetry that we'll be sending.</param>
-        /// <param name="data">The specific details about the telemetry.</param>
-        /// <param name="value">The count of instances for the telemetry payload.</param>
         internal static void SendTelemetryMetric(TelemetryType metricId, string data, double value = 1.0)
         {
         }
 
         
-        /// <param name="featureName">The name of the feature.</param>
-        /// <param name="detail">The details about the feature use.</param>
-        /// <param name="value">The value to report when sending the payload.</param>
         internal static void SendUseTelemetry(string featureName, string detail, double value = 1.0)
         {
         }
 
         
-        /// <param name="featureName">The name of the experimental feature.</param>
-        /// <param name="detail">The details about the experimental feature use.</param>
         internal static void SendExperimentalUseData(string featureName, string detail)
         {
         }
 
         
-        /// <param name="mode">The "mode" of the startup.</param>
-        /// <param name="parametersUsed">The parameter bitmap used when starting.</param>
         internal static void SendPSCoreStartupTelemetry(string mode, double parametersUsed)
         {
         }

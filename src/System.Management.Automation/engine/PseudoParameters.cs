@@ -7,17 +7,6 @@ using System.Collections.ObjectModel;
 namespace System.Management.Automation
 {
     
-    /// <remarks>
-    /// Instances of <see cref="RuntimeDefinedParameterDictionary"/>
-    /// should be returned to cmdlet implementations of
-    /// <see cref="IDynamicParameters.GetDynamicParameters"/>.
-    ///
-    /// It is permitted to subclass <see cref="RuntimeDefinedParameter"/>
-    /// but there is no established scenario for doing this, nor has it been tested.
-    /// </remarks>
-    /// <seealso cref="RuntimeDefinedParameterDictionary"/>
-    /// <seealso cref="IDynamicParameters"/>
-    /// <seealso cref="IDynamicParameters.GetDynamicParameters"/>
     public class RuntimeDefinedParameter
     {
         
@@ -26,23 +15,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="name">
-        /// The name of the parameter. This cannot be null or empty.
-        /// </param>
-        /// <param name="parameterType">
-        /// The type of the parameter value. Arguments will be coerced to this type before binding.
-        /// This parameter cannot be null.
-        /// </param>
-        /// <param name="attributes">
-        /// Any parameter attributes that should be on the parameter. This can be any of the
-        /// parameter attributes including but not limited to Validate*Attribute, ExpandWildcardAttribute, etc.
-        /// </param>
-        /// <exception cref="ArgumentException">
-        /// If <paramref name="name"/> is null or empty.
-        /// </exception>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="parameterType"/> is null.
-        /// </exception>
         public RuntimeDefinedParameter(string name, Type parameterType, Collection<Attribute> attributes)
         {
             if (string.IsNullOrEmpty(name))
@@ -65,9 +37,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <exception cref="ArgumentException">
-        /// If <paramref name="value"/> is null or empty on set.
-        /// </exception>
         public string Name
         {
             get
@@ -89,12 +58,6 @@ namespace System.Management.Automation
         private string _name = string.Empty;
 
         
-        /// <remarks>
-        /// Arguments will be coerced to this type before being bound.
-        /// </remarks>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="value"/> is null.
-        /// </exception>
         public Type ParameterType
         {
             get
@@ -116,10 +79,6 @@ namespace System.Management.Automation
         private Type _parameterType;
 
         
-        /// <remarks>
-        /// If the value is set prior to parameter binding, the value will be
-        /// reset before each pipeline object is processed.
-        /// </remarks>
         public object Value
         {
             get
@@ -140,9 +99,6 @@ namespace System.Management.Automation
         public bool IsSet { get; set; }
 
         
-        /// <remarks>
-        /// This can be any attribute that can be applied to a normal parameter.
-        /// </remarks>
         public Collection<Attribute> Attributes { get; } = new Collection<Attribute>();
 
         
@@ -182,17 +138,6 @@ namespace System.Management.Automation
     }
 
     
-    /// <remarks>
-    /// Instances of <see cref="RuntimeDefinedParameterDictionary"/>
-    /// should be returned to cmdlet implementations of
-    /// <see cref="IDynamicParameters.GetDynamicParameters"/>.
-    ///
-    /// It is permitted to subclass <see cref="RuntimeDefinedParameterDictionary"/>
-    /// but there is no established scenario for doing this, nor has it been tested.
-    /// </remarks>
-    /// <seealso cref="RuntimeDefinedParameter"/>
-    /// <seealso cref="IDynamicParameters"/>
-    /// <seealso cref="IDynamicParameters.GetDynamicParameters"/>
     public class RuntimeDefinedParameterDictionary : Dictionary<string, RuntimeDefinedParameter>
     {
         

@@ -19,17 +19,6 @@ namespace System.Management.Automation
     internal static class PathUtils
     {
         
-        /// <param name="cmdlet">Cmdlet that is opening the file (used mainly for error reporting).</param>
-        /// <param name="filePath">Path to the file (as specified on the command line - this method will resolve the path).</param>
-        /// <param name="encoding">Encoding (this method will convert the command line string to an Encoding instance).</param>
-        /// <param name="defaultEncoding">If <see langword="true"/>, then we will use default .NET encoding instead of the encoding specified in <paramref name="encoding"/> parameter.</param>
-        /// <param name="Append"></param>
-        /// <param name="Force"></param>
-        /// <param name="NoClobber"></param>
-        /// <param name="fileStream">Result1: <see cref="FileStream"/> opened for writing.</param>
-        /// <param name="streamWriter">Result2: <see cref="StreamWriter"/> (inherits from <see cref="TextWriter"/>) opened for writing.</param>
-        /// <param name="readOnlyFileInfo">Result3: file info that should be used to restore file attributes after done with the file (<see langword="null"/> is this is not needed).</param>
-        /// <param name="isLiteralPath">True if wildcard expansion should be bypassed.</param>
         internal static void MasterStreamOpen(
             PSCmdlet cmdlet,
             string filePath,
@@ -50,17 +39,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="cmdlet">Cmdlet that is opening the file (used mainly for error reporting).</param>
-        /// <param name="filePath">Path to the file (as specified on the command line - this method will resolve the path).</param>
-        /// <param name="resolvedEncoding">Encoding (this method will convert the command line string to an Encoding instance).</param>
-        /// <param name="defaultEncoding">If <see langword="true"/>, then we will use default .NET encoding instead of the encoding specified in <paramref name="encoding"/> parameter.</param>
-        /// <param name="Append"></param>
-        /// <param name="Force"></param>
-        /// <param name="NoClobber"></param>
-        /// <param name="fileStream">Result1: <see cref="FileStream"/> opened for writing.</param>
-        /// <param name="streamWriter">Result2: <see cref="StreamWriter"/> (inherits from <see cref="TextWriter"/>) opened for writing.</param>
-        /// <param name="readOnlyFileInfo">Result3: file info that should be used to restore file attributes after done with the file (<see langword="null"/> is this is not needed).</param>
-        /// <param name="isLiteralPath">True if wildcard expansion should be bypassed.</param>
         internal static void MasterStreamOpen(
             PSCmdlet cmdlet,
             string filePath,
@@ -135,16 +113,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="filePath">Path to the file (as specified on the command line - this method will resolve the path).</param>
-        /// <param name="resolvedEncoding">Encoding (this method will convert the command line string to an Encoding instance).</param>
-        /// <param name="defaultEncoding">If <see langword="true"/>, then we will use default .NET encoding instead of the encoding specified in <paramref name="encoding"/> parameter.</param>
-        /// <param name="Append"></param>
-        /// <param name="Force"></param>
-        /// <param name="NoClobber"></param>
-        /// <param name="fileStream">Result1: <see cref="FileStream"/> opened for writing.</param>
-        /// <param name="streamWriter">Result2: <see cref="StreamWriter"/> (inherits from <see cref="TextWriter"/>) opened for writing.</param>
-        /// <param name="readOnlyFileInfo">Result3: file info that should be used to restore file attributes after done with the file (<see langword="null"/> is this is not needed).</param>
-        /// <param name="isLiteralPath">True if wildcard expansion should be bypassed.</param>
         internal static void MasterStreamOpen(
             string filePath,
             Encoding resolvedEncoding,
@@ -230,15 +198,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="resolvedPath">Path to the file (as specified on the command line - this method will resolve the path).</param>
-        /// <param name="resolvedEncoding">Encoding (this method will convert the command line string to an Encoding instance).</param>
-        /// <param name="defaultEncoding">If <see langword="true"/>, then we will use default .NET encoding instead of the encoding specified in <paramref name="encoding"/> parameter.</param>
-        /// <param name="Append"></param>
-        /// <param name="Force"></param>
-        /// <param name="NoClobber"></param>
-        /// <param name="fileStream">Result1: <see cref="FileStream"/> opened for writing.</param>
-        /// <param name="streamWriter">Result2: <see cref="StreamWriter"/> (inherits from <see cref="TextWriter"/>) opened for writing.</param>
-        /// <param name="readOnlyFileInfo">Result3: file info that should be used to restore file attributes after done with the file (<see langword="null"/> is this is not needed).</param>
         internal static void MasterStreamOpenImpl(
             string resolvedPath,
             Encoding resolvedEncoding,
@@ -367,19 +326,12 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="filePath"></param>
-        /// <param name="command"></param>
-        /// <returns></returns>
         internal static string ResolveFilePath(string filePath, PSCmdlet command)
         {
             return ResolveFilePath(filePath, command, false);
         }
 
         
-        /// <param name="filePath"></param>
-        /// <param name="command"></param>
-        /// <param name="isLiteralPath"></param>
-        /// <returns></returns>
         internal static string ResolveFilePath(string filePath, PSCmdlet command, bool isLiteralPath)
         {
             string path = null;
@@ -440,9 +392,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="filePath"></param>
-        /// <param name="isLiteralPath"></param>
-        /// <returns></returns>
         internal static string ResolveFilePath(string filePath, bool isLiteralPath)
         {
             string path = null;
@@ -717,8 +666,6 @@ namespace System.Management.Automation
 #nullable enable
 
         
-        /// <param name="path">File path.</param>
-        /// <returns>File path (with extended prefix if the path is long path).</returns>
         [return: NotNullIfNotNull(nameof(path))]
         internal static string? EnsureExtendedPrefixIfNeeded(string? path)
         {
@@ -794,13 +741,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <remarks>
-        /// Handles paths that use the alternate directory separator.  It is a frequent mistake to
-        /// assume that rooted paths (Path.IsPathRooted) are not relative.  This isn't the case.
-        /// "C:a" is drive relative- meaning that it will be resolved against the current directory
-        /// for C: (rooted, but relative). "C:\a" is rooted and not relative (the current directory
-        /// will not be used to modify the path).
-        /// </remarks>
         private static bool IsPartiallyQualified(string path)
         {
             if (path.Length < 2)
@@ -846,14 +786,10 @@ namespace System.Management.Automation
             = SearchValues.Create(Path.GetInvalidPathChars());
 
         
-        /// <param name="filename">The path to check.</param>
-        /// <returns>True if the filename contains invalid file name characters, otherwise false.</returns>
         internal static bool ContainsInvalidFileNameChars(ReadOnlySpan<char> filename)
             => filename.ContainsAny(s_invalidFileNameChars);
 
         
-        /// <param name="path">The path to check.</param>
-        /// <returns>True if the path contains invalid path characters, otherwise false.</returns>
         internal static bool ContainsInvalidPathChars(ReadOnlySpan<char> path)
             => path.ContainsAny(s_invalidPathChars);
 

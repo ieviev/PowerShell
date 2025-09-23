@@ -117,7 +117,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
     internal class CmdletOperationRemoveCimInstance : CmdletOperationBase
     {
         
-        /// <param name="cmdlet"></param>
         public CmdletOperationRemoveCimInstance(Cmdlet cmdlet,
             CimRemoveCimInstance cimRemoveCimInstance)
             : base(cmdlet)
@@ -127,7 +126,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="sendToPipeline"></param>
         public override void WriteObject(object sendToPipeline, XOperationContextBase context)
         {
             if (sendToPipeline is CimInstance)
@@ -170,7 +168,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
     internal class CmdletOperationSetCimInstance : CmdletOperationBase
     {
         
-        /// <param name="cmdlet"></param>
         public CmdletOperationSetCimInstance(Cmdlet cmdlet,
             CimSetCimInstance theCimSetCimInstance)
             : base(cmdlet)
@@ -180,7 +177,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="sendToPipeline"></param>
         public override void WriteObject(object sendToPipeline, XOperationContextBase context)
         {
             DebugHelper.WriteLogEx();
@@ -236,7 +232,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
     internal class CmdletOperationInvokeCimMethod : CmdletOperationBase
     {
         
-        /// <param name="cmdlet"></param>
         public CmdletOperationInvokeCimMethod(Cmdlet cmdlet,
             CimInvokeCimMethod theCimInvokeCimMethod)
             : base(cmdlet)
@@ -246,7 +241,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="sendToPipeline"></param>
         public override void WriteObject(object sendToPipeline, XOperationContextBase context)
         {
             DebugHelper.WriteLogEx();
@@ -290,7 +284,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
     internal class CmdletOperationTestCimSession : CmdletOperationBase
     {
         
-        /// <param name="cmdlet"></param>
         public CmdletOperationTestCimSession(Cmdlet cmdlet,
             CimNewSession theCimNewSession)
             : base(cmdlet)
@@ -300,7 +293,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="sendToPipeline"></param>
         public override void WriteObject(object sendToPipeline, XOperationContextBase context)
         {
             DebugHelper.WriteLogEx();

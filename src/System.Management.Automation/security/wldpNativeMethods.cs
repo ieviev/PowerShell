@@ -41,13 +41,10 @@ namespace System.Management.Automation.Security
     // callers of the GetLockdownPolicy() should be reviewed.
     public enum SystemEnforcementMode
     {
-        /// Not enforced at all
         None = 0,
 
-        /// Enabled - allow, but audit
         Audit = 1,
 
-        /// Enabled, enforce restrictions
         Enforce = 2
     }
 
@@ -59,11 +56,6 @@ namespace System.Management.Automation.Security
         }
 
         
-        /// <param name="context">Current execution context.</param>
-        /// <param name="title">Audit message title.</param>
-        /// <param name="message">Audit message message.</param>
-        /// <param name="fqid">Fully Qualified ID.</param>
-        /// <param name="dropIntoDebugger">Stops code execution and goes into debugger mode.</param>
         internal static void LogWDACAuditMessage(
             ExecutionContext context,
             string title,
@@ -114,7 +106,6 @@ namespace System.Management.Automation.Security
         }
 
         
-        /// <returns>An EnforcementMode that describes the system policy.</returns>
         public static SystemEnforcementMode GetSystemLockdownPolicy()
         {
             if (s_systemLockdownPolicy == null)
@@ -141,9 +132,6 @@ namespace System.Management.Automation.Security
         private static bool s_wldpCanExecuteAvailable = true;
 
         
-        /// <param name="filePath">Script file path for policy check.</param>
-        /// <param name="fileStream">FileStream object to script file path.</param>
-        /// <returns>Policy check result for script file.</returns>
         public static SystemScriptFileEnforcement GetFilePolicyEnforcement(
             string filePath,
             System.IO.FileStream fileStream)
@@ -235,7 +223,6 @@ namespace System.Management.Automation.Security
         }
 
         
-        /// <returns>An EnforcementMode that describes policy.</returns>
         public static SystemEnforcementMode GetLockdownPolicy(string path, SafeHandle handle)
         {
             SystemScriptFileEnforcement modernMode = GetLockdownPolicy(path, handle, canExecuteResult: null);
@@ -597,7 +584,6 @@ namespace System.Management.Automation.Security
         private static bool s_hadMissingWldpAssembly = false;
 
         
-        /// <returns>True if the COM object is allowed, False otherwise.</returns>
         internal static bool IsClassInApprovedList(Guid clsid)
         {
             // This method is called only if there is an AppLocker and/or WLDP system wide lock down enforcement policy.
@@ -735,13 +721,10 @@ namespace System.Management.Automation.Security
         [StructLayoutAttribute(LayoutKind.Sequential)]
         internal struct WLDP_HOST_INFORMATION
         {
-            /// DWORD->unsigned int
             internal uint dwRevision;
 
-            /// WLDP_HOST_ID->_WLDP_HOST_ID
             internal WLDP_HOST_ID dwHostId;
 
-            /// PCWSTR->WCHAR*
             [MarshalAsAttribute(UnmanagedType.LPWStr)]
             internal string szSource;
 
@@ -772,12 +755,6 @@ namespace System.Management.Automation.Security
         internal static class WldpNativeMethods
         {
             
-            /// <param name="host">Host guid.</param>
-            /// <param name="options">Evaluation options.</param>
-            /// <param name="fileHandle">Evaluated file handle.</param>
-            /// <param name="auditInfo">Auditing information string.</param>
-            /// <param name="result">Evaluation result.</param>
-            /// <returns>HResult value.</returns>
             [DefaultDllImportSearchPathsAttribute(DllImportSearchPath.System32)]
             [DllImportAttribute("wldp.dll", EntryPoint = "WldpCanExecuteFile")]
             internal static extern int WldpCanExecuteFile(
@@ -789,10 +766,6 @@ namespace System.Management.Automation.Security
                 string auditInfo,
                 out WLDP_EXECUTION_POLICY result);
 
-            /// Return Type: HRESULT->LONG->int
-            /// pHostInformation: PWLDP_HOST_INFORMATION->_WLDP_HOST_INFORMATION*
-            /// pdwLockdownState: PDWORD->DWORD*
-            /// dwFlags: DWORD->unsigned int
             [DefaultDllImportSearchPathsAttribute(DllImportSearchPath.System32)]
             [DllImportAttribute("wldp.dll", EntryPoint = "WldpGetLockdownPolicy")]
             internal static extern int WldpGetLockdownPolicy(
@@ -800,11 +773,6 @@ namespace System.Management.Automation.Security
                 ref uint pdwLockdownState,
                 uint dwFlags);
 
-            /// Return Type: HRESULT->LONG->int
-            /// rclsid: IID*
-            /// pHostInformation: PWLDP_HOST_INFORMATION->_WLDP_HOST_INFORMATION*
-            /// ptIsApproved: PBOOL->BOOL*
-            /// dwFlags: DWORD->unsigned int
             [DefaultDllImportSearchPathsAttribute(DllImportSearchPath.System32)]
             [DllImportAttribute("wldp.dll", EntryPoint = "WldpIsClassInApprovedList")]
             internal static extern int WldpIsClassInApprovedList(

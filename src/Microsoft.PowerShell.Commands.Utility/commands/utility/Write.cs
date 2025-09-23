@@ -317,24 +317,18 @@ namespace Microsoft.PowerShell.Commands
     {
         #region ctor
         
-        /// <returns>Constructed object.</returns>
         public WriteErrorException()
             : base(StringUtil.Format(WriteErrorStrings.WriteErrorException))
         {
         }
 
         
-        /// <param name="message"></param>
-        /// <returns>Constructed object.</returns>
         public WriteErrorException(string message)
             : base(message)
         {
         }
 
         
-        /// <param name="message"></param>
-        /// <param name="innerException"></param>
-        /// <returns>Constructed object.</returns>
         public WriteErrorException(string message,
                                           Exception innerException)
             : base(message, innerException)
@@ -344,9 +338,6 @@ namespace Microsoft.PowerShell.Commands
 
         #region Serialization
         
-        /// <param name="info">Serialization information.</param>
-        /// <param name="context">Streaming context.</param>
-        /// <returns>Constructed object.</returns>
         [Obsolete("Legacy serialization support is deprecated since .NET 8", DiagnosticId = "SYSLIB0051")]
         protected WriteErrorException(SerializationInfo info,
                                       StreamingContext context)

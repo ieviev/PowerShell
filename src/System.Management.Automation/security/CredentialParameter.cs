@@ -11,17 +11,6 @@ namespace System.Management.Automation
     public sealed class CredentialAttribute : ArgumentTransformationAttribute
     {
         
-        /// <param name="engineIntrinsics">
-        /// The engine APIs for the context under which the transformation is being
-        /// made.
-        /// </param>
-        /// <param name="inputData">
-        /// If Null, the transformation prompts for both Username and Password
-        /// If a string, the transformation uses the input for a username, and prompts
-        ///    for a Password
-        /// If already an PSCredential, the transform does nothing.
-        /// </param>
-        /// <returns>An PSCredential object representing the inputData.</returns>
         public override object Transform(EngineIntrinsics engineIntrinsics, object inputData)
         {
             PSCredential cred = null;
@@ -78,7 +67,6 @@ namespace System.Management.Automation
             return cred;
         }
 
-        /// <summary/>
         public override bool TransformNullOptionalParameters { get { return false; } }
     }
 }

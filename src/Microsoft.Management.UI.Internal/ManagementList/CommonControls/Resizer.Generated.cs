@@ -12,15 +12,6 @@ namespace Microsoft.Management.UI.Internal
 {
 
     
-    /// <remarks>
-    ///
-    ///
-    /// If a custom template is provided for this control, then the template MUST provide the following template parts:
-    ///
-    ///     PART_LeftGrip - A required template part which must be of type Thumb.  The grip on the left.
-    ///     PART_RightGrip - A required template part which must be of type Thumb.  The grip on the right.
-    ///
-    /// </remarks>
     [TemplatePart(Name="PART_LeftGrip", Type=typeof(Thumb))]
     [TemplatePart(Name="PART_RightGrip", Type=typeof(Thumb))]
     [Localizability(LocalizationCategory.None)]
@@ -244,18 +235,12 @@ namespace Microsoft.Management.UI.Internal
         public static readonly DependencyProperty ThumbGripLocationProperty = DependencyProperty.RegisterAttached( "ThumbGripLocation", typeof(ResizeGripLocation), typeof(Resizer), new PropertyMetadata( ResizeGripLocation.Right, ThumbGripLocationProperty_PropertyChanged) );
 
         
-        /// <param name="element">The dependency object that the property is attached to.</param>
-        /// <returns>
-        /// The value of ThumbGripLocation that is attached to element.
-        /// </returns>
         static public ResizeGripLocation GetThumbGripLocation(DependencyObject element)
         {
             return (ResizeGripLocation) element.GetValue(ThumbGripLocationProperty);
         }
 
         
-        /// <param name="element">The dependency object that the property will be attached to.</param>
-        /// <param name="value">The new value.</param>
         static public void SetThumbGripLocation(DependencyObject element, ResizeGripLocation value)
         {
             element.SetValue(ThumbGripLocationProperty,value);

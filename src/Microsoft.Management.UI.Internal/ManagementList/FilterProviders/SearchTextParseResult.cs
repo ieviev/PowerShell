@@ -10,8 +10,6 @@ namespace Microsoft.Management.UI.Internal
     public class SearchTextParseResult
     {
         
-        /// <param name="rule">The rule that resulted from parsing the search text.</param>
-        /// <exception cref="ArgumentNullException">The specified value is a null reference.</exception>
         public SearchTextParseResult(FilterRule rule)
         {
             ArgumentNullException.ThrowIfNull(rule);

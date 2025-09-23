@@ -14,7 +14,6 @@ namespace System.Management.Automation
     internal sealed class ArgumentTypeConverterAttribute : ArgumentTransformationAttribute
     {
         
-        /// <param name="types"></param>
         internal ArgumentTypeConverterAttribute(params Type[] types)
         {
             _convertTypes = types;

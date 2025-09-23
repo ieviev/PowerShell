@@ -33,7 +33,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         public Exception Exception { get; }
 
         
-        /// <param name="result"></param>
         public CimIndicationEventExceptionEventArgs(Exception theException)
         {
             context = null;
@@ -72,7 +71,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="result"></param>
         public CimIndicationEventInstanceEventArgs(CimSubscriptionResult result)
         {
             context = null;
@@ -98,10 +96,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         public event EventHandler<CimIndicationEventArgs> CimIndicationArrived;
 
         
-        /// <param name="computerName"></param>
-        /// <param name="nameSpace"></param>
-        /// <param name="queryExpression"></param>
-        /// <param name="operationTimeout"></param>
         public CimIndicationWatcher(
             string computerName,
             string theNamespace,
@@ -116,10 +110,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="cimSession"></param>
-        /// <param name="nameSpace"></param>
-        /// <param name="queryExpression"></param>
-        /// <param name="operationTimeout"></param>
         public CimIndicationWatcher(
             CimSession cimSession,
             string theNamespace,
@@ -157,8 +147,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="src"></param>
-        /// <param name="args"></param>
         private void NewSubscriptionResultHandler(object src, CimSubscriptionEventArgs args)
         {
             EventHandler<CimIndicationEventArgs> temp = this.CimIndicationArrived;
@@ -251,7 +239,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
 
         #region internal method
         
-        /// <param name="cmdlet"></param>
         internal void SetCmdlet(Cmdlet cmdlet)
         {
             if (this.cimRegisterCimIndication != null)

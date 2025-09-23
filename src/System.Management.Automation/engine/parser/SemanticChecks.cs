@@ -583,8 +583,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="ast">BreakStatementAst or ContinueStatementAst.</param>
-        /// <param name="label">Label name. Can be null.</param>
         private void CheckLabelExists(StatementAst ast, string label)
         {
             if (string.IsNullOrEmpty(label))
@@ -618,10 +616,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="ast"></param>
-        /// <param name="label">If label is null, either it's a break/continue to an unknown label
-        /// (and unknown does not mean not specified, it means it's an expression we can't evaluate) or we have a return statement.
-        /// </param>
         private void CheckForFlowOutOfFinally(Ast ast, string label)
         {
             Ast parent;
@@ -725,9 +719,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="ast">The target of an assignment.</param>
-        /// <param name="simpleAssignment">True if the operator '=' is used, false otherwise (e.g. false on '+=' or '++'.).</param>
-        /// <param name="reportError">The action called to report any errors.</param>
         private void CheckAssignmentTarget(ExpressionAst ast, bool simpleAssignment, Action<Ast> reportError)
         {
             ArrayLiteralAst arrayLiteralAst = ast as ArrayLiteralAst;
@@ -1359,9 +1350,7 @@ namespace System.Management.Automation.Language
 
         public override AstVisitAction VisitDynamicKeywordStatement(DynamicKeywordStatementAst dynamicKeywordStatementAst)
         {
-            //////////////////////////////////////////////////////////////////////////////////
             // If a custom action was provided. then invoke it
-            //////////////////////////////////////////////////////////////////////////////////
             if (dynamicKeywordStatementAst.Keyword.SemanticCheck != null)
             {
                 try
@@ -1494,9 +1483,6 @@ namespace System.Management.Automation.Language
     internal static class DscResourceChecker
     {
         
-        /// <param name="parser"></param>
-        /// <param name="typeDefinitionAst"></param>
-        /// <param name="dscResourceAttributeAst"></param>
         internal static void CheckType(Parser parser, TypeDefinitionAst typeDefinitionAst, AttributeAst dscResourceAttributeAst)
         {
             bool hasSet = false;
@@ -1585,12 +1571,6 @@ namespace System.Management.Automation.Language
             }
         }
         
-        /// <param name="parser"></param>
-        /// <param name="typeDefinitionAst">The type definition ast of the DSC resource type.</param>
-        /// <param name="hasSet">Flag to indicate if the class contains Set method.</param>
-        /// <param name="hasGet">Flag to indicate if the class contains Get method.</param>
-        /// <param name="hasTest">Flag to indicate if the class contains Test method.</param>
-        /// <param name="hasKey">Flag to indicate if the class contains Key property.</param>
         private static void LookupRequiredMembers(Parser parser, TypeDefinitionAst typeDefinitionAst, ref bool hasSet, ref bool hasGet, ref bool hasTest, ref bool hasKey)
         {
             if (typeDefinitionAst == null)
@@ -1639,9 +1619,6 @@ namespace System.Management.Automation.Language
             }
         }
         
-        /// <param name="parser"></param>
-        /// <param name="functionMemberAst">The function member AST.</param>
-        /// <param name="hasGet">True if it is a Get method with qualified return type and signature; otherwise, false.</param>
         private static void CheckGet(Parser parser, FunctionMemberAst functionMemberAst, ref bool hasGet)
         {
             if (hasGet)
@@ -1682,8 +1659,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="functionMemberAst">The function member AST.</param>
-        /// <param name="hasTest">True if it is a Test method with qualified return type and signature; otherwise, false.</param>
         private static void CheckTest(FunctionMemberAst functionMemberAst, ref bool hasTest)
         {
             if (hasTest)
@@ -1697,8 +1672,6 @@ namespace System.Management.Automation.Language
                     functionMemberAst.ReturnType.TypeName.GetReflectionType() == typeof(bool));
         }
         
-        /// <param name="functionMemberAst">The function member AST.</param>
-        /// <param name="hasSet">True if it is a Set method with qualified return type and signature; otherwise, false.</param>
         private static void CheckSet(FunctionMemberAst functionMemberAst, ref bool hasSet)
         {
             if (hasSet)
@@ -1712,9 +1685,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="parser"></param>
-        /// <param name="propertyMemberAst">The property member AST.</param>
-        /// <param name="hasKey">True if it is a key property; otherwise, false.</param>
         private static void CheckKey(Parser parser, PropertyMemberAst propertyMemberAst, ref bool hasKey)
         {
             foreach (var attr in propertyMemberAst.Attributes)

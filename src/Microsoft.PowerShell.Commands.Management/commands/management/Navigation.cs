@@ -60,28 +60,12 @@ namespace Microsoft.PowerShell.Commands
         private bool _suppressWildcardExpansion;
 
         
-        /// <param name="context">
-        /// The context under which the command is running.
-        /// </param>
-        /// <returns>
-        /// An object representing the dynamic parameters for the cmdlet or null if there
-        /// are none.
-        /// </returns>
         internal virtual object GetDynamicParameters(CmdletProviderContext context) => null;
 
         
-        /// <value></value>
         protected virtual bool ProviderSupportsShouldProcess => true;
 
         
-        /// <param name="paths">
-        /// The paths to check to see if the providers support ShouldProcess.
-        /// </param>
-        /// <returns>
-        /// If the paths are to different providers, and any don't support
-        /// ShouldProcess, then the return value is false. If they all
-        /// support ShouldProcess then the return value is true.
-        /// </returns>
         protected bool DoesProviderSupportShouldProcess(string[] paths)
         {
             // If no paths are specified, then default to true as the paths
@@ -139,19 +123,9 @@ namespace Microsoft.PowerShell.Commands
             new();
 
         
-        /// <remarks>
-        /// This is meant to be overridden by derived classes if
-        /// they support the Filter parameter. This property is on
-        /// the base class to simplify the creation of the CmdletProviderContext.
-        /// </remarks>
         public virtual string Filter { get; set; }
 
         
-        /// <remarks>
-        /// This is meant to be overridden by derived classes if
-        /// they support the Include parameter. This property is on
-        /// the base class to simplify the creation of the CmdletProviderContext.
-        /// </remarks>
         public virtual string[] Include
         {
             get;
@@ -159,11 +133,6 @@ namespace Microsoft.PowerShell.Commands
         } = Array.Empty<string>();
 
         
-        /// <remarks>
-        /// This is meant to be overridden by derived classes if
-        /// they support the Exclude parameter. This property is on
-        /// the base class to simplify the creation of the CmdletProviderContext.
-        /// </remarks>
         public virtual string[] Exclude
         {
             get;
@@ -171,19 +140,6 @@ namespace Microsoft.PowerShell.Commands
         } = Array.Empty<string>();
 
         
-        /// <remarks>
-        /// Gives the provider guidance on how vigorous it should be about performing
-        /// the operation. If true, the provider should do everything possible to perform
-        /// the operation. If false, the provider should attempt the operation but allow
-        /// even simple errors to terminate the operation.
-        /// For example, if the user tries to copy a file to a path that already exists and
-        /// the destination is read-only, if force is true, the provider should copy over
-        /// the existing read-only file. If force is false, the provider should write an error.
-        ///
-        /// This is meant to be overridden by derived classes if
-        /// they support the Force parameter. This property is on
-        /// the base class to simplify the creation of the CmdletProviderContext.
-        /// </remarks>
         public virtual SwitchParameter Force
         {
             get => _force;
@@ -278,8 +234,6 @@ namespace Microsoft.PowerShell.Commands
     #region GetLocationCommand
 
     
-    /// <remarks>
-    /// </remarks>
     [Cmdlet(VerbsCommon.Get, "Location", DefaultParameterSetName = LocationParameterSet, SupportsTransactions = true, HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096495")]
     [OutputType(typeof(PathInfo), ParameterSetName = new string[] { LocationParameterSet })]
     [OutputType(typeof(PathInfoStack), ParameterSetName = new string[] { StackParameterSet })]
@@ -309,7 +263,6 @@ namespace Microsoft.PowerShell.Commands
         #region Stack parameter set parameters
 
         
-        /// <value></value>
         [Parameter(ParameterSetName = StackParameterSet)]
         public SwitchParameter Stack
         {
@@ -994,20 +947,12 @@ namespace Microsoft.PowerShell.Commands
         private bool _persist = false;
 #endif
         
-        /// <param name="context">
-        /// The context under which the command is running.
-        /// </param>
-        /// <returns>
-        /// An object representing the dynamic parameters for the cmdlet or null if there
-        /// are none.
-        /// </returns>
         internal override object GetDynamicParameters(CmdletProviderContext context)
         {
             return SessionState.Drive.NewDriveDynamicParameters(PSProvider, context);
         }
 
         
-        /// <value></value>
         protected override bool ProviderSupportsShouldProcess => true;
 
         #endregion Command parameters
@@ -1167,29 +1112,6 @@ namespace Microsoft.PowerShell.Commands
     public class DriveMatchingCoreCommandBase : CoreCommandBase
     {
         
-        /// <param name="driveName">
-        /// The name of the drive(s) to returned. The name can contain glob characters.
-        /// </param>
-        /// <param name="providerNames">
-        /// The name of the provider(s) to return. The name can contain glob characters.
-        /// </param>
-        /// <param name="scope">
-        /// The scope to get the drives from. If this parameter is null or empty all drives
-        /// will be retrieved.
-        /// </param>
-        /// <returns>
-        /// A collection of the drives that match the filters.
-        /// </returns>
-        /// <exception cref="DriveNotFoundException"></exception>
-        /// <exception cref="ProviderNotFoundException"></exception>
-        /// <exception cref="ArgumentException">
-        /// If <paramref name="scope"/> is less than zero, or not
-        /// a number and not "script", "global", "local", or "private"
-        /// </exception>
-        /// <exception cref="ArgumentOutOfRangeException">
-        /// If <paramref name="scope"/> is less than zero or greater than the number of currently
-        /// active scopes.
-        /// </exception>
         internal List<PSDriveInfo> GetMatchingDrives(
              string driveName,
             string[] providerNames,
@@ -1359,7 +1281,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <value></value>
         protected override bool ProviderSupportsShouldProcess => true;
 
         #endregion Command parameters
@@ -1466,12 +1387,6 @@ namespace Microsoft.PowerShell.Commands
         private const string LiteralNameParameterSet = "LiteralName";
 
         
-        /// <remarks>
-        /// If the drive name is left empty, all drives will be
-        /// returned. A globing or regular expression can also be
-        /// supplied and any drive names that match the expression
-        /// will be returned.
-        /// </remarks>
         [Parameter(Position = 0, ParameterSetName = NameParameterSet, ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public string[] Name
@@ -1499,12 +1414,6 @@ namespace Microsoft.PowerShell.Commands
         public string Scope { get; set; }
 
         
-        /// <remarks>
-        /// If the provider is left empty, all drives will be
-        /// returned. A globing or regular expression can also be
-        /// supplied and any drive with providers that match the expression
-        /// will be returned.
-        /// </remarks>
         [Parameter(ValueFromPipelineByPropertyName = true)]
         public string[] PSProvider
         {
@@ -1673,15 +1582,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <remarks>
-        /// Gives the provider guidance on how vigorous it should be about performing
-        /// the operation. If true, the provider should do everything possible to perform
-        /// the operation. If false, the provider should attempt the operation but allow
-        /// even simple errors to terminate the operation.
-        /// For example, if the user tries to copy a file to a path that already exists and
-        /// the destination is read-only, if force is true, the provider should copy over
-        /// the existing read-only file. If force is false, the provider should write an error.
-        /// </remarks>
         [Parameter]
         public override SwitchParameter Force
         {
@@ -1690,13 +1590,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="context">
-        /// The context under which the command is running.
-        /// </param>
-        /// <returns>
-        /// An object representing the dynamic parameters for the cmdlet or null if there
-        /// are none.
-        /// </returns>
         internal override object GetDynamicParameters(CmdletProviderContext context)
         {
             if (Path != null && Path.Length > 0)
@@ -1796,15 +1689,6 @@ namespace Microsoft.PowerShell.Commands
         public object Value { get; set; }
 
         
-        /// <remarks>
-        /// Gives the provider guidance on how vigorous it should be about performing
-        /// the operation. If true, the provider should do everything possible to perform
-        /// the operation. If false, the provider should attempt the operation but allow
-        /// even simple errors to terminate the operation.
-        /// For example, if the user tries to copy a file to a path that already exists and
-        /// the destination is read-only, if force is true, the provider should copy over
-        /// the existing read-only file. If force is false, the provider should write an error.
-        /// </remarks>
         [Parameter]
         public override SwitchParameter Force
         {
@@ -1813,13 +1697,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="context">
-        /// The context under which the command is running.
-        /// </param>
-        /// <returns>
-        /// An object representing the dynamic parameters for the cmdlet or null if there
-        /// are none.
-        /// </returns>
         internal override object GetDynamicParameters(CmdletProviderContext context)
         {
             if (Path != null && Path.Length > 0)
@@ -1835,7 +1712,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <value></value>
         protected override bool ProviderSupportsShouldProcess => DoesProviderSupportShouldProcess(Path);
 
         #endregion Command parameters
@@ -1935,15 +1811,6 @@ namespace Microsoft.PowerShell.Commands
         public object Value { get; set; }
 
         
-        /// <remarks>
-        /// Gives the provider guidance on how vigorous it should be about performing
-        /// the operation. If true, the provider should do everything possible to perform
-        /// the operation. If false, the provider should attempt the operation but allow
-        /// even simple errors to terminate the operation.
-        /// For example, if the user tries to copy a file to a path that already exists and
-        /// the destination is read-only, if force is true, the provider should copy over
-        /// the existing read-only file. If force is false, the provider should write an error.
-        /// </remarks>
         [Parameter]
         public override SwitchParameter Force
         {
@@ -1984,13 +1851,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="context">
-        /// The context under which the command is running.
-        /// </param>
-        /// <returns>
-        /// An object representing the dynamic parameters for the cmdlet or null if there
-        /// are none.
-        /// </returns>
         internal override object GetDynamicParameters(CmdletProviderContext context)
         {
             if (Path != null && Path.Length > 0)
@@ -2002,7 +1862,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <value></value>
         protected override bool ProviderSupportsShouldProcess => DoesProviderSupportShouldProcess(_paths);
         #endregion Command parameters
 
@@ -2135,15 +1994,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <remarks>
-        /// Gives the provider guidance on how vigorous it should be about performing
-        /// the operation. If true, the provider should do everything possible to perform
-        /// the operation. If false, the provider should attempt the operation but allow
-        /// even simple errors to terminate the operation.
-        /// For example, if the user tries to copy a file to a path that already exists and
-        /// the destination is read-only, if force is true, the provider should copy over
-        /// the existing read-only file. If force is false, the provider should write an error.
-        /// </remarks>
         [Parameter]
         public override SwitchParameter Force
         {
@@ -2152,13 +2002,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="context">
-        /// The context under which the command is running.
-        /// </param>
-        /// <returns>
-        /// An object representing the dynamic parameters for the cmdlet or null if there
-        /// are none.
-        /// </returns>
         internal override object GetDynamicParameters(CmdletProviderContext context)
         {
             if (Path != null && Path.Length > 0)
@@ -2170,7 +2013,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <value></value>
         protected override bool ProviderSupportsShouldProcess => DoesProviderSupportShouldProcess(_paths);
         #endregion Command parameters
 
@@ -2506,15 +2348,6 @@ namespace Microsoft.PowerShell.Commands
         public string Destination { get; set; } = ".";
 
         
-        /// <remarks>
-        /// Gives the provider guidance on how vigorous it should be about performing
-        /// the operation. If true, the provider should do everything possible to perform
-        /// the operation. If false, the provider should attempt the operation but allow
-        /// even simple errors to terminate the operation.
-        /// For example, if the user tries to copy a file to a path that already exists and
-        /// the destination is read-only, if force is true, the provider should copy over
-        /// the existing read-only file. If force is false, the provider should write an error.
-        /// </remarks>
         [Parameter]
         public override SwitchParameter Force
         {
@@ -2555,13 +2388,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="context">
-        /// The context under which the command is running.
-        /// </param>
-        /// <returns>
-        /// An object representing the dynamic parameters for the cmdlet or null if there
-        /// are none.
-        /// </returns>
         internal override object GetDynamicParameters(CmdletProviderContext context)
         {
             if (Path != null && Path.Length > 0)
@@ -2573,7 +2399,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <value></value>
         protected override bool ProviderSupportsShouldProcess => DoesProviderSupportShouldProcess(_paths);
 
         #endregion Command parameters
@@ -2846,15 +2671,6 @@ namespace Microsoft.PowerShell.Commands
         public string NewName { get; set; }
 
         
-        /// <remarks>
-        /// Gives the provider guidance on how vigorous it should be about performing
-        /// the operation. If true, the provider should do everything possible to perform
-        /// the operation. If false, the provider should attempt the operation but allow
-        /// even simple errors to terminate the operation.
-        /// For example, if the user tries to copy a file to a path that already exists and
-        /// the destination is read-only, if force is true, the provider should copy over
-        /// the existing read-only file. If force is false, the provider should write an error.
-        /// </remarks>
         [Parameter]
         public override SwitchParameter Force
         {
@@ -2871,20 +2687,12 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="context">
-        /// The context under which the command is running.
-        /// </param>
-        /// <returns>
-        /// An object representing the dynamic parameters for the cmdlet or null if there
-        /// are none.
-        /// </returns>
         internal override object GetDynamicParameters(CmdletProviderContext context)
         {
             return InvokeProvider.Item.RenameItemDynamicParameters(Path, NewName, context);
         }
 
         
-        /// <value></value>
         protected override bool ProviderSupportsShouldProcess => DoesProviderSupportShouldProcess(new string[] { _path });
 
         #endregion Command parameters
@@ -3173,15 +2981,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <remarks>
-        /// Gives the provider guidance on how vigorous it should be about performing
-        /// the operation. If true, the provider should do everything possible to perform
-        /// the operation. If false, the provider should attempt the operation but allow
-        /// even simple errors to terminate the operation.
-        /// For example, if the user tries to copy a file to a path that already exists and
-        /// the destination is read-only, if force is true, the provider should copy over
-        /// the existing read-only file. If force is false, the provider should write an error.
-        /// </remarks>
         [Parameter]
         public override SwitchParameter Force
         {
@@ -3241,13 +3040,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="context">
-        /// The context under which the command is running.
-        /// </param>
-        /// <returns>
-        /// An object representing the dynamic parameters for the cmdlet or null if there
-        /// are none.
-        /// </returns>
         internal override object GetDynamicParameters(CmdletProviderContext context)
         {
             if (Path != null && Path.Length > 0)
@@ -3259,7 +3051,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <value></value>
         protected override bool ProviderSupportsShouldProcess => DoesProviderSupportShouldProcess(_paths);
 
         #endregion Command parameters
@@ -3375,15 +3166,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <remarks>
-        /// Gives the provider guidance on how vigorous it should be about performing
-        /// the operation. If true, the provider should do everything possible to perform
-        /// the operation. If false, the provider should attempt the operation but allow
-        /// even simple errors to terminate the operation.
-        /// For example, if the user tries to copy a file to a path that already exists and
-        /// the destination is read-only, if force is true, the provider should copy over
-        /// the existing read-only file. If force is false, the provider should write an error.
-        /// </remarks>
         [Parameter]
         public override SwitchParameter Force
         {
@@ -3416,13 +3198,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="context">
-        /// The context under which the command is running.
-        /// </param>
-        /// <returns>
-        /// An object representing the dynamic parameters for the cmdlet or null if there
-        /// are none.
-        /// </returns>
         internal override object GetDynamicParameters(CmdletProviderContext context)
         {
             if (Path != null && Path.Length > 0)
@@ -3434,7 +3209,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <value></value>
         protected override bool ProviderSupportsShouldProcess => DoesProviderSupportShouldProcess(_paths);
 
         #endregion Command parameters
@@ -3565,13 +3339,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="context">
-        /// The context under which the command is running.
-        /// </param>
-        /// <returns>
-        /// An object representing the dynamic parameters for the cmdlet or null if there
-        /// are none.
-        /// </returns>
         internal override object GetDynamicParameters(CmdletProviderContext context)
         {
             if (Path != null && Path.Length > 0)
@@ -3583,7 +3350,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <value></value>
         protected override bool ProviderSupportsShouldProcess => DoesProviderSupportShouldProcess(_paths);
 
         #endregion Command parameters

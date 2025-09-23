@@ -34,12 +34,6 @@ namespace System.Management.Automation
         #region Constructor
 
         
-        /// <param name="context">
-        /// The context for the runspace to which this session state object belongs.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// if <paramref name="context"/> is null.
-        /// </exception>
         internal SessionStateInternal(ExecutionContext context) : this(null, false, context)
         {
         }
@@ -194,8 +188,6 @@ namespace System.Management.Automation
         public List<string> Scripts { get; } = new List<string>(new string[] { "*" });
 
         
-        /// <param name="scriptPath">Path to check.</param>
-        /// <returns>True if script is allowed.</returns>
         internal SessionStateEntryVisibility CheckScriptVisibility(string scriptPath)
         {
             return checkPathVisibility(Scripts, scriptPath);
@@ -211,29 +203,24 @@ namespace System.Management.Automation
         internal SessionStateEntryVisibility DefaultCommandVisibility = SessionStateEntryVisibility.Public;
 
         
-        /// <param name="entry">The entry to add.</param>
         internal void AddSessionStateEntry(SessionStateCmdletEntry entry)
         {
             AddSessionStateEntry(entry, false);
         }
 
         
-        /// <param name="entry">The entry to add.</param>
-        /// <param name="local">If local, add cmdlet to current scope. Else, add to module scope.</param>
         internal void AddSessionStateEntry(SessionStateCmdletEntry entry, bool local)
         {
             ExecutionContext.CommandDiscovery.AddSessionStateCmdletEntryToCache(entry, local);
         }
 
         
-        /// <param name="entry">The entry to add.</param>
         internal void AddSessionStateEntry(SessionStateApplicationEntry entry)
         {
             this.Applications.Add(entry.Path);
         }
 
         
-        /// <param name="entry">The entry to add.</param>
         internal void AddSessionStateEntry(SessionStateScriptEntry entry)
         {
             this.Scripts.Add(entry.Path);
@@ -330,8 +317,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="applicationPath">The path to the application to check.</param>
-        /// <returns>True if application is permitted.</returns>
         internal SessionStateEntryVisibility CheckApplicationVisibility(string applicationPath)
         {
             return checkPathVisibility(Applications, applicationPath);
@@ -397,30 +382,6 @@ namespace System.Management.Automation
         #region Errors
 
         
-        /// <param name="resourceId">
-        /// The resource ID to use as the format message for the error.
-        /// </param>
-        /// <param name="resourceStr">
-        /// This is the message template string.
-        /// </param>
-        /// <param name="provider">
-        /// The provider information used when formatting the error message.
-        /// </param>
-        /// <param name="path">
-        /// The path used when formatting the error message.
-        /// </param>
-        /// <param name="e">
-        /// The exception that was thrown by the provider. This will be set as
-        /// the ProviderInvocationException's InnerException and the message will
-        /// be used when formatting the error message.
-        /// </param>
-        /// <returns>
-        /// A new instance of a ProviderInvocationException.
-        /// </returns>
-        /// <exception cref="ProviderInvocationException">
-        /// Wraps <paramref name="e"/> in a ProviderInvocationException
-        /// and then throws it.
-        /// </exception>
         internal ProviderInvocationException NewProviderInvocationException(
             string resourceId,
             string resourceStr,
@@ -432,34 +393,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="resourceId">
-        /// The resource ID to use as the format message for the error.
-        /// </param>
-        /// <param name="resourceStr">
-        /// This is the message template string.
-        /// </param>
-        /// <param name="provider">
-        /// The provider information used when formatting the error message.
-        /// </param>
-        /// <param name="path">
-        /// The path used when formatting the error message.
-        /// </param>
-        /// <param name="e">
-        /// The exception that was thrown by the provider. This will be set as
-        /// the ProviderInvocationException's InnerException and the message will
-        /// be used when formatting the error message.
-        /// </param>
-        /// <param name="useInnerExceptionErrorMessage">
-        /// If true, the error record from the inner exception will be used if it contains one.
-        /// If false, the error message specified by the resourceId will be used.
-        /// </param>
-        /// <returns>
-        /// A new instance of a ProviderInvocationException.
-        /// </returns>
-        /// <exception cref="ProviderInvocationException">
-        /// Wraps <paramref name="e"/> in a ProviderInvocationException
-        /// and then throws it.
-        /// </exception>
         internal ProviderInvocationException NewProviderInvocationException(
             string resourceId,
             string resourceStr,

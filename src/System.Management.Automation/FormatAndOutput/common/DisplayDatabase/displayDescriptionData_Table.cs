@@ -65,7 +65,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
                             new List<TableColumnHeaderDefinition>();
 
         
-        /// <returns></returns>
         internal TableHeaderDefinition Copy()
         {
             TableHeaderDefinition result = new TableHeaderDefinition { hideHeader = this.hideHeader };
@@ -103,7 +102,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         internal List<TableRowItemDefinition> rowItemDefinitionList = new List<TableRowItemDefinition>();
 
         
-        /// <returns></returns>
         internal TableRowDefinition Copy()
         {
             TableRowDefinition result = new TableRowDefinition
@@ -170,7 +168,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <returns>True if safe, false otherwise.</returns>
         internal override bool SafeForExport()
         {
             if (!base.SafeForExport())
@@ -226,7 +223,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="tableControlRow"></param>
         public TableControl(TableControlRow tableControlRow) : this()
         {
             if (tableControlRow == null)
@@ -236,8 +232,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="tableControlRow"></param>
-        /// <param name="tableControlColumnHeaders"></param>
         public TableControl(TableControlRow tableControlRow, IEnumerable<TableControlColumnHeader> tableControlColumnHeaders) : this()
         {
             if (tableControlRow == null)
@@ -282,9 +276,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="label">Could be null if no label to specify.</param>
-        /// <param name="width">The Value should be non-negative.</param>
-        /// <param name="alignment">The default value is Alignment.Undefined.</param>
         public TableControlColumnHeader(string label, int width, Alignment alignment)
         {
             if (width < 0)
@@ -309,7 +300,6 @@ namespace System.Management.Automation
         public string FormatString { get; internal set; }
 
         
-        /// <returns></returns>
         public override string ToString()
         {
             return DisplayEntry.Value;
@@ -328,8 +318,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="alignment"></param>
-        /// <param name="entry"></param>
         public TableControlColumn(Alignment alignment, DisplayEntry entry)
         {
             this.Alignment = alignment;

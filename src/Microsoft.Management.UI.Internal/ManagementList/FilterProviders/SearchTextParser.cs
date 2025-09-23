@@ -29,10 +29,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <typeparam name="T">The type of the text rule within the specified selector rule.</typeparam>
-        /// <param name="selectorRule">The rule to include in the search expression.</param>
-        /// <returns><c>true</c> if a rule of type <typeparamref name="T"/> was added; otherwise, <c>false</c>.</returns>
-        /// <exception cref="ArgumentNullException">The specified value is a null reference.</exception>
         public bool TryAddSearchableRule<T>(SelectorFilterRule selectorRule)
             where T : TextFilterRule
         {
@@ -60,8 +56,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="text">The text to parse.</param>
-        /// <returns>A read-only collection of results.</returns>
         public virtual ReadOnlyCollection<SearchTextParseResult> Parse(string text)
         {
             if (string.IsNullOrEmpty(text))
@@ -90,7 +84,6 @@ namespace Microsoft.Management.UI.Internal
         protected static readonly string ValuePattern = "((?<" + ValueGroupName + ">\"[^\"]+\"?)|(?<" + ValueGroupName + ">[^\\s\"]+))";
 
         
-        /// <returns>A regular expression pattern used to parse the search text.</returns>
         protected virtual string GetPattern()
         {
             List<string> patterns = new List<string>(this.SearchableRules.Count + 1);
@@ -157,10 +150,6 @@ namespace Microsoft.Management.UI.Internal
             private TextFilterRule childRule;
 
             
-            /// <param name="uniqueId">A unique ID for this instance.</param>
-            /// <param name="selectorFilterRule">A selector rule that contains <paramref name="childRule"/>.</param>
-            /// <param name="childRule">A text rule within <paramref name="selectorFilterRule"/>.</param>
-            /// <exception cref="ArgumentNullException">The specified value is a null reference.</exception>
             public SearchableRule(string uniqueId, SelectorFilterRule selectorFilterRule, TextFilterRule childRule)
             {
                 ArgumentNullException.ThrowIfNull(uniqueId);
@@ -195,9 +184,6 @@ namespace Microsoft.Management.UI.Internal
             }
 
             
-            /// <param name="value">The search value.</param>
-            /// <returns>A rule with the specified search value set.</returns>
-            /// <exception cref="ArgumentNullException">The specified value is a null reference.</exception>
             public SelectorFilterRule GetRuleWithValueSet(string value)
             {
                 ArgumentNullException.ThrowIfNull(value);

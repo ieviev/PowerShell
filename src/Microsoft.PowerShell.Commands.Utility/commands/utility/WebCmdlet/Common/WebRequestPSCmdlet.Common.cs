@@ -192,18 +192,12 @@ namespace Microsoft.PowerShell.Commands
         public virtual SwitchParameter DisableKeepAlive { get; set; }
 
         
-        /// <remarks>
-        /// This property applies to sending the request and receiving the response headers only.
-        /// </remarks>
         [Alias("TimeoutSec")]
         [Parameter]
         [ValidateRange(0, int.MaxValue)]
         public virtual int ConnectionTimeoutSeconds { get; set; }
 
         
-        /// <remarks>
-        /// This property applies to each read operation when receiving the response body.
-        /// </remarks>
         [Parameter]
         [ValidateRange(0, int.MaxValue)]
         public virtual int OperationTimeoutSeconds { get; set; }
@@ -214,9 +208,6 @@ namespace Microsoft.PowerShell.Commands
         public virtual IDictionary Headers { get; set; }
 
         
-        /// <remarks>
-        /// This property adds headers to the request's header collection without validation.
-        /// </remarks>
         [Parameter]
         public virtual SwitchParameter SkipHeaderValidation { get; set; }
 
@@ -239,15 +230,6 @@ namespace Microsoft.PowerShell.Commands
         public virtual int MaximumRetryCount { get; set; }
 
         
-        /// <remarks>
-        /// This property overrides compatibility with web requests on Windows.
-        /// On FullCLR (WebRequest), authorization headers are stripped during redirect.
-        /// CoreCLR (HTTPClient) does not have this behavior so web requests that work on
-        /// PowerShell/FullCLR can fail with PowerShell/CoreCLR. To provide compatibility,
-        /// we'll detect requests with an Authorization header and automatically strip
-        /// the header when the first redirect occurs. This switch turns off this logic for
-        /// edge cases where the authorization header needs to be preserved across redirects.
-        /// </remarks>
         [Parameter]
         public virtual SwitchParameter PreserveAuthorizationOnRedirect { get; set; }
 
@@ -386,7 +368,6 @@ namespace Microsoft.PowerShell.Commands
         #region Abstract Methods
 
         
-        /// <param name="response">Instance of a WebResponse object to be processed.</param>
         internal abstract void ProcessResponse(HttpResponseMessage response);
 
         #endregion Abstract Methods
@@ -578,7 +559,6 @@ namespace Microsoft.PowerShell.Commands
         protected override void StopProcessing() => _cancelToken?.Cancel();
 
         
-        /// <param name="disposing">True when called from Dispose() and false when called from finalizer.</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!_disposed)
@@ -1589,12 +1569,6 @@ namespace Microsoft.PowerShell.Commands
         private bool IsPersistentSession() => MyInvocation.BoundParameters.ContainsKey(nameof(WebSession)) || MyInvocation.BoundParameters.ContainsKey(nameof(SessionVariable));
 
         
-        /// <param name="request">The WebRequest who's content is to be set.</param>
-        /// <param name="content">A byte array containing the content data.</param>
-        /// <remarks>
-        /// Because this function sets the request's ContentLength property and writes content data into the request's stream,
-        /// it should be called one time maximum on a given request.
-        /// </remarks>
         internal void SetRequestContent(HttpRequestMessage request, byte[] content)
         {
             ArgumentNullException.ThrowIfNull(request);
@@ -1604,12 +1578,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="request">The WebRequest who's content is to be set.</param>
-        /// <param name="content">A String object containing the content data.</param>
-        /// <remarks>
-        /// Because this function sets the request's ContentLength property and writes content data into the request's stream,
-        /// it should be called one time maximum on a given request.
-        /// </remarks>
         internal void SetRequestContent(HttpRequestMessage request, string content)
         {
             ArgumentNullException.ThrowIfNull(request);
@@ -1666,12 +1634,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="request">The WebRequest who's content is to be set.</param>
-        /// <param name="contentStream">A Stream object containing the content data.</param>
-        /// <remarks>
-        /// Because this function sets the request's ContentLength property and writes content data into the request's stream,
-        /// it should be called one time maximum on a given request.
-        /// </remarks>
         internal void SetRequestContent(HttpRequestMessage request, Stream contentStream)
         {
             ArgumentNullException.ThrowIfNull(request);
@@ -1681,12 +1643,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="request">The WebRequest who's content is to be set.</param>
-        /// <param name="multipartContent">A MultipartFormDataContent object containing multipart/form-data content.</param>
-        /// <remarks>
-        /// Because this function sets the request's ContentLength property and writes content data into the request's stream,
-        /// it should be called one time maximum on a given request.
-        /// </remarks>
         internal void SetRequestContent(HttpRequestMessage request, MultipartFormDataContent multipartContent)
         {
             ArgumentNullException.ThrowIfNull(request);
@@ -1746,10 +1702,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="fieldName">The Field Name to use.</param>
-        /// <param name="fieldValue">The Field Value to use.</param>
-        /// <param name="formData">The <see cref="MultipartFormDataContent"/> to update.</param>
-        /// <param name="enumerate">If true, collection types in <paramref name="fieldValue"/> will be enumerated. If false, collections will be treated as single value.</param>
         private static void AddMultipartContent(object fieldName, object fieldValue, MultipartFormDataContent formData, bool enumerate)
         {
             ArgumentNullException.ThrowIfNull(formData);
@@ -1797,8 +1749,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="fieldName">The Field Name to use for the <see cref="StringContent"/></param>
-        /// <param name="fieldValue">The Field Value to use for the <see cref="StringContent"/></param>
         private static StringContent GetMultipartStringContent(object fieldName, object fieldValue)
         {
             ContentDispositionHeaderValue contentDisposition = new("form-data");
@@ -1812,8 +1762,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="fieldName">The Field Name to use for the <see cref="StreamContent"/></param>
-        /// <param name="stream">The <see cref="Stream"/> to use for the <see cref="StreamContent"/></param>
         private static StreamContent GetMultipartStreamContent(object fieldName, Stream stream)
         {
             ContentDispositionHeaderValue contentDisposition = new("form-data");
@@ -1827,8 +1775,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="fieldName">The Field Name to use for the <see cref="StreamContent"/></param>
-        /// <param name="file">The file to use for the <see cref="StreamContent"/></param>
         private static StreamContent GetMultipartFileContent(object fieldName, FileInfo file)
         {
             StreamContent result = GetMultipartStreamContent(fieldName: fieldName, stream: new FileStream(file.FullName, FileMode.Open));
@@ -1942,8 +1888,6 @@ namespace Microsoft.PowerShell.Commands
     public sealed class HttpResponseException : HttpRequestException
     {
         
-        /// <param name="message">Message for the exception.</param>
-        /// <param name="response">Response from the HTTP server.</param>
         public HttpResponseException(string message, HttpResponseMessage response) : base(message, inner: null, response.StatusCode)
         {
             Response = response;

@@ -1,10 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-//
-// This file contains all of the publicly visible parts of the PowerShell abstract syntax tree.
-// Any private/internal methods or properties are found in the file AstCompile.cs.
-//
 
 using System.Collections;
 using System.Diagnostics.CodeAnalysis;
@@ -80,10 +76,6 @@ namespace System.Management.Automation.Language
     public abstract class Ast
     {
         
-        /// <param name="extent">The extent of the expression.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> is null.
-        /// </exception>
         protected Ast(IScriptExtent extent)
         {
             if (extent == null)
@@ -101,8 +93,6 @@ namespace System.Management.Automation.Language
         public Ast Parent { get; private set; }
 
         
-        /// <param name="astVisitor">The visitor.</param>
-        /// <returns>Returns the value returned by the visitor.</returns>
         public object Visit(ICustomAstVisitor astVisitor)
         {
             if (astVisitor == null)
@@ -114,7 +104,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="astVisitor">The visitor.</param>
         public void Visit(AstVisitor astVisitor)
         {
             if (astVisitor == null)
@@ -126,9 +115,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="predicate">The predicate function.</param>
-        /// <param name="searchNestedScriptBlocks">Search nested functions and script block expressions.</param>
-        /// <returns>A possibly empty collection of matching Ast nodes.</returns>
         public IEnumerable<Ast> FindAll(Func<Ast, bool> predicate, bool searchNestedScriptBlocks)
         {
             if (predicate == null)
@@ -140,9 +126,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="predicate">The predicate.</param>
-        /// <param name="searchNestedScriptBlocks">Search nested functions and script block expressions.</param>
-        /// <returns>The first matching node, or null if there is no match.</returns>
         public Ast Find(Func<Ast, bool> predicate, bool searchNestedScriptBlocks)
         {
             if (predicate == null)
@@ -160,25 +143,15 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <returns>A copy of the AST, with the link to the previous parent removed.</returns>
         public abstract Ast Copy();
 
         
-        /// <returns>The object represented by the AST as a safe object.</returns>
-        /// <exception cref="InvalidOperationException">
-        /// If <paramref name="extent"/> is deemed unsafe
-        /// </exception>
         public object SafeGetValue()
         {
             return SafeGetValue(skipHashtableSizeCheck: false);
         }
 
         
-        /// <param name="skipHashtableSizeCheck">Set to skip hashtable limit validation.</param>
-        /// <returns>The object represented by the AST as a safe object.</returns>
-        /// <exception cref="InvalidOperationException">
-        /// If <paramref name="extent"/> is deemed unsafe.
-        /// </exception>
         public object SafeGetValue(bool skipHashtableSizeCheck)
         {
             try
@@ -198,9 +171,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <typeparam name="T">The actual AST type</typeparam>
-        /// <param name="elements">Collection of ASTs.</param>
-        /// <returns></returns>
         internal static T[] CopyElements<T>(ReadOnlyCollection<T> elements) where T : Ast
         {
             if (elements == null || elements.Count == 0) { return null; }
@@ -215,9 +185,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <typeparam name="T">The actual AST type</typeparam>
-        /// <param name="element">An AST instance.</param>
-        /// <returns></returns>
         internal static T CopyElement<T>(T element) where T : Ast
         {
             if (element == null) { return null; }
@@ -359,8 +326,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="ast"></param>
-        /// <returns></returns>
         internal static T GetAncestorAst<T>(Ast ast) where T : Ast
         {
             T targetAst = null;
@@ -479,8 +444,6 @@ namespace System.Management.Automation.Language
         public Token Kind { get; }
 
         
-        /// TODO, Changing this to an IDictionary because ReadOnlyDictionary is available only in .NET 4.5
-        /// This is a temporary workaround and will be fixed later. Tracked by Win8: 354135
         [SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures")]
         public Dictionary<string, Tuple<Token, Ast>> Flags { get; }
 
@@ -689,17 +652,6 @@ namespace System.Management.Automation.Language
         internal bool PostParseChecksPerformed { get; set; }
 
         
-        /// <param name="extent">The extent of the script block.</param>
-        /// <param name="usingStatements">The list of using statements, may be null.</param>
-        /// <param name="attributes">The set of attributes for the script block.</param>
-        /// <param name="paramBlock">The ast for the param block, may be null.</param>
-        /// <param name="beginBlock">The ast for the begin block, may be null.</param>
-        /// <param name="processBlock">The ast for the process block, may be null.</param>
-        /// <param name="endBlock">The ast for the end block, may be null.</param>
-        /// <param name="dynamicParamBlock">The ast for the dynamicparam block, may be null.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> is null.
-        /// </exception>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "param")]
         public ScriptBlockAst(IScriptExtent extent,
                               IEnumerable<UsingStatementAst> usingStatements,
@@ -723,18 +675,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="extent">The extent of the script block.</param>
-        /// <param name="usingStatements">The list of using statements, may be null.</param>
-        /// <param name="attributes">The set of attributes for the script block.</param>
-        /// <param name="paramBlock">The ast for the param block, may be null.</param>
-        /// <param name="beginBlock">The ast for the begin block, may be null.</param>
-        /// <param name="processBlock">The ast for the process block, may be null.</param>
-        /// <param name="endBlock">The ast for the end block, may be null.</param>
-        /// <param name="cleanBlock">The ast for the clean block, may be null.</param>
-        /// <param name="dynamicParamBlock">The ast for the dynamicparam block, may be null.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> is null.
-        /// </exception>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "param")]
         public ScriptBlockAst(
             IScriptExtent extent,
@@ -798,16 +738,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="extent">The extent of the script block.</param>
-        /// <param name="usingStatements">The list of using statements, may be null.</param>
-        /// <param name="paramBlock">The ast for the param block, may be null.</param>
-        /// <param name="beginBlock">The ast for the begin block, may be null.</param>
-        /// <param name="processBlock">The ast for the process block, may be null.</param>
-        /// <param name="endBlock">The ast for the end block, may be null.</param>
-        /// <param name="dynamicParamBlock">The ast for the dynamicparam block, may be null.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> is null.
-        /// </exception>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "param")]
         public ScriptBlockAst(IScriptExtent extent,
                               IEnumerable<UsingStatementAst> usingStatements,
@@ -821,17 +751,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="extent">The extent of the script block.</param>
-        /// <param name="usingStatements">The list of using statements, may be null.</param>
-        /// <param name="paramBlock">The ast for the param block, may be null.</param>
-        /// <param name="beginBlock">The ast for the begin block, may be null.</param>
-        /// <param name="processBlock">The ast for the process block, may be null.</param>
-        /// <param name="endBlock">The ast for the end block, may be null.</param>
-        /// <param name="cleanBlock">The ast for the clean block, may be null.</param>
-        /// <param name="dynamicParamBlock">The ast for the dynamicparam block, may be null.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> is null.
-        /// </exception>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "param")]
         public ScriptBlockAst(
             IScriptExtent extent,
@@ -847,15 +766,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="extent">The extent of the script block.</param>
-        /// <param name="paramBlock">The ast for the param block, may be null.</param>
-        /// <param name="beginBlock">The ast for the begin block, may be null.</param>
-        /// <param name="processBlock">The ast for the process block, may be null.</param>
-        /// <param name="endBlock">The ast for the end block, may be null.</param>
-        /// <param name="dynamicParamBlock">The ast for the dynamicparam block, may be null.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> is null.
-        /// </exception>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "param")]
         public ScriptBlockAst(IScriptExtent extent,
                               ParamBlockAst paramBlock,
@@ -868,16 +778,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="extent">The extent of the script block.</param>
-        /// <param name="paramBlock">The ast for the param block, may be null.</param>
-        /// <param name="beginBlock">The ast for the begin block, may be null.</param>
-        /// <param name="processBlock">The ast for the process block, may be null.</param>
-        /// <param name="endBlock">The ast for the end block, may be null.</param>
-        /// <param name="cleanBlock">The ast for the clean block, may be null.</param>
-        /// <param name="dynamicParamBlock">The ast for the dynamicparam block, may be null.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> is null.
-        /// </exception>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "param")]
         public ScriptBlockAst(
             IScriptExtent extent,
@@ -892,17 +792,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="extent">The extent of the script block.</param>
-        /// <param name="usingStatements">The list of using statements, may be null.</param>
-        /// <param name="paramBlock">The ast for the param block, may be null.</param>
-        /// <param name="statements">
-        /// The statements that go in the end block if <paramref name="isFilter"/> is false, or the
-        /// process block if <paramref name="isFilter"/> is true.
-        /// </param>
-        /// <param name="isFilter">True if the script block is a filter, false if it is a function or workflow.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> or <paramref name="statements"/> is null.
-        /// </exception>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "param")]
         public ScriptBlockAst(IScriptExtent extent, List<UsingStatementAst> usingStatements, ParamBlockAst paramBlock, StatementBlockAst statements, bool isFilter)
             : this(extent, usingStatements, null, paramBlock, statements, isFilter, false)
@@ -910,16 +799,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="extent">The extent of the script block.</param>
-        /// <param name="paramBlock">The ast for the param block, may be null.</param>
-        /// <param name="statements">
-        /// The statements that go in the end block if <paramref name="isFilter"/> is false, or the
-        /// process block if <paramref name="isFilter"/> is true.
-        /// </param>
-        /// <param name="isFilter">True if the script block is a filter, false if it is a function or workflow.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> or <paramref name="statements"/> is null.
-        /// </exception>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "param")]
         public ScriptBlockAst(IScriptExtent extent, ParamBlockAst paramBlock, StatementBlockAst statements, bool isFilter)
             : this(extent, null, null, paramBlock, statements, isFilter, false)
@@ -927,17 +806,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="extent">The extent of the script block.</param>
-        /// <param name="paramBlock">The ast for the param block, may be null.</param>
-        /// <param name="statements">
-        /// The statements that go in the end block if <paramref name="isFilter"/> is false, or the
-        /// process block if <paramref name="isFilter"/> is true.
-        /// </param>
-        /// <param name="isFilter">True if the script block is a filter, false if it is a function or workflow.</param>
-        /// <param name="isConfiguration">True if the script block is a configuration.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> or <paramref name="statements"/> is null.
-        /// </exception>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "param")]
         public ScriptBlockAst(IScriptExtent extent, ParamBlockAst paramBlock, StatementBlockAst statements, bool isFilter, bool isConfiguration)
             : this(extent, null, null, paramBlock, statements, isFilter, isConfiguration)
@@ -945,18 +813,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="extent">The extent of the script block.</param>
-        /// <param name="usingStatements">The list of using statements, may be null.</param>
-        /// <param name="paramBlock">The ast for the param block, may be null.</param>
-        /// <param name="statements">
-        /// The statements that go in the end block if <paramref name="isFilter"/> is false, or the
-        /// process block if <paramref name="isFilter"/> is true.
-        /// </param>
-        /// <param name="isFilter">True if the script block is a filter, false if it is a function or workflow.</param>
-        /// <param name="isConfiguration">True if the script block is a configuration.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> or <paramref name="statements"/> is null.
-        /// </exception>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "param")]
         public ScriptBlockAst(IScriptExtent extent, IEnumerable<UsingStatementAst> usingStatements, ParamBlockAst paramBlock, StatementBlockAst statements, bool isFilter, bool isConfiguration)
             : this(extent, usingStatements, null, paramBlock, statements, isFilter, isConfiguration)
@@ -964,18 +820,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="extent">The extent of the script block.</param>
-        /// <param name="attributes">The attributes for the script block.</param>
-        /// <param name="paramBlock">The ast for the param block, may be null.</param>
-        /// <param name="statements">
-        /// The statements that go in the end block if <paramref name="isFilter"/> is false, or the
-        /// process block if <paramref name="isFilter"/> is true.
-        /// </param>
-        /// <param name="isFilter">True if the script block is a filter, false if it is a function or workflow.</param>
-        /// <param name="isConfiguration">True if the script block is a configuration.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> or <paramref name="statements"/> is null.
-        /// </exception>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "param")]
         public ScriptBlockAst(IScriptExtent extent, IEnumerable<AttributeAst> attributes, ParamBlockAst paramBlock, StatementBlockAst statements, bool isFilter, bool isConfiguration)
             : this(extent, null, attributes, paramBlock, statements, isFilter, isConfiguration)
@@ -983,19 +827,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="extent">The extent of the script block.</param>
-        /// <param name="usingStatements">The list of using statements, may be null.</param>
-        /// <param name="attributes">The attributes for the script block.</param>
-        /// <param name="paramBlock">The ast for the param block, may be null.</param>
-        /// <param name="statements">
-        /// The statements that go in the end block if <paramref name="isFilter"/> is false, or the
-        /// process block if <paramref name="isFilter"/> is true.
-        /// </param>
-        /// <param name="isFilter">True if the script block is a filter, false if it is a function or workflow.</param>
-        /// <param name="isConfiguration">True if the script block is a configuration.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> or <paramref name="statements"/> is null.
-        /// </exception>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "param")]
         public ScriptBlockAst(IScriptExtent extent, IEnumerable<UsingStatementAst> usingStatements, IEnumerable<AttributeAst> attributes, ParamBlockAst paramBlock, StatementBlockAst statements, bool isFilter, bool isConfiguration)
             : base(extent)
@@ -1092,10 +923,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <returns>The compiled script block.</returns>
-        /// <exception cref="ParseException">
-        /// Thrown if there are any semantic errors in the ast.
-        /// </exception>
         public ScriptBlock GetScriptBlock()
         {
             if (!PostParseChecksPerformed)
@@ -1596,12 +1423,6 @@ namespace System.Management.Automation.Language
             Utils.EmptyReadOnlyCollection<ParameterAst>();
 
         
-        /// <param name="extent">The extent of the param statement, from any possible attributes to the closing paren.</param>
-        /// <param name="attributes">The attributes (such as [cmdletbinding()]) specified on the param statement.  May be null.</param>
-        /// <param name="parameters">The parameters to the script block.  May be null.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> is null.
-        /// </exception>
         public ParamBlockAst(IScriptExtent extent, IEnumerable<AttributeAst> attributes, IEnumerable<ParameterAst> parameters)
             : base(extent)
         {
@@ -1698,30 +1519,6 @@ namespace System.Management.Automation.Language
     public class NamedBlockAst : Ast
     {
         
-        /// <param name="extent">
-        /// The extent of the block.  If <paramref name="unnamed"/> is false, the extent includes
-        /// the keyword through the closing curly, otherwise the extent is the as the extent of <paramref name="statementBlock"/>.
-        /// </param>
-        /// <param name="blockName">
-        /// The kind of block, must be one of:
-        /// <list type="bullet">
-        /// <item><see cref="TokenKind.Begin"/></item>
-        /// <item><see cref="TokenKind.Process"/></item>
-        /// <item><see cref="TokenKind.End"/></item>
-        /// <item><see cref="TokenKind.Clean"/></item>
-        /// <item><see cref="TokenKind.Dynamicparam"/></item>
-        /// </list>
-        /// </param>
-        /// <param name="statementBlock">The ast for the statements in this named block.</param>
-        /// <param name="unnamed">True if the block was not explicitly named.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> or <paramref name="statementBlock"/> is null.
-        /// </exception>
-        /// <exception cref="PSArgumentException">
-        /// If <paramref name="blockName"/> is not one of the valid kinds for a named block,
-        /// or if <paramref name="unnamed"/> is <see langword="true"/> and <paramref name="blockName"/> is neither
-        /// <see cref="TokenKind.Process"/> nor <see cref="TokenKind.End"/>.
-        /// </exception>
         public NamedBlockAst(IScriptExtent extent, TokenKind blockName, StatementBlockAst statementBlock, bool unnamed)
             : base(extent)
         {
@@ -1842,20 +1639,6 @@ namespace System.Management.Automation.Language
     public class NamedAttributeArgumentAst : Ast
     {
         
-        /// <param name="extent">
-        /// The extent of the named attribute argument, starting with the name, ending with the expression, or if the expression
-        /// is omitted from the source, then ending at the end of the name.
-        /// </param>
-        /// <param name="argumentName">The name of the argument specified.  May not be null or empty.</param>
-        /// <param name="argument">The argument expression.  May not be null even if the expression is omitted from the source.</param>
-        /// <param name="expressionOmitted">
-        /// True when an explicit argument is not provided in the source, e.g. <c>[Parameter(Mandatory)]</c>.  In this case,
-        /// an ast for the argument expression must still be provided.
-        /// </param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/>, <paramref name="argumentName"/>, or <paramref name="argument"/> is null, or if
-        /// <paramref name="argumentName"/> is an empty string.
-        /// </exception>
         public NamedAttributeArgumentAst(IScriptExtent extent, string argumentName, ExpressionAst argument, bool expressionOmitted)
             : base(extent)
         {
@@ -1915,11 +1698,6 @@ namespace System.Management.Automation.Language
     public abstract class AttributeBaseAst : Ast
     {
         
-        /// <param name="extent">The extent of the attribute, from the opening '[' to the closing ']'.</param>
-        /// <param name="typeName">The type named by the attribute.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> or <paramref name="typeName"/> is null.
-        /// </exception>
         protected AttributeBaseAst(IScriptExtent extent, ITypeName typeName)
             : base(extent)
         {
@@ -1947,13 +1725,6 @@ namespace System.Management.Automation.Language
             Utils.EmptyReadOnlyCollection<NamedAttributeArgumentAst>();
 
         
-        /// <param name="extent">The extent of the attribute from opening '[' to closing ']'.</param>
-        /// <param name="namedArguments">The named arguments, may be null.</param>
-        /// <param name="positionalArguments">The positional arguments, may be null.</param>
-        /// <param name="typeName">The attribute name.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> or <paramref name="typeName"/> is null.
-        /// </exception>
         public AttributeAst(IScriptExtent extent,
                             ITypeName typeName,
                             IEnumerable<ExpressionAst> positionalArguments,
@@ -2042,22 +1813,12 @@ namespace System.Management.Automation.Language
     public class TypeConstraintAst : AttributeBaseAst
     {
         
-        /// <param name="extent">The extent of the constraint, from the opening '[' to the closing ']'.</param>
-        /// <param name="typeName">The type for the constraint.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> or <paramref name="typeName"/> is null.
-        /// </exception>
         public TypeConstraintAst(IScriptExtent extent, ITypeName typeName)
             : base(extent, typeName)
         {
         }
 
         
-        /// <param name="extent">The extent of the constraint, from the opening '[' to the closing ']'.</param>
-        /// <param name="type">The type for the constraint.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> or <paramref name="type"/> is null.
-        /// </exception>
         public TypeConstraintAst(IScriptExtent extent, Type type)
             : base(extent, new ReflectionTypeName(type))
         {
@@ -2097,13 +1858,6 @@ namespace System.Management.Automation.Language
             Utils.EmptyReadOnlyCollection<AttributeBaseAst>();
 
         
-        /// <param name="extent">The extent of the parameter, including the attributes and default if specified.</param>
-        /// <param name="name">The name of the variable.</param>
-        /// <param name="attributes">The attributes, or null if no attributes were specified.</param>
-        /// <param name="defaultValue">The default value of the parameter, or null if no default value was specified.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> or <paramref name="name"/> is null.
-        /// </exception>
         public ParameterAst(IScriptExtent extent,
                             VariableExpressionAst name,
                             IEnumerable<AttributeBaseAst> attributes,
@@ -2176,10 +1930,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="orderedUsingVar">A sorted enumerator of using variable asts, ascendingly sorted based on StartOffSet.</param>
-        /// <returns>
-        /// The text of the ParameterAst with $using variable being replaced with a new variable name.
-        /// </returns>
         internal string GetParamTextWithDollarUsingHandling(IEnumerator<VariableExpressionAst> orderedUsingVar)
         {
             int indexOffset = Extent.StartOffset;
@@ -2272,14 +2022,6 @@ namespace System.Management.Automation.Language
         private static readonly ReadOnlyCollection<StatementAst> s_emptyStatementCollection = Utils.EmptyReadOnlyCollection<StatementAst>();
 
         
-        /// <param name="extent">The extent of the statement block.  If curly braces are part of the statement block (and
-        /// not some other ast like in a script block), then the curly braces are included in the extent, otherwise the
-        /// extent runs from the first statement or trap to the last statement or trap.</param>
-        /// <param name="statements">The (possibly null) collection of statements.</param>
-        /// <param name="traps">The (possibly null) collection of trap statements.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> is null.
-        /// </exception>
         public StatementBlockAst(IScriptExtent extent, IEnumerable<StatementAst> statements, IEnumerable<TrapStatementAst> traps)
             : base(extent)
         {
@@ -2366,10 +2108,6 @@ namespace System.Management.Automation.Language
     public abstract class StatementAst : Ast
     {
         
-        /// <param name="extent">The extent of the statement.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> is null.
-        /// </exception>
         protected StatementAst(IScriptExtent extent)
             : base(extent)
         {
@@ -2406,12 +2144,6 @@ namespace System.Management.Automation.Language
             Utils.EmptyReadOnlyCollection<TypeConstraintAst>();
 
         
-        /// <param name="extent">The extent of the type definition, from any attributes to the closing curly brace.</param>
-        /// <param name="name">The name of the type.</param>
-        /// <param name="attributes">The attributes, or null if no attributes were specified.</param>
-        /// <param name="members">The members, or null if no members were specified.</param>
-        /// <param name="typeAttributes">The attributes (like class or interface) of the type.</param>
-        /// <param name="baseTypes">Base class and implemented interfaces for the type.</param>
         public TypeDefinitionAst(IScriptExtent extent, string name, IEnumerable<AttributeAst> attributes, IEnumerable<MemberAst> members, TypeAttributes typeAttributes, IEnumerable<TypeConstraintAst> baseTypes)
             : base(extent)
         {
@@ -2597,12 +2329,6 @@ namespace System.Management.Automation.Language
     public class UsingStatementAst : StatementAst
     {
         
-        /// <param name="extent">The extent of the using statement including the using keyword.</param>
-        /// <param name="kind">
-        /// The kind of using statement, cannot be <see cref="System.Management.Automation.Language.UsingStatementKind.Command"/>
-        /// or <see cref="System.Management.Automation.Language.UsingStatementKind.Type"/>
-        /// </param>
-        /// <param name="name">The item (assembly, module, or namespace) being used.</param>
         public UsingStatementAst(IScriptExtent extent, UsingStatementKind kind, StringConstantExpressionAst name)
             : base(extent)
         {
@@ -2623,8 +2349,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="extent">The extent of the using statement including the using keyword.</param>
-        /// <param name="moduleSpecification">HashtableAst that describes <see cref="Microsoft.PowerShell.Commands.ModuleSpecification"/> object.</param>
         public UsingStatementAst(IScriptExtent extent, HashtableAst moduleSpecification)
             : base(extent)
         {
@@ -2640,12 +2364,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="extent">The extent of the using statement including the using keyword.</param>
-        /// <param name="kind">
-        /// The kind of using statement, cannot be <see cref="System.Management.Automation.Language.UsingStatementKind.Assembly"/>.
-        /// </param>
-        /// <param name="aliasName">The name of the alias.</param>
-        /// <param name="resolvedAliasAst">The item being aliased.</param>
         public UsingStatementAst(IScriptExtent extent, UsingStatementKind kind, StringConstantExpressionAst aliasName,
                                  StringConstantExpressionAst resolvedAliasAst)
             : base(extent)
@@ -2674,9 +2392,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="extent">The extent of the using statement including the using keyword.</param>
-        /// <param name="aliasName">The name of the alias.</param>
-        /// <param name="moduleSpecification">The module being aliased. Hashtable that describes <see cref="Microsoft.PowerShell.Commands.ModuleSpecification"/></param>
         public UsingStatementAst(IScriptExtent extent, StringConstantExpressionAst aliasName, HashtableAst moduleSpecification)
             : base(extent)
         {
@@ -2757,8 +2472,6 @@ namespace System.Management.Automation.Language
         #endregion
 
         
-        /// <param name="moduleInfo"></param>
-        /// <returns>Return ExportedTypeTable for this module.</returns>
         internal ReadOnlyDictionary<string, TypeDefinitionAst> DefineImportedModule(PSModuleInfo moduleInfo)
         {
             var types = moduleInfo.GetExportedTypeDefinitions();
@@ -2767,7 +2480,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <returns>True, if it is.</returns>
         internal bool IsUsingModuleOrAssembly()
         {
             return UsingStatementKind == UsingStatementKind.Assembly || UsingStatementKind == UsingStatementKind.Module;
@@ -2778,7 +2490,6 @@ namespace System.Management.Automation.Language
     public abstract class MemberAst : Ast
     {
         
-        /// <param name="extent">The extent of the type member.</param>
         protected MemberAst(IScriptExtent extent) : base(extent)
         {
         }
@@ -2819,12 +2530,6 @@ namespace System.Management.Automation.Language
             Utils.EmptyReadOnlyCollection<AttributeAst>();
 
         
-        /// <param name="extent">The extent of the property starting with any custom attributes.</param>
-        /// <param name="name">The name of the property.</param>
-        /// <param name="propertyType">The ast for the type of the property - may be null.</param>
-        /// <param name="attributes">The custom attributes for the property.</param>
-        /// <param name="propertyAttributes">The attributes (like public or static) for the property.</param>
-        /// <param name="initialValue">The initial value of the property (may be null).</param>
         public PropertyMemberAst(IScriptExtent extent, string name, TypeConstraintAst propertyType, IEnumerable<AttributeAst> attributes, PropertyAttributes propertyAttributes, ExpressionAst initialValue)
             : base(extent)
         {
@@ -2984,11 +2689,6 @@ namespace System.Management.Automation.Language
         private readonly FunctionDefinitionAst _functionDefinitionAst;
 
         
-        /// <param name="extent">The extent of the method starting from any attributes to the closing curly.</param>
-        /// <param name="functionDefinitionAst">The main body of the method.</param>
-        /// <param name="returnType">The return type of the method, may be null.</param>
-        /// <param name="attributes">The custom attributes for the function.</param>
-        /// <param name="methodAttributes">The method attributes like public or static.</param>
         public FunctionMemberAst(IScriptExtent extent, FunctionDefinitionAst functionDefinitionAst, TypeConstraintAst returnType, IEnumerable<AttributeAst> attributes, MethodAttributes methodAttributes)
             : base(extent)
         {
@@ -3351,20 +3051,6 @@ namespace System.Management.Automation.Language
     public class FunctionDefinitionAst : StatementAst, IParameterMetadataProvider
     {
         
-        /// <param name="extent">
-        /// The extent of the function definition, starting with the function or filter keyword, ending at the closing curly.
-        /// </param>
-        /// <param name="isFilter">True if the filter keyword was used.</param>
-        /// <param name="isWorkflow">True if the workflow keyword was used.</param>
-        /// <param name="name">The name of the function.</param>
-        /// <param name="parameters">
-        /// The parameters specified after the function name.  This does not include parameters specified with a param statement.
-        /// </param>
-        /// <param name="body">The body of the function/filter.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/>, <paramref name="name"/>, or <paramref name="body"/> is null, or
-        /// if <paramref name="name"/> is an empty string.
-        /// </exception>
         public FunctionDefinitionAst(IScriptExtent extent,
                                      bool isFilter,
                                      bool isWorkflow,
@@ -3449,12 +3135,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="scriptBlockTokenCache">A dictionary that the parser will use to
-        /// map AST nodes to their respective tokens. The parser uses this to improve performance
-        /// while repeatedly parsing the parent script blocks of a function (since the parent
-        /// script blocks may contain help comments related to this function.
-        /// To conserve memory, clear / null-out this cache when done with repeated parsing.</param>
-        /// <returns></returns>
         public CommentHelpInfo GetHelpContent(Dictionary<Ast, Token[]> scriptBlockTokenCache)
         {
             ArgumentNullException.ThrowIfNull(scriptBlockTokenCache);
@@ -3638,15 +3318,6 @@ namespace System.Management.Automation.Language
     public class IfStatementAst : StatementAst
     {
         
-        /// <param name="extent">
-        /// The extent of the statement, starting with the if keyword, ending at the closing curly of the last clause.
-        /// </param>
-        /// <param name="clauses">
-        /// A non-empty collection of pairs of condition expressions and statement blocks.
-        /// </param>
-        /// <param name="elseClause">The else clause, or null if no clause was specified.</param>
-        /// <exception cref="PSArgumentNullException">If <paramref name="extent"/> is null.</exception>
-        /// <exception cref="PSArgumentException">If <paramref name="clauses"/> is null or empty.</exception>
         [SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures")]
         public IfStatementAst(IScriptExtent extent, IEnumerable<IfClause> clauses, StatementBlockAst elseClause)
             : base(extent)
@@ -3731,13 +3402,6 @@ namespace System.Management.Automation.Language
         private static readonly ExpressionAst[] s_emptyCommandsAllowed = Array.Empty<ExpressionAst>();
 
         
-        /// <param name="extent">The extent of the data statement, extending from the data keyword to the closing curly brace.</param>
-        /// <param name="variableName">The name of the variable, if specified, otherwise null.</param>
-        /// <param name="commandsAllowed">The list of commands allowed in the data statement, if specified, otherwise null.</param>
-        /// <param name="body">The body of the data statement.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> or <paramref name="body"/> is null.
-        /// </exception>
         public DataStatementAst(IScriptExtent extent,
                                 string variableName,
                                 IEnumerable<ExpressionAst> commandsAllowed,
@@ -3821,12 +3485,6 @@ namespace System.Management.Automation.Language
     public abstract class LabeledStatementAst : StatementAst
     {
         
-        /// <param name="extent">The extent of the statement.</param>
-        /// <param name="label">The optionally null label for the statement.</param>
-        /// <param name="condition">The optionally null pipeline for the condition test of the statement.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> is null.
-        /// </exception>
         protected LabeledStatementAst(IScriptExtent extent, string label, PipelineBaseAst condition)
             : base(extent)
         {
@@ -3854,13 +3512,6 @@ namespace System.Management.Automation.Language
     public abstract class LoopStatementAst : LabeledStatementAst
     {
         
-        /// <param name="extent">The extent of the statement.</param>
-        /// <param name="label">The optionally null label for the statement.</param>
-        /// <param name="condition">The optionally null pipeline for the condition test of the statement.</param>
-        /// <param name="body">The body of the statement.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> or <paramref name="body"/> is null.
-        /// </exception>
         protected LoopStatementAst(IScriptExtent extent, string label, PipelineBaseAst condition, StatementBlockAst body)
             : base(extent, label, condition)
         {
@@ -3895,17 +3546,6 @@ namespace System.Management.Automation.Language
     public class ForEachStatementAst : LoopStatementAst
     {
         
-        /// <param name="extent">
-        /// The extent of the statement, starting from the optional label or the foreach keyword and ending at the closing curly brace.
-        /// </param>
-        /// <param name="label">The optionally null label.</param>
-        /// <param name="flags">Any flags that affect how the foreach statement is processed.</param>
-        /// <param name="variable">The variable set on each iteration of the loop.</param>
-        /// <param name="expression">The pipeline generating values to iterate through.</param>
-        /// <param name="body">The body to execute for each element written from pipeline.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/>, <paramref name="expression"/>, or <paramref name="variable"/> is null.
-        /// </exception>
         public ForEachStatementAst(IScriptExtent extent,
                                    string label,
                                    ForEachFlags flags,
@@ -3925,18 +3565,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="extent">
-        /// The extent of the statement, starting from the optional label or the foreach keyword and ending at the closing curly brace.
-        /// </param>
-        /// <param name="label">The optionally null label.</param>
-        /// <param name="flags">Any flags that affect how the foreach statement is processed.</param>
-        /// <param name="throttleLimit">The limit to be obeyed during parallel processing, if any.</param>
-        /// <param name="variable">The variable set on each iteration of the loop.</param>
-        /// <param name="expression">The pipeline generating values to iterate through.</param>
-        /// <param name="body">The body to execute for each element written from pipeline.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/>, <paramref name="expression"/>, or <paramref name="variable"/> is null.
-        /// </exception>
         public ForEachStatementAst(IScriptExtent extent,
                                    string label,
                                    ForEachFlags flags,
@@ -4007,15 +3635,6 @@ namespace System.Management.Automation.Language
     public class ForStatementAst : LoopStatementAst
     {
         
-        /// <param name="extent">The extent of the statement, from the label or for keyword to the closing curly.</param>
-        /// <param name="label">The optionally null label.</param>
-        /// <param name="initializer">The optionally null initialization expression executed before the loop.</param>
-        /// <param name="condition">The optionally null condition expression tested on each iteration of the loop.</param>
-        /// <param name="iterator">The optionally null iteration expression executed after each iteration of the loop.</param>
-        /// <param name="body">The body executed on each iteration of the loop.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> is null.
-        /// </exception>
         public ForStatementAst(IScriptExtent extent,
                                string label,
                                PipelineBaseAst initializer,
@@ -4084,13 +3703,6 @@ namespace System.Management.Automation.Language
     public class DoWhileStatementAst : LoopStatementAst
     {
         
-        /// <param name="extent">The extent of the do/while statement from the label or do keyword to the closing curly brace.</param>
-        /// <param name="label">The optionally null label.</param>
-        /// <param name="condition">The condition tested on each iteration of the loop.</param>
-        /// <param name="body">The body executed on each iteration of the loop.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> or <paramref name="condition"/> is null.
-        /// </exception>
         public DoWhileStatementAst(IScriptExtent extent, string label, PipelineBaseAst condition, StatementBlockAst body)
             : base(extent, label, condition, body)
         {
@@ -4134,13 +3746,6 @@ namespace System.Management.Automation.Language
     public class DoUntilStatementAst : LoopStatementAst
     {
         
-        /// <param name="extent">The extent of the statement, from the label or do keyword to the closing curly brace.</param>
-        /// <param name="label">The optionally null label.</param>
-        /// <param name="condition">The condition tested on each iteration of the loop.</param>
-        /// <param name="body">The body executed on each iteration of the loop.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> or <paramref name="condition"/> is null.
-        /// </exception>
         public DoUntilStatementAst(IScriptExtent extent, string label, PipelineBaseAst condition, StatementBlockAst body)
             : base(extent, label, condition, body)
         {
@@ -4184,13 +3789,6 @@ namespace System.Management.Automation.Language
     public class WhileStatementAst : LoopStatementAst
     {
         
-        /// <param name="extent">The extent of the statement, from the label or while keyword to the closing curly brace.</param>
-        /// <param name="label">The optionally null label.</param>
-        /// <param name="condition">The condition tested on each iteration of the loop.</param>
-        /// <param name="body">The body executed on each iteration of the loop.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> or <paramref name="condition"/> is null.
-        /// </exception>
         public WhileStatementAst(IScriptExtent extent, string label, PipelineBaseAst condition, StatementBlockAst body)
             : base(extent, label, condition, body)
         {
@@ -4266,20 +3864,6 @@ namespace System.Management.Automation.Language
         private static readonly SwitchClause[] s_emptyClauseArray = Array.Empty<SwitchClause>();
 
         
-        /// <param name="extent">The extent of the statement, from the label or switch keyword to the closing curly.</param>
-        /// <param name="label">The optionally null label.</param>
-        /// <param name="condition">The expression being switched upon.</param>
-        /// <param name="flags">Any flags that affect how the <paramref name="condition"/> is tested.</param>
-        /// <param name="clauses">
-        /// A possibly null or empty collection of conditions and block of statements to execute if the condition matches.
-        /// </param>
-        /// <param name="default">The default clause to execute if no clauses match.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> is null.
-        /// </exception>
-        /// <exception cref="PSArgumentException">
-        /// If <paramref name="default"/> and <paramref name="clauses"/> are both null or empty.
-        /// </exception>
         [SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures")]
         public SwitchStatementAst(IScriptExtent extent,
                                   string label,
@@ -4385,12 +3969,6 @@ namespace System.Management.Automation.Language
             Utils.EmptyReadOnlyCollection<TypeConstraintAst>();
 
         
-        /// <param name="extent">The extent of the catch, from the catch keyword to the closing curly brace.</param>
-        /// <param name="catchTypes">The collection of types caught by this catch clause, may be null if all types are caught.</param>
-        /// <param name="body">The body of the catch clause.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> or <paramref name="body"/> is null.
-        /// </exception>
         public CatchClauseAst(IScriptExtent extent, IEnumerable<TypeConstraintAst> catchTypes, StatementBlockAst body)
             : base(extent)
         {
@@ -4465,19 +4043,6 @@ namespace System.Management.Automation.Language
             Utils.EmptyReadOnlyCollection<CatchClauseAst>();
 
         
-        /// <param name="extent">
-        /// The extent of the try statement, from the try keyword to the closing curly of the last catch or finally.
-        /// </param>
-        /// <param name="body">The region of guarded code.</param>
-        /// <param name="catchClauses">The list of catch clauses, may be null.</param>
-        /// <param name="finally">The finally clause, may be null.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> or <paramref name="body"/> is null.
-        /// </exception>
-        /// <exception cref="PSArgumentException">
-        /// If <paramref name="catchClauses"/> is null or is an empty collection and <paramref name="finally"/> is also
-        /// null, then an exception is also raised as the try block must have a finally or at least one catch.
-        /// </exception>
         public TryStatementAst(IScriptExtent extent,
                                StatementBlockAst body,
                                IEnumerable<CatchClauseAst> catchClauses,
@@ -4569,14 +4134,6 @@ namespace System.Management.Automation.Language
     public class TrapStatementAst : StatementAst
     {
         
-        /// <param name="extent">
-        /// The extent of the trap statement, starting with the trap keyword and ending with the closing curly of the body.
-        /// </param>
-        /// <param name="trapType">The type handled by the trap statement, may be null if all exceptions are trapped.</param>
-        /// <param name="body">The handler for the error.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> or <paramref name="body"/> is null.
-        /// </exception>
         public TrapStatementAst(IScriptExtent extent, TypeConstraintAst trapType, StatementBlockAst body)
             : base(extent)
         {
@@ -4639,11 +4196,6 @@ namespace System.Management.Automation.Language
     public class BreakStatementAst : StatementAst
     {
         
-        /// <param name="extent">The extent of the statement, including the break keyword and the optional label.</param>
-        /// <param name="label">The optional label expression.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> is null.
-        /// </exception>
         public BreakStatementAst(IScriptExtent extent, ExpressionAst label)
             : base(extent)
         {
@@ -4688,11 +4240,6 @@ namespace System.Management.Automation.Language
     public class ContinueStatementAst : StatementAst
     {
         
-        /// <param name="extent">The extent of the statement including the optional label.</param>
-        /// <param name="label">The optional label expression.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> is null.
-        /// </exception>
         public ContinueStatementAst(IScriptExtent extent, ExpressionAst label)
             : base(extent)
         {
@@ -4737,11 +4284,6 @@ namespace System.Management.Automation.Language
     public class ReturnStatementAst : StatementAst
     {
         
-        /// <param name="extent">The extent of the statement including the optional return value.</param>
-        /// <param name="pipeline">The optional return value.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> is null.
-        /// </exception>
         public ReturnStatementAst(IScriptExtent extent, PipelineBaseAst pipeline)
             : base(extent)
         {
@@ -4786,11 +4328,6 @@ namespace System.Management.Automation.Language
     public class ExitStatementAst : StatementAst
     {
         
-        /// <param name="extent">The extent of the exit statement including the optional exit value.</param>
-        /// <param name="pipeline">The optional exit value.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> is null.
-        /// </exception>
         public ExitStatementAst(IScriptExtent extent, PipelineBaseAst pipeline)
             : base(extent)
         {
@@ -4835,11 +4372,6 @@ namespace System.Management.Automation.Language
     public class ThrowStatementAst : StatementAst
     {
         
-        /// <param name="extent">The extent of the throw statement, including the optional value to throw.</param>
-        /// <param name="pipeline">The optional value to throw.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> is null.
-        /// </exception>
         public ThrowStatementAst(IScriptExtent extent, PipelineBaseAst pipeline)
             : base(extent)
         {
@@ -4907,7 +4439,6 @@ namespace System.Management.Automation.Language
     public abstract class ChainableAst : PipelineBaseAst
     {
         
-        /// <param name="extent">The script extent of the AST.</param>
         protected ChainableAst(IScriptExtent extent) : base(extent)
         {
         }
@@ -4917,11 +4448,6 @@ namespace System.Management.Automation.Language
     public class PipelineChainAst : ChainableAst
     {
         
-        /// <param name="extent">The extent of the chained statement.</param>
-        /// <param name="lhsChain">The pipeline or pipeline chain to the left of the operator.</param>
-        /// <param name="rhsPipeline">The pipeline to the right of the operator.</param>
-        /// <param name="chainOperator">The operator used.</param>
-        /// <param name="background">True when this chain has been invoked with the background operator, false otherwise.</param>
         public PipelineChainAst(
             IScriptExtent extent,
             ChainableAst lhsChain,
@@ -4961,9 +4487,6 @@ namespace System.Management.Automation.Language
         public bool Background { get; }
 
         
-        /// <returns>
-        /// A fresh copy of this PipelineChainAst instance.
-        /// </returns>
         public override Ast Copy()
         {
             return new PipelineChainAst(Extent, CopyElement(LhsPipelineChain), CopyElement(RhsPipeline), Operator, Background);
@@ -5010,10 +4533,6 @@ namespace System.Management.Automation.Language
     public abstract class PipelineBaseAst : StatementAst
     {
         
-        /// <param name="extent">The extent of the statement.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> is null.
-        /// </exception>
         protected PipelineBaseAst(IScriptExtent extent)
             : base(extent)
         {
@@ -5030,15 +4549,6 @@ namespace System.Management.Automation.Language
     public class PipelineAst : ChainableAst
     {
         
-        /// <param name="extent">The extent of the pipeline.</param>
-        /// <param name="pipelineElements">The collection of commands representing the pipeline.</param>
-        /// <param name="background">Indicates that this pipeline should be run in the background.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> is null.
-        /// </exception>
-        /// <exception cref="PSArgumentException">
-        /// If <paramref name="pipelineElements"/> is null or is an empty collection.
-        /// </exception>
         public PipelineAst(IScriptExtent extent, IEnumerable<CommandBaseAst> pipelineElements, bool background)
             : base(extent)
         {
@@ -5053,25 +4563,11 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="extent">The extent of the pipeline.</param>
-        /// <param name="pipelineElements">The collection of commands representing the pipeline.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> is null.
-        /// </exception>
-        /// <exception cref="PSArgumentException">
-        /// If <paramref name="pipelineElements"/> is null or is an empty collection.
-        /// </exception>
         public PipelineAst(IScriptExtent extent, IEnumerable<CommandBaseAst> pipelineElements) : this(extent, pipelineElements, background: false)
         {
         }
 
         
-        /// <param name="extent">The extent of the pipeline (which should be the extent of the command).</param>
-        /// <param name="commandAst">The command for the pipeline.</param>
-        /// <param name="background">Indicates that this pipeline should be run in the background.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> or <paramref name="commandAst"/> is null.
-        /// </exception>
         public PipelineAst(IScriptExtent extent, CommandBaseAst commandAst, bool background)
             : base(extent)
         {
@@ -5086,11 +4582,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="extent">The extent of the pipeline (which should be the extent of the command).</param>
-        /// <param name="commandAst">The command for the pipeline.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> or <paramref name="commandAst"/> is null.
-        /// </exception>
         public PipelineAst(IScriptExtent extent, CommandBaseAst commandAst) : this(extent, commandAst, background: false)
         {
         }
@@ -5119,7 +4610,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <returns>A fresh copy of this PipelineAst instance.</returns>
         public override Ast Copy()
         {
             var newPipelineElements = CopyElements(this.PipelineElements);
@@ -5158,10 +4648,6 @@ namespace System.Management.Automation.Language
     public abstract class CommandElementAst : Ast
     {
         
-        /// <param name="extent">The extent of the command element.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> is null.
-        /// </exception>
         protected CommandElementAst(IScriptExtent extent)
             : base(extent)
         {
@@ -5172,26 +4658,6 @@ namespace System.Management.Automation.Language
     public class CommandParameterAst : CommandElementAst
     {
         
-        /// <param name="extent">
-        /// The extent of the parameter, starting from the dash character, ending at the end of the parameter name, or else
-        /// at the end of the optional argument.
-        /// </param>
-        /// <param name="parameterName">
-        /// The parameter name, without the leading dash and without the trailing colon, if a colon was used.
-        /// </param>
-        /// <param name="argument">
-        /// If the parameter includes an argument with the syntax like <c>-Path:a*</c>, then the expression for 'a*' is
-        /// passed as the argument.  An argument is not required.
-        /// </param>
-        /// <param name="errorPosition">
-        /// The extent to use for error reporting when parameter binding fails with this parameter.  If <paramref name="argument"/>
-        /// is null, this extent is the same as <paramref name="extent"/>, otherwise it is the extent of the parameter token
-        /// itself.
-        /// </param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> or <paramref name="parameterName"/>is null, or if <paramref name="parameterName"/>
-        /// is an empty string.
-        /// </exception>
         public CommandParameterAst(IScriptExtent extent, string parameterName, ExpressionAst argument, IScriptExtent errorPosition)
             : base(extent)
         {
@@ -5258,11 +4724,6 @@ namespace System.Management.Automation.Language
         internal const int MaxRedirections = (int)RedirectionStream.Information + 1;
 
         
-        /// <param name="extent">The extent of the command.</param>
-        /// <param name="redirections">The redirections for the command, may be null.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> is null.
-        /// </exception>
         protected CommandBaseAst(IScriptExtent extent, IEnumerable<RedirectionAst> redirections)
             : base(extent)
         {
@@ -5285,19 +4746,6 @@ namespace System.Management.Automation.Language
     public class CommandAst : CommandBaseAst
     {
         
-        /// <param name="extent">
-        /// The extent of the command, starting with either the optional invocation operator '&amp;' or '.' or the command name
-        /// and ending with the last command element.
-        /// </param>
-        /// <param name="commandElements">The elements of the command (command name, parameters and expressions.).</param>
-        /// <param name="invocationOperator">The invocation operator that was used, if any.</param>
-        /// <param name="redirections">The redirections for the command, may be null.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> is null.
-        /// </exception>
-        /// <exception cref="PSArgumentException">
-        /// If <paramref name="commandElements"/> is null or is an empty collection.
-        /// </exception>
         public CommandAst(IScriptExtent extent,
                           IEnumerable<CommandElementAst> commandElements,
                           TokenKind invocationOperator,
@@ -5326,7 +4774,6 @@ namespace System.Management.Automation.Language
         public TokenKind InvocationOperator { get; }
 
         
-        /// <returns>The command name, if known, null otherwise.</returns>
         public string GetCommandName()
         {
             var name = CommandElements[0] as StringConstantExpressionAst;
@@ -5391,12 +4838,6 @@ namespace System.Management.Automation.Language
     public class CommandExpressionAst : CommandBaseAst
     {
         
-        /// <param name="extent">The extent of the expression.</param>
-        /// <param name="expression">The expression being wrapped.</param>
-        /// <param name="redirections">The redirections for the command, may be null.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> or <paramref name="expression"/> is null.
-        /// </exception>
         public CommandExpressionAst(IScriptExtent extent,
                                     ExpressionAst expression,
                                     IEnumerable<RedirectionAst> redirections)
@@ -5458,8 +4899,6 @@ namespace System.Management.Automation.Language
     public abstract class RedirectionAst : Ast
     {
         
-        /// <param name="extent">The extent of the redirection.</param>
-        /// <param name="from">The stream to read from.</param>
         protected RedirectionAst(IScriptExtent extent, RedirectionStream from)
             : base(extent)
         {
@@ -5500,10 +4939,6 @@ namespace System.Management.Automation.Language
     public class MergingRedirectionAst : RedirectionAst
     {
         
-        /// <param name="extent">The extent of the redirection.</param>
-        /// <param name="from">The stream to read from.</param>
-        /// <param name="to">The stream to write to - must always be <see cref="RedirectionStream.Output"/></param>
-        /// <exception cref="PSArgumentNullException">If <paramref name="extent"/> is null.</exception>
         public MergingRedirectionAst(IScriptExtent extent, RedirectionStream from, RedirectionStream to)
             : base(extent, from)
         {
@@ -5539,21 +4974,6 @@ namespace System.Management.Automation.Language
     public class FileRedirectionAst : RedirectionAst
     {
         
-        /// <param name="extent">
-        /// The extent of the redirection, starting with the redirection operator and including the file.
-        /// </param>
-        /// <param name="stream">
-        /// The stream being redirected.
-        /// </param>
-        /// <param name="file">
-        /// The optional location to redirect to.  Merging operators may not specify a file, the other redirection
-        /// operators must specify a location.
-        /// </param>
-        /// <param name="append">
-        /// True if the file is being appended, false otherwise.
-        /// </param>
-        /// <exception cref="PSArgumentNullException">If <paramref name="extent"/> is null.</exception>
-        /// <exception cref="PSArgumentException">If <paramref name="file"/> is null.</exception>
         public FileRedirectionAst(IScriptExtent extent, RedirectionStream stream, ExpressionAst file, bool append)
             : base(extent, stream)
         {
@@ -5606,15 +5026,6 @@ namespace System.Management.Automation.Language
     public class AssignmentStatementAst : PipelineBaseAst
     {
         
-        /// <param name="extent">The extent of the assignment statement.</param>
-        /// <param name="left">The value being assigned.</param>
-        /// <param name="operator">The assignment operator, e.g. '=' or '+='.</param>
-        /// <param name="right">The value to assign.</param>
-        /// <param name="errorPosition">The position to report an error if an error occurs at runtime.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/>, <paramref name="left"/>, <paramref name="right"/>,
-        /// or <paramref name="errorPosition"/> is null.
-        /// </exception>
         public AssignmentStatementAst(IScriptExtent extent, ExpressionAst left, TokenKind @operator, StatementAst right, IScriptExtent errorPosition)
             : base(extent)
         {
@@ -5668,7 +5079,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <returns>All of the expressions assigned by the assignment statement.</returns>
         public IEnumerable<ExpressionAst> GetAssignmentTargets()
         {
             if (Left is ArrayLiteralAst arrayExpression)
@@ -5719,15 +5129,6 @@ namespace System.Management.Automation.Language
     public class ConfigurationDefinitionAst : StatementAst
     {
         
-        /// <param name="extent">
-        /// The extent of the expression, starting with the attribute and ending after the expression being attributed.
-        /// </param>
-        /// <param name="body"><see cref="ScriptBlockExpressionAst"/> of the configuration statement.</param>
-        /// <param name="type">The type of the configuration.</param>
-        /// <param name="instanceName">The configuration name expression.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/>, <paramref name="body"/>, or <paramref name="instanceName"/> is null.
-        /// </exception>
         public ConfigurationDefinitionAst(IScriptExtent extent,
             ScriptBlockExpressionAst body,
             ConfigurationType type,
@@ -5765,7 +5166,6 @@ namespace System.Management.Automation.Language
         public ExpressionAst InstanceName { get; }
 
         
-        /// <returns>A copy of the <see cref="ConfigurationDefinitionAst"/>, with the link to the previous parent removed.</returns>
         public override Ast Copy()
         {
             ScriptBlockExpressionAst body = CopyElement(Body);
@@ -5824,9 +5224,6 @@ namespace System.Management.Automation.Language
         internal List<DynamicKeyword> DefinedKeywords { get; set; }
 
         
-        /// <returns>
-        /// The <see cref="PipelineAst"/> that defines a function for this <see cref="ConfigurationDefinitionAst"/> object
-        /// </returns>
         internal PipelineAst GenerateSetItemPipelineAst()
         {
             // **************************
@@ -5860,7 +5257,6 @@ namespace System.Management.Automation.Language
                 new CommandParameterAst(LCurlyToken.Extent, "Name", (ExpressionAst)InstanceName.Copy(), LCurlyToken.Extent)
             };
 
-            ///////////////////////////
             // get import parameters
             var bodyStatements = Body.ScriptBlock.EndBlock.Statements;
             var resourceModulePairsToImport = new List<Tuple<string[], ModuleSpecification[], Version>>();
@@ -5974,9 +5370,6 @@ namespace System.Management.Automation.Language
         #region static fields/methods
 
         
-        /// <param name="stmt"></param>
-        /// <param name="resourceModulePairsToImport">Item1 - ResourceName, Item2 - ModuleName, Item3 - ModuleVersion.</param>
-        /// <returns></returns>
         private static bool IsImportCommand(StatementAst stmt, List<Tuple<string[], ModuleSpecification[], Version>> resourceModulePairsToImport)
         {
             var dkwsAst = stmt as DynamicKeywordStatementAst;
@@ -6185,13 +5578,6 @@ namespace System.Management.Automation.Language
     public class DynamicKeywordStatementAst : StatementAst
     {
         
-        /// <param name="extent">
-        /// The extent of the expression, starting with the attribute and ending after the expression being attributed.
-        /// </param>
-        /// <param name="commandElements">A collection of <see cref="CommandElementAst"/> used to invoke <see cref="DynamicKeyword"/> specific command.</param>
-        /// <exception cref="PSArgumentException">
-        /// If <paramref name="commandElements"/> is null or empty.
-        /// </exception>
         public DynamicKeywordStatementAst(IScriptExtent extent,
             IEnumerable<CommandElementAst> commandElements) : base(extent)
         {
@@ -6208,7 +5594,6 @@ namespace System.Management.Automation.Language
         public ReadOnlyCollection<CommandElementAst> CommandElements { get; }
 
         
-        /// <returns>A copy of the <see cref="DynamicKeywordStatementAst"/>, with the link to the previous parent removed.</returns>
         public override Ast Copy()
         {
             IEnumerable<CommandElementAst> commandElements = CopyElements(CommandElements);
@@ -6293,7 +5678,6 @@ namespace System.Management.Automation.Language
             if (_commandCallPipelineAst != null)
                 return _commandCallPipelineAst;
 
-            /////////////////////////////////////////////////////////////////////////
             //
             // Now construct the AST to call the function that defines implements the keywords logic. There are
             // two different types of ASTs that may be generated, depending on the settings in the DynamicKeyword object.
@@ -6510,10 +5894,6 @@ namespace System.Management.Automation.Language
     public abstract class ExpressionAst : CommandElementAst
     {
         
-        /// <param name="extent">The extent of the expression.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> is null.
-        /// </exception>
         protected ExpressionAst(IScriptExtent extent)
             : base(extent)
         {
@@ -6523,12 +5903,6 @@ namespace System.Management.Automation.Language
         public virtual Type StaticType { get { return typeof(object); } }
 
         
-        /// <remarks>
-        /// We should preserve the partial output in case of exception only if the SubExpression/ParenExpression meets following conditions:
-        ///  1. the SubExpr/ParenExpr is the first expression, and the only element in a pipeline
-        ///  2. the pipeline's parent is a StatementBlockAst or NamedBlockAst. e.g. $(1; throw 2) OR if (true) { $(1; throw 2) }
-        /// </remarks>
-        /// <returns></returns>
         internal virtual bool ShouldPreserveOutputInCaseOfException()
         {
             if (this is not ParenExpressionAst and not SubExpressionAst)
@@ -6562,10 +5936,6 @@ namespace System.Management.Automation.Language
     public class TernaryExpressionAst : ExpressionAst
     {
         
-        /// <param name="extent">The extent of the expression.</param>
-        /// <param name="condition">The condition operand.</param>
-        /// <param name="ifTrue">The if clause.</param>
-        /// <param name="ifFalse">The else clause.</param>
         public TernaryExpressionAst(IScriptExtent extent, ExpressionAst condition, ExpressionAst ifTrue, ExpressionAst ifFalse)
             : base(extent)
         {
@@ -6588,9 +5958,6 @@ namespace System.Management.Automation.Language
         public ExpressionAst IfFalse { get; }
 
         
-        /// <returns>
-        /// Returns a copy of the ast.
-        /// </returns>
         public override Ast Copy()
         {
             ExpressionAst newCondition = CopyElement(this.Condition);
@@ -6648,20 +6015,6 @@ namespace System.Management.Automation.Language
     public class BinaryExpressionAst : ExpressionAst
     {
         
-        /// <param name="extent">The extent of the expression.</param>
-        /// <param name="left">The left hand operand.</param>
-        /// <param name="operator">The binary operator.</param>
-        /// <param name="right">The right hand operand.</param>
-        /// <param name="errorPosition">
-        /// The position to report if an error occurs at runtime while evaluating the binary operation.
-        /// </param>
-        /// <exception cref="PSArgumentException">
-        /// If <paramref name="operator"/> is not a valid binary operator.
-        /// </exception>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/>, <paramref name="left"/>, <paramref name="right"/>,
-        /// or <paramref name="errorPosition"/> is null.
-        /// </exception>
         public BinaryExpressionAst(IScriptExtent extent, ExpressionAst left, TokenKind @operator, ExpressionAst right, IScriptExtent errorPosition)
             : base(extent)
         {
@@ -6751,15 +6104,6 @@ namespace System.Management.Automation.Language
     public class UnaryExpressionAst : ExpressionAst
     {
         
-        /// <param name="extent">The extent of the expression, including the operator (which may be prefix or postfix.).</param>
-        /// <param name="tokenKind">The unary operator token kind for the operation.</param>
-        /// <param name="child">The expression that the unary operator is applied to.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> or <paramref name="child"/> is null.
-        /// </exception>
-        /// <exception cref="PSArgumentException">
-        /// If <paramref name="tokenKind"/> is not a valid unary operator.
-        /// </exception>
         public UnaryExpressionAst(IScriptExtent extent, TokenKind tokenKind, ExpressionAst child)
             : base(extent)
         {
@@ -6826,9 +6170,6 @@ namespace System.Management.Automation.Language
     public class BlockStatementAst : StatementAst
     {
         
-        /// <param name="extent"></param>
-        /// <param name="kind"></param>
-        /// <param name="body"></param>
         public BlockStatementAst(IScriptExtent extent, Token kind, StatementBlockAst body)
             : base(extent)
         {
@@ -6884,14 +6225,6 @@ namespace System.Management.Automation.Language
     public class AttributedExpressionAst : ExpressionAst, ISupportsAssignment, IAssignableValue
     {
         
-        /// <param name="extent">
-        /// The extent of the expression, starting with the attribute and ending after the expression being attributed.
-        /// </param>
-        /// <param name="attribute">The attribute being applied to <paramref name="child"/></param>
-        /// <param name="child">The expression being attributed by <paramref name="attribute"/></param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/>, <paramref name="attribute"/>, or <paramref name="child"/> is null.
-        /// </exception>
         public AttributedExpressionAst(IScriptExtent extent, AttributeBaseAst attribute, ExpressionAst child)
             : base(extent)
         {
@@ -7001,14 +6334,6 @@ namespace System.Management.Automation.Language
     public class ConvertExpressionAst : AttributedExpressionAst, ISupportsAssignment
     {
         
-        /// <param name="extent">
-        /// The extent of the expression, starting with the type literal and ending after the expression being converted.
-        /// </param>
-        /// <param name="typeConstraint">The type to convert to.</param>
-        /// <param name="child">The expression being converted.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/>, <paramref name="typeConstraint"/>, or <paramref name="child"/> is null.
-        /// </exception>
         public ConvertExpressionAst(IScriptExtent extent, TypeConstraintAst typeConstraint, ExpressionAst child)
             : base(extent, typeConstraint, child)
         {
@@ -7079,18 +6404,6 @@ namespace System.Management.Automation.Language
     public class MemberExpressionAst : ExpressionAst, ISupportsAssignment
     {
         
-        /// <param name="extent">
-        /// The extent of the expression, starting with the expression before the operator '.' or '::' and ending after
-        /// membername or expression naming the member.
-        /// </param>
-        /// <param name="expression">The expression before the member access operator '.' or '::'.</param>
-        /// <param name="member">The name or expression naming the member to access.</param>
-        /// <param name="static">True if the '::' operator was used, false if '.' is used.
-        /// True if the member access is for a static member, using '::', false if accessing a member on an instance using '.'.
-        /// </param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/>, <paramref name="expression"/>, or <paramref name="member"/> is null.
-        /// </exception>
         public MemberExpressionAst(IScriptExtent extent, ExpressionAst expression, CommandElementAst member, bool @static)
             : base(extent)
         {
@@ -7107,17 +6420,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="extent">
-        /// The extent of the expression, starting with the expression before the operator '.', '::' or '?.' and ending after
-        /// membername or expression naming the member.
-        /// </param>
-        /// <param name="expression">The expression before the member access operator '.', '::' or '?.'.</param>
-        /// <param name="member">The name or expression naming the member to access.</param>
-        /// <param name="static">True if the '::' operator was used, false if '.' or '?.' is used.</param>
-        /// <param name="nullConditional">True if '?.' used.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/>, <paramref name="expression"/>, or <paramref name="member"/> is null.
-        /// </exception>
         public MemberExpressionAst(IScriptExtent extent, ExpressionAst expression, CommandElementAst member, bool @static, bool nullConditional)
             : this(extent, expression, member, @static)
         {
@@ -7181,20 +6483,6 @@ namespace System.Management.Automation.Language
     public class InvokeMemberExpressionAst : MemberExpressionAst, ISupportsAssignment
     {
         
-        /// <param name="extent">
-        /// The extent of the expression, starting with the expression before the invocation operator and ending with the
-        /// closing paren after the arguments.
-        /// </param>
-        /// <param name="expression">The expression before the invocation operator ('.', '::').</param>
-        /// <param name="method">The method to invoke.</param>
-        /// <param name="arguments">The arguments to pass to the method.</param>
-        /// <param name="static">
-        /// True if the invocation is for a static method, using '::', false if invoking a method on an instance using '.'.
-        /// </param>
-        /// <param name="genericTypes">The generic type arguments passed to the method.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> is null.
-        /// </exception>
         public InvokeMemberExpressionAst(
             IScriptExtent extent,
             ExpressionAst expression,
@@ -7217,19 +6505,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="extent">
-        /// The extent of the expression, starting with the expression before the invocation operator and ending with the
-        /// closing paren after the arguments.
-        /// </param>
-        /// <param name="expression">The expression before the invocation operator ('.', '::').</param>
-        /// <param name="method">The method to invoke.</param>
-        /// <param name="arguments">The arguments to pass to the method.</param>
-        /// <param name="static">
-        /// True if the invocation is for a static method, using '::', false if invoking a method on an instance using '.'.
-        /// </param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> is null.
-        /// </exception>
         public InvokeMemberExpressionAst(
             IScriptExtent extent,
             ExpressionAst expression,
@@ -7241,21 +6516,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="extent">
-        /// The extent of the expression, starting with the expression before the invocation operator and ending with the
-        /// closing paren after the arguments.
-        /// </param>
-        /// <param name="expression">The expression before the invocation operator ('.', '::' or '?.').</param>
-        /// <param name="method">The method to invoke.</param>
-        /// <param name="arguments">The arguments to pass to the method.</param>
-        /// <param name="static">
-        /// True if the invocation is for a static method, using '::', false if invoking a method on an instance using '.' or '?.'.
-        /// </param>
-        /// <param name="nullConditional">True if the operator used is '?.'.</param>
-        /// <param name="genericTypes">The generic type arguments passed to the method.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> is null.
-        /// </exception>
         public InvokeMemberExpressionAst(
             IScriptExtent extent,
             ExpressionAst expression,
@@ -7270,20 +6530,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="extent">
-        /// The extent of the expression, starting with the expression before the invocation operator and ending with the
-        /// closing paren after the arguments.
-        /// </param>
-        /// <param name="expression">The expression before the invocation operator ('.', '::' or '?.').</param>
-        /// <param name="method">The method to invoke.</param>
-        /// <param name="arguments">The arguments to pass to the method.</param>
-        /// <param name="static">
-        /// True if the invocation is for a static method, using '::', false if invoking a method on an instance using '.' or '?.'.
-        /// </param>
-        /// <param name="nullConditional">True if the operator used is '?.'.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> is null.
-        /// </exception>
         public InvokeMemberExpressionAst(
             IScriptExtent extent,
             ExpressionAst expression,
@@ -7365,19 +6611,6 @@ namespace System.Management.Automation.Language
     public class BaseCtorInvokeMemberExpressionAst : InvokeMemberExpressionAst
     {
         
-        /// <param name="baseKeywordExtent">
-        /// The extent of the base keyword, i.e. for
-        /// <c>class B : A { B() : base(100) {} }</c>
-        /// it will be "base".
-        /// Can be empty extent (i.e. for implicit base ctor call).
-        /// </param>
-        /// <param name="baseCallExtent">
-        /// The extent of the base ctor call expression, i.e. for
-        /// <c>class B : A { B() : base(100) {} }</c>
-        /// it will be "base(100)"
-        /// Can be empty extent (i.e. for implicit base ctor call).
-        /// </param>
-        /// <param name="arguments">The arguments to pass to the ctor.</param>
         public BaseCtorInvokeMemberExpressionAst(IScriptExtent baseKeywordExtent, IScriptExtent baseCallExtent, IEnumerable<ExpressionAst> arguments)
             : base(
                 baseCallExtent,
@@ -7458,14 +6691,6 @@ namespace System.Management.Automation.Language
         internal TypeDefinitionAst _typeDefinitionAst;
 
         
-        /// <param name="extent">The extent of the typename.</param>
-        /// <param name="name">The name of the type.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="name"/> is null or the empty string.
-        /// </exception>
-        /// <exception cref="PSArgumentException">
-        /// If <paramref name="name"/> contains characters that are only allowed in a generic or array typename.
-        /// </exception>
         public TypeName(IScriptExtent extent, string name)
         {
             if (extent == null || string.IsNullOrEmpty(name))
@@ -7489,15 +6714,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="extent">The extent of the typename.</param>
-        /// <param name="name">The name of the type.</param>
-        /// <param name="assembly">The assembly the type belongs to.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> is null or if <paramref name="name"/> or <paramref name="assembly"/> is null or the empty string.
-        /// </exception>
-        /// <exception cref="PSArgumentException">
-        /// If <paramref name="name"/> contains characters that are only allowed in a generic or array typename.
-        /// </exception>
         public TypeName(IScriptExtent extent, string name, string assembly)
             : this(extent, name)
         {
@@ -7510,9 +6726,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="extent">The extent of the typename.</param>
-        /// <param name="name">The name of the type.</param>
-        /// <param name="genericArgumentCount">The number of generic arguments.</param>
         internal TypeName(IScriptExtent extent, string name, int genericArgumentCount)
             : this(extent, name)
         {
@@ -7578,10 +6791,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <returns>
-        /// The <see cref="Type"/> if possible, null otherwise.  Null may be returned for valid typenames if the assembly
-        /// containing the type has not been loaded.
-        /// </returns>
         public Type GetReflectionType()
         {
             if (_type == null)
@@ -7627,10 +6836,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <returns>
-        /// The <see cref="Type"/> if possible, null otherwise.  Null may be returned for valid typenames if the assembly
-        /// containing the type has not been loaded.
-        /// </returns>
         public Type GetReflectionAttributeType()
         {
             var result = GetReflectionType();
@@ -7664,7 +6869,6 @@ namespace System.Management.Automation.Language
             return FullName;
         }
 
-        /// <summary/>
         public override bool Equals(object obj)
         {
             if (!(obj is TypeName other))
@@ -7682,7 +6886,6 @@ namespace System.Management.Automation.Language
             return AssemblyName.Equals(other.AssemblyName, StringComparison.OrdinalIgnoreCase);
         }
 
-        /// <summary/>
         public override int GetHashCode()
         {
             var stringComparer = StringComparer.OrdinalIgnoreCase;
@@ -7694,12 +6897,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="type">The given <see cref="System.Type"/></param>
-        /// <returns>Returns true if the type names a <see cref="System.Type"/>, false otherwise.</returns>
-        /// <remarks>
-        ///  This helper function is now used to check 'Void' type only;
-        ///  Other types may not work, for example, 'int'
-        /// </remarks>
         internal bool IsType(Type type)
         {
             string fullTypeName = type.FullName;
@@ -7729,20 +6926,6 @@ namespace System.Management.Automation.Language
         private Type _cachedType;
 
         
-        /// <param name="extent">The extent of the generic typename.</param>
-        /// <param name="genericTypeName">
-        /// The name of the generic class.  The name does not need to include the backtick and number of expected arguments,
-        /// (e.g. <c>System.Collections.Generic.Dictionary`2</c>, but the backtick and number be included.
-        /// </param>
-        /// <param name="genericArguments">
-        /// The list of typenames that represent the arguments to the generic type named by <paramref name="genericTypeName"/>.
-        /// </param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="genericTypeName"/> is null.
-        /// </exception>
-        /// <exception cref="PSArgumentException">
-        /// If <paramref name="genericArguments"/> is null or if <paramref name="genericArguments"/> is an empty collection.
-        /// </exception>
         public GenericTypeName(IScriptExtent extent, ITypeName genericTypeName, IEnumerable<ITypeName> genericArguments)
         {
             if (genericTypeName == null || extent == null)
@@ -7897,8 +7080,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="generic"></param>
-        /// <returns></returns>
         internal Type GetGenericType(Type generic)
         {
             if (generic == null || !generic.ContainsGenericParameters)
@@ -7920,10 +7101,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <returns>
-        /// The <see cref="Type"/> if possible, null otherwise.  Null may be returned for valid typenames if the assembly
-        /// containing the type has not been loaded.
-        /// </returns>
         public Type GetReflectionAttributeType()
         {
             Type type = GetReflectionType();
@@ -7961,7 +7138,6 @@ namespace System.Management.Automation.Language
             return FullName;
         }
 
-        /// <summary/>
         public override bool Equals(object obj)
         {
             if (!(obj is GenericTypeName other))
@@ -7983,7 +7159,6 @@ namespace System.Management.Automation.Language
             return true;
         }
 
-        /// <summary/>
         public override int GetHashCode()
         {
             int hash = TypeName.GetHashCode();
@@ -8011,15 +7186,6 @@ namespace System.Management.Automation.Language
         private Type _cachedType;
 
         
-        /// <param name="extent">The extent of the array typename.</param>
-        /// <param name="elementType">The name of the element type.</param>
-        /// <param name="rank">The number of dimensions in the array.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> or <paramref name="elementType"/> is null.
-        /// </exception>
-        /// <exception cref="PSArgumentException">
-        /// If <paramref name="rank"/> is 0 or negative.
-        /// </exception>
         public ArrayTypeName(IScriptExtent extent, ITypeName elementType, int rank)
         {
             if (extent == null || elementType == null)
@@ -8160,7 +7326,6 @@ namespace System.Management.Automation.Language
             return FullName;
         }
 
-        /// <summary/>
         public override bool Equals(object obj)
         {
             if (!(obj is ArrayTypeName other))
@@ -8169,7 +7334,6 @@ namespace System.Management.Automation.Language
             return ElementType.Equals(other.ElementType) && Rank == other.Rank;
         }
 
-        /// <summary/>
         public override int GetHashCode()
         {
             return Utils.CombineHashCodes(ElementType.GetHashCode(), Rank.GetHashCode());
@@ -8189,10 +7353,6 @@ namespace System.Management.Automation.Language
         private readonly Type _type;
 
         
-        /// <param name="type">The type to wrap.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="type"/> is null.
-        /// </exception>
         public ReflectionTypeName(Type type)
         {
             if (type == null)
@@ -8239,7 +7399,6 @@ namespace System.Management.Automation.Language
             return FullName;
         }
 
-        /// <summary/>
         public override bool Equals(object obj)
         {
             if (!(obj is ReflectionTypeName other))
@@ -8247,7 +7406,6 @@ namespace System.Management.Automation.Language
             return _type == other._type;
         }
 
-        /// <summary/>
         public override int GetHashCode()
         {
             return _type.GetHashCode();
@@ -8265,11 +7423,6 @@ namespace System.Management.Automation.Language
     public class TypeExpressionAst : ExpressionAst
     {
         
-        /// <param name="extent">The extent of the typename, including the opening and closing square braces.</param>
-        /// <param name="typeName">The typename for the constructed ast.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> or <paramref name="typeName"/> is null.
-        /// </exception>
         public TypeExpressionAst(IScriptExtent extent, ITypeName typeName)
             : base(extent)
         {
@@ -8313,16 +7466,6 @@ namespace System.Management.Automation.Language
     public class VariableExpressionAst : ExpressionAst, ISupportsAssignment, IAssignableValue
     {
         
-        /// <param name="extent">The extent of the variable.</param>
-        /// <param name="variableName">
-        /// The name of the variable.  A leading '$' or '@' is not removed, those characters are assumed to be part of
-        /// the variable name.
-        /// </param>
-        /// <param name="splatted">True if splatting, like <c>@PSBoundParameters</c>, false otherwise, like <c>$false</c></param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> or <paramref name="variableName"/> is null, or if <paramref name="variableName"/>
-        /// is an empty string.
-        /// </exception>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
         public VariableExpressionAst(IScriptExtent extent, string variableName, bool splatted)
             : base(extent)
@@ -8343,9 +7486,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> or <paramref name="variablePath"/> is null.
-        /// </exception>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
         public VariableExpressionAst(IScriptExtent extent, VariablePath variablePath, bool splatted)
             : base(extent)
@@ -8367,9 +7507,6 @@ namespace System.Management.Automation.Language
         public bool Splatted { get; }
 
         
-        /// <returns>
-        /// True if it is a constant variable
-        /// </returns>
         public bool IsConstantVariable()
         {
             if (this.VariablePath.IsVariable)
@@ -8522,11 +7659,6 @@ namespace System.Management.Automation.Language
     public class ConstantExpressionAst : ExpressionAst
     {
         
-        /// <param name="extent">The extent of the constant.</param>
-        /// <param name="value">The value of the constant.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> is null.
-        /// </exception>
         public ConstantExpressionAst(IScriptExtent extent, object value)
             : base(extent)
         {
@@ -8593,12 +7725,6 @@ namespace System.Management.Automation.Language
     public class StringConstantExpressionAst : ConstantExpressionAst
     {
         
-        /// <param name="extent">The extent of the string constant, including quotes.</param>
-        /// <param name="value">The value of the string.</param>
-        /// <param name="stringConstantType">The type of string.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> or <paramref name="value"/> is null.
-        /// </exception>
         public StringConstantExpressionAst(IScriptExtent extent, string value, StringConstantType stringConstantType)
             : base(extent, value)
         {
@@ -8673,16 +7799,6 @@ namespace System.Management.Automation.Language
     public class ExpandableStringExpressionAst : ExpressionAst
     {
         
-        /// <param name="extent">The extent of the string.</param>
-        /// <param name="value">The unexpanded value of the string.</param>
-        /// <param name="type">The kind of string, must be one of<list>
-        /// <see cref="System.Management.Automation.Language.StringConstantType.DoubleQuoted"/>
-        /// <see cref="System.Management.Automation.Language.StringConstantType.DoubleQuotedHereString"/>
-        /// <see cref="System.Management.Automation.Language.StringConstantType.BareWord"/>
-        /// </list></param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="value"/> or <paramref name="extent"/> is null.
-        /// </exception>
         public ExpandableStringExpressionAst(IScriptExtent extent,
                                              string value,
                                              StringConstantType type)
@@ -8805,11 +7921,6 @@ namespace System.Management.Automation.Language
     public class ScriptBlockExpressionAst : ExpressionAst
     {
         
-        /// <param name="extent">The extent of the script block, from the opening curly brace to the closing curly brace.</param>
-        /// <param name="scriptBlock">The script block.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> or <paramref name="scriptBlock"/> is null.
-        /// </exception>
         public ScriptBlockExpressionAst(IScriptExtent extent, ScriptBlockAst scriptBlock)
             : base(extent)
         {
@@ -8862,14 +7973,6 @@ namespace System.Management.Automation.Language
     public class ArrayLiteralAst : ExpressionAst, ISupportsAssignment
     {
         
-        /// <param name="extent">The extent of all of the elements.</param>
-        /// <param name="elements">The collection of asts that represent the array literal.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> is null.
-        /// </exception>
-        /// <exception cref="PSArgumentException">
-        /// If <paramref name="elements"/> is null or is an empty collection.
-        /// </exception>
         public ArrayLiteralAst(IScriptExtent extent, IList<ExpressionAst> elements)
             : base(extent)
         {
@@ -8934,11 +8037,6 @@ namespace System.Management.Automation.Language
         private static readonly ReadOnlyCollection<KeyValuePair> s_emptyKeyValuePairs = Utils.EmptyReadOnlyCollection<KeyValuePair>();
 
         
-        /// <param name="extent">The extent of the literal, from '@{' to the closing '}'.</param>
-        /// <param name="keyValuePairs">The optionally null or empty list of key/value pairs.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> is null.
-        /// </exception>
         [SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures")]
         public HashtableAst(IScriptExtent extent, IEnumerable<KeyValuePair> keyValuePairs)
             : base(extent)
@@ -9017,11 +8115,6 @@ namespace System.Management.Automation.Language
     public class ArrayExpressionAst : ExpressionAst
     {
         
-        /// <param name="extent">The extent of the expression, including the opening '@(' and closing ')'.</param>
-        /// <param name="statementBlock">The statements executed as part of the expression.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> or <paramref name="statementBlock"/> is null.
-        /// </exception>
         public ArrayExpressionAst(IScriptExtent extent, StatementBlockAst statementBlock)
             : base(extent)
         {
@@ -9073,11 +8166,6 @@ namespace System.Management.Automation.Language
     public class ParenExpressionAst : ExpressionAst, ISupportsAssignment
     {
         
-        /// <param name="extent">The extent of the expression, including the opening and closing parentheses.</param>
-        /// <param name="pipeline">The pipeline (or expression) enclosed in parentheses.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> or <paramref name="pipeline"/> is null.
-        /// </exception>
         public ParenExpressionAst(IScriptExtent extent, PipelineBaseAst pipeline)
             : base(extent)
         {
@@ -9130,11 +8218,6 @@ namespace System.Management.Automation.Language
     public class SubExpressionAst : ExpressionAst
     {
         
-        /// <param name="extent">The extent of the expression.</param>
-        /// <param name="statementBlock"></param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> or <paramref name="statementBlock"/> is null.
-        /// </exception>
         public SubExpressionAst(IScriptExtent extent, StatementBlockAst statementBlock)
             : base(extent)
         {
@@ -9182,11 +8265,6 @@ namespace System.Management.Automation.Language
     public class UsingExpressionAst : ExpressionAst
     {
         
-        /// <param name="extent">The extent of the using expression.</param>
-        /// <param name="expressionAst">The sub-expression of the using expression.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/> or <paramref name="expressionAst"/> is null.
-        /// </exception>
         public UsingExpressionAst(IScriptExtent extent, ExpressionAst expressionAst)
             : base(extent)
         {
@@ -9225,12 +8303,6 @@ namespace System.Management.Automation.Language
         internal const string UsingPrefix = "__using_";
 
         
-        /// <param name="usingExpressionAst">
-        /// A UsingExpressionAst
-        /// </param>
-        /// <returns>
-        /// The underlying VariableExpressionAst of the UsingExpression
-        /// </returns>
         [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "We want to get the underlying variable only for the UsingExpressionAst.")]
         public static VariableExpressionAst ExtractUsingVariable(UsingExpressionAst usingExpressionAst)
         {
@@ -9240,8 +8312,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="expression"></param>
-        /// <returns></returns>
         private static VariableExpressionAst ExtractUsingVariableImpl(ExpressionAst expression)
         {
             VariableExpressionAst variableExpr;
@@ -9309,12 +8379,6 @@ namespace System.Management.Automation.Language
     public class IndexExpressionAst : ExpressionAst, ISupportsAssignment
     {
         
-        /// <param name="extent">The extent of the expression.</param>
-        /// <param name="target">The expression being indexed.</param>
-        /// <param name="index">The index expression.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/>, <paramref name="target"/>, or <paramref name="index"/> is null.
-        /// </exception>
         public IndexExpressionAst(IScriptExtent extent, ExpressionAst target, ExpressionAst index)
             : base(extent)
         {
@@ -9330,13 +8394,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="extent">The extent of the expression.</param>
-        /// <param name="target">The expression being indexed.</param>
-        /// <param name="index">The index expression.</param>
-        /// <param name="nullConditional">Access the index only if the target is not null.</param>
-        /// <exception cref="PSArgumentNullException">
-        /// If <paramref name="extent"/>, <paramref name="target"/>, or <paramref name="index"/> is null.
-        /// </exception>
         public IndexExpressionAst(IScriptExtent extent, ExpressionAst target, ExpressionAst index, bool nullConditional)
             : this(extent, target, index)
         {
@@ -9404,8 +8461,6 @@ namespace System.Management.Automation.Language
         public string Notes { get; internal set; }
 
         
-        /// TODO, Changing this to an IDictionary because ReadOnlyDictionary is available only in .NET 4.5
-        /// This is a temporary workaround and will be fixed later. Tracked by Win8: 354135
         public IDictionary<string, string> Parameters { get; internal set; }
 
         

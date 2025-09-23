@@ -252,7 +252,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <returns></returns>
         private CimRemoveCimInstance CreateOperationAgent()
         {
             CimRemoveCimInstance cimRemoveInstance = new();

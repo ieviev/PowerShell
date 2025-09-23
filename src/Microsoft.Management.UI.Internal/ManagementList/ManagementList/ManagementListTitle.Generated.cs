@@ -204,9 +204,6 @@ namespace Microsoft.Management.UI.Internal
         // CreateAutomationPeer
         //
         
-        /// <returns>
-        /// An instance of the AutomationPeer.
-        /// </returns>
         protected override System.Windows.Automation.Peers.AutomationPeer OnCreateAutomationPeer()
         {
             return new ExtendedFrameworkElementAutomationPeer(this,AutomationControlType.StatusBar);

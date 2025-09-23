@@ -14,8 +14,6 @@ namespace System.Management.Automation
         internal const string BaseName = "Metadata";
 
         
-        /// <param name="info">Serialization information.</param>
-        /// <param name="context">Streaming context.</param>
         [Obsolete("Legacy serialization support is deprecated since .NET 8", DiagnosticId = "SYSLIB0051")]
         protected MetadataException(SerializationInfo info, StreamingContext context)
         {
@@ -29,15 +27,12 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="message">The exception's message.</param>
         public MetadataException(string message) : base(message)
         {
             SetErrorCategory(ErrorCategory.MetadataError);
         }
 
         
-        /// <param name="message">The exception's message.</param>
-        /// <param name="innerException">The exception's inner exception.</param>
         public MetadataException(string message, Exception innerException) : base(message, innerException)
         {
             SetErrorCategory(ErrorCategory.MetadataError);
@@ -90,8 +85,6 @@ namespace System.Management.Automation
         internal const string InvalidValueFailure = "InvalidValueFailure";
 
         
-        /// <param name="info">Serialization information.</param>
-        /// <param name="context">Streaming context.</param>
         [Obsolete("Legacy serialization support is deprecated since .NET 8", DiagnosticId = "SYSLIB0051")]
         protected ValidationMetadataException(SerializationInfo info, StreamingContext context)
         {
@@ -101,11 +94,8 @@ namespace System.Management.Automation
         
         public ValidationMetadataException() : base(typeof(ValidationMetadataException).FullName) { }
         
-        /// <param name="message">The exception's message.</param>
         public ValidationMetadataException(string message) : this(message, false) { }
         
-        /// <param name="message">The exception's message.</param>
-        /// <param name="innerException">The exception's inner exception.</param>
         public ValidationMetadataException(string message, Exception innerException) : base(message, innerException) { }
 
         internal ValidationMetadataException(
@@ -118,20 +108,12 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="message">
-        /// The error message</param>
-        /// <param name="swallowException">
-        /// Indicate whether to swallow this exception in positional binding phase
-        /// </param>
         internal ValidationMetadataException(string message, bool swallowException) : base(message)
         {
             _swallowException = swallowException;
         }
 
         
-        /// <remarks>
-        /// This property is only used internally in the positional binding phase
-        /// </remarks>
         internal bool SwallowException
         {
             get { return _swallowException; }
@@ -146,8 +128,6 @@ namespace System.Management.Automation
         internal const string ArgumentTransformationArgumentsShouldBeStrings = "ArgumentTransformationArgumentsShouldBeStrings";
 
         
-        /// <param name="info">Serialization information.</param>
-        /// <param name="context">Streaming context.</param>
         [Obsolete("Legacy serialization support is deprecated since .NET 8", DiagnosticId = "SYSLIB0051")]
         protected ArgumentTransformationMetadataException(SerializationInfo info, StreamingContext context)
         {
@@ -159,13 +139,10 @@ namespace System.Management.Automation
             : base(typeof(ArgumentTransformationMetadataException).FullName) { }
 
         
-        /// <param name="message">The exception's message.</param>
         public ArgumentTransformationMetadataException(string message)
             : base(message) { }
 
         
-        /// <param name="message">The exception's message.</param>
-        /// <param name="innerException">The exception's inner exception.</param>
         public ArgumentTransformationMetadataException(string message, Exception innerException)
             : base(message, innerException) { }
 
@@ -185,8 +162,6 @@ namespace System.Management.Automation
         internal const string ParsingTooManyParameterSets = "ParsingTooManyParameterSets";
 
         
-        /// <param name="info">Serialization information.</param>
-        /// <param name="context">Streaming context.</param>
         [Obsolete("Legacy serialization support is deprecated since .NET 8", DiagnosticId = "SYSLIB0051")]
         protected ParsingMetadataException(SerializationInfo info, StreamingContext context)
         {
@@ -198,13 +173,10 @@ namespace System.Management.Automation
             : base(typeof(ParsingMetadataException).FullName) { }
 
         
-        /// <param name="message">The exception's message.</param>
         public ParsingMetadataException(string message)
             : base(message) { }
 
         
-        /// <param name="message">The exception's message.</param>
-        /// <param name="innerException">The exception's inner exception.</param>
         public ParsingMetadataException(string message, Exception innerException)
             : base(message, innerException) { }
 

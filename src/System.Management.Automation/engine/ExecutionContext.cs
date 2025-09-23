@@ -52,7 +52,6 @@ namespace System.Management.Automation
             this.transactionManager = new PSTransactionManager();
         }
         
-        /// <value>True if tracing is turned on, false if it's turned off.</value>
         internal int PSDebugTraceLevel
         {
             get
@@ -70,7 +69,6 @@ namespace System.Management.Automation
         private int _debugTraceLevel;
 
         
-        /// <value>True of stepping is turned on, false if it's turned off.</value>
         internal bool PSDebugTraceStep
         {
             get
@@ -95,8 +93,6 @@ namespace System.Management.Automation
             return (context != null) && context.IsStrictVersion(majorVersion);
         }
         
-        /// <param name="majorVersion">The version for a strict check about to be performed.</param>
-        /// <returns></returns>
         internal bool IsStrictVersion(int majorVersion)
         {
             SessionStateScope scope = EngineSessionState.CurrentScope;
@@ -136,7 +132,6 @@ namespace System.Management.Automation
         internal bool ScriptCommandProcessorShouldRethrowExit { get; set; } = false;
 
         
-        /// <value>The current state of the IgnoreScriptDebug flag.</value>
         internal bool IgnoreScriptDebug { get; set; } = true;
 
         
@@ -325,11 +320,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <remarks>
-        /// This method is for tracking assignment to global variables and module script scope varaibles in ConstrainedLanguage mode. Those variables
-        /// can go across boundaries between ConstrainedLanguage and FullLanguage, and make it easy for a trusted script to use data from an untrusted
-        /// environment. Therefore, in ConstrainedLanguage mode, we need to mark the value objects assigned to those variables as untrusted.
-        /// </remarks>
         internal static void MarkObjectAsUntrustedForVariableAssignment(PSVariable variable, SessionStateScope scope, SessionStateInternal sessionState)
         {
             if (scope.Parent == null ||  // If it's the global scope, OR
@@ -395,7 +385,6 @@ namespace System.Management.Automation
         #region Engine State
 
         
-        /// <value></value>
         internal EngineState EngineState { get; set; } = EngineState.None;
 
         #endregion
@@ -488,10 +477,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="preferenceVariablePath"></param>
-        /// <param name="defaultPref"></param>
-        /// <param name="defaultUsed"></param>
-        /// <returns></returns>
         internal bool GetBooleanPreference(VariablePath preferenceVariablePath, bool defaultPref, out bool defaultUsed)
         {
             object val = EngineSessionState.GetVariableValue(preferenceVariablePath, out _, out _);
@@ -509,7 +494,6 @@ namespace System.Management.Automation
         #region HelpSystem
 
         
-        /// <value></value>
         internal HelpSystem HelpSystem
         {
             get { return _helpSystem ??= new HelpSystem(this); }
@@ -529,10 +513,6 @@ namespace System.Management.Automation
         internal Dictionary<string, ScriptBlock> NativeArgumentCompleters { get; set; }
 
         
-        /// <param name="command">The name of the command to lookup.</param>
-        /// <param name="dotSource"></param>
-        /// <param name="forCompletion"></param>
-        /// <returns>The command processor object.</returns>
         internal CommandProcessorBase CreateCommand(string command, bool dotSource, bool forCompletion = false)
         {
             CommandOrigin commandOrigin = this.EngineSessionState.CurrentScope.ScopeOrigin;
@@ -548,11 +528,9 @@ namespace System.Management.Automation
         }
 
         
-        /// <value>Reference to command discovery</value>
         internal CommandProcessorBase CurrentCommandProcessor { get; set; }
 
         
-        /// <value>Reference to command discovery</value>
         internal CommandDiscovery CommandDiscovery
         {
             get
@@ -623,7 +601,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <returns></returns>
         internal SavedContextData SaveContextData()
         {
             return new SavedContextData(this);
@@ -666,12 +643,6 @@ namespace System.Management.Automation
 
         #region Append to $error
         
-        /// <param name="obj">
-        /// ErrorRecord or Exception to be written to $global:error
-        /// </param>
-        /// <exception cref="ExtendedTypeSystemException">
-        /// (get-only) An error occurred accessing $ERROR.
-        /// </exception>
         internal void AppendDollarError(object obj)
         {
             ErrorRecord objAsErrorRecord = obj as ErrorRecord;
@@ -718,9 +689,6 @@ namespace System.Management.Automation
         #region Scope or Commands (in pipeline) Depth Count
 
         
-        /// <exception cref="ScriptCallDepthException">
-        /// If the stack would overflow soon.
-        /// </exception>
         internal static void CheckStackDepth()
         {
             try
@@ -747,7 +715,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="pp"></param>
         internal void PushPipelineProcessor(PipelineProcessor pp)
         {
             if (_currentRunspace == null)
@@ -770,7 +737,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <returns></returns>
         internal bool CurrentPipelineStopping
         {
             get
@@ -785,17 +751,14 @@ namespace System.Management.Automation
         }
 
         
-        /// <value></value>
         internal bool PropagateExceptionsToEnclosingStatementBlock { get; set; }
 
         internal RuntimeException CurrentExceptionBeingHandled { get; set; }
 
         
-        /// <value>The current value of $? </value>
         internal bool QuestionMarkVariableValue { get; set; } = true;
 
         
-        /// <value>The current value of $global:error </value>
         internal object DollarErrorVariable
         {
             get
@@ -1069,10 +1032,6 @@ namespace System.Management.Automation
         internal PSTransactionManager transactionManager;
 
         
-        /// <param name="source">Source of the assembly loading request, should be a module name when specified.</param>
-        /// <param name="assemblyName">Name of the assembly to be loaded.</param>
-        /// <param name="filePath">Path of the assembly to be loaded.</param>
-        /// <param name="error">Exception that is caught when the loading fails.</param>
         internal Assembly AddAssembly(string source, string assemblyName, string filePath, out Exception error)
         {
             // Search the cache by the path, and return the assembly if we find it.
@@ -1134,8 +1093,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="source">The source where the assembly comes from, should be a module name when specified.</param>
-        /// <param name="assembly">The assembly we try to cache.</param>
         internal void AddToAssemblyCache(string source, Assembly assembly)
         {
             // Try caching the assembly by its location if possible.
@@ -1271,8 +1228,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="resourceString">Resource string.</param>
-        /// <param name="arguments">Arguments.</param>
         internal void ReportEngineStartupError(string resourceString, params object[] arguments)
         {
             try
@@ -1308,7 +1263,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="error">Error to report.</param>
         internal void ReportEngineStartupError(string error)
         {
             try
@@ -1343,7 +1297,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="e"></param>
         internal void ReportEngineStartupError(Exception e)
         {
             try
@@ -1384,7 +1337,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="errorRecord"></param>
         internal void ReportEngineStartupError(ErrorRecord errorRecord)
         {
             try
@@ -1441,15 +1393,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="engine">
-        /// Engine that hosts this execution context
-        /// </param>
-        /// <param name="hostInterface">
-        /// Interface that should be used for interaction with host
-        /// </param>
-        /// <param name="initialSessionState">
-        /// InitialSessionState information
-        /// </param>
         internal ExecutionContext(AutomationEngine engine, PSHost hostInterface, InitialSessionState initialSessionState)
         {
             InitialSessionState = initialSessionState;

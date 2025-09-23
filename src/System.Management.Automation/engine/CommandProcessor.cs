@@ -41,15 +41,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="cmdletInfo">
-        /// The information about the cmdlet.
-        /// </param>
-        /// <param name="context">
-        /// PowerShell engine execution context for this command.
-        /// </param>
-        /// <exception cref="CommandNotFoundException">
-        /// If there was a failure creating an instance of the cmdlet type.
-        /// </exception>
         internal CommandProcessor(CmdletInfo cmdletInfo, ExecutionContext context) : base(cmdletInfo)
         {
             this._context = context;
@@ -57,15 +48,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="scriptCommandInfo">
-        /// The information about the cmdlet.
-        /// </param>
-        /// <param name="context">
-        /// PowerShell engine execution context for this command.
-        /// </param>
-        /// <param name="useLocalScope"></param>
-        /// <param name="sessionState"></param>
-        /// <param name="fromScriptFile">True when the script to be executed came from a file (as opposed to a function, or interactive input).</param>
         internal CommandProcessor(IScriptCommandInfo scriptCommandInfo, ExecutionContext context, bool useLocalScope, bool fromScriptFile, SessionStateInternal sessionState)
             : base(scriptCommandInfo as CommandInfo)
         {
@@ -81,15 +63,6 @@ namespace System.Management.Automation
         #region internal members
 
         
-        /// <param name="command">
-        /// The cmdlet to bind parameters to.
-        /// </param>
-        /// <returns>
-        /// A new instance of a CmdletParameterBinderController.
-        /// </returns>
-        /// <exception cref="ArgumentException">
-        /// if <paramref name="command"/> is not a Cmdlet.
-        /// </exception>
         internal ParameterBinderController NewParameterBinderController(InternalCommand command)
         {
             if (!(command is Cmdlet cmdlet))
@@ -137,17 +110,6 @@ namespace System.Management.Automation
         private ObsoleteAttribute _obsoleteAttribute;
 
         
-        /// <returns>
-        /// true if encode succeeds otherwise false.
-        /// </returns>
-        /// <exception cref="ParameterBindingException">
-        /// If any parameters fail to bind,
-        /// or
-        /// If any mandatory parameters are missing.
-        /// </exception>
-        /// <exception cref="MetadataException">
-        /// If there is an error generating the metadata for dynamic parameters.
-        /// </exception>
         internal void BindCommandLineParameters()
         {
             using (commandRuntime.AllowThisCommandToWrite(false))
@@ -166,14 +128,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <exception cref="ParameterBindingException">
-        /// If any parameters fail to bind,
-        /// or
-        /// If any mandatory parameters are missing.
-        /// </exception>
-        /// <exception cref="MetadataException">
-        /// If there is an error generating the metadata for dynamic parameters.
-        /// </exception>
         internal override void Prepare(IDictionary psDefaultParameterValues)
         {
             // Note that Prepare() and DoBegin() should NOT be combined.
@@ -283,9 +237,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <exception cref="PipelineStoppedException">
-        /// a terminating error occurred, or the pipeline was otherwise stopped
-        /// </exception>
         internal override void ProcessRecord()
         {
             // Invoke the Command method with the request object
@@ -410,17 +361,6 @@ namespace System.Management.Automation
         private bool _bailInNextCall;
 
         
-        /// <returns>
-        /// A bool indicating whether read succeeded.
-        /// </returns>
-        /// <exception cref="ParameterBindingException">
-        /// If a parameter fails to bind.
-        /// or
-        /// If a mandatory parameter is missing.
-        /// </exception>
-        /// <exception cref="PipelineStoppedException">
-        /// The pipeline was already stopped.
-        /// </exception>
         // 2003/10/07-JonN was public, now internal
         internal sealed override bool Read()
         {
@@ -554,19 +494,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="inputObject">
-        /// The pipeline input object that was not bound.
-        /// </param>
-        /// <param name="resourceString">
-        /// The error message.
-        /// </param>
-        /// <param name="errorId">
-        /// The resource ID of the error message is also used as error ID
-        /// of the ErrorRecord.
-        /// </param>
-        /// <param name="args">
-        /// Additional arguments to be formatted into the error message that represented in <paramref name="resourceString"/>.
-        /// </param>
         private void WriteInputObjectError(
             object inputObject,
             string resourceString,
@@ -599,18 +526,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="inputObject">
-        /// The pipeline input object to be processed.
-        /// </param>
-        /// <returns>
-        /// False the pipeline input object was not bound in any way to the command.
-        /// </returns>
-        /// <exception cref="ParameterBindingException">
-        /// If a ShouldProcess parameter is specified but the cmdlet does not support
-        /// ShouldProcess.
-        /// or
-        /// If an error occurred trying to bind a parameter from the pipeline object.
-        /// </exception>
         private bool ProcessInputPipelineObject(object inputObject)
         {
             PSObject inputToOperateOn = null;
@@ -646,19 +561,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="cmdletInformation">
-        /// The information about the cmdlet.
-        /// </param>
-        /// <exception cref="CmdletInvocationException">
-        /// If the constructor for the cmdlet threw an exception.
-        /// </exception>
-        /// <exception cref="MemberAccessException">
-        /// The type referenced by <paramref name="cmdletInformation"/> referred to an
-        /// abstract type or them member was invoked via a late-binding mechanism.
-        /// </exception>
-        /// <exception cref="TypeLoadException">
-        /// If <paramref name="cmdletInformation"/> refers to a type that is invalid.
-        /// </exception>
         private void Init(CmdletInfo cmdletInformation)
         {
             Diagnostics.Assert(cmdletInformation != null, "Constructor should throw exception if LookupCommand returned null.");
@@ -781,9 +683,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="helpTarget">Help target to request.</param>
-        /// <param name="helpCategory">Help category to request.</param>
-        /// <returns><see langword="true"/> if user requested help; <see langword="false"/> otherwise.</returns>
         internal override bool IsHelpRequested(out string helpTarget, out HelpCategory helpCategory)
         {
             if (this.arguments != null)

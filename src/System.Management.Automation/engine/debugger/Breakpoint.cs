@@ -162,7 +162,6 @@ namespace System.Management.Automation
         internal WildcardPattern CommandPattern { get; }
 
         
-        /// <returns>A string representation of this breakpoint.</returns>
         public override string ToString()
         {
             return IsScriptBreakpoint
@@ -262,7 +261,6 @@ namespace System.Management.Automation
         public string Variable { get; }
 
         
-        /// <returns>The string representation of this breakpoint.</returns>
         public override string ToString()
         {
             return IsScriptBreakpoint
@@ -345,7 +343,6 @@ namespace System.Management.Automation
         public int Line { get; }
 
         
-        /// <returns>A string representation of this breakpoint.</returns>
         public override string ToString()
         {
             return Column == 0

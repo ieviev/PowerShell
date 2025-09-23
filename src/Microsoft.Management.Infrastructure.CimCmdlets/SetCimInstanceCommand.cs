@@ -280,7 +280,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <returns></returns>
         private CimSetCimInstance CreateOperationAgent()
         {
             CimSetCimInstance cimSetCimInstance = new();

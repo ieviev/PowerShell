@@ -56,18 +56,6 @@ namespace System.Management.Automation
         #region ctor
 
         
-        /// <param name="target">
-        /// The target object that the parameter values will be bound to.
-        /// </param>
-        /// <param name="invocationInfo">
-        /// The invocation information for the code that is being bound.
-        /// </param>
-        /// <param name="context">
-        /// The context of the currently running engine.
-        /// </param>
-        /// <param name="command">
-        /// The command that the parameter binder is binding to. The command can be null.
-        /// </param>
         internal ParameterBinderBase(
             object target,
             InvocationInfo invocationInfo,
@@ -89,15 +77,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="invocationInfo">
-        /// The invocation information for the code that is being bound.
-        /// </param>
-        /// <param name="context">
-        /// The context of the currently running engine.
-        /// </param>
-        /// <param name="command">
-        /// The command that the parameter binder is binding to. The command can be null.
-        /// </param>
         internal ParameterBinderBase(
             InvocationInfo invocationInfo,
             ExecutionContext context,
@@ -120,7 +99,6 @@ namespace System.Management.Automation
         #region internal members
 
         
-        /// <value></value>
         internal object Target
         {
             get
@@ -161,12 +139,6 @@ namespace System.Management.Automation
         #region Parameter default values
 
         
-        /// <param name="name">
-        /// The name of the parameter to get the default value of.
-        /// </param>
-        /// <returns>
-        /// The value of the parameter specified by name.
-        /// </returns>
         internal abstract object GetDefaultParameterValue(string name);
 
         #endregion Parameter default values
@@ -174,15 +146,6 @@ namespace System.Management.Automation
         #region Parameter binding
 
         
-        /// <param name="name">
-        ///     The name of the parameter to bind the value to.
-        /// </param>
-        /// <param name="value">
-        ///     The value to bind to the parameter. It should be assumed by
-        ///     derived classes that the proper type coercion has already taken
-        ///     place and that any validation metadata has been satisfied.
-        /// </param>
-        /// <param name="parameterMetadata"></param>
         internal abstract void BindParameter(string name, object value, CompiledCommandParameter parameterMetadata);
 
         private void ValidatePSTypeName(
@@ -251,39 +214,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="parameter">
-        /// The parameter to be bound.
-        /// </param>
-        /// <param name="parameterMetadata">
-        /// The metadata for the parameter to use in guiding the binding.
-        /// </param>
-        /// <param name="flags">
-        /// Flags for type coercion and validation.
-        /// </param>
-        /// <returns>
-        /// True if the parameter was successfully bound. False if <paramref name="coerceTypeIfNeeded"/>
-        /// is false and the type does not match the parameter type.
-        /// </returns>
-        /// <remarks>
-        /// The binding algorithm goes as follows:
-        /// 1. The data generation attributes are run
-        /// 2. The data is coerced into the correct type
-        /// 3. The data if validated using the validation attributes
-        /// 4. The data is encoded into the bindable object using the
-        ///    protected BindParameter method.
-        /// </remarks>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="parameter"/> or <paramref name="parameterMetadata"/> is null.
-        /// </exception>
-        /// <exception cref="ParameterBindingException">
-        /// If argument transformation fails.
-        /// or
-        /// The argument could not be coerced to the appropriate type for the parameter.
-        /// or
-        /// The parameter argument transformation, prerequisite, or validation failed.
-        /// or
-        /// If the binding to the parameter fails.
-        /// </exception>
         internal virtual bool BindParameter(
             CommandParameterInternal parameter,
             CompiledCommandParameter parameterMetadata,
@@ -625,21 +555,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="parameter">
-        /// The argument token.
-        /// </param>
-        /// <param name="parameterMetadata">
-        /// The metadata for the parameter.
-        /// </param>
-        /// <param name="argumentType">
-        /// The type of the argument to validate against.
-        /// </param>
-        /// <param name="parameterValue">
-        /// The value that will be bound to the parameter.
-        /// </param>
-        /// <param name="recurseIntoCollections">
-        /// If true, then elements of collections will be validated against the metadata.
-        /// </param>
         private void ValidateNullOrEmptyArgument(
             CommandParameterInternal parameter,
             CompiledCommandParameter parameterMetadata,
@@ -899,33 +814,6 @@ namespace System.Management.Automation
         #region Private helpers
 
         
-        /// <param name="argument">
-        /// The argument as was specified by the command line.
-        /// </param>
-        /// <param name="parameterName">
-        /// The name of the parameter that the coercion is taking place to bind to. It is
-        /// used only for error reporting.
-        /// </param>
-        /// <param name="toType">
-        /// The type to coerce the value to.
-        /// </param>
-        /// <param name="collectionTypeInfo">
-        /// The information about the collection type, like element type, etc.
-        /// </param>
-        /// <param name="currentValue">
-        /// The current value of the argument.
-        /// </param>
-        /// <returns>
-        /// The value of the argument in the type of the parameter.
-        /// </returns>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="argument"/> or <paramref name="toType"/> is null.
-        /// </exception>
-        /// <exception cref="ParameterBindingException">
-        /// If the argument value is missing and the parameter is not a bool or SwitchParameter.
-        /// or
-        /// If the argument value could not be converted to the parameter type.
-        /// </exception>
         private object CoerceTypeAsNeeded(
             CommandParameterInternal argument,
             string parameterName,
@@ -1355,43 +1243,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="argument">
-        /// The argument the current value comes from. Used for error reporting.
-        /// </param>
-        /// <param name="parameterName">
-        /// The name of the parameter.
-        /// </param>
-        /// <param name="collectionTypeInformation">
-        /// The collection type information to which the current value will be
-        /// encoded.
-        /// </param>
-        /// <param name="toType">
-        /// The type the current value will be converted to.
-        /// </param>
-        /// <param name="currentValue">
-        /// The value to be encoded.
-        /// </param>
-        /// <param name="coerceElementTypeIfNeeded">
-        /// If true, the element will be coerced into the appropriate type
-        /// for the collection. If false, and the element isn't of the appropriate
-        /// type then the <paramref name="coercionRequired"/> out parameter will
-        /// be true.
-        /// </param>
-        /// <param name="coercionRequired">
-        /// This out parameter will be true if <paramref name="coerceElementTypeIfNeeded"/>
-        /// is true and the value could not be encoded into the collection because it
-        /// requires coercion to the element type.
-        /// </param>
-        /// <returns>
-        /// A collection of the appropriate type containing the specified value.
-        /// </returns>
-        /// <exception cref="ParameterBindingException">
-        /// If <paramref name="currentValue"/> is a collection and one of its values
-        /// cannot be coerced into the appropriate type.
-        /// or
-        /// A collection of the appropriate <paramref name="collectionTypeInformation"/>
-        /// could not be created.
-        /// </exception>
         [SuppressMessage("Microsoft.Maintainability", "CA1505:AvoidUnmaintainableCode")]
         [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Consider Simplifying it")]
         private object EncodeCollection(
@@ -1879,7 +1730,6 @@ namespace System.Management.Automation
     }
 
     
-    /// <remarks>It's a singleton class. Sealed to prevent subclassing</remarks>
     internal sealed class UnboundParameter
     {
         #region ctor

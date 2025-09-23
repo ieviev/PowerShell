@@ -48,35 +48,6 @@ namespace System.Management.Automation
                           "tracer for SignatureHelper");
 
         
-        /// <param name="option">Option that controls what gets embedded in the signature blob.</param>
-        /// <param name="fileName">Name of file to sign.</param>
-        /// <param name="certificate">Signing cert.</param>
-        /// <param name="timeStampServerUrl">URL of time stamping server.</param>
-        /// <param name="hashAlgorithm"> The name of the hash
-        /// algorithm to use.</param>
-        /// <returns>Does not return a value.</returns>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown if argument fileName or certificate is null.
-        /// </exception>
-        /// <exception cref="System.ArgumentException">
-        /// Thrown if
-        /// -- argument fileName is empty OR
-        /// -- the specified certificate is not suitable for
-        ///    signing code
-        /// </exception>
-        /// <exception cref="System.Security.Cryptography.CryptographicException">
-        /// This exception can be thrown if any cryptographic error occurs.
-        /// It is not possible to know exactly what went wrong.
-        /// This is because of the way CryptographicException is designed.
-        /// Possible reasons:
-        ///  -- certificate is invalid
-        ///  -- certificate has no private key
-        ///  -- certificate password mismatch
-        ///  -- etc
-        /// </exception>
-        /// <exception cref="System.IO.FileNotFoundException">
-        /// Thrown if the file specified by argument fileName is not found
-        /// </exception>
         internal static Signature SignFile(SigningOption option,
                                            string fileName,
                                            X509Certificate2 certificate,
@@ -242,18 +213,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="fileName">Name of file to check.</param>
-        /// <param name="fileContent">Content of file to check.</param>
-        /// <returns>Signature object.</returns>
-        /// <exception cref="System.ArgumentException">
-        /// Thrown if argument fileName is empty.
-        /// </exception>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown if argument fileName is null
-        /// </exception>
-        /// <exception cref="System.IO.FileNotFoundException">
-        /// Thrown if the file specified by argument fileName is not found.
-        /// </exception>
         internal static Signature GetSignature(string fileName, byte[] fileContent)
         {
             Signature signature = null;

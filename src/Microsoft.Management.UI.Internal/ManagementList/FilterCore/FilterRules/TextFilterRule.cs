@@ -59,7 +59,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="source">The source to initialize from.</param>
         protected TextFilterRule(TextFilterRule source)
             : base(source)
         {
@@ -68,8 +67,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="evaluateAsExactMatch">Whether the current value should be evaluated as an exact match.</param>
-        /// <returns>The current value.</returns>
         protected internal string GetParsedValue(out bool evaluateAsExactMatch)
         {
             var parsedValue = this.Value.GetCastValue();
@@ -87,10 +84,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="pattern">The pattern to use if the current value is not an exact-match string. The pattern must contain a <c>{0}</c> token.</param>
-        /// <param name="exactMatchPattern">The pattern to use if the current value is an exact-match string. The pattern must contain a <c>{0}</c> token.</param>
-        /// <returns>A regular expression pattern based on the current value and the specified patterns.</returns>
-        /// <exception cref="ArgumentNullException">The specified value is a null reference.</exception>
         protected internal string GetRegexPattern(string pattern, string exactMatchPattern)
         {
             ArgumentNullException.ThrowIfNull(pattern);
@@ -114,7 +107,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <returns>A <see cref="RegexOptions"/> object that matches the values of <see cref="IgnoreCase"/> and <see cref="CultureInvariant"/>.</returns>
         protected internal RegexOptions GetRegexOptions()
         {
             RegexOptions options = RegexOptions.None;
@@ -133,10 +125,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="data">The data to evaluate.</param>
-        /// <param name="pattern">The pattern to use if the current value is not an exact-match string. The pattern must contain a <c>{0}</c> token.</param>
-        /// <param name="exactMatchPattern">The pattern to use if the current value is an exact-match string. The pattern must contain a <c>{0}</c> token.</param>
-        /// <returns><c>true</c> if the specified data matches one of the specified patterns; otherwise, <c>false</c>.</returns>
         protected internal bool ExactMatchEvaluate(string data, string pattern, string exactMatchPattern)
         {
             Debug.Assert(this.IsValid, "is valid");

@@ -15,7 +15,6 @@ using System.Windows.Markup;
 namespace Microsoft.Management.UI.Internal
 {
     
-    /// 
     [ContentProperty("AvailableColumns")]
     public class InnerListGridView : GridView
     {
@@ -29,8 +28,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="availableColumns">The columns this grid should display.</param>
-        /// <exception cref="ArgumentNullException">The specified value is a null reference.</exception>
         internal InnerListGridView(ObservableCollection<InnerListColumn> availableColumns)
         {
             ArgumentNullException.ThrowIfNull(availableColumns);
@@ -73,10 +70,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="newValue">
-        /// The new ItemsSource.
-        /// This is used just to fetch .the first collection element.
-        /// </param>
         internal void PopulateColumns(System.Collections.IEnumerable newValue)
         {
             if (newValue == null)
@@ -108,8 +101,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="sender">The send object.</param>
-        /// <param name="e">The Event RoutedEventArgs.</param>
         internal void OnColumnPicker(object sender, RoutedEventArgs e)
         {
             ColumnPicker columnPicker = new ColumnPicker(
@@ -152,8 +143,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="sender">The collection changing.</param>
-        /// <param name="e">The event parameters.</param>
         private void Columns_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             switch (e.Action)
@@ -180,8 +169,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="sender">The collection changing.</param>
-        /// <param name="e">The event parameters.</param>
         private void AvailableColumns_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             this.AddOrRemoveNotifications(e);
@@ -189,7 +176,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="e">The parameter passed to availableColumns_CollectionChanged.</param>
         private void AddOrRemoveNotifications(NotifyCollectionChangedEventArgs e)
         {
             if (e.Action != NotifyCollectionChangedAction.Move)
@@ -244,8 +230,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="sender">The column whose property changed.</param>
-        /// <param name="e">The event parameters.</param>
         private void Column_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == InnerListColumn.VisibleProperty.Name)

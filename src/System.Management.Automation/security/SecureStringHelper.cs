@@ -22,8 +22,6 @@ namespace Microsoft.PowerShell
         internal static readonly string SecureStringExportHeader = "76492d1116743f0423413b16050a5345";
 
         
-        /// <param name="data">Input data.</param>
-        /// <returns>A SecureString .</returns>
         internal static SecureString New(byte[] data)
         {
             if ((data.Length % 2) != 0)
@@ -57,8 +55,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="s">Input string.</param>
-        /// <returns>Contents of s (char[]) converted to byte[].</returns>
         internal static byte[] GetData(SecureString s)
         {
             //
@@ -84,8 +80,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="data">Binary data to encode.</param>
-        /// <returns>A string representing encoded data.</returns>
         internal static string ByteArrayToString(byte[] data)
         {
             StringBuilder sb = new StringBuilder();
@@ -99,8 +93,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="s">Encoded input string.</param>
-        /// <returns>Bin data as byte[].</returns>
         internal static byte[] ByteArrayFromString(string s)
         {
             //
@@ -123,8 +115,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="input">SecureString to protect.</param>
-        /// <returns>A string (see summary) .</returns>
         internal static string Protect(SecureString input)
         {
             Utils.CheckSecureStringArg(input, "input");
@@ -152,8 +142,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="input">Encrypted string.</param>
-        /// <returns>SecureString .</returns>
         internal static SecureString Unprotect(string input)
         {
             Utils.CheckArgForNullOrEmpty(input, "input");
@@ -182,9 +170,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="input">Input string to encrypt.</param>
-        /// <param name="key">Encryption key.</param>
-        /// <returns>A string (see summary).</returns>
         internal static EncryptionResult Encrypt(SecureString input, SecureString key)
         {
             //
@@ -206,9 +191,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="input">Input string to encrypt.</param>
-        /// <param name="key">Encryption key.</param>
-        /// <returns>A string (see summary).</returns>
         internal static EncryptionResult Encrypt(SecureString input, byte[] key)
         {
             return Encrypt(input, key, null);
@@ -260,10 +242,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="input">Encrypted string.</param>
-        /// <param name="key">Encryption key.</param>
-        /// <param name="IV">Encryption initialization vector. If this is set to null, the method uses internally computed strong random number as IV.</param>
-        /// <returns>SecureString .</returns>
         internal static SecureString Decrypt(string input, SecureString key, byte[] IV)
         {
             //
@@ -285,10 +263,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="input">Encrypted string.</param>
-        /// <param name="key">Encryption key.</param>
-        /// <param name="IV">Encryption initialization vector. If this is set to null, the method uses internally computed strong random number as IV.</param>
-        /// <returns>SecureString .</returns>
         internal static SecureString Decrypt(string input, byte[] key, byte[] IV)
         {
             Utils.CheckArgForNullOrEmpty(input, "input");
@@ -326,8 +300,6 @@ namespace Microsoft.PowerShell
 
 #nullable enable
         
-        /// <param name="plainTextString">Plain text string. Must not be null.</param>
-        /// <returns>A new SecureString.</returns>
         internal static unsafe SecureString FromPlainTextString(string plainTextString)
         {
             Debug.Assert(plainTextString is not null);

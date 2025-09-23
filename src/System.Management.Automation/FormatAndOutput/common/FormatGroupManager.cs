@@ -13,8 +13,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
     internal sealed class GroupingInfoManager
     {
         
-        /// <param name="groupingExpression">Name of the grouping property.</param>
-        /// <param name="displayLabel">Display name of the property.</param>
         internal void Initialize(PSPropertyExpression groupingExpression, string displayLabel)
         {
             _groupingKeyExpression = groupingExpression;
@@ -37,8 +35,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="so">Object to use to compute the property value.</param>
-        /// <returns>True if there was an update.</returns>
         internal bool UpdateGroupingKeyValue(PSObject so)
         {
             if (_groupingKeyExpression == null)

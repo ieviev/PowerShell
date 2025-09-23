@@ -31,22 +31,18 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="source">The source to initialize from.</param>
         protected FilterRule(FilterRule source)
         {
             ArgumentNullException.ThrowIfNull(source);
             this.DisplayName = source.DisplayName;
         }
 
-        /// <inheritdoc cref="IDeepCloneable.DeepClone()" />
         public object DeepClone()
         {
             return Activator.CreateInstance(this.GetType(), new object[] { this });
         }
 
         
-        /// <param name="item">The item to evaluate.</param>
-        /// <returns>Returns true if the item meets the criteria. False otherwise.</returns>
         public abstract bool Evaluate(object item);
 
         #region EvaluationResultInvalidated

@@ -41,10 +41,6 @@ namespace System.Management.Automation
         public bool Enabled { get; private set; }
 
         
-        /// <param name="name">The name of the experimental feature.</param>
-        /// <param name="description">A description of the experimental feature.</param>
-        /// <param name="source">The source where the experimental feature is defined.</param>
-        /// <param name="isEnabled">Indicate whether the experimental feature is enabled.</param>
         internal ExperimentalFeature(string name, string description, string source, bool isEnabled)
         {
             Name = name;
@@ -54,8 +50,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="name">The name of the experimental feature.</param>
-        /// <param name="description">A description of the experimental feature.</param>
         private ExperimentalFeature(string name, string description)
             : this(name, description, source: EngineSource, isEnabled: false)
         {
@@ -198,8 +192,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="featureName">The feature name to check.</param>
-        /// <param name="moduleName">When specified, we check if the feature name matches the module name.</param>
         internal static bool IsModuleFeatureName(string featureName, string moduleName = null)
         {
             // Feature names cannot start with a dot

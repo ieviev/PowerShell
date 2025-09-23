@@ -167,8 +167,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="so"></param>
-        /// <param name="activeAssociationList"></param>
         internal static void HandleComputerNameProperties(PSObject so, List<MshResolvedExpressionParameterAssociation> activeAssociationList)
         {
             if (so.Properties[RemotingConstants.ShowComputerNameNoteProperty] != null)

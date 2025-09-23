@@ -30,8 +30,6 @@ namespace Microsoft.PowerShell.Commands.ShowCommandInternal
         }
 
         
-        /// <param name="sender">Event sender.</param>
-        /// <param name="e">Event arguments.</param>
         private void ImageButton_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
             object thisAutomationId = this.GetValue(AutomationProperties.AutomationIdProperty);

@@ -23,8 +23,6 @@ namespace System.Management.Automation
         #region constructor
 
         
-        /// <param name="shellId">
-        /// </param>
         public AuthorizationManager(string shellId)
         {
             ShellId = shellId;
@@ -37,16 +35,6 @@ namespace System.Management.Automation
         #region methods to use internally
 
         
-        /// <param name="commandInfo">Info on entity to be run.</param>
-        /// <param name="origin">The dispatch origin of a command.</param>
-        /// <param name="host">Allows access to the host.</param>
-        /// <remarks>
-        /// This method throws SecurityException in case running is not allowed.
-        /// </remarks>
-        /// <exception cref="System.Management.Automation.PSSecurityException">
-        /// If the derived security manager threw an exception or returned
-        /// false with a reason.
-        /// </exception>
         internal void ShouldRunInternal(CommandInfo commandInfo,
                                         CommandOrigin origin,
                                         PSHost host)
@@ -131,11 +119,6 @@ namespace System.Management.Automation
         #region methods for derived class to override
 
         
-        /// <param name="commandInfo">Information about the command to be run.</param>
-        /// <param name="origin">The origin of the command.</param>
-        /// <param name="host">The host running the command.</param>
-        /// <param name="reason">The reason for preventing execution, if applicable.</param>
-        /// <returns>True if the host should run the command.  False otherwise.</returns>
         protected internal virtual bool ShouldRun(CommandInfo commandInfo,
                                                   CommandOrigin origin,
                                                   PSHost host,

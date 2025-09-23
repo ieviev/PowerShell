@@ -257,8 +257,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="argument"></param>
-        /// <returns></returns>
         private static object MakeBaseObjectArray(object argument)
         {
             if (argument == null)

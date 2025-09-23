@@ -87,24 +87,12 @@ namespace Microsoft.PowerShell.Commands
         };
 
         
-        /// <param name="path">
-        /// The path to normalize.
-        /// </param>
-        /// <returns>
-        /// The path with all / normalized to \
-        /// </returns>
         internal static string NormalizePath(string path)
         {
             return GetCorrectCasedPath(path.Replace(StringLiterals.AlternatePathSeparator, StringLiterals.DefaultPathSeparator));
         }
 
         
-        /// <param name="path">
-        /// The path to retrieve.
-        /// </param>
-        /// <returns>
-        /// The path with accurate casing if item exists, otherwise it returns path that was passed in.
-        /// </returns>
         private static string GetCorrectCasedPath(string path)
         {
             // Only apply to directories where there are issues with some tools if the casing
@@ -183,22 +171,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="path">
-        /// Refers to the item for which we are checking for existence and creating filesysteminfo object.
-        /// </param>
-        /// <param name="isContainer">
-        /// Return true if path points to a directory else returns false.
-        /// </param>
-        /// <returns>FileInfo or DirectoryInfo object.</returns>
-        /// <exception cref="System.ArgumentNullException">
-        /// The path is null.
-        /// </exception>
-        /// <exception cref="System.IO.IOException">
-        /// I/O error occurs.
-        /// </exception>
-        /// <exception cref="System.UnauthorizedAccessException">
-        /// An I/O error or a specific type of security error.
-        /// </exception>
         private static FileSystemInfo GetFileSystemInfo(string path, out bool isContainer)
         {
             // We use 'FileInfo.Attributes' (not 'FileInfo.Exist')
@@ -225,9 +197,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <returns>
-        /// whether the filter or attribute filter is set.
-        /// </returns>
         internal override bool IsFilterSet()
         {
             bool attributeFilterSet = false;
@@ -247,41 +216,18 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="path">
-        /// If the path was specified on the command line, this is the path
-        /// to the item for which to get the dynamic parameters.
-        /// </param>
-        /// <returns>
-        /// An object that has properties and fields decorated with
-        /// parsing attributes similar to a cmdlet class.
-        /// </returns>
         protected override object GetChildNamesDynamicParameters(string path)
         {
             return new GetChildDynamicParameters();
         }
 
         
-        /// <param name="path">
-        /// If the path was specified on the command line, this is the path
-        /// to the item for which to get the dynamic parameters.
-        /// </param>
-        /// <param name="recurse">
-        /// Ignored.
-        /// </param>
-        /// <returns>
-        /// An object that has properties and fields decorated with
-        /// parsing attributes similar to a cmdlet class.
-        /// </returns>
         protected override object GetChildItemsDynamicParameters(string path, bool recurse)
         {
             return new GetChildDynamicParameters();
         }
 
         
-        /// <param name="path">Source for the copy operation.</param>
-        /// <param name="destination">Destination for the copy operation.</param>
-        /// <param name="recurse">Whether to recurse.</param>
-        /// <returns></returns>
         protected override object CopyItemDynamicParameters(string path, string destination, bool recurse)
         {
             return new CopyItemDynamicParameters();
@@ -290,15 +236,6 @@ namespace Microsoft.PowerShell.Commands
         #region ICmdletProviderSupportsHelp members
 
         
-        /// <param name="helpItemName">
-        /// Name of command that the help is requested for.
-        /// </param>
-        /// <param name="path">
-        /// Not used here.
-        /// </param>
-        /// <returns>
-        /// The MAML help XML that should be presented to the user.
-        /// </returns>
         public string GetHelpMaml(string helpItemName, string path)
         {
             // Get the verb and noun from helpItemName
@@ -400,12 +337,6 @@ namespace Microsoft.PowerShell.Commands
         #region CmdletProvider members
 
         
-        /// <param name="providerInfo">
-        /// The ProviderInfo object that holds the provider's configuration.
-        /// </param>
-        /// <returns>
-        /// The updated ProviderInfo object that holds the provider's configuration.
-        /// </returns>
         protected override ProviderInfo Start(ProviderInfo providerInfo)
         {
             // Set the home folder for the user
@@ -451,19 +382,6 @@ namespace Microsoft.PowerShell.Commands
         #region DriveCmdletProvider members
 
         
-        /// <param name="drive">
-        /// The drive that is going to be mounted.
-        /// </param>
-        /// <returns>
-        /// The same drive that was passed in, if the drive can be mounted.
-        /// null if the drive cannot be mounted.
-        /// </returns>
-        /// <exception cref="System.ArgumentNullException">
-        /// drive is null.
-        /// </exception>
-        /// <exception cref="System.ArgumentException">
-        /// drive root is null or empty.
-        /// </exception>
         protected override PSDriveInfo NewDrive(PSDriveInfo drive)
         {
             // verify parameters
@@ -544,7 +462,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="drive">The PSDrive info that would be used to create a new PS drive.</param>
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "Can be static on Unix but not on Windows.")]
 
         private void MapNetworkDrive(PSDriveInfo drive)
@@ -618,8 +535,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="drive"></param>
-        /// <returns></returns>
         private static bool IsNetworkMappedDrive(PSDriveInfo drive)
         {
             bool shouldMapNetworkDrive = (drive != null && !string.IsNullOrEmpty(drive.Root) && PathIsNetworkPath(drive.Root)) &&
@@ -629,11 +544,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="drive">
-        /// PSDrive info.
-        /// </param>
-        /// <returns>PSDrive info.
-        /// </returns>
         protected override PSDriveInfo RemoveDrive(PSDriveInfo drive)
         {
 #if UNIX
@@ -671,10 +581,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="drive">
-        /// PS Drive Info.
-        /// </param>
-        /// <returns>True if the drive can be persisted or else false.</returns>
         private static bool IsSupportedDriveForPersistence(PSDriveInfo drive)
         {
             bool isSupportedDriveForPersistence = false;
@@ -692,8 +598,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="driveName"></param>
-        /// <returns></returns>
         internal static string GetUNCForNetworkDrive(string driveName)
         {
 #if UNIX
@@ -715,8 +619,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="driveName"></param>
-        /// <returns></returns>
         internal static string GetSubstitutedPathForNetworkDosDevice(string driveName)
         {
 #if UNIX
@@ -739,8 +641,6 @@ namespace Microsoft.PowerShell.Commands
 #endif
 
         
-        /// <param name="driveInfo"></param>
-        /// <returns></returns>
         internal static string GetRootPathForNetworkDriveOrDosDevice(DriveInfo driveInfo)
         {
             Dbg.Diagnostics.Assert(driveInfo.DriveType == DriveType.Network, "Caller should make sure it is a network drive.");
@@ -772,10 +672,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <returns>
-        /// A collection of PSDriveInfo objects, one for each logical drive returned from
-        /// System.Environment.GetLogicalDrives().
-        /// </returns>
         protected override Collection<PSDriveInfo> InitializeDefaultDrives()
         {
             Collection<PSDriveInfo> results = new Collection<PSDriveInfo>();
@@ -938,20 +834,12 @@ namespace Microsoft.PowerShell.Commands
         #region ItemCmdletProvider methods
 
         
-        /// <param name="path">The path of the file to process.</param>
-        /// <returns>An instance of the FileSystemProviderGetItemDynamicParameters class that represents the dynamic parameters.</returns>
         protected override object GetItemDynamicParameters(string path)
         {
             return new FileSystemProviderGetItemDynamicParameters();
         }
 
         
-        /// <param name="path">
-        /// The fully qualified path to validate.
-        /// </param>
-        /// <returns>
-        /// True if the path is valid, false otherwise.
-        /// </returns>
         protected override bool IsValidPath(string path)
         {
             // Path passed should be fully qualified path.
@@ -1023,17 +911,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="path">
-        /// A fully qualified path representing a file or directory in the
-        /// file system.
-        /// </param>
-        /// <returns>
-        /// Nothing.  FileInfo and DirectoryInfo objects are written to the
-        /// context's pipeline.
-        /// </returns>
-        /// <exception cref="System.ArgumentException">
-        ///     path is null or empty.
-        /// </exception>
         protected override void GetItem(string path)
         {
             // Validate the argument
@@ -1222,12 +1099,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="path">
-        /// The item to invoke.
-        /// </param>
-        /// <exception cref="System.ArgumentException">
-        ///     path is null or empty.
-        /// </exception>
         protected override void InvokeDefaultAction(string path)
         {
             if (string.IsNullOrEmpty(path))
@@ -1287,22 +1158,6 @@ namespace Microsoft.PowerShell.Commands
 
         #region GetChildItems
         
-        /// <param name="path">
-        /// The full path of the directory to enumerate.
-        /// </param>
-        /// <param name="recurse">
-        /// If true, recursively enumerates the child items as well.
-        /// </param>
-        /// <param name="depth">
-        /// Limits the depth of recursion; uint.MaxValue performs full recursion.
-        /// </param>
-        /// <returns>
-        /// Nothing.  FileInfo and DirectoryInfo objects that match the filter are written to the
-        /// context's pipeline.
-        /// </returns>
-        /// <exception cref="System.ArgumentException">
-        ///     path is null or empty.
-        /// </exception>
         protected override void GetChildItems(
             string path,
             bool recurse,
@@ -1314,19 +1169,6 @@ namespace Microsoft.PowerShell.Commands
 
         #region GetChildNames
         
-        /// <param name="path">
-        /// The full path of the directory to enumerate.
-        /// </param>
-        /// <param name="returnContainers">
-        /// Determines if all containers should be returned or only those containers that match the
-        /// filter(s).
-        /// </param>
-        /// <returns>
-        /// Nothing.  Child names are written to the context's pipeline.
-        /// </returns>
-        /// <exception cref="System.ArgumentException">
-        ///     path is null or empty.
-        /// </exception>
         protected override void GetChildNames(
             string path,
             ReturnContainers returnContainers)
@@ -1336,27 +1178,6 @@ namespace Microsoft.PowerShell.Commands
         #endregion GetChildNames
 
         
-        /// <param name="path">
-        /// The path to the item. Unlike most other provider APIs, this path is likely to
-        /// contain PowerShell wildcards.
-        /// </param>
-        /// <param name="filter">
-        /// The provider-specific filter currently applied.
-        /// </param>
-        /// <param name="updatedPath">
-        /// The new path to the item.
-        /// </param>
-        /// <param name="updatedFilter">
-        /// The new filter.
-        /// </param>
-        /// <returns>
-        /// True if the path or filter were altered. False otherwise.
-        /// </returns>
-        /// <remarks>
-        /// Makes no attempt to filter if the user has already specified a filter, or
-        /// if the path contains directory separators. Those are not supported by the
-        /// FileSystem filter.
-        /// </remarks>
         protected override bool ConvertPath(
             string path,
             string filter,
@@ -1723,12 +1544,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <returns>
-        /// If any attribute filtering switch parameters are set,
-        /// returns an evaluator that evaluates these parameters.
-        /// Otherwise,
-        /// returns NULL
-        /// </returns>
         private FlagsExpression<FileAttributes> FormatAttributeSwitchParameters()
         {
             FlagsExpression<FileAttributes> switchParamEvaluator = null;
@@ -1771,14 +1586,10 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="instance">Instance of PSObject wrapping a FileSystemInfo.</param>
-        /// <returns>A string representation of the FileAttributes, with one letter per attribute.</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods")]
         public static string Mode(PSObject instance) => Mode(instance, excludeHardLink: false);
 
         
-        /// <param name="instance">Instance of PSObject wrapping a FileSystemInfo.</param>
-        /// <returns>A string representation of the FileAttributes, with one letter per attribute.</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods")]
         public static string ModeWithoutHardLink(PSObject instance) => Mode(instance, excludeHardLink: true);
 
@@ -1826,8 +1637,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="instance">Instance of PSObject wrapping a FileSystemInfo.</param>
-        /// <returns>Name if a file or directory, Name -> Target if symlink.</returns>
         public static string NameString(PSObject instance)
         {
             if (instance?.BaseObject is FileSystemInfo fileInfo)
@@ -1859,8 +1668,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="instance">Instance of PSObject wrapping a FileSystemInfo.</param>
-        /// <returns>Length as a string.</returns>
         public static string LengthString(PSObject instance)
         {
             return instance?.BaseObject is FileInfo fileInfo
@@ -1871,8 +1678,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="instance">Instance of PSObject wrapping a FileSystemInfo.</param>
-        /// <returns>LastWriteTime formatted as short date + short time.</returns>
         public static string LastWriteTimeString(PSObject instance)
         {
             return instance?.BaseObject is FileSystemInfo fileInfo
@@ -1883,20 +1688,6 @@ namespace Microsoft.PowerShell.Commands
         #region RenameItem
 
         
-        /// <param name="path">
-        /// The current full path to the file or directory.
-        /// </param>
-        /// <param name="newName">
-        /// The new full path to the file or directory.
-        /// </param>
-        /// <returns>
-        /// Nothing.  The renamed DirectoryInfo or FileInfo object is
-        /// written to the context's pipeline.
-        /// </returns>
-        /// <exception cref="System.ArgumentException">
-        ///     path is null or empty.
-        ///     newName is null or empty
-        /// </exception>
         protected override void RenameItem(
             string path,
             string newName)
@@ -2014,25 +1805,6 @@ namespace Microsoft.PowerShell.Commands
         #region NewItem
 
         
-        /// <param name="path">
-        /// The path of the file or directory to create.
-        /// </param>
-        /// <param name="type">
-        /// Specify "file" to create a file.
-        /// Specify "directory" or "container" to create a directory.
-        /// </param>
-        /// <param name="value">
-        /// If <paramref name="type"/> is "file" then this parameter becomes the content
-        /// of the file to be created.
-        /// </param>
-        /// <returns>
-        /// Nothing.  The new DirectoryInfo or FileInfo object is
-        /// written to the context's pipeline.
-        /// </returns>
-        /// <exception cref="System.ArgumentException">
-        ///     path is null or empty.
-        ///     type is null or empty.
-        /// </exception>
         protected override void NewItem(
             string path,
             string type,
@@ -2547,12 +2319,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="path">
-        /// The path of the directory to create
-        /// </param>
-        /// <param name="streamOutput">
-        /// Determines if the directory should be streamed out after being created.
-        /// </param>
         private void CreateDirectory(string path, bool streamOutput)
         {
             Dbg.Diagnostics.Assert(
@@ -2704,15 +2470,6 @@ namespace Microsoft.PowerShell.Commands
         #region RemoveItem
 
         
-        /// <param name="path">
-        /// The full path to the file or directory to be removed.
-        /// </param>
-        /// <param name="recurse">
-        /// Specifies if the operation should also remove child items.
-        /// </param>
-        /// <exception cref="System.ArgumentException">
-        ///     path is null or empty.
-        /// </exception>
         protected override void RemoveItem(string path, bool recurse)
         {
             if (string.IsNullOrEmpty(path))
@@ -2865,9 +2622,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="path">The path of the file to process.</param>
-        /// <param name="recurse">Whether to recurse into containers.</param>
-        /// <returns>An instance of the FileSystemProviderRemoveItemDynamicParameters class that represents the dynamic parameters.</returns>
         protected override object RemoveItemDynamicParameters(string path, bool recurse)
         {
             if (!recurse)
@@ -2881,21 +2635,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="directory">
-        /// The DirectoryInfo object representing the directory to be removed.
-        /// </param>
-        /// <param name="recurse">
-        /// If true, ShouldProcess will be called for each item in the subtree.
-        /// If false, ShouldProcess will only be called for the directory item.
-        /// </param>
-        /// <param name="force">
-        /// If true, attempts to modify the file attributes in case of a failure so that
-        /// the file can be removed.
-        /// </param>
-        /// <param name="rootOfRemoval">
-        /// True if the DirectoryInfo being passed in is the root of the tree being removed.
-        /// ShouldProcess will be called if this is true or if recurse is true.
-        /// </param>
         private void RemoveDirectoryInfoItem(DirectoryInfo directory, bool recurse, bool force, bool rootOfRemoval)
         {
             Dbg.Diagnostics.Assert(directory != null, "Caller should always check directory");
@@ -3035,13 +2774,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="file">
-        /// The FileInfo object representing the file to be removed.
-        /// </param>
-        /// <param name="force">
-        /// If true, attempts to modify the file attributes in case of a failure so that
-        /// the file can be removed.
-        /// </param>
         private void RemoveFileInfoItem(FileInfo file, bool force)
         {
             Dbg.Diagnostics.Assert(
@@ -3057,14 +2789,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="fileSystemInfo">
-        /// The FileSystemInfo object representing the file or directory to be removed.
-        /// </param>
-        /// <param name="force">
-        /// If true, the readonly and hidden attributes will be masked off in the case of
-        /// an error, and the removal will be attempted again. If false, exceptions are
-        /// written to the error pipeline.
-        /// </param>
         private void RemoveFileSystemItem(FileSystemInfo fileSystemInfo, bool force)
         {
             Dbg.Diagnostics.Assert(
@@ -3191,15 +2915,6 @@ namespace Microsoft.PowerShell.Commands
         #region ItemExists
 
         
-        /// <param name="path">
-        /// The path of the item to check.
-        /// </param>
-        /// <returns>
-        /// True if a file or directory exists at the specified path, false otherwise.
-        /// </returns>
-        /// <exception cref="System.ArgumentException">
-        ///     path is null or empty.
-        /// </exception>
         protected override bool ItemExists(string path)
         {
             ErrorRecord error = null;
@@ -3214,18 +2929,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="path">
-        /// The path of the object to check
-        /// </param>
-        /// <param name="error">
-        /// An error record is returned in this parameter if there was an error.
-        /// </param>
-        /// <returns>
-        /// True if an object exists at the specified path, false otherwise.
-        /// </returns>
-        /// <exception cref="System.ArgumentException">
-        ///     path is null or empty.
-        /// </exception>
         private bool ItemExists(string path, out ErrorRecord error)
         {
             error = null;
@@ -3288,17 +2991,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="path">
-        /// If the path was specified on the command line, this is the path
-        /// to the item to get the dynamic parameters for.
-        /// </param>
-        /// <returns>
-        /// Overrides of this method should return an object that has properties and fields decorated with
-        /// parsing attributes similar to a cmdlet class or a
-        /// <see cref="System.Management.Automation.RuntimeDefinedParameterDictionary"/>.
-        ///
-        /// The default implementation returns null. (no additional parameters)
-        /// </returns>
         protected override object ItemExistsDynamicParameters(string path)
         {
             using (PSTransactionManager.GetEngineProtectionScope())
@@ -3312,16 +3004,6 @@ namespace Microsoft.PowerShell.Commands
         #region HasChildItems
 
         
-        /// <param name="path">
-        /// The full path to the directory.
-        /// </param>
-        /// <returns>
-        /// True if the path refers to a directory that contains other
-        /// directories or files.  False otherwise.
-        /// </returns>
-        /// <exception cref="System.ArgumentException">
-        ///     path is null or empty.
-        /// </exception>
         protected override bool HasChildItems(string path)
         {
             bool result = false;
@@ -3406,22 +3088,6 @@ namespace Microsoft.PowerShell.Commands
         #region CopyItem
 
         
-        /// <param name="path">
-        /// The path of the item to copy.
-        /// </param>
-        /// <param name="destinationPath">
-        /// The path of the destination.
-        /// </param>
-        /// <param name="recurse">
-        /// Specifies if the operation should also copy child items.
-        /// </param>
-        /// <exception cref="System.ArgumentException">
-        ///     path is null or empty.
-        ///     destination path is null or empty.
-        /// </exception>
-        /// <returns>
-        /// Nothing.  Copied items are written to the context's pipeline.
-        /// </returns>
         protected override void CopyItem(
             string path,
             string destinationPath,
@@ -4828,15 +4494,6 @@ namespace Microsoft.PowerShell.Commands
         #region NavigationCmdletProvider members
 
         
-        /// <param name="path">
-        /// The path of which to get the parent.
-        /// </param>
-        /// <param name="root">
-        /// The root of the drive.
-        /// </param>
-        /// <returns>
-        /// The parent of the given path.
-        /// </returns>
         protected override string GetParentPath(string path, string root)
         {
             string parentPath = base.GetParentPath(path, root);
@@ -4877,12 +4534,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="path">
-        /// The path to check to see if its a UNC root.
-        /// </param>
-        /// <returns>
-        /// True if the path is a UNC root, or false otherwise.
-        /// </returns>
         private static bool IsUNCRoot(string path)
         {
             bool result = false;
@@ -4927,12 +4578,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="path">
-        /// The path
-        /// </param>
-        /// <returns>
-        /// True if the path is either a drive root or a UNC root, or false otherwise.
-        /// </returns>
         private static bool IsPathRoot(string path)
         {
             if (string.IsNullOrEmpty(path))
@@ -4948,19 +4593,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="path">
-        /// A fully qualifiedpath to an item. The item must exist,
-        /// or the provider writes out an error.
-        /// </param>
-        /// <param name="basePath">
-        /// The path that the normalized path should be relative to.
-        /// </param>
-        /// <returns>
-        /// A normalized path, relative to the given basePath.
-        /// </returns>
-        /// <exception cref="System.ArgumentException">
-        ///     path is null or empty.
-        /// </exception>
         protected override string NormalizeRelativePath(
             string path,
             string basePath)
@@ -5123,27 +4755,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="path">
-        /// A fully qualified provider specific path to an item. The item should exist
-        /// or the provider should write out an error.
-        /// </param>
-        /// <param name="basePath">
-        /// The path that the return value should be relative to.
-        /// </param>
-        /// <returns>
-        /// A normalized path that is relative to the basePath that was passed. The
-        /// provider should parse the path parameter, normalize the path, and then
-        /// return the normalized path relative to the basePath.
-        /// </returns>
-        /// <remarks>
-        /// This method does not have to be purely syntactical parsing of the path. It
-        /// is encouraged that the provider actually use the path to lookup in its store
-        /// and create a relative path that matches the casing, and standardized path syntax.
-        ///
-        /// Note, the base class implementation uses GetParentPath, GetChildName, and MakePath
-        /// to normalize the path and then make it relative to basePath. All string comparisons
-        /// are done using StringComparison.InvariantCultureIgnoreCase.
-        /// </remarks>
         private string NormalizeRelativePathHelper(string path, string basePath)
         {
             if (path == null)
@@ -5334,8 +4945,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="path1">One path.</param>
-        /// <param name="path2">Another path.</param>
         private string GetCommonBase(string path1, string path2)
         {
             // Always see if the shorter path is a substring of the
@@ -5357,16 +4966,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="path">
-        /// The path to tokenize.
-        /// </param>
-        /// <param name="basePath">
-        /// The base part of the path that should not be tokenized.
-        /// </param>
-        /// <returns>
-        /// A stack containing the tokenized path with leaf elements on the bottom
-        /// of the stack and the most ancestral parent at the top.
-        /// </returns>
         private Stack<string> TokenizePathToStack(string path, string basePath)
         {
             Stack<string> tokenizedPathStack = new Stack<string>();
@@ -5417,18 +5016,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="basepath">
-        ///   String containing basepath for which we are trying to find the relative path.
-        /// </param>
-        /// <param name="tokenizedPathStack">
-        /// A stack containing path elements where the leaf most element is at
-        /// the bottom of the stack and the most ancestral parent is on the top.
-        /// Generally this stack comes from TokenizePathToStack().
-        /// </param>
-        /// <returns>
-        /// A stack in reverse order with the path elements normalized and all relative
-        /// path tokens removed.
-        /// </returns>
         private Stack<string> NormalizeThePath(string basepath, Stack<string> tokenizedPathStack)
         {
             Stack<string> normalizedPathStack = new Stack<string>();
@@ -5512,17 +5099,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="normalizedPathStack">
-        /// The stack containing the leaf elements of the path.
-        /// </param>
-        /// <returns>
-        /// A path that is made up of the leaf elements on the given stack.
-        /// </returns>
-        /// <remarks>
-        /// The elements on the stack start from the leaf element followed by its parent
-        /// followed by its parent, etc. Each following element on the stack is the parent
-        /// of the one before it.
-        /// </remarks>
         private string CreateNormalizedRelativePathFromStack(Stack<string> normalizedPathStack)
         {
             string leafElement = string.Empty;
@@ -5544,15 +5120,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="path">
-        /// The fully qualified path to the item.
-        /// </param>
-        /// <returns>
-        /// The leaf element of the specified path.
-        /// </returns>
-        /// <exception cref="System.ArgumentException">
-        ///     path is null or empty.
-        /// </exception>
         protected override string GetChildName(string path)
         {
             // Verify the parameters
@@ -5606,16 +5173,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="path">
-        /// The path to the file or directory to check.
-        /// </param>
-        /// <returns>
-        /// True if the item at the specified path is a directory.
-        /// False otherwise.
-        /// </returns>
-        /// <exception cref="System.ArgumentException">
-        ///     path is null or empty.
-        /// </exception>
         protected override bool IsItemContainer(string path)
         {
             if (string.IsNullOrEmpty(path))
@@ -5631,19 +5188,6 @@ namespace Microsoft.PowerShell.Commands
         #region MoveItem
 
         
-        /// <param name="path">
-        /// The path of the item to move.
-        /// </param>
-        /// <param name="destination">
-        /// The path of the destination.
-        /// </param>
-        /// <returns>
-        /// Nothing.  Moved items are written to the context's pipeline.
-        /// </returns>
-        /// <exception cref="System.ArgumentException">
-        ///     path is null or empty.
-        ///     destination is null or empty.
-        /// </exception>
         protected override void MoveItem(
             string path,
             string destination)
@@ -5948,9 +5492,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="directory">The directory to move.</param>
-        /// <param name="destinationPath">The destination path to move the directory to.</param>
-        /// <param name="force">If true, force move the directory, overwriting anything at the destination.</param>
         private void MoveDirectoryInfoUnchecked(DirectoryInfo directory, string destinationPath, bool force)
         {
             try
@@ -6022,13 +5563,6 @@ namespace Microsoft.PowerShell.Commands
         #region IPropertyCmdletProvider
 
         
-        /// <param name="path">The fully qualified path to the item.</param>
-        /// <param name="providerSpecificPickList">
-        /// The list of properties to get.  Examples include "Attributes", "LastAccessTime,"
-        /// and other properties defined by
-        /// <see cref="System.IO.DirectoryInfo"/> and
-        /// <see cref="System.IO.FileInfo"/>
-        /// </param>
         public void GetProperty(string path, Collection<string> providerSpecificPickList)
         {
             if (string.IsNullOrEmpty(path))
@@ -6119,17 +5653,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="path">
-        /// If the path was specified on the command line, this is the path
-        /// to the item for which to get the dynamic parameters.
-        /// </param>
-        /// <param name="providerSpecificPickList">
-        /// A list of properties that should be retrieved. If this parameter is null
-        /// or empty, all properties should be retrieved.
-        /// </param>
-        /// <returns>
-        /// Null.  This feature is not required by the File System provider.
-        /// </returns>
         public object GetPropertyDynamicParameters(
             string path,
             Collection<string> providerSpecificPickList)
@@ -6138,20 +5661,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="path">
-        /// The path of the item on which to set the properties.
-        /// </param>
-        /// <param name="propertyToSet">
-        /// A PSObject which contains a collection of the names and values
-        /// of the properties to be set.  The File System provider supports setting
-        /// only the "Attributes" property.
-        /// </param>
-        /// <exception cref="System.ArgumentException">
-        ///     path is null or empty.
-        /// </exception>
-        /// <exception cref="System.ArgumentNullException">
-        ///     propertyToSet is null.
-        /// </exception>
         public void SetProperty(string path, PSObject propertyToSet)
         {
             // verify parameters
@@ -6285,17 +5794,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="path">
-        /// If the path was specified on the command line, this is the path
-        /// to the item for which to set the dynamic parameters.
-        /// </param>
-        /// <param name="propertyValue">
-        /// A PSObject which contains a collection of the name, type, value
-        /// of the properties to be set.
-        /// </param>
-        /// <returns>
-        /// Null.  This feature is not required by the File System provider.
-        /// </returns>
         public object SetPropertyDynamicParameters(
             string path,
             PSObject propertyValue)
@@ -6304,19 +5802,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="path">
-        /// The path of the item on which to clear the properties.
-        /// </param>
-        /// <param name="propertiesToClear">
-        /// A collection of the names of the properties to clear.  The File System
-        /// provider supports clearing only the "Attributes" property.
-        /// </param>
-        /// <exception cref="System.ArgumentException">
-        ///     Path is null or empty.
-        /// </exception>
-        /// <exception cref="System.ArgumentNullException">
-        ///     propertiesToClear is null or count is zero.
-        /// </exception>
         public void ClearProperty(
             string path,
             Collection<string> propertiesToClear)
@@ -6399,16 +5884,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="path">
-        /// If the path was specified on the command line, this is the path
-        /// to the item for which to set the dynamic parameters.
-        /// </param>
-        /// <param name="propertiesToClear">
-        /// A collection of the names of the properties to clear.
-        /// </param>
-        /// <returns>
-        /// Null.  This feature is not required by the File System provider.
-        /// </returns>
         public object ClearPropertyDynamicParameters(
             string path,
             Collection<string> propertiesToClear)
@@ -6421,15 +5896,6 @@ namespace Microsoft.PowerShell.Commands
         #region IContentCmdletProvider
 
         
-        /// <param name="path">
-        /// The path of the file to be opened for reading.
-        /// </param>
-        /// <returns>
-        /// An IContentReader for the specified file.
-        /// </returns>
-        /// <exception cref="System.ArgumentException">
-        ///     path is null or empty.
-        /// </exception>
         public IContentReader GetContentReader(string path)
         {
             if (string.IsNullOrEmpty(path))
@@ -6582,29 +6048,12 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="path">
-        /// If the path was specified on the command line, this is the path
-        /// to the item for which to get the dynamic parameters.
-        /// </param>
-        /// <returns>
-        /// An object that has properties and fields decorated with
-        /// parsing attributes similar to a cmdlet class.
-        /// </returns>
         public object GetContentReaderDynamicParameters(string path)
         {
             return new FileSystemContentReaderDynamicParameters(this);
         }
 
         
-        /// <param name="path">
-        /// The path of the file to be opened for writing.
-        /// </param>
-        /// <returns>
-        /// An IContentWriter for the specified file.
-        /// </returns>
-        /// <exception cref="System.ArgumentException">
-        ///     path is null or empty.
-        /// </exception>
         public IContentWriter GetContentWriter(string path)
         {
             if (string.IsNullOrEmpty(path))
@@ -6716,26 +6165,12 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="path">
-        /// If the path was specified on the command line, this is the path
-        /// to the item for which to get the dynamic parameters.
-        /// </param>
-        /// <returns>
-        /// An object that has properties and fields decorated with
-        /// parsing attributes similar to a cmdlet class.
-        /// </returns>
         public object GetContentWriterDynamicParameters(string path)
         {
             return new FileSystemContentWriterDynamicParameters(this);
         }
 
         
-        /// <param name="path">
-        /// The path to the file of which to clear the contents.
-        /// </param>
-        /// <exception cref="System.ArgumentException">
-        ///     path is null or empty.
-        /// </exception>
         public void ClearContent(string path)
         {
             if (string.IsNullOrEmpty(path))
@@ -6868,7 +6303,6 @@ namespace Microsoft.PowerShell.Commands
             {
                 if (Force)
                 {
-                    //// Store the old attributes so that we can recover them
                     FileAttributes oldAttributes = File.GetAttributes(path);
 
                     try
@@ -6888,7 +6322,6 @@ namespace Microsoft.PowerShell.Commands
                     }
                     finally
                     {
-                        //// Reset the attributes
                         File.SetAttributes(path, oldAttributes);
                     }
                 }
@@ -6900,13 +6333,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="path">
-        /// If the path was specified on the command line, this is the path
-        /// to the item for which to get the dynamic parameters.
-        /// </param>
-        /// <returns>
-        /// A FileSystemClearContentDynamicParameters that provides access to the -Stream dynamic parameter.
-        /// </returns>
         public object ClearContentDynamicParameters(string path)
         {
             return new FileSystemClearContentDynamicParameters();
@@ -6946,8 +6372,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="path"></param>
-        /// <returns></returns>
         internal static bool PathIsNetworkPath(string path)
         {
 #if UNIX
@@ -6959,8 +6383,6 @@ namespace Microsoft.PowerShell.Commands
 
 #if !UNIX
         
-        /// <param name="path">A file system path.</param>
-        /// <returns>True if the path is a network path.</returns>
         internal static bool WinPathIsNetworkPath(string path)
             {
                 if (string.IsNullOrEmpty(path))
@@ -7010,13 +6432,6 @@ namespace Microsoft.PowerShell.Commands
             }
 
             
-            /// <param name="path">
-            /// Path to the file system item to be visited.
-            /// </param>
-            /// <returns>
-            /// True if the path had not been previously visited and was
-            /// successfully marked as visited, false otherwise.
-            /// </returns>
             internal bool TryVisitPath(string path)
             {
                 bool returnValue = false;
@@ -7463,8 +6878,6 @@ namespace Microsoft.PowerShell.Commands
                 out BY_HANDLE_FILE_INFORMATION lpFileInformation);
 
         
-        /// <param name="instance">The object of FileInfo or DirectoryInfo type.</param>
-        /// <returns>The target of the reparse point.</returns>
         [Obsolete("This method is now obsolete. Please use the .NET API 'FileSystemInfo.LinkTarget'", error: true)]
         public static string GetTarget(PSObject instance)
         {
@@ -7483,8 +6896,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="instance">The FileInfo or DirectoryInfo type.</param>
-        /// <returns>The file path the instance points to.</returns>
         public static string ResolvedTarget(PSObject instance)
         {
             if (instance.BaseObject is FileSystemInfo fileSysInfo)
@@ -7497,8 +6908,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="instance">The object of FileInfo or DirectoryInfo type.</param>
-        /// <returns>The link type of the reparse point. SymbolicLink for symbolic links.</returns>
         public static string GetLinkType(PSObject instance)
         {
             FileSystemInfo fileSysInfo = instance.BaseObject as FileSystemInfo;
@@ -7855,8 +7264,6 @@ namespace System.Management.Automation.Internal
     public static partial class AlternateDataStreamUtilities
     {
         
-        /// <param name="path">The fully-qualified path to the file.</param>
-        /// <returns>The list of streams (and their size) in the file.</returns>
         internal static List<AlternateStreamData> GetStreams(string path)
         {
             ArgumentNullException.ThrowIfNull(path);
@@ -7924,12 +7331,6 @@ namespace System.Management.Automation.Internal
         }
 
         
-        /// <param name="path">The fully-qualified path to the file.</param>
-        /// <param name="streamName">The name of the alternate data stream to open.</param>
-        /// <param name="mode">The FileMode of the file.</param>
-        /// <param name="access">The FileAccess of the file.</param>
-        /// <param name="share">The FileShare of the file.</param>
-        /// <returns>A FileStream that can be used to interact with the file.</returns>
         internal static FileStream CreateFileStream(string path, string streamName, FileMode mode, FileAccess access, FileShare share)
         {
             if (!TryCreateFileStream(path, streamName, mode, access, share, out var stream))
@@ -7943,13 +7344,6 @@ namespace System.Management.Automation.Internal
         }
 
         
-        /// <param name="path">The fully-qualified path to the file.</param>
-        /// <param name="streamName">The name of the alternate data stream to open.</param>
-        /// <param name="mode">The FileMode of the file.</param>
-        /// <param name="access">The FileAccess of the file.</param>
-        /// <param name="share">The FileShare of the file.</param>
-        /// <param name="stream">A FileStream that can be used to interact with the file.</param>
-        /// <returns>True if the stream was successfully created, otherwise false.</returns>
         internal static bool TryCreateFileStream(string path, string streamName, FileMode mode, FileAccess access, FileShare share, out FileStream stream)
         {
             ArgumentNullException.ThrowIfNull(path);
@@ -7975,8 +7369,6 @@ namespace System.Management.Automation.Internal
         }
 
         
-        /// <param name="path">The path to the file.</param>
-        /// <param name="streamName">The name of the alternate data stream to delete.</param>
         internal static void DeleteFileStream(string path, string streamName)
         {
             ArgumentNullException.ThrowIfNull(path);

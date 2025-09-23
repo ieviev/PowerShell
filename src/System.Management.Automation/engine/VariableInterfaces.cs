@@ -19,12 +19,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="sessionState">
-        /// The session for which the facade wraps.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="sessionState"/> is null.
-        /// </exception>
         internal PSVariableIntrinsics(SessionStateInternal sessionState)
         {
             if (sessionState == null)
@@ -40,16 +34,6 @@ namespace System.Management.Automation
         #region Public methods
 
         
-        /// <param name="name">
-        /// The name of the variable to get. The name can contain drive and/or
-        /// scope specifiers like "ENV:path" or "global:myvar".
-        /// </param>
-        /// <returns>
-        /// The specified variable.
-        /// </returns>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="name"/> is null.
-        /// </exception>
         public PSVariable Get(string name)
         {
             Dbg.Diagnostics.Assert(
@@ -73,27 +57,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="name">
-        /// The name of the variable to get. The name can contain drive and/or
-        /// scope specifiers like "ENV:path" or "global:myvar".
-        /// </param>
-        /// <param name="scope">
-        /// The ID of the scope to do the lookup in.
-        /// </param>
-        /// <returns>
-        /// The specified variable.
-        /// </returns>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="name"/> is null.
-        /// </exception>
-        /// <exception cref="ArgumentException">
-        /// If <paramref name="scope"/> is less than zero, or not
-        /// a number and not "script", "global", "local", or "private"
-        /// </exception>
-        /// <exception cref="ArgumentOutOfRangeException">
-        /// If <paramref name="scopeID"/> is less than zero or greater than the number of currently
-        /// active scopes.
-        /// </exception>
         internal PSVariable GetAtScope(string name, string scope)
         {
             Dbg.Diagnostics.Assert(
@@ -106,29 +69,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="name">
-        /// The name of the variable to get. The name can contain drive and/or
-        /// scope specifiers like "ENV:path" or "global:myvar".
-        /// </param>
-        /// <returns>
-        /// The value of the specified variable.
-        /// </returns>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="name"/> is null.
-        /// </exception>
-        /// <exception cref="ProviderNotFoundException">
-        /// If the <paramref name="name"/> refers to a provider that could not be found.
-        /// </exception>
-        /// <exception cref="DriveNotFoundException">
-        /// If the <paramref name="name"/> refers to a drive that could not be found.
-        /// </exception>
-        /// <exception cref="NotSupportedException">
-        /// If the provider that the <paramref name="name"/> refers to does
-        /// not support this operation.
-        /// </exception>
-        /// <exception cref="ProviderInvocationException">
-        /// If the provider threw an exception.
-        /// </exception>
         public object GetValue(string name)
         {
             Dbg.Diagnostics.Assert(
@@ -141,33 +81,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="name">
-        /// The name of the variable to get. The name can contain drive and/or
-        /// scope specifiers like "ENV:path" or "global:myvar".
-        /// </param>
-        /// <param name="defaultValue">
-        /// The default value returned if the variable could not be found.
-        /// </param>
-        /// <returns>
-        /// The value of the specified variable or the default value if the variable
-        /// is not found.
-        /// </returns>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="name"/> is null.
-        /// </exception>
-        /// <exception cref="ProviderNotFoundException">
-        /// If the <paramref name="name"/> refers to a provider that could not be found.
-        /// </exception>
-        /// <exception cref="DriveNotFoundException">
-        /// If the <paramref name="name"/> refers to a drive that could not be found.
-        /// </exception>
-        /// <exception cref="NotSupportedException">
-        /// If the provider that the <paramref name="name"/> refers to does
-        /// not support this operation.
-        /// </exception>
-        /// <exception cref="ProviderInvocationException">
-        /// If the provider threw an exception.
-        /// </exception>
         public object GetValue(string name, object defaultValue)
         {
             Dbg.Diagnostics.Assert(
@@ -180,40 +93,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="name">
-        /// The name of the variable to get. The name can contain drive and/or
-        /// scope specifiers like "ENV:path" or "global:myvar".
-        /// </param>
-        /// <param name="scope">
-        /// The ID of the scope to do the lookup in.
-        /// </param>
-        /// <returns>
-        /// The value of the specified variable.
-        /// </returns>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="name"/> is null.
-        /// </exception>
-        /// <exception cref="ArgumentException">
-        /// If <paramref name="scope"/> is less than zero, or not
-        /// a number and not "script", "global", "local", or "private"
-        /// </exception>
-        /// <exception cref="ArgumentOutOfRangeException">
-        /// If <paramref name="scopeID"/> is less than zero or greater than the number of currently
-        /// active scopes.
-        /// </exception>
-        /// <exception cref="ProviderNotFoundException">
-        /// If the <paramref name="name"/> refers to a provider that could not be found.
-        /// </exception>
-        /// <exception cref="DriveNotFoundException">
-        /// If the <paramref name="name"/> refers to a drive that could not be found.
-        /// </exception>
-        /// <exception cref="NotSupportedException">
-        /// If the provider that the <paramref name="name"/> refers to does
-        /// not support this operation.
-        /// </exception>
-        /// <exception cref="ProviderInvocationException">
-        /// If the provider threw an exception.
-        /// </exception>
         internal object GetValueAtScope(string name, string scope)
         {
             Dbg.Diagnostics.Assert(
@@ -226,32 +105,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="name">
-        /// The name of the variable to be set. The name can contain drive and/or
-        /// scope specifiers like "ENV:path" or "global:myvar".
-        /// </param>
-        /// <param name="value">
-        /// The value to set the variable to.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="name"/> is null.
-        /// </exception>
-        /// <exception cref="SessionStateUnauthorizedAccessException">
-        /// If the variable is read-only or constant.
-        /// </exception>
-        /// <exception cref="ProviderNotFoundException">
-        /// If the <paramref name="name"/> refers to a provider that could not be found.
-        /// </exception>
-        /// <exception cref="DriveNotFoundException">
-        /// If the <paramref name="name"/> refers to a drive that could not be found.
-        /// </exception>
-        /// <exception cref="NotSupportedException">
-        /// If the provider that the <paramref name="name"/> refers to does
-        /// not support this operation.
-        /// </exception>
-        /// <exception cref="ProviderInvocationException">
-        /// If the provider threw an exception.
-        /// </exception>
         public void Set(string name, object value)
         {
             Dbg.Diagnostics.Assert(
@@ -264,15 +117,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="variable">
-        /// The variable to set
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="variable"/> is null.
-        /// </exception>
-        /// <exception cref="SessionStateUnauthorizedAccessException">
-        /// If the variable is read-only or constant.
-        /// </exception>
         public void Set(PSVariable variable)
         {
             Dbg.Diagnostics.Assert(
@@ -285,29 +129,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="name">
-        /// The name of the variable to be removed. The name can contain drive and/or
-        /// scope specifiers like "ENV:path" or "global:myvar".
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="name"/> is null.
-        /// </exception>
-        /// <exception cref="SessionStateUnauthorizedAccessException">
-        /// if the variable is constant.
-        /// </exception>
-        /// <exception cref="ProviderNotFoundException">
-        /// If the <paramref name="name"/> refers to a provider that could not be found.
-        /// </exception>
-        /// <exception cref="DriveNotFoundException">
-        /// If the <paramref name="name"/> refers to a drive that could not be found.
-        /// </exception>
-        /// <exception cref="NotSupportedException">
-        /// If the provider that the <paramref name="name"/> refers to does
-        /// not support this operation.
-        /// </exception>
-        /// <exception cref="ProviderInvocationException">
-        /// If the provider threw an exception.
-        /// </exception>
         public void Remove(string name)
         {
             Dbg.Diagnostics.Assert(
@@ -320,15 +141,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="variable">
-        /// The variable to be removed. It is removed based on the name of the variable.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="variable"/> is null.
-        /// </exception>
-        /// <exception cref="SessionStateUnauthorizedAccessException">
-        /// if the variable is constant.
-        /// </exception>
         public void Remove(PSVariable variable)
         {
             Dbg.Diagnostics.Assert(
@@ -341,28 +153,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="name">
-        /// The name of the variable to remove.
-        /// </param>
-        /// <param name="scope">
-        /// The ID of the scope to do the lookup in. The ID is a zero based index
-        /// of the scope tree with the current scope being zero, its parent scope
-        /// being 1 and so on.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="name"/> is null.
-        /// </exception>
-        /// <exception cref="ArgumentOutOfRangeException">
-        /// If <paramref name="scopeID"/> is less than zero or greater than the number of currently
-        /// active scopes.
-        /// </exception>
-        /// <exception cref="SessionStateUnauthorizedAccessException">
-        /// if the variable is constant.
-        /// </exception>
-        /// <exception cref="ProviderInvocationException">
-        /// If <paramref name="name"/> refers to an MSH path (not a variable)
-        /// and the provider throws an exception.
-        /// </exception>
         internal void RemoveAtScope(string name, string scope)
         {
             Dbg.Diagnostics.Assert(
@@ -375,24 +165,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="variable">
-        /// The variable to be removed. It is removed based on the name of the variable.
-        /// </param>
-        /// <param name="scope">
-        /// The ID of the scope to do the lookup in. The ID is a zero based index
-        /// of the scope tree with the current scope being zero, its parent scope
-        /// being 1 and so on.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="variable"/> is null.
-        /// </exception>
-        /// <exception cref="ArgumentOutOfRangeException">
-        /// If <paramref name="scopeID"/> is less than zero or greater than the number of currently
-        /// active scopes.
-        /// </exception>
-        /// <exception cref="SessionStateUnauthorizedAccessException">
-        /// if the variable is constant.
-        /// </exception>
         internal void RemoveAtScope(PSVariable variable, string scope)
         {
             Dbg.Diagnostics.Assert(

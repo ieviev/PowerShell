@@ -59,8 +59,6 @@ namespace System.Management.Automation
     internal static class PSTypeExtensions
     {
         
-        /// <param name="type">Type.</param>
-        /// <returns>True when type has a default ctor.</returns>
         internal static bool HasDefaultCtor(this Type type)
         {
             var ctor = type.GetConstructor(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, null, Type.EmptyTypes, null);

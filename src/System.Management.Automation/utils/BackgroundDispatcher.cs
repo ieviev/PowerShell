@@ -38,10 +38,6 @@ namespace System.Management.Automation
         #region Creation/Cleanup
 
         
-        /// <param name="transferProvider">The <see cref="EventProvider" /> to use when logging transfer events
-        ///     during activity correlation.</param>
-        /// <param name="transferEvent">The <see cref="EventDescriptor" /> to use when logging transfer events
-        ///     during activity correlation.</param>
         public BackgroundDispatcher(EventProvider transferProvider, EventDescriptor transferEvent)
             : this(new EtwActivityReverterMethodInvoker(new EtwEventCorrelator(transferProvider, transferEvent)))
         {

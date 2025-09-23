@@ -36,7 +36,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="so"></param>
         internal override void PrepareForRemoteObjects(PSObject so)
         {
             Diagnostics.Assert(so != null, "so cannot be null");

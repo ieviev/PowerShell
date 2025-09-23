@@ -84,17 +84,12 @@ namespace System.Management.Automation
     public static class PSSerializer
     {
         
-        /// <param name="source">The input object to serialize. Serializes to a default depth of 1.</param>
-        /// <returns>The serialized object, as CliXml.</returns>
         public static string Serialize(object source)
         {
             return Serialize(source, s_mshDefaultSerializationDepth);
         }
 
         
-        /// <param name="source">The input object to serialize.</param>
-        /// <param name="depth">The depth of the members to serialize.</param>
-        /// <returns>The serialized object, as CliXml.</returns>
         public static string Serialize(object source, int depth)
         {
             // Create an xml writer
@@ -117,10 +112,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="source">The input objects to serialize.</param>
-        /// <param name="depth">The depth of the members to serialize.</param>
-        /// <param name="enumerate">Enumerates input objects and serializes one at a time.</param>
-        /// <returns>The serialized object, as CliXml.</returns>
         internal static string Serialize(IList<object> source, int depth, bool enumerate)
         {
             StringBuilder sb = new();
@@ -154,8 +145,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="source">The CliXml the represents the object to deserialize.</param>
-        /// <returns>An object that represents the serialized content.</returns>
         public static object Deserialize(string source)
         {
             object[] results = DeserializeAsList(source);
@@ -176,8 +165,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="source">The CliXml the represents the object to deserialize.</param>
-        /// <returns>An object array represents the serialized content.</returns>
         public static object[] DeserializeAsList(string source)
         {
             List<object> results = new List<object>();
@@ -209,27 +196,18 @@ namespace System.Management.Automation
         private readonly InternalSerializer _serializer;
 
         
-        /// <param name="writer">Writer to be used for serialization.</param>
         internal Serializer(XmlWriter writer)
             : this(writer, new SerializationContext())
         {
         }
 
         
-        /// <param name="writer">Writer to be used for serialization.</param>
-        /// <param name="depth">Depth of serialization.</param>
-        /// <param name="useDepthFromTypes">
-        /// if <see langword="true"/> then types.ps1xml can override depth
-        /// for a particular types (using SerializationDepth property)
-        /// </param>
         internal Serializer(XmlWriter writer, int depth, bool useDepthFromTypes)
             : this(writer, new SerializationContext(depth, useDepthFromTypes))
         {
         }
 
         
-        /// <param name="writer">Writer to be used for serialization.</param>
-        /// <param name="context">Serialization context.</param>
         internal Serializer(XmlWriter writer, SerializationContext context)
         {
             if (writer == null)
@@ -259,27 +237,12 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="source">Object to be serialized.</param>
-        /// <remarks>
-        /// Please note that this method shouldn't throw any exceptions.
-        /// If it throws - please open a bug.
-        /// </remarks>
         internal void Serialize(object source)
         {
             Serialize(source, null);
         }
 
         
-        /// <param name="source">
-        /// object to be serialized
-        /// </param>
-        /// <param name="streamName">
-        /// Stream to which this object belong. Ex: Output, Error etc.
-        /// </param>
-        /// <remarks>
-        /// Please note that this method shouldn't throw any exceptions.
-        /// If it throws - please open a bug.
-        /// </remarks>
         internal void Serialize(object source, string streamName)
         {
             _serializer.WriteOneTopLevelObject(source, streamName);
@@ -327,7 +290,6 @@ namespace System.Management.Automation
         internal int? MaximumAllowedMemory { get; set; }
 
         
-        /// <param name="amountOfExtraMemory"></param>
         internal void LogExtraMemoryUsage(int amountOfExtraMemory)
         {
             if (amountOfExtraMemory < 0)
@@ -440,21 +402,12 @@ namespace System.Management.Automation
         private readonly DeserializationContext _context;
 
         
-        /// <param name="reader">Reader to be used for deserialization.</param>
-        /// <exception cref="XmlException">
-        /// Thrown when the xml is in an incorrect format
-        /// </exception>
         internal Deserializer(XmlReader reader)
             : this(reader, new DeserializationContext())
         {
         }
 
         
-        /// <param name="reader">Reader to be used for deserialization.</param>
-        /// <param name="context">Serialization context.</param>
-        /// <exception cref="XmlException">
-        /// Thrown when the xml is in an incorrect format
-        /// </exception>
         internal Deserializer(XmlReader reader, DeserializationContext context)
         {
             if (reader == null)
@@ -568,9 +521,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <exception cref="XmlException">
-        /// Thrown when the xml is in an incorrect format
-        /// </exception>
         internal object Deserialize()
         {
             string ignore;
@@ -578,10 +528,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="streamName">Stream the object belongs to (i.e. "Error", "Output", etc.).</param>
-        /// <exception cref="XmlException">
-        /// Thrown when the xml is in an incorrect format
-        /// </exception>
         internal object Deserialize(out string streamName)
         {
             if (Done())
@@ -605,7 +551,6 @@ namespace System.Management.Automation
         #region Helper methods for dealing with "Deserialized." prefix
 
         
-        /// <param name="type"></param>
         internal static void AddDeserializationPrefix(ref string type)
         {
             Dbg.Assert(type != null, "caller should validate the parameter");
@@ -616,9 +561,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="o"></param>
-        /// <param name="type"></param>
-        /// <returns><see langword="true"/> if <paramref name="o"/> is either a live or deserialized instance of class <paramref name="type"/> or one of its subclasses;  <see langword="false"/> otherwise.</returns>
         internal static bool IsInstanceOfType(object o, Type type)
         {
             if (type == null)
@@ -635,9 +577,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="o"></param>
-        /// <param name="type"></param>
-        /// <returns><see langword="true"/> if <paramref name="o"/> is a deserialized instance of class <paramref name="type"/> or one of its subclasses;  <see langword="false"/> otherwise.</returns>
         internal static bool IsDeserializedInstanceOfType(object o, Type type)
         {
             if (type == null)
@@ -688,11 +627,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="typeNames"></param>
-        /// <returns>
-        /// Null if no type with "Deserialized." prefix is found.
-        /// Otherwise <paramref name="typeNames"/> with the prefix removed if any.
-        /// </returns>
         internal static Collection<string> MaskDeserializationPrefix(Collection<string> typeNames)
         {
             Dbg.Assert(typeNames != null, "typeNames cannot be null");
@@ -753,9 +687,6 @@ namespace System.Management.Automation
         
         private readonly SerializationContext _context;
 
-        /// Used by Remoting infrastructure. This TypeTable instance
-        /// will be used by Serializer if ExecutionContext is not
-        /// available (to get the ExecutionContext's TypeTable)
         private TypeTable _typeTable;
 
         
@@ -840,12 +771,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="source">
-        /// source to be serialized.
-        /// </param>
-        /// <param name="streamName">
-        /// Stream to which source belongs
-        /// </param>
         internal void WriteOneTopLevelObject
         (
             object source,
@@ -949,9 +874,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <returns>
-        /// true if source is handled, else false.
-        /// </returns>
         private bool HandlePrimitiveKnownType
         (
             object source,
@@ -973,11 +895,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="source"></param>
-        /// <param name="streamName"></param>
-        /// <param name="property"></param>
-        /// <param name="depth"></param>
-        /// <returns></returns>
         private bool HandlePrimitiveKnownTypeByConvertingToPSObject(
             object source,
             string streamName,
@@ -998,10 +915,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="source"></param>
-        /// <param name="streamName"></param>
-        /// <param name="property"></param>
-        /// <returns></returns>
         private bool HandleSecureString(object source, string streamName, string property)
         {
             Dbg.Assert(source != null, "caller should validate the parameter");
@@ -1070,13 +983,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="source"></param>
-        /// <param name="streamName"></param>
-        /// <param name="property"></param>
-        /// <param name="depth"></param>
-        /// <returns>
-        /// true if source is handled, else false.
-        /// </returns>
         private bool HandlePrimitiveKnownTypePSObject
         (
             object source,
@@ -1239,20 +1145,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="source">
-        /// source from which notes are written
-        /// </param>
-        /// <param name="primitive">
-        /// primitive object which is written as base object. In most cases it
-        /// is same source.ImmediateBaseObject. When PSObject is serialized as string,
-        /// it can be different. <see cref="HandlePSObjectAsString"/> for more info.
-        /// </param>
-        /// <param name="pktInfo">
-        /// TypeSerializationInfo for the primitive.
-        /// </param>
-        /// <param name="streamName"></param>
-        /// <param name="property"></param>
-        /// <param name="depth"></param>
         private void WritePrimitiveTypePSObject
         (
             PSObject source,
@@ -1299,22 +1191,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="source">
-        /// source from which notes are written
-        /// </param>
-        /// <param name="primitive">
-        /// primitive object which is written as base object. In most cases it
-        /// is same source.ImmediateBaseObject. When PSObject is serialized as string,
-        /// it can be different. <see cref="HandlePSObjectAsString"/> for more info.
-        /// </param>
-        /// <param name="hasModifiedTypesCollection"></param>
-        /// <param name="toStringValue"></param>
-        /// <param name="pktInfo">
-        /// TypeSerializationInfo for the primitive.
-        /// </param>
-        /// <param name="streamName"></param>
-        /// <param name="property"></param>
-        /// <param name="depth"></param>
         private void WritePrimitiveTypePSObjectWithNotes
         (
             PSObject source,
@@ -1546,12 +1422,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="mshObject"></param>
-        /// <param name="streamName"></param>
-        /// <param name="property"></param>
-        /// <param name="refId"></param>
-        /// <param name="writeTypeNames">If true, TypeName information is written, else not.</param>
-        /// <param name="toStringValue">If not null then ToString information is written.</param>
         private void WriteStartOfPSObject
         (
             PSObject mshObject,
@@ -1623,9 +1493,6 @@ namespace System.Management.Automation
         #region membersets
 
         
-        /// <param name="source"></param>
-        /// <returns>
-        /// </returns>
         private static bool PSObjectHasNotes(PSObject source)
         {
             Dbg.Assert(source != null, "Caller should validate the parameter");
@@ -1653,14 +1520,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="me">
-        /// enumerable containing members
-        /// </param>
-        /// <param name="depth"></param>
-        /// <param name="writeEnclosingMemberSetElementTag">
-        /// if this is true, write an enclosing "<memberset></memberset>" tag.
-        /// </param>
-        /// <returns></returns>
         private void WriteMemberInfoCollection
         (
             IEnumerable<PSMemberInfo> me,
@@ -1853,16 +1712,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="propertyCollection">
-        /// Collection of properties to serialize
-        /// </param>
-        /// <param name="name">
-        /// Name for enclosing element tag
-        /// </param>
-        /// <param name="depth">
-        /// depth to which each property should be
-        /// serialized
-        /// </param>
         private void SerializeProperties
         (
             IEnumerable<PSPropertyInfo> propertyCollection,
@@ -1907,12 +1756,6 @@ namespace System.Management.Automation
         #region enumerable and dictionary
 
         
-        /// <param name="enumerable">
-        /// enumerable which is serialized
-        /// </param>
-        /// <param name="tag">
-        /// </param>
-        /// <param name="depth"></param>
         private void WriteEnumerable
         (
             IEnumerable enumerable,
@@ -1981,9 +1824,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="dictionary">Dictionary which is serialized.</param>
-        /// <param name="tag"></param>
-        /// <param name="depth"></param>
         private void WriteDictionary
         (
             IDictionary dictionary,
@@ -2075,12 +1915,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="source">
-        /// PSObject to be converted to string
-        /// </param>
-        /// <returns>
-        /// string value to use for serializing this PSObject.
-        /// </returns>
         private string GetSerializationString(PSObject source)
         {
             Dbg.Assert(source != null, "caller should have validated the information");
@@ -2114,8 +1948,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="source">PSObject to be serialized.</param>
-        /// <returns>True if the object needs to be serialized as a string.</returns>
         private bool SerializeAsString(PSObject source)
         {
             SerializationMethod method = source.GetSerializationMethod(_typeTable);
@@ -2134,9 +1966,6 @@ namespace System.Management.Automation
         #endregion serialize as string
 
         
-        /// <param name="source">PSObject whose serialization depth has to be computed.</param>
-        /// <param name="depth">Current depth.</param>
-        /// <returns></returns>
         private int GetDepthOfSerialization(object source, int depth)
         {
             Dbg.Assert(source != null, "Caller should verify source != null");
@@ -2196,8 +2025,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="streamName"></param>
-        /// <param name="property"></param>
         private void WriteNull(string streamName, string property)
         {
             WriteStartElement(SerializationStrings.NilTag);
@@ -2218,11 +2045,6 @@ namespace System.Management.Automation
         #region known type serialization
 
         
-        /// <param name="serializer">The serializer to which the object is serialized.</param>
-        /// <param name="streamName">Name of the stream to write. Do not write if null.</param>
-        /// <param name="property">Name of property. Pass null for item.</param>
-        /// <param name="raw">String to write.</param>
-        /// <param name="entry">Serialization information.</param>
         private static void WriteRawString
         (
             InternalSerializer serializer,
@@ -2256,11 +2078,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="serializer">The serializer to which the object is serialized.</param>
-        /// <param name="streamName"></param>
-        /// <param name="property">Name of property. Pass null for item.</param>
-        /// <param name="source">Object to be written.</param>
-        /// <param name="entry">Serialization information about source.</param>
         private static void WriteOnePrimitiveKnownType
         (
             InternalSerializer serializer,
@@ -2289,11 +2106,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="serializer">The serializer to which the object is serialized.</param>
-        /// <param name="streamName"></param>
-        /// <param name="property">Name of property. pass null for item.</param>
-        /// <param name="source">DateTime to write.</param>
-        /// <param name="entry">Serialization information about source.</param>
         internal static void WriteDateTime(InternalSerializer serializer, string streamName, string property, object source, TypeSerializationInfo entry)
         {
             Dbg.Assert(serializer != null, "caller should have validated the information");
@@ -2304,11 +2116,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="serializer">The serializer to which the object is serialized.</param>
-        /// <param name="streamName"></param>
-        /// <param name="property">Name of property. pass null for item.</param>
-        /// <param name="source">Version to write.</param>
-        /// <param name="entry">Serialization information about source.</param>
         internal static void WriteVersion(InternalSerializer serializer, string streamName, string property, object source, TypeSerializationInfo entry)
         {
             Dbg.Assert(serializer != null, "caller should have validated the information");
@@ -2320,11 +2127,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="serializer">The serializer to which the object is serialized.</param>
-        /// <param name="streamName"></param>
-        /// <param name="property">Name of property. pass null for item.</param>
-        /// <param name="source">Version to write.</param>
-        /// <param name="entry">Serialization information about source.</param>
         internal static void WriteSemanticVersion(InternalSerializer serializer, string streamName, string property, object source, TypeSerializationInfo entry)
         {
             Dbg.Assert(serializer != null, "caller should have validated the information");
@@ -2336,11 +2138,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="serializer">The serializer to which the object is serialized.</param>
-        /// <param name="streamName"></param>
-        /// <param name="property">Name of property. pass null for item.</param>
-        /// <param name="source">Scriptblock to write.</param>
-        /// <param name="entry">Serialization information about source.</param>
         internal static void WriteScriptBlock(InternalSerializer serializer, string streamName, string property, object source, TypeSerializationInfo entry)
         {
             Dbg.Assert(serializer != null, "caller should have validated the information");
@@ -2352,11 +2149,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="serializer">The serializer to which the object is serialized.</param>
-        /// <param name="streamName"></param>
-        /// <param name="property">Name of property. pass null for item.</param>
-        /// <param name="source">URI to write.</param>
-        /// <param name="entry">Serialization information about source.</param>
         internal static void WriteUri(InternalSerializer serializer, string streamName, string property, object source, TypeSerializationInfo entry)
         {
             Dbg.Assert(serializer != null, "caller should have validated the information");
@@ -2368,11 +2160,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="serializer">The serializer to which the object is serialized.</param>
-        /// <param name="streamName"></param>
-        /// <param name="property">Name of property. pass null for item.</param>
-        /// <param name="source">String to write.</param>
-        /// <param name="entry">Serialization information about source.</param>
         internal static void WriteEncodedString(InternalSerializer serializer, string streamName, string property, object source, TypeSerializationInfo entry)
         {
             Dbg.Assert(serializer != null, "caller should have validated the information");
@@ -2407,11 +2194,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="serializer">The serializer to which the object is serialized.</param>
-        /// <param name="streamName"></param>
-        /// <param name="property">Name of property. pass null for item.</param>
-        /// <param name="source">Double to write.</param>
-        /// <param name="entry">Serialization information about source.</param>
         internal static void WriteDouble(InternalSerializer serializer, string streamName, string property, object source, TypeSerializationInfo entry)
         {
             Dbg.Assert(serializer != null, "caller should have validated the information");
@@ -2422,11 +2204,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="serializer">The serializer to which the object is serialized.</param>
-        /// <param name="streamName"></param>
-        /// <param name="property">Name of property. pass null for item.</param>
-        /// <param name="source">Char to write.</param>
-        /// <param name="entry">Serialization information about source.</param>
         internal static void WriteChar(InternalSerializer serializer, string streamName, string property, object source, TypeSerializationInfo entry)
         {
             Dbg.Assert(serializer != null, "caller should have validated the information");
@@ -2438,11 +2215,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="serializer">The serializer to which the object is serialized.</param>
-        /// <param name="streamName"></param>
-        /// <param name="property">Name of property. pass null for item.</param>
-        /// <param name="source">Boolean to write.</param>
-        /// <param name="entry">Serialization information about source.</param>
         internal static void WriteBoolean(InternalSerializer serializer, string streamName, string property, object source, TypeSerializationInfo entry)
         {
             Dbg.Assert(serializer != null, "caller should have validated the information");
@@ -2453,11 +2225,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="serializer">The serializer to which the object is serialized.</param>
-        /// <param name="streamName"></param>
-        /// <param name="property">Name of property. pass null for item.</param>
-        /// <param name="source">Single to write.</param>
-        /// <param name="entry">Serialization information about source.</param>
         internal static void WriteSingle(InternalSerializer serializer, string streamName, string property, object source, TypeSerializationInfo entry)
         {
             Dbg.Assert(serializer != null, "caller should have validated the information");
@@ -2468,11 +2235,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="serializer">The serializer to which the object is serialized.</param>
-        /// <param name="streamName"></param>
-        /// <param name="property">Name of property. pass null for item.</param>
-        /// <param name="source">DateTime to write.</param>
-        /// <param name="entry">Serialization information about source.</param>
         internal static void WriteTimeSpan(InternalSerializer serializer, string streamName, string property, object source, TypeSerializationInfo entry)
         {
             Dbg.Assert(serializer != null, "caller should have validated the information");
@@ -2483,11 +2245,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="serializer">The serializer to which the object is serialized.</param>
-        /// <param name="streamName"></param>
-        /// <param name="property">Name of property. pass null for item.</param>
-        /// <param name="source">Bytearray to write.</param>
-        /// <param name="entry">Serialization information about source.</param>
         internal static void WriteByteArray(InternalSerializer serializer, string streamName, string property, object source, TypeSerializationInfo entry)
         {
             Dbg.Assert(serializer != null, "caller should have validated the information");
@@ -2568,7 +2325,6 @@ namespace System.Management.Automation
         #region misc
 
         
-        /// <param name="elementTag">Tag of element.</param>
         private void WriteStartElement(string elementTag)
         {
             Dbg.Assert(!string.IsNullOrEmpty(elementTag), "Caller should validate the parameter");
@@ -2583,8 +2339,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="name">Name of attribute.</param>
-        /// <param name="value">Value of attribute.</param>
         private void WriteAttribute(string name, string value)
         {
             Dbg.Assert(!string.IsNullOrEmpty(name), "Caller should validate the parameter");
@@ -2601,22 +2355,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="s">String to encode.</param>
-        /// <returns>Encoded string.</returns>
-        /// <remarks>
-        /// Output from this method can be reverted using XmlConvert.DecodeName method
-        /// (or InternalDeserializer.DecodeString).
-        /// This method has been introduced to produce shorter output than XmlConvert.EncodeName
-        /// (which escapes everything that can't be part of an xml name - whitespace, punctuation).
-        ///
-        /// This method has been split into 2 parts to optimize its performance:
-        /// 1) part1 (this method) checks if there are any encodable characters and
-        ///    if there aren't it simply (and efficiently) returns the original string
-        /// 2) part2 (EncodeString(string, int)) picks up when part1 detects the first encodable
-        ///    character.  It avoids looking at the characters already verified by part1
-        ///    and copies those already verified characters and then starts encoding
-        ///    the rest of the string.
-        /// </remarks>
         internal static string EncodeString(string s)
         {
             Dbg.Assert(s != null, "Caller should validate the parameter");
@@ -2645,9 +2383,6 @@ namespace System.Management.Automation
         private static readonly char[] s_hexlookup = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
 
         
-        /// <param name="s">String to encode.</param>
-        /// <param name="indexOfFirstEncodableCharacter">IndexOfFirstEncodableCharacter.</param>
-        /// <returns>Encoded string.</returns>
         private static string EncodeString(string s, int indexOfFirstEncodableCharacter)
         {
             Dbg.Assert(s != null, "Caller should validate the 's' parameter");
@@ -2711,8 +2446,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="name"></param>
-        /// <param name="value"></param>
         private void WriteEncodedElementString(string name, string value)
         {
             Dbg.Assert(!string.IsNullOrEmpty(name), "Caller should validate the parameter");
@@ -2745,9 +2478,6 @@ namespace System.Management.Automation
         
         private readonly DeserializationContext _context;
 
-        /// Used by Remoting infrastructure. This TypeTable instance
-        /// will be used by Serializer if ExecutionContext is not
-        /// available (to get the ExecutionContext's TypeTable)
         private TypeTable _typeTable;
 
         
@@ -2792,8 +2522,6 @@ namespace System.Management.Automation
         private readonly ReferenceIdHandlerForDeserializer<ConsolidatedString> _typeRefIdHandler;
 
         
-        /// <param name="reader"></param>
-        /// <param name="context"></param>
         internal InternalDeserializer(XmlReader reader, DeserializationContext context)
         {
             Dbg.Assert(reader != null, "caller should validate the parameter");
@@ -2846,9 +2574,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="version">
-        /// version in string format
-        /// </param>
         internal void ValidateVersion(string version)
         {
             Dbg.Assert(version != null, "Caller should validate the parameter");
@@ -3314,9 +3039,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <returns>
-        /// Deserialized Object.
-        /// </returns>
         internal object ReadOneObject(out string streamName)
         {
             this.CheckIfStopping();
@@ -3490,7 +3212,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <returns>MshObject which is created for refId.</returns>
         private PSObject ReadAttributeAndCreatePSObject()
         {
             string refId = _reader.GetAttribute(SerializationStrings.ReferenceIdAttribute);
@@ -3507,9 +3228,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="dso">
-        /// PSObject to which TypeNames are added
-        /// </param>
         private void ReadTypeNames(PSObject dso)
         {
             Dbg.Assert(dso != null, "caller should validate the parameter");
@@ -3624,9 +3342,6 @@ namespace System.Management.Automation
         #region memberset
 
         
-        /// <param name="collection">
-        /// collection to which members are added
-        /// </param>
         private void ReadMemberSet(PSMemberInfoCollection<PSMemberInfo> collection)
         {
             Dbg.Assert(collection != null, "caller should validate the value");
@@ -3658,7 +3373,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <returns></returns>
         private PSNoteProperty ReadNoteProperty()
         {
             string name = ReadNameAttribute();
@@ -3723,7 +3437,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <returns></returns>
         private object ReadListContainer(ContainerType ct)
         {
             Dbg.Assert(ct == ContainerType.Enumerable ||
@@ -3811,7 +3524,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <returns></returns>
         private object ReadDictionary(ContainerType ct, ConsolidatedString InternalTypeNames)
         {
             Dbg.Assert(ct == ContainerType.Dictionary, "Unrecognized ContainerType enum");
@@ -4334,7 +4046,6 @@ namespace System.Management.Automation
             }
         }
 
-        /// <exception cref="System.Xml.XmlException"></exception>
         internal static XmlDocument LoadUnsafeXmlDocument(FileInfo xmlPath, bool preserveNonElements, int? maxCharactersInDocument)
         {
             XmlDocument doc = null;
@@ -4347,7 +4058,6 @@ namespace System.Management.Automation
             return doc;
         }
 
-        /// <exception cref="System.Xml.XmlException"></exception>
         internal static XmlDocument LoadUnsafeXmlDocument(string xmlContents, bool preserveNonElements, int? maxCharactersInDocument)
         {
             using (TextReader textReader = new StringReader(xmlContents))
@@ -4356,7 +4066,6 @@ namespace System.Management.Automation
             }
         }
 
-        /// <exception cref="System.Xml.XmlException"></exception>
         internal static XmlDocument LoadUnsafeXmlDocument(Stream stream, bool preserveNonElements, int? maxCharactersInDocument)
         {
             using (TextReader textReader = new StreamReader(stream))
@@ -4365,7 +4074,6 @@ namespace System.Management.Automation
             }
         }
 
-        /// <exception cref="System.Xml.XmlException"></exception>
         internal static XmlDocument LoadUnsafeXmlDocument(TextReader textReader, bool preserveNonElements, int? maxCharactersInDocument)
         {
             XmlReaderSettings settings;
@@ -4526,8 +4234,6 @@ namespace System.Management.Automation
         #region misc
 
         
-        /// <param name="tag"></param>
-        /// <returns></returns>
         private bool IsNextElement(string tag)
         {
             Dbg.Assert(!string.IsNullOrEmpty(tag), "Caller should validate the parameter");
@@ -4537,8 +4243,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="element">Element tag to read.</param>
-        /// <returns>True if not an empty element else false.</returns>
         internal bool ReadStartElementAndHandleEmpty(string element)
         {
             Dbg.Assert(!string.IsNullOrEmpty(element), "Caller should validate the parameter");
@@ -4609,8 +4313,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="pktInfo"></param>
-        /// <returns></returns>
         private object ReadPrimaryKnownType(TypeSerializationInfo pktInfo)
         {
             Dbg.Assert(pktInfo != null, "Deserializer should be available");
@@ -4646,13 +4348,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="resourceString">
-        /// resource String
-        /// </param>
-        /// <param name="innerException"></param>
-        /// <param name="args">
-        /// params for format string obtained from resourceId
-        /// </param>
         private XmlException NewXmlException
         (
             string resourceString,
@@ -4710,7 +4405,6 @@ namespace System.Management.Automation
     internal class ReferenceIdHandlerForSerializer<T> where T : class
     {
         
-        /// <returns>New reference id.</returns>
         private UInt64 GetNewReferenceId()
         {
             UInt64 refId = _seed++;
@@ -4731,8 +4425,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="t">Object to assign a RefId to.</param>
-        /// <returns>RefId assigned to the object.</returns>
         internal string SetRefId(T t)
         {
             if (_object2refId != null)
@@ -4749,8 +4441,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="t"></param>
-        /// <returns></returns>
         internal string GetRefId(T t)
         {
             UInt64 refId;
@@ -4804,11 +4494,6 @@ namespace System.Management.Automation
     internal class TypeSerializationInfo
     {
         
-        /// <param name="type">Type for which this entry is created.</param>
-        /// <param name="itemTag">ItemTag for the type.</param>
-        /// <param name="propertyTag">PropertyTag for the type.</param>
-        /// <param name="serializer">TypeSerializerDelegate for serializing the type.</param>
-        /// <param name="deserializer">TypeDeserializerDelegate for deserializing the type.</param>
         internal TypeSerializationInfo(Type type, string itemTag, string propertyTag, TypeSerializerDelegate serializer, TypeDeserializerDelegate deserializer)
         {
             Type = type;
@@ -4856,8 +4541,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="type">Type for which information is retrieved.</param>
-        /// <returns>TypeSerializationInfo for the type, null if it doesn't exist.</returns>
         internal static TypeSerializationInfo GetTypeSerializationInfo(Type type)
         {
             TypeSerializationInfo temp;
@@ -4870,8 +4553,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="itemTag">ItemTag for which TypeSerializationInfo is to be fetched.</param>
-        /// <returns>TypeSerializationInfo entry, null if no entry exist for the tag.</returns>
         internal static TypeSerializationInfo GetTypeSerializationInfoFromItemTag(string itemTag)
         {
             TypeSerializationInfo temp;
@@ -5071,10 +4752,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="source"></param>
-        /// <param name="ct"></param>
-        /// <param name="dictionary"></param>
-        /// <param name="enumerable"></param>
         internal static void GetKnownContainerTypeInfo(
             object source,
             out ContainerType ct,
@@ -5174,9 +4851,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="derived"></param>
-        /// <param name="baseType"></param>
-        /// <returns></returns>
         private static bool DerivesFromGenericType(Type derived, Type baseType)
         {
             Dbg.Assert(derived != null, "caller should validate the parameter");
@@ -5198,12 +4872,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="source">
-        /// PSObject to be converted to string
-        /// </param>
-        /// <returns>
-        /// "ToString" value
-        /// </returns>
         internal static string GetToString(object source)
         {
             Dbg.Assert(source != null, "caller should have validated the information");
@@ -5334,7 +5002,6 @@ namespace System.Management.Automation
     }
 
     
-    /// <typeparam name="T">type of dictionary values</typeparam>
     internal class WeakReferenceDictionary<T> : IDictionary<object, T>
     {
         private sealed class WeakReferenceEqualityComparer : IEqualityComparer<WeakReference>
@@ -5578,11 +5245,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="other">Hashtable to copy into the new instance of <see cref="PSPrimitiveDictionary"/></param>
-        /// <exception cref="ArgumentException">
-        /// This constructor will throw if the <paramref name="other"/> hashtable contains keys that are not a strings
-        /// or values that are not one of primitive types that will work during PowerShell remoting handshake.
-        /// </exception>
         [SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors", Justification = "The class is sealed")]
         public PSPrimitiveDictionary(Hashtable other)
             : base(StringComparer.OrdinalIgnoreCase)
@@ -5703,13 +5365,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="key">The key of the element to add.</param>
-        /// <param name="value">The value of the element to add.</param>
-        /// <exception cref="ArgumentException">
-        /// This method will throw if the <paramref name="key"/> is not a string and the <paramref name="value"/>
-        /// is not one of primitive types that will work during PowerShell remoting handshake.
-        /// Use of strongly-typed overloads of this method is suggested if throwing an exception is not acceptable.
-        /// </exception>
         public override void Add(object key, object value)
         {
             string keyAsString = VerifyKey(key);
@@ -5718,17 +5373,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="key">The key whose value to get or set.</param>
-        /// <returns>The value associated with the specified key.</returns>
-        /// <remarks>
-        /// If the specified key is not found, attempting to get it returns <see langword="null"/>
-        /// and attempting to set it creates a new element using the specified key.
-        /// </remarks>
-        /// <exception cref="ArgumentException">
-        /// The setter will throw if the <paramref name="key"/> is not a string and the value
-        /// is not one of primitive types that will work during PowerShell remoting handshake.
-        /// Use of strongly-typed overloads of Add method is suggested if throwing an exception is not acceptable.
-        /// </exception>
         public override object this[object key]
         {
             get
@@ -5745,17 +5389,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="key">The key whose value to get or set.</param>
-        /// <returns>The value associated with the specified key.</returns>
-        /// <remarks>
-        /// If the specified key is not found, attempting to get it returns <see langword="null"/>
-        /// and attempting to set it creates a new element using the specified key.
-        /// </remarks>
-        /// <exception cref="ArgumentException">
-        /// The setter will throw if the value
-        /// is not one of primitive types that will work during PowerShell remoting handshake.
-        /// Use of strongly-typed overloads of Add method is suggested if throwing an exception is not acceptable.
-        /// </exception>
         public object this[string key]
         {
             get
@@ -5775,311 +5408,234 @@ namespace System.Management.Automation
         #region Helper methods
 
         
-        /// <returns></returns>
         public override object Clone()
         {
             return new PSPrimitiveDictionary(this);
         }
 
         
-        /// <param name="key">The key of the element to add.</param>
-        /// <param name="value">The value of the element to add.</param>
         public void Add(string key, bool value)
         {
             this.Add((object)key, (object)value);
         }
 
         
-        /// <param name="key">The key of the element to add.</param>
-        /// <param name="value">The value of the element to add.</param>
         public void Add(string key, bool[] value)
         {
             this.Add((object)key, (object)value);
         }
 
         
-        /// <param name="key">The key of the element to add.</param>
-        /// <param name="value">The value of the element to add.</param>
         public void Add(string key, byte value)
         {
             this.Add((object)key, (object)value);
         }
 
         
-        /// <param name="key">The key of the element to add.</param>
-        /// <param name="value">The value of the element to add.</param>
         public void Add(string key, byte[] value)
         {
             this.Add((object)key, (object)value);
         }
 
         
-        /// <param name="key">The key of the element to add.</param>
-        /// <param name="value">The value of the element to add.</param>
         public void Add(string key, char value)
         {
             this.Add((object)key, (object)value);
         }
 
         
-        /// <param name="key">The key of the element to add.</param>
-        /// <param name="value">The value of the element to add.</param>
         public void Add(string key, char[] value)
         {
             this.Add((object)key, (object)value);
         }
 
         
-        /// <param name="key">The key of the element to add.</param>
-        /// <param name="value">The value of the element to add.</param>
         public void Add(string key, DateTime value)
         {
             this.Add((object)key, (object)value);
         }
 
         
-        /// <param name="key">The key of the element to add.</param>
-        /// <param name="value">The value of the element to add.</param>
         public void Add(string key, DateTime[] value)
         {
             this.Add((object)key, (object)value);
         }
 
         
-        /// <param name="key">The key of the element to add.</param>
-        /// <param name="value">The value of the element to add.</param>
         public void Add(string key, Decimal value)
         {
             this.Add((object)key, (object)value);
         }
 
         
-        /// <param name="key">The key of the element to add.</param>
-        /// <param name="value">The value of the element to add.</param>
         public void Add(string key, Decimal[] value)
         {
             this.Add((object)key, (object)value);
         }
 
         
-        /// <param name="key">The key of the element to add.</param>
-        /// <param name="value">The value of the element to add.</param>
         public void Add(string key, double value)
         {
             this.Add((object)key, (object)value);
         }
 
         
-        /// <param name="key">The key of the element to add.</param>
-        /// <param name="value">The value of the element to add.</param>
         public void Add(string key, double[] value)
         {
             this.Add((object)key, (object)value);
         }
 
         
-        /// <param name="key">The key of the element to add.</param>
-        /// <param name="value">The value of the element to add.</param>
         public void Add(string key, Guid value)
         {
             this.Add((object)key, (object)value);
         }
 
         
-        /// <param name="key">The key of the element to add.</param>
-        /// <param name="value">The value of the element to add.</param>
         public void Add(string key, Guid[] value)
         {
             this.Add((object)key, (object)value);
         }
 
         
-        /// <param name="key">The key of the element to add.</param>
-        /// <param name="value">The value of the element to add.</param>
         public void Add(string key, Int32 value)
         {
             this.Add((object)key, (object)value);
         }
 
         
-        /// <param name="key">The key of the element to add.</param>
-        /// <param name="value">The value of the element to add.</param>
         public void Add(string key, Int32[] value)
         {
             this.Add((object)key, (object)value);
         }
 
         
-        /// <param name="key">The key of the element to add.</param>
-        /// <param name="value">The value of the element to add.</param>
         public void Add(string key, Int64 value)
         {
             this.Add((object)key, (object)value);
         }
 
         
-        /// <param name="key">The key of the element to add.</param>
-        /// <param name="value">The value of the element to add.</param>
         public void Add(string key, Int64[] value)
         {
             this.Add((object)key, (object)value);
         }
 
         
-        /// <param name="key">The key of the element to add.</param>
-        /// <param name="value">The value of the element to add.</param>
         public void Add(string key, sbyte value)
         {
             this.Add((object)key, (object)value);
         }
 
         
-        /// <param name="key">The key of the element to add.</param>
-        /// <param name="value">The value of the element to add.</param>
         public void Add(string key, sbyte[] value)
         {
             this.Add((object)key, (object)value);
         }
 
         
-        /// <param name="key">The key of the element to add.</param>
-        /// <param name="value">The value of the element to add.</param>
         public void Add(string key, Single value)
         {
             this.Add((object)key, (object)value);
         }
 
         
-        /// <param name="key">The key of the element to add.</param>
-        /// <param name="value">The value of the element to add.</param>
         public void Add(string key, Single[] value)
         {
             this.Add((object)key, (object)value);
         }
 
         
-        /// <param name="key">The key of the element to add.</param>
-        /// <param name="value">The value of the element to add.</param>
         public void Add(string key, string value)
         {
             this.Add((object)key, (object)value);
         }
 
         
-        /// <param name="key">The key of the element to add.</param>
-        /// <param name="value">The value of the element to add.</param>
         public void Add(string key, string[] value)
         {
             this.Add((object)key, (object)value);
         }
 
         
-        /// <param name="key">The key of the element to add.</param>
-        /// <param name="value">The value of the element to add.</param>
         public void Add(string key, TimeSpan value)
         {
             this.Add((object)key, (object)value);
         }
 
         
-        /// <param name="key">The key of the element to add.</param>
-        /// <param name="value">The value of the element to add.</param>
         public void Add(string key, TimeSpan[] value)
         {
             this.Add((object)key, (object)value);
         }
 
         
-        /// <param name="key">The key of the element to add.</param>
-        /// <param name="value">The value of the element to add.</param>
         public void Add(string key, UInt16 value)
         {
             this.Add((object)key, (object)value);
         }
 
         
-        /// <param name="key">The key of the element to add.</param>
-        /// <param name="value">The value of the element to add.</param>
         public void Add(string key, UInt16[] value)
         {
             this.Add((object)key, (object)value);
         }
 
         
-        /// <param name="key">The key of the element to add.</param>
-        /// <param name="value">The value of the element to add.</param>
         public void Add(string key, UInt32 value)
         {
             this.Add((object)key, (object)value);
         }
 
         
-        /// <param name="key">The key of the element to add.</param>
-        /// <param name="value">The value of the element to add.</param>
         public void Add(string key, UInt32[] value)
         {
             this.Add((object)key, (object)value);
         }
 
         
-        /// <param name="key">The key of the element to add.</param>
-        /// <param name="value">The value of the element to add.</param>
         public void Add(string key, UInt64 value)
         {
             this.Add((object)key, (object)value);
         }
 
         
-        /// <param name="key">The key of the element to add.</param>
-        /// <param name="value">The value of the element to add.</param>
         public void Add(string key, UInt64[] value)
         {
             this.Add((object)key, (object)value);
         }
 
         
-        /// <param name="key">The key of the element to add.</param>
-        /// <param name="value">The value of the element to add.</param>
         public void Add(string key, Uri value)
         {
             this.Add((object)key, (object)value);
         }
 
         
-        /// <param name="key">The key of the element to add.</param>
-        /// <param name="value">The value of the element to add.</param>
         public void Add(string key, Uri[] value)
         {
             this.Add((object)key, (object)value);
         }
 
         
-        /// <param name="key">The key of the element to add.</param>
-        /// <param name="value">The value of the element to add.</param>
         public void Add(string key, Version value)
         {
             this.Add((object)key, (object)value);
         }
 
         
-        /// <param name="key">The key of the element to add.</param>
-        /// <param name="value">The value of the element to add.</param>
         public void Add(string key, Version[] value)
         {
             this.Add((object)key, (object)value);
         }
 
         
-        /// <param name="key">The key of the element to add.</param>
-        /// <param name="value">The value of the element to add.</param>
         public void Add(string key, PSPrimitiveDictionary value)
         {
             this.Add((object)key, (object)value);
         }
 
         
-        /// <param name="key">The key of the element to add.</param>
-        /// <param name="value">The value of the element to add.</param>
         public void Add(string key, PSPrimitiveDictionary[] value)
         {
             this.Add((object)key, (object)value);
@@ -6090,8 +5646,6 @@ namespace System.Management.Automation
         #region Internal Methods
 
         
-        /// <param name="originalHash"></param>
-        /// <returns></returns>
         internal static PSPrimitiveDictionary CloneAndAddPSVersionTable(PSPrimitiveDictionary originalHash)
         {
             if ((originalHash != null) &&
@@ -6120,11 +5674,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <typeparam name="T">Expected type of the value</typeparam>
-        /// <param name="data">The root dictionary.</param>
-        /// <param name="result"></param>
-        /// <param name="keys">A chain of keys leading from the root dictionary (<paramref name="data"/>) to the value.</param>
-        /// <returns><see langword="true"/> if the value was found and was of the correct type; <see langword="false"/> otherwise.</returns>
         internal static bool TryPathGet<T>(IDictionary data, out T result, params string[] keys)
         {
             Dbg.Assert(keys != null, "Caller should verify that keys != null");
@@ -6169,7 +5718,6 @@ namespace Microsoft.PowerShell
     using System.Security.Principal;
 
     
-    /// 
     public sealed class DeserializingTypeConverter : PSTypeConverter
     {
         #region Infrastructure
@@ -6230,9 +5778,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="sourceValue">The value to convert from.</param>
-        /// <param name="destinationType">The type to convert to.</param>
-        /// <returns>True if the converter can convert the <paramref name="sourceValue"/> parameter to the <paramref name="destinationType"/> parameter, otherwise false.</returns>
         public override bool CanConvertFrom(PSObject sourceValue, Type destinationType)
         {
             foreach (Type type in s_converter.Keys)
@@ -6247,12 +5792,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="sourceValue">The value to convert from.</param>
-        /// <param name="destinationType">The type to convert to.</param>
-        /// <param name="formatProvider">The format provider to use like in IFormattable's ToString.</param>
-        /// <param name="ignoreCase">True if case should be ignored.</param>
-        /// <returns>The <paramref name="sourceValue"/> parameter converted to the <paramref name="destinationType"/> parameter using formatProvider and ignoreCase.</returns>
-        /// <exception cref="InvalidCastException">If no conversion was possible.</exception>
         public override object ConvertFrom(PSObject sourceValue, Type destinationType, IFormatProvider formatProvider, bool ignoreCase)
         {
             if (destinationType == null)
@@ -6323,21 +5862,12 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="sourceValue">The value to convert from.</param>
-        /// <param name="destinationType">The type to convert to.</param>
-        /// <returns>True if the converter can convert the <paramref name="sourceValue"/> parameter to the <paramref name="destinationType"/> parameter, otherwise false.</returns>
         public override bool CanConvertTo(object sourceValue, Type destinationType)
         {
             return false;
         }
 
         
-        /// <param name="sourceValue">The value to convert from.</param>
-        /// <param name="destinationType">The type to convert to.</param>
-        /// <param name="formatProvider">The format provider to use like in IFormattable's ToString.</param>
-        /// <param name="ignoreCase">True if case should be ignored.</param>
-        /// <returns>SourceValue converted to the <paramref name="destinationType"/> parameter using formatProvider and ignoreCase.</returns>
-        /// <exception cref="InvalidCastException">If no conversion was possible.</exception>
         public override object ConvertTo(object sourceValue, Type destinationType, IFormatProvider formatProvider, bool ignoreCase)
         {
             throw PSTraceSource.NewNotSupportedException();
@@ -6383,21 +5913,12 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <typeparam name="T">Expected type of the property</typeparam>
-        /// <param name="pso">Deserialized object.</param>
-        /// <param name="propertyName">Property name.</param>
-        /// <returns></returns>
         private static T GetPropertyValue<T>(PSObject pso, string propertyName)
         {
             return GetPropertyValue<T>(pso, propertyName, RehydrationFlags.NullValueBad | RehydrationFlags.MissingPropertyBad);
         }
 
         
-        /// <typeparam name="T">Expected type of the property</typeparam>
-        /// <param name="pso">Deserialized object.</param>
-        /// <param name="propertyName">Property name.</param>
-        /// <param name="flags"></param>
-        /// <returns></returns>
         internal static T GetPropertyValue<T>(PSObject pso, string propertyName, RehydrationFlags flags)
         {
             Dbg.Assert(pso != null, "Caller should verify pso != null");
@@ -6812,12 +6333,6 @@ namespace Microsoft.PowerShell
         #region Rehydration of types needed by implicit remoting
 
         
-        /// <param name="instance">
-        /// The PSObject for which to obtain the flags
-        /// </param>
-        /// <returns>
-        /// Boolean properties of ParameterSetMetadata object encoded as an integer
-        /// </returns>
         public static UInt32 GetParameterSetMetadataFlags(PSObject instance)
         {
             if (instance == null)
@@ -6834,8 +6349,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="instance">InvocationInfo instance.</param>
-        /// <returns>PSObject containing serialized InvocationInfo.</returns>
         public static PSObject GetInvocationInfo(PSObject instance)
         {
             if (instance == null)
@@ -7087,12 +6600,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="instance">
-        /// The PSObject for which to obtain the flags
-        /// </param>
-        /// <returns>
-        /// Boolean properties of ParameterSetMetadata object encoded as an integer
-        /// </returns>
         public static Guid GetFormatViewDefinitionInstanceId(PSObject instance)
         {
             if (instance == null)

@@ -6,9 +6,6 @@ using System;
 namespace Microsoft.Management.UI.Internal
 {
     
-    /// <typeparam name="T">
-    /// The generic parameter.
-    /// </typeparam>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public abstract class ComparableValueFilterRule<T> : FilterRule where T : IComparable
     {
@@ -18,7 +15,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="source">The source to initialize from.</param>
         protected ComparableValueFilterRule(ComparableValueFilterRule<T> source)
             : base(source)
         {
@@ -39,12 +35,6 @@ namespace Microsoft.Management.UI.Internal
         #region Public Methods
 
         
-        /// <param name="item">
-        /// The item to match evaluate.
-        /// </param>
-        /// <returns>
-        /// Returns true if the item matches, false otherwise.
-        /// </returns>
         public override bool Evaluate(object item)
         {
             if (item == null)
@@ -67,12 +57,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="data">
-        /// The item to match evaluate.
-        /// </param>
-        /// <returns>
-        /// Returns true if the item matches, false otherwise.
-        /// </returns>
         protected abstract bool Evaluate(T data);
 
         #endregion Public Methods

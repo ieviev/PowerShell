@@ -51,7 +51,6 @@ namespace System.Management.Automation
         };
 
         
-        /// <returns>A System.Text.Encoding object (null if no encoding specified).</returns>
         internal static Encoding Convert(Cmdlet cmdlet, string encoding)
         {
             if (string.IsNullOrEmpty(encoding))
@@ -88,8 +87,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="cmdlet">A cmdlet instance which is used to emit the warning.</param>
-        /// <param name="encoding">The encoding to check for obsolescence.</param>
         internal static void WarnIfObsolete(Cmdlet cmdlet, Encoding encoding)
         {
             // Check for UTF-7 by checking for code page 65000

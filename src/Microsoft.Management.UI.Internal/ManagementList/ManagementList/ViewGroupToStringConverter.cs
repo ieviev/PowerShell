@@ -17,11 +17,6 @@ namespace Microsoft.Management.UI.Internal
     internal class ViewGroupToStringConverter : IValueConverter
     {
         
-        /// <param name="value">Value to be converted.</param>
-        /// <param name="targetType">Type to convert the value to.</param>
-        /// <param name="parameter">The conversion parameter.</param>
-        /// <param name="culture">Conversion culture.</param>
-        /// <returns>The converted string.</returns>
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             CollectionViewGroup cvg = value as CollectionViewGroup;
@@ -37,12 +32,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="value">Value to be converted.</param>
-        /// <param name="targetType">Type to convert the value to.</param>
-        /// <param name="parameter">The conversion parameter.</param>
-        /// <param name="culture">Conversion culture.</param>
-        /// <returns>This method is not supported.</returns>
-        /// <exception cref="NotSupportedException">when calling the method.</exception>
         public object ConvertBack(
             object value,
             Type targetType,

@@ -12,17 +12,9 @@ namespace Microsoft.Management.UI.Internal
     public abstract class FilterExpressionNode : IEvaluate
     {
         
-        /// <param name="item">
-        /// The item to evaluate against.
-        /// </param>
-        /// <returns>
-        /// True if the criteria is met, false otherwise.
-        /// </returns>
         public abstract bool Evaluate(object item);
 
         
-        /// <typeparam name="T">The type of the items to find.</typeparam>
-        /// <returns>All elements of the specified type within the entire expression tree.</returns>
         public ICollection<T> FindAll<T>()
         {
             var ts = new List<T>();

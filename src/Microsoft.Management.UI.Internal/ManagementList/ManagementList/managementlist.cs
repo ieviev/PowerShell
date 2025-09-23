@@ -83,7 +83,6 @@ namespace Microsoft.Management.UI.Internal
         #endregion Ctor
 
         
-        /// <param name="e">The event data.</param>
         protected override void OnKeyDown(KeyEventArgs e)
         {
             if (this.IsSearchShown &&
@@ -156,8 +155,6 @@ namespace Microsoft.Management.UI.Internal
         #region Registration Helpers
 
         
-        /// <param name="column">The column to add.</param>
-        /// <exception cref="ArgumentNullException">The specified value is a null reference.</exception>
         public void AddColumn(InnerListColumn column)
         {
             ArgumentNullException.ThrowIfNull(column);
@@ -166,9 +163,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="column">The column to add.</param>
-        /// <param name="addDefaultFilterRules">Whether to add default filter rules for the specified column.</param>
-        /// <exception cref="ArgumentNullException">The specified value is a null reference.</exception>
         public void AddColumn(InnerListColumn column, bool addDefaultFilterRules)
         {
             ArgumentNullException.ThrowIfNull(column);
@@ -198,8 +192,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="rule">The rule to add.</param>
-        /// <exception cref="ArgumentNullException">The specified value is a null reference.</exception>
         public void AddRule(FilterRule rule)
         {
             ArgumentNullException.ThrowIfNull(rule);

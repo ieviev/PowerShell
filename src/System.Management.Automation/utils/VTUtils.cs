@@ -47,12 +47,6 @@ namespace System.Management.Automation
         };
 
         
-        /// <param name="color">
-        /// The ConsoleColor to return the equivalent VT escape sequence.
-        /// </param>
-        /// <returns>
-        /// The requested VT escape sequence.
-        /// </returns>
         public static string GetEscapeSequence(ConsoleColor color)
         {
             string value = string.Empty;
@@ -61,12 +55,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="vt">
-        /// The VT code to return the VT escape sequence.
-        /// </param>
-        /// <returns>
-        /// The requested VT escape sequence.
-        /// </returns>
         public static string GetEscapeSequence(VT vt)
         {
             string value = string.Empty;

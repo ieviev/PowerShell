@@ -12,9 +12,6 @@ namespace Microsoft.PowerShell.Commands.ShowCommandExtension
     public class ShowCommandCommandInfo
     {
         
-        /// <param name="other">
-        /// The object to wrap.
-        /// </param>
         public ShowCommandCommandInfo(CommandInfo other)
         {
             ArgumentNullException.ThrowIfNull(other);
@@ -55,9 +52,6 @@ namespace Microsoft.PowerShell.Commands.ShowCommandExtension
         }
 
         
-        /// <param name="other">
-        /// The object to wrap.
-        /// </param>
         public ShowCommandCommandInfo(PSObject other)
         {
             ArgumentNullException.ThrowIfNull(other);
@@ -88,9 +82,6 @@ namespace Microsoft.PowerShell.Commands.ShowCommandExtension
         }
 
         
-        /// <param name="enumerable">
-        /// The object to enumerate.
-        /// </param>
         internal static IEnumerable<object> GetObjectEnumerable(System.Collections.IEnumerable enumerable)
         {
             foreach (object obj in enumerable)

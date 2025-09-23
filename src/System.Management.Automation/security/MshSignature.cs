@@ -132,11 +132,6 @@ namespace System.Management.Automation
         public bool IsOSBinary { get; internal set; }
 
         
-        /// <param name="filePath">This signature is found in this file.</param>
-        /// <param name="error">Win32 error code.</param>
-        /// <param name="signer">Cert of the signer.</param>
-        /// <param name="timestamper">Cert of the time stamper.</param>
-        /// <returns>Constructed object.</returns>
         internal Signature(string filePath,
                            DWORD error,
                            X509Certificate2 signer,
@@ -150,9 +145,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="filePath">This signature is found in this file.</param>
-        /// <param name="signer">Cert of the signer.</param>
-        /// <returns>Constructed object.</returns>
         internal Signature(string filePath,
                            X509Certificate2 signer)
         {
@@ -163,10 +155,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="filePath">This signature is found in this file.</param>
-        /// <param name="error">Win32 error code.</param>
-        /// <param name="signer">Cert of the signer.</param>
-        /// <returns>Constructed object.</returns>
         internal Signature(string filePath,
                            DWORD error,
                            X509Certificate2 signer)
@@ -178,9 +166,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="filePath">This signature is found in this file.</param>
-        /// <param name="error">Win32 error code.</param>
-        /// <returns>Constructed object.</returns>
         internal Signature(string filePath, DWORD error)
         {
             Utils.CheckArgForNullOrEmpty(filePath, "filePath");

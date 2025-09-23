@@ -19,35 +19,6 @@ namespace System.Management.Automation
         #region GetItem
 
         
-        /// <param name="paths">
-        /// The path(s) to the object(s). They can be either a relative (most common)
-        /// or absolute path.
-        /// </param>
-        /// <param name="force">
-        /// Passed on to providers to force operations.
-        /// </param>
-        /// <param name="literalPath">
-        /// If true, globbing is not done on paths.
-        /// </param>
-        /// <returns>
-        /// The item at the specified path.
-        /// </returns>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="path"/> is null.
-        /// </exception>
-        /// <exception cref="ProviderNotFoundException">
-        /// If the <paramref name="path"/> refers to a provider that could not be found.
-        /// </exception>
-        /// <exception cref="DriveNotFoundException">
-        /// If the <paramref name="path"/> refers to a drive that could not be found.
-        /// </exception>
-        /// <exception cref="NotSupportedException">
-        /// If the provider that the <paramref name="path"/> refers to does
-        /// not support this operation.
-        /// </exception>
-        /// <exception cref="ProviderInvocationException">
-        /// If the provider threw an exception.
-        /// </exception>
         internal Collection<PSObject> GetItem(string[] paths, bool force, bool literalPath)
         {
             if (paths == null)
@@ -71,37 +42,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="paths">
-        /// The path(s) to the object(s). They can be either a relative (most common)
-        /// or absolute path.
-        /// </param>
-        /// <param name="context">
-        /// The context which the core command is running.
-        /// </param>
-        /// <returns>
-        /// Nothing is returned, but all objects should be written to the WriteObject
-        /// method of the <paramref name="context"/> parameter.
-        /// </returns>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="path"/> is null.
-        /// </exception>
-        /// <exception cref="ProviderNotFoundException">
-        /// If the <paramref name="path"/> refers to a provider that could not be found.
-        /// </exception>
-        /// <exception cref="DriveNotFoundException">
-        /// If the <paramref name="path"/> refers to a drive that could not be found.
-        /// </exception>
-        /// <exception cref="NotSupportedException">
-        /// If the provider that the <paramref name="path"/> refers to does
-        /// not support this operation.
-        /// </exception>
-        /// <exception cref="ProviderInvocationException">
-        /// If the provider threw an exception.
-        /// </exception>
-        /// <exception cref="ItemNotFoundException">
-        /// If <paramref name="path"/> does not contain glob characters and
-        /// could not be found.
-        /// </exception>
         internal void GetItem(
             string[] paths,
             CmdletProviderContext context)
@@ -137,24 +77,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="providerInstance">
-        /// The provider instance to use.
-        /// </param>
-        /// <param name="path">
-        /// The path to the item if it was specified on the command line.
-        /// </param>
-        /// <param name="context">
-        /// The context which the core command is running.
-        /// </param>
-        /// <exception cref="NotSupportedException">
-        /// If the <paramref name="providerInstance"/> does not support this operation.
-        /// </exception>
-        /// <exception cref="PipelineStoppedException">
-        /// If the pipeline is being stopped while executing the command.
-        /// </exception>
-        /// <exception cref="ProviderInvocationException">
-        /// If the provider threw an exception.
-        /// </exception>
         private void GetItemPrivate(
             CmdletProvider providerInstance,
             string path,
@@ -204,33 +126,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="path">
-        /// The path to the item if it was specified on the command line.
-        /// </param>
-        /// <param name="context">
-        /// The context which the core command is running.
-        /// </param>
-        /// <returns>
-        /// An object that has properties and fields decorated with
-        /// parsing attributes similar to a cmdlet class.
-        /// </returns>
-        /// <exception cref="ProviderNotFoundException">
-        /// If the <paramref name="path"/> refers to a provider that could not be found.
-        /// </exception>
-        /// <exception cref="DriveNotFoundException">
-        /// If the <paramref name="path"/> refers to a drive that could not be found.
-        /// </exception>
-        /// <exception cref="NotSupportedException">
-        /// If the provider that the <paramref name="path"/> refers to does
-        /// not support this operation.
-        /// </exception>
-        /// <exception cref="ProviderInvocationException">
-        /// If the provider threw an exception.
-        /// </exception>
-        /// <exception cref="ItemNotFoundException">
-        /// If <paramref name="path"/> does not contain glob characters and
-        /// could not be found.
-        /// </exception>
         internal object GetItemDynamicParameters(string path, CmdletProviderContext context)
         {
             if (path == null)
@@ -267,28 +162,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="path">
-        /// The path to the item if it was specified on the command line.
-        /// </param>
-        /// <param name="providerInstance">
-        /// The instance of the provider to use.
-        /// </param>
-        /// <param name="context">
-        /// The context which the core command is running.
-        /// </param>
-        /// <returns>
-        /// An object that has properties and fields decorated with
-        /// parsing attributes similar to a cmdlet class.
-        /// </returns>
-        /// <exception cref="NotSupportedException">
-        /// If the <paramref name="providerInstance"/> does not support this operation.
-        /// </exception>
-        /// <exception cref="PipelineStoppedException">
-        /// If the pipeline is being stopped while executing the command.
-        /// </exception>
-        /// <exception cref="ProviderInvocationException">
-        /// If the provider threw an exception.
-        /// </exception>
         private object GetItemDynamicParameters(
             CmdletProvider providerInstance,
             string path,
@@ -345,38 +218,6 @@ namespace System.Management.Automation
         #region SetItem
 
         
-        /// <param name="paths">
-        /// The path(s) to the object. It can be either a relative (most common)
-        /// or absolute path.
-        /// </param>
-        /// <param name="value">
-        /// The new value for the item at the specified path.
-        /// </param>
-        /// <param name="force">
-        /// Passed on to providers to force operations.
-        /// </param>
-        /// <param name="literalPath">
-        /// If true, globbing is not done on paths.
-        /// </param>
-        /// <returns>
-        /// The item that was modified at the specified path.
-        /// </returns>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="path"/> is null.
-        /// </exception>
-        /// <exception cref="ProviderNotFoundException">
-        /// If the <paramref name="path"/> refers to a provider that could not be found.
-        /// </exception>
-        /// <exception cref="DriveNotFoundException">
-        /// If the <paramref name="path"/> refers to a drive that could not be found.
-        /// </exception>
-        /// <exception cref="NotSupportedException">
-        /// If the provider that the <paramref name="path"/> refers to does
-        /// not support this operation.
-        /// </exception>
-        /// <exception cref="ProviderInvocationException">
-        /// If the provider threw an exception.
-        /// </exception>
         internal Collection<PSObject> SetItem(string[] paths, object value, bool force, bool literalPath)
         {
             if (paths == null)
@@ -398,36 +239,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="paths">
-        /// The path(s) to the object. It can be either a relative (most common)
-        /// or absolute path.
-        /// </param>
-        /// <param name="value">
-        /// The new value of the item at the specified path.
-        /// </param>
-        /// <param name="context">
-        /// The context which the core command is running.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="path"/> is null.
-        /// </exception>
-        /// <exception cref="ProviderNotFoundException">
-        /// If the <paramref name="path"/> refers to a provider that could not be found.
-        /// </exception>
-        /// <exception cref="DriveNotFoundException">
-        /// If the <paramref name="path"/> refers to a drive that could not be found.
-        /// </exception>
-        /// <exception cref="NotSupportedException">
-        /// If the provider that the <paramref name="path"/> refers to does
-        /// not support this operation.
-        /// </exception>
-        /// <exception cref="ProviderInvocationException">
-        /// If the provider threw an exception.
-        /// </exception>
-        /// <exception cref="ItemNotFoundException">
-        /// If <paramref name="path"/> does not contain glob characters and
-        /// could not be found.
-        /// </exception>
         internal void SetItem(
             string[] paths,
             object value,
@@ -467,27 +278,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="providerInstance">
-        /// The provider instance to use.
-        /// </param>
-        /// <param name="path">
-        /// The path to the item if it was specified on the command line.
-        /// </param>
-        /// <param name="value">
-        /// The value of the item.
-        /// </param>
-        /// <param name="context">
-        /// The context which the core command is running.
-        /// </param>
-        /// <exception cref="NotSupportedException">
-        /// If the <paramref name="providerInstance"/> does not support this operation.
-        /// </exception>
-        /// <exception cref="PipelineStoppedException">
-        /// If the pipeline is being stopped while executing the command.
-        /// </exception>
-        /// <exception cref="ProviderInvocationException">
-        /// If the provider threw an exception.
-        /// </exception>
         private void SetItem(
             CmdletProvider providerInstance,
             string path,
@@ -538,36 +328,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="path">
-        /// The path to the item if it was specified on the command line.
-        /// </param>
-        /// <param name="value">
-        /// The new value of the item at the specified path.
-        /// </param>
-        /// <param name="context">
-        /// The context which the core command is running.
-        /// </param>
-        /// <returns>
-        /// An object that has properties and fields decorated with
-        /// parsing attributes similar to a cmdlet class.
-        /// </returns>
-        /// <exception cref="ProviderNotFoundException">
-        /// If the <paramref name="path"/> refers to a provider that could not be found.
-        /// </exception>
-        /// <exception cref="DriveNotFoundException">
-        /// If the <paramref name="path"/> refers to a drive that could not be found.
-        /// </exception>
-        /// <exception cref="NotSupportedException">
-        /// If the provider that the <paramref name="path"/> refers to does
-        /// not support this operation.
-        /// </exception>
-        /// <exception cref="ProviderInvocationException">
-        /// If the provider threw an exception.
-        /// </exception>
-        /// <exception cref="ItemNotFoundException">
-        /// If <paramref name="path"/> does not contain glob characters and
-        /// could not be found.
-        /// </exception>
         internal object SetItemDynamicParameters(string path, object value, CmdletProviderContext context)
         {
             if (path == null)
@@ -604,31 +364,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="path">
-        /// The path to the item if it was specified on the command line.
-        /// </param>
-        /// <param name="providerInstance">
-        /// The instance of the provider to use.
-        /// </param>
-        /// <param name="value">
-        /// The value to be set.
-        /// </param>
-        /// <param name="context">
-        /// The context which the core command is running.
-        /// </param>
-        /// <returns>
-        /// An object that has properties and fields decorated with
-        /// parsing attributes similar to a cmdlet class.
-        /// </returns>
-        /// <exception cref="NotSupportedException">
-        /// If the <paramref name="providerInstance"/> does not support this operation.
-        /// </exception>
-        /// <exception cref="PipelineStoppedException">
-        /// If the pipeline is being stopped while executing the command.
-        /// </exception>
-        /// <exception cref="ProviderInvocationException">
-        /// If the provider threw an exception.
-        /// </exception>
         private object SetItemDynamicParameters(
             CmdletProvider providerInstance,
             string path,
@@ -686,38 +421,6 @@ namespace System.Management.Automation
         #region ClearItem
 
         
-        /// <param name="paths">
-        /// The path(s) to the object. It can be either a relative (most common)
-        /// or absolute path.
-        /// </param>
-        /// <param name="force">
-        /// Passed on to providers to force operations.
-        /// </param>
-        /// <param name="literalPath">
-        /// If true, globbing is not done on paths.
-        /// </param>
-        /// <returns>
-        /// The items that were cleared.
-        /// </returns>
-        /// <remarks>
-        /// If an error occurs that error will be thrown.
-        /// </remarks>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="path"/> is null.
-        /// </exception>
-        /// <exception cref="ProviderNotFoundException">
-        /// If the <paramref name="path"/> refers to a provider that could not be found.
-        /// </exception>
-        /// <exception cref="DriveNotFoundException">
-        /// If the <paramref name="path"/> refers to a drive that could not be found.
-        /// </exception>
-        /// <exception cref="NotSupportedException">
-        /// If the provider that the <paramref name="path"/> refers to does
-        /// not support this operation.
-        /// </exception>
-        /// <exception cref="ProviderInvocationException">
-        /// If the provider threw an exception.
-        /// </exception>
         internal Collection<PSObject> ClearItem(string[] paths, bool force, bool literalPath)
         {
             if (paths == null)
@@ -737,33 +440,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="paths">
-        /// The path(s) to the object. It can be either a relative (most common)
-        /// or absolute path.
-        /// </param>
-        /// <param name="context">
-        /// The context which the core command is running.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="path"/> is null.
-        /// </exception>
-        /// <exception cref="ProviderNotFoundException">
-        /// If the <paramref name="path"/> refers to a provider that could not be found.
-        /// </exception>
-        /// <exception cref="DriveNotFoundException">
-        /// If the <paramref name="path"/> refers to a drive that could not be found.
-        /// </exception>
-        /// <exception cref="NotSupportedException">
-        /// If the provider that the <paramref name="path"/> refers to does
-        /// not support this operation.
-        /// </exception>
-        /// <exception cref="ProviderInvocationException">
-        /// If the provider threw an exception.
-        /// </exception>
-        /// <exception cref="ItemNotFoundException">
-        /// If <paramref name="path"/> does not contain glob characters and
-        /// could not be found.
-        /// </exception>
         internal void ClearItem(
             string[] paths,
             CmdletProviderContext context)
@@ -802,24 +478,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="providerInstance">
-        /// The provider instance to use.
-        /// </param>
-        /// <param name="path">
-        /// The path to the item if it was specified on the command line.
-        /// </param>
-        /// <param name="context">
-        /// The context which the core command is running.
-        /// </param>
-        /// <exception cref="NotSupportedException">
-        /// If the <paramref name="providerInstance"/> does not support this operation.
-        /// </exception>
-        /// <exception cref="PipelineStoppedException">
-        /// If the pipeline is being stopped while executing the command.
-        /// </exception>
-        /// <exception cref="ProviderInvocationException">
-        /// If the provider threw an exception.
-        /// </exception>
         private void ClearItemPrivate(
             CmdletProvider providerInstance,
             string path,
@@ -869,33 +527,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="path">
-        /// The path to the item if it was specified on the command line.
-        /// </param>
-        /// <param name="context">
-        /// The context which the core command is running.
-        /// </param>
-        /// <returns>
-        /// An object that has properties and fields decorated with
-        /// parsing attributes similar to a cmdlet class.
-        /// </returns>
-        /// <exception cref="ProviderNotFoundException">
-        /// If the <paramref name="path"/> refers to a provider that could not be found.
-        /// </exception>
-        /// <exception cref="DriveNotFoundException">
-        /// If the <paramref name="path"/> refers to a drive that could not be found.
-        /// </exception>
-        /// <exception cref="NotSupportedException">
-        /// If the provider that the <paramref name="path"/> refers to does
-        /// not support this operation.
-        /// </exception>
-        /// <exception cref="ProviderInvocationException">
-        /// If the provider threw an exception.
-        /// </exception>
-        /// <exception cref="ItemNotFoundException">
-        /// If <paramref name="path"/> does not contain glob characters and
-        /// could not be found.
-        /// </exception>
         internal object ClearItemDynamicParameters(string path, CmdletProviderContext context)
         {
             if (path == null)
@@ -932,28 +563,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="path">
-        /// The path to the item if it was specified on the command line.
-        /// </param>
-        /// <param name="providerInstance">
-        /// The instance of the provider to use.
-        /// </param>
-        /// <param name="context">
-        /// The context which the core command is running.
-        /// </param>
-        /// <returns>
-        /// An object that has properties and fields decorated with
-        /// parsing attributes similar to a cmdlet class.
-        /// </returns>
-        /// <exception cref="NotSupportedException">
-        /// If the <paramref name="providerInstance"/> does not support this operation.
-        /// </exception>
-        /// <exception cref="PipelineStoppedException">
-        /// If the pipeline is being stopped while executing the command.
-        /// </exception>
-        /// <exception cref="ProviderInvocationException">
-        /// If the provider threw an exception.
-        /// </exception>
         private object ClearItemDynamicParameters(
             CmdletProvider providerInstance,
             string path,
@@ -1010,32 +619,6 @@ namespace System.Management.Automation
         #region InvokeDefaultAction
 
         
-        /// <param name="paths">
-        /// The path(s) to the object(s). They can be either a relative (most common)
-        /// or absolute path(s).
-        /// </param>
-        /// <param name="literalPath">
-        /// If true, globbing is not done on paths.
-        /// </param>
-        /// <remarks>
-        /// If an error occurs that error will be thrown.
-        /// </remarks>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="path"/> is null.
-        /// </exception>
-        /// <exception cref="ProviderNotFoundException">
-        /// If the <paramref name="path"/> refers to a provider that could not be found.
-        /// </exception>
-        /// <exception cref="DriveNotFoundException">
-        /// If the <paramref name="path"/> refers to a drive that could not be found.
-        /// </exception>
-        /// <exception cref="NotSupportedException">
-        /// If the provider that the <paramref name="path"/> refers to does
-        /// not support this operation.
-        /// </exception>
-        /// <exception cref="ProviderInvocationException">
-        /// If the provider threw an exception.
-        /// </exception>
         internal void InvokeDefaultAction(string[] paths, bool literalPath)
         {
             if (paths == null)
@@ -1052,33 +635,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="paths">
-        /// The path(s) to the object(s). They can be either a relative (most common)
-        /// or absolute paths.
-        /// </param>
-        /// <param name="context">
-        /// The context which the core command is running.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="path"/> is null.
-        /// </exception>
-        /// <exception cref="ProviderNotFoundException">
-        /// If the <paramref name="path"/> refers to a provider that could not be found.
-        /// </exception>
-        /// <exception cref="DriveNotFoundException">
-        /// If the <paramref name="path"/> refers to a drive that could not be found.
-        /// </exception>
-        /// <exception cref="NotSupportedException">
-        /// If the provider that the <paramref name="path"/> refers to does
-        /// not support this operation.
-        /// </exception>
-        /// <exception cref="ProviderInvocationException">
-        /// If the provider threw an exception.
-        /// </exception>
-        /// <exception cref="ItemNotFoundException">
-        /// If <paramref name="path"/> does not contain glob characters and
-        /// could not be found.
-        /// </exception>
         internal void InvokeDefaultAction(
             string[] paths,
             CmdletProviderContext context)
@@ -1117,24 +673,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="providerInstance">
-        /// The provider instance to use.
-        /// </param>
-        /// <param name="path">
-        /// The path to the item if it was specified on the command line.
-        /// </param>
-        /// <param name="context">
-        /// The context which the core command is running.
-        /// </param>
-        /// <exception cref="NotSupportedException">
-        /// If the <paramref name="providerInstance"/> does not support this operation.
-        /// </exception>
-        /// <exception cref="PipelineStoppedException">
-        /// If the pipeline is being stopped while executing the command.
-        /// </exception>
-        /// <exception cref="ProviderInvocationException">
-        /// If the provider threw an exception.
-        /// </exception>
         private void InvokeDefaultActionPrivate(
             CmdletProvider providerInstance,
             string path,
@@ -1184,33 +722,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="path">
-        /// The path to the item if it was specified on the command line.
-        /// </param>
-        /// <param name="context">
-        /// The context which the core command is running.
-        /// </param>
-        /// <returns>
-        /// An object that has properties and fields decorated with
-        /// parsing attributes similar to a cmdlet class.
-        /// </returns>
-        /// <exception cref="ProviderNotFoundException">
-        /// If the <paramref name="path"/> refers to a provider that could not be found.
-        /// </exception>
-        /// <exception cref="DriveNotFoundException">
-        /// If the <paramref name="path"/> refers to a drive that could not be found.
-        /// </exception>
-        /// <exception cref="NotSupportedException">
-        /// If the provider that the <paramref name="path"/> refers to does
-        /// not support this operation.
-        /// </exception>
-        /// <exception cref="ProviderInvocationException">
-        /// If the provider threw an exception.
-        /// </exception>
-        /// <exception cref="ItemNotFoundException">
-        /// If <paramref name="path"/> does not contain glob characters and
-        /// could not be found.
-        /// </exception>
         internal object InvokeDefaultActionDynamicParameters(string path, CmdletProviderContext context)
         {
             if (path == null)
@@ -1247,28 +758,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="path">
-        /// The path to the item if it was specified on the command line.
-        /// </param>
-        /// <param name="providerInstance">
-        /// The instance of the provider to use.
-        /// </param>
-        /// <param name="context">
-        /// The context which the core command is running.
-        /// </param>
-        /// <returns>
-        /// An object that has properties and fields decorated with
-        /// parsing attributes similar to a cmdlet class.
-        /// </returns>
-        /// <exception cref="NotSupportedException">
-        /// If the <paramref name="providerInstance"/> does not support this operation.
-        /// </exception>
-        /// <exception cref="PipelineStoppedException">
-        /// If the pipeline is being stopped while executing the command.
-        /// </exception>
-        /// <exception cref="ProviderInvocationException">
-        /// If the provider threw an exception.
-        /// </exception>
         private object InvokeDefaultActionDynamicParameters(
             CmdletProvider providerInstance,
             string path,

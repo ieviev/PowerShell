@@ -846,9 +846,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="disposing">
-        /// Specified as true when Dispose() was called, false if this is called from the finalizer.
-        /// </param>
         protected virtual void Dispose(bool disposing)
         {
             if (!_disposed)
@@ -898,14 +895,6 @@ namespace Microsoft.PowerShell.Commands
         public class TcpPortStatus
         {
             
-            /// <param name="id">The number of this test.</param>
-            /// <param name="source">The source machine name or IP of the test.</param>
-            /// <param name="target">The target machine name or IP of the test.</param>
-            /// <param name="targetAddress">The resolved IP from the target.</param>
-            /// <param name="port">The port used for the connection.</param>
-            /// <param name="latency">The latency of the test.</param>
-            /// <param name="connected">If the test connection succeeded.</param>
-            /// <param name="status">Status of the underlying socket.</param>
             internal TcpPortStatus(int id, string source, string target, IPAddress targetAddress, int port, long latency, bool connected, SocketError status)
             {
                 Id = id;
@@ -947,12 +936,6 @@ namespace Microsoft.PowerShell.Commands
         public class PingStatus
         {
             
-            /// <param name="source">The source machine name or IP of the ping.</param>
-            /// <param name="destination">The destination machine name of the ping.</param>
-            /// <param name="reply">The response from the ping attempt.</param>
-            /// <param name="latency">The latency of the ping.</param>
-            /// <param name="bufferSize">The buffer size.</param>
-            /// <param name="pingNum">The sequence number in the sequence of pings to the hop point.</param>
             internal PingStatus(
                 string source,
                 string destination,
@@ -967,10 +950,6 @@ namespace Microsoft.PowerShell.Commands
             }
 
             
-            /// <param name="source">The source machine name or IP of the ping.</param>
-            /// <param name="destination">The destination machine name of the ping.</param>
-            /// <param name="reply">The response from the ping attempt.</param>
-            /// <param name="pingNum">The sequence number of the ping in the sequence of pings to the target.</param>
             internal PingStatus(string source, string destination, PingReply reply, uint pingNum)
             {
                 Ping = pingNum;
@@ -1017,10 +996,6 @@ namespace Microsoft.PowerShell.Commands
         public class PingMtuStatus : PingStatus
         {
             
-            /// <param name="source">The source machine name or IP of the ping.</param>
-            /// <param name="destination">The destination machine name of the ping.</param>
-            /// <param name="reply">The response from the ping attempt.</param>
-            /// <param name="bufferSize">The buffer size from the successful ping attempt.</param>
             internal PingMtuStatus(string source, string destination, PingReply reply, int bufferSize)
                 : base(source, destination, reply, 1)
             {
@@ -1035,11 +1010,6 @@ namespace Microsoft.PowerShell.Commands
         public class TraceStatus
         {
             
-            /// <param name="hop">The hop number of this trace hop.</param>
-            /// <param name="status">The PingStatus response from this trace hop.</param>
-            /// <param name="source">The source computer name or IP address of the traceroute.</param>
-            /// <param name="destination">The target destination of the traceroute.</param>
-            /// <param name="destinationAddress">The target IPAddress of the overall traceroute.</param>
             internal TraceStatus(
                 int hop,
                 PingStatus status,
@@ -1070,7 +1040,6 @@ namespace Microsoft.PowerShell.Commands
             public int Hop { get; }
 
             
-            /// <value></value>
             public string? Hostname { get; }
 
             

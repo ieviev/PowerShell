@@ -19,13 +19,6 @@ namespace System.Management.Automation.Runspaces
         #region constructors
 
         
-        /// <param name="runspace">The associated Runspace/></param>
-        /// <param name="command">Command string.</param>
-        /// <param name="addToHistory">If true, add pipeline to history.</param>
-        /// <param name="isNested">True for nested pipeline.</param>
-        /// <exception cref="ArgumentNullException">
-        /// Command is null and add to history is true
-        /// </exception>
         protected PipelineBase(Runspace runspace, string command, bool addToHistory, bool isNested)
             : base(runspace)
         {
@@ -38,37 +31,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <param name="runspace">
-        /// The LocalRunspace to associate with this pipeline.
-        /// </param>
-        /// <param name="command">
-        /// The command to invoke.
-        /// </param>
-        /// <param name="addToHistory">
-        /// If true, add the command to history.
-        /// </param>
-        /// <param name="isNested">
-        /// If true, mark this pipeline as a nested pipeline.
-        /// </param>
-        /// <param name="inputStream">
-        /// Stream to use for reading input objects.
-        /// </param>
-        /// <param name="errorStream">
-        /// Stream to use for writing error objects.
-        /// </param>
-        /// <param name="outputStream">
-        /// Stream to use for writing output objects.
-        /// </param>
-        /// <param name="infoBuffers">
-        /// Buffers used to write progress, verbose, debug, warning, information
-        /// information of an invocation.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// Command is null and add to history is true
-        /// </exception>
-        /// <exception cref="ArgumentNullException">
-        /// 1. InformationalBuffers is null
-        /// </exception>
         protected PipelineBase(Runspace runspace,
             CommandCollection command,
             bool addToHistory,
@@ -105,13 +67,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <param name="pipeline">The source pipeline.</param>
-        /// <remarks>
-        /// The copy constructor's intent is to support the scenario
-        /// where a host needs to run the same set of commands multiple
-        /// times.  This is accomplished via creating a master pipeline
-        /// then cloning it and executing the cloned copy.
-        /// </remarks>
         protected PipelineBase(PipelineBase pipeline)
             : this(pipeline.Runspace, null, false, pipeline.IsNested)
         {
@@ -153,7 +108,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <returns></returns>
         internal Runspace GetRunspace()
         {
             return _runspace;
@@ -176,9 +130,6 @@ namespace System.Management.Automation.Runspaces
         private PipelineStateInfo _pipelineStateInfo = new PipelineStateInfo(PipelineState.NotStarted);
 
         
-        /// <remarks>
-        /// This value indicates the state of the pipeline after the change.
-        /// </remarks>
         public override PipelineStateInfo PipelineStateInfo
         {
             get
@@ -211,11 +162,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <remarks>
-        /// This is the non-terminating error stream from the command.
-        /// In this release, the objects read from this PipelineReader
-        /// are PSObjects wrapping ErrorRecords.
-        /// </remarks>
         public override PipelineReader<object> Error
         {
             get
@@ -244,8 +190,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <param name="syncCall">If true pipeline is stopped synchronously
-        /// else asynchronously.</param>
         private void CoreStop(bool syncCall)
         {
             // Is pipeline already in stopping state.
@@ -313,7 +257,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <param name="syncCall">If false, call is asynchronous.</param>
         protected abstract void ImplementStop(bool syncCall);
 
         #endregion stop
@@ -321,16 +264,6 @@ namespace System.Management.Automation.Runspaces
         #region invoke
 
         
-        /// <param name="input">an array of input objects to pass to the pipeline.
-        /// Array may be empty but may not be null</param>
-        /// <returns>An array of zero or more result objects.</returns>
-        /// <remarks>Caller of synchronous exectute should not close
-        /// input objectWriter. Synchronous invoke will always close the input
-        /// objectWriter.
-        ///
-        /// On Synchronous Invoke if output is throttled and no one is reading from
-        /// output pipe, Execution will block after buffer is full.
-        /// </remarks>
         public override Collection<PSObject> Invoke(IEnumerable input)
         {
             // NTRAID#Windows Out Of Band Releases-915851-2005/09/13
@@ -374,9 +307,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <remarks>
-        /// Results are returned through the <see cref="Pipeline.Output"/> reader.
-        /// </remarks>
         public override void InvokeAsync()
         {
             CoreInvoke(null, false);
@@ -386,33 +316,6 @@ namespace System.Management.Automation.Runspaces
         protected bool SyncInvokeCall { get; private set; }
 
         
-        /// <param name="input">input to provide to pipeline. Input is
-        /// used only for synchronous execution</param>
-        /// <param name="syncCall">True if this method is called from
-        /// synchronous invoke else false</param>
-        /// <remarks>
-        /// Results are returned through the <see cref="Pipeline.Output"/> reader.
-        /// </remarks>
-        /// <exception cref="InvalidOperationException">
-        /// No command is added to pipeline
-        /// </exception>
-        /// <exception cref="InvalidPipelineStateException">
-        /// PipelineState is not NotStarted.
-        /// </exception>
-        /// <exception cref="InvalidOperationException">
-        /// 1) A pipeline is already executing. Pipeline cannot execute
-        /// concurrently.
-        /// 2) InvokeAsync is called on nested pipeline. Nested pipeline
-        /// cannot be executed Asynchronously.
-        /// 3) Attempt is made to invoke a nested pipeline directly. Nested
-        /// pipeline must be invoked from a running pipeline.
-        /// </exception>
-        /// <exception cref="InvalidRunspaceStateException">
-        /// RunspaceState is not Open
-        /// </exception>
-        /// <exception cref="ObjectDisposedException">
-        /// Pipeline already disposed
-        /// </exception>
         private void CoreInvoke(IEnumerable input, bool syncCall)
         {
             lock (SyncRoot)
@@ -530,18 +433,6 @@ namespace System.Management.Automation.Runspaces
         internal Thread NestedPipelineExecutionThread { get; set; }
 
         
-        /// <param name="syncCall">True if method is called from Invoke, false
-        /// if called from InvokeAsync</param>
-        /// <param name="syncObject">The sync object on which the lock is acquired.</param>
-        /// <param name="isInLock">True if the method is invoked in a critical section.</param>
-        /// <exception cref="InvalidOperationException">
-        /// 1) A pipeline is already executing. Pipeline cannot execute
-        /// concurrently.
-        /// 2) InvokeAsync is called on nested pipeline. Nested pipeline
-        /// cannot be executed Asynchronously.
-        /// 3) Attempt is made to invoke a nested pipeline directly. Nested
-        /// pipeline must be invoked from a running pipeline.
-        /// </exception>
         internal void DoConcurrentCheck(bool syncCall, object syncObject, bool isInLock)
         {
             PipelineBase currentPipeline = (PipelineBase)RunspaceBase.GetCurrentlyRunningPipeline();
@@ -634,7 +525,6 @@ namespace System.Management.Automation.Runspaces
         #region Connect
 
         
-        /// <returns>A collection of result objects.</returns>
         public override Collection<PSObject> Connect()
         {
             // Connect semantics not supported on local (non-remoting) pipelines.
@@ -656,9 +546,6 @@ namespace System.Management.Automation.Runspaces
         public override event EventHandler<PipelineStateEventArgs> StateChanged = null;
 
         
-        /// <remarks>
-        /// This value indicates the state of the pipeline after the change.
-        /// </remarks>
         protected PipelineState PipelineState
         {
             get
@@ -668,7 +555,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <returns></returns>
         protected bool IsPipelineFinished()
         {
             return (PipelineState == PipelineState.Completed ||
@@ -694,16 +580,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <param name="state">The new state.</param>
-        /// <param name="reason">
-        /// An exception indicating that state change is the result of an error,
-        /// otherwise; null.
-        /// </param>
-        /// <remarks>
-        /// Sets the internal execution state information member variable. It
-        /// also adds PipelineStateInfo to a queue. RaisePipelineStateEvents
-        /// raises event for each item in this queue.
-        /// </remarks>
         protected void SetPipelineState(PipelineState state, Exception reason)
         {
             lock (SyncRoot)
@@ -732,7 +608,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <param name="state">The new state.</param>
         protected void SetPipelineState(PipelineState state)
         {
             SetPipelineState(state, null);
@@ -835,10 +710,6 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <remarks>
-        /// Informational buffers are introduced after 1.0. This can be
-        /// null if executing command as part of 1.0 hosting interfaces.
-        /// </remarks>
         protected PSInformationalBuffers InformationalBuffers { get; }
 
         
@@ -855,8 +726,6 @@ namespace System.Management.Automation.Runspaces
         internal bool AddToHistory { get; set; }
 
         
-        /// <remarks>This needs to be internal so that it can be replaced
-        /// by invoke-cmd to place correct string in history.</remarks>
         internal string HistoryString { get; set; }
 
         #endregion history
@@ -864,13 +733,6 @@ namespace System.Management.Automation.Runspaces
         #region misc
 
         
-        /// <param name="runspace"></param>
-        /// <param name="command"></param>
-        /// <param name="addToHistory"></param>
-        /// <param name="isNested"></param>
-        /// <exception cref="ArgumentNullException">
-        /// 1. addToHistory is true and command is null.
-        /// </exception>
         private void Initialize(Runspace runspace, string command, bool addToHistory, bool isNested)
         {
             Dbg.Assert(runspace != null, "caller should validate the parameter");
@@ -914,7 +776,6 @@ namespace System.Management.Automation.Runspaces
         private bool _disposed;
 
         
-        /// <param name="disposing"></param>
         protected override
         void
         Dispose(bool disposing)

@@ -38,40 +38,30 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         internal static readonly string ShowComputerNameNoteProperty = "PSShowComputerName";
 
         
-        /// <param name="computerName"></param>
-        /// <returns></returns>
         internal static bool IsDefaultComputerName(string computerName)
         {
             return string.IsNullOrEmpty(computerName);
         }
 
         
-        /// <param name="computerNames"></param>
-        /// <returns></returns>
         internal static IEnumerable<string> GetComputerNames(IEnumerable<string> computerNames)
         {
             return computerNames ?? NullComputerNames;
         }
 
         
-        /// <param name="computerName"></param>
-        /// <returns></returns>
         internal static string GetComputerName(string computerName)
         {
             return string.IsNullOrEmpty(computerName) ? NullComputerName : computerName;
         }
 
         
-        /// <param name="nameSpace"></param>
-        /// <returns></returns>
         internal static string GetNamespace(string nameSpace)
         {
             return nameSpace ?? DefaultNameSpace;
         }
 
         
-        /// <param name="queryDialect"></param>
-        /// <returns></returns>
         internal static string GetQueryDialectWithDefault(string queryDialect)
         {
             return queryDialect ?? DefaultQueryDialect;
@@ -141,21 +131,18 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         #endregion
 
         
-        /// <param name="message"></param>
         internal static void WriteLog(string message)
         {
             WriteLog(message, 0);
         }
 
         
-        /// <param name="message"></param>
         internal static void WriteEmptyLine()
         {
             WriteLog(string.Empty, 0);
         }
 
         
-        /// <param name="message"></param>
         internal static void WriteLog(string message, int indent, params object[] args)
         {
             string outMessage = string.Empty;
@@ -164,15 +151,12 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="message"></param>
-        /// <param name="indent"></param>
         internal static void WriteLog(string message, int indent)
         {
             WriteLogInternal(message, indent, -1);
         }
 
         
-        /// <param name="message"></param>
         internal static void WriteLogEx(string message, int indent, params object[] args)
         {
             string outMessage = string.Empty;
@@ -182,8 +166,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="message"></param>
-        /// <param name="indent"></param>
         internal static void WriteLogEx(string message, int indent)
         {
             WriteLogInternal(string.Empty, 0, -1);
@@ -191,8 +173,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="message"></param>
-        /// <param name="indent"></param>
         internal static void WriteLogEx()
         {
             WriteLogInternal(string.Empty, 0, -1);
@@ -200,9 +180,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="message"></param>
-        /// <param name="args"></param>
-        /// <returns></returns>
         [Conditional("LOGENABLE")]
         private static void FormatLogMessage(ref string outMessage, string message, params object[] args)
         {
@@ -210,8 +187,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="message"></param>
-        /// <param name="nIndent"></param>
         [Conditional("LOGENABLE")]
         private static void WriteLogInternal(string message, int indent, int depth)
         {
@@ -268,16 +243,12 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
     internal static class ValidationHelper
     {
         
-        /// <param name="obj"></param>
-        /// <param name="argumentName"></param>
         public static void ValidateNoNullArgument(object obj, string argumentName)
         {
             ArgumentNullException.ThrowIfNull(obj, argumentName);
         }
 
         
-        /// <param name="obj"></param>
-        /// <param name="argumentName"></param>
         public static void ValidateNoNullorWhiteSpaceArgument(string obj, string argumentName)
         {
             if (string.IsNullOrWhiteSpace(obj))
@@ -287,10 +258,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="parameterName"></param>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentException">Throw if the given value is not a valid name (class name or property name).</exception>
         public static string ValidateArgumentIsValidName(string parameterName, string value)
         {
             DebugHelper.WriteLogEx();
@@ -312,10 +279,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="parameterName"></param>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentException">Throw if the given value contains any invalid name (class name or property name).</exception>
         public static string[] ValidateArgumentIsValidName(string parameterName, string[] value)
         {
             if (value != null)

@@ -11,42 +11,33 @@ namespace System.Management.Automation
         internal string Severity { get; set; } = string.Empty;
 
         
-        /// <value></value>
         internal string HostName { get; set; } = string.Empty;
 
         
-        /// <value></value>
         internal string HostApplication
         {
             get; set;
         }
 
         
-        /// <value></value>
         internal string HostVersion { get; set; } = string.Empty;
 
         
-        /// <value></value>
         internal string HostId { get; set; } = string.Empty;
 
         
-        /// <value></value>
         internal string EngineVersion { get; set; } = string.Empty;
 
         
-        /// <value></value>
         internal string RunspaceId { get; set; } = string.Empty;
 
         
-        /// <value></value>
         internal string PipelineId { get; set; } = string.Empty;
 
         
-        /// <value></value>
         internal string CommandName { get; set; } = string.Empty;
 
         
-        /// <value></value>
         internal string CommandType { get; set; } = string.Empty;
 
         

@@ -200,9 +200,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="module">Module to process.</param>
-        /// <param name="culture">Culture to use.</param>
-        /// <returns>True if the module has been processed, false if not.</returns>
         internal override bool ProcessModuleWithCulture(UpdatableHelpModuleInfo module, string culture)
         {
             // Simulate culture not found
@@ -480,8 +477,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="path"></param>
-        /// <param name="e"></param>
         private static void ThrowPathMustBeValidContainersException(string path, Exception e)
         {
             throw new UpdatableHelpSystemException("PathMustBeValidContainers",

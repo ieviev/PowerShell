@@ -17,19 +17,12 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
     internal class DisplayCells
     {
         
-        /// <param name="str">String that may contain VT escape sequences.</param>
-        /// <returns>Number of buffer cells the string needs to take.</returns>
         internal int Length(string str)
         {
             return Length(str, 0);
         }
 
         
-        /// <param name="str">String that may contain VT escape sequences.</param>
-        /// <param name="offset">
-        /// When the string doesn't contain VT sequences, it's the starting index.
-        /// When the string contains VT sequences, it means starting from the 'n-th' char that doesn't belong to a escape sequence.</param>
-        /// <returns>Number of buffer cells the string needs to take.</returns>
         internal virtual int Length(string str, int offset)
         {
             if (string.IsNullOrEmpty(str))
@@ -53,29 +46,18 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="character"></param>
-        /// <returns>Number of buffer cells the character needs to take.</returns>
         internal virtual int Length(char character)
         {
             return CharLengthInBufferCells(character);
         }
 
         
-        /// <param name="str">String that may contain VT escape sequences.</param>
-        /// <param name="displayCells">Number of buffer cells to fit in.</param>
-        /// <returns>Number of non-escape-sequence characters from head of the string that can fit in the space.</returns>
         internal int TruncateTail(string str, int displayCells)
         {
             return TruncateTail(str, offset: 0, displayCells);
         }
 
         
-        /// <param name="str">String that may contain VT escape sequences.</param>
-        /// <param name="offset">
-        /// When the string doesn't contain VT sequences, it's the starting index.
-        /// When the string contains VT sequences, it means starting from the 'n-th' char that doesn't belong to a escape sequence.</param>
-        /// <param name="displayCells">Number of buffer cells to fit in.</param>
-        /// <returns>Number of non-escape-sequence characters from head of the string that can fit in the space.</returns>
         internal int TruncateTail(string str, int offset, int displayCells)
         {
             var valueStrDec = new ValueStringDecorated(str);
@@ -88,9 +70,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="str">String that may contain VT escape sequences.</param>
-        /// <param name="displayCells">Number of buffer cells to fit in.</param>
-        /// <returns>Number of non-escape-sequence characters from head of the string that should be skipped.</returns>
         internal int TruncateHead(string str, int displayCells)
         {
             var valueStrDec = new ValueStringDecorated(str);
@@ -129,11 +108,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="str">String to be displayed, which doesn't contain any VT sequences.</param>
-        /// <param name="offset">Offset inside the string.</param>
-        /// <param name="displayCells">Number of display cells.</param>
-        /// <param name="startFromHead">If true compute from the head (i.e. k++) else from the tail (i.e. k--).</param>
-        /// <returns>Number of characters that would fit.</returns>
         protected int GetFitLength(string str, int offset, int displayCells, bool startFromHead)
         {
             int filledDisplayCellsCount = 0; // number of cells that are filled in
@@ -197,13 +171,9 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         internal abstract int RowNumber { get; }
 
         
-        /// <param name="s">
-        ///     string to be written to the device
-        /// </param>
         internal abstract void WriteLine(string s);
 
         
-        /// <param name="s">The raw text to be written to the device.</param>
         internal virtual void WriteRawText(string s) => WriteLine(s);
 
         internal WriteStreamType WriteStream
@@ -228,7 +198,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <value></value>
         internal virtual DisplayCells DisplayCells
         {
             get
@@ -249,7 +218,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         #region callbacks
 
         
-        /// <param name="s">String to write.</param>
         internal delegate void WriteCallback(string s);
 
         
@@ -263,10 +231,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         private readonly bool _lineWrap;
 
         
-        /// <param name="lineWrap">True if we require line wrapping.</param>
-        /// <param name="wlc">Delegate for WriteLine(), must ben non null.</param>
-        /// <param name="wc">Delegate for Write(), if null, use the first parameter.</param>
-        /// <param name="displayCells">Helper object for manipulating strings.</param>
         internal WriteLineHelper(bool lineWrap, WriteCallback wlc, WriteCallback wc, DisplayCells displayCells)
         {
             if (wlc == null)
@@ -281,16 +245,12 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="s">String to process.</param>
-        /// <param name="cols">Width of the device.</param>
         internal void WriteLine(string s, int cols)
         {
             WriteLineInternal(s, cols);
         }
 
         
-        /// <param name="val">String to process.</param>
-        /// <param name="cols">Width of the device.</param>
         private void WriteLineInternal(string val, int cols)
         {
             if (string.IsNullOrEmpty(val))
@@ -380,14 +340,12 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="s"></param>
         internal override void WriteLine(string s)
         {
             WriteRawText(PSHostUserInterface.GetOutputString(s, isHost: false));
         }
 
         
-        /// <param name="s">The raw text to be written to the device.</param>
         internal override void WriteRawText(string s)
         {
             CheckStopProcessing();
@@ -405,8 +363,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         #endregion
 
         
-        /// <param name="writer">TextWriter to write to.</param>
-        /// <param name="columns">Max columns widths for the text.</param>
         internal TextWriterLineOutput(TextWriter writer, int columns)
         {
             _writer = writer;
@@ -414,9 +370,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="writer">TextWriter to write to.</param>
-        /// <param name="columns">Max columns widths for the text.</param>
-        /// <param name="suppressNewline">False to add a newline to the end of the output string, true if not.</param>
         internal TextWriterLineOutput(TextWriter writer, int columns, bool suppressNewline)
             : this(writer, columns)
         {
@@ -439,8 +392,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         #endregion tracer
 
         
-        /// <param name="writeCall">Delegate to write to.</param>
-        /// <param name="culture">Culture for this TextWriter.</param>
         internal StreamingTextWriter(WriteLineCallback writeCall, CultureInfo culture)
             : base(culture)
         {
@@ -462,7 +413,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         #endregion
 
         
-        /// <param name="s">String to write.</param>
         internal delegate void WriteLineCallback(string s);
 
         

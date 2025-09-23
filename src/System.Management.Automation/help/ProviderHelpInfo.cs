@@ -24,7 +24,6 @@ namespace System.Management.Automation
         #region Basic Help Properties / Methods
 
         
-        /// <value>Name of the provider</value>
         internal override string Name
         {
             get
@@ -47,7 +46,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <value>Synopsis in the provider help info</value>
         internal override string Synopsis
         {
             get
@@ -70,7 +68,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <value>Detailed description in the provider help info</value>
         internal string DetailedDescription
         {
             get
@@ -114,7 +111,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <value>Help category for this provider help info</value>
         internal override HelpCategory HelpCategory
         {
             get
@@ -126,7 +122,6 @@ namespace System.Management.Automation
         private readonly PSObject _fullHelpObject;
 
         
-        /// <value>Full help object for this provider help info</value>
         internal override PSObject FullHelp
         {
             get
@@ -136,8 +131,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="pattern"></param>
-        /// <returns></returns>
         internal override bool MatchPatternInContent(WildcardPattern pattern)
         {
             Diagnostics.Assert(pattern != null, "pattern cannot be null");
@@ -160,8 +153,6 @@ namespace System.Management.Automation
         private Hashtable _cmdletHelps;
 
         
-        /// <param name="cmdletName">CmdletName on which to get provider-specific help.</param>
-        /// <returns>An mshObject that contains provider-specific commandlet help.</returns>
         internal PSObject GetCmdletHelp(string cmdletName)
         {
             if (string.IsNullOrEmpty(cmdletName))
@@ -226,8 +217,6 @@ namespace System.Management.Automation
         private Hashtable _dynamicParameterHelps;
 
         
-        /// <param name="parameters">An array of parameters to retrieve help.</param>
-        /// <returns>An array of mshObject that contains the parameter help.</returns>
         internal PSObject[] GetDynamicParameterHelp(string[] parameters)
         {
             if (parameters == null || parameters.Length == 0)
@@ -305,8 +294,6 @@ namespace System.Management.Automation
         #region Load Help
 
         
-        /// <param name="xmlNode">Xml node that contains the provider help info.</param>
-        /// <returns>The providerHelpInfo object created.</returns>
         internal static ProviderHelpInfo Load(XmlNode xmlNode)
         {
             ProviderHelpInfo providerHelpInfo = new ProviderHelpInfo(xmlNode);

@@ -26,11 +26,6 @@ namespace System.Management.Automation
     public class DscResourceInfo
     {
         
-        /// <param name="name">Name of the DscResource.</param>
-        /// <param name="friendlyName">FriendlyName of the DscResource.</param>
-        /// <param name="path">Path of the DscResource.</param>
-        /// <param name="parentPath">ParentPath of the DscResource.</param>
-        /// <param name="context">The execution context for the DscResource.</param>
         internal DscResourceInfo(string name, string friendlyName, string path, string parentPath, ExecutionContext context)
         {
             this.Name = name;
@@ -65,7 +60,6 @@ namespace System.Management.Automation
         public ReadOnlyCollection<DscResourcePropertyInfo> Properties { get; private set; }
 
         
-        /// <param name="properties">Updated properties.</param>
         public void UpdateProperties(IList<DscResourcePropertyInfo> properties)
         {
             if (properties != null)

@@ -17,8 +17,6 @@ namespace Microsoft.Management.UI.Internal
 
         #region Constructors
         
-        /// <param name="propertyName">The name of the property that this instance describes.</param>
-        /// <param name="displayName">The name displayed to users for this data.</param>
         public UIPropertyGroupDescription(string propertyName, string displayName)
             : this(propertyName, displayName, typeof(string))
         {
@@ -26,9 +24,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="propertyName">The name of the property that this instance describes.</param>
-        /// <param name="displayName">The name displayed to users for this data.</param>
-        /// <param name="dataType">The type of the data that this instance describes.</param>
         public UIPropertyGroupDescription(string propertyName, string displayName, Type dataType)
             : base(propertyName)
         {
@@ -81,7 +76,6 @@ namespace Microsoft.Management.UI.Internal
 
         #region Methods
         
-        /// <returns>The new sort direction.</returns>
         public ListSortDirection ReverseSortDirection()
         {
             if (this.SortDirection == ListSortDirection.Descending)
@@ -99,7 +93,6 @@ namespace Microsoft.Management.UI.Internal
 
         #region ToString
         
-        /// <returns>A string to represent the instance of this class.</returns>
         public override string ToString()
         {
             return this.PropertyName;

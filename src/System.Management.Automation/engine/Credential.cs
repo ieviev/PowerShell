@@ -47,10 +47,6 @@ namespace System.Management.Automation
     }
 
     
-    /// <param name="context">The streaming context, which contains the serialization context.</param>
-    /// <param name="key">Symmetric encryption key.</param>
-    /// <param name="iv">Symmetric encryption initialization vector.</param>
-    /// <returns></returns>
     public delegate bool GetSymmetricEncryptionKey(StreamingContext context, out byte[] key, out byte[] iv);
 
     
@@ -74,8 +70,6 @@ namespace System.Management.Automation
         private static GetSymmetricEncryptionKey s_delegate = null;
 
         
-        /// <param name="info"></param>
-        /// <param name="context"></param>
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             if (info == null)
@@ -110,8 +104,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="info"></param>
-        /// <param name="context"></param>
         private PSCredential(SerializationInfo info, StreamingContext context)
         {
             if (info == null)
@@ -156,8 +148,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="userName">User's name.</param>
-        /// <param name="password">User's password.</param>
         public PSCredential(string userName, SecureString password)
         {
             Utils.CheckArgForNullOrEmpty(userName, "userName");
@@ -168,7 +158,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="pso"></param>
         public PSCredential(PSObject pso)
         {
             if (pso == null)
@@ -191,12 +180,6 @@ namespace System.Management.Automation
         private NetworkCredential _netCred;
 
         
-        /// <returns>
-        ///     null if the current object has not been initialized.
-        ///     null if the current credentials are incompatible with
-        ///       a NetworkCredential -- such as smart card credentials.
-        ///     the appropriate network credential for this PSCredential otherwise.
-        /// </returns>
         public NetworkCredential GetNetworkCredential()
         {
             if (_netCred == null)
@@ -214,13 +197,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="credential">PSCredential to convert.</param>
-        /// <returns>
-        ///     null if the current object has not been initialized.
-        ///     null if the current credentials are incompatible with
-        ///       a NetworkCredential -- such as smart card credentials.
-        ///     the appropriate network credential for this PSCredential otherwise.
-        /// </returns>
         public static explicit operator NetworkCredential(PSCredential credential)
         {
 #pragma warning disable 56506

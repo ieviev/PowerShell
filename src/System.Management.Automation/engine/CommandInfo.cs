@@ -54,15 +54,6 @@ namespace System.Management.Automation
         #region ctor
 
         
-        /// <param name="name">
-        /// The name of the command.
-        /// </param>
-        /// <param name="type">
-        /// The type of the command.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="name"/> is null.
-        /// </exception>
         internal CommandInfo(string name, CommandTypes type)
         {
             // The name can be empty for functions and filters but it
@@ -75,18 +66,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="name">
-        /// The name of the command.
-        /// </param>
-        /// <param name="type">
-        /// The type of the command.
-        /// </param>
-        /// <param name="context">
-        /// The execution context for the command.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="name"/> is null.
-        /// </exception>
         internal CommandInfo(string name, CommandTypes type, ExecutionContext context)
             : this(name, type)
         {
@@ -197,26 +176,15 @@ namespace System.Management.Automation
         internal CommandInfo CopiedCommand { get; set; }
 
         
-        /// <param name="newType"></param>
         internal void SetCommandType(CommandTypes newType)
         {
             CommandType = newType;
         }
 
         
-        /// <remarks>
-        /// This is overridden by derived classes to return specific
-        /// information for the command type.
-        /// </remarks>
         public abstract string Definition { get; }
 
         
-        /// <param name="newName">
-        /// The new name for the command.
-        /// </param>
-        /// <exception cref="ArgumentException">
-        /// If <paramref name="newName"/> is null or empty.
-        /// </exception>
         internal void Rename(string newName)
         {
             ArgumentException.ThrowIfNullOrEmpty(newName);
@@ -225,7 +193,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <returns></returns>
         public override string ToString()
         {
             return ModuleCmdletBase.AddPrefixToCommandName(Name, Prefix);
@@ -329,7 +296,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <returns></returns>
         private MergedCommandParameterMetadata GetMergedCommandParameterMetadataSafely()
         {
             if (_context == null)
@@ -494,8 +460,6 @@ namespace System.Management.Automation
         private CommandMetadata _externalCommandMetadata;
 
         
-        /// <param name="name">The name of the parameter to resolve.</param>
-        /// <returns>The parameter that matches this name.</returns>
         public ParameterMetadata ResolveParameter(string name)
         {
             MergedCommandParameterMetadata merged = GetMergedCommandParameterMetadataSafely();
@@ -539,24 +503,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <returns>
-        /// A collection of CommandParameterSetInfo representing the cmdlet metadata.
-        /// </returns>
-        /// <exception cref="ArgumentException">
-        /// The type name is invalid or the length of the type name
-        /// exceeds 1024 characters.
-        /// </exception>
-        /// <exception cref="System.Security.SecurityException">
-        /// The caller does not have the required permission to load the assembly
-        /// or create the type.
-        /// </exception>
-        /// <exception cref="ParsingMetadataException">
-        /// If more than int.MaxValue parameter-sets are defined for the command.
-        /// </exception>
-        /// <exception cref="MetadataException">
-        /// If a parameter defines the same parameter-set name multiple times.
-        /// If the attributes could not be read from a property or field.
-        /// </exception>
         internal Collection<CommandParameterSetInfo> GenerateCommandParameterSetInfo()
         {
             Collection<CommandParameterSetInfo> result;
@@ -632,7 +578,6 @@ namespace System.Management.Automation
     public class PSTypeName
     {
         
-        /// <param name="type">The type.</param>
         public PSTypeName(Type type)
         {
             _type = type;
@@ -643,7 +588,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="name">The name of the type.</param>
         public PSTypeName(string name)
         {
             Name = name;
@@ -651,8 +595,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="name">The name of the type.</param>
-        /// <param name="type">The real type.</param>
         public PSTypeName(string name, Type type)
         {
             Name = name;
@@ -660,7 +602,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="typeDefinitionAst">The type definition from the ast.</param>
         public PSTypeName(TypeDefinitionAst typeDefinitionAst)
         {
             if (typeDefinitionAst == null)
@@ -751,7 +692,6 @@ namespace System.Management.Automation
         private bool _typeWasCalculated;
 
         
-        /// <returns>String that represents the current PSTypeName.</returns>
         public override string ToString()
         {
             return Name ?? string.Empty;

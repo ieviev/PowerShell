@@ -13,10 +13,6 @@ using Dbg = System.Management.Automation;
 namespace System.Management.Automation
 {
     
-    /// <remarks>
-    /// A cmdlet provider may want to derive from this class to provide their
-    /// own public members to expose to the user or to cache information related to the provider.
-    /// </remarks>
     public class ProviderInfo
     {
         
@@ -173,10 +169,6 @@ namespace System.Management.Automation
         private bool _capabilitiesRead;
 
         
-        /// <remarks>
-        /// The location can be either a fully qualified provider path
-        /// or a PowerShell path. This is the location that is substituted for the ~.
-        /// </remarks>
         public string Home { get; set; }
 
         
@@ -201,10 +193,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <returns>
-        /// The name of the provider. If single-shell, the name is pssnapin-qualified. If custom-shell,
-        /// the name is just the provider name.
-        /// </returns>
         public override string ToString()
         {
             return FullName;
@@ -226,18 +214,6 @@ namespace System.Management.Automation
         public char AltItemSeparator { get; private set; }
 
         
-        /// <param name="providerInfo">
-        /// The provider information to copy to this instance.
-        /// </param>
-        /// <remarks>
-        /// This constructor should be used by derived types to easily copying
-        /// the base class members from an existing ProviderInfo.
-        /// This is designed for use by a <see cref="System.Management.Automation.Provider.CmdletProvider"/>
-        /// during calls to their <see cref="System.Management.Automation.Provider.CmdletProvider.Start(ProviderInfo)"/> method.
-        /// </remarks>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="providerInfo"/> is null.
-        /// </exception>
         protected ProviderInfo(ProviderInfo providerInfo)
         {
             if (providerInfo == null)
@@ -260,30 +236,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="sessionState">
-        /// The instance of session state that the provider is being added to.
-        /// </param>
-        /// <param name="implementingType">
-        /// The type that implements the provider
-        /// </param>
-        /// <param name="name">
-        /// The name of the provider.
-        /// </param>
-        /// <param name="helpFile">
-        /// The help file for the provider.
-        /// </param>
-        /// <param name="psSnapIn">
-        /// The Snap-In name for the provider.
-        /// </param>
-        /// <exception cref="ArgumentException">
-        /// If <paramref name="name"/> is null or empty.
-        /// </exception>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="sessionState"/> is null.
-        /// </exception>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="implementingType"/> is null.
-        /// </exception>
         internal ProviderInfo(
             SessionState sessionState,
             Type implementingType,
@@ -295,34 +247,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="sessionState">
-        /// The instance of session state that the provider is being added to.
-        /// </param>
-        /// <param name="implementingType">
-        /// The type that implements the provider
-        /// </param>
-        /// <param name="name">
-        /// The alternate name to use for the provider instead of the one specified
-        /// in the .cmdletprovider file.
-        /// </param>
-        /// <param name="description">
-        /// The description of the provider.
-        /// </param>
-        /// <param name="home">
-        /// The home path for the provider. This must be a PowerShell path.
-        /// </param>
-        /// <param name="helpFile">
-        /// The help file for the provider.
-        /// </param>
-        /// <param name="psSnapIn">
-        /// The Snap-In for the provider.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="implementingType"/> or <paramref name="sessionState"/> is null.
-        /// </exception>
-        /// <exception cref="ArgumentException">
-        /// If <paramref name="name"/> is null or empty.
-        /// </exception>
         internal ProviderInfo(
             SessionState sessionState,
             Type implementingType,
@@ -379,12 +303,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="providerName">
-        /// The name to compare with the provider name.
-        /// </param>
-        /// <returns>
-        /// True if the name is the fully-qualified pssnapin name or the short name of the provider.
-        /// </returns>
         internal bool NameEquals(string providerName)
         {
             PSSnapinQualifiedName qualifiedProviderName = PSSnapinQualifiedName.GetInstance(providerName);
@@ -472,13 +390,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <returns>
-        /// An instance of the provider or null if one could not be created.
-        /// </returns>
-        /// <exception cref="ProviderNotFoundException">
-        /// If an instance of the provider could not be created because the
-        /// type could not be found in the assembly.
-        /// </exception>
         internal Provider.CmdletProvider CreateInstance()
         {
             // It doesn't really seem that using thread local storage to store an

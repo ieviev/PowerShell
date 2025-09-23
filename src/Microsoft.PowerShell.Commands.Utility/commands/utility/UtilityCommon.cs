@@ -64,9 +64,6 @@ namespace Microsoft.PowerShell.Commands
     public class ByteCollection
     {
         
-        /// <param name="offset">The Offset address to be used while displaying the bytes in the collection.</param>
-        /// <param name="value">Underlying bytes stored in the collection.</param>
-        /// <param name="path">Indicates the path of the file whose contents are wrapped in the ByteCollection.</param>
         [Obsolete("The constructor is deprecated.", true)]
         public ByteCollection(uint offset, byte[] value, string path)
             : this((ulong)offset, value, path)
@@ -74,9 +71,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="offset">The Offset address to be used while displaying the bytes in the collection.</param>
-        /// <param name="value">Underlying bytes stored in the collection.</param>
-        /// <param name="path">Indicates the path of the file whose contents are wrapped in the ByteCollection.</param>
         public ByteCollection(ulong offset, byte[] value, string path)
         {
             if (value == null)
@@ -91,8 +85,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="offset">The Offset address to be used while displaying the bytes in the collection.</param>
-        /// <param name="value">Underlying bytes stored in the collection.</param>
         [Obsolete("The constructor is deprecated.", true)]
         public ByteCollection(uint offset, byte[] value)
             : this((ulong)offset, value)
@@ -100,8 +92,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="offset">The Offset address to be used while displaying the bytes in the collection.</param>
-        /// <param name="value">Underlying bytes stored in the collection.</param>
         public ByteCollection(ulong offset, byte[] value)
         {
             if (value == null)
@@ -114,11 +104,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="offset">The Offset address to be used while displaying the bytes in the collection.</param>
-        /// <param name="label">
-        /// The label for the byte group. This may be a file path or a formatted identifying string for the group.
-        /// </param>
-        /// <param name="value">Underlying bytes stored in the collection.</param>
         public ByteCollection(ulong offset, string label, byte[] value)
             : this(offset, value)
         {
@@ -126,7 +111,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="value">Underlying bytes stored in the collection.</param>
         public ByteCollection(byte[] value)
         {
             if (value == null)
@@ -196,7 +180,6 @@ namespace Microsoft.PowerShell.Commands
         private string _ascii = string.Empty;
 
         
-        /// <value></value>
         public string Ascii
         {
             get
@@ -230,7 +213,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <returns></returns>
         public override string ToString()
         {
             const int BytesPerLine = 16;

@@ -32,12 +32,6 @@ namespace Microsoft.PowerShell.Commands
 
         #region Constructors
         
-        /// <param name="stream">Response stream.</param>
-        /// <param name="initialCapacity">Presize the memory stream.</param>
-        /// <param name="cmdlet">Owner cmdlet if any.</param>
-        /// <param name="contentLength">Expected download size in Bytes.</param>
-        /// <param name="perReadTimeout">Time permitted between reads or Timeout.InfiniteTimeSpan for no timeout.</param>
-        /// <param name="cancellationToken">Cancellation token.</param>
         internal WebResponseContentMemoryStream(Stream stream, int initialCapacity, Cmdlet? cmdlet, long? contentLength, TimeSpan perReadTimeout, CancellationToken cancellationToken) : base(initialCapacity)
         {
             this._contentLength = contentLength;
@@ -68,10 +62,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="destination"></param>
-        /// <param name="bufferSize"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
         public override Task CopyToAsync(Stream destination, int bufferSize, CancellationToken cancellationToken)
         {
             Initialize(cancellationToken);
@@ -79,10 +69,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="buffer"></param>
-        /// <param name="offset"></param>
-        /// <param name="count"></param>
-        /// <returns></returns>
         public override int Read(byte[] buffer, int offset, int count)
         {
             Initialize();
@@ -90,11 +76,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="buffer"></param>
-        /// <param name="offset"></param>
-        /// <param name="count"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
         public override Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
         {
             Initialize(cancellationToken);
@@ -102,7 +83,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <returns></returns>
         public override int ReadByte()
         {
             Initialize();
@@ -110,7 +90,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="value"></param>
         public override void SetLength(long value)
         {
             Initialize();
@@ -118,7 +97,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <returns></returns>
         public override byte[] ToArray()
         {
             Initialize();
@@ -126,9 +104,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="buffer"></param>
-        /// <param name="offset"></param>
-        /// <param name="count"></param>
         public override void Write(byte[] buffer, int offset, int count)
         {
             Initialize();
@@ -136,11 +111,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="buffer"></param>
-        /// <param name="offset"></param>
-        /// <param name="count"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
         public override Task WriteAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
         {
             Initialize(cancellationToken);
@@ -148,7 +118,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="value"></param>
         public override void WriteByte(byte value)
         {
             Initialize();
@@ -156,7 +125,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="stream"></param>
         public override void WriteTo(Stream stream)
         {
             Initialize();
@@ -381,12 +349,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="stream">Input stream.</param>
-        /// <param name="filePath">Output file name.</param>
-        /// <param name="cmdlet">Current cmdlet (Invoke-WebRequest or Invoke-RestMethod).</param>
-        /// <param name="contentLength">Expected download size in Bytes.</param>
-        /// <param name="perReadTimeout">Time permitted between reads or Timeout.InfiniteTimeSpan for no timeout.</param>
-        /// <param name="cancellationToken">CancellationToken to track the cmdlet cancellation.</param>
         internal static void SaveStreamToFile(Stream stream, string filePath, PSCmdlet cmdlet, long? contentLength, TimeSpan perReadTimeout, CancellationToken cancellationToken)
         {
             // If the web cmdlet should resume, append the file instead of overwriting.

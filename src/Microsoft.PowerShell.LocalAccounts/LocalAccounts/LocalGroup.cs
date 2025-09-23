@@ -23,7 +23,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="name">Name of the new LocalGroup.</param>
         public LocalGroup(string name)
           : base(name)
         {
@@ -31,7 +30,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="other"></param>
         private LocalGroup(LocalGroup other)
           : this(other.Name)
         {
@@ -41,18 +39,12 @@ namespace Microsoft.PowerShell.Commands
 
         #region Public Methods
         
-        /// <returns>
-        /// A string containing the Group Name.
-        /// </returns>
         public override string ToString()
         {
             return Name ?? SID.ToString();
         }
 
         
-        /// <returns>
-        /// A new LocalGroup object with the same property values as this one.
-        /// </returns>
         public LocalGroup Clone()
         {
             return new LocalGroup(this);

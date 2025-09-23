@@ -32,7 +32,6 @@ namespace Microsoft.PowerShell.Commands
         #region protected methods
 
         
-        /// <param name="breakpoint">The breakpoint to write to the pipeline.</param>
         protected virtual void ProcessBreakpoint(Breakpoint breakpoint)
         {
             if (Runspace != Context.CurrentRunspace)

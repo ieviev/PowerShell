@@ -32,9 +32,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
     internal sealed class CommandWrapper : IDisposable
     {
         
-        /// <param name="execContext">ExecutionContext used to create sub pipeline.</param>
-        /// <param name="nameOfCommand">Name of the command to run.</param>
-        /// <param name="typeOfCommand">Type of the command to run.</param>
         internal void Initialize(ExecutionContext execContext, string nameOfCommand, Type typeOfCommand)
         {
             _context = execContext;
@@ -43,8 +40,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="parameterName">Name of the parameter.</param>
-        /// <param name="parameterValue">Value of the parameter.</param>
         internal void AddNamedParameter(string parameterName, object parameterValue)
         {
             _commandParameterList.Add(
@@ -55,8 +50,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="o">Object to process.</param>
-        /// <returns>Array of objects out of the success pipeline.</returns>
         internal Array Process(object o)
         {
             if (_pp == null)
@@ -70,7 +63,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <returns>Array of objects out of the success pipeline.</returns>
         internal Array ShutDown()
         {
             if (_pp == null)
@@ -163,14 +155,12 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <returns>Cmdlet reference.</returns>
         protected virtual PSCmdlet OuterCmdletCall()
         {
             return this;
         }
 
         
-        /// <returns>Current object from the pipeline.</returns>
         protected virtual PSObject InputObjectCall()
         {
             // just bind to the input object parameter
@@ -178,7 +168,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="value">Object to be written.</param>
         protected virtual void WriteObjectCall(object value)
         {
             // just call Monad API
@@ -191,7 +180,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         #region IDisposable Implementation
 
         
-        /// <remarks>This method calls GC.SuppressFinalize</remarks>
         public void Dispose()
         {
             Dispose(true);
@@ -200,7 +188,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="disposing"></param>
         protected virtual void Dispose(bool disposing)
         {
             if (disposing)
@@ -253,7 +240,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         }
 
         
-        /// <param name="o">Object to write to the pipeline.</param>
         internal virtual void WriteObject(object o)
         {
             // delegate to the front end object
@@ -263,7 +249,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
 
         // callback methods to get to the outer Monad Cmdlet
         
-        /// <returns></returns>
         internal virtual PSCmdlet OuterCmdlet()
         {
             // delegate to the front end object
@@ -300,7 +285,6 @@ namespace Microsoft.PowerShell.Commands.Internal.Format
         #region IDisposable Implementation
 
         
-        /// <remarks>This method calls GC.SuppressFinalize</remarks>
         public void Dispose()
         {
             Dispose(true);

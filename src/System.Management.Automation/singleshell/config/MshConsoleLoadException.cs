@@ -9,7 +9,6 @@ using System.Text;
 namespace System.Management.Automation.Runspaces
 {
     
-    /// 
     public class PSConsoleLoadException : SystemException, IContainsErrorRecord
     {
         
@@ -18,15 +17,12 @@ namespace System.Management.Automation.Runspaces
         }
 
         
-        /// <param name="message">Error message.</param>
         public PSConsoleLoadException(string message)
             : base(message)
         {
         }
 
         
-        /// <param name="message">Error message.</param>
-        /// <param name="innerException">Inner exception.</param>
         public PSConsoleLoadException(string message, Exception innerException)
             : base(message, innerException)
         {
@@ -35,7 +31,6 @@ namespace System.Management.Automation.Runspaces
         private ErrorRecord _errorRecord;
 
         
-        /// 
         public ErrorRecord ErrorRecord
         {
             get

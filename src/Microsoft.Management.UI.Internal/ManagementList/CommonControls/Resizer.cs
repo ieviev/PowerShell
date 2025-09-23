@@ -22,9 +22,6 @@ namespace Microsoft.Management.UI.Internal
         Left,
     }
 
-    /// <content>
-    /// Partial class implementation for Resizer control.
-    /// </content>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
     public partial class Resizer : ContentControl

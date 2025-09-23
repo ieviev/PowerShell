@@ -14,9 +14,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
     internal class CimGetCimClassContext : XOperationContextBase
     {
         
-        /// <param name="methodName"></param>
-        /// <param name="propertyName"></param>
-        /// <param name="qualifierName"></param>
         internal CimGetCimClassContext(
             string theClassName,
             string theMethodName,
@@ -52,7 +49,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="cmdlet"><see cref="GetCimClassCommand"/> object.</param>
         public void GetCimClass(GetCimClassCommand cmdlet)
         {
             List<CimSessionProxy> proxys = new();
@@ -114,8 +110,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         #region private methods
 
         
-        /// <param name="proxy"></param>
-        /// <param name="cmdlet"></param>
         private static void SetSessionProxyProperties(
             ref CimSessionProxy proxy,
             GetCimClassCommand cmdlet)
@@ -125,9 +119,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="computerName"></param>
-        /// <param name="cmdlet"></param>
-        /// <returns></returns>
         private CimSessionProxy CreateSessionProxy(
             string computerName,
             GetCimClassCommand cmdlet)
@@ -139,9 +130,6 @@ namespace Microsoft.Management.Infrastructure.CimCmdlets
         }
 
         
-        /// <param name="session"></param>
-        /// <param name="cmdlet"></param>
-        /// <returns></returns>
         private CimSessionProxy CreateSessionProxy(
             CimSession session,
             GetCimClassCommand cmdlet)

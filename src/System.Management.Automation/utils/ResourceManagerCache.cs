@@ -18,15 +18,6 @@ namespace System.Management.Automation
         private static readonly object s_syncRoot = new object();
 
         
-        /// <param name="assembly">
-        /// The assembly to be used as the base for resource lookup.
-        /// </param>
-        /// <param name="baseName">
-        /// The base name of the resources to get the ResourceManager for.
-        /// </param>
-        /// <returns>
-        /// A ResourceManager instance for the assembly and base name that were specified.
-        /// </returns>
         internal static ResourceManager GetResourceManager(
             Assembly assembly,
             string baseName)
@@ -110,28 +101,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="assembly">
-        /// The base assembly from which to get the resources from.
-        /// </param>
-        /// <param name="baseName">
-        /// The base name of the resource to retrieve the string from.
-        /// </param>
-        /// <param name="resourceId">
-        /// Resource ID for which the localized string needs to be retrieved
-        /// </param>
-        /// <returns>
-        /// Localized String, or null if the string does not exist
-        /// </returns>
-        /// <remarks>
-        /// The current thread's UI culture is used.
-        /// </remarks>
-        /// <throws>
-        /// ArgumentException if <paramref name="baseName"/> or <paramref name="resourceId"/>
-        ///     are null or empty..
-        /// InvalidOperationException if the value of the specified resource is not a string
-        /// MissingManifestResourceException if no usable set of resources have been found, and
-        ///     there are no neutral culture resources.
-        /// </throws>
         internal static string GetResourceString(
             Assembly assembly,
             string baseName,
@@ -194,18 +163,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="baseName">
-        /// The root name of the resources.
-        /// For example, the root name for the resource file
-        /// named "MyResource.en-US.resources" is "MyResource".
-        /// </param>
-        /// <param name="assemblyToUse">
-        /// The main Assembly for the resources
-        /// </param>
-        /// <returns>Resource Manager instance.</returns>
-        /// <exception cref="ArgumentException">
-        /// Thrown if the resource manager instance could not be created
-        /// </exception>
         private static ResourceManager InitRMWithAssembly(string baseName, Assembly assemblyToUse)
         {
             ResourceManager rm = null;

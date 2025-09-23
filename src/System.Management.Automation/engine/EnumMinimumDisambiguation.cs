@@ -27,7 +27,6 @@ namespace System.Management.Automation
         #endregion
 
         
-        /// <returns>Complete enum name after disambiguation.</returns>
         internal static string EnumDisambiguate(string text, Type enumType)
         {
             // Get all enum names in the given enum type
@@ -93,8 +92,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <param name="enumType"></param>
-        /// <returns></returns>
         internal static string EnumAllValues(Type enumType)
         {
             string[] names = Enum.GetNames(enumType);

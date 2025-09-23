@@ -114,7 +114,6 @@ namespace DataTransferContracts // generated with http://json2csharp.com/#
         public List<Measurement> Measurements { get; set; }
 
         
-        /// <returns>an array of the actual workload results (not warmup, not pilot)</returns>
         internal double[] GetOriginalValues()
             => Measurements
                 .Where(measurement => measurement.IterationStage == "Result")

@@ -11,17 +11,6 @@ namespace Microsoft.Management.UI.Internal
     public class DateTimeApproximationComparer : IComparer<DateTime>
     {
         
-        /// <param name="value1">
-        /// The first object to compare.
-        /// </param>
-        /// <param name="value2">
-        /// The second object to compare.
-        /// </param>
-        /// <returns>
-        /// If value1 is less than value2, then a value less than zero is returned.
-        /// If value1 equals value2, than zero is returned.
-        /// If value1 is greater than value2, then a value greater than zero is returned.
-        /// </returns>
         public int Compare(DateTime value1, DateTime value2)
         {
             DateTime roundedX;

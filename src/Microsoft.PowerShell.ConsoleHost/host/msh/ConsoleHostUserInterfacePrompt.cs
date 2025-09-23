@@ -50,32 +50,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="caption"></param>
-        /// <param name="message"></param>
-        /// <param name="descriptions"></param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="descriptions"/> is null
-        ///    OR
-        ///    at least one FieldDescription in <paramref name="descriptions"/> is null
-        /// </exception>
-        /// <exception cref="ArgumentException">
-        /// If <paramref name="descriptions"/> count is less than 1
-        ///    OR
-        ///    at least one FieldDescription.AssemblyFullName in <paramref name="descriptions"/> is
-        ///     null or empty
-        /// </exception>
-        /// <exception cref="PromptingException">
-        /// If a FieldDescription in <paramref name="descriptions"/> specifies one of SecureString or
-        ///     PSCredential and the type can not be loaded.
-        ///    OR
-        ///    at least one FieldDescription in <paramref name="descriptions"/> specifies an array
-        ///     whose rank is less than 1.
-        /// </exception>
-        /// <exception cref="PSInvalidCastException">
-        /// If the converting the user input to the prompt field type fails unless it is caused by
-        ///     OverflowException or FormatException
-        /// </exception>
         public override
         Dictionary<string, PSObject>
         Prompt(string caption, string message, Collection<FieldDescription> descriptions)
@@ -336,13 +310,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="fieldPrompt">Prompt written to host for the field.</param>
-        /// <param name="desc">The field to be read.</param>
-        /// <param name="fieldEchoOnPrompt">True to echo user input.</param>
-        /// <param name="listInput">True if the field is a list.</param>
-        /// <param name="endListInput">Valid only if listInput is true. set to true if the input signals end of list input.</param>
-        /// <param name="cancelled">True if-and-only-if the input is canceled, e.g., by Ctrl-C or Ctrl-Break.</param>
-        /// <returns>Processed input string to be converted with LanguagePrimitives.ConvertTo.</returns>
         private string PromptReadInput(string fieldPrompt, FieldDescription desc, bool fieldEchoOnPrompt,
                         bool listInput, out bool endListInput, out bool cancelled)
         {
@@ -397,12 +364,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="fieldType">The type that inputString is to be interpreted.</param>
-        /// <param name="isFromRemoteHost">Is the call coming from a remote host.</param>
-        /// <param name="inputString">The string to be converted.</param>
-        /// <param name="convertedObj">if there's no error in the conversion, the converted object will be assigned here;
-        /// otherwise, this will be the same as the inputString</param>
-        /// <returns>An object of type fieldType that inputString represents.</returns>
         private PromptCommonInputErrors PromptTryConvertTo(Type fieldType, bool isFromRemoteHost, string inputString, out object convertedObj)
         {
             Dbg.Assert(fieldType != null, "fieldType should never be null when PromptTryConvertTo is called");
@@ -460,10 +421,6 @@ namespace Microsoft.PowerShell
         }
 
         
-        /// <param name="input"></param>
-        /// <param name="desc"></param>
-        /// <param name="inputDone"></param>
-        /// <returns></returns>
         private string PromptCommandMode(string input, FieldDescription desc, out bool inputDone)
         {
             Dbg.Assert(input != null && input.StartsWith(PromptCommandPrefix, StringComparison.OrdinalIgnoreCase),

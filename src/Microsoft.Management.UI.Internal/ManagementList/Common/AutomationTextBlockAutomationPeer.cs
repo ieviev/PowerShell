@@ -14,7 +14,6 @@ namespace Microsoft.Management.UI.Internal
         #region Structors
 
         
-        /// <param name="owner">The owner of the automation peer.</param>
         public AutomationTextBlockAutomationPeer(TextBlock owner)
             : base(owner)
         {
@@ -26,14 +25,12 @@ namespace Microsoft.Management.UI.Internal
         #region Overrides
 
         
-        /// <returns>This method always returns true.</returns>
         protected override bool IsControlElementCore()
         {
             return true;
         }
 
         
-        /// <returns>The class name.</returns>
         protected override string GetClassNameCore()
         {
             return this.Owner.GetType().Name;

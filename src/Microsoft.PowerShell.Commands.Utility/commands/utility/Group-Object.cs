@@ -19,19 +19,12 @@ namespace Microsoft.PowerShell.Commands
     internal static class PSTuple
     {
         
-        /// <typeparam name="T">The first generic type parameter.</typeparam>
-        /// <param name="inputObjects">Input objects used to create a tuple.</param>
-        /// <returns>Tuple object.</returns>
         internal static object ArrayToTuple<T>(IList<T> inputObjects)
         {
             return ArrayToTuple(inputObjects, 0);
         }
 
         
-        /// <typeparam name="T">The first generic type parameter.</typeparam>
-        /// <param name="inputObjects">Input objects used to create a tuple.</param>
-        /// <param name="startIndex">Start index of the array from which the objects have to considered for the tuple creation.</param>
-        /// <returns>Tuple object.</returns>
         private static object ArrayToTuple<T>(IList<T> inputObjects, int startIndex)
         {
             Diagnostics.Assert(inputObjects != null, "inputObjects is null");
@@ -203,12 +196,10 @@ namespace Microsoft.PowerShell.Commands
         #region Command Line Switches
 
         
-        /// <value></value>
         [Parameter]
         public SwitchParameter NoElement { get; set; }
 
         
-        /// <value></value>
         [Parameter(ParameterSetName = "HashTable")]
         [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "HashTable")]
         [Alias("AHT")]
@@ -232,11 +223,6 @@ namespace Microsoft.PowerShell.Commands
         #region utils
 
         
-        /// <param name="currentObjectEntry">Input object that needs to be grouped.</param>
-        /// <param name="noElement">True if we are not accumulating objects.</param>
-        /// <param name="groups">List containing Groups.</param>
-        /// <param name="groupInfoDictionary">Dictionary used to keep track of the groups with hash of the property values being the key.</param>
-        /// <param name="orderByPropertyComparer">The Comparer to be used while comparing to check if new group has to be created.</param>
         private static void DoGrouping(
             OrderByPropertyEntry currentObjectEntry,
             bool noElement,
@@ -284,11 +270,6 @@ namespace Microsoft.PowerShell.Commands
         }
 
         
-        /// <param name="currentObjectEntry">Input object that needs to be grouped.</param>
-        /// <param name="noElement">True if we are not accumulating objects.</param>
-        /// <param name="groups">List containing Groups.</param>
-        /// <param name="groupInfoDictionary">Dictionary used to keep track of the groups with hash of the property values being the key.</param>
-        /// <param name="orderByPropertyComparer">The Comparer to be used while comparing to check if new group has to be created.</param>
         private static void DoOrderedGrouping(
             OrderByPropertyEntry currentObjectEntry,
             bool noElement,

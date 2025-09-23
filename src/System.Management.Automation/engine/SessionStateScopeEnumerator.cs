@@ -9,9 +9,6 @@ namespace System.Management.Automation
     internal sealed class SessionStateScopeEnumerator : IEnumerator<SessionStateScope>, IEnumerable<SessionStateScope>
     {
         
-        /// <param name="scope">
-        ///   The starting scope to start the enumeration from.
-        /// </param>
         internal SessionStateScopeEnumerator(SessionStateScope scope)
         {
             Diagnostics.Assert(scope != null, "Caller to verify scope argument");
@@ -19,9 +16,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <returns>
-        /// True if the enumerator was advanced to the next scope, or false otherwise.
-        /// </returns>
         public bool MoveNext()
         {
             // On the first call to MoveNext the enumerator should be before
@@ -42,10 +36,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <exception cref="InvalidOperationException">
-        /// The enumerator is positioned before the first element of the
-        /// collection or after the last element.
-        /// </exception>
         SessionStateScope IEnumerator<SessionStateScope>.Current
         {
             get
@@ -68,9 +58,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <returns>
-        /// The IEnumerator interface for this class.
-        /// </returns>
         System.Collections.Generic.IEnumerator<SessionStateScope> System.Collections.Generic.IEnumerable<SessionStateScope>.GetEnumerator()
         {
             return this;

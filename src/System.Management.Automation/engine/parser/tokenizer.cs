@@ -93,8 +93,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="name"></param>
-        /// <returns></returns>
         public static DynamicKeyword GetKeyword(string name)
         {
             DynamicKeyword keywordToReturn;
@@ -103,15 +101,12 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <returns></returns>
         public static List<DynamicKeyword> GetKeyword()
         {
             return new List<DynamicKeyword>(DynamicKeyword.DynamicKeywords.Values);
         }
 
         
-        /// <param name="name"></param>
-        /// <returns></returns>
         public static bool ContainsKeyword(string name)
         {
             if (string.IsNullOrEmpty(name))
@@ -124,7 +119,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="keywordToAdd"></param>
         public static void AddKeyword(DynamicKeyword keywordToAdd)
         {
             if (keywordToAdd == null)
@@ -145,7 +139,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="name"></param>
         public static void RemoveKeyword(string name)
         {
             if (string.IsNullOrEmpty(name))
@@ -158,8 +151,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="name"></param>
-        /// <returns></returns>
         internal static bool IsHiddenKeyword(string name)
         {
             if (string.IsNullOrEmpty(name))
@@ -178,7 +169,6 @@ namespace System.Management.Automation.Language
         #endregion
 
         
-        /// <returns>A copy of the DynamicKeyword.</returns>
         public DynamicKeyword Copy()
         {
             DynamicKeyword keyword = new DynamicKeyword()
@@ -305,9 +295,6 @@ namespace System.Management.Automation.Language
         };
 
         
-        /// <param name="keyword"></param>
-        /// <param name="allowedKeywords"></param>
-        /// <returns>NULL if no keyword allowed for a given <see cref="DynamicKeyword"/></returns>
         internal static IEnumerable<DynamicKeyword> GetAllowedKeywords(this DynamicKeyword keyword, IEnumerable<DynamicKeyword> allowedKeywords)
         {
             string keywordName = keyword.Keyword;
@@ -3775,16 +3762,6 @@ namespace System.Management.Automation.Language
         }
 
         
-        /// <param name="firstChar">The first character.</param>
-        /// <param name="format">Indicate if it's a hex, binary, or decimal number.</param>
-        /// <param name="suffix">Indicate the format suffix.</param>
-        /// <param name="real">Indicate if the number is real (non-integer).</param>
-        /// <param name="multiplier">Indicate the specified multiplier.</param>
-        /// <returns>
-        /// Return null if the token is not a number
-        /// OR
-        /// Return the string format of the number.
-        /// </returns>
         private string ScanNumberHelper(char firstChar, out NumberFormat format, out NumberSuffixFlags suffix, out bool real, out long multiplier)
         {
             format = NumberFormat.Decimal;

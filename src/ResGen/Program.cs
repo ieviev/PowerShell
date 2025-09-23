@@ -84,8 +84,7 @@ namespace ConsoleApplication
             XElement root = XElement.Parse(File.ReadAllText(xmlPath));
             foreach (var data in root.Elements("data"))
             {
-                string value = data.Value.Replace("\n", "\n    ///");
-                string name = data.Attribute("name").Value.Replace(' ', '_');
+                string value = data.Value.Replace("\n", "\n                string name = data.Attribute("name").Value.Replace(' ', '_');
                 entries.AppendFormat(ENTRY, name, value, accessModifier);
             }
 

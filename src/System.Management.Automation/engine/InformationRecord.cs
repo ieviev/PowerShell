@@ -7,17 +7,10 @@ using System.Runtime.Serialization;
 namespace System.Management.Automation
 {
     
-    /// <remarks>
-    /// InformationRecords are passed to <see cref="System.Management.Automation.Cmdlet.WriteInformation(object, string[])"/>,
-    /// which, according to host or user preference, forwards that information on to the host for rendering to the user.
-    /// </remarks>
-    /// <seealso cref="System.Management.Automation.Cmdlet.WriteInformation(object, string[])"/>
     [DataContract]
     public class InformationRecord
     {
         
-        /// <param name="messageData">The object to be transmitted to the host.</param>
-        /// <param name="source">The source of the message (i.e.: script path, function name, etc.).</param>
         public InformationRecord(object messageData, string source)
         {
             this.MessageData = messageData;
@@ -140,7 +133,6 @@ namespace System.Management.Automation
         public uint ManagedThreadId { get; set; }
 
         
-        /// <returns></returns>
         public override string ToString()
         {
             if (MessageData != null)
@@ -178,7 +170,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <returns>This object as a PSObject property bag.</returns>
         internal PSObject ToPSObjectForRemoting()
         {
             PSObject informationAsPSObject = RemotingEncoder.CreateEmptyPSObject();
@@ -213,7 +204,6 @@ namespace System.Management.Automation
         public ConsoleColor? BackgroundColor { get; set; }
 
         
-        /// <returns></returns>
         public override string ToString()
         {
             return Message;

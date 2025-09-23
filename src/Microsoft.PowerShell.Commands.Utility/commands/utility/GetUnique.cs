@@ -15,12 +15,10 @@ namespace Microsoft.PowerShell.Commands
     {
         #region Parameters
         
-        /// <value></value>
         [Parameter(ValueFromPipeline = true)]
         public PSObject InputObject { get; set; } = AutomationNull.Value;
 
         
-        /// <value></value>
         [Parameter(ParameterSetName = "AsString")]
         public SwitchParameter AsString
         {
@@ -32,7 +30,6 @@ namespace Microsoft.PowerShell.Commands
         private bool _asString;
 
         
-        /// <value></value>
         [Parameter(ParameterSetName = "UniqueByType")]
         public SwitchParameter OnType
         {

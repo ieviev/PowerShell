@@ -18,9 +18,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <param name="exception">
-        /// The Exception that was raised when filtering was evaluated.
-        /// </param>
         public FilterExceptionEventArgs(Exception exception)
         {
             ArgumentNullException.ThrowIfNull(exception);

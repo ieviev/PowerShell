@@ -10,15 +10,12 @@ using System.Windows;
 namespace Microsoft.Management.UI.Internal
 {
     
-    /// <typeparam name="T">There are no restrictions on type T.</typeparam>
     [SuppressMessage("Microsoft.MSInternal", "CA903:InternalNamespaceShouldNotContainPublicTypes")]
     public class DataRoutedEventArgs<T> : RoutedEventArgs
     {
         private T data;
 
         
-        /// <param name="data">The data payload to be stored.</param>
-        /// <param name="routedEvent">The routed event.</param>
         public DataRoutedEventArgs(T data, RoutedEvent routedEvent)
         {
             this.data = data;

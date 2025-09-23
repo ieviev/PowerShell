@@ -22,14 +22,6 @@ namespace Microsoft.Management.UI.Internal
 {
 
     
-    /// <remarks>
-    ///
-    ///
-    /// If a custom template is provided for this control, then the template MUST provide the following template parts:
-    ///
-    ///     PART_Picker - A required template part which must be of type PickerBase.  This control provides basic functionality for Picker-like controls.
-    ///
-    /// </remarks>
     [TemplatePart(Name="PART_Picker", Type=typeof(PickerBase))]
     [Localizability(LocalizationCategory.None)]
     partial class ListOrganizer
@@ -90,9 +82,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <remarks>
-        /// Informs the ListOrganizer that it should delete the item passed.
-        /// </remarks>
         protected virtual void OnDeleteItemExecuted(ExecutedRoutedEventArgs e)
         {
             OnDeleteItemExecutedImplementation(e);
@@ -113,9 +102,6 @@ namespace Microsoft.Management.UI.Internal
         }
 
         
-        /// <remarks>
-        /// Informs the ListOrganizer that it should select the item passed.
-        /// </remarks>
         protected virtual void OnSelectItemExecuted(ExecutedRoutedEventArgs e)
         {
             OnSelectItemExecutedImplementation(e);

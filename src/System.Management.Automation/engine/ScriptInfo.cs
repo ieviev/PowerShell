@@ -12,18 +12,6 @@ namespace System.Management.Automation
         #region ctor
 
         
-        /// <param name="name">
-        /// The name of the script.
-        /// </param>
-        /// <param name="script">
-        /// The script definition
-        /// </param>
-        /// <param name="context">
-        /// The execution context for the script.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// If <paramref name="script"/> is null.
-        /// </exception>
         internal ScriptInfo(string name, ScriptBlock script, ExecutionContext context)
             : base(name, CommandTypes.Script, context)
         {
@@ -77,7 +65,6 @@ namespace System.Management.Automation
         }
 
         
-        /// <returns></returns>
         public override string ToString()
         {
             return ScriptBlock.ToString();
