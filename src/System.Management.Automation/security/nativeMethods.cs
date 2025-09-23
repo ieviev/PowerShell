@@ -610,59 +610,9 @@ namespace System.Management.Automation.Security
             System.IntPtr pvKey,
             uint dwGroupId);
 
-        internal static DWORD GetCertChoiceFromSigningOption(
-            SigningOption option)
-        {
-            DWORD cc = 0;
+       
 
-            switch (option)
-            {
-                case SigningOption.AddOnlyCertificate:
-                    cc = 0;
-                    break;
-
-                case SigningOption.AddFullCertificateChain:
-                    cc = (DWORD)SignInfoAdditionalCertChoice.CRYPTUI_WIZ_DIGITAL_SIGN_ADD_CHAIN;
-                    break;
-
-                case SigningOption.AddFullCertificateChainExceptRoot:
-                    cc = (DWORD)SignInfoAdditionalCertChoice.CRYPTUI_WIZ_DIGITAL_SIGN_ADD_CHAIN_NO_ROOT;
-                    break;
-
-                default:
-                    cc = (DWORD)SignInfoAdditionalCertChoice.CRYPTUI_WIZ_DIGITAL_SIGN_ADD_CHAIN_NO_ROOT;
-                    break;
-            }
-
-            return cc;
-        }
-
-        internal static CRYPTUI_WIZ_DIGITAL_SIGN_INFO
-            InitSignInfoStruct(string fileName,
-                               X509Certificate2 signingCert,
-                               string timeStampServerUrl,
-                               string hashAlgorithm,
-                               SigningOption option)
-        {
-            CRYPTUI_WIZ_DIGITAL_SIGN_INFO si = new CRYPTUI_WIZ_DIGITAL_SIGN_INFO();
-
-            si.dwSize = (DWORD)Marshal.SizeOf(si);
-            si.dwSubjectChoice = (DWORD)SignInfoSubjectChoice.CRYPTUI_WIZ_DIGITAL_SIGN_SUBJECT_FILE;
-            si.pwszFileName = fileName;
-            si.dwSigningCertChoice = (DWORD)SignInfoCertChoice.CRYPTUI_WIZ_DIGITAL_SIGN_CERT;
-            si.pSigningCertContext = signingCert.Handle;
-            si.pwszTimestampURL = timeStampServerUrl;
-            si.dwAdditionalCertChoice = GetCertChoiceFromSigningOption(option);
-
-            CRYPTUI_WIZ_DIGITAL_SIGN_EXTENDED_INFO siex =
-                InitSignInfoExtendedStruct(string.Empty, string.Empty, hashAlgorithm);
-            IntPtr pSiexBuffer = Marshal.AllocCoTaskMem(Marshal.SizeOf(siex));
-            Marshal.StructureToPtr(siex, pSiexBuffer, false);
-            si.pSignExtInfo = pSiexBuffer;
-
-            return si;
-        }
-
+        
         [StructLayout(LayoutKind.Sequential)]
         internal struct CRYPT_PROVIDER_CERT
         {

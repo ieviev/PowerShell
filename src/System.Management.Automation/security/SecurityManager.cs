@@ -489,31 +489,7 @@ namespace Microsoft.PowerShell
         // or altered script.
         private static Signature GetSignatureWithEncodingRetry(string path, ExternalScriptInfo script)
         {
-            // Invoke the SIP directly with the most simple method
-            Signature signature = SignatureHelper.GetSignature(path, fileContent: null);
-            if (signature.Status == SignatureStatus.Valid)
-            {
-                return signature;
-            }
-
-            // try harder to validate the signature by being explicit about encoding
-            // and providing the script contents
-            byte[] bytesWithBom = GetContentBytesWithBom(script.OriginalEncoding, script.ScriptContents);
-            signature = SignatureHelper.GetSignature(path, bytesWithBom);
-
-            // A last ditch effort -
-            // If the file was originally ASCII or UTF8, the SIP may have added the Unicode BOM
-            if (signature.Status != SignatureStatus.Valid
-                && script.OriginalEncoding != Encoding.Unicode)
-            {
-                bytesWithBom = GetContentBytesWithBom(Encoding.Unicode, script.ScriptContents);
-                Signature fallbackSignature = SignatureHelper.GetSignature(path, bytesWithBom);
-
-                if (fallbackSignature.Status == SignatureStatus.Valid)
-                    signature = fallbackSignature;
-            }
-
-            return signature;
+            return null;
         }
 
         private static byte[] GetContentBytesWithBom(Encoding encoding, string scriptContent)
