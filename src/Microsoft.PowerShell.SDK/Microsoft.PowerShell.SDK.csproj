@@ -12,19 +12,4 @@
     <ProjectReference Include="..\Microsoft.PowerShell.ConsoleHost\Microsoft.PowerShell.ConsoleHost.csproj" />
     <ProjectReference Include="..\System.Management.Automation\System.Management.Automation.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    
-    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="10.0.0-rc.1.25451.107" />
-    <PackageReference Include="Microsoft.Extensions.ObjectPool" Version="10.0.0-rc.1.25451.107" />
-    <PackageReference Include="System.IO.Packaging" Version="10.0.0-rc.1.25451.107" />
-    
-    <PackageReference Include="System.ServiceModel.Duplex" Version="4.10.3" NoWarn="NU1605" />
-    <PackageReference Include="System.ServiceModel.Http" Version="4.10.3" NoWarn="NU1605" />
-    <PackageReference Include="System.ServiceModel.NetTcp" Version="4.10.3" NoWarn="NU1605" />
-    <PackageReference Include="System.ServiceModel.Primitives" Version="4.10.3" NoWarn="NU1605" />
-    <PackageReference Include="System.ServiceModel.Security" Version="4.10.3" NoWarn="NU1605" />
-    <PackageReference Include="System.Private.ServiceModel" Version="4.10.3" NoWarn="NU1605" />
-  </ItemGroup>
-
 </Project>
