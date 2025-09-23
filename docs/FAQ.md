@@ -100,7 +100,7 @@ essentially the same thing), you must manually delete the folder, as the .NET CL
 how their binaries are setup, such that new packages' binaries get stomped on by old packages'
 binaries.
 
-<!-- updated link references -->
+
 [01]: dev-process/resx-files.md
 [02]: https://github.com/MicrosoftDocs/PowerShell-Docs/issues/1583
 [03]: https://github.com/PoshCode/PowerShellPracticeAndStyle

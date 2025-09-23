@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <schema targetNamespace="http://schemas.microsoft.com/maml/2004/10" xmlns:doc="http://schemas.microsoft.com/maml/internal" xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" blockDefault="#all" xml:lang="en">
-  <!-- Schema documentation -->
+  
   <annotation>
     <documentation>This schema definition defines common hierarchy types for the Content Studio Schema. This schema is part of the base layer.</documentation>
   </annotation>
-  <!-- include and import declarations -->
+  
   <include schemaLocation="structure.xsd"/>
   <element name="reusableContent">
     <annotation>
@@ -189,7 +189,7 @@
       <attributeGroup ref="maml:contentIdentificationSharingAndConditionGroup"/>
     </complexType>
   </element>
-  <!-- complexType declarations -->
+  
   <complexType name="contentTypeType">
     <sequence>
       <element ref="maml:title"/>

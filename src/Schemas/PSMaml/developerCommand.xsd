@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <schema targetNamespace="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:doc="http://schemas.microsoft.com/maml/internal" xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" blockDefault="#all" xml:lang="en">
-  <!-- Schema documentation -->
+  
   <annotation>
     <documentation>
       This schema describes the command page type of MAML.
@@ -8,7 +8,7 @@
   </annotation>
   <import schemaLocation="maml.xsd" namespace="http://schemas.microsoft.com/maml/2004/10"/>
   <import schemaLocation="developer.xsd" namespace="http://schemas.microsoft.com/maml/dev/2004/10"/>
-  <!-- ROOT ELEMENT DEFINITION -->
+  
   <element name="command" type="command:commandType">
     <annotation>
       <documentation>
@@ -32,8 +32,8 @@
     </sequence>
     <attribute name="contentType" type="token"/>
   </complexType>
-  <!-- END ROOT ELEMENT DEFINITION -->
-  <!-- details definition -->
+  
+  
   <element name="details" type="command:detailsType"/>
   <complexType name="detailsType">
     <sequence>
@@ -48,10 +48,10 @@
     </sequence>
     <attributeGroup ref="maml:contentIdentificationSharingAndConditionGroup"/>
   </complexType>
-  <!-- end details definition -->
+  
   <element name="verb" type="maml:textType"/>
   <element name="noun" type="maml:textType"/>
-  <!-- vendor definition -->
+  
   <element name="vendor" type="command:vendorType"/>
   <complexType name="vendorType">
     <sequence>
@@ -59,8 +59,8 @@
       <element ref="dev:products"/>
     </sequence>
   </complexType>
-  <!-- end vendor definition -->
-  <!-- name definition -->
+  
+  
   <element name="name" type="command:nameType"/>
   <complexType name="nameType" mixed="true">
     <complexContent>
@@ -75,8 +75,8 @@
       </extension>
     </complexContent>
   </complexType>
-  <!-- end name definition -->
-  <!-- synonyms definition -->
+  
+  
   <element name="synonyms" type="command:synonymsType"/>
   <complexType name="synonymsType">
     <sequence>
@@ -84,11 +84,11 @@
     </sequence>
     <attributeGroup ref="maml:contentIdentificationSharingAndConditionGroup"/>
   </complexType>
-  <!-- end synonyms definition -->
-  <!-- end synonym definition -->
+  
+  
   <element name="synonym" type="maml:textType"/>
-  <!-- end synonym definition -->
-  <!-- syntax definition -->
+  
+  
   <element name="syntax" type="command:syntaxType"/>
   <complexType name="syntaxType">
     <sequence>
@@ -96,8 +96,8 @@
     </sequence>
     <attributeGroup ref="maml:contentIdentificationSharingAndConditionGroup"/>
   </complexType>
-  <!-- end syntax definition -->
-  <!-- syntaxItem definition -->
+  
+  
   <element name="syntaxItem" type="command:syntaxItemType"/>
   <complexType name="syntaxItemType">
     <sequence>
@@ -107,16 +107,16 @@
     </sequence>
     <attributeGroup ref="maml:contentIdentificationSharingAndConditionGroup"/>
   </complexType>
-  <!-- end syntaxItem definition -->
-  <!-- parameterGroup definition -->
+  
+  
   <element name="parameterGroup" type="command:parameterGroupType"/>
   <complexType name="parameterGroupType">
     <sequence>
       <element ref="command:parameter" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
-  <!-- end parameterGroup definition -->
-  <!-- parameters definition -->
+  
+  
   <element name="parameters" type="command:parametersType"/>
   <complexType name="parametersType">
     <sequence>
@@ -124,8 +124,8 @@
     </sequence>
     <attributeGroup ref="maml:contentIdentificationSharingAndConditionGroup"/>
   </complexType>
-  <!-- end parameters definition -->
-  <!-- parameter definition -->
+  
+  
   <element name="parameter" type="command:parameterType"/>
   <complexType name="parameterType">
     <sequence>
@@ -148,8 +148,8 @@
     <attribute name="position" type="string" use="required"/>
     <attribute ref="command:requiresTrustedData" use="optional"/>
   </complexType>
-  <!-- end parameter definition -->
-  <!-- validation definition -->
+  
+  
   <element name="validation" type="command:validationType"/>
   <complexType name="validationType">
     <sequence>
@@ -163,8 +163,8 @@
     </sequence>
     <attributeGroup ref="maml:contentIdentificationSharingAndConditionGroup"/>
   </complexType>
-  <!-- end validation definition -->
-  <!-- inputTypes definition -->
+  
+  
   <element name="inputTypes" type="command:inputTypesType"/>
   <complexType name="inputTypesType">
     <sequence>
@@ -172,8 +172,8 @@
     </sequence>
     <attributeGroup ref="maml:contentIdentificationSharingAndConditionGroup"/>
   </complexType>
-  <!-- end inputTypes definition -->
-  <!-- inputType definition -->
+  
+  
   <element name="inputType" type="command:inputTypeType"/>
   <complexType name="inputTypeType">
     <sequence>
@@ -182,16 +182,16 @@
     </sequence>
     <attribute ref="command:requiresTrustedData" use="optional"/>
   </complexType>
-  <!-- end inputTypedefinition -->
-  <!-- returnValues definition -->
+  
+  
   <element name="returnValues" type="command:returnValuesType"/>
   <complexType name="returnValuesType">
     <sequence>
       <element ref="command:returnValue" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
-  <!-- end returnValues definition -->
-  <!-- returnValue definition -->
+  
+  
   <element name="returnValue" type="command:returnValueType"/>
   <complexType name="returnValueType">
     <complexContent>
@@ -200,8 +200,8 @@
       </extension>
     </complexContent>
   </complexType>
-  <!-- end returnValue definition -->
-  <!-- terminatingErrors definition -->
+  
+  
   <element name="terminatingErrors" type="command:terminatingErrorsType"/>
   <complexType name="terminatingErrorsType">
     <sequence>
@@ -209,11 +209,11 @@
     </sequence>
     <attributeGroup ref="maml:contentIdentificationSharingAndConditionGroup"/>
   </complexType>
-  <!-- end terminatingErrors definition -->
-  <!-- end terminatingError definition -->
+  
+  
   <element name="terminatingError" type="command:errorType"/>
-  <!-- end terminatingError definition -->
-  <!-- nonTerminatingErrors definition -->
+  
+  
   <element name="nonTerminatingErrors" type="command:nonTerminatingErrorsType"/>
   <complexType name="nonTerminatingErrorsType">
     <sequence>
@@ -221,11 +221,11 @@
     </sequence>
     <attributeGroup ref="maml:contentIdentificationSharingAndConditionGroup"/>
   </complexType>
-  <!-- end nonTerminatingErrors definition -->
-  <!-- end nonTerminatingError definition -->
+  
+  
   <element name="nonTerminatingError" type="command:errorType"/>
-  <!-- end nonTerminatingError definition -->
-  <!-- examples definition -->
+  
+  
   <element name="examples" type="command:examplesType"/>
   <complexType name="examplesType">
     <sequence>
@@ -233,8 +233,8 @@
     </sequence>
     <attributeGroup ref="maml:contentIdentificationSharingAndConditionGroup"/>
   </complexType>
-  <!-- end examples definition -->
-  <!-- example definition -->
+  
+  
   <element name="example" type="command:exampleType"/>
   <complexType name="exampleType">
     <complexContent>
@@ -261,24 +261,24 @@
       </restriction>
     </complexContent>
   </complexType>
-  <!-- end example definition -->
-  <!-- commandLines definition -->
+  
+  
   <element name="commandLines" type="command:commandLinesType"/>
   <complexType name="commandLinesType">
     <sequence>
       <element ref="command:commandLine" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
-  <!-- end commandLines definition -->
-  <!-- commandLine definition -->
+  
+  
   <element name="commandLine" type="command:commandLineType"/>
   <complexType name="commandLineType">
     <sequence>
       <element ref="command:commandText" minOccurs="1" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
-  <!-- end commandLine definition -->
-  <!-- commandText definition -->
+  
+  
   <element name="commandText" type="command:commandTextType"/>
   <complexType name="commandTextType" mixed="true">
     <sequence>
@@ -286,8 +286,8 @@
     </sequence>
     <attribute name="input" type="boolean" use="optional"/>
   </complexType>
-  <!-- end commandText definition -->
-  <!-- parameterValue definition -->
+  
+  
   <element name="parameterValue" type="command:parameterValueType"/>
   <complexType name="parameterValueType" mixed="true">
     <complexContent>
@@ -305,16 +305,16 @@
       </extension>
     </complexContent>
   </complexType>
-  <!-- end parameterValue definition -->
-  <!-- parameterValueGroup definition -->
+  
+  
   <element name="parameterValueGroup" type="command:parameterValueGroupType"/>
   <complexType name="parameterValueGroupType">
     <sequence>
       <element ref="command:parameterValue" minOccurs="1" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
-  <!-- end parameterValueGroup definition -->
-  <!-- miscellaneous -->
+  
+  
   <attribute name="requiresTrustedData" type="command:trustedDataType"/>
   <attribute name="isTrustedData" type="command:trustedDataType"/>
   <simpleType name="trustedDataType">
@@ -343,5 +343,5 @@
   </complexType>
   <element name="parameterNameInline" type="string"/>
   <element name="parameterValueInline" type="string"/>
-  <!-- end miscellaneous -->
+  
 </schema>

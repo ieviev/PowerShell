@@ -14,8 +14,8 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <!-- Removing System.Security.AccessControl as per NU1510 -->
-    <!-- PackageReference Include="System.Security.AccessControl" Version="6.0.0" /-->
+    
+    
     <PackageReference Include="Microsoft.PowerShell.MarkdownRender" Version="7.2.1" />
   </ItemGroup>
 </Project>

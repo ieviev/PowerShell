@@ -7,14 +7,14 @@
     attributeFormDefault="unqualified"
     blockDefault="#all"
     xml:lang="en">
-  <!-- Schema documentation -->
+  
   <annotation>
     <documentation>This schema definition defines the troubleshooting base type within the Content Studio schema.</documentation>
   </annotation>
-  <!-- include and import declarations -->
+  
   <include schemaLocation="hierarchy.xsd"/>
   <include schemaLocation="base.xsd"/>
-  <!-- element declarations -->
+  
   <element name="troubleshooting">
     <annotation>
       <documentation>Describes the content model for the troubleshooting content type, which is used to create topics that guide users through solving problems.</documentation>

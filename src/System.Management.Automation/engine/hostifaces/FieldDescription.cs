@@ -16,7 +16,7 @@ namespace System.Management.Automation.Host
 {
     /// <summary>
     /// Provides a description of a field for use by <see cref="System.Management.Automation.Host.PSHostUserInterface.Prompt"/>.
-    /// <!--Used by the engine to describe cmdlet parameters.-->
+    /// 
     /// </summary>
     /// <remarks>
     /// It is permitted to subclass <see cref="System.Management.Automation.Host.FieldDescription"/>
@@ -90,8 +90,7 @@ namespace System.Management.Automation.Host
         /// <remarks>
         /// If not already set by a call to <see cref="System.Management.Automation.Host.FieldDescription.SetParameterType"/>,
         /// <see cref="System.String"/> will be used as the type.
-        /// <!--The value of ParameterTypeName is the string value returned.
-        /// by System.Type.Name.-->
+        /// 
         /// </remarks>
         public
         string
@@ -116,8 +115,7 @@ namespace System.Management.Automation.Host
         /// <remarks>
         /// If not already set by a call to <see cref="System.Management.Automation.Host.FieldDescription.SetParameterType"/>,
         /// <see cref="System.String"/> will be used as the type.
-        /// <!--The value of ParameterTypeName is the string value returned.
-        /// by System.Type.Name.-->
+        /// 
         /// </remarks>
         public
         string

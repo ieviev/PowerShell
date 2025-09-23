@@ -7,13 +7,13 @@
     attributeFormDefault="unqualified"
     blockDefault="#all"
     xml:lang="en">
-  <!-- Schema documentation -->
+  
   <annotation>
     <documentation>This schema definition defines the inline UI elements for the Content Studio Schema. This schema is part of the base layer.</documentation>
   </annotation>
-  <!-- include and import declarations -->
+  
   <include schemaLocation="base.xsd"/>
-  <!-- element declarations -->
+  
   <element name="menuSelection">
     <annotation>
       <documentation>Identifies one or more selections from a menu.</documentation>
@@ -123,7 +123,7 @@
       </sequence>
     </complexType>
   </element>
-  <!-- attribute declarations -->
+  
   <attributeGroup name="userInstructionAttributeGroup">
     <annotation>
       <documentation>This type is used for describing user actions.</documentation>
@@ -144,7 +144,7 @@
       </simpleType>
     </attribute>
   </attributeGroup>
-  <!-- group declarations -->
+  
   <group name="inlineUiGroup">
     <annotation>
       <documentation>This group is used for referencing all base UI elements.</documentation>

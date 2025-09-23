@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <schema targetNamespace="http://schemas.microsoft.com/maml/2004/10" xmlns:doc="http://schemas.microsoft.com/maml/internal" xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" blockDefault="#all" xml:lang="en">
-  <!-- Schema documentation -->
+  
   <annotation>
     <documentation>This schema definition defines common structure types for the Content Studio Schema. This schema is part of the base layer.</documentation>
   </annotation>
-  <!-- include and import declarations -->
+  
   <include schemaLocation="base.xsd"/>
   <include schemaLocation="structureTable.xsd"/>
   <include schemaLocation="structureList.xsd"/>
   <include schemaLocation="structureProcedure.xsd"/>
   <include schemaLocation="structureGlossary.xsd"/>
-  <!-- element declarations -->
+  
   <element name="example" type="maml:structureType">
     <annotation>
       <documentation>Describes an example within a topic. Examples are typically one or more lines of code.</documentation>
@@ -29,7 +29,7 @@
       </appinfo>
     </annotation>
   </element>
-  <!-- complexType declarations -->
+  
   <complexType name="structureType">
     <annotation>
       <documentation>Describes the common structure elements. It is intended for use in page types and structure elements.</documentation>

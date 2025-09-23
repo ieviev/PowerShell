@@ -1,7 +1,4 @@
-<!--=================================================================
-// Copyright (c) Microsoft Corporation.
-// Licensed under the MIT License.
-==================================================================-->
+
 
 <Window x:Uid="Window_1" x:Class="Microsoft.Management.UI.Internal.ColumnPicker"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -51,7 +48,7 @@
                     <DynamicResource x:Uid="DynamicResource_3" ResourceKey="{ComponentResourceKey ResourceId=CPNotSelectedListboxHeaderStyle, TypeInTargetAssembly=local:ColumnPicker}" />
                 </Label.Style>
             </Label>
-            <!-- This should be the single column filter list. -->
+            
             <ListBox x:Uid="PART_NotSelectedList" x:Name="PART_NotSelectedList" Grid.Row="1" Grid.Column="0"
                      AutomationProperties.Name="{x:Static default:XamlLocalizableResources.AutoResXGen_ColumnPicker_AutomationPropertiesName_49}"
                      MouseDoubleClick="NotSelectedList_MouseDoubleClick"
@@ -110,7 +107,7 @@
                      >
                 <ListBox.ItemTemplate>
                     <DataTemplate x:Uid="DataTemplate_2">
-                        <!-- This is where you would put a style to color the item based on {Binding Path=Header.Required} -->
+                        
                         <local:AutomationTextBlock x:Uid="local:ExtendedTextBlock_2" Text="{Binding Path=DataDescription.DisplayName}"/>
                     </DataTemplate>
                 </ListBox.ItemTemplate>

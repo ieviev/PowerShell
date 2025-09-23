@@ -431,7 +431,7 @@
       <xs:documentation>Provides a definition of the wide view.</xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <!-- "EntrySelectedBy" is optional, but it can be omitted in at most one WideEntry -->
+      
       <xs:element minOccurs="0" name="EntrySelectedBy" type="EntrySelectedBy">
         <xs:annotation>
           <xs:documentation>Optional element. Defines the .NET types that use this wide entry definition or the condition that must exist for this definition to be used.</xs:documentation>
@@ -746,7 +746,7 @@
     <xs:restriction base="xs:string">
       <xs:enumeration value="false" />
       <xs:enumeration value="true" />
-      <!--empty indicates "true"-->
+      
       <xs:enumeration value="" />
     </xs:restriction>
   </xs:simpleType>

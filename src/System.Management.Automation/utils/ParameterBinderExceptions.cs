@@ -24,35 +24,24 @@ namespace System.Management.Automation
         /// </param>
         /// <param name="invocationInfo">
         /// The information about the command that encountered the error.
-        /// <!--
-        /// InvocationInfo.MyCommand.Name == {0}
-        /// -->
+        /// 
         /// </param>
         /// <param name="errorPosition">
         /// The position for the command or parameter that caused the error.
         /// If position is null, the one from the InvocationInfo is used.
-        /// <!--
-        /// token.LineNumber == {4}
-        /// token.OffsetInLine == {5}
-        /// -->
+        /// 
         /// </param>
         /// <param name="parameterName">
         /// The parameter on which binding caused the error.
-        /// <!--
-        /// parameterName == {1}
-        /// -->
+        /// 
         /// </param>
         /// <param name="parameterType">
         /// The Type the parameter was expecting.
-        /// <!--
-        /// parameterType == {2}
-        /// -->
+        /// 
         /// </param>
         /// <param name="typeSpecified">
         /// The Type that was attempted to be bound to the parameter.
-        /// <!--
-        /// typeSpecified == {3}
-        /// -->
+        /// 
         /// </param>
         /// <param name="resourceString">
         /// The format string for the exception message.
@@ -62,9 +51,7 @@ namespace System.Management.Automation
         /// </param>
         /// <param name="args">
         /// Additional arguments to pass to the format string.
-        /// <!--
-        /// starts at {6}
-        /// -->
+        /// 
         /// </param>
         /// <exception cref="ArgumentException">
         /// If <paramref name="resourceString"/> or <paramref name="errorId"/>

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <schema targetNamespace="http://schemas.microsoft.com/maml/2004/10" xmlns:doc="http://schemas.microsoft.com/maml/internal" xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" blockDefault="#all" xml:lang="en">
-  <!-- Schema documentation -->
+  
   <annotation>
     <documentation>This schema defines attributes and simpleTypes that can be referenced from any other part of MAML.</documentation>
   </annotation>
-  <!-- include and import declarations -->
+  
   <include schemaLocation="inline.xsd"/>
-  <!-- simpleType declarations -->
+  
   <simpleType name="mediaFileFormatsEnumType">
     <annotation>
       <documentation>Describes the type of media file format.</documentation>
@@ -101,7 +101,7 @@
     <attribute name="uri" type="anyURI"/>
     <attributeGroup ref="maml:contentIdentificationSharingAndConditionGroup"/>
   </attributeGroup>
-  <!-- complexType declarations -->
+  
    <complexType name="textType" mixed="true">
     <annotation>
       <documentation>Includes the common attributes, allows character data and the notLocalizable element.</documentation>
@@ -128,7 +128,7 @@
       <documentation>Intended for creating empty elements without attributes. There is no schema type for empty.</documentation>
     </annotation>
   </complexType>
-  <!-- element declarations -->
+  
   <element name="notLocalizable" type="maml:inlineType">
     <annotation>
       <documentation>Identifies a span of text that should not be localized.</documentation>

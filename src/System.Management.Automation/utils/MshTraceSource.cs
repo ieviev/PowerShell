@@ -16,34 +16,7 @@ namespace System.Management.Automation
     /// It is permitted to subclass <see cref="PSTraceSource"/>
     /// but there is no established scenario for doing this, nor has it been tested.
     /// </remarks>
-    /// <!--
-    /// IF YOU ARE NOT PART OF THE PowerShell DEVELOPMENT TEAM PLEASE
-    /// DO NOT USE THIS CLASS!!!!!
-    ///
-    /// The PSTraceSource class is derived from Switch to provide granular
-    /// control over the tracing in a program.  An instance of PSTraceSource
-    /// is created for each category of tracing such that separate flags
-    /// (filters) can be set. Each flag enables one or more method for tracing.
-    ///
-    /// For instance, the Exception flag will enable tracing on these methods:
-    ///     TraceException.
-    /// </summary>
-    /// <remarks>
-    /// To get an instance of this class a user should define a public static
-    /// field of the type PSTraceSource, decorated it with an attribute of
-    /// PSTraceSourceAttribute, and assign the results of GetTracer to it.
-    /// <newpara/>
-    /// <example>
-    /// <code>
-    /// [PSTraceSourceAttribute("category", "description")]
-    /// public static PSTraceSource tracer = GetTracer("category", "description");
-    /// </code>
-    /// </example>
-    /// <newpara/>
-    /// Other than initial creation of this class through the GetTracer method,
-    /// this class should throw no exceptions. Any call to a PSTraceSource method
-    /// that results in an exception being thrown will be ignored.
-    /// -->
+    /// 
     public partial class PSTraceSource
     {
         /// <summary>

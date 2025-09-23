@@ -1,7 +1,4 @@
-<!--=================================================================
-// Copyright (c) Microsoft Corporation.
-// Licensed under the MIT License.
-==================================================================-->
+
 
 <ResourceDictionary
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -13,7 +10,7 @@
     xmlns:Microsoft_Windows_Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero">
 
 
-    <!--  ImageButtonBase Start -->
+    
     <controls:ImageButtonToolTipConverter x:Key="imageButtonToolTipConverter"/>
     <LinearGradientBrush x:Key="ImageButtonPressedBrush" StartPoint="0,0" EndPoint="0,1">
         <GradientBrush.GradientStops>
@@ -125,5 +122,5 @@
             </DataTrigger>
         </Style.Triggers>
     </Style>
-    <!--  ImageButtonBase End -->
+    
 </ResourceDictionary>

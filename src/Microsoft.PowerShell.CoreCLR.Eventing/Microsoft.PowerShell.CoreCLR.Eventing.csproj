@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <!-- the following package(s) are from https://github.com/dotnet/corefx -->
+    
     <PackageReference Include="System.Diagnostics.EventLog" Version="10.0.0-rc.1.25451.107" />
   </ItemGroup>
 

@@ -289,9 +289,7 @@ namespace System.Management.Automation.Host
         /// </summary>
         /// <returns>
         /// Hash code for this instance.
-        /// <!--
-        /// consider Width the high-order part of a 64-bit in, and
-        /// Height the lower order half.  Then use the int64.GetHashCode.-->
+        /// 
         /// </returns>
         public override
         int
@@ -597,10 +595,7 @@ namespace System.Management.Automation.Host
         /// </summary>
         /// <returns>
         /// Hash code for this instance.
-        /// <!--consider KeyDown (true == 1, false == 0) the highest-order nibble,
-        ///                ControlKeyState the second to fourth highest-order nibbles
-        ///                VirtualKeyCode the lower-order nibbles of a 32-bit int,
-        ///       Then use the UInt32.GetHashCode.-->
+        /// 
         /// </returns>
         public override
         int
@@ -670,8 +665,7 @@ namespace System.Management.Automation.Host
 
     /// <summary>
     /// Represents a rectangular region of the screen.
-    /// <!--We use this structure instead of System.Drawing.Rectangle because S.D.R
-    /// is way overkill and would bring in another assembly.-->
+    /// 
     /// </summary>
     public
     struct Rectangle
@@ -769,9 +763,7 @@ namespace System.Management.Automation.Host
         /// Initializes a new instance of the Rectangle class and defines the Left, Top, Right, and Bottom values
         /// by <paramref name="upperLeft"/>, the upper left corner and <paramref name="lowerRight"/>, the lower
         /// right corner.
-        /// <!--
-        /// Added based on feedback from review with BCL PM.
-        /// -->
+        /// 
         /// </summary>
         /// <param name="upperLeft">
         /// The Coordinates of the upper left corner of the Rectangle
@@ -828,8 +820,7 @@ namespace System.Management.Automation.Host
         /// </summary>
         /// <returns>
         /// Hash code for this instance.
-        /// <!-- consider (Top XOR Bottom) the high-order part of a 64-bit int,
-        ///                (Left XOR Right) the lower order half.  Then use the int64.GetHashCode.-->
+        /// 
         /// </returns>
         /// <exception/>
         public override
@@ -1053,8 +1044,7 @@ namespace System.Management.Automation.Host
 
         /// <summary>
         /// Overrides <see cref="System.Object.GetHashCode"/>
-        /// <!-- consider (ForegroundColor XOR BackgroundColor) the high-order part of a 32-bit int,
-        ///      and Character the lower order half.  Then use the int32.GetHashCode.-->
+        /// 
         /// </summary>
         /// <returns>
         /// Hash code for this instance.
@@ -1178,10 +1168,7 @@ namespace System.Management.Automation.Host
         /// Gets or sets the color used to render characters on the screen buffer. Each character cell in the screen buffer can
         /// have a separate foreground color.
         /// </summary>
-        /// <!--Design note: we separate Foreground and Background colors into separate properties rather than having a single
-        /// property that is a ColorAttribute.  While a single property that takes a struct is consistent with all of our
-        /// other properties that take structs (e.g. -Position, -Size), I anticipate that the more common use-case for color
-        /// is to just change the foreground color.-->
+        /// 
         /// <seealso cref="System.Management.Automation.Host.PSHostRawUserInterface.BackgroundColor"/>
         public abstract
         ConsoleColor

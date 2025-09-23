@@ -1,12 +1,12 @@
-<!-- Anything that looks like this is a comment and can't be seen after the Pull Request is created. -->
+
 
 # PR Summary
 
-<!-- Summarize your PR between here and the checklist. -->
+
 
 ## PR Context
 
-<!-- Provide a little reasoning as to why this Pull Request helps and why you have opened it. -->
+
 
 ## PR Checklist
 
@@ -19,12 +19,12 @@
   - [ ] None
   - **OR**
   - [ ] [Experimental feature(s) needed](https://github.com/MicrosoftDocs/PowerShell-Docs/blob/main/reference/7.5/Microsoft.PowerShell.Core/About/about_Experimental_Features.md)
-    - [ ] Experimental feature name(s): <!-- Experimental feature name(s) here -->
+    - [ ] Experimental feature name(s): 
 - **User-facing changes**
   - [ ] Not Applicable
   - **OR**
   - [ ] [Documentation needed](https://github.com/PowerShell/PowerShell/blob/master/.github/CONTRIBUTING.md#pull-request---submission)
-    - [ ] Issue filed: <!-- Number/link of that issue here -->
+    - [ ] Issue filed: 
 - **Testing - New and feature**
   - [ ] N/A or can only be tested interactively
   - **OR**

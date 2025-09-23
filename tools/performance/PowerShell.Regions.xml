@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8' standalone='yes'?>
 <?Copyright (c) Microsoft Corporation.?>
-<!-- See MSDN docs about 'region of interest': https://learn.microsoft.com/windows-hardware/test/wpt/regions-of-interest -->
+
 <InstrumentationManifest>
    <Instrumentation>
       <Regions>
@@ -15,11 +15,11 @@
             </Region>
             <Region Guid="{659ff11f-ad6f-4cae-b6be-f3fc58fa9a18}" Name="Load-User-Profiles" FriendlyName="Loading user profiles">
                <Start>
-                   <!-- This is the telemetry event we report on startup -->
+                   
                    <Duration Provider="{816ebd75-f7ab-59c0-e2f0-bddfeed66ac2}" Id="30" Version="0" Duration="ProfileLoadTime" Multiplier="1000000" />
                </Start>
                <Stop>
-                   <!-- This is the same event as in Start, which is extremely close, but not precisely when we recorded  -->
+                   
                    <Event Provider="{816ebd75-f7ab-59c0-e2f0-bddfeed66ac2}" Id="30" Version="0"/>
                </Stop>
             </Region>

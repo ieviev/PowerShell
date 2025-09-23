@@ -6588,19 +6588,7 @@ namespace Microsoft.PowerShell
     /// It takes results of serializing some common types
     /// and rehydrates them back from property bags into live objects.
     /// </summary>
-    /// <!--
-    /// To add a new type for rehydration:
-    /// - Add a new T RehydrateT(PSObject pso) method below
-    /// - Add this method to converters dictionary in the static constructor below
-    /// - If implicit rehydration is required then
-    ///   - Add appropriate types.ps1 xml entries for
-    ///     - SerializationDepth=X
-    ///     - For types depending only on ToString for rehydration set
-    ///       - SerializationMethod=SpecificProperties
-    ///       - PropertySerializationSet=<empty>
-    ///     - TargetTypeForDeserialization=DeserializingTypeConverter
-    ///   - Add a field of that type in unit tests / S.M.A.Test.SerializationTest+RehydratedType
-    /// -->
+    /// 
     public sealed class DeserializingTypeConverter : PSTypeConverter
     {
         #region Infrastructure

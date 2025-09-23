@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- ##################################################################
-Copyright (c) Microsoft Corporation.
-Licensed under the MIT License.
-################################################################### -->
+
 <!DOCTYPE schema [
   <!ENTITY csharpIdentifierLetterCharacterRegex "\p{Lu}\p{Ll}\p{Lt}\p{Lm}\p{Lo}\p{Nl}">
   <!ENTITY csharpIdentifierFirstCharacterRegex "&csharpIdentifierLetterCharacterRegex;_">
@@ -23,37 +20,7 @@ Licensed under the MIT License.
   <!ENTITY powerShellCmdletParameterRegex "[&powerShellCmdletParameterCharacterRegex;]{1,100}">
   <!ENTITY powerShellParameterSetRegex "[^,;]{1,100}">
 ]>
-<!--
- csharpIdentifierRegex based on C# Language Specification 3.0, section 2.4.2 Idenfifiers
- - the C# spec allows \p{Pc}\p{Cf}\p{Mn}\{Mc} in csharpIdentifierOtherCharacterRegex,
-   but those characters classes seem risky wrt code injection attacks, so they were
-   removed above.
-   - '_' (ASCII 95) is the only character in \p{Pc} class out of the first 0..255 characters
-   - No characters in the first 0..255 characters belong to \p{Cf}, \p{Mn}, \p{Mc}
 
- clrTypeRegex and clrTypeSpecialCharacterRegex are based on https://learn.microsoft.com/dotnet/framework/reflection-and-codedom/specifying-fully-qualified-type-names
-
- clrTypeSpecialCharacterRegex includes the following characters;
-
-   - ',' - part of ReflectionDimension and TypeName productions in BNF
-   - '=' - part of AssemblyProperty production in BNF
-   - ' ' - unspecified in the docs, but apparently allowed (i.e. between NamespaceTypeName and AssemblyNameSpec in the TypeName production
-   - '+' - part of NestedTypeName production in BNF
-   - '&amp;' - part of ReferenceTypeSpec production in BNF
-   - '*' - part of ReflectionDimension production in BNF
-   - '[' and ']' - part of ArrayTypeSpec production in BNF
-   - '.' - part of ReflectionDimension and NamespaceTypeName productions in BNF
-   - '\' - an escape character
-   - '-' - required for Culture property of an Assembly.
-           RFC-1766 defines the format of a culture identifier as:
-              Language-Tag = Primary-tag *( "-" Subtag )
-              Primary-tag = 1*8ALPHA
-              Subtag = 1*8ALPHA
-   - '&quot;' - unspecified in the docs, but used in the examples (i.e. Culture="")
-
-
-
--->
 <xsd:schema
     elementFormDefault="qualified"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
@@ -88,8 +55,8 @@ Licensed under the MIT License.
     </xsd:unique>
   </xsd:element>
 
-  <!-- ############################################################ -->
-  <!-- # ENUM ##################################################### -->
+  
+  
 
   <xsd:complexType name="EnumMetadata">
     <xsd:sequence>
@@ -155,8 +122,8 @@ Licensed under the MIT License.
     </xsd:sequence>
   </xsd:complexType>
 
-  <!-- ############################################################ -->
-  <!-- # CLASS #################################################### -->
+  
+  
 
   <xsd:complexType name="ClassMetadata">
 
@@ -275,8 +242,8 @@ Licensed under the MIT License.
 
   </xsd:complexType>
 
-  <!-- ############################################################ -->
-  <!-- # CMDLETS ################################################## -->
+  
+  
 
   <xsd:complexType name="InstanceCmdletMetadata">
     <xsd:annotation>
@@ -431,8 +398,8 @@ Licensed under the MIT License.
     </xsd:attribute>
   </xsd:complexType>
 
-  <!-- ############################################################ -->
-  <!-- # METHODS ################################################## -->
+  
+  
 
   <xsd:complexType name="StaticMethodMetadata">
     <xsd:complexContent>
@@ -548,8 +515,8 @@ Licensed under the MIT License.
     <xsd:attribute name="DefaultValue" type="xsd:string" use="optional" />
   </xsd:complexType>
 
-  <!-- ############################################################ -->
-  <!-- # PROPERTIES METADATA ###################################### -->
+  
+  
 
   <xsd:complexType name="GetCmdletParameters">
     <xsd:annotation>
@@ -750,8 +717,8 @@ Licensed under the MIT License.
     </xsd:sequence>
   </xsd:complexType>
 
-  <!-- ############################################################ -->
-  <!-- # COMMON PROPERTIES/PARAMETERS METADATA##################### -->
+  
+  
 
   <xsd:complexType name="CmdletParameterMetadataForStaticMethodParameter">
     <xsd:complexContent>
@@ -817,14 +784,14 @@ Licensed under the MIT License.
           <xsd:attribute name="Max" type="xsd:nonNegativeInteger" use="required" />
         </xsd:complexType>
       </xsd:element>
-      <!-- ValidatePattern omitted - CDXML does not allow DOS attacks against PS client -->
+      
       <xsd:element name="ValidateRange" minOccurs="0">
         <xsd:complexType>
           <xsd:attribute name="Min" type="xsd:integer" use="required" />
           <xsd:attribute name="Max" type="xsd:integer" use="required" />
         </xsd:complexType>
       </xsd:element>
-      <!-- ValidateScript omitted - CDXML does not allow execution of arbitrary code in PS client -->
+      
       <xsd:element name="ValidateSet" minOccurs="0">
         <xsd:complexType>
           <xsd:sequence>
@@ -918,8 +885,8 @@ Licensed under the MIT License.
 
   </xsd:complexType>
 
-  <!-- ############################################################ -->
-  <!-- # SIMPLE TYPES ############################################# -->
+  
+  
 
   <xsd:simpleType name="NonEmptyListOfParameterSetNames">
     <xsd:restriction>

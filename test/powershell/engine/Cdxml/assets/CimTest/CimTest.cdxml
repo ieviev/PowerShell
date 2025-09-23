@@ -3,13 +3,7 @@
     <Version>1.0.0.0</Version>
     <DefaultNoun>CimTest</DefaultNoun>
     <InstanceCmdlets>
-      <!--
-
-      //
-      // Get-CimTest
-      //
-
-      -->
+      
       <GetCmdletParameters DefaultCmdletParameterSet="Id">
         <QueryableProperties>
           <Property PropertyName="Id">
@@ -48,7 +42,7 @@
         </GetCmdletParameters>
       </Cmdlet>
 
-    <!-- Set-CimTest -->
+    
       <Cmdlet>
         <CmdletMetadata Verb="Set" ConfirmImpact="Medium" Aliases="scimt"/>
         <Method MethodName="cim:ModifyInstance">

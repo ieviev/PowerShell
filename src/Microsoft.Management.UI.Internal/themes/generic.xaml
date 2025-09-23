@@ -1,7 +1,4 @@
-<!--=================================================================
-// Copyright (c) Microsoft Corporation.
-// Licensed under the MIT License.
-==================================================================-->
+
 
 <ResourceDictionary x:Uid="MainResourceDictionary" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -38,9 +35,7 @@
     <Geometry x:Key="LeftFacingOpenArrow">M205.63696,8.9046901 L201.73368,12.456607 205.68294,16.093484</Geometry>
 
 
-    <!--=================================================================
-            Designer Style Resources Xaml
-        ==================================================================-->
+    
 
     <Style x:Key="FocusVisual_Style">
         <Setter Property="Control.Template">
@@ -109,7 +104,7 @@
         </Border>
     </ControlTemplate>
 
-    <!--This is for themeing to make sure all textblocks behave as expected -->
+    
     <Style TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
     </Style>
@@ -122,7 +117,7 @@
         <Setter Property="TextBlock.Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
     </Style>
 
-    <!-- Style for Expand Collapse Chevron: points down -->
+    
     <Style x:Key="GeneralExpandCollapseArrowStyle" TargetType="{x:Type Path}">
         <Setter Property="Data" Value="{StaticResource SingleChevron}"/>
         <Setter Property="Width" Value="10"/>
@@ -145,7 +140,7 @@
         </Setter>
     </Style>
 
-    <!-- Points Right  Use for Nav Pane, CE Etc. -->
+    
     <Style x:Key="GeneralArrowStyle" TargetType="{x:Type Path}">
         <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="Stroke" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
@@ -155,7 +150,7 @@
         <Setter Property="Data" Value="{StaticResource NavPane_ListViewItem_RightArrow}"/>
     </Style>
 
-    <!-- Points Down Use for menus and the like -->
+    
     <Style x:Key="GeneralArrowStyleDown" TargetType="{x:Type Path}" BasedOn="{StaticResource GeneralArrowStyle}">
         <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
         <Setter Property="RenderTransform">
@@ -220,7 +215,7 @@
     </Style>
 
 
-    <!-- Pop Up border a la Column Explorer -->
+    
     <Style x:Key="General_PopUp_InnerBorder" TargetType="{x:Type Border}" >
         <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
         <Setter Property="Padding" Value="8,4,8,8"/>
@@ -246,13 +241,13 @@
         <Setter Property="Padding" Value="4,4,4,4"/>
     </Style>
 
-    <!--Style for NP TabItem-->
+    
     <Style x:Key="MUX_TabControlStyle" TargetType="{x:Type TabControl}">
         <Setter Property="BorderThickness" Value="0,1,0,0"/>
         <Setter Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>
     </Style>
 
-    <!--Style for NP TabItem-->
+    
     <Style x:Key="MUX_TabItemStyle" TargetType="{x:Type TabItem}">
     </Style>
 
@@ -261,7 +256,7 @@
         <Setter Property="Stretch" Value="Uniform" />
         <Setter Property="Fill" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
         <Style.Triggers>
-            <!-- Use different colors if the button is disabled -->
+            
             <Trigger Property="ButtonBase.IsEnabled" Value="False">
                 <Setter Property="Fill" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
             </Trigger>
@@ -312,7 +307,7 @@
                     </BeginStoryboard>
                 </Trigger.ExitActions>
             </Trigger>
-            <!-- Use different colors if the button is disabled -->
+            
             <Trigger Property="IsEnabled" Value="False">
                 <Setter TargetName="BackgroundCircle" Property="Stroke" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
             </Trigger>
@@ -333,14 +328,12 @@
         <Setter Property="Template" Value="{StaticResource ExpanderButton_Template}" />
     </Style>
 
-    <!-- End of Styles from Tile that are used in ManagementList-->
+    
 
 
-    <!--=================================================================
-        Converts Xaml
-    ==================================================================-->
+    
 
-    <!-- Converters -->
+    
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
 
     <local:ValidatingSelectorValueToDisplayNameConverter x:Key="ValidatingSelectorValueToDisplayNameConverter" />
@@ -369,12 +362,8 @@
     <local:InputFieldBackgroundTextConverter x:Key="InputFieldBackgroundTextConverter" />
 
 
-    <!--=================================================================
-        Icons Xaml
-    ==================================================================-->
-    <!--=================================================================
-            Add Filter Rule Picker Default Templates
-        ==================================================================-->
+    
+    
 
     <DataTemplate x:Key="AddFilterRulePicker_PickerBase_Header_Template">
         <StackPanel Orientation="Horizontal">
@@ -470,7 +459,7 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <!-- Shortcut Rules -->
+                
                 <ScrollViewer x:Name="ShortcutRulesScrollViewer"
                               KeyboardNavigation.TabNavigation="Once"
                               HorizontalScrollBarVisibility="Disabled"
@@ -504,7 +493,7 @@
                     </StackPanel>
                 </ScrollViewer>
 
-                <!--Footer Border-->
+                
 
                 <Grid Grid.Row="2"
                       Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
@@ -554,7 +543,7 @@
 
         <DataTemplate.Triggers>
 
-            <!--Hide the separator if there are no shortcut filter rules -->
+            
             <DataTrigger Binding="{Binding Path=ShortcutFilterRules.Count, RelativeSource={RelativeSource AncestorType={x:Type local:AddFilterRulePicker}}}"
                          Value="0">
                 <Setter TargetName="PART_RulesSeparator"
@@ -562,7 +551,7 @@
                         Value="Collapsed" />
             </DataTrigger>
 
-            <!--Hide the separator if there are no column filter rules-->
+            
             <DataTrigger Binding="{Binding Path=ColumnFilterRules.Count, RelativeSource={RelativeSource AncestorType={x:Type local:AddFilterRulePicker}}}"
                          Value="0">
                 <Setter TargetName="PART_RulesSeparator"
@@ -573,7 +562,7 @@
         </DataTemplate.Triggers>
     </DataTemplate>
 
-    <!--Add Filter Rule Picker Base Style-->
+    
     <Style x:Key="AddFilterRulePicker_PickerBase_Style"
            TargetType="{x:Type local:PickerBase}">
         <Setter Property="HeaderTemplate"
@@ -584,7 +573,7 @@
                 Value="AddFilterRulePicker" />
     </Style>
 
-    <!--Add Filter Rule Picker-->
+    
     <Style TargetType="{x:Type local:AddFilterRulePicker}">
         <Setter Property="IsTabStop"
                 Value="False" />
@@ -620,12 +609,10 @@
     </Style>
 
 
-    <!--=================================================================
-            Column Picker Xaml
-        ==================================================================-->
+    
 
-    <!--ColumnPicker Styles-->
-    <!-- These styles are available for theming the components of the ColumnPicker dialog. -->
+    
+    
     <Style x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type local:ColumnPicker}, ResourceId=CPWindowStyle}"
            TargetType="{x:Type Window}">
         <Setter Property="Width"
@@ -756,9 +743,7 @@
     </Style>
 
 
-    <!--=================================================================
-            Filter Rule Panel Default Templates
-        ==================================================================-->
+    
 
     <Style x:Key="OperatorDropDown_Button_Style" TargetType="{x:Type ButtonBase}">
         <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.HotTrackBrushKey}}" />
@@ -943,20 +928,20 @@
                 Text="{Binding Path=DisplayName, Mode=OneWay}" />
 
             <StackPanel Orientation="Horizontal">
-                <!--Rules Selector-->
+                
                 <local:FilterRulePanelContentPresenter Content="{Binding Path=AvailableRules}" />
 
-                <!--Rule Input-->
+                
                 <local:FilterRulePanelContentPresenter Content="{Binding Path=AvailableRules.SelectedValue}" />
 
-                <!--Delete Button-->
+                
                 <local:AutomationButton Style="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type local:FilterRulePanel}, ResourceId=RemoveFilterItemButtonStyle}}" />
             </StackPanel>
         </WrapPanel>
     </DataTemplate>
 
     <DataTemplate x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type local:FilterRulePanel}, ResourceId=CatchAllTemplate}">
-        <!--The ContentTemplateSelector must be explicitly set to null, otherwise infinite loops are possible-->
+        
         <ContentPresenter ContentTemplateSelector="{x:Null}" />
     </DataTemplate>
 
@@ -1032,7 +1017,7 @@
 
         <DataTemplate.Triggers>
 
-            <!--Show Error Icon When Input Is Invalid-->
+            
             <Trigger SourceName="InputField"
                      Property="Validation.HasError"
                      Value="True">
@@ -1041,7 +1026,7 @@
                         Value="Visible" />
             </Trigger>
 
-            <!--Show error popup when input is invalid and when the mouse is over the textbox-->
+            
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
                     <Condition
@@ -1058,7 +1043,7 @@
                     Value="True" />
             </MultiDataTrigger>
 
-            <!--Show error popup when input is invalid and when the textbox has focus-->
+            
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
                     <Condition
@@ -1124,9 +1109,7 @@
         </DataTemplate.Triggers>
     </DataTemplate>
 
-    <!--=================================================================
-            Filter Rule Panel
-        ==================================================================-->
+    
 
     <Style TargetType="{x:Type local:FilterRulePanel}">
         <Setter Property="IsTabStop" Value="False" />
@@ -1137,7 +1120,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:FilterRulePanel}">
-                    <!--Adding AdornerDecorator with implicit style for Control to fix Win7 bug 393988-->
+                    
                     <AdornerDecorator>
                         <AdornerDecorator.Resources>
                             <Style
@@ -1192,11 +1175,9 @@
     </Style>
 
 
-    <!--=================================================================
-            Inner List Xaml
-        ==================================================================-->
+    
 
-    <!--MenuItem Style definition -->
+    
     <ControlTemplate x:Key="{x:Static MenuItem.TopLevelItemTemplateKey}"
                      TargetType="MenuItem">
         <Border Name="Border">
@@ -1296,7 +1277,7 @@
     </local:ScalableImageSource>
 
 
-    <!--Inner List Default Styles-->
+    
     <Style x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type local:ManagementList}, ResourceId=ManagementListDefaultInnerListStyle}"
            TargetType="{x:Type local:InnerList}">
         <Style.Resources>
@@ -1308,7 +1289,7 @@
         <Setter Property="AutomationProperties.Name" Value="{Binding Path=(AutomationProperties.Name), RelativeSource={RelativeSource AncestorType={x:Type local:ManagementList}}}" />
     </Style>
 
-    <!--Style definition specially for column header -->
+    
     <Style x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type local:ManagementList}, ResourceId=ManagementList_GridViewColumnHeader_Style}"
            TargetType="{x:Type GridViewColumnHeader}">
         <Setter Property="Background"
@@ -1353,7 +1334,7 @@
                         </classictheme:ClassicBorderDecorator>
 
 
-                        <!-- Sort Glyph -->
+                        
                         <local:ScalableImage x:Name="PART_SortAdorner"
                                              VerticalAlignment="Top"
                                              Margin="1"
@@ -1366,7 +1347,7 @@
                         </Canvas>
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <!-- Disable the header if there is no content. This prevents the empty final column from getting focus or having visual effects. -->
+                        
                         <Trigger Property="ContentControl.HasContent" Value="False">
                             <Setter Property="UIElement.IsEnabled" Value="False" />
                         </Trigger>
@@ -1398,9 +1379,7 @@
     </Style>
 
 
-    <!--=================================================================
-            List Organizer Item Style
-        ==================================================================-->
+    
 
     <Style TargetType="{x:Type local:ListOrganizerItem}">
         <Setter Property="IsTabStop" Value="false" />
@@ -1544,9 +1523,7 @@
     </Style>
 
 
-    <!--=================================================================
-            List Organizer Style
-        ==================================================================-->
+    
 
     <ControlTemplate x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type local:ListOrganizer}, ResourceId=ListOrganizerItemTemplateKey}"
         TargetType="{x:Type ListBoxItem}">
@@ -1571,7 +1548,7 @@
                                 <Style x:Key="{x:Type ListBoxItem}"
                             TargetType="{x:Type ListBoxItem}">
 
-                                    <!-- By default, bind the automation name to a 'Name' property on the data. If the solution needs a different property, they need to override this style. -->
+                                    
                                     <Setter Property="AutomationProperties.Name" Value="{Binding Path=Name}" />
 
                                     <Setter Property="HorizontalContentAlignment"
@@ -1642,11 +1619,9 @@
     </Style>
 
 
-    <!--=================================================================
-            Management List Xaml
-        ==================================================================-->
+    
 
-    <!--Show Filter Panel Toggle Button Style-->
+    
     <Style x:Key="ManagementList_ShowFilterPanel_ToggleButton_Style"
            TargetType="{x:Type ToggleButton}"
            BasedOn="{StaticResource ExpanderButton_Style}">
@@ -1665,7 +1640,7 @@
         </Style.Triggers>
     </Style>
 
-    <!--View Manager Style-->
+    
     <Style x:Key="ManagementList_ViewManager_ListOrganizer_Style"
            TargetType="{x:Type local:ListOrganizer}"
            BasedOn="{StaticResource {x:Type local:ListOrganizer}}">
@@ -1698,7 +1673,7 @@
                     <StackPanel Orientation="Horizontal" Margin="5,2,5,2">
                         <TextBlock x:Name="QueryText"  VerticalAlignment="Center" Text="{x:Static default:XamlLocalizableResources.AutoResXGen_ManagementList2_Content_33}" />
 
-                        <!--Arrow Glyph-->
+                        
                         <Path x:Name="ViewSave_ArrowDown" Style="{StaticResource GeneralArrowStyleDown}" Margin="10,0,0,0"/>
 
                     </StackPanel>
@@ -1730,7 +1705,7 @@
         </Style.Triggers>
     </Style>
 
-    <!-- Start Filter Button Style-->
+    
     <Style x:Key="ManagementList_StartFilter_Button_Style" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
         <Setter Property="ContentTemplate">
             <Setter.Value>
@@ -1754,7 +1729,7 @@
         <Setter Property="MinWidth" Value="75" />
     </Style>
 
-    <!-- Stop Filter Button Style-->
+    
     <Style x:Key="ManagementList_StopFilter_Button_Style" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
         <Setter Property="ContentTemplate">
             <Setter.Value>
@@ -1778,7 +1753,7 @@
         <Setter Property="MinWidth" Value="75" />
     </Style>
 
-    <!--Clear Filter Style-->
+    
     <Style x:Key="ManagementList_ClearFilter_Button_Style" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
         <Setter Property="ContentTemplate">
             <Setter.Value>
@@ -1810,7 +1785,7 @@
         </Style.Triggers>
     </Style>
 
-    <!-- DimmingGeneralArrowStyleDown -->
+    
     <Style
         x:Key="DimmingGeneralArrowStyleDown"
         TargetType="{x:Type Path}"
@@ -1826,24 +1801,24 @@
         </Style.Triggers>
     </Style>
 
-    <!--Save View Header Template-->
+    
     <DataTemplate x:Key="ManagementList_SaveView_Header_Template">
         <StackPanel Orientation="Horizontal" Margin="2,0,5,0">
 
-            <!--Save Glyph-->
+            
             <local:ScalableImage Style="{StaticResource Dimming_Image_Style}">
                 <local:ScalableImage.Source>
                     <local:ScalableImageSource Image="pack://application:,,,/Microsoft.Powershell.GraphicalHost;component/resources/Graphics/Save16.png" Size="14,14" />
                 </local:ScalableImage.Source>
             </local:ScalableImage>
 
-            <!--Arrow Glyph-->
+            
             <Path x:Name="ViewSave_ArrowDown" Style="{StaticResource DimmingGeneralArrowStyleDown}" Margin="10,0,0,0"/>
 
         </StackPanel>
     </DataTemplate>
 
-    <!--Save View Content Template-->
+    
     <DataTemplate x:Key="ManagementList_SaveView_Content_Template">
         <Border Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
                     BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"
@@ -1852,14 +1827,14 @@
                     Padding="2,4,2,0">
 
             <StackPanel>
-                <!--Info Text-->
+                
                 <local:AutomationTextBlock Text="{x:Static default:XamlLocalizableResources.AutoResXGen_ManagementList2_Text_166}"
                                          Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
                                          TextWrapping="Wrap"
                                          AutomationProperties.AutomationId="SaveViewsPromptText"
                                          Margin="2" />
 
-                <!--Name Of View TextBox-->
+                
                 <TextBox x:Name="PART_ViewNameTextBox"
                              AutomationProperties.Name="{Binding Path=Text, ElementName=PART_ViewNameTextBox}"
                              Margin="2">
@@ -1894,7 +1869,7 @@
                         </Rectangle.Fill>
                     </Rectangle>
 
-                    <!--Ok Button-->
+                    
                     <local:AutomationButton Grid.Row="1"
                             HorizontalAlignment="Right"
                             Content="{x:Static default:XamlLocalizableResources.AutoResXGen_ManagementList2_Content_186}"
@@ -1905,7 +1880,7 @@
                             MinWidth="75"
                             Margin="5,3,5,3" />
 
-                    <!--Cancel Button-->
+                    
                     <local:AutomationButton Grid.Column="1"
                             Grid.Row="1"
                             Content="{x:Static default:XamlLocalizableResources.AutoResXGen_ManagementList2_Content_196}"
@@ -1920,7 +1895,7 @@
         </Border>
     </DataTemplate>
 
-    <!--Save View Style-->
+    
     <Style x:Key="ManagementList_SaveView_PickerBase_Style" TargetType="{x:Type local:PickerBase}">
         <Setter Property="HeaderTemplate" Value="{StaticResource ManagementList_SaveView_Header_Template}" />
         <Setter Property="ContentTemplate" Value="{StaticResource ManagementList_SaveView_Content_Template}" />
@@ -1937,9 +1912,9 @@
         </Setter>
     </Style>
 
-    <!-- Search container style -->
+    
     <Style x:Key="SearchContainer_Style" TargetType="{x:Type Border}">
-        <!-- This negative margin is needed in order to not get a 1 px semi transparent line between title and search. Don't know why. -->
+        
         <Setter Property="Margin" Value="0,-1,0,0"/>
         <Style.Triggers>
             <DataTrigger Binding="{Binding Path=IsFilterShown, RelativeSource={RelativeSource AncestorType={x:Type local:ManagementList}}}" Value="True">
@@ -1948,9 +1923,9 @@
         </Style.Triggers>
     </Style>
 
-    <!-- Filter panel container style -->
+    
     <Style x:Key="FilterPanelContainer_Style" TargetType="{x:Type Grid}">
-        <!-- This negative margin is needed in order to not get a 1 px semi transparent line between title and search. -->
+        
         <Setter Property="Margin" Value="0,-1,0,0"/>
         <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
     </Style>
@@ -1962,7 +1937,7 @@
                 <Setter Property="AutomationProperties.AutomationId"
                         Value="ListViewItem" />
 
-                <!-- By default, bind the automation name to a 'Name' property on the data. If the solution needs a different property, they need to override this style. -->
+                
                 <Setter Property="AutomationProperties.Name"
                         Value="{Binding Path=Name}" />
             </Style>
@@ -1974,14 +1949,14 @@
 
             <Style TargetType="{x:Type local:SearchBox}">
                 <Style.Triggers>
-                    <!-- Change the default searchbox background text to "Filter" for "live" mode -->
+                    
                     <DataTrigger Binding="{Binding Evaluator.StartFilterOnExpressionChanged, RelativeSource={RelativeSource AncestorType={x:Type local:ManagementList}}}" Value="True">
                         <Setter Property="BackgroundText" Value="{x:Static default:XamlLocalizableResources.ManagementList_SearchBox_BackgroundText_Live}" />
                     </DataTrigger>
                 </Style.Triggers>
             </Style>
 
-            <!-- Default style for the Rule Picker -->
+            
             <Style TargetType="{x:Type local:AddFilterRulePicker}">
                 <Setter Property="AddFilterRulesCommand"
                         Value="{x:Static local:FilterRulePanel.AddRulesCommand}" />
@@ -2017,7 +1992,7 @@
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
 
-                        <!--Search Box, Show Query ToggleButton, Views DropDown-->
+                        
                         <Border x:Name="SearchBG" Style="{StaticResource SearchContainer_Style}">
                             <Grid Margin="3, 2, 3, 4">
                                 <Grid.ColumnDefinitions>
@@ -2025,7 +2000,7 @@
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
 
-                                <!--Search Box-->
+                                
                                 <ContentPresenter
                                     x:Name="PART_SearchBox"
                                     Content="{TemplateBinding SearchBox}">
@@ -2046,13 +2021,13 @@
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
 
-                                    <!-- Start Filter Button-->
+                                    
                                     <local:AutomationButton
                                         x:Name="PART_StartFilterButton"
                                         Margin="1,0,7,0"
                                         Style="{StaticResource ManagementList_StartFilter_Button_Style}" />
 
-                                    <!-- Stop Filter Button-->
+                                    
                                     <local:AutomationButton
                                         x:Name="PART_StopFilterButton"
                                         Grid.Column="1"
@@ -2060,21 +2035,21 @@
                                         Visibility="Collapsed"
                                         Style="{StaticResource ManagementList_StopFilter_Button_Style}" />
 
-                                    <!--Views DropDown-->
+                                    
                                     <local:ListOrganizer x:Name="PART_ViewManager"
                                                      ToolTip="{x:Static default:XamlLocalizableResources.AutoResXGen_ManagementList_ToolTip_314}"
                                                      Margin="5,0,0,0"
                                                      Grid.Column="2"
                                                      Style="{StaticResource ManagementList_ViewManager_ListOrganizer_Style}" />
 
-                                    <!--Save View Picker-->
+                                    
                                     <local:PickerBase x:Name="PART_ViewSaver"
                                                     Grid.Column="3"
                                                       ToolTip="{x:Static default:XamlLocalizableResources.AutoResXGen_ManagementList2_AutomationPropertiesName_314}"
                                                   AutomationProperties.Name="{x:Static default:XamlLocalizableResources.AutoResXGen_ManagementList2_AutomationPropertiesName_314}"
                                                   Style="{StaticResource ManagementList_SaveView_PickerBase_Style}" />
 
-                                    <!--Show Query ToggleButton-->
+                                    
                                     <local:ExpanderButton x:Name="buttonShowFilterPanel"  Grid.Column="4"
                                               Style="{StaticResource ManagementList_ShowFilterPanel_ToggleButton_Style}" />
 
@@ -2083,7 +2058,7 @@
                             </Grid>
                         </Border>
 
-                        <!--FilterPanel, Add Criteria, Filter Description, Clear Filter Button-->
+                        
                         <Grid x:Name="filterPanelRow" Grid.Row="1"
                               Style="{StaticResource FilterPanelContainer_Style}">
 
@@ -2092,7 +2067,7 @@
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
 
-                            <!--Filter Panel-->
+                            
                             <ScrollViewer
                                 x:Name="PART_FilterPanelScroller"
                                 Visibility="Collapsed"
@@ -2113,19 +2088,19 @@
                                 Orientation="Horizontal"
                                 Grid.Row="1"
                                 Margin="4,0,0,4">
-                                <!--Add Criteria Picker-->
+                                
                                 <ContentPresenter x:Name="addFilterRulePanelCriteriaButton"
                                                   Visibility="Collapsed"
                                                   Content="{TemplateBinding AddFilterRulePicker}" />
 
-                                <!-- Filter Description -->
+                                
                                 <TextBlock
                                     x:Name="PART_FilterDescription"
                                     Margin="0,7,7,5"
                                     VerticalAlignment="Top"
                                     Text="{x:Static default:XamlLocalizableResources.AutoResXGen_ManagementList_Text_392}"/>
 
-                                <!-- Clear Filter Button-->
+                                
                                 <local:AutomationButton x:Name="PART_ClearAllButton"
                                         VerticalAlignment="Bottom"
                                         AutomationProperties.Name="{x:Static default:XamlLocalizableResources.AutoResXGen_ManagementList_AutomationPropertiesName_395}"
@@ -2134,7 +2109,7 @@
                             </StackPanel>
                         </Grid>
 
-                        <!-- Progress Indicator -->
+                        
                         <local:WaitRing
                             x:Name="PART_ProgressIndicator"
                             Width="25"
@@ -2146,7 +2121,7 @@
                             Visibility="Collapsed"
                             Panel.ZIndex="1" />
 
-                        <!--No Matches Found Message-->
+                        
                         <local:AutomationTextBlock
                             x:Name="PART_NoMatchesFoundMessage"
                             Grid.Row="3"
@@ -2160,7 +2135,7 @@
                             Visibility="Collapsed"
                             Panel.ZIndex="1" />
 
-                        <!--Inner List-->
+                        
                         <ContentPresenter x:Name="PART_InnerList" Content="{TemplateBinding List}"
                                           Grid.Row="3"
                                           Width="Auto"/>
@@ -2174,7 +2149,7 @@
                             <Setter TargetName="PART_FilterDescription" Property="Visibility" Value="Collapsed" />
                         </DataTrigger>
 
-                        <!-- Hide the Clear All button if the filter panel is collapsed and the filter isn't applied -->
+                        
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding Path=IsChecked, ElementName=buttonShowFilterPanel}" Value="False" />
@@ -2185,18 +2160,18 @@
                             </MultiDataTrigger.Setters>
                         </MultiDataTrigger>
 
-                        <!-- Hide the filter description when there are no rules -->
+                        
                         <DataTrigger Binding="{Binding Path=FilterRulePanel.Controller.FilterRulePanelItems.Count, RelativeSource={RelativeSource Self}}" Value="0">
                             <Setter TargetName="PART_FilterDescription" Property="Visibility" Value="Collapsed" />
                         </DataTrigger>
 
-                        <!-- Hide the Start and Stop buttons for "live" mode -->
+                        
                         <DataTrigger Binding="{Binding Evaluator.StartFilterOnExpressionChanged, RelativeSource={RelativeSource Self}}" Value="True">
                             <Setter TargetName="PART_StartFilterButton" Property="Visibility" Value="Collapsed" />
                             <Setter TargetName="PART_StopFilterButton" Property="Visibility" Value="Collapsed" />
                         </DataTrigger>
 
-                        <!-- In "non-live" mode, hide the Start button and show the Stop button when it's enabled -->
+                        
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding Path=IsEnabled, ElementName=PART_StopFilterButton}" Value="True" />
@@ -2208,7 +2183,7 @@
                             </MultiDataTrigger.Setters>
                         </MultiDataTrigger>
 
-                        <!-- Hide the search buttons when the search and filter aren't shown. -->
+                        
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsSearchShown" Value="False" />
@@ -2223,7 +2198,7 @@
                             <Setter TargetName="PART_SearchBox" Property="Visibility" Value="Collapsed" />
                         </Trigger>
 
-                        <!-- Toggle the state of the View Saver -->
+                        
                         <Trigger Property="ViewSaverUserActionState" Value="Hidden">
                             <Setter TargetName="PART_ViewSaver" Property="Visibility" Value="Collapsed" />
                         </Trigger>
@@ -2232,7 +2207,7 @@
                             <Setter TargetName="PART_ViewSaver" Property="IsEnabled" Value="False" />
                         </Trigger>
 
-                        <!-- Toggle the state of the View Manager -->
+                        
                         <Trigger Property="ViewManagerUserActionState" Value="Hidden">
                             <Setter TargetName="PART_ViewManager" Property="Visibility" Value="Collapsed" />
                         </Trigger>
@@ -2241,7 +2216,7 @@
                             <Setter TargetName="PART_ViewManager" Property="IsEnabled" Value="False" />
                         </Trigger>
 
-                        <!-- Hide the filter panel and View Manager when filter isn't shown -->
+                        
                         <Trigger Property="IsFilterShown" Value="False">
                             <Setter TargetName="buttonShowFilterPanel" Property="Visibility" Value="Collapsed" />
                             <Setter TargetName="PART_ViewManager" Property="Visibility" Value="Collapsed" />
@@ -2256,19 +2231,18 @@
                         <DataTrigger Binding="{Binding Path=Evaluator.FilterStatus, RelativeSource={RelativeSource Self}}" Value="Applied">
                             <Setter Property="Background" Value="{StaticResource FilterBackgroundSearch}" TargetName="SearchBG"/>
                             <Setter Property="Background" Value="{StaticResource FilterBackgroundSearch}" TargetName="filterPanelRow"/>
-                            <!-- Force the text to Black since the background will be light -->
+                            
                             <Setter TargetName="buttonShowFilterPanel" Property="Foreground" Value="Black" />
                             <Setter TargetName="PART_FilterPanelScroller" Property="Foreground" Value="Black" />
                             <Setter TargetName="PART_FilterDescription" Property="Foreground" Value="Black" />
                         </DataTrigger>
 
-                        <!-- Hide the list if there are no columns -->
+                        
                         <DataTrigger Binding="{Binding Path=List.Columns.Count, RelativeSource={RelativeSource Self}}" Value="0">
                             <Setter TargetName="PART_InnerList" Property="Visibility" Value="Hidden" />
                         </DataTrigger>
 
-                        <!-- Show the progress indicator if the list is shown, filtering is in progress,
-                             and no items have been retrieved -->
+                        
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
                                 <Condition
@@ -2286,7 +2260,7 @@
                             </MultiDataTrigger.Setters>
                         </MultiDataTrigger>
 
-                        <!-- Show the progress indicator if the list is loading items -->
+                        
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding Path=List.Visibility, RelativeSource={RelativeSource Self}}" Value="Visible" />
@@ -2297,7 +2271,7 @@
                             </MultiDataTrigger.Setters>
                         </MultiDataTrigger>
 
-                        <!--Show the "No Matches Found" Message when the Filter is applied and there are no items-->
+                        
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
                                 <Condition
@@ -2315,7 +2289,7 @@
                             </MultiDataTrigger.Setters>
                         </MultiDataTrigger>
 
-                        <!-- Assume items are loading if there is no data -->
+                        
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding Path=List.ItemsSource, RelativeSource={RelativeSource Self}}" Value="{x:Null}" />
@@ -2333,9 +2307,7 @@
     </Style>
 
 
-    <!--=================================================================
-            Management List Title Xaml
-        ==================================================================-->
+    
 
     <Style x:Key="ManagementListTitle_Title_Style" TargetType="{x:Type local:AutomationTextBlock}" BasedOn="{StaticResource TextTrimmedTextBlockStyle}">
         <Setter Property="VerticalAlignment" Value="Center" />
@@ -2404,13 +2376,13 @@
                     </Setter.Value>
                 </Setter>
                 <Setter Property="Background" Value="{StaticResource FilterBackgroundSearch}" />
-                <!-- Force the text to Black since the background will be light -->
+                
                 <Setter TargetName="PART_Title" Property="Foreground" Value="Black" />
                 <Setter TargetName="PART_TitleShadow" Property="Foreground" Value="Black" />
                 <Setter TargetName="PART_ListStatus" Property="Foreground" Value="Black" />
             </DataTrigger>
 
-            <!--Show Title With View Name-->
+            
             <DataTrigger
                 Binding="{Binding Path=List.CurrentView, Converter={StaticResource IsNotNullConverter}, RelativeSource={RelativeSource Self}}"
                 Value="True">
@@ -2446,9 +2418,7 @@
     </Style>
 
 
-    <!--=================================================================
-            Message Text Box Xaml
-        ==================================================================-->
+    
 
     <Style x:Key="{x:Type local:MessageTextBox}" TargetType="{x:Type local:MessageTextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
         <Setter Property="Margin" Value="1"/>
@@ -2464,7 +2434,7 @@
                                                       BorderBrush="{TemplateBinding BorderBrush}"
                                                       SnapsToDevicePixels="true">
                         <Grid >
-                            <!-- Don't take out this part name. TextBox needs it to draw correctly. -->
+                            
                             <ScrollViewer Name="PART_ContentHost">
                                 <ScrollViewer.Background>
                                     <VisualBrush
@@ -2521,9 +2491,7 @@
     </Style>
 
 
-    <!--=================================================================
-            PickerBase Style
-        ==================================================================-->
+    
     <Style TargetType="local:PickerBase">
         <Setter Property="IsTabStop"
                 Value="False" />
@@ -2563,9 +2531,7 @@
     </Style>
 
 
-    <!--=================================================================
-            SearchBox Xaml
-        ==================================================================-->
+    
 
     <Style x:Key="SearchBox_ClearButton_Style" TargetType="{x:Type ButtonBase}">
         <Setter Property="Control.Template">
@@ -2663,9 +2629,7 @@
     </Style>
 
 
-    <!--=================================================================
-            Waiting Ring Xaml
-        ==================================================================-->
+    
 
     <Pen x:Key="RingBackground" Thickness="30">
         <Pen.Brush>

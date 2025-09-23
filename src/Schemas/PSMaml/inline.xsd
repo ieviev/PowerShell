@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <schema targetNamespace="http://schemas.microsoft.com/maml/2004/10" xmlns:doc="http://schemas.microsoft.com/maml/internal" xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" blockDefault="#all" xml:lang="en">
-  <!-- Schema documentation -->
+  
   <annotation>
     <documentation>This schema aggregates inline elements from other inline schemas.</documentation>
   </annotation>
-  <!-- include and import declarations -->
+  
   <include schemaLocation="inlineCommon.xsd"/>
   <include schemaLocation="inlineUi.xsd"/>
   <include schemaLocation="inlineSoftware.xsd"/>
@@ -29,7 +29,7 @@
       <element ref="command:parameterValueInline"/>
     </choice>
   </group>
-  <!-- complexType declarations -->
+  
   <complexType name="inlineType" mixed="true">
     <annotation>
       <documentation>Describes a simple inline-only content model. It provides both text and elements with similarly simple content models.</documentation>

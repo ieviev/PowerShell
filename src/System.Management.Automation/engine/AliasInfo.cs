@@ -127,10 +127,7 @@ namespace System.Management.Automation
         /// An alias may reference another alias. This property follows the reference
         /// chain of aliases to its end.
         /// </remarks>
-        /// <!--
-        /// If the command didn't resolve to anything but aliases, the UnresolvedCommandName
-        /// property contains the last name the resolution succeeded in finding.
-        /// -->
+        /// 
         public CommandInfo ResolvedCommand
         {
             get

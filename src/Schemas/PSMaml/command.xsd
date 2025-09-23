@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <schema targetNamespace="http://schemas.microsoft.com/maml/2004/4" xmlns:doc="http://schemas.microsoft.com/maml/internal" xmlns:maml="http://schemas.microsoft.com/maml/2004/4" xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
-	<!-- Schema documentation -->
+	
 	<annotation>
 		<documentation>
 			This schema describes the command page type of MAML.
 		</documentation>
 	</annotation>
-	<!-- INCLUDE AND IMPORT DECLARATIONS -->
+	
 	<include schemaLocation="hierarchy.xsd"/>
 	<include schemaLocation="base.xsd"/>
 	<include schemaLocation="developerStructure.xsd"/>
-	<!-- END INCLUDE AND IMPORT DECLARATIONS -->
-	<!-- ROOT ELEMENT DEFINITION -->
+	
+	
 	<element name="commandHelp">
 		<annotation>
 			<documentation>
@@ -20,37 +20,15 @@
 		</annotation>
 		<complexType>
 			<sequence>
-				<!-- [gxie] items missing:
-					defaultverbs
-					class
-					shortdescription
-				-->
-				<!-- [gxie] items moved:
-					name : moved to commandDetails
-					verb : moved to commandDetails
-					noun : moved to commandDetails
-					? Synopsis : mapped to commandDetails.CommandDescription
-				-->
-				<!-- [gxie] items added:
-					keywords
-					commandDetails
-					commandSyntax
-					commandParameters
-					configuration
-				-->
-				<!-- [gxie] items updated:
-					description => DetailedDescription
-					? alertSet => Notes
-					commandExamples => Examples
-					? relatedLinks => SeeAlsoItems
-					commandExceptions => Exceptions
-					commandErrors => Errors
-				-->
+				
+				
+				
+				
 
 				<element ref="maml:keywords"/>
 				<element ref="maml:commandDetails"/>
 				<element ref="maml:description"/>
-				<!-- [gxie] ? will commandSyntax be generated from command Parameters or provided in help content itself-->
+				
 				<element ref="maml:commandSyntax"/>
 				<element ref="maml:commandParameters" minOccurs="0"/>
 				<element ref="maml:inputTypes"/>
@@ -65,12 +43,12 @@
 			<attribute name="contentType" type="token"/>
 		</complexType>
 	</element>
-	<!-- END ROOT ELEMENT DEFINITION -->
-	<!-- ELEMENT AND TYPE DECLARATIONS -->
-	<!-- keywords definition -->
-	<!-- [gxie] ! keywords are not defined yet-->
+	
+	
+	
+	
 	<element name="keywords"/>
-	<!-- commandDetails definition -->
+	
 	<element name="commandDetails">
 		<annotation>
 			<documentation>
@@ -83,7 +61,7 @@
 					<complexType>
 						<complexContent>							
 							<extension base="maml:textType">
-								<!-- [gxie] ? what's the meaning of commandType="provider"-->
+								
 								<attribute name="commandType">
 									<simpleType>
 										<restriction base="token">
@@ -95,14 +73,14 @@
 						</complexContent>
 					</complexType>
 				</element>
-				<!-- [gxie] ? Is this the same thing as synopsis or shot description-->
+				
 				<element name="commandDescription" type="maml:textType"/>
 				<element name="synonyms" minOccurs="0">
 					<complexType>
 						<sequence>
 							<element name="synonym" type="maml:textType" maxOccurs="unbounded"/>
 						</sequence>
-						<!-- [gxie] ? what is usage of contentIdentificationSharingAndConditionGroup-->
+						
 						<attributeGroup ref="maml:contentIdentificationSharingAndConditionGroup"/>
 					</complexType>
 				</element>
@@ -122,8 +100,8 @@
 			<attributeGroup ref="maml:contentIdentificationSharingAndConditionGroup"/>
 		</complexType>
 	</element>
-	<!-- end commandDetails definition -->
-	<!-- commandSyntax definition -->
+	
+	
 	<element name="commandSyntax">
 		<annotation>
 			<documentation>
@@ -152,8 +130,8 @@
 			<attributeGroup ref="maml:contentIdentificationSharingAndConditionGroup"/>
 		</complexType>
 	</element>
-	<!-- end commandSyntax definition -->
-	<!-- commandParameters definition -->
+	
+	
 	<element name="commandParameters">
 		<annotation>
 			<documentation>
@@ -168,15 +146,15 @@
 							<element ref="maml:name"/>
 							<element ref="maml:commandParameterValue"/>
 							<element ref="maml:type"/>
-							<!-- [gxie] ? should we reduce this to simple text -->
+							
 							<element ref="maml:description"/>
-							<!-- [gxie] ? what is the difference of this from commandParameterValue-->
+							
 							<element ref="maml:possibleValues"/>
 							<element name="defaultValue" type="maml:textType"/>
 							<element name="validation">
 								<complexType>
 									<sequence>
-										<!-- [gxie] ? what is the difference between minCount/minLength/minRange -->
+										
 										<element name="minCount" type="maml:integerType"/>
 										<element name="maxCount" type="maml:integerType"/>
 										<element name="minLength" type="maml:integerType"/>
@@ -201,8 +179,8 @@
 			<attributeGroup ref="maml:contentIdentificationSharingAndConditionGroup"/>
 		</complexType>
 	</element>
-	<!-- end commandParameters definition -->
-	<!-- inputTypes definition -->
+	
+	
 	<element name="inputTypes">
 		<annotation>
 			<documentation>
@@ -215,7 +193,7 @@
 					<complexType>
 						<sequence>
 							<element ref="maml:type"/>
-							<!-- [gxie] should we reduce this to simple text -->
+							
 							<element ref="maml:description"/>
 						</sequence>
 					</complexType>
@@ -224,8 +202,8 @@
 			<attributeGroup ref="maml:contentIdentificationSharingAndConditionGroup"/>
 		</complexType>
 	</element>
-	<!-- end inputTypes definition -->
-	<!-- returnTypes definition -->
+	
+	
 	<element name="returnTypes">
 		<annotation>
 			<documentation>
@@ -238,7 +216,7 @@
 					<complexType>
 						<sequence>
 							<element ref="maml:type"/>
-							<!-- [gxie] should we reduce this to simple text -->
+							
 							<element ref="maml:description"/>
 						</sequence>
 					</complexType>
@@ -247,8 +225,8 @@
 			<attributeGroup ref="maml:contentIdentificationSharingAndConditionGroup"/>
 		</complexType>
 	</element>
-	<!-- end returnTypes definition -->
-	<!-- commandExceptions definition -->
+	
+	
 	<element name="commandExceptions">
 		<annotation>
 			<documentation>
@@ -262,8 +240,8 @@
 			<attributeGroup ref="maml:contentIdentificationSharingAndConditionGroup"/>
 		</complexType>
 	</element>
-	<!-- end commandExceptions definition -->
-	<!-- commandErrors definition -->
+	
+	
 	<element name="commandErrors">
 		<annotation>
 			<documentation>
@@ -283,8 +261,8 @@
 			<attributeGroup ref="maml:contentIdentificationSharingAndConditionGroup"/>
 		</complexType>
 	</element>
-	<!-- end commandErrors definition -->
-	<!-- commandExamples definition -->
+	
+	
 	<element name="commandExamples">
 		<annotation>
 			<documentation>
@@ -304,8 +282,8 @@
 			<attributeGroup ref="maml:contentIdentificationSharingAndConditionGroup"/>
 		</complexType>
 	</element>
-	<!-- end commandExamples definition -->
-	<!-- configuration definition -->
+	
+	
 	<element name="configuration">
 		<annotation>
 			<documentation>
@@ -313,14 +291,14 @@
 			</documentation>
 		</annotation>
 		<complexType>
-			<!-- [gxie] ! this is not defined yet -->
+			
 			<sequence/>
 			<attributeGroup ref="maml:contentIdentificationSharingAndConditionGroup"/>
 		</complexType>
 	</element>
-	<!-- end configuration definition -->
-	<!-- END ELEMENT AND TYPE DECLARATIONS -->
-	<!-- GLOBALS -->
+	
+	
+	
 	<element name="commandSyntaxParameter">
 		<complexType>
 			<sequence>
@@ -338,7 +316,7 @@
 								<element ref="maml:commandParameterValue"/>
 							</sequence>
 							<attributeGroup ref="maml:contentIdentificationSharingAndConditionGroup"/>
-							<!-- [gxie] ? what is the meaning of required here -->
+							
 							<attribute name="required" type="boolean" use="required"/>
 						</complexType>
 					</element>
@@ -350,14 +328,14 @@
 	<element name="commandParameterValue">
 		<complexType>
 			<attributeGroup ref="maml:contentIdentificationSharingAndConditionGroup"/>
-			<!-- [gxie] ? what is the meaning of required here -->
+			
 			<attribute name="required" type="boolean" use="required"/>
 			<attribute name="variableLength" type="boolean" use="required"/>
 			<attribute name="type" use="optional" default="literal">
 				<simpleType>
 					<restriction base="token">
 						<enumeration value="literal"/>
-						<!-- [gxie] what is the meaning of placeHolder here -->
+						
 						<enumeration value="placeHolder"/>
 					</restriction>
 				</simpleType>
@@ -367,11 +345,11 @@
 	<complexType name="commandExceptionType">
 		<sequence>
 			<element ref="maml:type"/>
-			<!-- [gxie] ? should we reduce this to a simple block of text -->
+			
 			<element ref="maml:description"/>
 			<element name="message"/>
 			<element name="category" minOccurs="0"/>
 		</sequence>
 	</complexType>
-	<!-- END GLOBALS -->
+	
 </schema>

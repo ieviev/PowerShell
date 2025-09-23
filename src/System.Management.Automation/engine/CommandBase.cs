@@ -28,13 +28,7 @@ namespace System.Management.Automation.Internal
     /// <see cref="System.Management.Automation.Internal.InternalCommand"/>.
     /// </remarks>
     /// <seealso cref="System.Management.Automation.Cmdlet"/>
-    /// <!--
-    /// These are the Cmdlet members which are also used by other
-    /// non-public command types.
-    ///
-    /// Ideally this would be an internal class, but C# does not support
-    /// public classes deriving from internal classes.
-    /// -->
+    /// 
     [DebuggerDisplay("Command = {_commandInfo}")]
     public abstract class InternalCommand
     {

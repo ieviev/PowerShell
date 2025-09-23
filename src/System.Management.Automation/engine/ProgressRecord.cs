@@ -119,9 +119,7 @@ namespace System.Management.Automation
         /// A negative value (the default) indicates that the activity is not a subordinate.
         ///
         /// May not be the same as ActivityId.
-        /// <!--NTRAID#Windows OS Bugs-1161549 the default value for this should be picked up from a variable in the
-        /// shell so that a script can set that variable, and have all subsequent calls to WriteProgress (the API) be
-        /// subordinate to the "current parent id".-->
+        /// 
         /// </remarks>
         public
         int

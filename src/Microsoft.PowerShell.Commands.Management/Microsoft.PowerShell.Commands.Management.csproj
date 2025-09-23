@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <!-- <ProjectReference Include="..\Microsoft.PowerShell.Security\Microsoft.PowerShell.Security.csproj" /> -->
+    
     <ProjectReference Include="..\System.Management.Automation\System.Management.Automation.csproj" />
   </ItemGroup>
 
@@ -47,7 +47,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <!-- the following package(s) are from https://github.com/dotnet/corefx -->
+    
     <PackageReference Include="System.ServiceProcess.ServiceController" Version="10.0.0-rc.1.25451.107" />
   </ItemGroup>
 

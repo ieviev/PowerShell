@@ -84,7 +84,7 @@ Note: This policy setting exists under both Computer Configuration and User Conf
       <string id="ConsoleSessionConfiguration">Console session configuration</string>
       <string id="ConsoleSessionConfiguration_Explain">Specifies a configuration endpoint in which PowerShell is run. This can be any endpoint registered on the local machine including the default PowerShell remoting endpoints or a custom endpoint having specific user role capabilities.</string>
       
-      <!--<string id="PowerShell">PowerShell Core</string>-->
+      
     </stringTable>
     <presentationTable>
       <presentation id="EnableScripts">

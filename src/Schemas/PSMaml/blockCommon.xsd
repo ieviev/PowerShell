@@ -7,13 +7,13 @@
     attributeFormDefault="unqualified"
     blockDefault="#all"
     xml:lang="en">
-  <!-- Schema documentation -->
+  
   <annotation>
     <documentation>Defines block inline types for the Content Studio Schema. This schema is part of the base layer.</documentation>
   </annotation>
-  <!-- include and import declarations -->
+  
   <include schemaLocation="inline.xsd"/>
-  <!-- Element declarations -->
+  
   <element name="leadInPhrase">
     <annotation>
       <documentation>Describes a span of introductory text within a para element.</documentation>
@@ -78,7 +78,7 @@
   <annotation>
     <documentation>Specifies a link to another entry within a document.</documentation>
   </annotation>
-  <!-- group declarations -->
+  
   <group name="blockCommonGroup">
     <choice>
       <element ref="maml:para"/>

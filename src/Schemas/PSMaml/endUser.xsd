@@ -7,22 +7,17 @@
     attributeFormDefault="unqualified"
     blockDefault="#all"
     xml:lang="en">
-  <!-- Schema documentation -->
+  
   <annotation>
     <documentation>Describes the end user content types of MAML. These content types represent schema structures that are used to create documentation for end-users. End user structures are pervasive in Windows XP and Office XP documentation. </documentation>
   </annotation>
-  <!-- end user content types are:
-    - conceptual
-    - procedural
-    - faq
-    - troubleshootingCt
-   -->
-  <!-- include and import declarations -->
+  
+  
   <include schemaLocation="hierarchy.xsd"/>
   <include schemaLocation="troubleshooting.xsd"/>
   <include schemaLocation="task.xsd"/>
   <include schemaLocation="shellExecute.xsd"/>
-  <!-- element declarations -->
+  
   <element name="conceptual" type="maml:contentTypeType">
     <annotation>
       <documentation>Describes the content model for the conceptual content type. Conceptual topics provide a high-level overview of particular technology areas.</documentation>

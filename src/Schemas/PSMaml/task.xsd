@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <schema targetNamespace="http://schemas.microsoft.com/maml/2004/10" xmlns:doc="http://schemas.microsoft.com/maml/internal" xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" blockDefault="#all" xml:lang="en">
-  <!-- Schema documentation -->
+  
   <annotation>
     <documentation>This schema file defines the schema for an automated procedural file.</documentation>
   </annotation>
-  <!-- include and import declarations -->
+  
   <include schemaLocation="hierarchy.xsd"/>
   <include schemaLocation="shellExecute.xsd"/>
-  <!-- Type declarations -->
+  
   <complexType name="actionReferenceType">
     <annotation>
       <documentation>Refers to a UI element that is stored in a different schema.</documentation>

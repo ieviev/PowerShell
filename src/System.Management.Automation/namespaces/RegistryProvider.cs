@@ -24,30 +24,7 @@ namespace Microsoft.PowerShell.Commands
     /// <see cref="System.Management.Automation.Provider.ISecurityDescriptorCmdletProvider"/>
     /// interfaces.
     /// </summary>
-    /// <!--
-    ///
-    /// INSTALLATION:
-    ///
-    /// Type the following at a PowerShell prompt:
-    ///
-    /// new-PSProvider -Path "REG.cmdletprovider" -description "My registry navigation provider"
-    ///
-    /// TO EXERCISE THE PROVIDER:
-    ///
-    /// Get-PSDrive
-    /// set-location HKLM:\software
-    /// get-childitem
-    /// New-PSDrive -PSProvider REG -name HKCR -root HKEY_CLASSES_ROOT\CLSID
-    /// set-location HKCR:
-    /// get-childitem "{0000*"
-    ///
-    /// The CmdletProvider attribute defines the name and capabilities of the provider.
-    /// The first parameter is the default friendly name for the provider. The second parameter
-    /// is the provider name which, along with some assembly information like version, company, etc.
-    /// is used as a fully-qualified provider name which can be used for disambiguation.
-    /// The third parameter states the capabilities of the provider.
-    ///
-    /// -->
+    /// 
 #if CORECLR // System.Transaction namespace is not in CoreClr.
     [CmdletProvider(RegistryProvider.ProviderName, ProviderCapabilities.ShouldProcess)]
 #else
@@ -105,13 +82,7 @@ namespace Microsoft.PowerShell.Commands
         /// Verifies that the new drive has a valid root.
         /// </summary>
         /// <returns>A PSDriveInfo object.</returns>
-        /// <!--
-        /// It also givesthe provider an opportunity to return a
-        /// derived class of PSDriveInfo which can contain provider specific
-        /// information about the drive.This may be done for performance
-        /// or reliability reasons or toprovide extra data to all calls
-        /// using the drive
-        /// -->
+        /// 
         protected override PSDriveInfo NewDrive(PSDriveInfo drive)
         {
             if (drive == null)
@@ -2125,10 +2096,7 @@ namespace Microsoft.PowerShell.Commands
         /// Nothing. A PSObject representing the property that was created should
         /// be passed to the WriteObject() method.
         /// </returns>
-        /// <!--
-        /// Implement this method when you are providing access to a data store
-        /// that allows dynamic creation of properties.
-        /// -->
+        /// 
         public void NewProperty(
             string path,
             string propertyName,

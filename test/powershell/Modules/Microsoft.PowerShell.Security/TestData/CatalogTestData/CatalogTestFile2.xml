@@ -1,7 +1,7 @@
 <MachineInventory aliasing="True">
      <Machine machineRole="Server">
         <Accounts>
-          <!--[SuppressMessage("Microsoft.Security", "CS002:SecretInNextLine", Justification="Demo/doc/test secret.")] -->
+          
           <LocalAdmin user="root" password="PowerShellRocks!" />
         </Accounts>
         <BMCMachine>No</BMCMachine>

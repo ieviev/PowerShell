@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <schema targetNamespace="http://schemas.microsoft.com/maml/2004/10" xmlns:doc="http://schemas.microsoft.com/maml/internal" xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" blockDefault="#all" xml:lang="en">
-  <!-- Schema documentation -->
+  
   <annotation>
     <documentation>This schema defines common inline elements.</documentation>
   </annotation>
-  <!-- include and import declarations -->
+  
   <include schemaLocation="base.xsd"/>
-  <!-- element declarations -->
-  <!-- language markup -->
+  
+  
   <element name="acronym" type="maml:textType">
     <annotation>
       <documentation>Identifies an acronym within a body of text.</documentation>
@@ -69,7 +69,7 @@
       </appinfo>
     </annotation>
   </element>
-  <!-- legal and political markup -->
+  
   <element name="trademark" type="token">
     <annotation>
       <documentation>Describes a corporate trademark.</documentation>
@@ -121,7 +121,7 @@
       <documentation>Identifies the name of a country within a body of text.</documentation>
     </annotation>
   </element>
-  <!-- other markup -->
+  
   <element name="alertInline">
     <annotation>
       <documentation>Describes an alert that appears inline within a body of text.</documentation>
@@ -155,7 +155,7 @@
       <documentation>Describes a range of values, such as numbers or characters.</documentation>
     </annotation>
   </element>
-  <!-- other markup -->
+  
   <element name="footnote" type="normalizedString">
     <annotation>
       <documentation>Identifies a span of text to be associated with a footnote reference.</documentation>
@@ -176,7 +176,7 @@
       <documentation>This element identifies strings that represent a mathematical elements. The intent is to allow rendering to format a math element in a font that supports displaying the text appropriately (example would be allowing for a font to render the Pi symbol appropriately).</documentation>
     </annotation>
   </element>
-  <!-- group declarations -->
+  
   <group name="inlineCommonGroup">
     <annotation>
       <documentation>This type describes the set of inline elements that are likely to be needed for block elements' content models.</documentation>

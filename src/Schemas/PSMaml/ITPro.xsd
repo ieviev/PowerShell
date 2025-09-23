@@ -7,7 +7,7 @@
     attributeFormDefault="unqualified"
     blockDefault="#all"
     xml:lang="en">
-  <!-- Schema documentation -->
+  
   <annotation>
     <documentation>This schema describes MAML (Microsoft Assistance Markup Language). MAML is intended for software documentation. In particular, MAML is intended to accommodate the needs of Microsoft documentation.</documentation>
     <documentation>The schema is broken into three main areas: end user, developer and IT Pro. These areas represent the main categories of Microsoft documentation.</documentation>

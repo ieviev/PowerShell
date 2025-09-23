@@ -2375,10 +2375,7 @@ namespace System.Management.Automation
             /// <summary>
             /// End the scope where WriteObject/WriteError is permitted.
             /// </summary>
-            /// <!--
-            /// Not a true public, since the class is internal.
-            /// This is public only due to C# interface rules.
-            /// -->
+            /// 
             public void Dispose()
             {
                 _pp._permittedToWrite = _wasPermittedToWrite;

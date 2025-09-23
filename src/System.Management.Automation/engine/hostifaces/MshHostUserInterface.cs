@@ -80,7 +80,7 @@ namespace System.Management.Automation.Host
 
         /// <summary>
         /// Writes characters to the screen buffer.  Does not append a carriage return.
-        /// <!-- Here we choose to just offer string parameters rather than the 18 overloads from TextWriter -->
+        /// 
         /// </summary>
         /// <param name="value">
         /// The characters to be written.  null is not allowed.
@@ -955,9 +955,7 @@ namespace System.Management.Automation.Host
 
         /// <summary>
         /// Prompt for credentials.
-        /// <!--In future, when we have Credential object from the security team,
-        /// this function will be modified to prompt using secure-path
-        /// if so configured.-->
+        /// 
         /// </summary>
         /// <summary>
         /// Prompt for credential.

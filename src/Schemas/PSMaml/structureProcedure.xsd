@@ -7,11 +7,11 @@
     attributeFormDefault="unqualified"
     blockDefault="#all"
     xml:lang="en">
-  <!-- Schema documentation -->
+  
   <annotation>
     <documentation>This schema definition defines common structure types for the Content Studio Schema. This schema is part of the common layer.</documentation>
   </annotation>
-  <!-- include and import declarations -->
+  
   <include schemaLocation="block.xsd"/>
   <element name="step">
     <annotation>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <schema targetNamespace="http://schemas.microsoft.com/maml/2004/4" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:maml="http://schemas.microsoft.com/maml/2004/4" xmlns:doc="http://schemas.microsoft.com/maml/internal" elementFormDefault="qualified" attributeFormDefault="unqualified" blockDefault="#all" xml:lang="en">
-	<!-- Schema documentation -->
+	
 	<annotation>
 		<documentation>
             This schema describes MAML, the Microsoft Assistance Markup Language.
@@ -28,8 +28,8 @@
 	</annotation>
 	<include schemaLocation="conditionSet.xsd"/>
 	<include schemaLocation="ManagedDeveloperStructure.xsd"/>
-	<!-- <include schemaLocation="developerReference.xsd"/> -->
-	<!-- ************ Reference Content Type ************ -->
+	
+	
 	<element name="managedClass" type="maml:managedClassType">
 		<annotation>
 			<documentation>
@@ -44,19 +44,19 @@
 		<sequence>
 			<element ref="maml:title"/>
 			<element ref="maml:introduction"/>
-			<!-- <element ref="maml:implements"/> -->
-			<!-- <element ref="maml:members"/> -->
-			<!-- <element ref="maml:genericParameters"/> -->
-			<!-- <element ref="maml:genericConstraints"/> -->
-			<!-- <element ref="maml:security"/> -->
-			<!-- <element ref="maml:xamlAttributeUsage"/> -->
-			<!-- <element ref="maml:xamlElementUsage"/> -->
+			
+			
+			
+			
+			
+			
+			
 			<element ref="maml:remarks" minOccurs="0" maxOccurs="unbounded"/>
-			<!-- <element ref="maml:derives"/> -->
-			<!-- <element ref="maml:examples"/> -->
-			<!-- <element ref="maml:threadSafety"/> -->
-			<!-- <element ref="maml:requirements"/> -->
-			<!-- <element ref="maml:relatedTopics"/>-->
+			
+			
+			
+			
+			
 		</sequence>
 	</complexType>
 	<element name="managedMethod" type="maml:managedMethodType">
@@ -73,16 +73,16 @@
 		<sequence>
 			<element ref="maml:title"/>
 			<element ref="maml:introduction"/>
-			<!-- <element ref="maml:parameters"/> -->
-			<!-- <element ref="maml:returnValue"/> -->
-			<!-- <element ref="maml:exceptions"/> -->
-			<!-- <element ref="maml:security"/> -->
+			
+			
+			
+			
 			<element ref="maml:remarks" minOccurs="0" maxOccurs="unbounded"/>
-			<!-- <element ref="maml:examples"/> -->
-			<!-- <element ref="maml:threadSafety"/> -->
-			<!-- <element ref="maml:appliesTo"/> -->
-			<!-- <element ref="maml:requirements"/> -->
-			<!-- <element ref="maml:relatedTopics"/>-->
+			
+			
+			
+			
+			
 		</sequence>
 	</complexType>
 	<element name="managedEvent" type="maml:managedEventType">
@@ -99,14 +99,14 @@
 		<sequence>
 			<element ref="maml:title"/>
 			<element ref="maml:introduction"/>
-			<!-- <element ref="maml:eventData"/> -->
-			<!-- <element ref="maml:security"/> -->
+			
+			
 			<element ref="maml:remarks" minOccurs="0" maxOccurs="unbounded"/>
-			<!-- <element ref="maml:examples"/> -->
-			<!-- <element ref="maml:threadSafety"/> -->
-			<!-- <element ref="maml:appliesTo"/> -->
-			<!-- <element ref="maml:requirements"/> -->
-			<!-- <element ref="maml:relatedTopics"/>-->
+			
+			
+			
+			
+			
 		</sequence>
 	</complexType>
 	<element name="managedProperty" type="maml:managedPropertyType">
@@ -123,17 +123,17 @@
 		<sequence>
 			<element ref="maml:title"/>
 			<element ref="maml:introduction"/>
-			<!-- <element ref="maml:implements"/> --> <!-- BUGBUG: This seems wrong -->
-			<!-- <element ref="maml:property"/> -->
-			<!-- <element ref="maml:exceptions"/> -->
-			<!-- <element ref="maml:security"/> -->
-			<!-- <element ref="maml:xamlAttributeValue"/> -->
+			 
+			
+			
+			
+			
 			<element ref="maml:remarks" minOccurs="0" maxOccurs="unbounded"/>
-			<!-- <element ref="maml:examples"/> -->
-			<!-- <element ref="maml:threadSafety"/> --> <!-- BUGBUG: This isn't in specification. Why not! -->
-			<!-- <element ref="maml:appliesTo"/> -->
-			<!-- <element ref="maml:requirements"/> -->
-			<!-- <element ref="maml:relatedTopics"/>-->
+			
+			 
+			
+			
+			
 		</sequence>
 	</complexType>
 	<element name="managedStructure" type="maml:managedStructureType">
@@ -150,17 +150,17 @@
 		<sequence>
 			<element ref="maml:title"/>
 			<element ref="maml:introduction"/>
-			<!-- <element ref="maml:members"/> -->
-			<!-- <element ref="maml:genericParameters"/> -->
-			<!-- <element ref="maml:genericConstraints"/> -->
-			<!-- <element ref="maml:security"/> -->
-			<!-- <element ref="maml:xamlAttributeUsage"/> -->
-			<!-- <element ref="maml:xamlElementUsage"/> -->
+			
+			
+			
+			
+			
+			
 			<element ref="maml:remarks" minOccurs="0" maxOccurs="unbounded"/>
-			<!-- <element ref="maml:examples"/> -->
-			<!-- <element ref="maml:threadSafety"/> -->
-			<!-- <element ref="maml:requirements"/> -->
-			<!-- <element ref="maml:relatedTopics"/>-->
+			
+			
+			
+			
 		</sequence>
 	</complexType>
 	<element name="managedNamespace" type="maml:managedNamespaceType">
@@ -177,13 +177,13 @@
 		<sequence>
 			<element ref="maml:title"/>
 			<element ref="maml:introduction"/>
-			<!-- <element ref="maml:namespace"/> -->
-			<!-- <element ref="maml:classes"/> -->
-			<!-- <element ref="maml:interfaces"/> -->
-			<!-- <element ref="maml:delegates"/> -->
-			<!-- <element ref="maml:enumerations"/> -->
+			
+			
+			
+			
+			
 			<element ref="maml:remarks" minOccurs="0" maxOccurs="unbounded"/>
-			<!-- <element ref="maml:relatedTopics"/>-->
+			
 		</sequence>
 	</complexType>
 	<element name="managedEnumeration" type="maml:managedEnumerationType">
@@ -200,13 +200,13 @@
 		<sequence>
 			<element ref="maml:title"/>
 			<element ref="maml:introduction"/>
-			<!-- <element ref="maml:members"/> -->
-			<!-- <element ref="maml:xamlAttributeUsage"/> -->
-			<!-- <element ref="maml:xamlElementUsage"/> -->
+			
+			
+			
 			<element ref="maml:remarks" minOccurs="0" maxOccurs="unbounded"/>
-			<!-- <element ref="maml:examples"/> -->
-			<!-- <element ref="maml:requirements"/> -->
-			<!-- <element ref="maml:relatedTopics"/>-->
+			
+			
+			
 		</sequence>
 	</complexType>
 	<element name="managedInterface" type="maml:managedInterfaceType">
@@ -223,18 +223,18 @@
 		<sequence>
 			<element ref="maml:title"/>
 			<element ref="maml:introduction"/>
-			<!-- <element ref="maml:implementedBy"/> -->
-			<!-- <element ref="maml:members"/> -->
-			<!-- <element ref="maml:genericParameters"/> -->
-			<!-- <element ref="maml:genericConstraints"/> -->
-			<!-- <element ref="maml:security"/> -->
-			<!-- <element ref="maml:xamlAttributeUsage"/> -->
-			<!-- <element ref="maml:xamlElementUsage"/> -->
+			
+			
+			
+			
+			
+			
+			
 			<element ref="maml:remarks" minOccurs="0" maxOccurs="unbounded"/>
-			<!-- <element ref="maml:derives"/> --> <!-- BUGBUG: This isn't in the spec but I think this is needed too. -->
-			<!-- <element ref="maml:examples"/> -->
-			<!-- <element ref="maml:requirements"/> -->
-			<!-- <element ref="maml:relatedTopics"/>-->
+			 
+			
+			
+			
 		</sequence>
 	</complexType>
 	<element name="managedDelegate" type="maml:managedDelegateType">
@@ -251,14 +251,14 @@
 		<sequence>
 			<element ref="maml:title"/>
 			<element ref="maml:introduction"/>
-			<!-- <element ref="maml:parameters"/> -->
-			<!-- <element ref="maml:genericParameters"/> -->
-			<!-- <element ref="maml:genericConstraints"/> -->
-			<!-- <element ref="maml:security"/> --> <!-- BUGBUG: This isn't in the spec but I think this is needed too. -->
+			
+			
+			
+			 
 			<element ref="maml:remarks" minOccurs="0" maxOccurs="unbounded"/>
-			<!-- <element ref="maml:examples"/> -->
-			<!-- <element ref="maml:requirements"/> -->
-			<!-- <element ref="maml:relatedTopics"/>-->
+			
+			
+			
 		</sequence>
 	</complexType>
 	<element name="managedOperator" type="maml:managedOperatorType">
@@ -275,16 +275,16 @@
 		<sequence>
 			<element ref="maml:title"/>
 			<element ref="maml:introduction"/>
-			<!-- <element ref="maml:parameters"/> -->
-			<!-- <element ref="maml:returnValue"/> -->
-			<!-- <element ref="maml:exceptions"/> --> <!-- BUGBUG: This isn't in the spec but I think this is needed too. -->
-			<!-- <element ref="maml:security"/> --> <!-- BUGBUG: This isn't in the spec but I think this is needed too. -->
+			
+			
+			 
+			 
 			<element ref="maml:remarks" minOccurs="0" maxOccurs="unbounded"/>
-			<!-- <element ref="maml:examples"/> -->
-			<!-- <element ref="maml:threadSafety"/> --> <!-- BUGBUG: This isn't in the spec but I think this is needed too. -->
-			<!-- <element ref="maml:appliesTo"/> --> <!-- BUGBUG: This isn't in the spec but I think this is needed too. -->
-			<!-- <element ref="maml:requirements"/> -->
-			<!-- <element ref="maml:relatedTopics"/>-->
+			
+			 
+			 
+			
+			
 		</sequence>
 	</complexType>
 	<element name="managedField" type="maml:managedFieldType">
@@ -301,13 +301,13 @@
 		<sequence>
 			<element ref="maml:title"/>
 			<element ref="maml:introduction"/>
-			<!-- <element ref="maml:datatype"/> --> <!-- BUGBUG: This isn't in spec, but we need something to indicate data type -->
+			 
 			<element ref="maml:remarks" minOccurs="0" maxOccurs="unbounded"/>
-			<!-- <element ref="maml:examples"/> -->
-			<!-- <element ref="maml:threadSafety"/> --> <!-- BUGBUG: This isn't in specification. Why not! -->
-			<!-- <element ref="maml:appliesTo"/> -->
-			<!-- <element ref="maml:requirements"/> -->
-			<!-- <element ref="maml:relatedTopics"/>-->
+			
+			 
+			
+			
+			
 		</sequence>
 	</complexType>
 	<element name="managedOverload" type="maml:managedOverloadType">
@@ -324,10 +324,10 @@
 		<sequence>
 			<element ref="maml:title"/>
 			<element ref="maml:introduction"/>
-			<!-- <element ref="maml:overloads"/> -->
+			
 			<element ref="maml:remarks" minOccurs="0" maxOccurs="unbounded"/>
-			<!-- <element ref="maml:examples"/> -->
-			<!-- <element ref="maml:relatedTopics"/>-->
+			
+			
 		</sequence>
 	</complexType>
 	<element name="managedConstructor" type="maml:managedConstructorType">
@@ -344,16 +344,16 @@
 		<sequence>
 			<element ref="maml:title"/>
 			<element ref="maml:introduction"/>
-			<!-- <element ref="maml:parameters"/> -->
-			<!-- <element ref="maml:returnValue"/> -->
-			<!-- <element ref="maml:exceptions"/> -->
-			<!-- <element ref="maml:security"/> -->
+			
+			
+			
+			
 			<element ref="maml:remarks" minOccurs="0" maxOccurs="unbounded"/>
-			<!-- <element ref="maml:examples"/> -->
-			<!-- <element ref="maml:threadSafety"/> -->
-			<!-- <element ref="maml:appliesTo"/> -->
-			<!-- <element ref="maml:requirements"/> -->
-			<!-- <element ref="maml:relatedTopics"/>-->
+			
+			
+			
+			
+			
 		</sequence>
 	</complexType>
 </schema>

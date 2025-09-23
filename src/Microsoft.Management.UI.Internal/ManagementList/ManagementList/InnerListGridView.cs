@@ -18,10 +18,7 @@ namespace Microsoft.Management.UI.Internal
     /// Extends the basic GrdView class to introduce the Visible concept to the
     /// Columns collection.
     /// </summary>
-    /// <!--We create our own version of Columns, that:
-    /// 1) Only takes InnerListColumn's
-    /// 2) Passes through the underlying ListView Columns, only the InnerListColumns
-    /// that have Visible=true.-->
+    /// 
     [ContentProperty("AvailableColumns")]
     public class InnerListGridView : GridView
     {

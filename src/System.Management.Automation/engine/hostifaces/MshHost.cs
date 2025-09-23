@@ -174,9 +174,7 @@ namespace System.Management.Automation.Host
         /// A non-interactive host may throw a "not implemented" exception here.
         ///
         /// If the UI property returns null, the engine should not call this method.
-        /// <!--Was: ExecuteSubShell.  "subshell" implies a new child engine, which is not the case here.  This is called during the
-        /// interruption of a pipeline to allow nested pipeline(s) to be run as a way to the user to suspend execution while he
-        /// evaluates other commands.  It does not create a truly new engine instance with new session state.-->
+        /// 
         /// </remarks>
         /// <seealso cref="System.Management.Automation.Host.PSHost.ExitNestedPrompt"/>
         public abstract void EnterNestedPrompt();

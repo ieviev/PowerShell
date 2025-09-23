@@ -7,13 +7,13 @@
     attributeFormDefault="unqualified"
     blockDefault="#all"
     xml:lang="en">
-  <!-- Schema documentation -->
+  
   <annotation>
     <documentation>This schema definition defines common hierarchy types for the Content Studio Schema. This schema is part of the base layer.</documentation>
   </annotation>
-  <!-- include and import declarations -->
+  
   <include schemaLocation="block.xsd"/>
-  <!-- element declarations -->
+  
   <element name="table">
     <annotation>
       <documentation>Describes a table structure. The table element is the parent of all elements within a table structure. The MAML table model conforms to the Computer-Aided Acquisition and Logistic Support group (CALS) table model (a standard formatting type designed by the Department of Defense).</documentation>
@@ -77,7 +77,7 @@
 		<documentation><b>Describes a table footer, typically the last row in a table.</b></documentation>
 	</annotation>
   </element>
-  <!-- complexType declarations -->
+  
   <complexType name="tableBodyType">
     <annotation>
       <documentation>This type is intended for use as the children of table elements.</documentation>
@@ -86,7 +86,7 @@
       <element ref="maml:row" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
-  <!-- attribute declarations -->
+  
   <attributeGroup name="tableEntryAttributeGroup">
     <annotation>
       <documentation>This type describes the attributes for table Entry.</documentation>
@@ -103,7 +103,7 @@
       </annotation>
     </attribute>
   </attributeGroup>
-  <!-- Definition Table -->
+  
   <complexType name="definitionListItemType">
     <sequence>
       <element ref="maml:term"/>

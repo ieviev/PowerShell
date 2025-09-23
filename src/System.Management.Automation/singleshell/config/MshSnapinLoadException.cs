@@ -10,15 +10,7 @@ namespace System.Management.Automation.Runspaces
     /// <summary>
     /// Defines exception thrown when a PSSnapin was not able to load into current runspace.
     /// </summary>
-    /// <!--
-    /// Implementation of PSSnapInException requires it to
-    ///     1. Implement IContainsErrorRecord,
-    ///     2. ISerializable
-    ///
-    /// Basic information for this exception includes,
-    ///     1. PSSnapin name
-    ///     2. Inner exception.
-    /// -->
+    /// 
     public class PSSnapInException : RuntimeException
     {
         /// <summary>
@@ -123,10 +115,7 @@ namespace System.Management.Automation.Runspaces
         /// <summary>
         /// Gets error record embedded in this exception.
         /// </summary>
-        /// <!--
-        /// This property is required as part of IErrorRecordContainer
-        /// interface.
-        /// -->
+        /// 
         public override ErrorRecord ErrorRecord
         {
             get

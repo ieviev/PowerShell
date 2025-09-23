@@ -1872,14 +1872,7 @@ namespace System.Management.Automation.Provider
         /// <param name="isContainer">
         /// True if the item is a container, false otherwise.
         /// </param>
-        /// <!--
-        /// If streaming is on and the writeObjectHandler was specified then the object
-        /// gets written to the writeObjectHandler. If streaming is on and the writeObjectHandler
-        /// was not specified and the command object was specified, the object gets written to
-        /// the WriteObject method of the command object.
-        /// If streaming is off the object gets written to an accumulator collection. The collection
-        /// of written object can be retrieved using the AccumulatedObjects method.
-        /// -->
+        /// 
         public void WriteItemObject(
             object item,
             string path,
@@ -1901,14 +1894,7 @@ namespace System.Management.Automation.Provider
         /// <param name="path">
         /// The path of the item being written.
         /// </param>
-        /// <!--
-        /// If streaming is on and the writeObjectHandler was specified then the object
-        /// gets written to the writeObjectHandler. If streaming is on and the writeObjectHandler
-        /// was not specified and the command object was specified, the object gets written to
-        /// the WriteObject method of the command object.
-        /// If streaming is off the object gets written to an accumulator collection. The collection
-        /// of written object can be retrieved using the AccumulatedObjects method.
-        /// -->
+        /// 
         public void WritePropertyObject(
             object propertyValue,
             string path)
@@ -1929,14 +1915,7 @@ namespace System.Management.Automation.Provider
         /// <param name="path">
         /// The path of the item from which the Security Descriptor was retrieved.
         /// </param>
-        /// <!--
-        /// If streaming is on and the writeObjectHandler was specified then the object
-        /// gets written to the writeObjectHandler. If streaming is on and the writeObjectHandler
-        /// was not specified and the command object was specified, the object gets written to
-        /// the WriteObject method of the command object.
-        /// If streaming is off the object gets written to an accumulator collection. The collection
-        /// of written object can be retrieved using the AccumulatedObjects method.
-        /// -->
+        /// 
         public void WriteSecurityDescriptorObject(
             ObjectSecurity securityDescriptor,
             string path)

@@ -1215,12 +1215,7 @@ namespace System.Management.Automation.Runspaces
         /// Get enumerator for this collection.
         /// </summary>
         /// <returns></returns>
-        /// <!--
-        /// Enumerator work is not thread safe by default. Any code trying
-        /// to do enumeration on this collection should lock it first.
-        ///
-        /// Need to document this.
-        /// -->
+        /// 
         IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             return _internalCollection.GetEnumerator();
@@ -1230,12 +1225,7 @@ namespace System.Management.Automation.Runspaces
         /// Get enumerator for this collection.
         /// </summary>
         /// <returns></returns>
-        /// <!--
-        /// Enumerator work is not thread safe by default. Any code trying
-        /// to do enumeration on this collection should lock it first.
-        ///
-        /// Need to document this.
-        /// -->
+        /// 
         IEnumerator<T> System.Collections.Generic.IEnumerable<T>.GetEnumerator()
         {
             return _internalCollection.GetEnumerator();

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <schema targetNamespace="http://schemas.microsoft.com/maml/2004/10" xmlns:doc="http://schemas.microsoft.com/maml/internal" xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" blockDefault="#all" xml:lang="en">
-  <!-- Schema documentation -->
+  
   <annotation>
     <documentation>This schema definition defines the common reference types within the Content Studio schema.</documentation>
   </annotation>
-  <!-- include and import declarations -->
+  
   <include schemaLocation="base.xsd"/>
-  <!-- element declarations -->
+  
   <element name="application" type="maml:textType">
     <annotation>
       <documentation>Identifies the name of an application, such as Microsoft Windows or Notepad, within a body of text.</documentation>
@@ -171,7 +171,7 @@
       </attribute>
     </complexType>
   </element>
-  <!-- group declarations -->
+  
   <group name="inlineSoftwareGroup">
     <choice>
       <element ref="maml:application"/>

@@ -7,11 +7,11 @@
     attributeFormDefault="unqualified"
     blockDefault="#all"
     xml:lang="en">
-  <!-- Schema documentation -->
+  
   <annotation>
     <documentation>This schema defines a way to specify a command line that will be executed as a shell execute. This schema is part of the base layer.</documentation>
   </annotation>
-  <!-- include and import declarations -->
+  
   <include schemaLocation="hierarchy.xsd"/>
   <complexType name="shellExecuteType">
     <sequence>

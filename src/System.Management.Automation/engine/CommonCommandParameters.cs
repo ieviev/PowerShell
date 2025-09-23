@@ -108,12 +108,7 @@ namespace System.Management.Automation.Internal
         /// <remarks>
         /// This parameter tells the command what to do when an informational record occurs.
         /// </remarks>
-        /// <!--
-        /// NOTE: The "infa" alias name does not follow the same alias naming convention used
-        /// with other common parameter aliases that control stream functionality; however,
-        /// "ia" was already taken as a parameter alias in other commands when this parameter
-        /// was added to PowerShell, so "infa" was chosen instead.
-        /// -->
+        /// 
         [Parameter]
         [Alias("infa")]
         public ActionPreference InformationAction
@@ -129,12 +124,7 @@ namespace System.Management.Automation.Internal
         /// <remarks>
         /// This parameter tells the command what to do when a progress record occurs.
         /// </remarks>
-        /// <!--
-        /// NOTE: The "proga" alias name does not follow the same alias naming convention used
-        /// with other common parameter aliases that control stream functionality; however,
-        /// "pa" was already taken as a parameter alias in other commands when this parameter
-        /// was added to PowerShell, so "proga" was chosen instead.
-        /// -->
+        /// 
         [Parameter]
         [Alias("proga")]
         public ActionPreference ProgressAction
@@ -151,10 +141,7 @@ namespace System.Management.Automation.Internal
         /// This parameter tells the command which variable to populate with the errors.
         /// Use +varname to append to the variable rather than clearing it.
         /// </remarks>
-        /// <!--
-        /// 897599-2003/10/20-JonN Need to figure out how to get a working
-        /// commandline parameter without making it a public property
-        /// -->
+        /// 
         [Parameter]
         [Alias("ev")]
         [ValidateVariableName]

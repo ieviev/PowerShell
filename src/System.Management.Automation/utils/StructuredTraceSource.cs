@@ -27,97 +27,73 @@ namespace System.Management.Automation
         /// <summary>
         /// All tracing off.
         /// </summary>
-        /// <!--
-        /// No tracing is enabled
-        /// -->
+        /// 
         None = 0x00000000,
 
         /// <summary>
         /// Constructors will be traced.
         /// </summary>
-        /// <!--
-        /// The TraceConstructor methods are enabled
-        /// -->
+        /// 
         Constructor = 0x00000001,
 
         /// <summary>
         /// Dispose will be traced.
         /// </summary>
-        /// <!--
-        /// The TraceDispose methods are enabled
-        /// -->
+        /// 
         Dispose = 0x00000002,
 
         /// <summary>
         /// Finalize will be traced.
         /// </summary>
-        /// <!--
-        /// The TraceFinalizer methods are enabled
-        /// -->
+        /// 
         Finalizer = 0x00000004,
 
         /// <summary>
         /// Methods will be traced.
         /// </summary>
-        /// <!--
-        /// The TraceMethod methods are enabled
-        /// -->
+        /// 
         Method = 0x00000008,
 
         /// <summary>
         /// Properties will be traced.
         /// </summary>
-        /// <!--
-        /// The TraceProperty methods are enabled
-        /// -->
+        /// 
         Property = 0x00000010,
 
         /// <summary>
         /// Delegates will be traced.
         /// </summary>
-        /// <!--
-        /// The TraceDelegate and TraceDelegateHandler methods are enabled
-        /// -->
+        /// 
         Delegates = 0x00000020,
 
         /// <summary>
         /// Events will be traced.
         /// </summary>
-        /// <!--
-        /// The TraceRaiseEvent and TraceEventHandler methods are enabled
-        /// -->
+        /// 
         Events = 0x00000040,
 
         /// <summary>
         /// Exceptions will be traced.
         /// </summary>
-        /// <!--
-        /// The TraceException method is enabled
-        /// -->
+        /// 
         Exception = 0x00000080,
 
         /// <summary>
         /// Locks will be traced.
         /// </summary>
-        /// <!--
-        /// The TraceLock methods are enabled
-        /// -->
+        /// 
         Lock = 0x00000100,
 
         /// <summary>
         /// Errors will be traced.
         /// </summary>
-        /// <!--
-        /// The TraceError methods are enabled
-        /// -->
+        /// 
         Error = 0x00000200,
 
         /// <summary>
         /// Warnings will be traced.
         /// </summary>
-        /// <!--
-        /// The TraceWarning methods are enabled
-        /// -->
+        /// 
         Warning = 0x00000400,
 
         /// <summary>
@@ -128,9 +104,7 @@ namespace System.Management.Automation
         /// <summary>
         /// WriteLines will be traced.
         /// </summary>
-        /// <!--
-        /// The WriteLine methods are enabled
-        /// -->
+        /// 
         WriteLine = 0x00001000,
 
         /// <summary>
@@ -207,31 +181,7 @@ namespace System.Management.Automation
     /// An PSTraceSource is a representation of a System.Diagnostics.TraceSource instance
     /// that is used in the PowerShell components to produce trace output.
     /// </summary>
-    /// <!--
-    /// The StructuredTraceSource class is derived from TraceSource to provide granular
-    /// control over the tracing in a program.  An instance of StructuredTraceSource
-    /// is created for each category of tracing such that separate flags
-    /// (filters) can be set. Each flag enables one or more method for tracing.
-    ///
-    /// For instance, the Exception flag will enable tracing on these methods:
-    ///     TraceException.
-    /// </summary>
-    /// <remarks>
-    /// To get an instance of this class a user should define a static
-    /// field of the type StructuredTraceSource, and assign the results of GetTracer() to it.
-    /// If the category should be automatically put in the application config file the
-    /// field should be decorated with the TraceSourceAttribute so that GenerateAppConfigFile.exe
-    /// can find it through reflection.
-    /// <example>
-    /// <code>
-    /// [TraceSourceAttribute("category", "description")]
-    /// public static StructuredTraceSource tracer = GetTracer("category", "description", true);
-    /// </code>
-    /// </example>
-    /// Other than initial creation of this class through the GetTracer method,
-    /// this class should throw no exceptions. Any call to a StructuredTraceSource method
-    /// that results in an exception being thrown will be ignored.
-    /// -->
+    /// 
     public partial class PSTraceSource
     {
         #region PSTraceSource construction methods

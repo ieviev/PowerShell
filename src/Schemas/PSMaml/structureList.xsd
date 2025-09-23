@@ -7,13 +7,13 @@
     attributeFormDefault="unqualified"
     blockDefault="#all"
     xml:lang="en">
-  <!-- Schema documentation -->
+  
   <annotation>
     <documentation>This schema definition defines common structure types for the Content Studio Schema. This schema is part of the base layer.</documentation>
   </annotation>
-  <!-- include and import declarations -->
+  
   <include schemaLocation="base.xsd"/>
-  <!-- element declarations -->
+  
   <element name="list">
     <annotation>
       <documentation>Describes a span of content to present in a list format.</documentation>
@@ -87,7 +87,7 @@
       <attributeGroup ref="maml:contentIdentificationSharingAndConditionGroup"/>
     </complexType>
   </element>
-  <!-- group declarations -->
+  
   <group name="structureListGroup">
     <annotation>
       <documentation>Describes the common lists that can be used to describe list data.</documentation>

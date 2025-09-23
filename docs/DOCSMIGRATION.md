@@ -24,7 +24,7 @@ provides links to suitable replacements.
   - [about_Object_Creation][05]
   - [Crescendo overview][10]
 
-<!-- link references -->
+
 [01]: https://github.com/MicrosoftDocs/PowerShell-Docs
 [02]: https://github.com/pester/Pester
 [03]: https://github.com/PowerShell/PowerShell/blob/master/docs/testing-guidelines/WritingPesterTests.md

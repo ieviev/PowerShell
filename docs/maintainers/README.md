@@ -19,7 +19,7 @@ They have [write access](https://docs.github.com/en/free-pro-team@latest/github/
 
 ## Current Repository Maintainers
 
-<!-- please keep in alphabetical order -->
+
 
 - Aditya Patwardhan ([adityapatwardhan](https://github.com/adityapatwardhan))
 - Andrew Menagarishvili ([anmenaga](https://github.com/anmenaga))
@@ -30,7 +30,7 @@ They have [write access](https://docs.github.com/en/free-pro-team@latest/github/
 
 ## Former Repository Maintainers
 
-<!-- please keep in alphabetical order -->
+
 
 - Andy Jordan ([andyleejordan](https://github.com/andyleejordan))
 - Jason Shirk ([lzybkr](https://github.com/lzybkr))
