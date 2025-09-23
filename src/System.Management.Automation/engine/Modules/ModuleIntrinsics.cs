@@ -675,50 +675,6 @@ namespace System.Management.Automation
             return new Guid();
         }
 
-        internal static ExperimentalFeature[] GetExperimentalFeature(string manifestPath)
-        {
-            try
-            {
-                Hashtable dataFileSetting =
-                    PsUtils.GetModuleManifestProperties(
-                        manifestPath,
-                        PsUtils.ManifestPrivateDataPropertyName);
-
-                object privateData = dataFileSetting["PrivateData"];
-                if (privateData is Hashtable hashData && hashData["PSData"] is Hashtable psData)
-                {
-                    object expFeatureValue = psData["ExperimentalFeatures"];
-                    if (expFeatureValue != null &&
-                        LanguagePrimitives.TryConvertTo(expFeatureValue, out Hashtable[] features) &&
-                        features.Length > 0)
-                    {
-                        string moduleName = ModuleIntrinsics.GetModuleName(manifestPath);
-                        var expFeatureList = new List<ExperimentalFeature>();
-                        foreach (Hashtable feature in features)
-                        {
-                            string featureName = feature["Name"] as string;
-                            if (string.IsNullOrEmpty(featureName))
-                            {
-                                continue;
-                            }
-
-                            if (ExperimentalFeature.IsModuleFeatureName(featureName, moduleName))
-                            {
-                                string featureDescription = feature["Description"] as string;
-                                expFeatureList.Add(new ExperimentalFeature(featureName, featureDescription, manifestPath,
-                                                                           ExperimentalFeature.IsEnabled(featureName)));
-                            }
-                        }
-
-                        return expFeatureList.ToArray();
-                    }
-                }
-            }
-            catch (PSInvalidOperationException) { }
-
-            return Array.Empty<ExperimentalFeature>();
-        }
-
         // The extensions of all of the files that can be processed with Import-Module, put the ni.dll in front of .dll to have higher priority to be loaded.
         internal static readonly string[] PSModuleProcessableExtensions = new string[]
         {

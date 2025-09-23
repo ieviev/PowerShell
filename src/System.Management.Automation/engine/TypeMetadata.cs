@@ -1233,14 +1233,11 @@ namespace System.Management.Automation
         {
             try
             {
-                var expAttribute = member.GetCustomAttributes<ExperimentalAttribute>(inherit: false).FirstOrDefault();
-                if (expAttribute != null && expAttribute.ToHide) { return false; }
-
                 var hasAnyVisibleParamAttributes = false;
                 var paramAttributes = member.GetCustomAttributes<ParameterAttribute>(inherit: false);
                 foreach (var paramAttribute in paramAttributes)
                 {
-                    if (!paramAttribute.ToHide)
+                    if (true)
                     {
                         hasAnyVisibleParamAttributes = true;
                         break;

@@ -106,27 +106,12 @@ namespace System.Management.Automation
         {
             bool hasParameterAttribute = false;
             bool hasEnabledParamAttribute = false;
-            bool hasSeenExpAttribute = false;
 
             foreach (Attribute attr in Attributes)
             {
-                if (!hasSeenExpAttribute && attr is ExperimentalAttribute expAttribute)
-                {
-                    if (expAttribute.ToHide)
-                    {
-                        return true;
-                    }
-
-                    hasSeenExpAttribute = true;
-                }
-                else if (attr is ParameterAttribute paramAttribute)
+                if (attr is ParameterAttribute paramAttribute)
                 {
                     hasParameterAttribute = true;
-                    if (paramAttribute.ToHide)
-                    {
-                        continue;
-                    }
-
                     hasEnabledParamAttribute = true;
                 }
             }

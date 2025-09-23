@@ -351,49 +351,11 @@ namespace System.Management.Automation
         }
 
         
-        public ParameterAttribute(string experimentName, ExperimentAction experimentAction)
-        {
-            ExperimentalAttribute.ValidateArguments(experimentName, experimentAction);
-            ExperimentName = experimentName;
-            ExperimentAction = experimentAction;
-        }
-
         private string _parameterSetName = ParameterAttribute.AllParameterSets;
 
         private string _helpMessage;
         private string _helpMessageBaseName;
         private string _helpMessageResourceId;
-
-        #region Experimental Feature Related Properties
-
-        
-        public string ExperimentName { get; }
-
-        
-        public ExperimentAction ExperimentAction { get; }
-
-        internal bool ToHide => EffectiveAction == ExperimentAction.Hide;
-
-        internal bool ToShow => EffectiveAction == ExperimentAction.Show;
-
-        
-        private ExperimentAction EffectiveAction
-        {
-            get
-            {
-                if (_effectiveAction == ExperimentAction.None)
-                {
-                    _effectiveAction = ExperimentalFeature.GetActionToTake(ExperimentName, ExperimentAction);
-                }
-
-                return _effectiveAction;
-            }
-        }
-
-        private ExperimentAction _effectiveAction = default(ExperimentAction);
-
-        #endregion
-
         
         public int Position { get; set; } = int.MinValue;
 

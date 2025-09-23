@@ -891,7 +891,6 @@ namespace System.Management.Automation.Language
             }
 
             s_builtinAttributeGenerator.Add(typeof(CmdletBindingAttribute), NewCmdletBindingAttribute);
-            s_builtinAttributeGenerator.Add(typeof(ExperimentalAttribute), NewExperimentalAttribute);
             s_builtinAttributeGenerator.Add(typeof(ParameterAttribute), NewParameterAttribute);
             s_builtinAttributeGenerator.Add(typeof(OutputTypeAttribute), NewOutputTypeAttribute);
             s_builtinAttributeGenerator.Add(typeof(AliasAttribute), NewAliasAttribute);
@@ -1331,9 +1330,6 @@ namespace System.Management.Automation.Language
         private static readonly CallSite<Func<CallSite, object, ConfirmImpact>> s_attrArgToConfirmImpactConverter =
             CallSite<Func<CallSite, object, ConfirmImpact>>.Create(PSConvertBinder.Get(typeof(ConfirmImpact)));
 
-        private static readonly CallSite<Func<CallSite, object, ExperimentAction>> s_attrArgToExperimentActionConverter =
-            CallSite<Func<CallSite, object, ExperimentAction>>.Create(PSConvertBinder.Get(typeof(ExperimentAction)));
-
         private static readonly ConstantValueVisitor s_cvv = new ConstantValueVisitor { AttributeArgument = true };
 
         private static void CheckNoPositionalArgs(AttributeAst ast)
@@ -1367,16 +1363,6 @@ namespace System.Management.Automation.Language
                     argumentName,
                     typeof(CmdletBindingAttribute));
             }
-        }
-
-        private static (string, ExperimentAction) GetFeatureNameAndAction(AttributeAst ast)
-        {
-            var argValue0 = ast.PositionalArguments[0].Accept(s_cvv);
-            var argValue1 = ast.PositionalArguments[1].Accept(s_cvv);
-
-            var featureName = s_attrArgToStringConverter.Target(s_attrArgToStringConverter, argValue0);
-            var action = s_attrArgToExperimentActionConverter.Target(s_attrArgToExperimentActionConverter, argValue1);
-            return (featureName, action);
         }
 
         private static Attribute NewCmdletBindingAttribute(AttributeAst ast)
@@ -1433,25 +1419,7 @@ namespace System.Management.Automation.Language
             return result;
         }
 
-        private static Attribute NewExperimentalAttribute(AttributeAst ast)
-        {
-            int positionalArgCount = ast.PositionalArguments.Count;
-            if (positionalArgCount != 2)
-            {
-                throw InterpreterError.NewInterpreterException(
-                    targetObject: null,
-                    typeof(MethodException),
-                    ast.Extent,
-                    "MethodCountCouldNotFindBest",
-                    ExtendedTypeSystem.MethodArgumentCountException,
-                    ".ctor",
-                    positionalArgCount);
-            }
-
-            (string name, ExperimentAction action) = GetFeatureNameAndAction(ast);
-            return new ExperimentalAttribute(name, action);
-        }
-
+        
         private static Attribute NewParameterAttribute(AttributeAst ast)
         {
             ParameterAttribute result;
@@ -1460,10 +1428,6 @@ namespace System.Management.Automation.Language
             {
                 case 0:
                     result = new ParameterAttribute();
-                    break;
-                case 2:
-                    (string name, ExperimentAction action) = GetFeatureNameAndAction(ast);
-                    result = new ParameterAttribute(name, action);
                     break;
                 default:
                     throw InterpreterError.NewInterpreterException(
@@ -1811,33 +1775,16 @@ namespace System.Management.Automation.Language
             var attributes = new List<Attribute>(parameterAst.Attributes.Count);
             bool hasParameterAttribute = false;
             bool hasEnabledParamAttribute = false;
-            bool hasSeenExpAttribute = false;
 
             for (int index = 0; index < parameterAst.Attributes.Count; index++)
             {
                 var attributeAst = parameterAst.Attributes[index];
                 var attribute = attributeAst.GetAttribute();
 
-                if (attribute is ExperimentalAttribute expAttribute)
-                {
-                    // Only honor the first seen experimental attribute, ignore the others.
-                    if (!hasSeenExpAttribute && expAttribute.ToHide)
-                    {
-                        return null;
-                    }
-
-                    // Do not add experimental attributes to the attribute list.
-                    hasSeenExpAttribute = true;
-                    continue;
-                }
-                else if (attribute is ParameterAttribute paramAttribute)
+                if (attribute is ParameterAttribute paramAttribute)
                 {
                     hasParameterAttribute = true;
-                    if (paramAttribute.ToHide)
-                    {
-                        continue;
-                    }
-
+                    
                     hasEnabledParamAttribute = true;
                     usesCmdletBinding = true;
                     if (paramAttribute.Position != int.MinValue ||

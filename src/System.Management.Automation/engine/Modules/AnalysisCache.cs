@@ -1074,33 +1074,6 @@ namespace System.Management.Automation
             string hashString = CRC32Hash.ComputeHash(Utils.DefaultPowerShellAppBase);
             cacheFileName = string.Create(CultureInfo.InvariantCulture, $"{cacheFileName}-{hashString}");
 
-            if (ExperimentalFeature.EnabledExperimentalFeatureNames.Count > 0)
-            {
-                // If any experimental features are enabled, we cannot use the default cache file because those
-                // features may expose commands that are not available in a regular powershell session, and we
-                // should not cache those commands in the default cache file because that will result in wrong
-                // auto-completion suggestions when the default cache file is used in another powershell session.
-                //
-                // Here we will generate a cache file name that represent the combination of enabled feature names.
-                // We first convert enabled feature names to lower case, then we sort the feature names, and then
-                // compute an CRC32 hash from the sorted feature names. We will use the CRC32 hash to generate the
-                // cache file name.
-                int index = 0;
-                string[] featureNames = new string[ExperimentalFeature.EnabledExperimentalFeatureNames.Count];
-                foreach (string featureName in ExperimentalFeature.EnabledExperimentalFeatureNames)
-                {
-                    featureNames[index++] = featureName.ToLowerInvariant();
-                }
-
-                Array.Sort(featureNames);
-                string allNames = string.Join(Environment.NewLine, featureNames);
-
-                // Use CRC32 because it's faster.
-                // It's very unlikely to get collision from hashing the combinations of enabled features names.
-                hashString = CRC32Hash.ComputeHash(allNames);
-                cacheFileName = string.Create(CultureInfo.InvariantCulture, $"{cacheFileName}-{hashString}");
-            }
-
             s_cacheStoreLocation = Path.Combine(Platform.CacheDirectory, cacheFileName);
         }
     }

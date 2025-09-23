@@ -1092,16 +1092,6 @@ namespace System.Management.Automation
         {
             // Check first to see if File is a variable path. If so, we'll not create the FileBytePipe
             bool redirectToVariable = false;
-            if (ExperimentalFeature.IsEnabled(ExperimentalFeature.PSRedirectToVariable))
-            {
-                ProviderInfo p;
-                context.SessionState.Path.GetUnresolvedProviderPathFromPSPath(File, out p, out _);
-                if (p != null && p.NameEquals(context.ProviderNames.Variable))
-                {
-                    redirectToVariable = true;
-                }
-            }
-
             if (commandProcessor is NativeCommandProcessor nativeCommand
                 && nativeCommand.CommandRuntime.ErrorMergeTo is not MshCommandRuntime.MergeDataStream.Output
                 && FromStream is RedirectionStream.Output
@@ -1228,22 +1218,6 @@ namespace System.Management.Automation
             CommandProcessorBase commandProcessor;
             var name = context.SessionState.Path.GetUnresolvedProviderPathFromPSPath(File, out p, out d);
 
-            if (ExperimentalFeature.IsEnabled(ExperimentalFeature.PSRedirectToVariable) && p != null && p.NameEquals(context.ProviderNames.Variable))
-            {
-                commandProcessor = context.CreateCommand("Set-Variable", false);
-                Diagnostics.Assert(commandProcessor != null, "CreateCommand returned null");
-                var cpi = CommandParameterInternal.CreateParameterWithArgument(
-                    null, "Name", "-Name:",
-                    null, name,
-                    false);
-                commandProcessor.AddParameter(cpi);
-
-                if (this.Appending)
-                {
-                    commandProcessor.AddParameter(CommandParameterInternal.CreateParameter("Append", "-Append", null));
-                }
-            }
-            else
             {
                 commandProcessor = context.CreateCommand("out-file", false);
                 Diagnostics.Assert(commandProcessor != null, "CreateCommand returned null");
@@ -1347,8 +1321,7 @@ namespace System.Management.Automation
                 ScriptBlock scriptBlock = scriptBlockExpressionWrapper.GetScriptBlock(
                     context, functionDefinitionAst.IsFilter);
 
-                var expAttribute = scriptBlock.ExperimentalAttribute;
-                if (expAttribute == null || expAttribute.ToShow)
+                
                 {
                     context.EngineSessionState.SetFunctionRaw(functionDefinitionAst.Name,
                         scriptBlock, context.EngineSessionState.CurrentScope.ScopeOrigin);

@@ -45,7 +45,7 @@ namespace System.Management.Automation
                     // and disabled parameter attributes. We should ignore those attributes.
                     // When processing non-dynamic parameters, the experimental attributes and disabled parameter
                     // attributes have already been filtered out when constructing the RuntimeDefinedParameter.
-                    if (attribute is ExperimentalAttribute || attribute is ParameterAttribute param && param.ToHide)
+                    if (attribute is ParameterAttribute param)
                     {
                         continue;
                     }
@@ -133,9 +133,6 @@ namespace System.Management.Automation
             {
                 switch (attr)
                 {
-                    case ExperimentalAttribute _:
-                    case ParameterAttribute param when param.ToHide:
-                        break;
                     default:
                         ProcessAttribute(member.Name, attr, ref validationAttributes, ref argTransformationAttributes, ref aliases);
                         break;

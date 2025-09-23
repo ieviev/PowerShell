@@ -29,22 +29,6 @@ namespace System.Management.Automation
 
             if (commandInfo is IScriptCommandInfo scriptCommand)
             {
-                ExperimentalAttribute expAttribute = scriptCommand.ScriptBlock.ExperimentalAttribute;
-                if (expAttribute != null && expAttribute.ToHide)
-                {
-                    string errorTemplate = expAttribute.ExperimentAction == ExperimentAction.Hide
-                        ? DiscoveryExceptions.ScriptDisabledWhenFeatureOn
-                        : DiscoveryExceptions.ScriptDisabledWhenFeatureOff;
-
-                    string errorMsg = StringUtil.Format(errorTemplate, expAttribute.ExperimentName);
-                    ErrorRecord errorRecord = new ErrorRecord(
-                        new InvalidOperationException(errorMsg),
-                        "ScriptCommandDisabled",
-                        ErrorCategory.InvalidOperation,
-                        commandInfo);
-                    throw new CmdletInvocationException(errorRecord);
-                }
-
                 HasCleanBlock = scriptCommand.ScriptBlock.HasCleanBlock;
             }
 

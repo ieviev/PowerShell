@@ -610,11 +610,6 @@ namespace Microsoft.PowerShell.Commands
 
         private bool _passThru;
 
-        
-        [Parameter]
-        [Experimental(ExperimentalFeature.PSRedirectToVariable, ExperimentAction.Show)]
-        public SwitchParameter Append { get; set; }
-
         private bool _nameIsFormalParameter;
         private bool _valueIsFormalParameter;
         #endregion parameters
@@ -631,53 +626,11 @@ namespace Microsoft.PowerShell.Commands
             {
                 _valueIsFormalParameter = true;
             }
-
-            if (Append)
-            {
-                // create the list here and add to it if it has a value
-                // but if they have more than one name, produce an error
-                if (Name.Length != 1)
-                {
-                    ErrorRecord appendVariableError = new ErrorRecord(new InvalidOperationException(), "SetVariableAppend", ErrorCategory.InvalidOperation, Name);
-                    appendVariableError.ErrorDetails = new ErrorDetails("SetVariableAppend");
-                    appendVariableError.ErrorDetails.RecommendedAction = VariableCommandStrings.UseSingleVariable;
-                    ThrowTerminatingError(appendVariableError);
-                }
-
-                _valueList = new List<object>();
-                var currentValue = Context.SessionState.PSVariable.Get(Name[0]);
-                if (currentValue is not null)
-                {
-                    if (currentValue.Value is IList<object> ilist)
-                    {
-                        _valueList.AddRange(ilist);
-                    }
-                    else
-                    {
-                        _valueList.Add(currentValue.Value);
-                    }
-                }
-            }
         }
 
         
         protected override void ProcessRecord()
         {
-            if (_nameIsFormalParameter && _valueIsFormalParameter)
-            {
-                if (Append)
-                {
-                    if (Value != AutomationNull.Value)
-                    {
-                        _valueList ??= new List<object>();
-
-                        _valueList.Add(Value);
-                    }
-                }
-
-                return;
-            }
-
             if (_nameIsFormalParameter && !_valueIsFormalParameter)
             {
                 if (Value != AutomationNull.Value)
@@ -702,11 +655,6 @@ namespace Microsoft.PowerShell.Commands
             {
                 if (_valueIsFormalParameter)
                 {
-                    if (Append)
-                    {
-                        SetVariable(Name, _valueList);
-                    }
-                    else
                     {
                         SetVariable(Name, Value);
                     }

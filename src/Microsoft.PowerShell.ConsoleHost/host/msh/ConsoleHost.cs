@@ -2159,11 +2159,6 @@ namespace Microsoft.PowerShell
                                 // Evaluate any suggestions
                                 if (previousResponseWasEmpty == false)
                                 {
-                                    if (ExperimentalFeature.IsEnabled(ExperimentalFeature.PSFeedbackProvider))
-                                    {
-                                        EvaluateFeedbacks(ui);
-                                    }
-                                    else
                                     {
                                         EvaluateSuggestions(ui);
                                     }

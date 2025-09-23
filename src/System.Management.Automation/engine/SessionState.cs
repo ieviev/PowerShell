@@ -308,12 +308,7 @@ namespace System.Management.Automation
                     RunspaceInit.PSHOMEDescription);
             this.GlobalScope.SetVariable(v.Name, v, asValue: false, force: true, this, CommandOrigin.Internal, fastPath: true);
 
-            // $EnabledExperimentalFeatures
-            v = new PSVariable(SpecialVariables.EnabledExperimentalFeatures,
-                               ExperimentalFeature.EnabledExperimentalFeatureNames,
-                               ScopedItemOptions.Constant | ScopedItemOptions.AllScope,
-                               RunspaceInit.EnabledExperimentalFeatures);
-            this.GlobalScope.SetVariable(v.Name, v, asValue: false, force: true, this, CommandOrigin.Internal, fastPath: true);
+            
         }
 
         

@@ -321,9 +321,6 @@ namespace System.Management.Automation
         }
 
         
-        public IEnumerable<ExperimentalFeature> ExperimentalFeatures { get; internal set; } = Utils.EmptyReadOnlyCollection<ExperimentalFeature>();
-
-        
         public IEnumerable<string> Tags
         {
             get { return _tags; }
