@@ -10,8 +10,6 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace Microsoft.PowerShell
 {
@@ -113,142 +111,9 @@ namespace Microsoft.PowerShell
             }
         }
 
-        internal static async Task CheckForUpdates()
+        internal static Task CheckForUpdates()
         {
-            // Delay the update check for 3 seconds so that it has the minimal impact on startup.
-            await Task.Delay(3000);
-
-            // A self-built pwsh for development purpose has the SHA1 commit hash baked in 'GitCommitId',
-            // which is 40 characters long. So we can quickly check the length of 'GitCommitId' to tell
-            // if this is a self-built pwsh, and skip the update check if so.
-            if (PSVersionInfo.GitCommitId.Length > 40)
-            {
-                return;
-            }
-
-            // Daily builds do not support update notifications
-            string preReleaseLabel = PSVersionInfo.PSCurrentVersion.PreReleaseLabel;
-            if (preReleaseLabel != null && preReleaseLabel.StartsWith("daily", StringComparison.OrdinalIgnoreCase))
-            {
-                return;
-            }
-
-            // If the host is not connect to a network, skip the rest of the check.
-            if (!NetworkInterface.GetIsNetworkAvailable())
-            {
-                return;
-            }
-
-            // Create the update cache directory if it doesn't exists
-            if (!Directory.Exists(s_cacheDirectory))
-            {
-                Directory.CreateDirectory(s_cacheDirectory);
-            }
-
-            bool parseSuccess = TryParseUpdateFile(
-                out string updateFilePath,
-                out SemanticVersion lastUpdateVersion,
-                out DateTime lastUpdateDate);
-
-            DateTime today = DateTime.UtcNow;
-            if (parseSuccess && updateFilePath != null && (today - lastUpdateDate).TotalDays < 7)
-            {
-                // There is an existing update file, and the last update was less than 1 week ago.
-                // It's unlikely a new version is released within 1 week, so we can skip this check.
-                return;
-            }
-
-            // Construct the sentinel file paths for today's check.
-            string todayDoneFileName = string.Format(
-                CultureInfo.InvariantCulture,
-                s_doneFileNameTemplate,
-                today.Year.ToString(),
-                today.Month.ToString(),
-                today.Day.ToString());
-
-            string todayDoneFilePath = Path.Combine(s_cacheDirectory, todayDoneFileName);
-            if (File.Exists(todayDoneFilePath))
-            {
-                // A successful update check has been done today.
-                // We can skip this update check.
-                return;
-            }
-
-            try
-            {
-                // Use 's_sentinelFileName' as the file lock.
-                // The update-check tasks started by every 'pwsh' process of the same version will compete on holding this file.
-                string sentinelFilePath = Path.Combine(s_cacheDirectory, s_sentinelFileName);
-                using (new FileStream(sentinelFilePath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None, bufferSize: 1, FileOptions.DeleteOnClose))
-                {
-                    if (File.Exists(todayDoneFilePath))
-                    {
-                        // After acquiring the file lock, it turns out a successful check has already been done for today.
-                        // Then let's skip this update check.
-                        return;
-                    }
-
-                    // Now it's guaranteed that this is the only process that reaches here.
-                    // Clean up the old '.done' file, there should be only one of it.
-                    foreach (string oldFile in Directory.EnumerateFiles(s_cacheDirectory, s_doneFileNamePattern, s_enumOptions))
-                    {
-                        File.Delete(oldFile);
-                    }
-
-                    if (!parseSuccess)
-                    {
-                        // The update file is corrupted, either because more than one update files were found unexpectedly,
-                        // or because the update file name failed to be parsed into a release version and a publish date.
-                        // This is **very unlikely** to happen unless the file is accidentally altered manually.
-                        // We try to recover here by cleaning up all update files for the configured notification type.
-                        foreach (string file in Directory.EnumerateFiles(s_cacheDirectory, s_updateFileNamePattern, s_enumOptions))
-                        {
-                            File.Delete(file);
-                        }
-                    }
-
-                    // Do the real update check:
-                    //  - Send HTTP request to query for the new release/pre-release;
-                    //  - If there is a valid new release that should be reported to the user,
-                    //    create the file `update<NotificationType>_<tag>_<publish-date>` when no `update` file exists,
-                    //    or rename the existing file to `update<NotificationType>_<new-version>_<new-publish-date>`.
-                    SemanticVersion baselineVersion = lastUpdateVersion ?? PSVersionInfo.PSCurrentVersion;
-                    Release release = await QueryNewReleaseAsync(baselineVersion);
-
-                    if (release != null)
-                    {
-                        // The date part of the string is 'YYYY-MM-DD'.
-                        const int dateLength = 10;
-                        string newUpdateFileName = string.Format(
-                            CultureInfo.InvariantCulture,
-                            s_updateFileNameTemplate,
-                            release.TagName,
-                            release.PublishAt.Substring(0, dateLength));
-
-                        string newUpdateFilePath = Path.Combine(s_cacheDirectory, newUpdateFileName);
-
-                        if (updateFilePath == null)
-                        {
-                            new FileStream(newUpdateFilePath, FileMode.CreateNew, FileAccess.Write, FileShare.None).Close();
-                        }
-                        else
-                        {
-                            File.Move(updateFilePath, newUpdateFilePath);
-                        }
-                    }
-
-                    // Finally, create the `todayDoneFilePath` file as an indicator that a successful update check has finished today.
-                    new FileStream(todayDoneFilePath, FileMode.CreateNew, FileAccess.Write, FileShare.None).Close();
-                }
-            }
-            catch (Exception)
-            {
-                // There are 2 possible reason for the exception:
-                // 1. An update check initiated from another `pwsh` process is in progress.
-                //    It's OK to just return and let that update check to finish the work.
-                // 2. The update check failed (ex. internet connectivity issue, GitHub service failure).
-                //    It's OK to just return and let another `pwsh` do the check at later time.
-            }
+            return Task.CompletedTask;
         }
 
         
@@ -307,55 +172,6 @@ namespace Microsoft.PowerShell
             lastUpdateDate = default;
             return false;
         }
-
-        private static async Task<Release> QueryNewReleaseAsync(SemanticVersion baselineVersion)
-        {
-            bool isStableRelease = string.IsNullOrEmpty(PSVersionInfo.PSCurrentVersion.PreReleaseLabel);
-            string[] queryUris = s_notificationType switch
-            {
-                NotificationType.LTS => new[] { LTSBuildInfoURL },
-                NotificationType.Default => isStableRelease
-                    ? new[] { StableBuildInfoURL }
-                    : new[] { StableBuildInfoURL, PreviewBuildInfoURL },
-                _ => Array.Empty<string>()
-            };
-
-            using var client = new HttpClient();
-
-            string userAgent = string.Create(CultureInfo.InvariantCulture, $"PowerShell {PSVersionInfo.GitCommitId}");
-            client.DefaultRequestHeaders.Add("User-Agent", userAgent);
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-            Release releaseToReturn = null;
-            SemanticVersion highestVersion = baselineVersion;
-            var settings = new JsonSerializerSettings() { DateParseHandling = DateParseHandling.None };
-            var serializer = JsonSerializer.Create(settings);
-
-            foreach (string queryUri in queryUris)
-            {
-                // Query the GitHub Rest API and throw if the query fails.
-                HttpResponseMessage response = await client.GetAsync(queryUri);
-                response.EnsureSuccessStatusCode();
-
-                using var stream = await response.Content.ReadAsStreamAsync();
-                using var reader = new StreamReader(stream);
-                using var jsonReader = new JsonTextReader(reader);
-
-                JObject release = serializer.Deserialize<JObject>(jsonReader);
-                var tagName = release["ReleaseTag"].ToString();
-                var version = SemanticVersion.Parse(tagName.Substring(1));
-
-                if (version > highestVersion)
-                {
-                    highestVersion = version;
-                    var publishAt = release["ReleaseDate"].ToString();
-                    releaseToReturn = new Release(publishAt, tagName);
-                }
-            }
-
-            return releaseToReturn;
-        }
-
         
         private static NotificationType GetNotificationType()
         {
