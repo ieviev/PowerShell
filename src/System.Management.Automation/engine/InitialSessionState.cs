@@ -755,7 +755,7 @@ namespace System.Management.Automation.Runspaces
         {
             get
             {
-                Collection<T> result = new Collection<T>();
+                Collection<T> result = new();
                 lock (_syncObject)
                 {
                     foreach (T element in _internalCollection)
