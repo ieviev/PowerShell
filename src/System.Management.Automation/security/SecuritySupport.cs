@@ -721,52 +721,6 @@ namespace System.Management.Automation
     
     internal static class CmsUtils
     {
-        internal static string Encrypt(byte[] contentBytes, CmsMessageRecipient[] recipients, SessionState sessionState, out ErrorRecord error)
-        {
-            error = null;
-
-            if ((contentBytes == null) || (contentBytes.Length == 0))
-            {
-                return string.Empty;
-            }
-
-            // After review with the crypto board, NIST_AES256_CBC is more appropriate
-            // than .NET's default 3DES. Also, when specified, uses szOID_RSAES_OAEP for key
-            // encryption to prevent padding attacks.
-            const string szOID_NIST_AES256_CBC = "2.16.840.1.101.3.4.1.42";
-
-            ContentInfo content = new ContentInfo(contentBytes);
-            EnvelopedCms cms = new EnvelopedCms(content,
-                new AlgorithmIdentifier(
-                    Oid.FromOidValue(szOID_NIST_AES256_CBC, OidGroup.EncryptionAlgorithm)));
-
-            CmsRecipientCollection recipientCollection = new CmsRecipientCollection();
-            foreach (CmsMessageRecipient recipient in recipients)
-            {
-                // Resolve the recipient, if it hasn't been done yet.
-                if ((recipient.Certificates != null) && (recipient.Certificates.Count == 0))
-                {
-                    recipient.Resolve(sessionState, ResolutionPurpose.Encryption, out error);
-                }
-
-                if (error != null)
-                {
-                    return null;
-                }
-
-                foreach (X509Certificate2 certificate in recipient.Certificates)
-                {
-                    recipientCollection.Add(new CmsRecipient(certificate));
-                }
-            }
-
-            cms.Encrypt(recipientCollection);
-
-            byte[] encodedBytes = cms.Encode();
-            string encodedContent = CmsUtils.GetAsciiArmor(encodedBytes);
-            return encodedContent;
-        }
-
         internal static readonly string BEGIN_CMS_SIGIL = "-----BEGIN CMS-----";
         internal static readonly string END_CMS_SIGIL = "-----END CMS-----";
 
