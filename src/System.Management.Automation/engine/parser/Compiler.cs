@@ -392,10 +392,6 @@ namespace System.Management.Automation.Language
 
         internal static readonly MethodInfo PipelineOps_InvokePipeline =
             typeof(PipelineOps).GetMethod(nameof(PipelineOps.InvokePipeline), StaticFlags);
-
-        internal static readonly MethodInfo PipelineOps_InvokePipelineInBackground =
-            typeof(PipelineOps).GetMethod(nameof(PipelineOps.InvokePipelineInBackground), StaticFlags);
-
         internal static readonly MethodInfo PipelineOps_Nop =
             typeof(PipelineOps).GetMethod(nameof(PipelineOps.Nop), StaticFlags);
 
@@ -3463,16 +3459,6 @@ namespace System.Management.Automation.Language
 
         public object VisitPipelineChain(PipelineChainAst pipelineChainAst)
         {
-            // If the statement chain is backgrounded,
-            // we defer that to the background operation call
-            if (pipelineChainAst.Background)
-            {
-                return Expression.Call(
-                    CachedReflectionInfo.PipelineOps_InvokePipelineInBackground,
-                    Expression.Constant(pipelineChainAst),
-                    s_functionContext);
-            }
-
             // We want to generate code like:
             //
             // dispatchIndex = 0;
@@ -3637,15 +3623,6 @@ namespace System.Management.Automation.Language
                 exprs.Add(UpdatePosition(pipelineAst));
             }
 
-            if (pipelineAst.Background)
-            {
-                Expression invokeBackgroundPipe = Expression.Call(
-                    CachedReflectionInfo.PipelineOps_InvokePipelineInBackground,
-                    Expression.Constant(pipelineAst),
-                    s_functionContext);
-                exprs.Add(invokeBackgroundPipe);
-            }
-            else
             {
                 var pipeElements = pipelineAst.PipelineElements;
                 var firstCommandExpr = pipeElements[0] as CommandExpressionAst;
