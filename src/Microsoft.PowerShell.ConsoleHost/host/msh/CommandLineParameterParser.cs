@@ -598,11 +598,6 @@ namespace Microsoft.PowerShell
             return true;
         }
 
-        internal static string GetConfigurationNameFromGroupPolicy()
-        {
-            return string.Empty;
-        }
-
         
         private (string switchKey, bool shouldBreak) GetSwitchKey(string[] args, ref int argIndex, ref bool noexitSeen)
         {

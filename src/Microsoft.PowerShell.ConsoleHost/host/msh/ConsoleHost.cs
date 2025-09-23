@@ -64,38 +64,12 @@ namespace Microsoft.PowerShell
             string helpText,
             bool issProvidedExternally)
         {
-            // string path = Environment.GetEnvironmentVariable("PATH");
-            // string pshome = Utils.DefaultPowerShellAppBase;
-
-            // pshome += Path.PathSeparator;
-
-            // // To not impact startup perf, we don't remove duplicates, but we avoid adding a duplicate to the front
-            // // we also don't handle the edge case where PATH only contains $PSHOME
-            // if (string.IsNullOrEmpty(path))
-            // {
-            //     Environment.SetEnvironmentVariable("PATH", pshome);
-            // }
-            // else if (!path.StartsWith(pshome, StringComparison.Ordinal))
-            // {
-            //     Environment.SetEnvironmentVariable("PATH", pshome + path);
-            // }
-
-            try
-            {
-                string profileDir = Platform.CacheDirectory;
-            }
-            catch
-            {
-                // It's safe to ignore errors, the guarded code is just there to try and
-                // improve startup performance.
-            }
-
+            
+            string profileDir = Platform.CacheDirectory;
             uint exitCode = ExitCodeSuccess;
 
             try
             {
-                // We might be able to ignore console host creation error if we are running in
-                // server mode, which does not require a console.
                 HostException hostException = null;
                 try
                 {
@@ -107,14 +81,6 @@ namespace Microsoft.PowerShell
                 }
 
                 PSHostUserInterface hostUI = s_theConsoleHost?.UI ?? new NullHostUserInterface();
-                s_cpp.ShowErrorHelpBanner(hostUI, bannerText, helpText);
-
-                if (s_cpp.ShowVersion)
-                {
-                    s_theConsoleHost.UI.WriteLine($"PowerShell :)");
-                    return 0;
-                }
-                else
                 {
                     // Run PowerShell in normal console mode.
                     if (hostException != null)
@@ -155,11 +121,6 @@ namespace Microsoft.PowerShell
         internal static void ParseCommandLine(string[] args)
         {
             s_cpp.Parse(args);
-
-            // Check registry setting for a Group Policy ConfigurationName entry,
-            // and use it to override anything set by the user on the command line.
-            // It depends on setting file so 'SetSystemConfigFilePath()' should be called before.
-            s_cpp.ConfigurationName = CommandLineParameterParser.GetConfigurationNameFromGroupPolicy();
         }
 
         private static readonly CommandLineParameterParser s_cpp = new CommandLineParameterParser();
@@ -180,36 +141,9 @@ namespace Microsoft.PowerShell
                         // ControlBreak mimics ControlC in Noninteractive shells
                         SpinUpBreakHandlerThread(shouldEndSession: true);
                     }
-                    else
-                    {
-                        // Break into script debugger.
-                        BreakIntoDebugger();
-                    }
 
                     return;
             }
-        }
-
-        private static bool BreakIntoDebugger()
-        {
-            ConsoleHost host = ConsoleHost.SingletonInstance;
-            Debugger debugger = null;
-            lock (host.hostGlobalLock)
-            {
-                if (host._runspaceRef.Runspace != null &&
-                    host._runspaceRef.Runspace.GetCurrentlyRunningPipeline() != null)
-                {
-                    debugger = host._runspaceRef.Runspace.Debugger;
-                }
-            }
-
-            if (debugger != null)
-            {
-                debugger.SetDebuggerStepMode(true);
-                return true;
-            }
-
-            return false;
         }
 
         
@@ -282,14 +216,6 @@ namespace Microsoft.PowerShell
                     }
                 }
             }
-
-            // call the console APIs directly, instead of ui.rawui.FlushInputHandle, as ui may be finalized
-            // already if this thread is lagging behind the main thread.
-
-#if !UNIX
-            ConsoleHandle handle = ConsoleControl.GetConioDeviceHandle();
-            ConsoleControl.FlushConsoleInputBuffer(handle);
-#endif
 
             ConsoleHost.SingletonInstance._breakHandlerThread = null;
         }
@@ -1142,17 +1068,13 @@ namespace Microsoft.PowerShell
         
         private uint Run(CommandLineParameterParser cpp, bool isPrestartWarned)
         {
-            Dbg.Assert(cpp != null, "CommandLine parameter parser cannot be null.");
             uint exitCode = ExitCodeSuccess;
 
             do
             {
-                s_runspaceInitTracer.WriteLine("starting parse of command line parameters");
-
                 exitCode = ExitCodeSuccess;
                 if (!string.IsNullOrEmpty(cpp.InitialCommand) && isPrestartWarned)
                 {
-                    s_tracer.TraceError("Start up warnings made command \"{0}\" not executed", cpp.InitialCommand);
                     string msg = StringUtil.Format(ConsoleHostStrings.InitialCommandNotExecuted, cpp.InitialCommand);
                     ui.WriteErrorLine(msg);
                     exitCode = ExitCodeInitFailure;
@@ -1161,7 +1083,6 @@ namespace Microsoft.PowerShell
 
                 if (cpp.AbortStartup)
                 {
-                    s_tracer.WriteLine("processing of cmdline args failed, exiting");
                     exitCode = cpp.ExitCode;
                     break;
                 }
@@ -1432,10 +1353,6 @@ namespace Microsoft.PowerShell
                 
             }
 
-#if LEGACYTELEMETRY
-            // Record how long it took from process start to runspace open for telemetry.
-            _readyForInputTimeInMS = (DateTime.Now - Process.GetCurrentProcess().StartTime).TotalMilliseconds;
-#endif
 
             DoRunspaceInitialization(args);
         }

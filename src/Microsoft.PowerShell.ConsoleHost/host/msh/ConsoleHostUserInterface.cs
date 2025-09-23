@@ -49,27 +49,6 @@ namespace Microsoft.PowerShell
             SupportsVirtualTerminal = true;
             _isInteractiveTestToolListening = false;
 
-            // check if TERM env var is set
-            // `dumb` means explicitly don't use VT
-            // `xterm-mono` and `xtermm` means support VT, but emit plaintext
-            switch (Environment.GetEnvironmentVariable("TERM"))
-            {
-                case "dumb":
-                    SupportsVirtualTerminal = false;
-                    break;
-                case "xterm-mono":
-                case "xtermm":
-                    PSStyle.Instance.OutputRendering = OutputRendering.PlainText;
-                    break;
-                default:
-                    break;
-            }
-
-            // widely supported by CLI tools via https://no-color.org/
-            if (Environment.GetEnvironmentVariable("NO_COLOR") != null)
-            {
-                PSStyle.Instance.OutputRendering = OutputRendering.PlainText;
-            }
 
             if (SupportsVirtualTerminal)
             {
@@ -79,37 +58,7 @@ namespace Microsoft.PowerShell
 
         internal bool TryTurnOnVirtualTerminal()
         {
-#if UNIX
             return true;
-#else
-            try
-            {
-                // Turn on virtual terminal if possible.
-                // This might throw - not sure how exactly (no console), but if it does, we shouldn't fail to start.
-                var outputHandle = ConsoleControl.GetActiveScreenBufferHandle();
-                var outputMode = ConsoleControl.GetMode(outputHandle);
-
-                if (outputMode.HasFlag(ConsoleControl.ConsoleModes.VirtualTerminal))
-                {
-                    return true;
-                }
-
-                outputMode |= ConsoleControl.ConsoleModes.VirtualTerminal;
-                if (ConsoleControl.NativeMethods.SetConsoleMode(outputHandle.DangerousGetHandle(), (uint)outputMode))
-                {
-                    // We only know if vt100 is supported if the previous call actually set the new flag, older
-                    // systems ignore the setting.
-                    outputMode = ConsoleControl.GetMode(outputHandle);
-                    return outputMode.HasFlag(ConsoleControl.ConsoleModes.VirtualTerminal);
-                }
-            }
-            catch
-            {
-                // Do nothing if failed
-            }
-
-            return false;
-#endif
         }
 
         
