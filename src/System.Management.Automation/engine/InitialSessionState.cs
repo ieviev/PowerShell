@@ -4229,57 +4229,13 @@ end {
                     // Web cmdlets aliases
                     new SessionStateAliasEntry("irm", "Invoke-RestMethod", string.Empty, ReadOnly),
                     new SessionStateAliasEntry("iwr", "Invoke-WebRequest", string.Empty, ReadOnly),
-// Porting note: #if !UNIX is used to disable aliases for cmdlets which conflict with Linux / macOS
-#if !UNIX
-                    // ac is a native command on macOS
-                    new SessionStateAliasEntry("ac", "Add-Content", string.Empty, ReadOnly),
-                    new SessionStateAliasEntry("clear", "Clear-Host"),
-                    new SessionStateAliasEntry("compare", "Compare-Object", string.Empty, ReadOnly),
-                    new SessionStateAliasEntry("cpp", "Copy-ItemProperty", string.Empty, ReadOnly),
-                    new SessionStateAliasEntry("diff", "Compare-Object", string.Empty, ReadOnly),
-                    new SessionStateAliasEntry("gsv", "Get-Service", string.Empty, ReadOnly),
-                    new SessionStateAliasEntry("sleep", "Start-Sleep", string.Empty, ReadOnly),
-                    new SessionStateAliasEntry("sort", "Sort-Object", string.Empty, ReadOnly),
-                    new SessionStateAliasEntry("start", "Start-Process", string.Empty, ReadOnly),
-                    new SessionStateAliasEntry("sasv", "Start-Service", string.Empty, ReadOnly),
-                    new SessionStateAliasEntry("spsv", "Stop-Service", string.Empty, ReadOnly),
-                    new SessionStateAliasEntry("tee", "Tee-Object", string.Empty, ReadOnly),
-                    new SessionStateAliasEntry("write", "Write-Output", string.Empty, ReadOnly),
-                    // These were transferred from the "transferred from the profile" section
-                    new SessionStateAliasEntry("cat", "Get-Content"),
-                    new SessionStateAliasEntry("cp", "Copy-Item", string.Empty, AllScope),
-                    new SessionStateAliasEntry("ls", "Get-ChildItem"),
-                    new SessionStateAliasEntry("man", "help"),
-                    new SessionStateAliasEntry("mount", "New-PSDrive"),
-                    new SessionStateAliasEntry("mv", "Move-Item"),
-                    new SessionStateAliasEntry("ps", "Get-Process"),
-                    new SessionStateAliasEntry("rm", "Remove-Item"),
-                    new SessionStateAliasEntry("rmdir", "Remove-Item"),
-                    new SessionStateAliasEntry("cnsn", "Connect-PSSession", string.Empty, ReadOnly),
-                    new SessionStateAliasEntry("dnsn", "Disconnect-PSSession", string.Empty, ReadOnly),
-                    new SessionStateAliasEntry("ogv", "Out-GridView", string.Empty, ReadOnly),
-                    new SessionStateAliasEntry("shcm", "Show-Command", string.Empty, ReadOnly),
-#endif
                     // Bash built-ins we purposefully keep even if they override native commands
                     new SessionStateAliasEntry("cd", "Set-Location", string.Empty, AllScope),
                     new SessionStateAliasEntry("dir", "Get-ChildItem", string.Empty, AllScope),
                     new SessionStateAliasEntry("echo", "Write-Output", string.Empty, AllScope),
                     new SessionStateAliasEntry("fc", "Format-Custom", string.Empty, ReadOnly),
-#if !UNIX
-                    new SessionStateAliasEntry("kill", "Stop-Process"),
-#endif
                     new SessionStateAliasEntry("pwd", "Get-Location"),
                     new SessionStateAliasEntry("type", "Get-Content"),
-// #if !CORECLR is used to disable aliases for cmdlets which are not available on OneCore or not appropriate for PSCore6 due to conflicts
-#if !CORECLR
-                    new SessionStateAliasEntry("gwmi", "Get-WmiObject", string.Empty, ReadOnly),
-                    new SessionStateAliasEntry("iwmi", "Invoke-WMIMethod", string.Empty, ReadOnly),
-                    new SessionStateAliasEntry("ise", "powershell_ise.exe", string.Empty, ReadOnly),
-                    new SessionStateAliasEntry("rwmi", "Remove-WMIObject", string.Empty, ReadOnly),
-                    new SessionStateAliasEntry("sc", "Set-Content", string.Empty, ReadOnly),
-                    new SessionStateAliasEntry("swmi", "Set-WMIInstance", string.Empty, ReadOnly),
-                    new SessionStateAliasEntry("trcm", "Trace-Command", string.Empty, ReadOnly),
-#endif
                     // Aliases transferred from the profile
                     new SessionStateAliasEntry("h", "Get-History"),
                     new SessionStateAliasEntry("history", "Get-History"),

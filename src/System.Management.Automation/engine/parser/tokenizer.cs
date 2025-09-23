@@ -787,7 +787,7 @@ namespace System.Management.Automation.Language
 
                     break;
 
-                case '`':
+                case '\\':
                     char c1 = GetChar();
                     if (c1 == '\n' || c1 == '\r')
                     {
