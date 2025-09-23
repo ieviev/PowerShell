@@ -337,41 +337,6 @@ namespace Microsoft.PowerShell
             }
         }
 
-        internal bool SocketServerMode
-        {
-            get
-            {
-                AssertArgumentsParsed();
-                return _socketServerMode;
-            }
-        }
-
-        internal bool NamedPipeServerMode
-        {
-            get
-            {
-                AssertArgumentsParsed();
-                return _namedPipeServerMode;
-            }
-        }
-
-        internal bool SSHServerMode
-        {
-            get
-            {
-                AssertArgumentsParsed();
-                return _sshServerMode;
-            }
-        }
-
-        internal bool ServerMode
-        {
-            get
-            {
-                AssertArgumentsParsed();
-                return _serverMode;
-            }
-        }
 
         // Added for using in xUnit tests
         internal string? ErrorMessage
@@ -393,15 +358,6 @@ namespace Microsoft.PowerShell
             }
         }
 
-        // Added for using in xUnit tests
-        internal bool ShowExtendedHelp
-        {
-            get
-            {
-                AssertArgumentsParsed();
-                return _showExtendedHelp;
-            }
-        }
 
         internal bool NoProfileLoadTime
         {
@@ -472,22 +428,6 @@ namespace Microsoft.PowerShell
             {
                 AssertArgumentsParsed();
                 return _executionPolicy;
-            }
-        }
-
-        internal bool StaMode
-        {
-            get
-            {
-                AssertArgumentsParsed();
-                if (_staMode.HasValue)
-                {
-                    return _staMode.Value;
-                }
-                else
-                {
-                    return Platform.IsStaSupported;
-                }
             }
         }
 
@@ -733,10 +673,6 @@ namespace Microsoft.PowerShell
                     hostUI.WriteLine(bannerText);
                 }
 
-                if (UpdatesNotification.CanNotifyUpdates)
-                {
-                    UpdatesNotification.ShowUpdateNotification(hostUI);
-                }
             }
         }
 
@@ -820,106 +756,6 @@ namespace Microsoft.PowerShell
                     _showBanner = false;
                     ParametersUsed |= ParameterBitmap.NoLogo;
                 }
-                else if (MatchSwitch(switchKey, "noninteractive", "noni"))
-                {
-                    _noInteractive = true;
-                    ParametersUsed |= ParameterBitmap.NonInteractive;
-                }
-                else if (MatchSwitch(switchKey, "socketservermode", "so"))
-                {
-                    _socketServerMode = true;
-                    _showBanner = false;
-                    ParametersUsed |= ParameterBitmap.SocketServerMode;
-                }
-#if !UNIX
-                else if (MatchSwitch(switchKey, "v2socketservermode", "v2so"))
-                {
-                    _v2SocketServerMode = true;
-                    _showBanner = false;
-                    ParametersUsed |= ParameterBitmap.V2SocketServerMode;
-                }
-#endif
-                else if (MatchSwitch(switchKey, "servermode", "s"))
-                {
-                    _serverMode = true;
-                    _showBanner = false;
-                    ParametersUsed |= ParameterBitmap.ServerMode;
-                }
-                else if (MatchSwitch(switchKey, "namedpipeservermode", "nam"))
-                {
-                    _namedPipeServerMode = true;
-                    _showBanner = false;
-                    ParametersUsed |= ParameterBitmap.NamedPipeServerMode;
-                }
-                else if (MatchSwitch(switchKey, "sshservermode", "sshs"))
-                {
-                    _sshServerMode = true;
-                    _showBanner = false;
-                    ParametersUsed |= ParameterBitmap.SSHServerMode;
-                }
-                else if (MatchSwitch(switchKey, "noprofileloadtime", "noprofileloadtime"))
-                {
-                    _noProfileLoadTime = true;
-                    ParametersUsed |= ParameterBitmap.NoProfileLoadTime;
-                }
-                else if (MatchSwitch(switchKey, "interactive", "i"))
-                {
-                    _noInteractive = false;
-                    ParametersUsed |= ParameterBitmap.Interactive;
-                }
-                else if (MatchSwitch(switchKey, "configurationfile", "configurationfile"))
-                {
-                    ++i;
-                    if (i >= args.Length)
-                    {
-                        SetCommandLineError(
-                            CommandLineParameterParserStrings.MissingConfigurationFileArgument);
-                        break;
-                    }
-
-                    _configurationFile = args[i];
-                    ParametersUsed |= ParameterBitmap.ConfigurationFile;
-                }
-                else if (MatchSwitch(switchKey, "configurationname", "config"))
-                {
-                    ++i;
-                    if (i >= args.Length)
-                    {
-                        SetCommandLineError(
-                            CommandLineParameterParserStrings.MissingConfigurationNameArgument);
-                        break;
-                    }
-
-                    _configurationName = args[i];
-                    ParametersUsed |= ParameterBitmap.ConfigurationName;
-                }
-                else if (MatchSwitch(switchKey, "custompipename", "cus"))
-                {
-                    ++i;
-                    if (i >= args.Length)
-                    {
-                        SetCommandLineError(
-                            CommandLineParameterParserStrings.MissingCustomPipeNameArgument);
-                        break;
-                    }
-
-#if UNIX
-                    int maxNameLength = MaxNameLength();
-                    if (args[i].Length > maxNameLength)
-                    {
-                        SetCommandLineError(
-                            string.Format(
-                                CommandLineParameterParserStrings.CustomPipeNameTooLong,
-                                maxNameLength,
-                                args[i],
-                                args[i].Length));
-                        break;
-                    }
-#endif
-
-                    _customPipeName = args[i];
-                    ParametersUsed |= ParameterBitmap.CustomPipeName;
-                }
                 else if (MatchSwitch(switchKey, "commandwithargs", "commandwithargs") || MatchSwitch(switchKey, "cwa", "cwa"))
                 {
                     _commandHasArgs = true;
@@ -942,35 +778,6 @@ namespace Microsoft.PowerShell
 
                     ParametersUsed |= ParameterBitmap.Command;
                 }
-                else if (MatchSwitch(switchKey, "windowstyle", "w"))
-                {
-#if UNIX
-                    SetCommandLineError(
-                        CommandLineParameterParserStrings.WindowStyleArgumentNotImplemented);
-                    break;
-#else
-                    ++i;
-                    if (i >= args.Length)
-                    {
-                        SetCommandLineError(
-                            CommandLineParameterParserStrings.MissingWindowStyleArgument);
-                        break;
-                    }
-
-                    try
-                    {
-                        _windowStyle = LanguagePrimitives.ConvertTo<ProcessWindowStyle>(args[i]);
-                    }
-                    catch (PSInvalidCastException e)
-                    {
-                        SetCommandLineError(
-                            string.Format(CultureInfo.CurrentCulture, CommandLineParameterParserStrings.InvalidWindowStyleArgument, args[i], e.Message));
-                        break;
-                    }
-
-                    ParametersUsed |= ParameterBitmap.WindowStyle;
-#endif
-                }
                 else if (MatchSwitch(switchKey, "file", "f"))
                 {
                     if (!ParseFile(args, ref i, noexitSeen))
@@ -980,12 +787,6 @@ namespace Microsoft.PowerShell
 
                     ParametersUsed |= ParameterBitmap.File;
                 }
-#if DEBUG
-                else if (MatchSwitch(switchKey, "isswait", "isswait"))
-                {
-                    // Just toss this option, it was processed earlier in 'ManagedEntrance.Start()'.
-                }
-#endif
                 else if (MatchSwitch(switchKey, "outputformat", "o") || MatchSwitch(switchKey, "of", "o"))
                 {
                     ParseFormat(args, ref i, ref _outFormat, CommandLineParameterParserStrings.MissingOutputFormatParameter);
@@ -997,21 +798,6 @@ namespace Microsoft.PowerShell
                     ParseFormat(args, ref i, ref _inFormat, CommandLineParameterParserStrings.MissingInputFormatParameter);
                     ParametersUsed |= ParameterBitmap.InputFormat;
                 }
-                else if (MatchSwitch(switchKey, "executionpolicy", "ex") || MatchSwitch(switchKey, "ep", "ep"))
-                {
-                    ParseExecutionPolicy(args, ref i, ref _executionPolicy, CommandLineParameterParserStrings.MissingExecutionPolicyParameter);
-                    ParametersUsed |= ParameterBitmap.ExecutionPolicy;
-                    var executionPolicy = GetExecutionPolicy(_executionPolicy);
-                    if (executionPolicy == ParameterBitmap.EPIncorrect)
-                    {
-                        SetCommandLineError(
-                            string.Format(CultureInfo.CurrentCulture, CommandLineParameterParserStrings.InvalidExecutionPolicyArgument, _executionPolicy),
-                            showHelp: true);
-                        break;
-                    }
-
-                    ParametersUsed |= executionPolicy;
-                }
                 else if (MatchSwitch(switchKey, "encodedcommand", "e") || MatchSwitch(switchKey, "ec", "e"))
                 {
                     _wasCommandEncoded = true;
@@ -1021,65 +807,6 @@ namespace Microsoft.PowerShell
                     }
 
                     ParametersUsed |= ParameterBitmap.EncodedCommand;
-                }
-                else if (MatchSwitch(switchKey, "encodedarguments", "encodeda") || MatchSwitch(switchKey, "ea", "ea"))
-                {
-                    if (!CollectArgs(args, ref i))
-                    {
-                        break;
-                    }
-
-                    ParametersUsed |= ParameterBitmap.EncodedArgument;
-                }
-                else if (MatchSwitch(switchKey, "settingsfile", "settings"))
-                {
-                    // Parse setting file arg and write error
-                    if (!TryParseSettingFileHelper(args, ++i))
-                    {
-                        break;
-                    }
-
-                    ParametersUsed |= ParameterBitmap.SettingsFile;
-                }
-                else if (MatchSwitch(switchKey, "sta", "sta"))
-                {
-                    if (!Platform.IsWindowsDesktop || !Platform.IsStaSupported)
-                    {
-                        SetCommandLineError(
-                            CommandLineParameterParserStrings.STANotImplemented);
-                        break;
-                    }
-
-                    if (_staMode.HasValue)
-                    {
-                        // -sta and -mta are mutually exclusive.
-                        SetCommandLineError(
-                            CommandLineParameterParserStrings.MtaStaMutuallyExclusive);
-                        break;
-                    }
-
-                    _staMode = true;
-                    ParametersUsed |= ParameterBitmap.STA;
-                }
-                else if (MatchSwitch(switchKey, "mta", "mta"))
-                {
-                    if (!Platform.IsWindowsDesktop)
-                    {
-                        SetCommandLineError(
-                            CommandLineParameterParserStrings.MTANotImplemented);
-                        break;
-                    }
-
-                    if (_staMode.HasValue)
-                    {
-                        // -sta and -mta are mutually exclusive.
-                        SetCommandLineError(
-                            CommandLineParameterParserStrings.MtaStaMutuallyExclusive);
-                        break;
-                    }
-
-                    _staMode = false;
-                    ParametersUsed |= ParameterBitmap.MTA;
                 }
                 else if (MatchSwitch(switchKey, "workingdirectory", "wo") || MatchSwitch(switchKey, "wd", "wd"))
                 {
@@ -1483,13 +1210,6 @@ namespace Microsoft.PowerShell
             return true;
         }
 
-        private bool _socketServerMode;
-#if !UNIX
-        private bool _v2SocketServerMode;
-#endif
-        private bool _serverMode;
-        private bool _namedPipeServerMode;
-        private bool _sshServerMode;
         private bool _noProfileLoadTime;
         private bool _showVersion;
         private string? _configurationFile;
@@ -1502,7 +1222,6 @@ namespace Microsoft.PowerShell
         private bool _abortStartup;
         private bool _skipUserInit;
         private string? _customPipeName;
-        private bool? _staMode = null;
         private bool _noExit = true;
         private bool _explicitReadCommandsFromStdin;
         private bool _noPrompt;
@@ -1519,14 +1238,6 @@ namespace Microsoft.PowerShell
         private string? _executionPolicy;
         private string? _settingsFile;
         private string? _workingDirectory;
-#if !UNIX
-        private string? _token;
-        private DateTimeOffset? _utcTimestamp;
-#endif
 
-#if !UNIX
-        private ProcessWindowStyle? _windowStyle;
-        private bool _removeWorkingDirectoryTrailingCharacter = false;
-#endif
     }
 }   // namespace

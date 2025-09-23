@@ -952,7 +952,7 @@ namespace Microsoft.PowerShell
 
                 // NTRAID#Windows Out Of Band Releases-915506-2005/09/09
                 // Removed HandleUnexpectedExceptions infrastructure
-                exitCode = DoRunspaceLoop(cpp.InitialCommand, cpp.SkipProfiles, cpp.Args, cpp.StaMode, cpp.ConfigurationName, cpp.ConfigurationFile);
+                exitCode = DoRunspaceLoop(cpp.InitialCommand, cpp.SkipProfiles, cpp.Args, cpp.ConfigurationName, cpp.ConfigurationFile);
             }
             while (false);
 
@@ -964,7 +964,6 @@ namespace Microsoft.PowerShell
             string initialCommand,
             bool skipProfiles,
             Collection<CommandParameter> initialCommandArgs,
-            bool staMode,
             string configurationName,
             string configurationFilePath)
         {
@@ -972,7 +971,7 @@ namespace Microsoft.PowerShell
 
             while (!ShouldEndSession)
             {
-                RunspaceCreationEventArgs args = new RunspaceCreationEventArgs(initialCommand, skipProfiles, staMode, configurationName, configurationFilePath, initialCommandArgs);
+                RunspaceCreationEventArgs args = new RunspaceCreationEventArgs(initialCommand, skipProfiles, configurationName, configurationFilePath, initialCommandArgs);
                 CreateRunspace(args);
 
                 if (ExitCode == ExitCodeInitFailure)
@@ -1014,12 +1013,6 @@ namespace Microsoft.PowerShell
 
                 _runspaceRef.Runspace.Close();
                 _runspaceRef = null;
-
-                if (staMode)
-                {
-                    // don't continue the session in STA mode
-                    ShouldEndSession = true;
-                }
             }
 
             return ExitCode;
@@ -2190,14 +2183,12 @@ namespace Microsoft.PowerShell
         internal RunspaceCreationEventArgs(
             string initialCommand,
             bool skipProfiles,
-            bool staMode,
             string configurationName,
             string configurationFilePath,
             Collection<CommandParameter> initialCommandArgs)
         {
             InitialCommand = initialCommand;
             SkipProfiles = skipProfiles;
-            StaMode = staMode;
             ConfigurationName = configurationName;
             ConfigurationFilePath = configurationFilePath;
             InitialCommandArgs = initialCommandArgs;

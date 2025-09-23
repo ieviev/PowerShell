@@ -6,5 +6,7 @@
       <NoWarn>$(NoWarn);SA1517;SA1002;CS1591;SA1507;SA1001;SA1516</NoWarn>
       <!-- never used -->
       <NoWarn>$(NoWarn);CS0067</NoWarn>
+      <!-- never assigned -->
+      <NoWarn>$(NoWarn);CS0649</NoWarn>
   </PropertyGroup>
 </Project>
