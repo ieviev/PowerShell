@@ -25,10 +25,6 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using Microsoft.PowerShell.Commands;
-using Microsoft.PowerShell.Telemetry;
-#if LEGACYTELEMETRY
-using Microsoft.PowerShell.Telemetry.Internal;
-#endif
 using ConsoleHandle = Microsoft.Win32.SafeHandles.SafeFileHandle;
 using Dbg = System.Management.Automation.Diagnostics;
 using Debugger = System.Management.Automation.Debugger;
@@ -68,21 +64,21 @@ namespace Microsoft.PowerShell
             string helpText,
             bool issProvidedExternally)
         {
-            string path = Environment.GetEnvironmentVariable("PATH");
-            string pshome = Utils.DefaultPowerShellAppBase;
+            // string path = Environment.GetEnvironmentVariable("PATH");
+            // string pshome = Utils.DefaultPowerShellAppBase;
 
-            pshome += Path.PathSeparator;
+            // pshome += Path.PathSeparator;
 
-            // To not impact startup perf, we don't remove duplicates, but we avoid adding a duplicate to the front
-            // we also don't handle the edge case where PATH only contains $PSHOME
-            if (string.IsNullOrEmpty(path))
-            {
-                Environment.SetEnvironmentVariable("PATH", pshome);
-            }
-            else if (!path.StartsWith(pshome, StringComparison.Ordinal))
-            {
-                Environment.SetEnvironmentVariable("PATH", pshome + path);
-            }
+            // // To not impact startup perf, we don't remove duplicates, but we avoid adding a duplicate to the front
+            // // we also don't handle the edge case where PATH only contains $PSHOME
+            // if (string.IsNullOrEmpty(path))
+            // {
+            //     Environment.SetEnvironmentVariable("PATH", pshome);
+            // }
+            // else if (!path.StartsWith(pshome, StringComparison.Ordinal))
+            // {
+            //     Environment.SetEnvironmentVariable("PATH", pshome + path);
+            // }
 
             try
             {
@@ -115,10 +111,7 @@ namespace Microsoft.PowerShell
 
                 if (s_cpp.ShowVersion)
                 {
-                    // Alternatively, we could call s_theConsoleHost.UI.WriteLine(s_theConsoleHost.Version.ToString());
-                    // or start up the engine and retrieve the information via $psversiontable.GitCommitId
-                    // but this returns the semantic version and avoids executing a script
-                    s_theConsoleHost.UI.WriteLine($"PowerShell {PSVersionInfo.GitCommitId}");
+                    s_theConsoleHost.UI.WriteLine($"PowerShell :)");
                     return 0;
                 }
                 else
@@ -134,10 +127,6 @@ namespace Microsoft.PowerShell
 
                     s_theConsoleHost.BindBreakHandler();
                     PSHost.IsStdOutputRedirected = Console.IsOutputRedirected;
-
-                    // Send startup telemetry for ConsoleHost startup
-                    ApplicationInsightsTelemetry.SendPSCoreStartupTelemetry("Normal", s_cpp.ParametersUsedAsDouble);
-
                     exitCode = s_theConsoleHost.Run(s_cpp, false);
                 }
             }
