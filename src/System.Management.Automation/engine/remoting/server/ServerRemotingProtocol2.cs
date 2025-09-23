@@ -24,11 +24,10 @@ namespace System.Management.Automation
         /// </summary>
         /// <param name="driver"></param>
         /// <param name="transportManager"></param>
-        internal ServerRunspacePoolDataStructureHandler(ServerRunspacePoolDriver driver,
+        internal ServerRunspacePoolDataStructureHandler(object driver,
             AbstractServerSessionTransportManager transportManager)
         {
-            _clientRunspacePoolId = driver.InstanceId;
-            _transportManager = transportManager;
+          
         }
 
         #endregion Constructors
@@ -42,22 +41,7 @@ namespace System.Management.Automation
         /// <param name="serverCapability">Server capability negotiated during initial exchange of remoting messages / session capabilities of client and server.</param>
         internal void SendApplicationPrivateDataToClient(PSPrimitiveDictionary applicationPrivateData, RemoteSessionCapability serverCapability)
         {
-            // make server's PSVersionTable available to the client using ApplicationPrivateData
-            PSPrimitiveDictionary applicationPrivateDataWithVersionTable =
-                PSPrimitiveDictionary.CloneAndAddPSVersionTable(applicationPrivateData);
-
-            // override the hardcoded version numbers with the stuff that was reported to the client during negotiation
-            PSPrimitiveDictionary versionTable = (PSPrimitiveDictionary)applicationPrivateDataWithVersionTable[PSVersionInfo.PSVersionTableName];
-            versionTable[PSVersionInfo.PSRemotingProtocolVersionName] = serverCapability.ProtocolVersion;
-            versionTable[PSVersionInfo.SerializationVersionName] = serverCapability.SerializationVersion;
-
-            // Pass back the true PowerShell version to the client via application private data.
-            versionTable[PSVersionInfo.PSVersionName] = PSVersionInfo.PSVersion;
-
-            RemoteDataObject data = RemotingEncoder.GenerateApplicationPrivateData(
-                _clientRunspacePoolId, applicationPrivateDataWithVersionTable);
-
-            SendDataAsync(data);
+            
         }
 
         /// <summary>
@@ -66,10 +50,7 @@ namespace System.Management.Automation
         /// <param name="stateInfo">State info to send.</param>
         internal void SendStateInfoToClient(RunspacePoolStateInfo stateInfo)
         {
-            RemoteDataObject data = RemotingEncoder.GenerateRunspacePoolStateInfo(
-                    _clientRunspacePoolId, stateInfo);
-
-            SendDataAsync(data);
+      
         }
 
         /// <summary>
@@ -78,9 +59,7 @@ namespace System.Management.Automation
         /// <param name="e">Event to send.</param>
         internal void SendPSEventArgsToClient(PSEventArgs e)
         {
-            RemoteDataObject data = RemotingEncoder.GeneratePSEventArgs(_clientRunspacePoolId, e);
-
-            SendDataAsync(data);
+            
         }
 
         /// <summary>
@@ -89,16 +68,7 @@ namespace System.Management.Automation
         /// </summary>
         internal void ProcessConnect()
         {
-            List<ServerPowerShellDataStructureHandler> dsHandlers;
-            lock (_associationSyncObject)
-            {
-                dsHandlers = new List<ServerPowerShellDataStructureHandler>(_associatedShells.Values);
-            }
-
-            foreach (var dsHandler in dsHandlers)
-            {
-                dsHandler.ProcessConnect();
-            }
+            
         }
 
         /// <summary>
@@ -108,92 +78,7 @@ namespace System.Management.Automation
         /// <param name="receivedData">Data received.</param>
         internal void ProcessReceivedData(RemoteDataObject<PSObject> receivedData)
         {
-            if (receivedData == null)
-            {
-                throw PSTraceSource.NewArgumentNullException(nameof(receivedData));
-            }
-
-            Dbg.Assert(receivedData.TargetInterface == RemotingTargetInterface.RunspacePool,
-                "RemotingTargetInterface must be Runspace");
-
-            switch (receivedData.DataType)
-            {
-                case RemotingDataType.CreatePowerShell:
-                    {
-                        Dbg.Assert(CreateAndInvokePowerShell != null,
-                            "The ServerRunspacePoolDriver should subscribe to all data structure handler events");
-
-                        CreateAndInvokePowerShell.SafeInvoke(this, new RemoteDataEventArgs<RemoteDataObject<PSObject>>(receivedData));
-                    }
-
-                    break;
-
-                case RemotingDataType.GetCommandMetadata:
-                    {
-                        Dbg.Assert(GetCommandMetadata != null,
-                            "The ServerRunspacePoolDriver should subscribe to all data structure handler events");
-
-                        GetCommandMetadata.SafeInvoke(this, new RemoteDataEventArgs<RemoteDataObject<PSObject>>(receivedData));
-                    }
-
-                    break;
-
-                case RemotingDataType.RemoteRunspaceHostResponseData:
-                    {
-                        Dbg.Assert(HostResponseReceived != null,
-                            "The ServerRunspacePoolDriver should subscribe to all data structure handler events");
-
-                        RemoteHostResponse remoteHostResponse = RemoteHostResponse.Decode(receivedData.Data);
-
-                        // part of host message robustness algo. Now the host response is back, report to transport that
-                        // execution status is back to running
-                        _transportManager.ReportExecutionStatusAsRunning();
-
-                        HostResponseReceived.SafeInvoke(this, new RemoteDataEventArgs<RemoteHostResponse>(remoteHostResponse));
-                    }
-
-                    break;
-
-                case RemotingDataType.SetMaxRunspaces:
-                    {
-                        Dbg.Assert(SetMaxRunspacesReceived != null,
-                            "The ServerRunspacePoolDriver should subscribe to all data structure handler events");
-
-                        SetMaxRunspacesReceived.SafeInvoke(this, new RemoteDataEventArgs<PSObject>(receivedData.Data));
-                    }
-
-                    break;
-
-                case RemotingDataType.SetMinRunspaces:
-                    {
-                        Dbg.Assert(SetMinRunspacesReceived != null,
-                            "The ServerRunspacePoolDriver should subscribe to all data structure handler events");
-
-                        SetMinRunspacesReceived.SafeInvoke(this, new RemoteDataEventArgs<PSObject>(receivedData.Data));
-                    }
-
-                    break;
-
-                case RemotingDataType.AvailableRunspaces:
-                    {
-                        Dbg.Assert(GetAvailableRunspacesReceived != null,
-                            "The ServerRunspacePoolDriver should subscribe to all data structure handler events");
-
-                        GetAvailableRunspacesReceived.SafeInvoke(this, new RemoteDataEventArgs<PSObject>(receivedData.Data));
-                    }
-
-                    break;
-
-                case RemotingDataType.ResetRunspaceState:
-                    {
-                        Dbg.Assert(ResetRunspaceState != null,
-                            "The ServerRunspacePoolDriver should subscribe to all data structure handler events.");
-
-                        ResetRunspaceState.SafeInvoke(this, new RemoteDataEventArgs<PSObject>(receivedData.Data));
-                    }
-
-                    break;
-            }
+            
         }
 
         /// <summary>
@@ -207,26 +92,8 @@ namespace System.Management.Automation
         internal ServerPowerShellDataStructureHandler CreatePowerShellDataStructureHandler(
             Guid instanceId, Guid runspacePoolId, RemoteStreamOptions remoteStreamOptions, PowerShell localPowerShell)
         {
-            // start with pool's transport manager.
-            AbstractServerTransportManager cmdTransportManager = _transportManager;
-
-            if (instanceId != Guid.Empty)
-            {
-                cmdTransportManager = _transportManager.GetCommandTransportManager(instanceId);
-                Dbg.Assert(cmdTransportManager.TypeTable != null, "This should be already set in managed C++ code");
-            }
-
-            ServerPowerShellDataStructureHandler dsHandler =
-                new ServerPowerShellDataStructureHandler(instanceId, runspacePoolId, remoteStreamOptions, cmdTransportManager, localPowerShell);
-
-            lock (_associationSyncObject)
-            {
-                _associatedShells.Add(dsHandler.PowerShellId, dsHandler);
-            }
-
-            dsHandler.RemoveAssociation += HandleRemoveAssociation;
-
-            return dsHandler;
+            
+            return null;
         }
 
         /// <summary>
@@ -237,21 +104,7 @@ namespace System.Management.Automation
         /// </returns>
         internal ServerPowerShellDataStructureHandler GetPowerShellDataStructureHandler()
         {
-            lock (_associationSyncObject)
-            {
-                if (_associatedShells.Count > 0)
-                {
-                    foreach (object o in _associatedShells.Values)
-                    {
-                        ServerPowerShellDataStructureHandler result = o as ServerPowerShellDataStructureHandler;
-                        if (result != null)
-                        {
-                            return result;
-                        }
-                    }
-                }
-            }
-
+         
             return null;
         }
 
@@ -261,12 +114,7 @@ namespace System.Management.Automation
         /// <param name="rcvdData">Message to dispatch.</param>
         internal void DispatchMessageToPowerShell(RemoteDataObject<PSObject> rcvdData)
         {
-            ServerPowerShellDataStructureHandler dsHandler =
-                GetAssociatedPowerShellDataStructureHandler(rcvdData.PowerShellId);
-
-            // if data structure handler is not found, then association has already been
-            // removed, discard message
-            dsHandler?.ProcessReceivedData(rcvdData);
+            
         }
 
         /// <summary>
@@ -277,10 +125,7 @@ namespace System.Management.Automation
         /// <param name="response">Response to send.</param>
         internal void SendResponseToClient(long callId, object response)
         {
-            RemoteDataObject message =
-                RemotingEncoder.GenerateRunspacePoolOperationResponse(_clientRunspacePoolId, response, callId);
-
-            SendDataAsync(message);
+           
         }
 
         /// <summary>
@@ -626,7 +471,7 @@ namespace System.Management.Automation
                 case RemotingDataType.StopPowerShell:
                     {
                         Dbg.Assert(StopPowerShellReceived != null,
-                            "ServerPowerShellDriver should subscribe to all data structure handler events");
+                            "object should subscribe to all data structure handler events");
                         StopPowerShellReceived.SafeInvoke(this, EventArgs.Empty);
                     }
 
@@ -635,7 +480,7 @@ namespace System.Management.Automation
                 case RemotingDataType.PowerShellInput:
                     {
                         Dbg.Assert(InputReceived != null,
-                            "ServerPowerShellDriver should subscribe to all data structure handler events");
+                            "object should subscribe to all data structure handler events");
                         InputReceived.SafeInvoke(this, new RemoteDataEventArgs<object>(receivedData.Data));
                     }
 
@@ -644,7 +489,7 @@ namespace System.Management.Automation
                 case RemotingDataType.PowerShellInputEnd:
                     {
                         Dbg.Assert(InputEndReceived != null,
-                            "ServerPowerShellDriver should subscribe to all data structure handler events");
+                            "object should subscribe to all data structure handler events");
                         InputEndReceived.SafeInvoke(this, EventArgs.Empty);
                     }
 
@@ -653,7 +498,7 @@ namespace System.Management.Automation
                 case RemotingDataType.RemotePowerShellHostResponseData:
                     {
                         Dbg.Assert(HostResponseReceived != null,
-                            "ServerPowerShellDriver should subscribe to all data structure handler events");
+                            "object should subscribe to all data structure handler events");
 
                         RemoteHostResponse remoteHostResponse = RemoteHostResponse.Decode(receivedData.Data);
 

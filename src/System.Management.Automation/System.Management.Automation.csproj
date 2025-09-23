@@ -8,6 +8,8 @@
     <NoWarn>$(NoWarn);CS0169</NoWarn>
     <NoWarn>$(NoWarn);CA1822</NoWarn>
     <NoWarn>$(NoWarn);SA1001</NoWarn>
+    <!-- never used -->
+    <NoWarn>$(NoWarn);CS0414;CS0067</NoWarn>
     <!-- summaries -->
     <NoWarn>$(NoWarn);SA1517;SA1002;CS1591</NoWarn>
     <AssemblyName>System.Management.Automation</AssemblyName>

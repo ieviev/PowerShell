@@ -271,7 +271,7 @@ namespace System.Management.Automation.Remoting
     }
 
     /// <summary>
-    /// The remote host class for the ServerRunspacePoolDriver.
+    /// The remote host class for the object.
     /// </summary>
     internal class ServerDriverRemoteHost : ServerRemoteHost
     {

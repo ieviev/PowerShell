@@ -434,65 +434,7 @@ namespace System.Management.Automation.Remoting
             int flags, // in
             WSManNativeApi.WSManData_UnToMan inboundConnectInformation) // in optional
         {
-            if (inboundConnectInformation == null)
-            {
-                WSManPluginInstance.ReportOperationComplete(
-                    requestDetails,
-                    WSManPluginErrorCodes.NullInvalidInput,
-                    StringUtil.Format(
-                        RemotingErrorIdStrings.WSManPluginNullInvalidInput,
-                        "inboundConnectInformation",
-                        "WSManPluginShellConnect"));
-                return;
-            }
-
-            // not registering shutdown event as this is a synchronous operation.
-
-            IntPtr responseXml = IntPtr.Zero;
-            try
-            {
-                byte[] inputData;
-                byte[] outputData;
-
-                // Retrieve the string (Base64 encoded)
-                inputData = ServerOperationHelpers.ExtractEncodedXmlElement(
-                    inboundConnectInformation.Text,
-                    WSManNativeApi.PS_CONNECT_XML_TAG);
-
-                // this will raise exceptions on failure
-                try
-                {
-                    _remoteSession.ExecuteConnect(inputData, out outputData);
-
-                    // construct Xml to send back
-                    string responseData = string.Format(
-                        System.Globalization.CultureInfo.InvariantCulture,
-                        "<{0} xmlns=\"{1}\">{2}</{0}>",
-                        WSManNativeApi.PS_CONNECTRESPONSE_XML_TAG,
-                        WSManNativeApi.PS_XML_NAMESPACE,
-                        Convert.ToBase64String(outputData));
-
-                    // TODO: currently using OperationComplete to report back the responseXml. This will need to change to use WSManReportObject
-                    // that is currently internal.
-                    WSManPluginInstance.ReportOperationComplete(requestDetails, WSManPluginErrorCodes.NoError, responseData);
-                }
-                catch (PSRemotingDataStructureException ex)
-                {
-                    WSManPluginInstance.ReportOperationComplete(requestDetails, WSManPluginErrorCodes.PluginConnectOperationFailed, ex.Message);
-                }
-            }
-            catch (OutOfMemoryException)
-            {
-                WSManPluginInstance.ReportOperationComplete(requestDetails, WSManPluginErrorCodes.OutOfMemory);
-            }
-            finally
-            {
-                if (responseXml != IntPtr.Zero)
-                {
-                    Marshal.FreeHGlobal(responseXml);
-                }
-            }
-
+            
             return;
         }
 
@@ -504,52 +446,7 @@ namespace System.Management.Automation.Remoting
             string commandLine,
             WSManNativeApi.WSManCommandArgSet arguments)
         {
-            try
-            {
-                // inbound cmd information is already verified.. so no need to verify here.
-                WSManPluginCommandTransportManager serverCmdTransportMgr = new WSManPluginCommandTransportManager(transportMgr);
-                serverCmdTransportMgr.Initialize();
-
-                // Apply quota limits on the command transport manager
-                _remoteSession.ApplyQuotaOnCommandTransportManager(serverCmdTransportMgr);
-
-                WSManPluginCommandSession mgdCmdSession = new WSManPluginCommandSession(requestDetails, serverCmdTransportMgr, _remoteSession);
-                AddToActiveCmdSessions(mgdCmdSession);
-                mgdCmdSession.SessionClosed += this.HandleCommandSessionClosed;
-
-                mgdCmdSession.shutDownContext = new WSManPluginOperationShutdownContext(
-                    pluginContext,
-                    creationRequestDetails.unmanagedHandle,
-                    mgdCmdSession.creationRequestDetails.unmanagedHandle,
-                    false);
-
-                do
-                {
-                    if (!mgdCmdSession.ProcessArguments(arguments))
-                    {
-                        WSManPluginInstance.ReportOperationComplete(
-                            requestDetails,
-                            WSManPluginErrorCodes.InvalidArgSet,
-                            StringUtil.Format(
-                                RemotingErrorIdStrings.WSManPluginInvalidArgSet,
-                                "WSManPluginCommand"));
-                        break;
-                    }
-
-                    // Report plugin context to WSMan
-                    mgdCmdSession.ReportContext();
-                } while (false);
-            }
-            catch (System.Exception e)
-            {
-                // if there is an exception creating remote session send the message to client.
-                WSManPluginInstance.ReportOperationComplete(
-                    requestDetails,
-                    WSManPluginErrorCodes.ManagedException,
-                    StringUtil.Format(
-                        RemotingErrorIdStrings.WSManPluginManagedException,
-                        e.Message));
-            }
+          
         }
 
         // Closes the command and clears associated resources

@@ -28,20 +28,7 @@ namespace System.Management.Automation.Internal
         internal ClientRunspacePoolDataStructureHandler(RemoteRunspacePoolInternal clientRunspacePool,
             TypeTable typeTable)
         {
-            _clientRunspacePoolId = clientRunspacePool.InstanceId;
-            _minRunspaces = clientRunspacePool.GetMinRunspaces();
-            _maxRunspaces = clientRunspacePool.GetMaxRunspaces();
-            _host = clientRunspacePool.Host;
-            _applicationArguments = clientRunspacePool.ApplicationArguments;
-            RemoteSession = CreateClientRemoteSession(clientRunspacePool);
-            // TODO: Assign remote session name.. should be passed from clientRunspacePool
-            _transportManager = RemoteSession.SessionDataStructureHandler.TransportManager;
-            _transportManager.TypeTable = typeTable;
-            RemoteSession.StateChanged += HandleClientRemoteSessionStateChanged;
-            _reconnecting = false;
-
-            _transportManager.RobustConnectionNotification += HandleRobustConnectionNotification;
-            _transportManager.CreateCompleted += HandleSessionCreateCompleted;
+        
         }
 
         #endregion Constructors
@@ -51,13 +38,6 @@ namespace System.Management.Automation.Internal
         
         internal void CreateRunspacePoolAndOpenAsync()
         {
-            // #1: Connect to remote session
-            Dbg.Assert(RemoteSession.SessionDataStructureHandler.StateMachine.State == RemoteSessionState.Idle,
-                "State of ClientRemoteSession is expected to be idle before connection is established");
-            RemoteSession.CreateAsync();
-
-            // #2: send the message for runspace pool creation
-            // this is done in HandleClientRemoteSessionStateChanged
         }
 
         
@@ -69,115 +49,26 @@ namespace System.Management.Automation.Internal
         
         internal void DisconnectPoolAsync()
         {
-            // Prepare running commands for disconnect and start disconnect
-            // when ready.
-            PrepareForAndStartDisconnect();
+         
         }
 
         
         internal void ReconnectPoolAsync()
         {
-            // TODO: Integrate this into state machine
-            _reconnecting = true;
-            PrepareForConnect();
-            RemoteSession.ReconnectAsync();
+            
         }
 
         
         internal void ConnectPoolAsync()
         {
-            PrepareForConnect();
-            RemoteSession.ConnectAsync();
+            
         }
 
         
         /// <param name="receivedData">Data received.</param>
         internal void ProcessReceivedData(RemoteDataObject<PSObject> receivedData)
         {
-            // verify if this data structure handler is the intended recipient
-            if (receivedData.RunspacePoolId != _clientRunspacePoolId)
-            {
-                throw new PSRemotingDataStructureException(RemotingErrorIdStrings.RunspaceIdsDoNotMatch,
-                                receivedData.RunspacePoolId, _clientRunspacePoolId);
-            }
-
-            // take appropriate action based on the action type
-            Dbg.Assert(receivedData.TargetInterface == RemotingTargetInterface.RunspacePool,
-                "Target interface is expected to be RunspacePool");
-
-            switch (receivedData.DataType)
-            {
-                case RemotingDataType.RemoteHostCallUsingRunspaceHost:
-                    {
-                        Dbg.Assert(RemoteHostCallReceived != null,
-                            "RemoteRunspacePoolInternal should subscribe to all data structure handler events");
-
-                        RemoteHostCall remoteHostCall = RemoteHostCall.Decode(receivedData.Data);
-                        RemoteHostCallReceived.SafeInvoke(this, new RemoteDataEventArgs<RemoteHostCall>(remoteHostCall));
-                    }
-
-                    break;
-
-                case RemotingDataType.RunspacePoolInitData:
-                    {
-                        RunspacePoolInitInfo initInfo = RemotingDecoder.GetRunspacePoolInitInfo(receivedData.Data);
-
-                        Dbg.Assert(RSPoolInitInfoReceived != null,
-                            "RemoteRunspacePoolInternal should subscribe to all data structure handler events");
-                        RSPoolInitInfoReceived.SafeInvoke(this,
-                            new RemoteDataEventArgs<RunspacePoolInitInfo>(initInfo));
-                    }
-
-                    break;
-
-                case RemotingDataType.RunspacePoolStateInfo:
-                    {
-                        RunspacePoolStateInfo stateInfo =
-                            RemotingDecoder.GetRunspacePoolStateInfo(receivedData.Data);
-
-                        Dbg.Assert(StateInfoReceived != null,
-                            "RemoteRunspacePoolInternal should subscribe to all data structure handler events");
-                        StateInfoReceived.SafeInvoke(this,
-                            new RemoteDataEventArgs<RunspacePoolStateInfo>(stateInfo));
-
-                        NotifyAssociatedPowerShells(stateInfo);
-                    }
-
-                    break;
-
-                case RemotingDataType.ApplicationPrivateData:
-                    {
-                        PSPrimitiveDictionary applicationPrivateData = RemotingDecoder.GetApplicationPrivateData(receivedData.Data);
-                        Dbg.Assert(ApplicationPrivateDataReceived != null,
-                            "RemoteRunspacePoolInternal should subscribe to all data structure handler events");
-                        ApplicationPrivateDataReceived.SafeInvoke(this,
-                            new RemoteDataEventArgs<PSPrimitiveDictionary>(applicationPrivateData));
-                    }
-
-                    break;
-
-                case RemotingDataType.RunspacePoolOperationResponse:
-                    {
-                        Dbg.Assert(SetMaxMinRunspacesResponseReceived != null,
-                            "RemoteRunspacePoolInternal should subscribe to all data structure handler events");
-
-                        SetMaxMinRunspacesResponseReceived.SafeInvoke(this, new RemoteDataEventArgs<PSObject>(receivedData.Data));
-                    }
-
-                    break;
-
-                case RemotingDataType.PSEventArgs:
-                    {
-                        PSEventArgs psEventArgs = RemotingDecoder.GetPSEventArgs(receivedData.Data);
-
-                        Dbg.Assert(PSEventArgsReceived != null,
-                            "RemoteRunspacePoolInternal should subscribe to all data structure handler events");
-
-                        PSEventArgsReceived.SafeInvoke(this, new RemoteDataEventArgs<PSEventArgs>(psEventArgs));
-                    }
-
-                    break;
-            }
+            
         }
 
         
@@ -186,11 +77,7 @@ namespace System.Management.Automation.Internal
         internal ClientPowerShellDataStructureHandler CreatePowerShellDataStructureHandler(
             ClientRemotePowerShell shell)
         {
-            BaseClientCommandTransportManager clientTransportMgr =
-                RemoteSession.SessionDataStructureHandler.CreateClientCommandTransportManager(shell, shell.NoInput);
-
-            return new ClientPowerShellDataStructureHandler(
-                clientTransportMgr, _clientRunspacePoolId, shell.InstanceId);
+            return null;            
         }
 
         
@@ -198,27 +85,7 @@ namespace System.Management.Automation.Internal
         internal void CreatePowerShellOnServerAndInvoke(ClientRemotePowerShell shell)
         {
             // add to associated powershell list and send request to server
-            lock (_associationSyncObject)
-            {
-                _associatedPowerShellDSHandlers.Add(shell.InstanceId, shell.DataStructureHandler);
-            }
-
-            shell.DataStructureHandler.RemoveAssociation += HandleRemoveAssociation;
-
-            // Find out if this is an invoke and disconnect operation and if so whether the endpoint
-            // supports disconnect.  Throw exception if disconnect is not supported.
-            bool invokeAndDisconnect = shell.Settings != null && shell.Settings.InvokeAndDisconnect;
-            if (invokeAndDisconnect && !EndpointSupportsDisconnect)
-            {
-                throw new PSRemotingDataStructureException(RemotingErrorIdStrings.EndpointDoesNotSupportDisconnect);
-            }
-
-            if (RemoteSession == null)
-            {
-                throw new ObjectDisposedException("ClientRunspacePoolDataStructureHandler");
-            }
-
-            shell.DataStructureHandler.Start(RemoteSession.SessionDataStructureHandler.StateMachine, invokeAndDisconnect);
+            
         }
 
         
@@ -226,43 +93,27 @@ namespace System.Management.Automation.Internal
         /// <param name="psDSHandler">ClientPowerShellDataStructureHandler for PowerShell.</param>
         internal void AddRemotePowerShellDSHandler(Guid psShellInstanceId, ClientPowerShellDataStructureHandler psDSHandler)
         {
-            lock (_associationSyncObject)
-            {
-                // Remove old DSHandler and replace with new.
-                _associatedPowerShellDSHandlers[psShellInstanceId] = psDSHandler;
-            }
-
-            psDSHandler.RemoveAssociation += HandleRemoveAssociation;
+     
         }
 
         
         /// <param name="rcvdData">Message received.</param>
         internal void DispatchMessageToPowerShell(RemoteDataObject<PSObject> rcvdData)
         {
-            ClientPowerShellDataStructureHandler dsHandler =
-                GetAssociatedPowerShellDataStructureHandler(rcvdData.PowerShellId);
-
-            // if a data structure handler does not exist it means
-            // the association has been removed -
-            // discard messages
-            dsHandler?.ProcessReceivedData(rcvdData);
+           
         }
 
         
         /// <param name="hostResponse">Host response object to send.</param>
         internal void SendHostResponseToServer(RemoteHostResponse hostResponse)
         {
-            SendDataAsync(hostResponse.Encode(), DataPriorityType.PromptResponse);
         }
 
         
         /// <param name="callId">Caller Id.</param>
         internal void SendResetRunspaceStateToServer(long callId)
         {
-            RemoteDataObject message =
-                RemotingEncoder.GenerateResetRunspaceState(_clientRunspacePoolId, callId);
-
-            SendDataAsync(message);
+           
         }
 
         
@@ -271,10 +122,7 @@ namespace System.Management.Automation.Internal
         /// be blocked on</param>
         internal void SendSetMaxRunspacesToServer(int maxRunspaces, long callId)
         {
-            RemoteDataObject message =
-                RemotingEncoder.GenerateSetMaxRunspaces(_clientRunspacePoolId, maxRunspaces, callId);
-
-            SendDataAsync(message);
+            
         }
 
         

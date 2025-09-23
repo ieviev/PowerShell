@@ -193,27 +193,7 @@ namespace System.Management.Automation.Remoting
         /// If the parameter is null.
         /// </exception>
         internal void RaiseEvent(RemoteSessionStateMachineEventArgs fsmEventArg)
-        {
-            // make sure only one thread is processing events.
-            lock (_syncObject)
-            {
-                s_trace.WriteLine("Event received : {0}", fsmEventArg.StateEvent);
-                _processPendingEventsQueue.Enqueue(fsmEventArg);
-
-                if (_eventsInProcess)
-                {
-                    return;
-                }
-
-                _eventsInProcess = true;
-            }
-
-            ProcessEvents();
-
-            // currently server state machine doesn't raise events
-            // this will allow server state machine to raise events.
-            // RaiseStateMachineEvents();
-        }
+        {}
 
         /// <summary>
         /// Processes events in the queue. If there are no
@@ -480,94 +460,7 @@ namespace System.Management.Automation.Remoting
         /// If the parameter <paramref name="fsmEventArg"/> does not contain remote data.
         /// </exception>
         internal void DoMessageReceived(object sender, RemoteSessionStateMachineEventArgs fsmEventArg)
-        {
-            using (s_trace.TraceEventHandlers())
-            {
-                if (fsmEventArg == null)
-                {
-                    throw PSTraceSource.NewArgumentNullException(nameof(fsmEventArg));
-                }
-
-                if (fsmEventArg.RemoteData == null)
-                {
-                    throw PSTraceSource.NewArgumentException(nameof(fsmEventArg));
-                }
-
-                Dbg.Assert(_state == RemoteSessionState.Established ||
-                           _state == RemoteSessionState.EstablishedAndKeyExchanged ||
-                           _state == RemoteSessionState.EstablishedAndKeyReceived ||
-                           _state == RemoteSessionState.EstablishedAndKeySent,  // server session will never be in this state.. TODO- remove this
-                           "State must be Established or EstablishedAndKeySent or EstablishedAndKeyReceived or EstablishedAndKeyExchanged");
-
-                RemotingTargetInterface targetInterface = fsmEventArg.RemoteData.TargetInterface;
-                RemotingDataType dataType = fsmEventArg.RemoteData.DataType;
-
-                Guid clientRunspacePoolId;
-                ServerRunspacePoolDriver runspacePoolDriver;
-                // string errorMessage = null;
-
-                RemoteDataEventArgs remoteDataForSessionArg = null;
-
-                switch (targetInterface)
-                {
-                    case RemotingTargetInterface.Session:
-                        {
-                            switch (dataType)
-                            {
-                                // GETBACK
-                                case RemotingDataType.CreateRunspacePool:
-                                    remoteDataForSessionArg = new RemoteDataEventArgs(fsmEventArg.RemoteData);
-                                    _session.SessionDataStructureHandler.RaiseDataReceivedEvent(remoteDataForSessionArg);
-                                    break;
-
-                                default:
-                                    Dbg.Assert(false, "Should never reach here");
-                                    break;
-                            }
-                        }
-
-                        break;
-
-                    case RemotingTargetInterface.RunspacePool:
-                        // GETBACK
-                        clientRunspacePoolId = fsmEventArg.RemoteData.RunspacePoolId;
-                        runspacePoolDriver = _session.GetRunspacePoolDriver(clientRunspacePoolId);
-
-                        if (runspacePoolDriver != null)
-                        {
-                            runspacePoolDriver.DataStructureHandler.ProcessReceivedData(fsmEventArg.RemoteData);
-                        }
-                        else
-                        {
-                            s_trace.WriteLine(@"Server received data for Runspace (id: {0}),
-                                but the Runspace cannot be found", clientRunspacePoolId);
-
-                            PSRemotingDataStructureException reasonOfFailure = new
-                                PSRemotingDataStructureException(RemotingErrorIdStrings.RunspaceCannotBeFound,
-                                    clientRunspacePoolId);
-                            RemoteSessionStateMachineEventArgs runspaceNotFoundArg = new RemoteSessionStateMachineEventArgs(RemoteSessionEvent.FatalError, reasonOfFailure);
-                            RaiseEvent(runspaceNotFoundArg);
-                        }
-
-                        break;
-
-                    case RemotingTargetInterface.PowerShell:
-                        clientRunspacePoolId = fsmEventArg.RemoteData.RunspacePoolId;
-                        runspacePoolDriver = _session.GetRunspacePoolDriver(clientRunspacePoolId);
-
-                        runspacePoolDriver.DataStructureHandler.DispatchMessageToPowerShell(fsmEventArg.RemoteData);
-                        break;
-
-                    default:
-                        s_trace.WriteLine("Server received data unknown targetInterface: {0}", targetInterface);
-
-                        PSRemotingDataStructureException reasonOfFailure2 = new PSRemotingDataStructureException(RemotingErrorIdStrings.ReceivedUnsupportedRemotingTargetInterfaceType, targetInterface);
-                        RemoteSessionStateMachineEventArgs unknownTargetArg = new RemoteSessionStateMachineEventArgs(RemoteSessionEvent.FatalError, reasonOfFailure2);
-                        RaiseEvent(unknownTargetArg);
-                        break;
-                }
-            }
-        }
+        {}
 
         /// <summary>
         /// This is the handler for ConnectFailed event. In this implementation, this should never
