@@ -8,7 +8,6 @@ using System.Management.Automation.Tracing;
 using System.Reflection;
 using System.Runtime.ExceptionServices;
 using System.Threading;
-using Microsoft.PowerShell.Telemetry;
 
 using Dbg = System.Management.Automation.Diagnostics;
 
@@ -250,7 +249,7 @@ namespace System.Management.Automation.Internal
                     // Only report experimental feature usage once per pipeline.
                     if (!_haveReportedNativePipeUsage)
                     {
-                        ApplicationInsightsTelemetry.SendExperimentalUseData("PSNativeCommandPreserveBytePipe", "p");
+                        
                         _haveReportedNativePipeUsage = true;
                     }
 

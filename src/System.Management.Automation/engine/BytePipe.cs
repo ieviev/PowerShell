@@ -7,7 +7,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.PowerShell.Telemetry;
 
 namespace System.Management.Automation;
 
@@ -96,7 +95,7 @@ internal sealed class FileBytePipe : BytePipe
             throw new RuntimeException(null, e, errorRecord);
         }
 
-        ApplicationInsightsTelemetry.SendExperimentalUseData("PSNativeCommandPreserveBytePipe", "f");
+        
 
         return new FileBytePipe(fileStream);
     }

@@ -9,7 +9,6 @@ using System.Management.Automation.Internal;
 using System.Management.Automation.Language;
 using System.Management.Automation.Runspaces;
 using System.Threading;
-using Microsoft.PowerShell.Telemetry;
 
 namespace System.Management.Automation.Subsystem.Feedback
 {
@@ -228,7 +227,7 @@ namespace System.Management.Automation.Subsystem.Feedback
 
 			if (results.Count > 0)
 			{
-				ApplicationInsightsTelemetry.SendUseTelemetry("FuzzyMatching", "CommandNotFound");
+				
 				return new FeedbackItem(
 					SuggestionStrings.Suggestion_CommandNotFound,
 					new List<string>(results),

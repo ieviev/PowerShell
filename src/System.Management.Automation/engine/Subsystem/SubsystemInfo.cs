@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Management.Automation.Internal;
-using Microsoft.PowerShell.Telemetry;
 
 namespace System.Management.Automation.Subsystem
 {
@@ -74,7 +73,7 @@ namespace System.Management.Automation.Subsystem
         internal void RegisterImplementation(ISubsystem impl)
         {
             AddImplementation(impl);
-            ApplicationInsightsTelemetry.SendUseTelemetry(ApplicationInsightsTelemetry.s_subsystemRegistration, impl.Name);
+            
         }
 
         internal ISubsystem UnregisterImplementation(Guid id)

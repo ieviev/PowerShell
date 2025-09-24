@@ -9,7 +9,6 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Reflection;
 using System.Runtime.Loader;
-using Microsoft.PowerShell.Telemetry;
 
 namespace System.Management.Automation
 {
@@ -507,7 +506,7 @@ namespace System.Management.Automation
                 result = -1;
             }
 
-            ApplicationInsightsTelemetry.SendUseTelemetry("PowerShellUnsafeAssemblyLoad", result == 0 ? "1" : "0");
+            
             return result;
         }
     }

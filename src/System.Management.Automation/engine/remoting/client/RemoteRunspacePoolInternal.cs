@@ -10,7 +10,6 @@ using System.Management.Automation.Remoting;
 using System.Management.Automation.Remoting.Client;
 using System.Management.Automation.Tracing;
 using System.Threading;
-using Microsoft.PowerShell.Telemetry;
 
 using Dbg = System.Management.Automation.Diagnostics;
 #if LEGACYTELEMETRY
