@@ -233,10 +233,6 @@ namespace System.Management.Automation.Configuration
                 }
             }
 
-            if (result == 0)
-            {
-                result = System.Management.Automation.Tracing.PSSysLogProvider.DefaultChannels;
-            }
 
             return result;
         }
@@ -267,10 +263,6 @@ namespace System.Management.Automation.Configuration
                 }
             }
 
-            if (result == 0)
-            {
-                result = System.Management.Automation.Tracing.PSSysLogProvider.DefaultKeywords;
-            }
 
             return result;
         }
